@@ -1,0 +1,357 @@
+/* ============================================
+   PRICING SECTION — Premium Layout
+   ============================================ */
+.price-section {
+  padding: 120px 20px;
+  background: linear-gradient(180deg, #f7f9fc 0%, #eef2f7 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle decorative background orb */
+.price-section::before {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: -5%;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(26, 62, 114, 0.04) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.price-section::after {
+  content: '';
+  position: absolute;
+  bottom: 5%;
+  right: -5%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(248, 180, 0, 0.05) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.price-section-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.price-badge {
+  display: inline-block;
+  background: rgba(26, 62, 114, 0.06);
+  color: var(--primary);
+  border: 1px solid rgba(26, 62, 114, 0.12);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+
+/* ---- Card Grid ---- */
+.price-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  max-width: 1300px;
+  margin: 0 auto;
+  align-items: stretch;
+}
+
+/* ============================================
+   PRICING CARD — Glass-effect with depth
+   ============================================ */
+.price-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 44px 36px;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.price-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+  border-color: rgba(26, 62, 114, 0.12);
+}
+
+/* ---- Popular Card — Elevated & accented ---- */
+.price-card-popular {
+  background: linear-gradient(170deg, #0b1c34 0%, #152d52 100%);
+  border: 1px solid rgba(248, 180, 0, 0.2);
+  box-shadow: 0 12px 40px rgba(11, 28, 52, 0.2);
+  transform: scale(1.04);
+}
+
+.price-card-popular:hover {
+  transform: scale(1.04) translateY(-6px);
+  box-shadow: 0 25px 60px rgba(11, 28, 52, 0.3);
+  border-color: rgba(248, 180, 0, 0.35);
+}
+
+/* Popular Badge */
+.popular-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: var(--secondary);
+  color: #0b1c34;
+  font-weight: 700;
+  font-size: 11px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.popular-badge i {
+  font-size: 10px;
+}
+
+/* ---- Card Header ---- */
+.price-card-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.price-tier-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(26, 62, 114, 0.06);
+  border: 1px solid rgba(26, 62, 114, 0.1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: var(--primary);
+  margin-bottom: 18px;
+  transition: all 0.3s ease;
+}
+
+.price-card:hover .price-tier-icon {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+  transform: scale(1.08);
+  box-shadow: 0 4px 15px rgba(26, 62, 114, 0.2);
+}
+
+.price-tier-icon-popular {
+  background: rgba(248, 180, 0, 0.12);
+  border-color: rgba(248, 180, 0, 0.25);
+  color: var(--secondary);
+}
+
+.price-card-popular:hover .price-tier-icon {
+  background: var(--secondary);
+  border-color: var(--secondary);
+  color: #0b1c34;
+  box-shadow: 0 4px 15px rgba(248, 180, 0, 0.3);
+}
+
+.price-card h3 {
+  font-size: 1.25rem;
+  color: #0b1c34;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.price-card-popular h3 {
+  color: white;
+}
+
+/* ---- Price Amount ---- */
+.price-amount {
+  text-align: center;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 2px;
+}
+
+.price-currency {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-right: 2px;
+  position: relative;
+  top: -8px;
+}
+
+.price-card-popular .price-currency {
+  color: var(--secondary);
+}
+
+.price-value {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #0b1c34;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+.price-card-popular .price-value {
+  color: white;
+}
+
+.price-period {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-light);
+  margin-left: 2px;
+}
+
+.price-card-popular .price-period {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* ---- Divider ---- */
+.price-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.08) 50%, transparent 100%);
+  margin-bottom: 28px;
+}
+
+.price-card-popular .price-divider {
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%);
+}
+
+/* ---- Feature List ---- */
+.price-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 35px 0;
+  flex-grow: 1;
+}
+
+.price-features li {
+  margin-bottom: 16px;
+  font-size: 0.95rem;
+  color: #4a5568;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 450;
+}
+
+.price-card-popular .price-features li {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.feature-check {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  border-radius: 50%;
+  background: rgba(76, 175, 80, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: var(--success);
+}
+
+.price-card-popular .feature-check {
+  background: rgba(248, 180, 0, 0.12);
+  color: var(--secondary);
+}
+
+/* ---- CTA Button ---- */
+.price-btn {
+  width: 100%;
+  padding: 14px 0;
+  background: transparent;
+  color: var(--primary);
+  text-align: center;
+  border-radius: 10px;
+  font-weight: 700;
+  border: 2px solid rgba(26, 62, 114, 0.2);
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.price-btn:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(26, 62, 114, 0.2);
+}
+
+.price-btn i {
+  font-size: 12px;
+  transition: transform 0.3s ease;
+}
+
+.price-btn:hover i {
+  transform: translateX(4px);
+}
+
+.price-btn-popular {
+  background: var(--secondary);
+  border-color: var(--secondary);
+  color: #0b1c34;
+}
+
+.price-btn-popular:hover {
+  background: white;
+  border-color: white;
+  color: #0b1c34;
+  box-shadow: 0 6px 20px rgba(248, 180, 0, 0.3);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 1200px) {
+  .price-container {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 760px;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 992px) {
+  .price-container {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    gap: 24px;
+  }
+
+  .price-card-popular {
+    transform: scale(1);
+  }
+
+  .price-card-popular:hover {
+    transform: translateY(-6px);
+  }
+}
+
+@media (max-width: 768px) {
+  .price-section {
+    padding: 80px 15px;
+  }
+}

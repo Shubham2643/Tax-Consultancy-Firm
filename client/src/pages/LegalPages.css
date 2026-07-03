@@ -1,0 +1,213 @@
+/* ============================================
+   UNIFIED STYLING FOR LEGAL & POLICY PAGES
+   ============================================ */
+
+.legal-page {
+  background-color: #f8fafc;
+  min-height: 100vh;
+  text-align: left;
+}
+
+/* Legal Page Hero Banner */
+.legal-hero {
+  background: var(--gradient-primary);
+  color: white;
+  padding: 80px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.legal-hero h1 {
+  font-size: 3.2rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  letter-spacing: -0.8px;
+  background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.legal-hero p {
+  font-size: 1.15rem;
+  color: rgba(226, 232, 240, 0.8);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Page Layout Grid */
+.legal-grid {
+  display: flex;
+  gap: 40px;
+  padding: 60px 0 100px 0;
+  align-items: flex-start;
+}
+
+/* Sidebar Navigation */
+.legal-sidebar {
+  flex: 1;
+  min-width: 260px;
+  position: sticky;
+  top: 110px;
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+.legal-sidebar h3 {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #0b1c34;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--secondary);
+  display: inline-block;
+}
+
+.legal-sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.legal-sidebar-menu a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  color: var(--text-light);
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 600;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.legal-sidebar-menu a:hover {
+  background: rgba(11, 28, 52, 0.03);
+  color: var(--primary);
+  transform: translateX(3px);
+}
+
+.legal-sidebar-menu li.active a {
+  background: rgba(26, 62, 114, 0.06);
+  color: var(--primary);
+  border-left: 3px solid var(--primary);
+  border-radius: 0 6px 6px 0;
+  padding-left: 11px;
+}
+
+/* Main Content Column */
+.legal-content-col {
+  flex: 3;
+  min-width: 320px;
+  background: white;
+  padding: 50px;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+}
+
+.legal-section-block {
+  scroll-margin-top: 120px; /* Offset for sticky header */
+}
+
+.legal-section-block:not(:last-child) {
+  margin-bottom: 45px;
+  padding-bottom: 45px;
+  border-bottom: 1px solid #edf2f7;
+}
+
+.legal-section-block h2 {
+  font-size: 1.4rem;
+  color: #0b1c34;
+  margin-bottom: 18px;
+  font-weight: 700;
+}
+
+.legal-section-block p {
+  font-size: 0.98rem;
+  line-height: 1.75;
+  color: var(--text-light);
+  margin-bottom: 16px;
+}
+
+.legal-section-block ul,
+.legal-section-block ol {
+  padding-left: 20px;
+  margin-bottom: 16px;
+}
+
+.legal-section-block li {
+  font-size: 0.96rem;
+  line-height: 1.7;
+  color: var(--text-light);
+  margin-bottom: 8px;
+}
+
+/* Important highlights (eg. Jurisdiction, fee limits) */
+.legal-highlight-box {
+  background: rgba(26, 62, 114, 0.03);
+  border-left: 4px solid var(--primary);
+  padding: 16px 20px;
+  border-radius: 0 8px 8px 0;
+  margin: 20px 0;
+}
+
+.legal-highlight-box p {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.legal-date {
+  font-size: 0.88rem;
+  color: var(--text-light);
+  margin-bottom: 30px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legal-date i {
+  color: var(--secondary);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 992px) {
+  .legal-grid {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .legal-sidebar,
+  .legal-content-col {
+    width: 100%;
+  }
+  .legal-sidebar {
+    position: static;
+  }
+  .legal-content-col {
+    padding: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .legal-hero {
+    padding: 60px 0;
+  }
+  .legal-hero h1 {
+    font-size: 2.2rem;
+  }
+}

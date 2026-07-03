@@ -1,0 +1,150 @@
+/* ============================================
+   PUSH NOTIFICATION CONSENT BANNER — Premium Glass
+   ============================================ */
+.push-consent-bar {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  max-width: 480px;
+  background: rgba(11, 28, 52, 0.96);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.3);
+  padding: 24px;
+  z-index: 9999;
+  animation: pushSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  text-align: left;
+}
+
+@keyframes pushSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.push-consent-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.push-consent-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.push-consent-icon-box {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  background: rgba(248, 180, 0, 0.12);
+  border: 1px solid rgba(248, 180, 0, 0.25);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--secondary);
+  font-size: 16px;
+  animation: bellRing 4s ease-in-out infinite;
+}
+
+@keyframes bellRing {
+  0%, 100% { transform: rotate(0); }
+  5%, 15% { transform: rotate(12deg); }
+  10%, 20% { transform: rotate(-12deg); }
+  25% { transform: rotate(0); }
+}
+
+.push-consent-text h4 {
+  color: white;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  letter-spacing: 0.3px;
+}
+
+.push-consent-text p {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.88rem;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.push-consent-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.push-btn-secondary {
+  padding: 10px 18px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.25s ease;
+}
+
+.push-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+}
+
+.push-btn-primary {
+  padding: 10px 22px;
+  background: var(--secondary);
+  border: 1px solid var(--secondary);
+  color: #0b1c34;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 15px rgba(248, 180, 0, 0.2);
+}
+
+.push-btn-primary:hover {
+  background: white;
+  border-color: white;
+  color: #0b1c34;
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.push-btn-primary i {
+  font-size: 10px;
+}
+
+.push-btn-primary:disabled,
+.push-btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 580px) {
+  .push-consent-bar {
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    max-width: calc(100% - 40px);
+  }
+}
