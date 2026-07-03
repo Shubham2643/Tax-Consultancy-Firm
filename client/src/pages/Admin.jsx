@@ -47,7 +47,8 @@ import {
   getAdminInvoices,
   createInvoice,
   deleteInvoice,
-  postAdminComment
+  postAdminComment,
+  API_URL
 } from '../api';
 import useSEO from '../hooks/useSEO';
 import './Admin.css';
@@ -1285,7 +1286,7 @@ const Admin = () => {
                                 <div className="text-sub">{doc.userId?.email}</div>
                               </td>
                               <td>
-                                <a href={`http://localhost:5000/api/admin/documents/download/${doc._id}?token=${localStorage.getItem('authToken')}`} target="_blank" rel="noreferrer" className="btn-link-action">
+                                <a href={`${API_URL}/api/admin/documents/download/${doc._id}?token=${localStorage.getItem('authToken')}`} target="_blank" rel="noreferrer" className="btn-link-action">
                                   <i className="fas fa-file-pdf"></i> {doc.originalName}
                                 </a>
                                 <div className="text-sub">{(doc.fileSize / 1024).toFixed(1)} KB</div>

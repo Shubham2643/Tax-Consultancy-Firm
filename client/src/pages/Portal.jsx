@@ -11,7 +11,8 @@ import {
   bookConsultation, 
   getClientInvoices, 
   payInvoice, 
-  postClientComment 
+  postClientComment,
+  API_URL
 } from '../api';
 import useSEO from '../hooks/useSEO';
 import axios from 'axios';
@@ -265,7 +266,7 @@ const Portal = () => {
       const invoiceObj = invoices.find(inv => inv._id === invoiceId);
 
       const res = await axios.post(
-        'http://localhost:5000/api/portal/payments/create-order',
+        `${API_URL}/api/portal/payments/create-order`,
         { invoiceId },
         {
           headers: {
@@ -290,7 +291,7 @@ const Portal = () => {
               setPaymentProcessing(true);
               setProcessingInvoiceId(invoiceObj._id);
               const verifyRes = await axios.post(
-                'http://localhost:5000/api/portal/payments/verify-signature',
+                `${API_URL}/api/portal/payments/verify-signature`,
                 {
                   razorpay_payment_id: response.razorpay_payment_id,
                   razorpay_order_id: response.razorpay_order_id,
@@ -684,7 +685,7 @@ const Portal = () => {
                             <td>
                               <div className="vault-filename-cell">
                                 <span className={`file-badge-icon ${fileInfo.class}`}><i className={`fas ${fileInfo.icon}`}></i></span>
-                                <a href={`http://localhost:5000/api/portal/documents/download/${doc._id}?token=${localStorage.getItem('authToken')}`} target="_blank" rel="noreferrer" className="filename-text-link" title={doc.originalName}>
+                                <a href={`${API_URL}/api/portal/documents/download/${doc._id}?token=${localStorage.getItem('authToken')}`} target="_blank" rel="noreferrer" className="filename-text-link" title={doc.originalName}>
                                   {doc.originalName}
                                 </a>
                               </div>
