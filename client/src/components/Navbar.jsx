@@ -150,6 +150,11 @@ const Navbar = () => {
           <div
             className={`navbar-menu ${isMobileOpen ? "navbar-menu-open" : ""}`}
           >
+            {isMobileOpen && (
+              <button className="navbar-menu-close-btn" onClick={toggleMobile} aria-label="Close menu">
+                <i className="fas fa-times"></i>
+              </button>
+            )}
             <ul className="navbar-nav">
               {navMenu.map((item, index) => (
                 <li

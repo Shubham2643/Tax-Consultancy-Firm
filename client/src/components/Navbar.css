@@ -158,6 +158,10 @@
   z-index: 1006 !important;
 }
 
+.navbar-mobile-active .navbar-toggler {
+  display: none !important;
+}
+
 .navbar-inner {
   display: flex;
   align-items: center;
@@ -441,6 +445,32 @@
 
   .navbar-menu-open {
     right: 0;
+  }
+
+  .navbar-menu-close-btn {
+    position: absolute;
+    top: 22px;
+    right: 20px;
+    background: rgba(15, 23, 42, 0.05);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #64748b;
+    font-size: 14px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1010;
+  }
+
+  .navbar-menu-close-btn:hover {
+    background: #fee2e2;
+    color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.2);
+    transform: rotate(90deg);
   }
 
   .navbar-nav {

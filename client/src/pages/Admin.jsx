@@ -2380,7 +2380,7 @@ const Admin = () => {
           <div className={`modal-card-box ${['service', 'faq', 'blog', 'pricing', 'feature', 'navmenu', 'team'].includes(modalType) ? 'modal-wide' : ''}`}>
             <div className="modal-title-header">
               <h3>{editingItem ? 'Edit Existing Record' : 'Create New Record'}</h3>
-              <button className="btn-close-modal" onClick={() => setModalType('')}>&times;</button>
+              <button className="btn-close-modal" onClick={() => setModalType('')}><i className="fas fa-times"></i></button>
             </div>
 
             <div className="modal-body-scroll">
@@ -2901,7 +2901,7 @@ const Admin = () => {
           <div className="modal-card-box">
             <div className="modal-title-header">
               <h3><i className="fas fa-file-invoice-dollar"></i> Generate New Client Invoice</h3>
-              <button className="btn-close-modal" onClick={() => setInvoiceModalOpen(false)}>&times;</button>
+              <button className="btn-close-modal" onClick={() => setInvoiceModalOpen(false)}><i className="fas fa-times"></i></button>
             </div>
             <form onSubmit={handleCreateInvoiceSubmit} className="modal-form-flex" style={{ display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden', padding: 0, gap: 0 }}>
               <div className="modal-body-scroll" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -2988,7 +2988,7 @@ const Admin = () => {
           <div className="modal-card-box modal-comments-thread" style={{ maxWidth: '650px' }}>
             <div className="modal-title-header">
               <h3><i className="fas fa-comments"></i> discussion Thread: {activeInquiryComments.service || 'General inquiry'}</h3>
-              <button className="btn-close-modal" onClick={() => setActiveInquiryComments(null)}>&times;</button>
+              <button className="btn-close-modal" onClick={() => setActiveInquiryComments(null)}><i className="fas fa-times"></i></button>
             </div>
             <div className="modal-body-scroll comments-thread-body" style={{ padding: '20px' }}>
               <div className="inquiry-context-info" style={{ background: '#f5f7fa', padding: '14px', borderRadius: '8px', marginBottom: '16px' }}>

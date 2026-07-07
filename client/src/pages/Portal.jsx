@@ -896,7 +896,7 @@ const Portal = () => {
           <div className="portal-modal-card">
             <div className="modal-card-header">
               <h3><i className="fas fa-edit"></i> Edit Document Details</h3>
-              <button className="modal-close-btn" onClick={() => setEditingDoc(null)}>&times;</button>
+              <button className="modal-close-btn" onClick={() => setEditingDoc(null)}><i className="fas fa-times"></i></button>
             </div>
             <div className="modal-card-body">
               <div className="form-field">
@@ -946,7 +946,7 @@ const Portal = () => {
           <div className="portal-modal-card delete-warning">
             <div className="modal-card-header">
               <h3><i className="fas fa-exclamation-triangle"></i> Delete Document?</h3>
-              <button className="modal-close-btn" onClick={() => setDeletingDoc(null)}>&times;</button>
+              <button className="modal-close-btn" onClick={() => setDeletingDoc(null)}><i className="fas fa-times"></i></button>
             </div>
             <div className="modal-card-body">
               <p>Are you sure you want to permanently delete <strong>{deletingDoc.originalName}</strong>?</p>
