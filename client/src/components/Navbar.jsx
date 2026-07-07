@@ -35,18 +35,6 @@ const Navbar = () => {
     setActiveDropdown(null);
   }, [location]);
 
-  // Lock body scroll when mobile menu is open to prevent background scrolling
-  useEffect(() => {
-    if (isMobileOpen && isMobile) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isMobileOpen, isMobile]);
-
   const toggleMobile = () => {
     setIsMobileOpen(!isMobileOpen);
   };
@@ -150,7 +138,7 @@ const Navbar = () => {
       </div>
 
       {/* Main Navbar */}
-      <nav className={`navbar ${isScrolled ? "navbar-scrolled" : ""}`}>
+      <nav className={`navbar ${isScrolled ? "navbar-scrolled" : ""} ${isMobileOpen ? "navbar-mobile-active" : ""}`}>
         <div className="container navbar-inner">
           <Link to="/" className="navbar-logo">
             <img
@@ -166,7 +154,7 @@ const Navbar = () => {
               {navMenu.map((item, index) => (
                 <li
                   key={index}
-                  className={`nav-item ${item.children && item.children.length > 0 ? "has-dropdown" : ""} ${location.pathname === item.href ? "active" : ""} ${activeDropdown === index ? "dropdown-active" : ""}`}
+                  className={`nav-item ${item.children && item.children.length > 0 ? "has-dropdown" : ""} ${location.pathname === item.href ? "active" : ""}`}
                   onMouseEnter={() =>
                     item.children?.length > 0 && setActiveDropdown(index)
                   }
