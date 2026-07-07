@@ -10,7 +10,6 @@ import {
   getClientConsultations, 
   bookConsultation, 
   getClientInvoices, 
-  payInvoice, 
   postClientComment 
 } from '../api';
 import useSEO from '../hooks/useSEO';

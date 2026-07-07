@@ -277,7 +277,7 @@ ${textMessage}
               ${phone ? `<p><strong>Registered Phone:</strong> ${phone}</p>` : ''}
               <p>To start uploading tax invoices, business bills, or audit requests, please log in to your secure client portal:</p>
               <div style="text-align: center; margin: 24px 0;">
-                <a href="http://localhost:5173/login" style="background-color: #0b1c34; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; display: inline-block;">Access Client Portal</a>
+                <a href="${process.env.FRONTEND_URL || 'http://localhost:5173'}/login" style="background-color: #0b1c34; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; display: inline-block;">Access Client Portal</a>
               </div>
               <p>If you have any questions or require support, please contact us directly.</p>
               <hr style="border: none; border-top: 1px solid #eee; margin-top: 24px;" />
@@ -290,7 +290,8 @@ ${textMessage}
 
       // 2. SMS Alert
       if (phone) {
-        const smsMessage = `Welcome to Shree Chamunda Associates! Dear ${name}, your client portal account has been successfully created. Log in at: http://localhost:5173/login`;
+        const portalUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+        const smsMessage = `Welcome to Shree Chamunda Associates! Dear ${name}, your client portal account has been successfully created. Log in at: ${portalUrl}/login`;
         await notificationService.sendSMS(phone, smsMessage);
       }
     } catch (err) {

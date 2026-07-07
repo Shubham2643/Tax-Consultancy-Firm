@@ -274,6 +274,9 @@ router.post('/otp/verify', async (req, res, next) => {
       return res.status(400).json({ success: false, message: 'Invalid or expired OTP' });
     }
 
+    // Consume the OTP so it cannot be reused
+    await Otp.deleteOne({ _id: otpRecord._id });
+
     res.json({ success: true, message: 'OTP verified successfully' });
   } catch (err) {
     next(err);

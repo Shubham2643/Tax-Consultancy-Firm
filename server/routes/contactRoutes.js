@@ -40,8 +40,16 @@ const contactValidation = [
     .isLength({ max: 200 })
     .withMessage('Service name is too long'),
 ];
+const { authenticate, authorize } = require('../middleware/auth');
 
-router.route('/').get(getInquiries).post(contactValidation, createInquiry);
-router.route('/:id').get(getInquiry).put(updateInquiryStatus).delete(deleteInquiry);
+// Public: anyone can submit a contact form
+router.route('/').post(contactValidation, createInquiry);
+
+// Protected: only admin can view, update, or delete inquiries
+router.route('/').get(authenticate, authorize('admin'), getInquiries);
+router.route('/:id')
+  .get(authenticate, authorize('admin'), getInquiry)
+  .put(authenticate, authorize('admin'), updateInquiryStatus)
+  .delete(authenticate, authorize('admin'), deleteInquiry);
 
 module.exports = router;

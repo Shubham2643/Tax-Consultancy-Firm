@@ -213,28 +213,4 @@ router.get('/invoices', authenticate, async (req, res, next) => {
   }
 });
 
-// PUT /api/portal/invoices/:id/pay — Pay invoice (mock payment)
-router.put('/invoices/:id/pay', authenticate, async (req, res, next) => {
-  try {
-    const invoice = await Invoice.findOneAndUpdate(
-      { _id: req.params.id, client: req.user._id },
-      { status: 'paid', paidAt: new Date() },
-      { new: true }
-    );
-
-    if (!invoice) {
-      return res.status(404).json({ success: false, message: 'Invoice not found' });
-    }
-
-    // Broadcast Socket Update
-    if (req.io) {
-      req.io.emit('invoice_paid', invoice);
-    }
-
-    res.json({ success: true, data: invoice });
-  } catch (err) {
-    next(err);
-  }
-});
-
 module.exports = router;
