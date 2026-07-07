@@ -35,6 +35,17 @@ const Navbar = () => {
     setActiveDropdown(null);
   }, [location]);
 
+  useEffect(() => {
+    if (isMobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileOpen]);
+
   const toggleMobile = () => {
     setIsMobileOpen(!isMobileOpen);
   };
