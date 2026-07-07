@@ -20,6 +20,11 @@ const Login = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   
+  // Visibility toggle states
+  const [showPassword, setShowPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  
   // Feedback states
   const [error, setError] = useState('');
   const [infoMessage, setInfoMessage] = useState('');
@@ -289,7 +294,24 @@ const Login = () => {
                     <label><i className="fas fa-lock"></i> Account Password</label>
                     <button type="button" className="inline-action-link" onClick={() => { setResetTarget(formData.email); setViewMode('forgot_request'); }}>Forgot Password?</button>
                   </div>
-                  <input type="password" name="password" required value={formData.password} onChange={handleInputChange} placeholder="••••••••" />
+                  <div className="password-input-wrapper">
+                    <input 
+                      type={showPassword ? "text" : "password"} 
+                      name="password" 
+                      required 
+                      value={formData.password} 
+                      onChange={handleInputChange} 
+                      placeholder="••••••••" 
+                    />
+                    <button 
+                      type="button" 
+                      className="password-toggle-btn" 
+                      onClick={() => setShowPassword(!showPassword)}
+                      aria-label={showPassword ? "Hide password" : "Show password"}
+                    >
+                      <i className={`fas ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
+                    </button>
+                  </div>
                 </div>
 
                 <button type="submit" className="secure-submit-auth-btn" disabled={loading}>
@@ -378,13 +400,23 @@ const Login = () => {
               <form onSubmit={handleResetPasswordSubmit} className="split-form-element">
                 <div className="auth-form-group">
                   <label><i className="fas fa-key"></i> New Password</label>
-                  <input
-                    type="password"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    placeholder="Create secure password"
-                    required
-                  />
+                  <div className="password-input-wrapper">
+                    <input
+                      type={showNewPassword ? "text" : "password"}
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      placeholder="Create secure password"
+                      required
+                    />
+                    <button
+                      type="button"
+                      className="password-toggle-btn"
+                      onClick={() => setShowNewPassword(!showNewPassword)}
+                      aria-label={showNewPassword ? "Hide password" : "Show password"}
+                    >
+                      <i className={`fas ${showNewPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
+                    </button>
+                  </div>
                   {/* Password Strength Indicator */}
                   {newPassword && (
                     <div className="password-strength-bar-wrapper">
@@ -406,13 +438,23 @@ const Login = () => {
 
                 <div className="auth-form-group">
                   <label><i className="fas fa-check-double"></i> Confirm New Password</label>
-                  <input
-                    type="password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="Verify secure password"
-                    required
-                  />
+                  <div className="password-input-wrapper">
+                    <input
+                      type={showConfirmPassword ? "text" : "password"}
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      placeholder="Verify secure password"
+                      required
+                    />
+                    <button
+                      type="button"
+                      className="password-toggle-btn"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                    >
+                      <i className={`fas ${showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
+                    </button>
+                  </div>
                 </div>
 
                 <button type="submit" className="secure-submit-auth-btn" disabled={loading}>

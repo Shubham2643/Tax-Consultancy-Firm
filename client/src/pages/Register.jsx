@@ -17,6 +17,10 @@ const Register = () => {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', password: '', confirmPassword: '' });
   const [otpCodeArray, setOtpCodeArray] = useState(['', '', '', '', '', '']);
   
+  // Visibility toggle states
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  
   // Feedback states
   const [error, setError] = useState('');
   const [infoMessage, setInfoMessage] = useState('');
@@ -255,7 +259,25 @@ const Register = () => {
 
                 <div className="auth-form-group">
                   <label><i className="fas fa-lock"></i> Password</label>
-                  <input type="password" name="password" required minLength={6} value={formData.password} onChange={handleChange} placeholder="Min. 6 characters" />
+                  <div className="password-input-wrapper">
+                    <input 
+                      type={showPassword ? "text" : "password"} 
+                      name="password" 
+                      required 
+                      minLength={6} 
+                      value={formData.password} 
+                      onChange={handleChange} 
+                      placeholder="Min. 6 characters" 
+                    />
+                    <button 
+                      type="button" 
+                      className="password-toggle-btn" 
+                      onClick={() => setShowPassword(!showPassword)}
+                      aria-label={showPassword ? "Hide password" : "Show password"}
+                    >
+                      <i className={`fas ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
+                    </button>
+                  </div>
                   
                   {/* Password Strength Indicator */}
                   {formData.password && (
@@ -278,7 +300,24 @@ const Register = () => {
 
                 <div className="auth-form-group">
                   <label><i className="fas fa-check-double"></i> Confirm Password</label>
-                  <input type="password" name="confirmPassword" required value={formData.confirmPassword} onChange={handleChange} placeholder="Re-enter password" />
+                  <div className="password-input-wrapper">
+                    <input 
+                      type={showConfirmPassword ? "text" : "password"} 
+                      name="confirmPassword" 
+                      required 
+                      value={formData.confirmPassword} 
+                      onChange={handleChange} 
+                      placeholder="Re-enter password" 
+                    />
+                    <button 
+                      type="button" 
+                      className="password-toggle-btn" 
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                    >
+                      <i className={`fas ${showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
+                    </button>
+                  </div>
                 </div>
 
                 <button type="submit" className="secure-submit-auth-btn" disabled={loading}>
