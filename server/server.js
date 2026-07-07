@@ -91,6 +91,20 @@ app.use('/api/portal/payments', paymentRoutes);
 
 
 
+// Server root welcome page
+app.get('/', (req, res) => {
+  res.send(`
+    <div style="font-family: Arial, sans-serif; text-align: center; padding: 50px; background: #071324; color: white; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 0; box-sizing: border-box;">
+      <h1 style="color: #f8b400; font-size: 2.2rem; margin-bottom: 8px; font-weight: 800; letter-spacing: -0.5px;">Shree Chamunda Associates</h1>
+      <p style="font-size: 1.1rem; color: #94a3b8; margin-bottom: 24px;">Secure MERN API Gateway Server</p>
+      <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); padding: 12px 24px; border-radius: 6px; display: inline-flex; align-items: center; gap: 8px;">
+        <span style="width: 8px; height: 8px; border-radius: 50%; background-color: #4CAF50; display: inline-block;"></span>
+        <span style="color: #cbd5e1; font-size: 0.95rem; font-weight: 600;">System Online</span>
+      </div>
+    </div>
+  `);
+});
+
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
