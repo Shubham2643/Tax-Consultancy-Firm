@@ -197,7 +197,8 @@
   color: rgba(255, 255, 255, 0.6);
   text-decoration: none;
   transition: color 0.25s ease;
-  word-break: break-all;
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 
 .footer-contact-item a:hover {
@@ -361,9 +362,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 22px;
   }
 
   .footer-contact-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
     justify-content: center;
   }
 
@@ -433,8 +439,7 @@
   }
 
   .footer-contact-item {
-    gap: 10px;
-    margin-bottom: 12px;
+    gap: 6px;
   }
 
   .footer-contact-item a,
