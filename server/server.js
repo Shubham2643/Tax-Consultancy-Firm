@@ -38,7 +38,7 @@ const allowedOrigins = [
 // Helper check for CORS permission
 const isOriginAllowed = (origin) => {
   if (!origin) return true;
-  return allowedOrigins.includes(origin) || origin.endsWith('.onrender.com');
+  return allowedOrigins.includes(origin) || origin.endsWith('.onrender.com') || origin.endsWith('.vercel.app');
 };
 
 // Initialize Socket.io
