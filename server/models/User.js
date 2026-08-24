@@ -22,6 +22,11 @@ const UserSchema = new mongoose.Schema({
     enum: ['client', 'admin'],
     default: 'client',
   },
+  authProvider: {
+    type: String,
+    enum: ['local', 'google'],
+    default: 'local',
+  },
   phone: {
     type: String,
     default: '',

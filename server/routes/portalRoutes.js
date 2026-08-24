@@ -1,5 +1,6 @@
 const express = require('express');
-const fs = require('fs');
+const fs = require('fs').promises;
+const fsSync = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const router = express.Router();
@@ -9,9 +10,26 @@ const ContactInquiry = require('../models/ContactInquiry');
 const Invoice = require('../models/Invoice');
 
 const UPLOADS_DIR = path.join(__dirname, '..', 'uploads');
-if (!fs.existsSync(UPLOADS_DIR)) {
-  fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+if (!fsSync.existsSync(UPLOADS_DIR)) {
+  fsSync.mkdirSync(UPLOADS_DIR, { recursive: true });
 }
+
+// Allowed file extensions and MIME types for upload validation
+const ALLOWED_EXTENSIONS = ['.pdf', '.jpg', '.jpeg', '.png', '.doc', '.docx', '.xls', '.xlsx'];
+const ALLOWED_MIME_TYPES = [
+  'application/pdf',
+  'image/jpeg', 'image/png',
+  'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+];
+
+/**
+ * Validate that a resolved file path stays within the uploads directory (path traversal protection)
+ */
+const isSafePath = (filePath) => {
+  const resolved = path.resolve(filePath);
+  return resolved.startsWith(path.resolve(UPLOADS_DIR));
+};
 
 // GET /api/portal/documents — Get logged-in user's uploaded documents
 router.get('/documents', authenticate, async (req, res, next) => {
@@ -32,6 +50,18 @@ router.post('/upload', authenticate, async (req, res, next) => {
       return res.status(400).json({ success: false, message: 'File data and original name are required' });
     }
 
+    // Validate file extension
+    const ext = path.extname(originalName).toLowerCase();
+    if (!ALLOWED_EXTENSIONS.includes(ext)) {
+      return res.status(400).json({ success: false, message: `File type '${ext}' is not allowed. Accepted: ${ALLOWED_EXTENSIONS.join(', ')}` });
+    }
+
+    // Validate MIME type
+    const safeMime = mimeType || 'application/pdf';
+    if (!ALLOWED_MIME_TYPES.includes(safeMime)) {
+      return res.status(400).json({ success: false, message: 'Invalid file MIME type' });
+    }
+
     // Strip base64 prefix if present
     const base64Data = fileData.replace(/^data:[^;]+;base64,/, '');
     const buffer = Buffer.from(base64Data, 'base64');
@@ -41,11 +71,15 @@ router.post('/upload', authenticate, async (req, res, next) => {
       return res.status(400).json({ success: false, message: 'File size must be under 10MB' });
     }
 
-    const ext = path.extname(originalName) || '.pdf';
     const fileName = `${req.user._id}_${crypto.randomBytes(8).toString('hex')}${ext}`;
     const filePath = path.join(UPLOADS_DIR, fileName);
 
-    fs.writeFileSync(filePath, buffer);
+    // Path traversal check
+    if (!isSafePath(filePath)) {
+      return res.status(400).json({ success: false, message: 'Invalid file path' });
+    }
+
+    await fs.writeFile(filePath, buffer);
 
     const doc = await UserDocument.create({
       userId: req.user._id,
@@ -54,7 +88,7 @@ router.post('/upload', authenticate, async (req, res, next) => {
       originalName,
       filePath: `/uploads/${fileName}`,
       fileSize: buffer.length,
-      mimeType: mimeType || 'application/pdf',
+      mimeType: safeMime,
     });
 
     res.status(201).json({ success: true, data: doc });
@@ -73,8 +107,8 @@ router.delete('/documents/:id', authenticate, async (req, res, next) => {
 
     // Remove file from disk
     const fullPath = path.join(__dirname, '..', doc.filePath);
-    if (fs.existsSync(fullPath)) {
-      fs.unlinkSync(fullPath);
+    if (isSafePath(fullPath)) {
+      try { await fs.unlink(fullPath); } catch { /* file may already be gone */ }
     }
 
     await UserDocument.deleteOne({ _id: doc._id });
@@ -99,6 +133,16 @@ router.put('/documents/:id', authenticate, async (req, res, next) => {
 
     // If new file binary content is sent, replace the file on disk
     if (fileData) {
+      const ext = path.extname(originalName || doc.originalName).toLowerCase();
+      if (!ALLOWED_EXTENSIONS.includes(ext)) {
+        return res.status(400).json({ success: false, message: `File type '${ext}' is not allowed` });
+      }
+
+      const safeMime = mimeType || 'application/pdf';
+      if (!ALLOWED_MIME_TYPES.includes(safeMime)) {
+        return res.status(400).json({ success: false, message: 'Invalid file MIME type' });
+      }
+
       const base64Data = fileData.replace(/^data:[^;]+;base64,/, '');
       const buffer = Buffer.from(base64Data, 'base64');
 
@@ -109,20 +153,24 @@ router.put('/documents/:id', authenticate, async (req, res, next) => {
 
       // Delete old file from disk
       const oldFullPath = path.join(__dirname, '..', doc.filePath);
-      if (fs.existsSync(oldFullPath)) {
-        fs.unlinkSync(oldFullPath);
+      if (isSafePath(oldFullPath)) {
+        try { await fs.unlink(oldFullPath); } catch { /* file may already be gone */ }
       }
 
       // Save new file to disk
-      const ext = path.extname(originalName || doc.originalName) || '.pdf';
       const fileName = `${req.user._id}_${crypto.randomBytes(8).toString('hex')}${ext}`;
-      const filePath = path.join(UPLOADS_DIR, fileName);
-      fs.writeFileSync(filePath, buffer);
+      const newFilePath = path.join(UPLOADS_DIR, fileName);
+
+      if (!isSafePath(newFilePath)) {
+        return res.status(400).json({ success: false, message: 'Invalid file path' });
+      }
+
+      await fs.writeFile(newFilePath, buffer);
 
       doc.fileName = fileName;
       doc.filePath = `/uploads/${fileName}`;
       doc.fileSize = buffer.length;
-      doc.mimeType = mimeType || 'application/pdf';
+      doc.mimeType = safeMime;
     }
 
     await doc.save();
@@ -141,14 +189,21 @@ router.get('/documents/download/:id', authenticate, async (req, res, next) => {
     }
 
     const fullPath = path.join(__dirname, '..', doc.filePath);
-    if (!fs.existsSync(fullPath)) {
+    if (!isSafePath(fullPath)) {
+      return res.status(400).json({ success: false, message: 'Invalid file path' });
+    }
+
+    try {
+      await fs.access(fullPath);
+    } catch {
       return res.status(404).json({ success: false, message: 'File not found on server disk' });
     }
 
     res.setHeader('Content-Type', doc.mimeType || 'application/pdf');
     res.setHeader('Content-Disposition', `inline; filename="${encodeURIComponent(doc.originalName)}"`);
 
-    const fileStream = fs.createReadStream(fullPath);
+    const { createReadStream } = require('fs');
+    const fileStream = createReadStream(fullPath);
     fileStream.pipe(res);
   } catch (err) {
     next(err);
@@ -192,9 +247,9 @@ router.post('/inquiries/:id/comment', authenticate, async (req, res, next) => {
     inquiry.comments.push(newComment);
     await inquiry.save();
 
-    // Broadcast Socket Update
+    // Emit to admin room only
     if (req.io) {
-      req.io.emit('inquiry_comment_added', { inquiryId: inquiry._id, comment: newComment });
+      req.io.to('admin').emit('inquiry_comment_added', { inquiryId: inquiry._id, comment: newComment });
     }
 
     res.json({ success: true, data: inquiry });

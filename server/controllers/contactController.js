@@ -31,11 +31,11 @@ const createInquiry = async (req, res, next) => {
       `Client "${inquiry.name}" is interested in: ${inquiry.service || 'General Consulting'}`
     );
 
-    // 4. Real-time Socket.io message
+    // 4. Real-time Socket.io message (admin room only)
     notificationService.sendRealTimeMessage(req.io, 'inquiry_received', {
       message: `Inquiry received from ${inquiry.name} for ${inquiry.service || 'General Consultation'}`,
       inquiry
-    });
+    }, 'admin');
 
     res.status(201).json({
       success: true,
@@ -116,11 +116,11 @@ const updateInquiryStatus = async (req, res, next) => {
       });
     }
 
-    // Trigger update notifications
+    // Trigger update notifications (admin room)
     notificationService.sendRealTimeMessage(req.io, 'inquiry_updated', {
       message: `Inquiry status updated to ${status}`,
       inquiry
-    });
+    }, 'admin');
 
     notificationService.sendPushNotification(
       'Inquiry Status Updated',

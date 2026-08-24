@@ -22,6 +22,8 @@ import Portal from './pages/Portal';
 import Admin from './pages/Admin';
 import OAuthCallback from './pages/OAuthCallback';
 import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
+import NotFound from './pages/NotFound';
 import './App.css';
 
 
@@ -34,6 +36,10 @@ function App() {
 
     socket.on('connect', () => {
       console.log('🔌 Connected to Socket.io backend server');
+      const token = localStorage.getItem('authToken');
+      if (token) {
+        socket.emit('authenticate', token);
+      }
     });
 
     const addToast = (message) => {
@@ -119,9 +125,10 @@ function App() {
           <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/portal" element={<Portal />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/portal" element={<ProtectedRoute><Portal /></ProtectedRoute>} />
+          <Route path="/admin" element={<ProtectedRoute requiredRole="admin"><Admin /></ProtectedRoute>} />
           <Route path="/auth/google/callback" element={<OAuthCallback />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       

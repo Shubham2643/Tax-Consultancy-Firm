@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const PushSubscription = require('../models/PushSubscription');
 const notificationService = require('../services/notificationService');
+const { authenticate, authorize } = require('../middleware/auth');
 
 /**
  * @route   GET /api/notifications/vapid-key
@@ -52,9 +53,9 @@ router.post('/subscribe', async (req, res, next) => {
 /**
  * @route   POST /api/notifications/send-test
  * @desc    Trigger a mock push notification to all subscribers
- * @access  Public
+ * @access  Admin only
  */
-router.post('/send-test', async (req, res, next) => {
+router.post('/send-test', authenticate, authorize('admin'), async (req, res, next) => {
   try {
     const { title, body } = req.body;
 

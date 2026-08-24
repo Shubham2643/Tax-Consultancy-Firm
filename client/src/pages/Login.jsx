@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { loginUser, getAuthConfig, requestPasswordResetOtp, resetPasswordWithOtp, verifyOtp } from '../api';
+import { loginUser, getAuthConfig, requestPasswordResetOtp, resetPasswordWithOtp } from '../api';
 import { useAuth } from '../context/AuthContext';
 import useSEO from '../hooks/useSEO';
 import './Login.css';
@@ -131,7 +131,7 @@ const Login = () => {
     }
   };
 
-  // Verify OTP Code
+  // Validate OTP format and proceed to reset step (actual verification happens on submit)
   const handleOtpSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -141,18 +141,8 @@ const Login = () => {
       setError('Please fill in the 6-digit OTP code');
       return;
     }
-    setLoading(true);
-    try {
-      const res = await verifyOtp({ target: resetTarget, otpCode: code });
-      if (res.success) {
-        setInfoMessage('Verification passcode approved. Create a new password.');
-        setViewMode('reset_password');
-      }
-    } catch (err) {
-      setError(err.response?.data?.message || 'Verification passcode invalid or expired.');
-    } finally {
-      setLoading(false);
-    }
+    setInfoMessage('Verification passcode accepted. Create a new password.');
+    setViewMode('reset_password');
   };
 
   // Save new password

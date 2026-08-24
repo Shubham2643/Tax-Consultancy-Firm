@@ -2,6 +2,19 @@ const nodemailer = require('nodemailer');
 const webPush = require('web-push');
 const PushSubscription = require('../models/PushSubscription');
 
+/**
+ * Escape HTML special characters to prevent XSS in email templates
+ */
+const escapeHtml = (str) => {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+};
+
 // Configure Web Push VAPID keys
 let vapidKeys = {
   publicKey: process.env.VAPID_PUBLIC_KEY,
@@ -71,12 +84,17 @@ const notificationService = {
   getVapidPublicKey: () => vapidKeys.publicKey,
 
   /**
-   * Broadcast a real-time event to all connected clients via Socket.io
+   * Broadcast a real-time event to connected clients (or specific room) via Socket.io
    */
-  sendRealTimeMessage: (io, event, data) => {
+  sendRealTimeMessage: (io, event, data, room = null) => {
     if (io) {
-      console.log(`🌐 [SOCKET.IO BROADCAST] Event: "${event}"`);
-      io.emit(event, data);
+      if (room) {
+        console.log(`🌐 [SOCKET.IO TARGETED] Room: "${room}" Event: "${event}"`);
+        io.to(room).emit(event, data);
+      } else {
+        console.log(`🌐 [SOCKET.IO BROADCAST] Event: "${event}"`);
+        io.emit(event, data);
+      }
     } else {
       console.log('⚠️ [SOCKET.IO] Cannot emit: Socket.io server not initialized');
     }
@@ -87,21 +105,28 @@ const notificationService = {
    */
   sendEmails: async ({ name, email, phone, message, service }) => {
     try {
+      // Sanitize all user-provided fields
+      const safeName = escapeHtml(name);
+      const safeEmail = escapeHtml(email);
+      const safePhone = escapeHtml(phone);
+      const safeMessage = escapeHtml(message);
+      const safeService = escapeHtml(service);
+
       // 1. Send inquiry receipt alert to Admin
       await mailTransporter.sendMail({
         from: '"Shree Chamunda System Alerts" <alerts@shreechamunda.com>',
         to: process.env.ADMIN_EMAIL || 'shreechamundaassociates0905@gmail.com',
-        subject: `New Inquiry Received: ${service || 'General Consultation'}`,
+        subject: `New Inquiry Received: ${safeService || 'General Consultation'}`,
         html: `
           <div style="font-family: Arial, sans-serif; line-height: 1.6; max-width: 600px; border: 1px solid #eee; padding: 20px; border-radius: 8px;">
             <h2 style="color: #0b1c34; border-bottom: 2px solid #f8b400; padding-bottom: 8px;">New Service Inquiry</h2>
-            <p><strong>Name:</strong> ${name}</p>
-            <p><strong>Email:</strong> ${email}</p>
-            <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
-            <p><strong>Service Requested:</strong> ${service || 'General'}</p>
+            <p><strong>Name:</strong> ${safeName}</p>
+            <p><strong>Email:</strong> ${safeEmail}</p>
+            <p><strong>Phone:</strong> ${safePhone || 'Not provided'}</p>
+            <p><strong>Service Requested:</strong> ${safeService || 'General'}</p>
             <p><strong>Message / Notes:</strong></p>
             <blockquote style="background: #f9f9f9; border-left: 4px solid #0b1c34; padding: 10px 15px; margin: 10px 0;">
-              ${message}
+              ${safeMessage}
             </blockquote>
             <hr style="border: none; border-top: 1px solid #eee; margin-top: 20px;" />
             <p style="font-size: 11px; color: #888;">Shree Chamunda Associates Administrative Alerts.</p>
@@ -113,16 +138,16 @@ const notificationService = {
       await mailTransporter.sendMail({
         from: '"Shree Chamunda Associates" <info@shreechamunda.com>',
         to: email,
-        subject: `Inquiry Confirmation - ${service || 'Tax Consultation'}`,
+        subject: `Inquiry Confirmation - ${safeService || 'Tax Consultation'}`,
         html: `
           <div style="font-family: Arial, sans-serif; line-height: 1.6; max-width: 600px; border: 1px solid #eee; padding: 20px; border-radius: 8px;">
             <h2 style="color: #0b1c34; border-bottom: 2px solid #f8b400; padding-bottom: 8px;">Inquiry Received</h2>
-            <p>Dear ${name},</p>
+            <p>Dear ${safeName},</p>
             <p>Thank you for reaching out to <strong>Shree Chamunda Associates</strong>.</p>
-            <p>We have successfully received your request regarding <strong>${service || 'our Tax Consultation services'}</strong>. Our expert team is reviewing your requirements and will contact you within 24 hours.</p>
+            <p>We have successfully received your request regarding <strong>${safeService || 'our Tax Consultation services'}</strong>. Our expert team is reviewing your requirements and will contact you within 24 hours.</p>
             <p>Here is a summary of the message we received:</p>
             <blockquote style="background: #f9f9f9; border-left: 4px solid #f8b400; padding: 10px 15px; margin: 10px 0; color: #555;">
-              ${message}
+              ${safeMessage}
             </blockquote>
             <p>If you have any urgent queries, feel free to call us directly at <strong>+91 95109 84735</strong>.</p>
             <br />
@@ -149,7 +174,11 @@ const notificationService = {
 
     if (accountSid && authToken && fromPhone) {
       try {
-        const twilio = require('twilio');
+        let twilio;
+        try { twilio = require('twilio'); } catch { 
+          console.error('❌ Twilio package not installed. Run: npm install twilio');
+          return;
+        }
         const client = twilio(accountSid, authToken);
         await client.messages.create({
           body: textMessage,

@@ -208,6 +208,7 @@ router.post('/google', async (req, res, next) => {
         email: email.toLowerCase(),
         password: hashPassword(randomPassword),
         role: 'client',
+        authProvider: 'google',
       });
     }
 
@@ -259,10 +260,10 @@ router.post('/otp/send', async (req, res, next) => {
   }
 });
 
-// POST /api/auth/otp/verify — Verify an OTP code
+// POST /api/auth/otp/verify — Verify an OTP code (validates only; does NOT consume)
 router.post('/otp/verify', async (req, res, next) => {
   try {
-    const { target, otpCode } = req.body;
+    const { target, otpCode, consume } = req.body;
     if (!target || !otpCode) {
       return res.status(400).json({ success: false, message: 'Target and OTP code are required' });
     }
@@ -274,8 +275,10 @@ router.post('/otp/verify', async (req, res, next) => {
       return res.status(400).json({ success: false, message: 'Invalid or expired OTP' });
     }
 
-    // Consume the OTP so it cannot be reused
-    await Otp.deleteOne({ _id: otpRecord._id });
+    // Only consume when explicitly requested (e.g. registration flow)
+    if (consume) {
+      await Otp.deleteOne({ _id: otpRecord._id });
+    }
 
     res.json({ success: true, message: 'OTP verified successfully' });
   } catch (err) {
@@ -302,6 +305,10 @@ router.post('/forgot-password/request', async (req, res, next) => {
 
     if (!user) {
       return res.status(404).json({ success: false, message: 'No registered account found matching this details' });
+    }
+
+    if (user.authProvider === 'google') {
+      return res.status(400).json({ success: false, message: 'This account uses Google sign-in. Please log in with Google instead of resetting your password.' });
     }
 
     const otpCode = Math.floor(100000 + Math.random() * 900000).toString();

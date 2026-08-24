@@ -92,9 +92,10 @@ router.post('/verify-signature', authenticate, async (req, res, next) => {
       return res.status(404).json({ success: false, message: 'Invoice not found to clear' });
     }
 
-    // Dispatch live websocket update
+    // Dispatch live websocket update to user and admin rooms
     if (req.io) {
-      req.io.emit('invoice_paid', invoice);
+      req.io.to(`user:${req.user._id}`).emit('invoice_paid', invoice);
+      req.io.to('admin').emit('invoice_paid', invoice);
     }
 
     res.json({

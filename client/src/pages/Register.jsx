@@ -362,7 +362,7 @@ const Register = () => {
               </form>
 
               <div className="otp-resend-prompt">
-                <p>Didn't receive code? <button type="button" className="inline-resend-btn" onClick={handleRegisterFormSubmit}>Resend OTP</button></p>
+                <p>Didn't receive code? <button type="button" className="inline-resend-btn" onClick={() => { sendOtp({ target: formData.email.trim() }).then(() => setInfoMessage('Verification code resent!')).catch(() => setError('Failed to resend code.')); }}>Resend OTP</button></p>
               </div>
             </div>
           )}

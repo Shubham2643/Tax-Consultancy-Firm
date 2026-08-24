@@ -51,9 +51,9 @@ router.put('/inquiries/:id', async (req, res, next) => {
       return res.status(404).json({ success: false, message: 'Inquiry not found' });
     }
 
-    // Broadcast Socket Event
+    // Emit to admin room
     if (req.io) {
-      req.io.emit('inquiry_status_changed', inquiry);
+      req.io.to('admin').emit('inquiry_status_changed', inquiry);
     }
 
     res.json({ success: true, data: inquiry });
@@ -89,7 +89,14 @@ router.get('/documents/download/:id', async (req, res, next) => {
 
     const fs = require('fs');
     const path = require('path');
-    const fullPath = path.join(__dirname, '..', doc.filePath);
+    const uploadsDir = path.resolve(__dirname, '..', 'uploads');
+    const fullPath = path.resolve(__dirname, '..', doc.filePath);
+
+    // Path traversal protection
+    if (!fullPath.startsWith(uploadsDir)) {
+      return res.status(400).json({ success: false, message: 'Invalid file path' });
+    }
+
     if (!fs.existsSync(fullPath)) {
       return res.status(404).json({ success: false, message: 'File not found on server disk' });
     }
@@ -254,12 +261,27 @@ router.put('/users/:id/role', async (req, res, next) => {
   }
 });
 
-// DELETE /api/admin/users/:id — Delete user
+// DELETE /api/admin/users/:id — Delete user and cascade related data
 router.delete('/users/:id', async (req, res, next) => {
   try {
-    const user = await User.findByIdAndDelete(req.params.id);
+    const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ success: false, message: 'User not found' });
-    res.json({ success: true, message: 'User deleted successfully' });
+
+    // Prevent self-deletion
+    if (user._id.toString() === req.user._id.toString()) {
+      return res.status(400).json({ success: false, message: 'Cannot delete your own account' });
+    }
+
+    const Session = require('../models/Session');
+    // Cascade delete related data
+    await Promise.all([
+      Session.deleteMany({ userId: user._id }),
+      UserDocument.deleteMany({ userId: user._id }),
+      Invoice.deleteMany({ client: user._id }),
+    ]);
+
+    await User.findByIdAndDelete(req.params.id);
+    res.json({ success: true, message: 'User and related data deleted successfully' });
   } catch (err) {
     next(err);
   }
@@ -277,7 +299,11 @@ router.get('/services', async (req, res, next) => {
 
 router.post('/services', async (req, res, next) => {
   try {
-    const service = await Service.create(req.body);
+    const { title, description, icon, slug, order, isActive, detailedOverview, timeline, serviceType, governmentFee, professionalFee, deliverables, documentsRequired, eligibility, keyBenefits } = req.body;
+    if (!title || !description) {
+      return res.status(400).json({ success: false, message: 'Title and description are required' });
+    }
+    const service = await Service.create({ title, description, icon, slug, order, isActive, detailedOverview, timeline, serviceType, governmentFee, professionalFee, deliverables, documentsRequired, eligibility, keyBenefits });
     res.status(201).json({ success: true, data: service });
   } catch (err) {
     next(err);
@@ -286,7 +312,25 @@ router.post('/services', async (req, res, next) => {
 
 router.put('/services/:id', async (req, res, next) => {
   try {
-    const service = await Service.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const { title, description, icon, slug, order, isActive, detailedOverview, timeline, serviceType, governmentFee, professionalFee, deliverables, documentsRequired, eligibility, keyBenefits } = req.body;
+    const updateData = {};
+    if (title !== undefined) updateData.title = title;
+    if (description !== undefined) updateData.description = description;
+    if (icon !== undefined) updateData.icon = icon;
+    if (slug !== undefined) updateData.slug = slug;
+    if (order !== undefined) updateData.order = order;
+    if (isActive !== undefined) updateData.isActive = isActive;
+    if (detailedOverview !== undefined) updateData.detailedOverview = detailedOverview;
+    if (timeline !== undefined) updateData.timeline = timeline;
+    if (serviceType !== undefined) updateData.serviceType = serviceType;
+    if (governmentFee !== undefined) updateData.governmentFee = governmentFee;
+    if (professionalFee !== undefined) updateData.professionalFee = professionalFee;
+    if (deliverables !== undefined) updateData.deliverables = deliverables;
+    if (documentsRequired !== undefined) updateData.documentsRequired = documentsRequired;
+    if (eligibility !== undefined) updateData.eligibility = eligibility;
+    if (keyBenefits !== undefined) updateData.keyBenefits = keyBenefits;
+
+    const service = await Service.findByIdAndUpdate(req.params.id, updateData, { new: true });
     if (!service) return res.status(404).json({ success: false, message: 'Service not found' });
     res.json({ success: true, data: service });
   } catch (err) {
@@ -432,9 +476,9 @@ router.post('/inquiries/:id/comment', async (req, res, next) => {
     inquiry.comments.push(newComment);
     await inquiry.save();
 
-    // Broadcast Socket Update
+    // Emit to admin room
     if (req.io) {
-      req.io.emit('inquiry_comment_added', { inquiryId: inquiry._id, comment: newComment });
+      req.io.to('admin').emit('inquiry_comment_added', { inquiryId: inquiry._id, comment: newComment });
     }
 
     res.json({ success: true, data: inquiry });
@@ -456,7 +500,8 @@ router.post('/invoices', async (req, res, next) => {
       return res.status(404).json({ success: false, message: 'Client not found' });
     }
 
-    const invoiceNumber = 'INV-' + Date.now() + Math.floor(Math.random() * 1000);
+    const crypto = require('crypto');
+    const invoiceNumber = 'INV-' + Date.now() + '-' + crypto.randomBytes(4).toString('hex').toUpperCase();
 
     const invoice = await Invoice.create({
       client,
@@ -468,9 +513,10 @@ router.post('/invoices', async (req, res, next) => {
       status: 'unpaid',
     });
 
-    // Broadcast Socket Update
+    // Emit to the specific client's room
     if (req.io) {
-      req.io.emit('invoice_created', invoice);
+      req.io.to(`user:${client}`).emit('invoice_created', invoice);
+      req.io.to('admin').emit('invoice_created', invoice);
     }
 
     res.json({ success: true, data: invoice });
@@ -499,9 +545,9 @@ router.delete('/invoices/:id', async (req, res, next) => {
       return res.status(404).json({ success: false, message: 'Invoice not found' });
     }
 
-    // Broadcast Socket Update
+    // Emit to admin room
     if (req.io) {
-      req.io.emit('invoice_deleted', { invoiceId: invoice._id });
+      req.io.to('admin').emit('invoice_deleted', { invoiceId: invoice._id });
     }
 
     res.json({ success: true, message: 'Invoice deleted successfully' });

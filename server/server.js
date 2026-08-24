@@ -2,11 +2,14 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const http = require('http');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 const { Server } = require('socket.io');
 require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/errorHandler');
+const Session = require('./models/Session');
 
 // Route imports
 const serviceRoutes = require('./routes/serviceRoutes');
@@ -28,20 +31,19 @@ const paymentRoutes = require('./routes/paymentRoutes');
 const app = express();
 const server = http.createServer(app);
 
-// Allowed origins for CORS
+// Allowed origins for CORS (explicit only — no wildcards)
 const allowedOrigins = [
   process.env.FRONTEND_URL,
   'http://localhost:5173',
   'http://localhost:3000'
 ].filter(Boolean);
 
-// Helper check for CORS permission
 const isOriginAllowed = (origin) => {
-  if (!origin) return true;
-  return allowedOrigins.includes(origin) || origin.endsWith('.onrender.com') || origin.endsWith('.vercel.app');
+  if (!origin) return true; // allow server-to-server / non-browser requests
+  return allowedOrigins.includes(origin);
 };
 
-// Initialize Socket.io
+// Initialize Socket.io with room-based auth
 const io = new Server(server, {
   cors: {
     origin: (origin, callback) => {
@@ -55,7 +57,52 @@ const io = new Server(server, {
   }
 });
 
-// Middleware
+// Security headers
+app.use(helmet({
+  contentSecurityPolicy: false, // disabled to avoid breaking inline styles in welcome page
+  crossOriginEmbedderPolicy: false,
+}));
+
+// HTTPS enforcement in production
+if (process.env.NODE_ENV === 'production') {
+  app.use((req, res, next) => {
+    if (req.headers['x-forwarded-proto'] !== 'https') {
+      return res.redirect(301, `https://${req.headers.host}${req.url}`);
+    }
+    next();
+  });
+}
+
+// Global rate limiter — 100 requests per minute per IP
+const globalLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, message: 'Too many requests, please try again later.' },
+});
+
+// Strict rate limiter for auth endpoints — 10 requests per minute per IP
+const authLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, message: 'Too many authentication attempts, please try again later.' },
+});
+
+// Strict rate limiter for contact form — 5 per minute
+const contactLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, message: 'Too many submissions, please try again later.' },
+});
+
+app.use(globalLimiter);
+
+// CORS
 app.use(cors({
   origin: function (origin, callback) {
     if (isOriginAllowed(origin)) {
@@ -65,8 +112,8 @@ app.use(cors({
   },
   credentials: true
 }));
-app.use(express.json({ limit: '15mb' }));
-app.use(express.urlencoded({ extended: true, limit: '15mb' }));
+app.use(express.json({ limit: '5mb' }));
+app.use(express.urlencoded({ extended: true, limit: '5mb' }));
 
 // Inject Socket.io into the request context
 app.use((req, res, next) => {
@@ -74,25 +121,49 @@ app.use((req, res, next) => {
   next();
 });
 
-// Socket connection logger
+// Socket.io — Room-based connection with auth
 io.on('connection', (socket) => {
   console.log(`🔌 Client connected to Socket: ${socket.id}`);
+
+  // Client joins a user-specific room by sending their auth token
+  socket.on('authenticate', async (token) => {
+    try {
+      if (!token) return;
+      const session = await Session.findOne({ token, expiresAt: { $gt: new Date() } });
+      if (session) {
+        const userId = session.userId.toString();
+        socket.join(`user:${userId}`);
+        socket.userId = userId;
+
+        // Also check if user is admin and join admin room
+        const User = require('./models/User');
+        const user = await User.findById(userId).select('role');
+        if (user && user.role === 'admin') {
+          socket.join('admin');
+        }
+        socket.emit('authenticated', { success: true });
+      }
+    } catch (err) {
+      console.error('Socket auth error:', err.message);
+    }
+  });
+
   socket.on('disconnect', () => {
     console.log(`🔌 Client disconnected from Socket: ${socket.id}`);
   });
 });
 
-// API Routes
+// API Routes (with rate limiters on sensitive endpoints)
 app.use('/api/services', serviceRoutes);
 app.use('/api/pricing', pricingRoutes);
 app.use('/api/features', featureRoutes);
-app.use('/api/contact', contactRoutes);
+app.use('/api/contact', contactLimiter, contactRoutes);
 app.use('/api/navmenu', navMenuRoutes);
 app.use('/api/settings', settingsRoutes);
 app.use('/api/blogs', blogRoutes);
 app.use('/api/faqs', faqRoutes);
 app.use('/api/notifications', notificationRoutes);
-app.use('/api/auth', authRoutes);
+app.use('/api/auth', authLimiter, authRoutes);
 app.use('/api/portal', portalRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/team', teamRoutes);

@@ -47,7 +47,8 @@ import {
   getAdminInvoices,
   createInvoice,
   deleteInvoice,
-  postAdminComment
+  postAdminComment,
+  downloadAdminDocument
 } from '../api';
 import useSEO from '../hooks/useSEO';
 import './Admin.css';
@@ -1285,9 +1286,15 @@ const Admin = () => {
                                 <div className="text-sub">{doc.userId?.email}</div>
                               </td>
                               <td>
-                                <a href={`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/documents/download/${doc._id}?token=${localStorage.getItem('authToken')}`} target="_blank" rel="noreferrer" className="btn-link-action">
+                                <button
+                                  type="button"
+                                  onClick={() => downloadAdminDocument(doc._id, doc.originalName)}
+                                  className="btn-link-action"
+                                  style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', textAlign: 'left', font: 'inherit' }}
+                                  title={`Download ${doc.originalName}`}
+                                >
                                   <i className="fas fa-file-pdf"></i> {doc.originalName}
-                                </a>
+                                </button>
                                 <div className="text-sub">{(doc.fileSize / 1024).toFixed(1)} KB</div>
                               </td>
                               <td><span className="slug-badge">{doc.serviceSlug || 'General'}</span></td>

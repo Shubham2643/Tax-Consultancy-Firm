@@ -44,9 +44,12 @@ router.post('/book', async (req, res, next) => {
       status: 'pending',
     });
 
-    // Broadcast Socket Event
+    // Emit to admin room and user room if client is authenticated
     if (req.io) {
-      req.io.emit('consultation_booked', booking);
+      req.io.to('admin').emit('consultation_booked', booking);
+      if (clientId) {
+        req.io.to(`user:${clientId}`).emit('consultation_booked', booking);
+      }
     }
 
     res.json({ success: true, data: booking });
@@ -105,9 +108,12 @@ router.put('/admin/:id', authenticate, async (req, res, next) => {
       return res.status(404).json({ success: false, message: 'Booking not found' });
     }
 
-    // Broadcast Socket Event
+    // Emit to admin room and user room if applicable
     if (req.io) {
-      req.io.emit('consultation_updated', booking);
+      req.io.to('admin').emit('consultation_updated', booking);
+      if (booking.client) {
+        req.io.to(`user:${booking.client.toString()}`).emit('consultation_updated', booking);
+      }
     }
 
     res.json({ success: true, data: booking });

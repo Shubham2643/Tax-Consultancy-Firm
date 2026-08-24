@@ -10,7 +10,8 @@ import {
   getClientConsultations, 
   bookConsultation, 
   getClientInvoices, 
-  postClientComment 
+  postClientComment,
+  downloadPortalDocument
 } from '../api';
 import useSEO from '../hooks/useSEO';
 import axios from 'axios';
@@ -683,9 +684,15 @@ const Portal = () => {
                             <td>
                               <div className="vault-filename-cell">
                                 <span className={`file-badge-icon ${fileInfo.class}`}><i className={`fas ${fileInfo.icon}`}></i></span>
-                                <a href={`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/portal/documents/download/${doc._id}?token=${localStorage.getItem('authToken')}`} target="_blank" rel="noreferrer" className="filename-text-link" title={doc.originalName}>
+                                <button
+                                  type="button"
+                                  onClick={() => downloadPortalDocument(doc._id, doc.originalName)}
+                                  className="filename-text-link"
+                                  style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', textAlign: 'left', font: 'inherit', color: 'inherit' }}
+                                  title={`Download ${doc.originalName}`}
+                                >
                                   {doc.originalName}
-                                </a>
+                                </button>
                               </div>
                             </td>
                             <td><span className="vault-service-slug">{doc.serviceSlug || 'General'}</span></td>
