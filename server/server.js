@@ -31,16 +31,19 @@ const paymentRoutes = require('./routes/paymentRoutes');
 const app = express();
 const server = http.createServer(app);
 
-// Allowed origins for CORS (explicit only — no wildcards)
+// Allowed origins for CORS
 const allowedOrigins = [
   process.env.FRONTEND_URL,
+  'https://shreechamundaassociates.onrender.com',
   'http://localhost:5173',
   'http://localhost:3000'
 ].filter(Boolean);
 
 const isOriginAllowed = (origin) => {
   if (!origin) return true; // allow server-to-server / non-browser requests
-  return allowedOrigins.includes(origin);
+  if (allowedOrigins.includes(origin)) return true;
+  if (origin.endsWith('.onrender.com') || origin.endsWith('.vercel.app')) return true;
+  return false;
 };
 
 // Initialize Socket.io with room-based auth
@@ -50,10 +53,11 @@ const io = new Server(server, {
       if (isOriginAllowed(origin)) {
         callback(null, true);
       } else {
-        callback(new Error('Not allowed by CORS'));
+        callback(null, false);
       }
     },
-    methods: ['GET', 'POST', 'PUT', 'DELETE']
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
   }
 });
 
@@ -108,9 +112,11 @@ app.use(cors({
     if (isOriginAllowed(origin)) {
       return callback(null, true);
     }
-    return callback(new Error('Not allowed by CORS'));
+    return callback(null, false);
   },
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ extended: true, limit: '5mb' }));

@@ -40,7 +40,7 @@ export const SiteContextProvider = ({ children }) => {
           heroTitle: "SHREE CHAMUNDA ASSOCIATES",
           heroSubtitle: "THE BEST TAX CONSULTANCY FIRM IN GUJARAT",
           heroDescription:
-            "We provide comprehensive tax consultancy services including GST registration, income tax filing, company registration, and more. Our expert team ensures your financial compliance with personalized solutions.",
+            "Welcome to Shree Chamunda Associates, your trusted partner for comprehensive tax consultancy and financial advisory services. Founded with a commitment to excellence, we specialize in helping individuals and businesses navigate the complexities of taxation with ease and confidence.",
           aboutText:
             "Shree Chamunda Associates is a premier tax consultancy firm based in Gujarat, offering expert financial services to businesses and individuals.",
           trustHeading: "WHAT WE OFFER",
@@ -79,19 +79,69 @@ export const SiteContextProvider = ({ children }) => {
         });
         setNavMenu([
           { label: 'Home', href: '/', children: [] },
-          { label: 'About', href: '/about', children: [] },
           {
-            label: 'Services',
-            href: '/services',
+            label: 'Start a Business',
+            href: '#',
             children: [
-              { label: 'GST Services', href: '/services#gst' },
-              { label: 'Income Tax', href: '/services#income-tax' },
-              { label: 'Company Registration', href: '/services#registration' },
-              { label: 'Accounting', href: '/services#accounting' },
+              { label: 'Private Limited Company', href: '/services/private-limited-company' },
+              { label: 'Limited Liability Partnership Firm', href: '/services/limited-liability-partnership-firm' },
+              { label: 'Sole Properties', href: '/services/sole-proprietorship' },
+              { label: 'Hindu Undividable Family(HUF)', href: '/services/huf-registration' },
+              { label: 'Public Limited Company', href: '/services/public-limited-company' },
+              { label: 'One Person Company(OPC)', href: '/services/one-person-company' },
+              { label: 'Partnership Firm', href: '/services/partnership-firm' },
+              { label: 'E-commerce Business', href: '/services/e-commerce-business' },
             ],
           },
-          { label: 'Blog', href: '/blog', children: [] },
-          { label: 'Contact', href: '/contact', children: [] },
+          {
+            label: 'Registration',
+            href: '#',
+            children: [
+              { label: 'Government Registration', href: '/services/government-registration' },
+              { label: 'GST Registration', href: '/services/gst-registration' },
+              { label: 'Import Export Code Registration', href: '/services/import-export-code-registration' },
+              { label: 'Startup-India Registration', href: '/services/startup-india-registration' },
+              { label: 'Udhyam-MSME Registration', href: '/services/udhyam-msme-registration' },
+              { label: 'Professional Tax Registration', href: '/services/professional-tax-registration' },
+              { label: 'PAN Application', href: '/services/pan-application' },
+              { label: 'TAN Application', href: '/services/tan-application' },
+              { label: 'ESI Registration', href: '/services/esi-registration' },
+              { label: 'Digital Signature', href: '/services/digital-signature' },
+            ],
+          },
+          {
+            label: 'Return',
+            href: '#',
+            children: [
+              { label: 'GST Return Filing', href: '/services/gst-return-filing' },
+              { label: 'Income Tax Return Filing', href: '/services/income-tax-return-filing' },
+              { label: 'PF Return', href: '/services/pf-return' },
+              { label: 'TDS Return', href: '/services/tds-return' },
+              { label: 'E-way Bill', href: '/services/e-way-bill' },
+              { label: 'PF & ESIC Return', href: '/services/pf-&-esic-return' },
+            ],
+          },
+          {
+            label: 'Accounting & Compliance',
+            href: '#',
+            children: [
+              { label: 'Book Keeping & Accounting', href: '/services/book-keeping-&-accounting' },
+              { label: 'Auditing (Internal & Tax Audit)', href: '/services/auditing' },
+              { label: 'TDS / TCS Compliance', href: '/services/tds-compliance' },
+              { label: 'Company Annual Filing (ROC)', href: '/services/roc-compliance' },
+            ],
+          },
+          {
+            label: 'Others',
+            href: '#',
+            children: [
+              { label: 'Trademark Registration', href: '/services/trademark-registration' },
+              { label: 'Copyright Registration', href: '/services/copyright-registration' },
+              { label: 'Food License (FSSAI)', href: '/services/fssai-license' },
+              { label: 'ISO Certification', href: '/services/iso-certification' },
+            ],
+          },
+          { label: 'Services', href: '/services', children: [] },
         ]);
       } finally {
         setLoading(false);
