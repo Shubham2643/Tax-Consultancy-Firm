@@ -133,18 +133,25 @@ const Navbar = () => {
             <div className="top-bar-divider"></div>
             {user ? (
               <div className="top-bar-auth-group">
-                <Link to={user.role === 'admin' ? '/admin' : '/portal'} className="top-bar-portal-link">
+                <Link to={user.role === 'admin' ? '/admin' : '/portal'} className="top-bar-portal-btn logged-in">
+                  <span className="live-pulse-dot"></span>
                   <i className="fas fa-user-circle"></i>
-                  <span>{user.role === 'admin' ? 'Admin Panel' : 'My Portal'}</span>
+                  <span className="portal-btn-text">{user.role === 'admin' ? 'Admin Panel' : 'My Portal'}</span>
                 </Link>
-                <button onClick={logout} className="top-bar-logout-btn" title="Logout">
+                <button onClick={logout} className="top-bar-logout-btn" title="Logout Session">
                   <i className="fas fa-sign-out-alt"></i>
                 </button>
               </div>
             ) : (
-              <Link to="/login" className="top-bar-portal-link">
-                <i className="fas fa-lock"></i>
-                <span>Client Login</span>
+              <Link to="/login" className="top-bar-portal-btn">
+                <span className="portal-shield-icon">
+                  <i className="fas fa-lock"></i>
+                </span>
+                <span className="portal-btn-text">Client Portal</span>
+                <span className="portal-btn-badge">
+                  <span>Login</span>
+                  <i className="fas fa-chevron-right"></i>
+                </span>
               </Link>
             )}
           </div>

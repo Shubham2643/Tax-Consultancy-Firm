@@ -190,49 +190,38 @@ const Login = () => {
   };
 
   return (
-    <div className="split-auth-container">
-      {/* LEFT SPLIT PANEL: BRANDING / GRAPHICS */}
-      <div className="split-branding-panel">
-        <div className="branding-mesh-overlay"></div>
-        <div className="branding-content">
-          <Link to="/" className="branding-logo-link">
-            <img src="/assets/logo_new.jpg?v=3" alt="Shree Chamunda Logo" className="branding-logo" />
-            <div className="branding-logo-text">
-              <h2>SHREE CHAMUNDA</h2>
-              <span>ASSOCIATES</span>
+    <div className="enterprise-auth-page">
+      {/* Top Header Bar */}
+      <header className="auth-top-navbar">
+        <div className="auth-navbar-inner">
+          <Link to="/" className="auth-brand-logo">
+            <img src="/assets/logo_new.jpg?v=3" alt="Shree Chamunda Logo" className="auth-logo-img" />
+            <div className="auth-brand-text">
+              <span className="brand-firm-name">SHREE CHAMUNDA ASSOCIATES</span>
+              <span className="brand-firm-tagline">TAX CONSULTANCY & FINANCIAL ADVISORY</span>
             </div>
           </Link>
-          
-          <div className="branding-showcase">
-            <h1>Expert Tax Advisory & Financial Solutions</h1>
-            <p>Access your secure compliance documents, track file submissions, and align with certified auditors in one place.</p>
-          </div>
-
-          <div className="branding-footer-stats">
-            <div className="stat-capsule">
-              <strong>99.8%</strong>
-              <span>Accuracy</span>
-            </div>
-            <div className="stat-capsule">
-              <strong>15+ Yrs</strong>
-              <span>Experience</span>
-            </div>
-            <div className="stat-capsule text-amber">
-              <strong>Secured</strong>
-              <span>Vaults</span>
-            </div>
+          <div className="auth-top-nav-links">
+            <Link to="/" className="auth-nav-link-btn">
+              <i className="fas fa-arrow-left"></i>
+              <span>Back to Home</span>
+            </Link>
+            <a href="tel:+919510984735" className="auth-nav-support-link">
+              <i className="fas fa-headset"></i>
+              <span>Need Help?</span>
+            </a>
           </div>
         </div>
-      </div>
+      </header>
 
-      {/* RIGHT SPLIT PANEL: DYNAMIC AUTH FORMS */}
-      <div className="split-forms-panel">
-        <div className="auth-card-wrapper">
+      {/* Center Auth Card */}
+      <main className="auth-center-container">
+        <div className="auth-card-box">
           
           {/* Back button for Forgot password steps */}
           {viewMode !== 'login' && (
             <button className="auth-back-link-btn" onClick={() => setViewMode(viewMode === 'reset_password' ? 'otp_verify' : 'login')}>
-              <i className="fas fa-arrow-left"></i> Back to Previous
+              <i className="fas fa-arrow-left"></i> Back to Login
             </button>
           )}
 
@@ -252,8 +241,12 @@ const Login = () => {
           {viewMode === 'login' && (
             <div className="auth-form-card animated fadeIn">
               <div className="auth-card-title">
-                <h2>Secure Advisor Login</h2>
-                <p>Welcome back! Sign in to audit your files.</p>
+                <div className="auth-security-pill">
+                  <i className="fas fa-shield-alt"></i>
+                  <span>Secure Client Portal</span>
+                </div>
+                <h2>Sign In to Your Account</h2>
+                <p>Enter your credentials to access your tax filings & document vaults.</p>
               </div>
 
               {/* Social Login Buttons */}
@@ -270,7 +263,7 @@ const Login = () => {
               </div>
 
               <div className="auth-form-separator">
-                <span>or log in using email credentials</span>
+                <span>or continue with email credentials</span>
               </div>
 
               <form onSubmit={handleLoginSubmit} className="split-form-element">
@@ -305,12 +298,20 @@ const Login = () => {
                 </div>
 
                 <button type="submit" className="secure-submit-auth-btn" disabled={loading}>
-                  {loading ? <><i className="fas fa-spinner fa-spin"></i> Securing session...</> : 'Login Securely'}
+                  {loading ? (
+                    <><i className="fas fa-spinner fa-spin"></i> Securing session...</>
+                  ) : (
+                    <>
+                      <i className="fas fa-lock"></i>
+                      <span>Sign In to Workspace</span>
+                      <i className="fas fa-arrow-right auth-btn-arrow"></i>
+                    </>
+                  )}
                 </button>
               </form>
 
               <div className="auth-form-footer">
-                <p>New workspace? <Link to="/register">Create Client Account</Link></p>
+                <p>New to Shree Chamunda? <Link to="/register">Create Client Account &rarr;</Link></p>
               </div>
             </div>
           )}
@@ -454,8 +455,24 @@ const Login = () => {
             </div>
           )}
 
+          {/* Security Compliance Footer */}
+          <div className="auth-security-footer">
+            <div className="auth-security-note">
+              <i className="fas fa-lock"></i>
+              <span>256-Bit SSL Encrypted Connection &bull; Bank-Grade Compliance</span>
+            </div>
+            <div className="auth-footer-legal-links">
+              <Link to="/privacy-policy">Privacy Policy</Link>
+              <span>&bull;</span>
+              <Link to="/terms-of-service">Terms of Service</Link>
+              <span>&bull;</span>
+              <Link to="/contact">Contact CA Support</Link>
+            </div>
+            <p className="auth-copyright-text">&copy; {new Date().getFullYear()} Shree Chamunda Associates. All rights reserved.</p>
+          </div>
+
         </div>
-      </div>
+      </main>
     </div>
   );
 };

@@ -83,30 +83,127 @@
   background-color: rgba(255, 255, 255, 0.15);
 }
 
-.top-bar-portal-link {
-  color: var(--secondary);
-  font-size: 12px;
-  font-weight: 600;
+/* Executive Glassmorphic Client Portal Button */
+.top-bar-portal-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+  padding: 4px 5px 4px 11px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
   text-decoration: none;
+  border-radius: 30px;
+  color: #e2e8f0;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(248, 180, 0, 0.35);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.top-bar-portal-btn .portal-shield-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: rgba(248, 180, 0, 0.15);
+  border: 1px solid rgba(248, 180, 0, 0.3);
+  border-radius: 50%;
+  font-size: 9px;
+  color: #f8b400;
   transition: all 0.25s ease;
-  padding: 4px 12px;
-  border-radius: 4px;
-  background-color: rgba(248, 180, 0, 0.06);
-  border: 1px solid rgba(248, 180, 0, 0.25);
 }
 
-.top-bar-portal-link i {
-  color: var(--secondary);
+.top-bar-portal-btn .portal-btn-text {
+  color: #f1f5f9;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.2px;
+}
+
+.top-bar-portal-btn .portal-btn-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 20px;
   font-size: 11px;
+  font-weight: 700;
+  color: #071324;
+  background: linear-gradient(135deg, #f8b400 0%, #d99a00 100%);
+  box-shadow: 0 2px 6px rgba(248, 180, 0, 0.3);
+  transition: all 0.25s ease;
 }
 
-.top-bar-portal-link:hover {
-  color: #071324 !important;
-  background-color: var(--secondary);
-  border-color: var(--secondary);
+.top-bar-portal-btn .portal-btn-badge i {
+  font-size: 9px;
+  transition: transform 0.2s ease;
+}
+
+.top-bar-portal-btn:hover {
+  background: rgba(248, 180, 0, 0.1);
+  border-color: #f8b400;
+  box-shadow: 0 0 16px rgba(248, 180, 0, 0.28), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.top-bar-portal-btn:hover .portal-shield-icon {
+  background: rgba(248, 180, 0, 0.3);
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+.top-bar-portal-btn:hover .portal-btn-badge {
+  background: linear-gradient(135deg, #ffc837 0%, #f8b400 100%);
+  box-shadow: 0 2px 10px rgba(248, 180, 0, 0.5);
+}
+
+.top-bar-portal-btn:hover .portal-btn-badge i {
+  transform: translateX(2px);
+}
+
+.top-bar-portal-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Logged-In State (Dashboard Pill) */
+.top-bar-portal-btn.logged-in {
+  padding: 5px 14px;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #f1f5f9;
+}
+
+.top-bar-portal-btn.logged-in .live-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+  display: inline-block;
+  animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-green {
+  0% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
+}
+
+.top-bar-portal-btn.logged-in:hover {
+  background: rgba(248, 180, 0, 0.12);
+  border-color: rgba(248, 180, 0, 0.4);
+  color: #f8b400;
+  box-shadow: 0 2px 12px rgba(248, 180, 0, 0.2);
 }
 
 .top-bar-auth-group {
@@ -116,24 +213,26 @@
 }
 
 .top-bar-logout-btn {
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.2);
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.25);
   color: #fca5a5;
-  width: 24px;
-  height: 24px;
-  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   font-size: 11px;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
 }
 
 .top-bar-logout-btn:hover {
   background: #ef4444;
   color: white;
   border-color: #ef4444;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.35);
 }
 
 /* ============================================
