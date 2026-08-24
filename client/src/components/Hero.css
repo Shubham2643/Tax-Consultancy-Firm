@@ -136,6 +136,35 @@
   box-shadow: 0 8px 25px rgba(248, 180, 0, 0.35);
 }
 
+.btn-whatsapp-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #25D366;
+  color: #ffffff;
+  padding: 14px 26px;
+  border-radius: 100px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: 2px solid #25D366;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3);
+  cursor: pointer;
+}
+
+.btn-whatsapp-hero:hover {
+  background-color: #20ba5a;
+  border-color: #20ba5a;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.45);
+  color: #ffffff;
+}
+
+.btn-whatsapp-hero i {
+  font-size: 1.15rem;
+}
+
 .btn-explore {
   display: inline-flex;
   align-items: center;

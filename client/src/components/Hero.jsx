@@ -22,6 +22,9 @@ const Hero = () => {
   const subtitle = settings?.heroSubtitle || 'THE BEST TAX CONSULTANCY FIRM IN GUJARAT';
   const description = settings?.heroDescription || 'Welcome to Shree Chamunda Associates, your trusted partner for comprehensive tax consultancy and financial advisory services.';
 
+  const phone = settings?.phone ? settings.phone.replace(/[^0-9]/g, '') : '919510984735';
+  const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent('Hello Shree Chamunda Associates! I would like to consult with a Chartered Accountant regarding Tax & Compliance.')}`;
+
   return (
     <section className="hero">
       <div className="hero-grid">
@@ -37,6 +40,15 @@ const Hero = () => {
             <Link to="/contact" className="btn-contact">
               <i className="fas fa-calendar-alt"></i> Free Consultation
             </Link>
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-whatsapp-hero"
+              aria-label="Direct WhatsApp Consultation"
+            >
+              <i className="fab fa-whatsapp"></i> WhatsApp Chat
+            </a>
             <Link to="/services" className="btn-explore">
               <i className="fas fa-briefcase"></i> Our Services
             </Link>

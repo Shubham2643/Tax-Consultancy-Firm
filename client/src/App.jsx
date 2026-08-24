@@ -24,6 +24,7 @@ import OAuthCallback from './pages/OAuthCallback';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import NotFound from './pages/NotFound';
+import WhatsAppWidget from './components/WhatsAppWidget';
 import './App.css';
 
 
@@ -132,6 +133,7 @@ function App() {
         </Routes>
       </main>
       
+      {!isFullPageLayout && <WhatsAppWidget />}
       {!isFullPageLayout && <NotificationConsent />}
       {!isFullPageLayout && <Footer />}
     </div>
