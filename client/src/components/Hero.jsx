@@ -18,71 +18,170 @@ const Hero = () => {
     );
   }
 
-  const title = settings?.heroTitle || 'SHREE CHAMUNDA ASSOCIATES';
-  const subtitle = settings?.heroSubtitle || 'THE BEST TAX CONSULTANCY FIRM IN GUJARAT';
-  const description = settings?.heroDescription || 'Welcome to Shree Chamunda Associates, your trusted partner for comprehensive tax consultancy and financial advisory services.';
-
   const phone = settings?.phone ? settings.phone.replace(/[^0-9]/g, '') : '919510984735';
-  const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent('Hello Shree Chamunda Associates! I would like to consult with a Chartered Accountant regarding Tax & Compliance.')}`;
+  const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(
+    'Hello Shree Chamunda Associates! I would like to consult with a Chartered Accountant regarding Tax & Compliance services.'
+  )}`;
 
   return (
     <section className="hero">
-      <div className="hero-grid">
-        <div className="hero-text-side">
-          <div className="hero-badge">
+      {/* Ambient background glows */}
+      <div className="hero-ambient-orb orb-primary"></div>
+      <div className="hero-ambient-orb orb-secondary"></div>
+      <div className="hero-grid-pattern"></div>
+
+      <div className="hero-layout-container">
+        {/* LEFT COLUMN: Executive Value Narrative */}
+        <div className="hero-narrative-col">
+          <div className="hero-pill-badge">
+            <span className="pill-dot-live"></span>
             <i className="fas fa-shield-alt"></i>
-            <span>Trusted Tax Advisory Since 2023</span>
+            <span>Premier Chartered Tax Advisory &bull; Gujarat</span>
           </div>
-          <h1>{title}</h1>
-          <h2>{subtitle}</h2>
-          <p>{description}</p>
-          <div className="hero-actions">
-            <Link to="/contact" className="btn-contact">
-              <i className="fas fa-calendar-alt"></i> Free Consultation
+
+          <h1 className="hero-main-title">
+            Strategic Tax Advisory &amp; <span className="title-gradient-accent">Seamless Compliance</span> for Growing Businesses.
+          </h1>
+
+          <p className="hero-subtext">
+            Partner with dedicated Chartered Accountants for corporate tax planning, GST audits, ROC filings, and dispute resolutions—ensuring zero penalties and maximum legal tax savings.
+          </p>
+
+          {/* 3 Trust Checkmarks */}
+          <div className="hero-trust-bullets">
+            <div className="trust-bullet-item">
+              <i className="fas fa-check-circle"></i>
+              <span>Zero-Penalty Track Record (99.8% Precision)</span>
+            </div>
+            <div className="trust-bullet-item">
+              <i className="fas fa-check-circle"></i>
+              <span>100% Paperless Digital Filing Vault</span>
+            </div>
+            <div className="trust-bullet-item">
+              <i className="fas fa-check-circle"></i>
+              <span>Dedicated Senior CA Advisor Assigned</span>
+            </div>
+          </div>
+
+          {/* Primary Action Buttons */}
+          <div className="hero-cta-group">
+            <Link to="/contact" className="btn-hero-primary">
+              <i className="fas fa-calendar-check"></i>
+              <span>Book Free Consultation</span>
+              <i className="fas fa-arrow-right btn-icon-arrow"></i>
             </Link>
+
             <a
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-whatsapp-hero"
+              className="btn-hero-whatsapp"
               aria-label="Direct WhatsApp Consultation"
             >
-              <i className="fab fa-whatsapp"></i> WhatsApp Chat
+              <span className="wa-live-dot"></span>
+              <i className="fab fa-whatsapp"></i>
+              <span>WhatsApp Advisory</span>
             </a>
-            <Link to="/services" className="btn-explore">
-              <i className="fas fa-briefcase"></i> Our Services
-            </Link>
+          </div>
+
+          {/* Trust Rating Strip */}
+          <div className="hero-social-proof">
+            <div className="rating-stars">
+              <i className="fas fa-star"></i>
+              <i className="fas fa-star"></i>
+              <i className="fas fa-star"></i>
+              <i className="fas fa-star"></i>
+              <i className="fas fa-star"></i>
+            </div>
+            <span className="rating-caption">
+              Trusted by <strong>250+ Gujarat Businesses</strong> &bull; <strong>4.9/5 Rating</strong>
+            </span>
           </div>
         </div>
-        <div className="hero-visual-side">
-          <div className="highlight-cards-grid">
-            <div className="highlight-card">
-              <div className="card-icon-box">
-                <i className="fas fa-business-time"></i>
+
+        {/* RIGHT COLUMN: Live Interactive Compliance Workspace Preview */}
+        <div className="hero-visual-col">
+          <div className="hero-mockup-card">
+            {/* Mockup Card Header */}
+            <div className="mockup-header">
+              <div className="mockup-brand">
+                <img src="/assets/logo_new.jpg?v=3" alt="Shree Chamunda Logo" className="mockup-logo" />
+                <div className="mockup-title">
+                  <strong>Shree Chamunda Workspace</strong>
+                  <span>Client Compliance Dashboard</span>
+                </div>
               </div>
-              <h3>4+ Years</h3>
-              <p>Corporate Excellence</p>
+              <div className="mockup-status-tag">
+                <span className="status-live-beacon"></span>
+                <span>Active Vault</span>
+              </div>
             </div>
-            <div className="highlight-card">
-              <div className="card-icon-box">
-                <i className="fas fa-users"></i>
+
+            {/* Live Filing Status Tiles */}
+            <div className="mockup-tiles-list">
+              {/* Tile 1: GST */}
+              <div className="mockup-tile-item">
+                <div className="tile-icon-wrapper icon-emerald">
+                  <i className="fas fa-file-invoice-dollar"></i>
+                </div>
+                <div className="tile-details">
+                  <div className="tile-title-row">
+                    <strong>GSTR-3B Monthly Return</strong>
+                    <span className="tile-badge-success">
+                      <i className="fas fa-check"></i> Filed &amp; Reconciled
+                    </span>
+                  </div>
+                  <span className="tile-meta">Tax Liability ₹0.00 &bull; Verified by Senior Auditor</span>
+                </div>
               </div>
-              <h3>250+</h3>
-              <p>Satisfied Clients</p>
+
+              {/* Tile 2: Corporate Audit */}
+              <div className="mockup-tile-item">
+                <div className="tile-icon-wrapper icon-gold">
+                  <i className="fas fa-tasks"></i>
+                </div>
+                <div className="tile-details">
+                  <div className="tile-title-row">
+                    <strong>Corporate Tax Audit (Sec 44AB)</strong>
+                    <span className="tile-badge-in-progress">In Review (92%)</span>
+                  </div>
+                  <div className="tile-progress-bar">
+                    <span className="progress-fill" style={{ width: '92%' }}></span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Tile 3: Tax Savings Stat */}
+              <div className="mockup-tile-item">
+                <div className="tile-icon-wrapper icon-blue">
+                  <i className="fas fa-chart-line"></i>
+                </div>
+                <div className="tile-details">
+                  <div className="tile-title-row">
+                    <strong>Tax Optimization Saved</strong>
+                    <span className="tile-badge-saving">+₹2,45,000</span>
+                  </div>
+                  <span className="tile-meta">Claimed Sec 80JJAA &amp; Depreciations legally</span>
+                </div>
+              </div>
             </div>
-            <div className="highlight-card">
-              <div className="card-icon-box">
-                <i className="fas fa-percentage"></i>
+
+            {/* Bottom 3-Metric Floating Mini Bar */}
+            <div className="mockup-metrics-bar">
+              <div className="metric-pill">
+                <strong>4+ Yrs</strong>
+                <span>Experience</span>
               </div>
-              <h3>99.2%</h3>
-              <p>Accuracy Rate</p>
-            </div>
-            <div className="highlight-card">
-              <div className="card-icon-box">
-                <i className="fas fa-award"></i>
+              <div className="metric-divider"></div>
+              <div className="metric-pill">
+                <strong>250+</strong>
+                <span>Active Clients</span>
               </div>
-              <h3>100%</h3>
-              <p>Audit Compliance</p>
+              <div className="metric-divider"></div>
+              <div className="metric-pill">
+                <strong className="text-emerald">100%</strong>
+                <span>Audit Legal</span>
+              </div>
             </div>
           </div>
         </div>

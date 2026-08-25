@@ -46,7 +46,7 @@ const WhatsAppWidget = () => {
             </div>
             <div className="wa-bubble-meta">
               <strong>Shree Chamunda Advisory</strong>
-              <span>Online &bull; Instant CA Support</span>
+              <span>Online &bull; Instant Expert Support</span>
             </div>
           </div>
           <p className="wa-bubble-text">

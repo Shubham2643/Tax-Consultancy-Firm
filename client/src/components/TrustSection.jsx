@@ -35,45 +35,96 @@ const TrustSection = () => {
   }
 
   const trustHeading = settings?.trustHeading || 'WHAT WE OFFER';
-  const trustMainText = settings?.trustMainText || 'We believe that selecting the right financial services firm is paramount to the financial success!';
-  const offerItems = settings?.offerItems || [
-    'Best Taxation Service',
-    'Tax Disputes',
-    'Quality Control',
-    'High Standard of Integrity',
-    'Professional Team',
-    '24/7 Legal Customer Support'
+  const trustMainText = settings?.trustMainText || 'We believe that selecting the right financial services firm is paramount to financial success.';
+  
+  const defaultFeatureCards = [
+    {
+      title: 'Strategic Taxation Service',
+      desc: 'End-to-end direct & indirect tax planning, returns filing, and year-round advisory.',
+      icon: 'fas fa-file-invoice-dollar'
+    },
+    {
+      title: 'Tax Disputes & Scrutiny',
+      desc: 'Expert representation for scrutiny notices, appeals, and tax tribunal cases.',
+      icon: 'fas fa-gavel'
+    },
+    {
+      title: 'Zero-Defect Quality Control',
+      desc: 'Multi-tier audit verification ensuring 100% statutory legal compliance.',
+      icon: 'fas fa-shield-alt'
+    },
+    {
+      title: 'High Standard of Integrity',
+      desc: 'Transparent pricing with strict adherence to ICAI chartered ethics.',
+      icon: 'fas fa-balance-scale'
+    },
+    {
+      title: 'Experienced CA Team',
+      desc: 'Senior tax consultants with deep expertise across Indian corporate laws.',
+      icon: 'fas fa-user-tie'
+    },
+    {
+      title: '24/7 Dedicated Support',
+      desc: 'Priority query turnaround, live filing updates, and WhatsApp advisory.',
+      icon: 'fas fa-headset'
+    }
   ];
-  const trustDescription = settings?.trustDescription || 'Confidentiality and Ethics: We adhere to the highest professional standards of confidentiality and ethics. You can trust us to handle your sensitive financial information with the utmost care and discretion.';
-  const trustDescription2 = settings?.trustDescription2 || 'Proactive Strategies: We believe in proactive tax planning rather than reactive measures. By anticipating changes in tax laws and identifying help. We provide ongoing tax consultation services for small business owners to help with everything from tax planning to bookkeeping. Whether you\'re a sole proprietor or managing a larger team.';
 
   return (
     <section className="trust">
       <div className="tst-container">
         <div className="trust-content">
           <div className="trust-left">
-            <span className="trust-badge-label">{trustHeading}</span>
+            <div className="trust-badge-label">
+              <i className="fas fa-shield-alt"></i>
+              <span>{trustHeading}</span>
+            </div>
             <h2 className="trust-title">{trustMainText}</h2>
-            <p className="trust-description">{trustDescription}</p>
-            <p className="trust-description">{trustDescription2}</p>
-            <div className="buttons">
-              <button className="btn btn-primary" onClick={() => navigate('/contact')}>
-                <i className="fas fa-calendar-alt"></i> FREE CONSULTATION
+
+            <div className="trust-pillars-list">
+              <div className="trust-pillar-card">
+                <div className="pillar-icon-box">
+                  <i className="fas fa-user-shield"></i>
+                </div>
+                <div className="pillar-text">
+                  <h4>Confidentiality & Professional Ethics</h4>
+                  <p>We adhere to strict chartered standards of confidentiality and ethics, handling sensitive corporate data with bank-grade discretion.</p>
+                </div>
+              </div>
+
+              <div className="trust-pillar-card">
+                <div className="pillar-icon-box">
+                  <i className="fas fa-chart-pie"></i>
+                </div>
+                <div className="pillar-text">
+                  <h4>Proactive Tax Planning</h4>
+                  <p>Forward-looking strategies anticipating regulatory shifts, optimizing allowable deductions and preventing reactive compliance penalties.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="trust-actions">
+              <button className="btn-trust-primary" onClick={() => navigate('/contact')}>
+                <i className="fas fa-calendar-alt"></i>
+                <span>Free Consultation</span>
+                <i className="fas fa-arrow-right btn-arrow"></i>
               </button>
-              <button className="btn btn-secondary" onClick={() => navigate('/about')}>
-                <i className="fas fa-info-circle"></i> MORE ABOUT US
+              <button className="btn-trust-secondary" onClick={() => navigate('/about')}>
+                <i className="fas fa-info-circle"></i>
+                <span>More About Us</span>
               </button>
             </div>
           </div>
 
           <div className="trust-right">
             <div className="offer-grid">
-              {offerItems.map((item, index) => (
+              {defaultFeatureCards.map((card, index) => (
                 <div key={index} className="offer-card card-animate">
                   <div className="offer-icon-box">
-                    <i className="fas fa-check-circle"></i>
+                    <i className={card.icon}></i>
                   </div>
-                  <span>{item}</span>
+                  <h3 className="offer-card-title">{card.title}</h3>
+                  <p className="offer-card-desc">{card.desc}</p>
                 </div>
               ))}
             </div>

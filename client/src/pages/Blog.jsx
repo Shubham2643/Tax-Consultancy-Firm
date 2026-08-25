@@ -1,33 +1,77 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getBlogs } from '../api';
 import useFetch from '../hooks/useFetch';
+import useSEO from '../hooks/useSEO';
 import './Blog.css';
 
 const Blog = () => {
+  useSEO({
+    title: 'Knowledge Hub & Tax Articles | Shree Chamunda Associates',
+    description: 'Expert insights, Union Budget breakdowns, GST guides, and Income Tax updates from certified Chartered Accountants.',
+  });
+
+  const navigate = useNavigate();
   const { data: response, loading, error } = useFetch(getBlogs);
   const blogs = response?.data || [];
 
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
-  const [selectedBlog, setSelectedBlog] = useState(null);
+  const [openingBlogId, setOpeningBlogId] = useState(null);
+  const [bookmarks, setBookmarks] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('saved_blogs') || '[]');
+    } catch {
+      return [];
+    }
+  });
 
-  const categories = ['All', 'GST', 'Income Tax', 'Business Startups', 'Compliance'];
+  const categories = ['All', 'GST', 'Income Tax', 'Business Startups', 'Compliance', 'Saved'];
+
+  const handleCardClick = (e, blogId) => {
+    if (e.target.closest('.bookmark-btn') || e.target.closest('.card-bookmark-btn')) {
+      return;
+    }
+    e.preventDefault();
+    setOpeningBlogId(blogId);
+    setTimeout(() => {
+      navigate(`/blog/${blogId}`);
+    }, 220);
+  };
+
+  const toggleBookmark = (e, blogId) => {
+    e.preventDefault();
+    e.stopPropagation();
+    let updated;
+    if (bookmarks.includes(blogId)) {
+      updated = bookmarks.filter((id) => id !== blogId);
+    } else {
+      updated = [...bookmarks, blogId];
+    }
+    setBookmarks(updated);
+    localStorage.setItem('saved_blogs', JSON.stringify(updated));
+  };
 
   const filteredBlogs = blogs.filter((blog) => {
+    if (activeCategory === 'Saved') {
+      return bookmarks.includes(blog._id);
+    }
     const matchesCategory = activeCategory === 'All' || blog.category === activeCategory;
     const matchesSearch =
       blog.title.toLowerCase().includes(search.toLowerCase()) ||
       blog.summary.toLowerCase().includes(search.toLowerCase()) ||
-      blog.tags.some((tag) => tag.toLowerCase().includes(search.toLowerCase()));
+      (blog.tags && blog.tags.some((tag) => tag.toLowerCase().includes(search.toLowerCase())));
     return matchesCategory && matchesSearch;
   });
 
-  // Find featured post (latest post under activeCategory, or absolute latest)
   const featuredPost = filteredBlogs.length > 0 ? filteredBlogs[0] : null;
   const regularPosts = featuredPost ? filteredBlogs.slice(1) : [];
 
   const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-IN', {
+    if (!dateString) return 'Recent Circular';
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return 'Recent Circular';
+    return date.toLocaleDateString('en-IN', {
       day: 'numeric',
       month: 'short',
       year: 'numeric',
@@ -36,46 +80,77 @@ const Blog = () => {
 
   return (
     <div className="blog-page fade-in">
+      {/* Executive Clean Midnight Hero Banner */}
       <div className="blog-hero">
         <div className="container">
-          <h1>Knowledge Hub & Blog</h1>
-          <p>Expert insights, GST guides, and Income Tax updates from our professionals</p>
+          <div className="blog-hero-badge">
+            <span className="live-dot"></span>
+            <i className="fas fa-shield-alt"></i>
+            <span>Knowledge Hub &bull; Statutory Circulars</span>
+          </div>
+          <h1>Tax &amp; Compliance Knowledge Hub</h1>
+          <p>Expert insights, Union Budget breakdowns, GST guides, and statutory circulars from certified Chartered Accountants.</p>
         </div>
       </div>
 
+      {/* Main Content Area */}
       <div className="container blog-container-wrapper">
-        {/* Controls */}
-        <div className="blog-controls">
-          <div className="blog-search-wrapper">
-            <i className="fas fa-search search-icon"></i>
-            <input
-              type="text"
-              placeholder="Search articles by title, content, or tags..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="blog-search-input"
-            />
+        {/* Sleek Corporate Filter & Search Toolbar */}
+        <div className="blog-toolbar-card">
+          <div className="blog-toolbar-left">
+            <div className="toolbar-category-tabs">
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  className={`toolbar-tab ${activeCategory === cat ? 'active' : ''}`}
+                  onClick={() => setActiveCategory(cat)}
+                >
+                  {cat === 'Saved' && <i className="fas fa-bookmark" style={{ marginRight: '5px' }}></i>}
+                  {cat} {cat === 'Saved' && bookmarks.length > 0 && <span className="tab-counter">{bookmarks.length}</span>}
+                </button>
+              ))}
+            </div>
           </div>
 
-          <div className="blog-categories">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                className={`blog-category-tab ${activeCategory === cat ? 'active' : ''}`}
-                onClick={() => setActiveCategory(cat)}
-              >
-                {cat}
-              </button>
-            ))}
+          <div className="blog-toolbar-right">
+            <div className="toolbar-search-box">
+              <i className="fas fa-search toolbar-search-icon"></i>
+              <input
+                type="text"
+                placeholder="Search circulars, GST notices, 44ADA..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="toolbar-search-input"
+              />
+              {search && (
+                <button className="toolbar-search-clear" onClick={() => setSearch('')} title="Clear search">
+                  <i className="fas fa-times"></i>
+                </button>
+              )}
+            </div>
           </div>
+        </div>
+
+        {/* Results Counter / Filter Bar */}
+        <div className="blog-results-bar">
+          <span className="results-count">
+            Showing <strong>{filteredBlogs.length}</strong> {filteredBlogs.length === 1 ? 'circular' : 'circulars'}
+            {activeCategory !== 'All' && <span> in <em>{activeCategory}</em></span>}
+            {search && <span> matching "<em>{search}</em>"</span>}
+          </span>
+          {(search || activeCategory !== 'All') && (
+            <button className="btn-clear-all-filters" onClick={() => { setSearch(''); setActiveCategory('All'); }}>
+              <i className="fas fa-undo"></i> Reset Filters
+            </button>
+          )}
         </div>
 
         {loading ? (
           <div className="blog-loading-grid">
-            <div className="skeleton skeleton-card" style={{ height: '350px', marginBottom: '30px' }}></div>
+            <div className="skeleton skeleton-card" style={{ height: '360px', marginBottom: '30px' }}></div>
             <div className="blog-grid">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="skeleton skeleton-card" style={{ height: '300px' }}></div>
+                <div key={i} className="skeleton skeleton-card" style={{ height: '320px' }}></div>
               ))}
             </div>
           </div>
@@ -85,52 +160,104 @@ const Blog = () => {
           </div>
         ) : filteredBlogs.length === 0 ? (
           <div className="no-blogs text-center py-5">
-            <i className="fas fa-file-signature no-blogs-icon"></i>
-            <h3>No Articles Found</h3>
-            <p>We couldn't find any articles matching your search query. Try another keyword.</p>
+            <div className="no-blogs-icon-wrapper">
+              <i className="fas fa-search"></i>
+            </div>
+            <h3>No Circulars Found</h3>
+            <p>We couldn't find any tax circulars matching your search criteria.</p>
+            <button className="btn-reset-filters" onClick={() => { setSearch(''); setActiveCategory('All'); }}>
+              Browse All Circulars
+            </button>
           </div>
         ) : (
           <>
-            {/* Featured Post Spotlight (Only if searching/filters are empty or it's page load) */}
-            {featuredPost && !search && (
-              <div className="featured-blog-card" onClick={() => setSelectedBlog(featuredPost)}>
-                <div className="featured-img-wrapper">
-                  <img src={featuredPost.image} alt={featuredPost.title} />
+            {/* Featured Post Spotlight */}
+            {featuredPost && !search && activeCategory !== 'Saved' && (
+              <div
+                className={`featured-blog-card ${openingBlogId === featuredPost._id ? 'card-opening' : ''}`}
+                onClick={(e) => handleCardClick(e, featuredPost._id)}
+              >
+                <div className="featured-img-box">
+                  <img src={featuredPost.image || '/assets/banner_screenshot.png'} alt={featuredPost.title} />
+                  <span className="featured-badge-pill">
+                    <i className="fas fa-bolt"></i> Spotlight Analysis
+                  </span>
+                  <button
+                    className={`bookmark-btn ${bookmarks.includes(featuredPost._id) ? 'bookmarked' : ''}`}
+                    onClick={(e) => toggleBookmark(e, featuredPost._id)}
+                    title="Bookmark article"
+                  >
+                    <i className={`fa${bookmarks.includes(featuredPost._id) ? 's' : 'r'} fa-bookmark`}></i>
+                  </button>
                 </div>
-                <div className="featured-info">
-                  <span className="blog-badge featured-badge">{featuredPost.category}</span>
-                  <div className="blog-meta">
-                    <span><i className="far fa-calendar-alt"></i> {formatDate(featuredPost.createdAt)}</span>
-                    <span><i className="far fa-clock"></i> {featuredPost.readTime}</span>
+
+                <div className="featured-content-box">
+                  <div className="featured-meta-header">
+                    <span className="blog-tag-badge">{featuredPost.category}</span>
+                    <span className="blog-meta-item">
+                      <i className="far fa-calendar-alt"></i> {formatDate(featuredPost.createdAt || featuredPost.publishedAt)}
+                    </span>
+                    <span className="blog-meta-item">
+                      <i className="far fa-clock"></i> {featuredPost.readTime || '5 min read'}
+                    </span>
                   </div>
-                  <h2>{featuredPost.title}</h2>
-                  <p>{featuredPost.summary}</p>
-                  <div className="blog-author-line">
-                    <span className="blog-author"><i className="far fa-user"></i> {featuredPost.author}</span>
-                    <button className="read-more-link">Read Full Article <i className="fas fa-arrow-right"></i></button>
+
+                  <h2 className="featured-headline">{featuredPost.title}</h2>
+                  <p className="featured-excerpt">{featuredPost.summary}</p>
+
+                  <div className="featured-author-footer">
+                    <div className="author-info">
+                      <div className="author-icon">
+                        <i className="fas fa-user-tie"></i>
+                      </div>
+                      <div className="author-names">
+                        <strong>{featuredPost.author || 'Senior Tax Partner'}</strong>
+                        <span>Chartered Advisory Desk</span>
+                      </div>
+                    </div>
+                    <span className="btn-read-analysis">
+                      <span>{openingBlogId === featuredPost._id ? 'Opening Guide...' : 'Read Full Analysis'}</span>
+                      <i className={`fas ${openingBlogId === featuredPost._id ? 'fa-circle-notch fa-spin' : 'fa-arrow-right'}`}></i>
+                    </span>
                   </div>
                 </div>
               </div>
             )}
 
-            {/* Grid of Regular Posts */}
+            {/* Regular Posts Grid */}
             <div className="blog-grid">
-              {(search ? filteredBlogs : regularPosts).map((blog) => (
-                <div key={blog._id} className="blog-item-card" onClick={() => setSelectedBlog(blog)}>
-                  <div className="blog-card-img-wrapper">
-                    <img src={blog.image} alt={blog.title} />
-                    <span className="blog-badge">{blog.category}</span>
+              {(search || activeCategory === 'Saved' ? filteredBlogs : regularPosts).map((blog) => (
+                <div
+                  key={blog._id}
+                  className={`blog-card card-animate ${openingBlogId === blog._id ? 'card-opening' : ''}`}
+                  onClick={(e) => handleCardClick(e, blog._id)}
+                >
+                  <div className="blog-card-img-box">
+                    <img src={blog.image || '/assets/banner_screenshot.png'} alt={blog.title} />
+                    <span className="card-category-pill">{blog.category}</span>
+                    <button
+                      className={`card-bookmark-btn ${bookmarks.includes(blog._id) ? 'bookmarked' : ''}`}
+                      onClick={(e) => toggleBookmark(e, blog._id)}
+                      title="Bookmark article"
+                    >
+                      <i className={`fa${bookmarks.includes(blog._id) ? 's' : 'r'} fa-bookmark`}></i>
+                    </button>
                   </div>
-                  <div className="blog-card-info">
-                    <div className="blog-meta">
-                      <span><i className="far fa-calendar-alt"></i> {formatDate(blog.createdAt)}</span>
-                      <span><i className="far fa-clock"></i> {blog.readTime}</span>
+
+                  <div className="blog-card-content">
+                    <div className="blog-card-meta-row">
+                      <span><i className="far fa-calendar-alt"></i> {formatDate(blog.createdAt || blog.publishedAt)}</span>
+                      <span><i className="far fa-clock"></i> {blog.readTime || '4 min read'}</span>
                     </div>
-                    <h3>{blog.title}</h3>
-                    <p>{blog.summary}</p>
-                    <div className="blog-card-footer">
-                      <span className="blog-author"><i className="far fa-user"></i> {blog.author}</span>
-                      <span className="read-btn">Read <i className="fas fa-chevron-right"></i></span>
+
+                    <h3 className="blog-card-title">{blog.title}</h3>
+                    <p className="blog-card-excerpt">{blog.summary}</p>
+
+                    <div className="blog-card-bottom-bar">
+                      <span className={`blog-card-read-action ${openingBlogId === blog._id ? 'action-opening' : ''}`}>
+                        <span>{openingBlogId === blog._id ? 'Opening...' : 'Read Article'}</span>
+                        <i className={`fas ${openingBlogId === blog._id ? 'fa-circle-notch fa-spin' : 'fa-arrow-right'}`}></i>
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -139,57 +266,6 @@ const Blog = () => {
           </>
         )}
       </div>
-
-      {/* Overlay Reader Modal */}
-      {selectedBlog && (
-        <div className="blog-reader-modal" onClick={() => setSelectedBlog(null)}>
-          <div className="blog-reader-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-reader-btn" onClick={() => setSelectedBlog(null)} aria-label="Close reader">
-              <i className="fas fa-times"></i>
-            </button>
-            <div className="reader-header">
-              <span className="blog-badge">{selectedBlog.category}</span>
-              <h1>{selectedBlog.title}</h1>
-              <div className="reader-meta">
-                <span><i className="far fa-calendar-alt"></i> {formatDate(selectedBlog.createdAt)}</span>
-                <span><i className="far fa-clock"></i> {selectedBlog.readTime}</span>
-                <span><i className="far fa-user"></i> {selectedBlog.author}</span>
-              </div>
-            </div>
-            <div className="reader-banner-img">
-              <img src={selectedBlog.image} alt={selectedBlog.title} />
-            </div>
-            <div className="reader-body">
-              {selectedBlog.content.split('\n\n').map((para, idx) => {
-                if (para.startsWith('### ')) {
-                  return <h3 key={idx} className="reader-h3">{para.replace('### ', '')}</h3>;
-                }
-                if (para.startsWith('1. ') || para.startsWith('- ')) {
-                  const items = para.split('\n');
-                  return (
-                    <ul key={idx} className="reader-list">
-                      {items.map((item, i) => (
-                        <li key={i}>{item.replace(/^\d+\.\s+|^-\s+/, '').replace(/\*\*(.*?)\*\*/g, '$1')}</li>
-                      ))}
-                    </ul>
-                  );
-                }
-                return <p key={idx}>{para}</p>;
-              })}
-            </div>
-            <div className="reader-tags">
-              {selectedBlog.tags.map((tag, idx) => (
-                <span key={idx} className="tag-badge">#{tag}</span>
-              ))}
-            </div>
-            <div className="reader-footer-cta">
-              <h4>Need specific advice on this topic?</h4>
-              <p>Get in touch with our tax professionals at Shree Chamunda Associates for tailored consultations.</p>
-              <a href="/contact" className="btn btn-cta" onClick={() => setSelectedBlog(null)}>Talk to an Expert</a>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

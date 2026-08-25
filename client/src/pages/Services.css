@@ -1,52 +1,105 @@
+/* ============================================
+   SERVICES PAGE — Executive Layout & Ambient Orbs
+   ============================================ */
+.services-page {
+  background-color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
 .services-hero {
-  background: var(--gradient-primary);
-  color: white;
-  padding: 80px 0;
+  background-color: #06101e;
+  color: #ffffff;
+  padding: 60px 0 55px 0;
   text-align: center;
-  margin-bottom: 50px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Floating Ambient Glowing Bubbles */
+.services-hero::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  right: 8%;
+  width: 360px;
+  height: 360px;
+  background: radial-gradient(circle, rgba(248, 180, 0, 0.14) 0%, rgba(34, 197, 94, 0.06) 50%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: servicesFloatBubble 7s ease-in-out infinite alternate;
+}
+
+.services-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  left: 6%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: servicesFloatBubble 9s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes servicesFloatBubble {
+  0% { transform: translateY(0) scale(1) rotate(0deg); }
+  50% { transform: translateY(-18px) scale(1.1) rotate(6deg); }
+  100% { transform: translateY(12px) scale(0.95) rotate(-6deg); }
+}
+
+.services-hero .container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 2;
+}
+
+.services-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(248, 180, 0, 0.08);
+  border: 1px solid rgba(248, 180, 0, 0.25);
+  color: #f8b400;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 14px;
+}
+
+.services-hero-badge .live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
 }
 
 .services-hero h1 {
-  font-size: 3.2rem;
-  font-weight: 800;
-  margin-bottom: 12px;
-  letter-spacing: -0.8px;
-  background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-size: 2.8rem;
+  font-weight: 850;
+  line-height: 1.15;
+  color: #ffffff;
+  letter-spacing: -1px;
+  margin: 0 0 10px 0;
 }
 
 .services-hero p {
-  font-size: 1.15rem;
-  color: rgba(226, 232, 240, 0.85);
-  max-width: 650px;
+  font-size: 1.05rem;
+  color: #94a3b8;
+  max-width: 680px;
   margin: 0 auto;
+  line-height: 1.5;
 }
 
-.services-intro-section {
-  max-width: 800px;
-  margin: 0 auto 50px auto;
-  padding: 0 20px;
-}
-
-.services-intro-section h2 {
-  font-size: 2rem;
-  color: var(--primary);
-  margin-bottom: 20px;
-  font-weight: 700;
-  text-align: center;
-}
-
-.services-intro-section p {
-  font-size: 1.1rem;
-  color: var(--text-light);
-  line-height: 1.6;
-  text-align: justify;
-}
-
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .services-hero h1 {
-    font-size: 2.2rem;
+    font-size: 2.1rem;
   }
 }

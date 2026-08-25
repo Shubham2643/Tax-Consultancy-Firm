@@ -39,33 +39,40 @@ const About = () => {
     );
   }
 
-  const companyDescription = settings?.companyDescription || 'Shree Chamunda Associates is a well reputed company providing complete solutions for Tax Services.';
+  const companyDescription = settings?.companyDescription || 'Shree Chamunda Associates is a premier accounting and tax consultancy firm providing complete chartered solutions for enterprises, SMEs, and high-net-worth individuals.';
 
   const stats = [
     { number: '4+', label: 'Years Experience', icon: 'fas fa-award' },
-    { number: '200+', label: 'Happy Clients', icon: 'fas fa-users' },
+    { number: '250+', label: 'Corporate Clients', icon: 'fas fa-users' },
     { number: '5+', label: 'Expert CAs & Advisors', icon: 'fas fa-user-tie' },
     { number: '1500+', label: 'Filings Completed', icon: 'fas fa-file-invoice-dollar' },
   ];
 
   const timeline = [
-    { year: '2023', title: 'Foundation', desc: 'Shree Chamunda Associates was established in Ahmedabad, Gujarat, starting with direct tax advisory.' },
-    { year: '2024', title: 'GST Transition', desc: 'Pioneered GST training and compliance support for over 200 local manufacturing units during the nation-wide transition.' },
-    { year: '2025', title: 'Digital Accounting Expansion', desc: 'Transitioned all client bookkeeping services onto the cloud, ensuring real-time accessibility and paperless audits.' },
-    { year: '2025', title: 'Corporate Compliance Expansion', desc: 'Expanded corporate consultation offerings to include LLP, OPC, and Pvt Ltd company incorporation services.' },
-    { year: '2026', title: 'Dynamic Financial Advisory', desc: 'Serving over 2500+ corporate and individual clients with customized digital tax planning systems.' },
+    { year: '2023', title: 'Foundation & Incorporation', desc: 'Shree Chamunda Associates was established in Ahmedabad, Gujarat, starting with direct tax advisory.' },
+    { year: '2024', title: 'GST & Corporate Auditing', desc: 'Scaled operations to provide comprehensive GST reconciliation, audits, and notice resolution for manufacturing units.' },
+    { year: '2025', title: 'Digital Accounting Vault', desc: 'Transitioned all client bookkeeping services onto the cloud, ensuring real-time accessibility and paperless audits.' },
+    { year: '2025', title: 'ROC & Startup Advisory', desc: 'Expanded corporate consultation offerings to include LLP, OPC, and Pvt Ltd company incorporation services.' },
+    { year: '2026', title: 'Dynamic Wealth & Tax Systems', desc: 'Serving over 250+ corporate and individual clients with customized digital tax planning systems.' },
   ];
 
   return (
     <div className="about-page fade-in">
+      {/* Luxury Inner Page Hero */}
       <div className="about-hero">
         <div className="container">
-          <h1>About Our Firm</h1>
-          <p>Delivering Integrity, Excellence, and Client-Centric Tax Advisory Since 2016</p>
+          <div className="about-hero-badge">
+            <span className="live-dot"></span>
+            <i className="fas fa-landmark"></i>
+            <span>Institutional Excellence &bull; Chartered Practice</span>
+          </div>
+          <h1>Architecting Financial Resilience</h1>
+          <p>Delivering precision tax advisory, statutory audits, and corporate compliance solutions across Gujarat.</p>
         </div>
       </div>
 
       <div className="container about-content-wrapper">
+        {/* Story & Pillars Grid */}
         <div className="about-grid">
           <div className="about-pillars-container">
             <div className="pillar-item">
@@ -91,14 +98,15 @@ const About = () => {
                 <i className="fas fa-check-double"></i>
               </div>
               <div className="pillar-text">
-                <h3>Compliance & Precision</h3>
+                <h3>Compliance &amp; Precision</h3>
                 <p>Ensuring 100% accurate filings through detailed pre-submission reviews and data reconciliation.</p>
               </div>
             </div>
           </div>
 
           <div className="about-text-content">
-            <h2>Our Story & Mission</h2>
+            <span className="about-section-tag">WHO WE ARE</span>
+            <h2>Our Story &amp; Mission</h2>
             <p className="lead-text">{companyDescription}</p>
             <p>
               Shree Chamunda Associates is a team of experienced tax professionals, Chartered Accountants (CAs), and financial experts dedicated to providing accurate, ethical, and client-centric solutions. Our mission is to simplify tax compliance, optimize financial strategies, and ensure our clients achieve maximum benefits while staying fully compliant with regulatory requirements.
@@ -124,7 +132,8 @@ const About = () => {
 
         {/* Interactive History Timeline */}
         <div className="history-timeline-section">
-          <h2>Our Journey & Milestones</h2>
+          <span className="about-section-tag">OUR JOURNEY</span>
+          <h2>Milestones of Excellence</h2>
           <p className="timeline-subtitle">A look at how we built our reputation as a trusted consultancy</p>
           <div className="timeline-container">
             {timeline.map((item, idx) => (
@@ -141,24 +150,27 @@ const About = () => {
         </div>
 
         {/* Dynamic Team Section */}
-        <div className="team-section">
-          <h2>Our Professional Team</h2>
-          <p className="team-subtitle">Meet the minds behind Shree Chamunda Associates</p>
-          <div className="team-grid">
-            {team.map((member, idx) => (
-              <div key={idx} className="team-card">
-                <div className="team-img-wrapper">
-                  <img src={member.img} alt={member.name} />
+        {team.length > 0 && (
+          <div className="team-section">
+            <span className="about-section-tag">EXECUTIVE LEADERSHIP</span>
+            <h2>Our Professional Team</h2>
+            <p className="team-subtitle">Meet the minds behind Shree Chamunda Associates</p>
+            <div className="team-grid">
+              {team.map((member, idx) => (
+                <div key={idx} className="team-card">
+                  <div className="team-img-wrapper">
+                    <img src={member.img} alt={member.name} />
+                  </div>
+                  <div className="team-info">
+                    <h3>{member.name}</h3>
+                    <p className="team-role">{member.role}</p>
+                    <span className="team-specialty">{member.specialty}</span>
+                  </div>
                 </div>
-                <div className="team-info">
-                  <h3>{member.name}</h3>
-                  <p className="team-role">{member.role}</p>
-                  <span className="team-specialty">{member.specialty}</span>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

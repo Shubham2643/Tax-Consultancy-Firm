@@ -40,12 +40,15 @@ const ServicesSection = ({ featured = false }) => {
     <section className="services" aria-labelledby="services-heading">
       <div className="container">
         <div className="section-header text-center">
-          <span className="services-badge">WHAT WE DO</span>
+          <div className="services-badge">
+            <i className="fas fa-layer-group"></i>
+            <span>PRACTICE AREAS &amp; EXPERTISE</span>
+          </div>
           <h2 id="services-heading">
-            {featured ? 'Featured Services' : 'Our Expert Services'}
+            {featured ? 'Featured Advisory Services' : 'Our Professional Services'}
           </h2>
           <p className="section-subtitle">
-            Comprehensive financial, legal, and compliance solutions to scale your business
+            End-to-end tax filing, corporate auditing, business registrations, and statutory compliance managed by certified Chartered Accountants.
           </p>
         </div>
 

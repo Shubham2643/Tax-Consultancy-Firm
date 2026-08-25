@@ -221,18 +221,20 @@ const ServiceDetail = () => {
         <div className="container">
           <div className="detail-hero-content">
             <span className="service-type-badge">
-              {isRegistration ? 'registration service' : `${service.serviceType} solutions`}
+              <span className="live-dot"></span>
+              <i className="fas fa-briefcase"></i>
+              <span>{isRegistration ? 'Registration Service' : `${service.serviceType} Solutions`}</span>
             </span>
             <h1>{service.title}</h1>
             <p className="detail-hero-desc">{service.description}</p>
             <div className="detail-hero-meta">
-              <p className="detail-timeline">
+              <span className="detail-timeline">
                 <i className="far fa-clock"></i> Expected Timeline: {service.timeline}
-              </p>
+              </span>
               {isRegistration && registrationTotal > 0 && (
-                <p className="detail-fee-preview">
+                <span className="detail-fee-preview">
                   <i className="fas fa-tag"></i> Starting from ₹{registrationTotal.toLocaleString('en-IN')}
-                </p>
+                </span>
               )}
             </div>
           </div>

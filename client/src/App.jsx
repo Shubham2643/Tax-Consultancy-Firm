@@ -10,6 +10,7 @@ import About from './pages/About';
 import Services from './pages/Services';
 import Contact from './pages/Contact';
 import Blog from './pages/Blog';
+import BlogDetail from './pages/BlogDetail';
 import FAQ from './pages/FAQ';
 import ServiceDetail from './pages/ServiceDetail';
 import TermsConditions from './pages/TermsConditions';
@@ -119,6 +120,7 @@ function App() {
           <Route path="/services/:id" element={<ServiceDetail />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:id" element={<BlogDetail />} />
           <Route path="/faqs" element={<FAQ />} />
           <Route path="/terms-conditions" element={<TermsConditions />} />
           <Route path="/refund-policy" element={<RefundPolicy />} />
