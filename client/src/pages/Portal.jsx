@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { 
   getMyDocuments, 
@@ -18,10 +18,12 @@ import axios from 'axios';
 import './Portal.css';
 
 const Portal = () => {
-  useSEO({ title: 'Client Portal Dashboard', description: 'Manage your documents, track filings, and communicate with tax advisors.' });
+  useSEO({ title: 'Client Portal Dashboard | Shree Chamunda Associates', description: 'Secure workspace for document management, tax filing tracking, and consultations.' });
   const navigate = useNavigate();
   const { user, loading: authLoading, logout } = useAuth();
   const [tab, setTab] = useState('overview');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  
   const [documents, setDocuments] = useState([]);
   const [inquiries, setInquiries] = useState([]);
   const [consultations, setConsultations] = useState([]);
@@ -40,7 +42,6 @@ const Portal = () => {
   const [bookingForm, setBookingForm] = useState({ date: '', timeSlot: '10:00 AM - 11:00 AM', serviceType: 'GST Filing', notes: '' });
   const [bookingLoading, setBookingLoading] = useState(false);
   const [newCommentText, setNewCommentText] = useState({});
-  const [activeInquiryDetails, setActiveInquiryDetails] = useState(null);
 
   // Custom Dialog/Modal States
   const [editingDoc, setEditingDoc] = useState(null);
@@ -99,7 +100,7 @@ const Portal = () => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file && file.size > 10 * 1024 * 1024) {
-      setMessage({ type: 'error', text: 'File must be under 10MB' });
+      setMessage({ type: 'error', text: 'File size must be under 10MB' });
       return;
     }
     setUploadFile(file);
@@ -119,7 +120,7 @@ const Portal = () => {
             mimeType: uploadFile.type,
             serviceSlug,
           });
-          setMessage({ type: 'success', text: 'Document uploaded successfully!' });
+          setMessage({ type: 'success', text: 'Document uploaded successfully to your vault!' });
           setUploadFile(null);
           setServiceSlug('');
           setTab('documents');
@@ -136,7 +137,6 @@ const Portal = () => {
     }
   };
 
-  // Trigger custom edit modal
   const handleOpenEdit = (doc) => {
     setEditingDoc(doc);
     setEditName(doc.originalName);
@@ -145,7 +145,6 @@ const Portal = () => {
     setMessage({ type: '', text: '' });
   };
 
-  // Submit edits
   const handleSaveEdit = async () => {
     if (!editName.trim()) {
       setMessage({ type: 'error', text: 'Document name is required' });
@@ -183,19 +182,17 @@ const Portal = () => {
     }
   };
 
-  // Trigger custom warning delete modal
   const handleOpenDelete = (doc) => {
     setDeletingDoc(doc);
     setMessage({ type: '', text: '' });
   };
 
-  // Confirm delete
   const handleConfirmDelete = async () => {
     setDeleteLoading(true);
     try {
       await deleteDocument(deletingDoc._id);
       setDocuments((prev) => prev.filter((d) => d._id !== deletingDoc._id));
-      setMessage({ type: 'success', text: 'Document deleted successfully!' });
+      setMessage({ type: 'success', text: 'Document deleted successfully from vault.' });
       setDeletingDoc(null);
     } catch {
       setMessage({ type: 'error', text: 'Failed to delete document' });
@@ -207,7 +204,7 @@ const Portal = () => {
   const handleBookConsultation = async (e) => {
     e.preventDefault();
     if (!bookingForm.date || !bookingForm.notes.trim()) {
-      setMessage({ type: 'error', text: 'Please fill in the date and reason for appointment.' });
+      setMessage({ type: 'error', text: 'Please fill in the appointment date and discussion objective.' });
       return;
     }
     setBookingLoading(true);
@@ -223,7 +220,7 @@ const Portal = () => {
         notes: bookingForm.notes
       });
       if (res.success) {
-        setMessage({ type: 'success', text: 'Appointment request submitted successfully!' });
+        setMessage({ type: 'success', text: 'Consultation slot requested! Our CA coordinator will confirm shortly.' });
         setBookingForm({ date: '', timeSlot: '10:00 AM - 11:00 AM', serviceType: 'GST Filing', notes: '' });
         fetchConsultations();
       }
@@ -255,7 +252,7 @@ const Portal = () => {
     try {
       const scriptLoaded = await loadRazorpayScript();
       if (!scriptLoaded) {
-        setMessage({ type: 'error', text: 'Razorpay SDK failed to load. Please check your network connection.' });
+        setMessage({ type: 'error', text: 'Payment gateway failed to initialize. Please check your network connection.' });
         setPaymentProcessing(false);
         setProcessingInvoiceId(null);
         return;
@@ -283,7 +280,7 @@ const Portal = () => {
           currency: currency,
           name: "Shree Chamunda Associates",
           description: `Invoice ${invoiceObj.invoiceNumber}`,
-          image: window.location.origin + '/assets/shreeChamundalogo.png',
+          image: window.location.origin + '/assets/logo_new.jpg',
           order_id: orderId,
           handler: async function (response) {
             try {
@@ -305,13 +302,13 @@ const Portal = () => {
               );
 
               if (verifyRes.data.success) {
-                setMessage({ type: 'success', text: 'Payment successful! Invoice has been cleared.' });
+                setMessage({ type: 'success', text: 'Payment verified! Invoice marked as paid.' });
                 fetchInvoices();
               } else {
                 setMessage({ type: 'error', text: verifyRes.data.message || 'Signature verification failed.' });
               }
             } catch (err) {
-              setMessage({ type: 'error', text: err.response?.data?.message || 'Verification request failed.' });
+              setMessage({ type: 'error', text: err.response?.data?.message || 'Verification failed.' });
             } finally {
               setPaymentProcessing(false);
               setProcessingInvoiceId(null);
@@ -340,7 +337,7 @@ const Portal = () => {
         setProcessingInvoiceId(null);
       }
     } catch (err) {
-      setMessage({ type: 'error', text: err.response?.data?.message || 'Failed to initialize payment.' });
+      setMessage({ type: 'error', text: err.response?.data?.message || 'Failed to initialize payment gateway.' });
       setPaymentProcessing(false);
       setProcessingInvoiceId(null);
     }
@@ -355,9 +352,6 @@ const Portal = () => {
       if (res.success) {
         setNewCommentText(prev => ({ ...prev, [inquiryId]: '' }));
         setInquiries(prev => prev.map(inq => inq._id === inquiryId ? res.data : inq));
-        if (activeInquiryDetails?._id === inquiryId) {
-          setActiveInquiryDetails(res.data);
-        }
       }
     } catch (err) {
       setMessage({ type: 'error', text: err.response?.data?.message || 'Failed to post comment' });
@@ -372,14 +366,13 @@ const Portal = () => {
   const getFileIcon = (name) => {
     const ext = name.split('.').pop().toLowerCase();
     if (ext === 'pdf') return { icon: 'fa-file-pdf', class: 'pdf' };
-    if (['jpg', 'jpeg', 'png', 'gif', 'svg'].includes(ext)) return { icon: 'fa-file-image', class: 'image' };
+    if (['jpg', 'jpeg', 'png', 'gif', 'svg', 'webp'].includes(ext)) return { icon: 'fa-file-image', class: 'image' };
     if (['doc', 'docx'].includes(ext)) return { icon: 'fa-file-word', class: 'word' };
     if (['xls', 'xlsx', 'csv'].includes(ext)) return { icon: 'fa-file-excel', class: 'excel' };
     return { icon: 'fa-file-alt', class: 'generic' };
   };
 
   const totalDocs = documents.length;
-  const totalInquiries = inquiries.length;
   const activeInquiries = inquiries.filter(i => ['new', 'pending', 'in-progress'].includes(i.status)).length;
   const resolvedInquiries = inquiries.filter(i => ['resolved', 'approved', 'closed'].includes(i.status)).length;
 
@@ -389,247 +382,470 @@ const Portal = () => {
       ...inquiries.map(i => new Date(i.createdAt))
     ].filter(d => !isNaN(d.getTime()));
     
-    if (dates.length === 0) return 'No recent activity';
+    if (dates.length === 0) return 'No actions yet';
     const latest = new Date(Math.max(...dates));
     return latest.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
   };
 
-  if (authLoading || !user) return <div className="portal-loading-screen"><div className="portal-spinner"></div><p>Verifying secure session...</p></div>;
+  if (authLoading || !user) {
+    return (
+      <div className="portal-loading-screen">
+        <div className="portal-spinner"></div>
+        <p>Verifying 256-bit encrypted session...</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="portal-dashboard">
-      {/* Sidebar Navigation */}
-      <aside className="portal-sidebar">
-        <div className="sidebar-brand">
-          <i className="fas fa-shield-alt"></i>
-          <div>
+    <div className="portal-app-container">
+      {/* Mobile Drawer Backdrop */}
+      {isSidebarOpen && (
+        <div className="portal-drawer-backdrop" onClick={() => setIsSidebarOpen(false)}></div>
+      )}
+
+      {/* ========================================================
+          SIDEBAR: Executive Midnight Command Center
+          ======================================================== */}
+      <aside className={`portal-sidebar-panel ${isSidebarOpen ? 'sidebar-open' : ''}`}>
+        <div className="sidebar-brand-box">
+          <div className="brand-crest-icon">
+            <i className="fas fa-shield-alt"></i>
+          </div>
+          <div className="brand-meta-info">
             <h3>SCA Workspace</h3>
-            <span>Secure Client Portal</span>
+            <span className="vault-live-badge">
+              <span className="live-pulse-dot"></span> CA Audit Vault
+            </span>
           </div>
         </div>
 
-        <div className="sidebar-profile">
-          <div className="profile-avatar">{user.name.charAt(0).toUpperCase()}</div>
-          <div className="profile-details">
+        {/* User Profile Card */}
+        <div className="sidebar-user-card">
+          <div className="user-avatar-circle">{user.name.charAt(0).toUpperCase()}</div>
+          <div className="user-meta-details">
             <h4>{user.name}</h4>
-            <p>{user.email}</p>
+            <span className="user-role-tag">Verified Client</span>
+            <p className="user-email-text">{user.email}</p>
           </div>
         </div>
 
-        <nav className="sidebar-nav">
-          <button className={`sidebar-nav-btn ${tab === 'overview' ? 'active' : ''}`} onClick={() => setTab('overview')}>
-            <i className="fas fa-th-large"></i> Overview
+        {/* Navigation Tabs */}
+        <nav className="sidebar-menu-list">
+          <button 
+            className={`sidebar-tab-btn ${tab === 'overview' ? 'active' : ''}`} 
+            onClick={() => { setTab('overview'); setIsSidebarOpen(false); }}
+          >
+            <div className="tab-icon-wrap"><i className="fas fa-chart-pie"></i></div>
+            <span className="tab-label">Executive Overview</span>
           </button>
-          <button className={`sidebar-nav-btn ${tab === 'inquiries' ? 'active' : ''}`} onClick={() => setTab('inquiries')}>
-            <i className="fas fa-envelope-open-text"></i> Filings & Services
-            {activeInquiries > 0 && <span className="sidebar-count">{activeInquiries}</span>}
+
+          <button 
+            className={`sidebar-tab-btn ${tab === 'inquiries' ? 'active' : ''}`} 
+            onClick={() => { setTab('inquiries'); setIsSidebarOpen(false); }}
+          >
+            <div className="tab-icon-wrap"><i className="fas fa-tasks"></i></div>
+            <span className="tab-label">Tax Filings &amp; Status</span>
+            {activeInquiries > 0 && <span className="tab-badge-counter active-count">{activeInquiries}</span>}
           </button>
-          <button className={`sidebar-nav-btn ${tab === 'documents' ? 'active' : ''}`} onClick={() => setTab('documents')}>
-            <i className="fas fa-folder-open"></i> Document Vault
-            {totalDocs > 0 && <span className="sidebar-count docs">{totalDocs}</span>}
+
+          <button 
+            className={`sidebar-tab-btn ${tab === 'documents' ? 'active' : ''}`} 
+            onClick={() => { setTab('documents'); setIsSidebarOpen(false); }}
+          >
+            <div className="tab-icon-wrap"><i className="fas fa-folder-open"></i></div>
+            <span className="tab-label">Document Vault</span>
+            {totalDocs > 0 && <span className="tab-badge-counter docs-count">{totalDocs}</span>}
           </button>
-          <button className={`sidebar-nav-btn ${tab === 'bookings' ? 'active' : ''}`} onClick={() => setTab('bookings')}>
-            <i className="fas fa-calendar-check"></i> Book Consultation
+
+          <button 
+            className={`sidebar-tab-btn ${tab === 'bookings' ? 'active' : ''}`} 
+            onClick={() => { setTab('bookings'); setIsSidebarOpen(false); }}
+          >
+            <div className="tab-icon-wrap"><i className="fas fa-calendar-check"></i></div>
+            <span className="tab-label">Book CA Consultation</span>
           </button>
-          <button className={`sidebar-nav-btn ${tab === 'billing' ? 'active' : ''}`} onClick={() => setTab('billing')}>
-            <i className="fas fa-file-invoice-dollar"></i> Billing Vault
+
+          <button 
+            className={`sidebar-tab-btn ${tab === 'billing' ? 'active' : ''}`} 
+            onClick={() => { setTab('billing'); setIsSidebarOpen(false); }}
+          >
+            <div className="tab-icon-wrap"><i className="fas fa-receipt"></i></div>
+            <span className="tab-label">Invoices &amp; Billing</span>
           </button>
-          <button className={`sidebar-nav-btn ${tab === 'upload' ? 'active' : ''}`} onClick={() => setTab('upload')}>
-            <i className="fas fa-cloud-upload-alt"></i> Upload Files
+
+          <button 
+            className={`sidebar-tab-btn ${tab === 'upload' ? 'active' : ''}`} 
+            onClick={() => { setTab('upload'); setIsSidebarOpen(false); }}
+          >
+            <div className="tab-icon-wrap"><i className="fas fa-cloud-upload-alt"></i></div>
+            <span className="tab-label">Fast Document Upload</span>
           </button>
         </nav>
 
-        <div className="sidebar-footer">
-          <button className="sidebar-logout-btn" onClick={handleLogout}>
+        {/* Sidebar Footer */}
+        <div className="sidebar-bottom-actions">
+          <Link to="/" className="sidebar-website-btn">
+            <i className="fas fa-arrow-left"></i> Back to Main Site
+          </Link>
+          <button className="sidebar-logout-pill" onClick={handleLogout}>
             <i className="fas fa-sign-out-alt"></i> Logout Session
           </button>
         </div>
       </aside>
 
-      {/* Main Content Pane */}
-      <main className="portal-main">
-        {/* Top Navbar */}
-        <header className="portal-topbar">
-          <h2>{tab.charAt(0).toUpperCase() + tab.slice(1)} Dashboard</h2>
-          <div className="topbar-actions">
-            <span className="topbar-status"><span className="pulse-dot"></span> Secure Connection</span>
+      {/* ========================================================
+          MAIN VIEWPORT: Dashboard Stage
+          ======================================================== */}
+      <main className="portal-content-stage">
+        {/* Modern Top Header Bar */}
+        <header className="portal-executive-topbar">
+          <div className="topbar-left-zone">
+            <button className="portal-mobile-toggle" onClick={() => setIsSidebarOpen(!isSidebarOpen)} aria-label="Toggle Navigation">
+              <i className="fas fa-bars"></i>
+            </button>
+            <div className="topbar-tab-icon-badge">
+              {tab === 'overview' && <i className="fas fa-chart-pie"></i>}
+              {tab === 'inquiries' && <i className="fas fa-tasks"></i>}
+              {tab === 'documents' && <i className="fas fa-folder-open"></i>}
+              {tab === 'bookings' && <i className="fas fa-calendar-check"></i>}
+              {tab === 'billing' && <i className="fas fa-receipt"></i>}
+              {tab === 'upload' && <i className="fas fa-cloud-upload-alt"></i>}
+            </div>
+            <div className="topbar-title-block">
+              <div className="topbar-breadcrumb">
+                <span className="breadcrumb-root">Workspace</span>
+                <i className="fas fa-chevron-right breadcrumb-separator"></i>
+                <span className="breadcrumb-current">
+                  {tab === 'overview' && 'Executive Overview'}
+                  {tab === 'inquiries' && 'Tax Filings & Milestones'}
+                  {tab === 'documents' && 'Document Vault'}
+                  {tab === 'bookings' && 'Consultations Scheduler'}
+                  {tab === 'billing' && 'Invoices & Retainers'}
+                  {tab === 'upload' && 'Document Upload'}
+                </span>
+              </div>
+              <span className="topbar-sub-kicker">Shree Chamunda Associates &bull; ICAI Compliant Audit Session</span>
+            </div>
+          </div>
+
+          <div className="topbar-right-zone">
+            {tab !== 'upload' && (
+              <button className="topbar-quick-upload-btn" onClick={() => setTab('upload')}>
+                <i className="fas fa-plus"></i>
+                <span>Upload File</span>
+              </button>
+            )}
+
+            <a 
+              href="https://wa.me/919510984735?text=Hello%20CA%20Team!%20I%20am%20logged%20into%20my%20SCA%20Client%20Portal%20and%20need%20assistance."
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="topbar-wa-btn"
+            >
+              <i className="fab fa-whatsapp"></i>
+              <span>WhatsApp Expert Desk</span>
+            </a>
+
+            <div className="topbar-user-mini-chip">
+              <div className="topbar-user-avatar">{user.name.charAt(0).toUpperCase()}</div>
+              <span className="topbar-user-name">{user.name}</span>
+            </div>
           </div>
         </header>
 
-        {/* Messaging Area */}
+        {/* Alert Notifications */}
         {message && message.text && (
-          <div className={`portal-alert-message ${message.type}`}>
-            <i className={`fas ${message.type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}`}></i>
-            <span>{message.text}</span>
-            <button onClick={() => setMessage({ type: '', text: '' })} className="alert-close-btn">&times;</button>
+          <div className={`portal-alert-ribbon ${message.type}`}>
+            <div className="alert-content-left">
+              <i className={`fas ${message.type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}`}></i>
+              <span>{message.text}</span>
+            </div>
+            <button onClick={() => setMessage({ type: '', text: '' })} className="alert-dismiss-btn">&times;</button>
           </div>
         )}
 
-        {/* Tab Viewports */}
-        <div className="portal-viewport">
+        {/* Body Viewport Area */}
+        <div className="portal-body-stage">
           {loadingData ? (
-            <div className="portal-loading-container"><div className="portal-spinner"></div><p>Fetching secure database records...</p></div>
+            <div className="portal-content-loader">
+              <div className="portal-spinner"></div>
+              <p>Fetching encrypted client records...</p>
+            </div>
           ) : tab === 'overview' ? (
-            /* TAB: OVERVIEW */
-            <div className="overview-tab-view">
-              <div className="portal-greeting-card">
-                <h1>Welcome back, {user.name}!</h1>
-                <p>Manage your uploaded documents, track active service requests, and review tax filing feedback in your secure advisory folder.</p>
-              </div>
-
-              {/* Metric Card Widgets Grid */}
-              <div className="metrics-grid">
-                <div className="metric-card">
-                  <div className="metric-icon blue"><i className="fas fa-file-signature"></i></div>
-                  <div className="metric-info">
-                    <h3>{activeInquiries}</h3>
-                    <p>Active Filings</p>
-                  </div>
+            /* ========================================================
+               TAB: OVERVIEW
+               ======================================================== */
+            <div className="overview-flow fade-in">
+              {/* Executive Hero Banner */}
+              <div className="portal-hero-card">
+                <div className="hero-text-content">
+                  <h1>Welcome to your tax command center, {user.name}!</h1>
+                  <p>Track ongoing GST/ITR filings, collaborate directly with your assigned Chartered Accountant, and access confidential tax records anytime.</p>
                 </div>
-                <div className="metric-card">
-                  <div className="metric-icon amber"><i className="fas fa-folder"></i></div>
-                  <div className="metric-info">
-                    <h3>{totalDocs}</h3>
-                    <p>Vault Documents</p>
-                  </div>
-                </div>
-                <div className="metric-card">
-                  <div className="metric-icon green"><i className="fas fa-check-double"></i></div>
-                  <div className="metric-info">
-                    <h3>{resolvedInquiries}</h3>
-                    <p>Completed Filings</p>
-                  </div>
-                </div>
-                <div className="metric-card">
-                  <div className="metric-icon slate"><i className="fas fa-history"></i></div>
-                  <div className="metric-info">
-                    <h3>{getLatestDate()}</h3>
-                    <p>Latest Activity</p>
-                  </div>
+                <div className="hero-action-buttons">
+                  <button className="btn-hero-primary" onClick={() => setTab('upload')}>
+                    <i className="fas fa-cloud-upload-alt"></i> Upload Document
+                  </button>
+                  <button className="btn-hero-secondary" onClick={() => setTab('bookings')}>
+                    <i className="fas fa-calendar-alt"></i> Book CA Slot
+                  </button>
                 </div>
               </div>
 
-              {/* Dual Layout */}
-              <div className="overview-split-layout">
-                {/* Recent Activities */}
-                <div className="overview-split-card">
-                  <h3>Recent Activities</h3>
-                  <div className="activity-timeline">
-                    {documents.slice(0, 3).map((doc) => (
-                      <div key={doc._id} className="activity-item">
-                        <div className="activity-dot doc"></div>
-                        <div className="activity-details">
-                          <p>Uploaded <strong>{doc.originalName}</strong></p>
-                          <span>{new Date(doc.uploadedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
-                        </div>
-                      </div>
-                    ))}
-                    {inquiries.slice(0, 2).map((inq) => (
-                      <div key={inq._id} className="activity-item">
-                        <div className="activity-dot inq"></div>
-                        <div className="activity-details">
-                          <p>Submitted inquiry for <strong>{inq.service || 'General'}</strong></p>
-                          <span>{new Date(inq.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
-                        </div>
-                      </div>
-                    ))}
-                    {documents.length === 0 && inquiries.length === 0 && (
-                      <p className="no-activities">No recent actions logged.</p>
-                    )}
+              {/* 4 Bento Metric KPI Cards */}
+              <div className="portal-kpi-grid">
+                <div className="kpi-bento-card" onClick={() => setTab('inquiries')}>
+                  <div className="kpi-icon-wrap blue">
+                    <i className="fas fa-file-signature"></i>
+                  </div>
+                  <div className="kpi-info-wrap">
+                    <span className="kpi-number">{activeInquiries}</span>
+                    <span className="kpi-label">Active Tax Filings</span>
+                  </div>
+                  <i className="fas fa-arrow-right kpi-corner-arrow"></i>
+                </div>
+
+                <div className="kpi-bento-card" onClick={() => setTab('documents')}>
+                  <div className="kpi-icon-wrap gold">
+                    <i className="fas fa-folder"></i>
+                  </div>
+                  <div className="kpi-info-wrap">
+                    <span className="kpi-number">{totalDocs}</span>
+                    <span className="kpi-label">Vault Documents</span>
+                  </div>
+                  <i className="fas fa-arrow-right kpi-corner-arrow"></i>
+                </div>
+
+                <div className="kpi-bento-card">
+                  <div className="kpi-icon-wrap green">
+                    <i className="fas fa-check-double"></i>
+                  </div>
+                  <div className="kpi-info-wrap">
+                    <span className="kpi-number">{resolvedInquiries}</span>
+                    <span className="kpi-label">Completed Filings</span>
                   </div>
                 </div>
 
-                {/* Quick Actions Panel */}
-                <div className="overview-split-card quick-actions-panel">
-                  <h3>Quick Tools</h3>
-                  <div className="quick-actions-buttons">
-                    <button className="quick-action-btn" onClick={() => setTab('upload')}>
-                      <i className="fas fa-upload"></i> Upload Tax Document
-                    </button>
-                    <button className="quick-action-btn secondary" onClick={() => navigate('/services')}>
-                      <i className="fas fa-search-dollar"></i> Catalog Services
-                    </button>
-                    <button className="quick-action-btn tertiary" onClick={() => setTab('inquiries')}>
-                      <i className="fas fa-file-invoice"></i> Track My Filings
-                    </button>
+                <div className="kpi-bento-card">
+                  <div className="kpi-icon-wrap slate">
+                    <i className="fas fa-clock"></i>
+                  </div>
+                  <div className="kpi-info-wrap">
+                    <span className="kpi-number text-date">{getLatestDate()}</span>
+                    <span className="kpi-label">Latest Vault Activity</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Dual Intelligence Stage */}
+              <div className="overview-dual-grid">
+                {/* Recent Activities Timeline */}
+                <div className="portal-bento-card activity-timeline-card">
+                  <div className="bento-card-header">
+                    <div className="bento-header-left">
+                      <div className="bento-header-icon"><i className="fas fa-history"></i></div>
+                      <div className="bento-header-title">
+                        <span className="bento-kicker">AUDIT TRAIL</span>
+                        <h3>Recent Vault Activity</h3>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bento-card-body">
+                    <div className="timeline-flow-list">
+                      {documents.slice(0, 3).map((doc) => (
+                        <div key={doc._id} className="timeline-event-row">
+                          <div className="event-icon-circle doc"><i className="fas fa-file-alt"></i></div>
+                          <div className="event-details-box">
+                            <p>Document uploaded: <strong>{doc.originalName}</strong></p>
+                            <span>{new Date(doc.uploadedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })} &bull; {doc.serviceSlug || 'General'}</span>
+                          </div>
+                        </div>
+                      ))}
+                      {inquiries.slice(0, 2).map((inq) => (
+                        <div key={inq._id} className="timeline-event-row">
+                          <div className="event-icon-circle inq"><i className="fas fa-paper-plane"></i></div>
+                          <div className="event-details-box">
+                            <p>Inquiry created: <strong>{inq.service || 'General Advisory'}</strong></p>
+                            <span>{new Date(inq.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })} &bull; Status: {inq.status}</span>
+                          </div>
+                        </div>
+                      ))}
+                      {documents.length === 0 && inquiries.length === 0 && (
+                        <div className="empty-state-card">
+                          <i className="fas fa-inbox"></i>
+                          <p>No recent actions logged. Upload your first document to begin.</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Assigned CA Desk & Quick Actions */}
+                <div className="portal-bento-card ca-desk-card">
+                  <div className="bento-card-header">
+                    <div className="bento-header-left">
+                      <div className="bento-header-icon"><i className="fas fa-user-tie"></i></div>
+                      <div className="bento-header-title">
+                        <span className="bento-kicker">ADVISORY TEAM</span>
+                        <h3>Assigned CA Support Desk</h3>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bento-card-body">
+                    <div className="ca-advisor-box">
+                      <div className="ca-avatar-ring">
+                        <i className="fas fa-user-shield"></i>
+                      </div>
+                      <div className="ca-info-text">
+                        <h4>Senior Compliance Team</h4>
+                        <span>ICAI Registered Tax &amp; Corporate Auditors</span>
+                        <p>Direct assistance available for notice handling, balance sheets, and ROC filings.</p>
+                      </div>
+                    </div>
+
+                    <div className="desk-shortcuts-stack">
+                      <button className="shortcut-tile-btn" onClick={() => setTab('upload')}>
+                        <div className="shortcut-icon"><i className="fas fa-cloud-upload-alt"></i></div>
+                        <div className="shortcut-text">
+                          <strong>Fast Document Drop</strong>
+                          <span>Upload Form 16, Bank Statements, or P&amp;L</span>
+                        </div>
+                        <i className="fas fa-chevron-right"></i>
+                      </button>
+
+                      <button className="shortcut-tile-btn" onClick={() => setTab('bookings')}>
+                        <div className="shortcut-icon"><i className="fas fa-calendar-check"></i></div>
+                        <div className="shortcut-text">
+                          <strong>Schedule 1-on-1 CA Session</strong>
+                          <span>Book direct audit video call or meeting</span>
+                        </div>
+                        <i className="fas fa-chevron-right"></i>
+                      </button>
+
+                      <button className="shortcut-tile-btn" onClick={() => setTab('inquiries')}>
+                        <div className="shortcut-icon"><i className="fas fa-comments"></i></div>
+                        <div className="shortcut-text">
+                          <strong>Active Filing Discussions</strong>
+                          <span>Send inquiries and review filing drafts</span>
+                        </div>
+                        <i className="fas fa-chevron-right"></i>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           ) : tab === 'inquiries' ? (
-            /* TAB: FILINGS & INQUIRIES */
-            <div className="portal-section-pane">
-              <div className="pane-header-group">
-                <h3>Tax Services & Inquiries</h3>
-                <p>Track progress milestones for tax advisory requests submitted through our contact channels.</p>
+            /* ========================================================
+               TAB: FILINGS & INQUIRIES
+               ======================================================== */
+            <div className="filings-flow fade-in">
+              {/* Executive Hero Banner */}
+              <div className="portal-hero-card">
+                <div className="hero-text-content">
+                  <h1>Tax Filings &amp; Service Milestones</h1>
+                  <p>Monitor progress stages for statutory filings, GST registrations, direct tax inquiries, and collaborate directly with your assigned CA auditor.</p>
+                </div>
+                <div className="hero-action-buttons">
+                  <button className="btn-hero-primary" onClick={() => navigate('/services')}>
+                    <i className="fas fa-search-dollar"></i> Catalog Services
+                  </button>
+                  <button className="btn-hero-secondary" onClick={() => setTab('upload')}>
+                    <i className="fas fa-cloud-upload-alt"></i> Upload Files
+                  </button>
+                </div>
               </div>
 
               {inquiries.length === 0 ? (
-                <div className="portal-empty-state"><i className="fas fa-inbox"></i><p>No active filings found. Select a service from our catalog to submit an inquiry.</p></div>
+                <div className="portal-bento-card empty-vault-box">
+                  <div className="empty-icon-wrap"><i className="fas fa-inbox"></i></div>
+                  <h3>No Active Service Filings Found</h3>
+                  <p>Submit an inquiry through our services catalog or contact desk to start tracking milestones here.</p>
+                  <button className="btn-hero-primary" onClick={() => navigate('/services')}>
+                    Browse Service Catalog &rarr;
+                  </button>
+                </div>
               ) : (
-                <div className="inquiry-milestones-list">
+                <div className="filings-cards-stack">
                   {inquiries.map((inq) => {
-                    const step1 = true; // Always submitted
+                    const step1 = true;
                     const step2 = ['pending', 'in-progress', 'resolved', 'approved', 'closed'].includes(inq.status);
                     const step3 = ['in-progress', 'resolved', 'approved', 'closed'].includes(inq.status);
                     const step4 = ['resolved', 'approved', 'closed'].includes(inq.status);
 
                     return (
-                      <div key={inq._id} className="inquiry-progress-card">
-                        <div className="inquiry-card-header">
-                          <div>
-                            <h4>{inq.service || 'General Consultation'}</h4>
-                            <span className="inquiry-date"><i className="far fa-calendar-alt"></i> Submitted: {new Date(inq.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                      <div key={inq._id} className="portal-bento-card filing-tracker-card">
+                        <div className="filing-card-top">
+                          <div className="filing-header-left">
+                            <span className="filing-badge-icon"><i className="fas fa-file-invoice"></i></span>
+                            <div>
+                              <h3>{inq.service || 'General Tax Consultation'}</h3>
+                              <span className="filing-date-text">
+                                <i className="far fa-calendar-alt"></i> Initiated on {new Date(inq.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+                              </span>
+                            </div>
                           </div>
-                          <span className={`status-badge-capsule ${inq.status}`}>{inq.status}</span>
+                          <span className={`status-pill ${inq.status}`}>{inq.status}</span>
                         </div>
 
-                        <p className="inquiry-card-message">"{inq.message}"</p>
+                        <div className="filing-client-quote">
+                          <i className="fas fa-quote-left"></i>
+                          <p>{inq.message}</p>
+                        </div>
 
-                        {/* Interactive Timeline Tracker */}
-                        <div className="timeline-tracker">
-                          <div className={`timeline-step ${step1 ? 'active' : ''}`}>
-                            <div className="timeline-node"><i className="fas fa-paper-plane"></i></div>
-                            <div className="timeline-label">Inquiry Sent</div>
+                        {/* Interactive 4-Stage Milestone Tracker */}
+                        <div className="portal-milestone-rail">
+                          <div className={`milestone-node-wrap ${step1 ? 'completed' : ''}`}>
+                            <div className="milestone-circle"><i className="fas fa-paper-plane"></i></div>
+                            <span className="milestone-name">Request Logged</span>
                           </div>
-                          <div className={`timeline-connector ${step2 ? 'active' : ''}`}></div>
+                          <div className={`milestone-line ${step2 ? 'completed' : ''}`}></div>
 
-                          <div className={`timeline-step ${step2 ? 'active' : ''}`}>
-                            <div className="timeline-node"><i className="fas fa-search"></i></div>
-                            <div className="timeline-label">Reviewing Info</div>
+                          <div className={`milestone-node-wrap ${step2 ? 'completed' : ''}`}>
+                            <div className="milestone-circle"><i className="fas fa-search"></i></div>
+                            <span className="milestone-name">CA Verification</span>
                           </div>
-                          <div className={`timeline-connector ${step3 ? 'active' : ''}`}></div>
+                          <div className={`milestone-line ${step3 ? 'completed' : ''}`}></div>
 
-                          <div className={`timeline-step ${step3 ? 'active' : ''}`}>
-                            <div className="timeline-node"><i className="fas fa-cogs"></i></div>
-                            <div className="timeline-label">Processing / Filing</div>
+                          <div className={`milestone-node-wrap ${step3 ? 'completed' : ''}`}>
+                            <div className="milestone-circle"><i className="fas fa-cogs"></i></div>
+                            <span className="milestone-name">Filing &amp; Computation</span>
                           </div>
-                          <div className={`timeline-connector ${step4 ? 'active' : ''}`}></div>
+                          <div className={`milestone-line ${step4 ? 'completed' : ''}`}></div>
 
-                          <div className={`timeline-step ${step4 ? 'active' : ''}`}>
-                            <div className="timeline-node"><i className="fas fa-check-circle"></i></div>
-                            <div className="timeline-label">Filing Completed</div>
+                          <div className={`milestone-node-wrap ${step4 ? 'completed' : ''}`}>
+                            <div className="milestone-circle"><i className="fas fa-check-circle"></i></div>
+                            <span className="milestone-name">Filing Approved</span>
                           </div>
                         </div>
 
-                        {/* Advisor-Client Discussion Thread */}
-                        <div className="inquiry-discussion-thread">
-                          <h5><i className="fas fa-comments"></i> CA-Client Discussion Thread</h5>
-                          <div className="discussion-comments-list">
+                        {/* Live CA-Client Discussion Thread */}
+                        <div className="filing-chat-thread">
+                          <div className="chat-thread-header">
+                            <i className="fas fa-comments"></i>
+                            <h4>CA-Client Advisory Discussion</h4>
+                          </div>
+
+                          <div className="chat-messages-container">
                             {(inq.comments || []).map((comm, idx) => (
-                              <div key={idx} className={`discussion-comment-item ${comm.senderRole}`}>
-                                <div className="comment-meta">
-                                  <strong>{comm.senderName}</strong>
-                                  <span>{new Date(comm.createdAt).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}</span>
+                              <div key={idx} className={`chat-bubble-row ${comm.senderRole === 'admin' ? 'advisor' : 'client'}`}>
+                                <div className="chat-bubble">
+                                  <div className="bubble-header">
+                                    <strong>{comm.senderName}</strong>
+                                    <span>{new Date(comm.createdAt).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}</span>
+                                  </div>
+                                  <p>{comm.text}</p>
                                 </div>
-                                <p className="comment-text">{comm.text}</p>
                               </div>
                             ))}
                             {(inq.comments || []).length === 0 && (
-                              <p className="no-comments-prompt">No messages posted. Discuss document corrections or file requirements with your advisor below.</p>
+                              <p className="no-chat-prompt">No messages posted yet. Use the box below to ask questions or post document clarifications.</p>
                             )}
                           </div>
-                          <div className="discussion-comment-input-box">
+
+                          <div className="chat-input-bar">
                             <input 
                               type="text" 
                               value={newCommentText[inq._id] || ''} 
@@ -637,13 +853,13 @@ const Portal = () => {
                                 const val = e.target.value;
                                 setNewCommentText(prev => ({ ...prev, [inq._id]: val }));
                               }} 
-                              placeholder="Type message for your Chartered Accountant..." 
+                              placeholder="Write a message to your Chartered Accountant..." 
                               onKeyDown={(e) => {
                                 if (e.key === 'Enter') handlePostComment(inq._id);
                               }}
                             />
-                            <button className="comment-send-btn" onClick={() => handlePostComment(inq._id)}>
-                              <i className="fas fa-paper-plane"></i>
+                            <button className="chat-send-btn" onClick={() => handlePostComment(inq._id)}>
+                              <span>Send</span> <i className="fas fa-paper-plane"></i>
                             </button>
                           </div>
                         </div>
@@ -654,242 +870,377 @@ const Portal = () => {
               )}
             </div>
           ) : tab === 'documents' ? (
-            /* TAB: DOCUMENT VAULT */
-            <div className="portal-section-pane">
-              <div className="pane-header-group">
-                <h3>Secure Document Vault</h3>
-                <p>Manage tax receipts, business invoices, and filing documents uploaded to our advisors.</p>
+            /* ========================================================
+               TAB: DOCUMENT VAULT
+               ======================================================== */
+            <div className="vault-flow fade-in">
+              {/* Executive Hero Banner */}
+              <div className="portal-hero-card">
+                <div className="hero-text-content">
+                  <h1>Confidential Document Vault</h1>
+                  <p>Access audit files, salary slips, P&amp;L balance sheets, and tax acknowledgments stored in encrypted cloud storage with instant download.</p>
+                </div>
+                <div className="hero-action-buttons">
+                  <button className="btn-hero-primary" onClick={() => setTab('upload')}>
+                    <i className="fas fa-cloud-upload-alt"></i> Upload New File
+                  </button>
+                  <button className="btn-hero-secondary" onClick={() => setTab('bookings')}>
+                    <i className="fas fa-calendar-alt"></i> Book CA Slot
+                  </button>
+                </div>
               </div>
 
               {documents.length === 0 ? (
-                <div className="portal-empty-state"><i className="fas fa-folder-open"></i><p>Your vault is empty. Upload tax files to begin secure advisory audits.</p></div>
+                <div className="portal-bento-card empty-vault-box">
+                  <div className="empty-icon-wrap"><i className="fas fa-folder-open"></i></div>
+                  <h3>Your Document Vault is Empty</h3>
+                  <p>Upload your tax receipts, PAN/Aadhaar copies, or GST invoices to start secure compliance auditing.</p>
+                  <button className="btn-hero-primary" onClick={() => setTab('upload')}>
+                    Upload Document Now &rarr;
+                  </button>
+                </div>
               ) : (
-                <div className="vault-table-wrapper">
-                  <table className="vault-table">
-                    <thead>
-                      <tr>
-                        <th>File Name</th>
-                        <th>Target Service</th>
-                        <th>Date Uploaded</th>
-                        <th>File Size</th>
-                        <th>Advisor Note</th>
-                        <th style={{ textAlign: 'right' }}>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {documents.map((doc) => {
-                        const fileInfo = getFileIcon(doc.originalName);
-                        return (
-                          <tr key={doc._id}>
-                            <td>
-                              <div className="vault-filename-cell">
-                                <span className={`file-badge-icon ${fileInfo.class}`}><i className={`fas ${fileInfo.icon}`}></i></span>
-                                <button
-                                  type="button"
-                                  onClick={() => downloadPortalDocument(doc._id, doc.originalName)}
-                                  className="filename-text-link"
-                                  style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', textAlign: 'left', font: 'inherit', color: 'inherit' }}
-                                  title={`Download ${doc.originalName}`}
-                                >
-                                  {doc.originalName}
-                                </button>
-                              </div>
-                            </td>
-                            <td><span className="vault-service-slug">{doc.serviceSlug || 'General'}</span></td>
-                            <td><span className="vault-date-cell">{new Date(doc.uploadedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span></td>
-                            <td><span className="vault-size-cell">{(doc.fileSize / 1024).toFixed(1)} KB</span></td>
-                            <td>
-                              {doc.adminNote ? (
-                                <span className="vault-note-tooltip" title={doc.adminNote}>
-                                  <i className="fas fa-comment-dots"></i> View Note
-                                </span>
-                              ) : (
-                                <span className="no-note-cell">-</span>
-                              )}
-                            </td>
-                            <td style={{ textAlign: 'right' }}>
-                              <div className="vault-action-group-cell">
-                                <button className="vault-edit-action-btn" onClick={() => handleOpenEdit(doc)} title="Edit Document Details">
-                                  <i className="fas fa-edit"></i>
-                                </button>
-                                <button className="vault-delete-action-btn" onClick={() => handleOpenDelete(doc)} title="Delete Document">
-                                  <i className="fas fa-trash-alt"></i>
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
+                <div className="portal-bento-card vault-table-card">
+                  <div className="table-responsive-box">
+                    <table className="portal-data-table">
+                      <thead>
+                        <tr>
+                          <th>Document Title</th>
+                          <th>Practice Area</th>
+                          <th>Upload Date</th>
+                          <th>Size</th>
+                          <th>CA Review Note</th>
+                          <th style={{ textAlign: 'right' }}>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {documents.map((doc) => {
+                          const fileInfo = getFileIcon(doc.originalName);
+                          return (
+                            <tr key={doc._id}>
+                              <td>
+                                <div className="vault-file-cell">
+                                  <span className={`file-badge ${fileInfo.class}`}>
+                                    <i className={`fas ${fileInfo.icon}`}></i>
+                                  </span>
+                                  <button
+                                    type="button"
+                                    onClick={() => downloadPortalDocument(doc._id, doc.originalName)}
+                                    className="filename-download-trigger"
+                                    title={`Download ${doc.originalName}`}
+                                  >
+                                    {doc.originalName}
+                                  </button>
+                                </div>
+                              </td>
+                              <td><span className="vault-tag-pill">{doc.serviceSlug || 'General'}</span></td>
+                              <td><span className="table-date">{new Date(doc.uploadedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span></td>
+                              <td><span className="table-size">{(doc.fileSize / 1024).toFixed(1)} KB</span></td>
+                              <td>
+                                {doc.adminNote ? (
+                                  <span className="ca-note-chip" title={doc.adminNote}>
+                                    <i className="fas fa-comment-dots"></i> {doc.adminNote}
+                                  </span>
+                                ) : (
+                                  <span className="empty-dash">-</span>
+                                )}
+                              </td>
+                              <td style={{ textAlign: 'right' }}>
+                                <div className="table-action-btns">
+                                  <button 
+                                    className="btn-table-action edit" 
+                                    onClick={() => handleOpenEdit(doc)} 
+                                    title="Edit Document"
+                                  >
+                                    <i className="fas fa-edit"></i>
+                                  </button>
+                                  <button 
+                                    className="btn-table-action delete" 
+                                    onClick={() => handleOpenDelete(doc)} 
+                                    title="Delete Document"
+                                  >
+                                    <i className="fas fa-trash-alt"></i>
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               )}
             </div>
           ) : tab === 'upload' ? (
-            /* TAB: UPLOAD FILE */
-            <div className="portal-section-pane">
-              <div className="pane-header-group">
-                <h3>Secure Document Upload</h3>
-                <p>Select tax declarations, invoices, or salary Slips to share with our advisory team.</p>
+            /* ========================================================
+               TAB: UPLOAD FILE
+               ======================================================== */
+            <div className="upload-flow fade-in">
+              {/* Executive Hero Banner */}
+              <div className="portal-hero-card">
+                <div className="hero-text-content">
+                  <h1>Upload Tax &amp; Audit Documents</h1>
+                  <p>Securely transmit bank statements, invoices, and accounting ledgers directly to our auditing team. All files are encrypted at rest.</p>
+                </div>
+                <div className="hero-action-buttons">
+                  <button className="btn-hero-primary" onClick={() => setTab('documents')}>
+                    <i className="fas fa-folder-open"></i> View Document Vault
+                  </button>
+                  <button className="btn-hero-secondary" onClick={() => setTab('inquiries')}>
+                    <i className="fas fa-tasks"></i> Active Filings
+                  </button>
+                </div>
               </div>
 
-              <div className="portal-drag-drop-zone">
-                <div className="drag-drop-icon"><i className="fas fa-cloud-upload-alt"></i></div>
-                <h4>Select File to Upload</h4>
-                <p>Supports PDF, JPEG, PNG, DOCX up to 10MB</p>
-                
-                <input type="file" id="portal-drag-file-input" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx" onChange={handleFileChange} />
-                <label htmlFor="portal-drag-file-input" className="file-input-selector-btn">
-                  <i className="fas fa-file-signature"></i> {uploadFile ? uploadFile.name : 'Choose Target File'}
-                </label>
+              <div className="portal-bento-card upload-center-card">
+                <div className="dropzone-core-box">
+                  <div className="dropzone-icon-ring"><i className="fas fa-cloud-upload-alt"></i></div>
+                  <h3>Select or Drop Target Document</h3>
+                  <p className="dropzone-formats">Supports PDF, JPG, PNG, DOCX, XLSX up to 10MB per file</p>
 
-                <div className="upload-service-slug-input">
-                  <label><i className="fas fa-cog"></i> Associated Service (Optional)</label>
-                  <input type="text" value={serviceSlug} onChange={(e) => setServiceSlug(e.target.value)} placeholder="e.g. gst-registration or bookkeeping" />
+                  <input 
+                    type="file" 
+                    id="portal-file-picker" 
+                    accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx" 
+                    onChange={handleFileChange} 
+                  />
+                  <label htmlFor="portal-file-picker" className="btn-file-select">
+                    <i className="fas fa-folder-open"></i> {uploadFile ? uploadFile.name : 'Choose File from Computer'}
+                  </label>
+
+                  <div className="upload-meta-fields">
+                    <div className="form-group-custom">
+                      <label><i className="fas fa-tag"></i> Associated Service Category (Optional)</label>
+                      <input 
+                        type="text" 
+                        value={serviceSlug} 
+                        onChange={(e) => setServiceSlug(e.target.value)} 
+                        placeholder="e.g. gst-filing, itr-return, or company-incorporation" 
+                      />
+                    </div>
+                  </div>
+
+                  <button 
+                    className="btn-submit-upload" 
+                    disabled={!uploadFile || uploadLoading} 
+                    onClick={handleUpload}
+                  >
+                    {uploadLoading ? (
+                      <span><i className="fas fa-spinner fa-spin"></i> Encrypting &amp; Uploading...</span>
+                    ) : (
+                      <span><i className="fas fa-check-circle"></i> Save to Document Vault</span>
+                    )}
+                  </button>
                 </div>
-
-                <button className="portal-submit-upload-btn" disabled={!uploadFile || uploadLoading} onClick={handleUpload}>
-                  {uploadLoading ? <><i className="fas fa-spinner fa-spin"></i> Processing Secure Upload...</> : <><i className="fas fa-check-double"></i> Upload Secure Document</>}
-                </button>
               </div>
             </div>
           ) : tab === 'bookings' ? (
-            /* TAB: BOOK CONSULTATIONS */
-            <div className="portal-section-pane">
-              <div className="pane-header-group">
-                <h3>Consultation & Meetings Scheduler</h3>
-                <p>Book live advisory sessions with our Chartered Accountants and track your scheduled slots.</p>
+            /* ========================================================
+               TAB: BOOK CONSULTATIONS
+               ======================================================== */
+            <div className="bookings-flow fade-in">
+              {/* Executive Hero Banner */}
+              <div className="portal-hero-card">
+                <div className="hero-text-content">
+                  <h1>Consultations &amp; Advisory Scheduler</h1>
+                  <p>Book live strategy sessions with our senior Chartered Accountants for tax minimization, notice defense, and corporate structuring.</p>
+                </div>
+                <div className="hero-action-buttons">
+                  <a 
+                    href="https://wa.me/919510984735?text=Hello%20CA%20Team!%20I%20would%20like%20to%20schedule%20an%20urgent%20consultation." 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="btn-hero-primary"
+                  >
+                    <i className="fab fa-whatsapp"></i> Instant WhatsApp Desk
+                  </a>
+                </div>
               </div>
-              
-              <div className="bookings-split-view">
-                <div className="booking-form-card">
-                  <h4>Schedule Advisory Meeting</h4>
-                  <form onSubmit={handleBookConsultation} className="booking-actual-form">
-                    <div className="form-field">
-                      <label>Select Service Field</label>
-                      <select 
-                        value={bookingForm.serviceType} 
-                        onChange={(e) => setBookingForm(prev => ({ ...prev, serviceType: e.target.value }))}
-                      >
-                        <option value="GST Filing">GST Registration & Filing</option>
-                        <option value="Income Tax Return">Income Tax Audits (ITR)</option>
-                        <option value="Business Startup Advisory">Startup Registration</option>
-                        <option value="Bookkeeping Consultancy">Bookkeeping & Accounting</option>
-                      </select>
+
+              <div className="bookings-dual-grid">
+                {/* Appointment Form */}
+                <div className="portal-bento-card booking-form-bento">
+                  <div className="bento-card-header">
+                    <div className="bento-header-left">
+                      <div className="bento-header-icon"><i className="fas fa-calendar-plus"></i></div>
+                      <div className="bento-header-title">
+                        <span className="bento-kicker">APPOINTMENT REQUEST</span>
+                        <h3>Schedule CA Strategy Session</h3>
+                      </div>
                     </div>
-                    <div className="form-field">
-                      <label>Desired Date</label>
-                      <input 
-                        type="date" 
-                        value={bookingForm.date} 
-                        onChange={(e) => setBookingForm(prev => ({ ...prev, date: e.target.value }))}
-                        required 
-                      />
-                    </div>
-                    <div className="form-field">
-                      <label>Preferred Time Slot</label>
-                      <select 
-                        value={bookingForm.timeSlot} 
-                        onChange={(e) => setBookingForm(prev => ({ ...prev, timeSlot: e.target.value }))}
-                      >
-                        <option value="10:00 AM - 11:00 AM">10:00 AM - 11:00 AM</option>
-                        <option value="11:30 AM - 12:30 PM">11:30 AM - 12:30 PM</option>
-                        <option value="02:00 PM - 03:00 PM">02:00 PM - 03:00 PM</option>
-                        <option value="03:30 PM - 04:30 PM">03:30 PM - 04:30 PM</option>
-                      </select>
-                    </div>
-                    <div className="form-field">
-                      <label>Reason / Notes</label>
-                      <textarea 
-                        value={bookingForm.notes} 
-                        onChange={(e) => setBookingForm(prev => ({ ...prev, notes: e.target.value }))} 
-                        placeholder="Briefly describe your tax questions..." 
-                        rows="3"
-                        required
-                      ></textarea>
-                    </div>
-                    <button type="submit" className="booking-submit-btn" disabled={bookingLoading}>
-                      {bookingLoading ? <><i className="fas fa-spinner fa-spin"></i> Booking...</> : <><i className="fas fa-calendar-check"></i> Request Slot</>}
-                    </button>
-                  </form>
+                  </div>
+
+                  <div className="bento-card-body">
+                    <form onSubmit={handleBookConsultation} className="portal-form-stack">
+                      <div className="form-group-custom">
+                        <label>Select Practice Field</label>
+                        <select 
+                          value={bookingForm.serviceType} 
+                          onChange={(e) => setBookingForm(prev => ({ ...prev, serviceType: e.target.value }))}
+                        >
+                          <option value="GST Filing">GST Registration &amp; Monthly Filing</option>
+                          <option value="Income Tax Return">Income Tax Audits &amp; Returns (ITR)</option>
+                          <option value="Business Startup Advisory">Company / LLP Incorporation</option>
+                          <option value="Bookkeeping Consultancy">Bookkeeping &amp; Accounting Retainer</option>
+                          <option value="Virtual CFO Leadership">Virtual CFO Strategic Advisory</option>
+                        </select>
+                      </div>
+
+                      <div className="form-row-custom">
+                        <div className="form-group-custom">
+                          <label>Desired Date</label>
+                          <input 
+                            type="date" 
+                            value={bookingForm.date} 
+                            onChange={(e) => setBookingForm(prev => ({ ...prev, date: e.target.value }))}
+                            required 
+                          />
+                        </div>
+                        <div className="form-group-custom">
+                          <label>Time Slot (IST)</label>
+                          <select 
+                            value={bookingForm.timeSlot} 
+                            onChange={(e) => setBookingForm(prev => ({ ...prev, timeSlot: e.target.value }))}
+                          >
+                            <option value="10:00 AM - 11:00 AM">10:00 AM - 11:00 AM</option>
+                            <option value="11:30 AM - 12:30 PM">11:30 AM - 12:30 PM</option>
+                            <option value="02:00 PM - 03:00 PM">02:00 PM - 03:00 PM</option>
+                            <option value="03:30 PM - 04:30 PM">03:30 PM - 04:30 PM</option>
+                            <option value="05:00 PM - 06:00 PM">05:00 PM - 06:00 PM</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div className="form-group-custom">
+                        <label>Consultation Agenda / Notes</label>
+                        <textarea 
+                          value={bookingForm.notes} 
+                          onChange={(e) => setBookingForm(prev => ({ ...prev, notes: e.target.value }))} 
+                          placeholder="Describe the tax query or notice requirement you want to discuss..." 
+                          rows="4"
+                          required
+                        ></textarea>
+                      </div>
+
+                      <button type="submit" className="btn-hero-primary full-width" disabled={bookingLoading}>
+                        {bookingLoading ? (
+                          <span><i className="fas fa-spinner fa-spin"></i> Submitting Request...</span>
+                        ) : (
+                          <span><i className="fas fa-calendar-check"></i> Request Consultation Slot</span>
+                        )}
+                      </button>
+                    </form>
+                  </div>
                 </div>
 
-                <div className="bookings-history-card">
-                  <h4>My Appointments</h4>
-                  {consultations.length === 0 ? (
-                    <div className="empty-bookings-notice"><i className="far fa-calendar"></i><p>No booked consultations found.</p></div>
-                  ) : (
-                    <div className="bookings-timeline-list">
-                      {consultations.map(booking => (
-                        <div key={booking._id} className="booking-item-card">
-                          <div className="booking-item-header">
-                            <span className="booking-service-tag">{booking.serviceType}</span>
-                            <span className={`status-badge-capsule ${booking.status}`}>{booking.status}</span>
-                          </div>
-                          <p className="booking-item-notes">"{booking.notes}"</p>
-                          <div className="booking-item-meta">
-                            <span><i className="far fa-calendar-alt"></i> {new Date(booking.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
-                            <span><i className="far fa-clock"></i> {booking.timeSlot}</span>
-                          </div>
-                        </div>
-                      ))}
+                {/* Scheduled Bookings History */}
+                <div className="portal-bento-card bookings-list-bento">
+                  <div className="bento-card-header">
+                    <div className="bento-header-left">
+                      <div className="bento-header-icon"><i className="fas fa-history"></i></div>
+                      <div className="bento-header-title">
+                        <span className="bento-kicker">APPOINTMENT LOG</span>
+                        <h3>My Scheduled Sessions</h3>
+                      </div>
                     </div>
-                  )}
+                  </div>
+
+                  <div className="bento-card-body">
+                    {consultations.length === 0 ? (
+                      <div className="empty-state-card">
+                        <i className="far fa-calendar-times"></i>
+                        <p>No booked consultations found. Fill out the scheduler form to reserve your slot.</p>
+                      </div>
+                    ) : (
+                      <div className="appointment-items-stack">
+                        {consultations.map(booking => (
+                          <div key={booking._id} className="appointment-card">
+                            <div className="appointment-card-top">
+                              <span className="appointment-service-tag">{booking.serviceType}</span>
+                              <span className={`status-pill ${booking.status}`}>{booking.status}</span>
+                            </div>
+                            <p className="appointment-notes">"{booking.notes}"</p>
+                            <div className="appointment-meta-row">
+                              <span><i className="far fa-calendar-alt"></i> {new Date(booking.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                              <span><i className="far fa-clock"></i> {booking.timeSlot}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
           ) : (
-            /* TAB: BILLING & INVOICES */
-            <div className="portal-section-pane">
-              <div className="pane-header-group">
-                <h3>Secure Billing & Invoice Vault</h3>
-                <p>Review advisor fee invoices and log mock payments to clear your accounting balance.</p>
+            /* ========================================================
+               TAB: BILLING & INVOICES
+               ======================================================== */
+            <div className="billing-flow fade-in">
+              {/* Executive Hero Banner */}
+              <div className="portal-hero-card">
+                <div className="hero-text-content">
+                  <h1>Invoices &amp; Retainer Clearances</h1>
+                  <p>Review statutory advisory retainers and clear audit fees online via UPI, Credit/Debit Cards, or Net Banking powered by Razorpay.</p>
+                </div>
+                <div className="hero-action-buttons">
+                  <button className="btn-hero-primary" onClick={() => setTab('overview')}>
+                    <i className="fas fa-chart-pie"></i> View Overview
+                  </button>
+                </div>
               </div>
 
               {invoices.length === 0 ? (
-                <div className="portal-empty-state"><i className="fas fa-file-invoice-dollar"></i><p>No billing invoices generated yet. Invoices appear here once tax filing fees are compiled.</p></div>
+                <div className="portal-bento-card empty-vault-box">
+                  <div className="empty-icon-wrap"><i className="fas fa-receipt"></i></div>
+                  <h3>No Billing Invoices Pending</h3>
+                  <p>Invoices generated for audits and retainers will appear here for one-click settlement.</p>
+                </div>
               ) : (
-                <div className="vault-table-wrapper">
-                  <table className="vault-table">
-                    <thead>
-                      <tr>
-                        <th>Invoice #</th>
-                        <th>Service Name</th>
-                        <th>Amount</th>
-                        <th>Due Date</th>
-                        <th>Status</th>
-                        <th style={{ textAlign: 'right' }}>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {invoices.map(inv => (
-                        <tr key={inv._id}>
-                          <td><span className="monospace-code">{inv.invoiceNumber}</span></td>
-                          <td><strong>{inv.serviceName}</strong></td>
-                          <td>₹{inv.amount}</td>
-                          <td><span className="vault-date-cell">{new Date(inv.dueDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span></td>
-                          <td><span className={`status-badge-capsule ${inv.status}`}>{inv.status}</span></td>
-                          <td style={{ textAlign: 'right' }}>
-                            {inv.status === 'unpaid' ? (
-                              <button 
-                                className="invoice-pay-btn" 
-                                onClick={() => handlePayInvoice(inv._id)}
-                                disabled={paymentProcessing}
-                              >
-                                {paymentProcessing && processingInvoiceId === inv._id ? (
-                                  <><i className="fas fa-spinner fa-spin"></i> Secure Connecting...</>
-                                ) : (
-                                  <><i className="fas fa-credit-card"></i> Pay Invoice</>
-                                )}
-                              </button>
-                            ) : (
-                              <span className="invoice-paid-tag"><i className="fas fa-check-circle"></i> Paid</span>
-                            )}
-                          </td>
+                <div className="portal-bento-card vault-table-card">
+                  <div className="table-responsive-box">
+                    <table className="portal-data-table">
+                      <thead>
+                        <tr>
+                          <th>Invoice Reference</th>
+                          <th>Service Description</th>
+                          <th>Fee Amount</th>
+                          <th>Due Date</th>
+                          <th>Payment Status</th>
+                          <th style={{ textAlign: 'right' }}>Action</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {invoices.map(inv => (
+                          <tr key={inv._id}>
+                            <td><span className="monospace-code">{inv.invoiceNumber}</span></td>
+                            <td><strong>{inv.serviceName}</strong></td>
+                            <td><strong className="invoice-amount-text">₹{Number(inv.amount).toLocaleString('en-IN')}</strong></td>
+                            <td><span className="table-date">{new Date(inv.dueDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span></td>
+                            <td><span className={`status-pill ${inv.status}`}>{inv.status}</span></td>
+                            <td style={{ textAlign: 'right' }}>
+                              {inv.status === 'unpaid' ? (
+                                <button 
+                                  className="btn-pay-razorpay" 
+                                  onClick={() => handlePayInvoice(inv._id)}
+                                  disabled={paymentProcessing}
+                                >
+                                  {paymentProcessing && processingInvoiceId === inv._id ? (
+                                    <span><i className="fas fa-spinner fa-spin"></i> Processing...</span>
+                                  ) : (
+                                    <span><i className="fas fa-credit-card"></i> Pay Online</span>
+                                  )}
+                                </button>
+                              ) : (
+                                <span className="paid-success-pill"><i className="fas fa-check-circle"></i> Settled</span>
+                              )}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               )}
             </div>
@@ -897,72 +1248,82 @@ const Portal = () => {
         </div>
       </main>
 
-      {/* CUSTOM EDIT/UPDATE MODAL DIALOG */}
+      {/* ========================================================
+          MODAL: EDIT DOCUMENT METADATA
+          ======================================================== */}
       {editingDoc && (
         <div className="portal-modal-overlay">
-          <div className="portal-modal-card">
-            <div className="modal-card-header">
-              <h3><i className="fas fa-edit"></i> Edit Document Details</h3>
-              <button className="modal-close-btn" onClick={() => setEditingDoc(null)}><i className="fas fa-times"></i></button>
+          <div className="portal-modal-window">
+            <div className="modal-top-bar">
+              <div className="modal-title-wrap">
+                <i className="fas fa-edit"></i>
+                <h3>Edit Document Details</h3>
+              </div>
+              <button className="btn-modal-close" onClick={() => setEditingDoc(null)}>&times;</button>
             </div>
-            <div className="modal-card-body">
-              <div className="form-field">
+            <div className="modal-body-content">
+              <div className="form-group-custom">
                 <label>Document Name</label>
                 <input
                   type="text"
                   value={editName}
                   onChange={(e) => setEditName(e.target.value)}
-                  placeholder="Enter new filename"
+                  placeholder="Enter filename"
                 />
               </div>
-              <div className="form-field">
-                <label>Related Service</label>
+              <div className="form-group-custom">
+                <label>Associated Service</label>
                 <input
                   type="text"
                   value={editService}
                   onChange={(e) => setEditService(e.target.value)}
-                  placeholder="e.g. gst-registration"
+                  placeholder="e.g. gst-filing"
                 />
               </div>
-              <div className="form-field file-replace-field">
-                <label><i className="fas fa-sync-alt"></i> Replace File (optional)</label>
+              <div className="form-group-custom">
+                <label><i className="fas fa-sync-alt"></i> Replace File (Optional)</label>
                 <input
                   type="file"
-                  id="edit-file-replace"
+                  id="modal-replace-file"
                   accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx"
                   onChange={(e) => setEditFile(e.target.files[0])}
                 />
-                <label htmlFor="edit-file-replace" className="file-replace-label">
-                  <i className="fas fa-paperclip"></i> {editFile ? editFile.name : 'Choose Replacement File'}
+                <label htmlFor="modal-replace-file" className="file-picker-trigger">
+                  <i className="fas fa-paperclip"></i> {editFile ? editFile.name : 'Select Replacement File'}
                 </label>
               </div>
             </div>
-            <div className="modal-card-footer">
-              <button className="portal-cancel-btn" onClick={() => setEditingDoc(null)}>Cancel</button>
-              <button className="portal-save-btn" disabled={editLoading} onClick={handleSaveEdit}>
-                {editLoading ? <><i className="fas fa-spinner fa-spin"></i> Saving Updates...</> : 'Save Changes'}
+            <div className="modal-bottom-bar">
+              <button className="btn-modal-cancel" onClick={() => setEditingDoc(null)}>Cancel</button>
+              <button className="btn-hero-primary" disabled={editLoading} onClick={handleSaveEdit}>
+                {editLoading ? <><i className="fas fa-spinner fa-spin"></i> Saving...</> : 'Save Changes'}
               </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* CUSTOM WARNING DELETE CONFIRMATION DIALOG */}
+      {/* ========================================================
+          MODAL: DELETE CONFIRMATION
+          ======================================================== */}
       {deletingDoc && (
         <div className="portal-modal-overlay">
-          <div className="portal-modal-card delete-warning">
-            <div className="modal-card-header">
-              <h3><i className="fas fa-exclamation-triangle"></i> Delete Document?</h3>
-              <button className="modal-close-btn" onClick={() => setDeletingDoc(null)}><i className="fas fa-times"></i></button>
+          <div className="portal-modal-window delete-warning-window">
+            <div className="modal-top-bar">
+              <div className="modal-title-wrap text-danger">
+                <i className="fas fa-exclamation-triangle"></i>
+                <h3>Delete Document Permanently?</h3>
+              </div>
+              <button className="btn-modal-close" onClick={() => setDeletingDoc(null)}>&times;</button>
             </div>
-            <div className="modal-card-body">
-              <p>Are you sure you want to permanently delete <strong>{deletingDoc.originalName}</strong>?</p>
-              <span>This action cannot be undone and the document will be permanently removed from our secure audit vaults.</span>
+            <div className="modal-body-content">
+              <p>Are you sure you want to delete <strong>{deletingDoc.originalName}</strong>?</p>
+              <span className="warning-sub">This action cannot be undone. The document will be permanently expunged from the audit repository.</span>
             </div>
-            <div className="modal-card-footer">
-              <button className="portal-cancel-btn" onClick={() => setDeletingDoc(null)}>Cancel</button>
-              <button className="portal-confirm-delete-btn" disabled={deleteLoading} onClick={handleConfirmDelete}>
-                {deleteLoading ? <><i className="fas fa-spinner fa-spin"></i> Deleting...</> : 'Delete Permanently'}
+            <div className="modal-bottom-bar">
+              <button className="btn-modal-cancel" onClick={() => setDeletingDoc(null)}>Cancel</button>
+              <button className="btn-delete-confirm" disabled={deleteLoading} onClick={handleConfirmDelete}>
+                {deleteLoading ? <><i className="fas fa-spinner fa-spin"></i> Deleting...</> : 'Delete Document'}
               </button>
             </div>
           </div>

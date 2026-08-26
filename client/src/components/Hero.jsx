@@ -94,7 +94,7 @@ const Hero = () => {
               <i className="fas fa-star"></i>
             </div>
             <span className="rating-caption">
-              Trusted by <strong>250+ Gujarat Businesses</strong> &bull; <strong>4.9/5 Rating</strong>
+              Trusted by <strong>200+ Gujarat Businesses</strong> &bull; <strong>4.9/5 Rating</strong>
             </span>
           </div>
         </div>
@@ -174,7 +174,7 @@ const Hero = () => {
               </div>
               <div className="metric-divider"></div>
               <div className="metric-pill">
-                <strong>250+</strong>
+                <strong>200+</strong>
                 <span>Active Clients</span>
               </div>
               <div className="metric-divider"></div>

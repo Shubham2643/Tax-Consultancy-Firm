@@ -1,25 +1,67 @@
-/* ============================================
-   CONTACT PAGE — World-Class Executive Layout
-   ============================================ */
+/* ============================================================
+   CONTACT PAGE — Symmetrical 50/50 Two-Column Architecture
+   ============================================================ */
 .contact-page {
-  background-color: #ffffff;
+  background-color: #f8fafc;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #0f172a;
+  min-height: 100vh;
+  padding-bottom: 60px; /* Equal 60px breathing room above footer */
 }
 
-/* Luxury Hero Banner */
+/* ============================================
+   HERO BANNER & AMBIENT GLOW ORBS
+   ============================================ */
 .contact-hero {
   background-color: #06101e;
   color: #ffffff;
-  padding: 60px 0 65px 0;
+  padding: 60px 0 55px 0;
+  margin-bottom: 60px; /* Equal 60px spacing between header and below section */
   text-align: center;
   position: relative;
+  overflow: hidden;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Floating Ambient Glowing Bubbles */
+.contact-hero::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  right: 8%;
+  width: 360px;
+  height: 360px;
+  background: radial-gradient(circle, rgba(248, 180, 0, 0.14) 0%, rgba(34, 197, 94, 0.06) 50%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: contactFloatBubble 7s ease-in-out infinite alternate;
+}
+
+.contact-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  left: 6%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: contactFloatBubble 9s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes contactFloatBubble {
+  0% { transform: translateY(0) scale(1) rotate(0deg); }
+  50% { transform: translateY(-18px) scale(1.1) rotate(6deg); }
+  100% { transform: translateY(12px) scale(0.95) rotate(-6deg); }
 }
 
 .contact-hero .container {
   max-width: 1240px;
   margin: 0 auto;
   padding: 0 24px;
+  position: relative;
+  z-index: 2;
 }
 
 .contact-hero-badge {
@@ -58,306 +100,323 @@
 .contact-hero p {
   font-size: 1.05rem;
   color: #94a3b8;
-  max-width: 600px;
+  max-width: 620px;
   margin: 0 auto;
   line-height: 1.5;
 }
 
-/* Page Layout Container */
-.contact-container-wrapper {
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 55px 24px 80px 24px;
-}
-
-.contact-grid {
+/* ============================================
+   SYMMETRICAL 50/50 TWO-COLUMN GRID
+   ============================================ */
+.contact-equal-two-col-grid {
   display: grid;
-  grid-template-columns: 1fr 1.15fr;
-  gap: 48px;
-  align-items: flex-start;
-  margin-bottom: 70px;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+  align-items: start;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
 }
 
-/* Left Panel: Direct Channels */
-.contact-info-panel {
+.contact-col-half {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* ============================================
+   BENTO CARDS (Uniform Section Design)
+   ============================================ */
+.contact-bento-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(7, 19, 36, 0.03);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   text-align: left;
 }
 
-.contact-panel-badge {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  color: #d99a00;
-  background: rgba(248, 180, 0, 0.1);
-  border: 1px solid rgba(248, 180, 0, 0.25);
-  padding: 4px 12px;
-  border-radius: 12px;
-  margin-bottom: 10px;
+.contact-bento-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(248, 180, 0, 0.45);
+  box-shadow: 0 10px 30px rgba(7, 19, 36, 0.06);
 }
 
-.contact-info-header h2 {
-  font-size: 2.1rem;
-  font-weight: 850;
-  color: #071324;
-  margin: 0 0 10px 0;
-  letter-spacing: -0.5px;
-}
-
-.contact-intro {
-  font-size: 14px;
-  color: #64748b;
-  line-height: 1.6;
-  margin-bottom: 24px;
-}
-
-.info-list {
+.contact-card-header {
+  padding: 22px 28px;
+  background: #ffffff;
+  border-bottom: 1px solid #f1f5f9;
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 14px;
 }
 
-.info-card {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  background: #ffffff;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 14px;
-  padding: 18px 20px;
-  transition: all 0.25s ease;
-  box-shadow: 0 2px 8px rgba(7, 19, 36, 0.02);
-}
-
-.info-card:hover {
-  border-color: rgba(248, 180, 0, 0.5);
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px -5px rgba(7, 19, 36, 0.08);
-}
-
-.info-icon-tile {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
-  background: #071324;
+.card-header-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(248, 180, 0, 0.1);
+  border: 1px solid rgba(248, 180, 0, 0.25);
   color: #f8b400;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 16px;
   flex-shrink: 0;
-  box-shadow: 0 4px 10px rgba(7, 19, 36, 0.12);
 }
 
-.info-label {
-  display: block;
-  font-size: 11px;
-  font-weight: 700;
+.card-header-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-kicker {
+  font-size: 10px;
+  font-weight: 800;
+  color: #94a3b8;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.contact-card-header h2 {
+  font-size: 1.25rem;
+  font-weight: 850;
+  color: #071324;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.contact-card-body {
+  padding: 26px 28px;
+}
+
+.contact-intro-text {
+  font-size: 13.5px;
+  color: #64748b;
+  line-height: 1.6;
+  margin: 0 0 20px 0;
+}
+
+/* Info Cards Stack */
+.info-cards-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contact-channel-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 16px 18px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.25s ease;
+}
+
+.contact-channel-card:hover {
+  background: #ffffff;
+  border-color: #f8b400;
+  transform: translateX(4px);
+  box-shadow: 0 4px 15px rgba(7, 19, 36, 0.05);
+}
+
+.channel-icon-box {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #071324;
+  color: #f8b400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.channel-text-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.channel-label {
+  font-size: 10.5px;
+  font-weight: 750;
   text-transform: uppercase;
   color: #94a3b8;
   letter-spacing: 0.5px;
   margin-bottom: 2px;
 }
 
-.info-link {
-  display: block;
-  font-size: 15px;
-  font-weight: 700;
+.channel-text-box strong {
+  font-size: 14px;
+  font-weight: 800;
   color: #071324;
-  text-decoration: none;
-  transition: color 0.2s ease;
   margin-bottom: 2px;
 }
 
-.info-link:hover {
-  color: #d99a00;
-}
-
-.info-sub {
-  display: block;
-  font-size: 12px;
+.channel-sub {
+  font-size: 11.5px;
   color: #64748b;
 }
 
-/* WhatsApp Quick Card */
-.whatsapp-quick-card {
+/* WhatsApp Urgent Card */
+.contact-wa-action-card {
   display: flex;
   align-items: center;
-  gap: 16px;
-  background: linear-gradient(135deg, rgba(37, 211, 102, 0.1) 0%, rgba(37, 211, 102, 0.03) 100%);
-  border: 1.5px solid rgba(37, 211, 102, 0.35);
+  gap: 14px;
+  background: #ecfdf5;
+  border: 1.5px solid #a7f3d0;
   border-radius: 14px;
-  padding: 18px 20px;
+  padding: 16px 18px;
   text-decoration: none;
   transition: all 0.25s ease;
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
-.whatsapp-quick-card .wa-icon-box {
-  width: 44px;
-  height: 44px;
+.contact-wa-action-card:hover {
+  background: #25D366;
+  border-color: #25D366;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+}
+
+.wa-action-icon {
+  width: 40px;
+  height: 40px;
   border-radius: 10px;
   background: #25D366;
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
+  font-size: 20px;
   flex-shrink: 0;
-  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
 }
 
-.whatsapp-quick-card .wa-text-box {
+.contact-wa-action-card:hover .wa-action-icon {
+  background: #ffffff;
+  color: #25D366;
+}
+
+.wa-action-text {
   display: flex;
   flex-direction: column;
 }
 
-.whatsapp-quick-card strong {
-  font-size: 14.5px;
-  color: #071324;
-  font-weight: 800;
+.wa-action-text strong {
+  font-size: 14px;
+  color: #065f46;
+  font-weight: 850;
 }
 
-.whatsapp-quick-card span {
+.wa-action-text span {
   font-size: 12px;
   color: #059669;
   font-weight: 600;
 }
 
-.whatsapp-quick-card:hover {
-  background: #25D366;
-  border-color: #25D366;
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
-}
-
-.whatsapp-quick-card:hover strong,
-.whatsapp-quick-card:hover span {
+.contact-wa-action-card:hover .wa-action-text strong,
+.contact-wa-action-card:hover .wa-action-text span {
   color: #ffffff !important;
 }
 
-/* Map Section */
-.map-section {
-  border-top: 1px solid #e2e8f0;
-  padding-top: 50px;
-  margin-bottom: 60px;
-}
-
-.map-header {
-  display: flex;
+/* Map Card Header with button */
+.map-card-header {
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
   flex-wrap: wrap;
-  gap: 16px;
-  text-align: left;
-}
-
-.map-header h2 {
-  font-size: 1.8rem;
-  font-weight: 850;
-  color: #071324;
-  margin: 0;
-}
-
-.btn-directions {
-  background-color: #071324;
-  color: #ffffff;
-  padding: 10px 20px;
-  border-radius: 10px;
-  font-weight: 700;
-  font-size: 13.5px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(7, 19, 36, 0.15);
-}
-
-.btn-directions:hover {
-  background: #0f2444;
-  color: #f8b400;
-  transform: translateY(-2px);
-}
-
-/* Quick FAQs */
-.quick-faq-section {
-  border-top: 1px solid #e2e8f0;
-  padding-top: 50px;
-  text-align: left;
-}
-
-.quick-faq-header h2 {
-  font-size: 1.8rem;
-  font-weight: 850;
-  color: #071324;
-  margin: 0 0 6px 0;
-}
-
-.quick-faq-intro {
-  font-size: 14px;
-  color: #64748b;
-  margin-bottom: 24px;
-}
-
-.quick-faq-list {
-  display: flex;
-  flex-direction: column;
   gap: 12px;
 }
 
-.quick-faq-item {
-  background: #f8fafc;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 18px 20px;
-  cursor: pointer;
-  transition: all 0.25s ease;
+.card-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
-.quick-faq-item:hover,
-.quick-faq-item.open {
+.btn-get-directions {
+  background: #071324;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 750;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn-get-directions:hover {
+  background: #0f2444;
+  color: #f8b400;
+}
+
+.map-body-wrap {
+  padding: 20px;
+}
+
+/* Quick FAQs Stack */
+.contact-faq-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contact-faq-item {
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f8fafc;
+  padding: 14px 18px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.contact-faq-item:hover,
+.contact-faq-item.open {
+  border-color: #071324;
   background: #ffffff;
-  border-color: rgba(248, 180, 0, 0.45);
   box-shadow: 0 4px 15px rgba(7, 19, 36, 0.04);
 }
 
-.quick-faq-question {
+.contact-faq-question-row {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
 
-.quick-faq-question h4 {
-  font-size: 15px;
-  font-weight: 700;
+.contact-faq-question-row h4 {
+  font-size: 13.5px;
+  font-weight: 750;
   color: #071324;
   margin: 0;
 }
 
-.quick-faq-icon {
-  font-size: 12px;
+.faq-toggle-icon {
+  font-size: 11px;
   color: #64748b;
-  transition: transform 0.25s ease;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
 }
 
-.quick-faq-icon.rotate {
-  transform: rotate(180deg);
+.contact-faq-item.open .faq-toggle-icon {
   color: #d99a00;
 }
 
-.quick-faq-answer {
-  overflow: hidden;
-  transition: max-height 0.3s ease;
-}
-
-.quick-faq-answer p {
-  font-size: 13.5px;
+.contact-faq-answer-box p {
+  font-size: 13px;
   color: #64748b;
   line-height: 1.6;
-  margin: 12px 0 0 0;
+  margin: 10px 0 0 0;
   padding-top: 10px;
   border-top: 1px solid #f1f5f9;
 }
@@ -365,15 +424,19 @@
 /* ============================================
    RESPONSIVE DESIGN
    ============================================ */
-@media (max-width: 991px) {
-  .contact-grid {
+@media (max-width: 1024px) {
+  .contact-equal-two-col-grid {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 30px;
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 680px) {
   .contact-hero h1 {
     font-size: 2.1rem;
+  }
+  .contact-card-body,
+  .contact-card-header {
+    padding: 18px 20px;
   }
 }

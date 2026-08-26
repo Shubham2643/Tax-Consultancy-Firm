@@ -57,106 +57,135 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="contact-form-container">
-      <h3>Send Us a Message</h3>
-      <p className="contact-form-subtitle">Fill out the form below, and we will get back to you within 24 hours.</p>
-
-      {status.success && (
-        <div className="success-banner">
-          <i className="fas fa-check-circle"></i>
-          <p>Thank you! Your message has been sent successfully. We will get in touch soon.</p>
+    <div className="contact-bento-form-wrap">
+      <div className="contact-bento-form-header">
+        <div className="contact-bento-icon">
+          <i className="fas fa-paper-plane"></i>
         </div>
-      )}
-
-      {status.error && (
-        <div className="error-banner">
-          <i className="fas fa-exclamation-circle"></i>
-          <p>{status.error}</p>
+        <div className="contact-bento-title-wrap">
+          <span className="contact-bento-kicker">SEND INQUIRY</span>
+          <h3>Send Us a Message</h3>
         </div>
-      )}
+      </div>
 
-      <form onSubmit={handleSubmit} className="contact-form">
-        <div className="form-group">
-          <label htmlFor="name">Full Name *</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-            placeholder="Enter your full name"
-          />
-        </div>
+      <div className="contact-bento-form-body">
+        <p className="contact-form-subtitle">Fill out your details below and our senior CA team will get back to you within 24 hours.</p>
 
-        <div className="form-row">
-          <div className="form-group col">
-            <label htmlFor="email">Email Address *</label>
+        {status.success && (
+          <div className="contact-success-banner">
+            <i className="fas fa-check-circle"></i>
+            <p>Thank you! Your message has been sent successfully. We will get in touch soon.</p>
+          </div>
+        )}
+
+        {status.error && (
+          <div className="contact-error-banner">
+            <i className="fas fa-exclamation-circle"></i>
+            <p>{status.error}</p>
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="contact-form-elements">
+          <div className="contact-form-group">
+            <label htmlFor="name">Full Name *</label>
             <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
               onChange={handleChange}
               required
-              placeholder="Enter your email address"
+              placeholder="e.g. Rajesh Patel"
+              className="contact-custom-input"
             />
           </div>
-          <div className="form-group col">
-            <label htmlFor="phone">Phone Number</label>
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              value={formData.phone}
+
+          <div className="contact-form-row">
+            <div className="contact-form-group">
+              <label htmlFor="email">Email Address *</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                placeholder="rajesh@company.com"
+                className="contact-custom-input"
+              />
+            </div>
+            <div className="contact-form-group">
+              <label htmlFor="phone">Phone Number</label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="+91 98765 43210"
+                className="contact-custom-input"
+              />
+            </div>
+          </div>
+
+          <div className="contact-form-group">
+            <label htmlFor="service">Interested Practice Area</label>
+            <select
+              id="service"
+              name="service"
+              value={formData.service}
               onChange={handleChange}
-              placeholder="Enter your phone number"
-            />
+              className="contact-custom-select"
+            >
+              <option value="">Select a service / retainer</option>
+              <option value="GST Registration & Monthly Filing">GST Registration &amp; Monthly Filing</option>
+              <option value="Income Tax Return & Direct Tax Advisory">Income Tax Return &amp; Direct Tax Advisory</option>
+              <option value="Company / LLP Turnkey Incorporation">Company / LLP Turnkey Incorporation</option>
+              <option value="Complete Accounting & Bookkeeping Retainer">Complete Accounting &amp; Bookkeeping Retainer</option>
+              <option value="Virtual CFO & Financial Leadership">Virtual CFO &amp; Financial Leadership</option>
+              <option value="Statutory Notice Defense & Appeals">Statutory Notice Defense &amp; Appeals</option>
+            </select>
+          </div>
+
+          <div className="contact-form-group">
+            <label htmlFor="message">Your Inquiry / Message *</label>
+            <textarea
+              id="message"
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              required
+              minLength={10}
+              rows="4"
+              placeholder="Describe your business or specific filing requirement..."
+              className="contact-custom-textarea"
+            ></textarea>
+          </div>
+
+          <button type="submit" className="btn-contact-submit" disabled={status.submitting}>
+            {status.submitting ? (
+              <span><i className="fas fa-spinner fa-spin"></i> Submitting...</span>
+            ) : (
+              <span>Send Message <i className="fas fa-arrow-right"></i></span>
+            )}
+          </button>
+        </form>
+
+        <div className="contact-form-trust-pills">
+          <div className="trust-pill">
+            <i className="fas fa-lock"></i>
+            <span>100% Confidential</span>
+          </div>
+          <div className="trust-pill">
+            <i className="fas fa-user-shield"></i>
+            <span>ICAI Certified</span>
+          </div>
+          <div className="trust-pill">
+            <i className="fas fa-clock"></i>
+            <span>&lt; 24h Response</span>
           </div>
         </div>
-
-        <div className="form-group">
-          <label htmlFor="service">Interested Service</label>
-          <select
-            id="service"
-            name="service"
-            value={formData.service}
-            onChange={handleChange}
-          >
-            <option value="">Select a service</option>
-            <option value="GST Registration & Filing">GST Registration & Filing</option>
-            <option value="Income Tax Return Filing">Income Tax Return Filing</option>
-            <option value="Company / LLP Incorporation">Company / LLP Incorporation</option>
-            <option value="Accounting & Bookkeeping">Accounting & Bookkeeping</option>
-            <option value="Payroll Services">Payroll Services</option>
-            <option value="Other Audit & Compliances">Other Audit & Compliances</option>
-          </select>
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="message">Your Message *</label>
-          <textarea
-            id="message"
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            required
-            minLength={10}
-            rows="5"
-            placeholder="Enter your message here (min. 10 characters)..."
-          ></textarea>
-        </div>
-
-        <button type="submit" className="btn btn-submit" disabled={status.submitting}>
-          {status.submitting ? (
-            <>
-              <i className="fas fa-spinner fa-spin"></i> Submitting...
-            </>
-          ) : (
-            'Send Message'
-          )}
-        </button>
-      </form>
+      </div>
     </div>
   );
 };

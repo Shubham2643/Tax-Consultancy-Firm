@@ -1,177 +1,209 @@
-/* ============================================
-   CONTACT FORM — Enterprise Card Design
-   ============================================ */
-.contact-form-container {
+/* ============================================================
+   CONTACT FORM — Executive Bento Card Architecture
+   ============================================================ */
+.contact-bento-form-wrap {
   background: #ffffff;
-  padding: 36px 32px;
-  border-radius: 18px;
-  box-shadow: 0 10px 30px -5px rgba(7, 19, 36, 0.08), 0 0 1px 1px rgba(7, 19, 36, 0.04);
-  border: 1px solid #e2e8f0;
-  position: relative;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 20px;
   overflow: hidden;
+  box-shadow: 0 4px 20px rgba(7, 19, 36, 0.03);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   text-align: left;
 }
 
-.contact-form-container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #f8b400, #ffc425);
+.contact-bento-form-wrap:hover {
+  transform: translateY(-3px);
+  border-color: rgba(248, 180, 0, 0.45);
+  box-shadow: 0 10px 30px rgba(7, 19, 36, 0.06);
 }
 
-.contact-form-container h3 {
-  font-size: 1.6rem;
-  color: #071324;
-  margin: 0 0 6px 0;
+.contact-bento-form-header {
+  padding: 22px 28px;
+  background: #ffffff;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.contact-bento-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(248, 180, 0, 0.1);
+  border: 1px solid rgba(248, 180, 0, 0.25);
+  color: #f8b400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.contact-bento-title-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-bento-kicker {
+  font-size: 10px;
+  font-weight: 800;
+  color: #94a3b8;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.contact-bento-form-header h3 {
+  font-size: 1.25rem;
   font-weight: 850;
-  letter-spacing: -0.4px;
+  color: #071324;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.contact-bento-form-body {
+  padding: 26px 28px;
 }
 
 .contact-form-subtitle {
+  font-size: 13px;
   color: #64748b;
-  font-size: 13.5px;
+  margin: 0 0 20px 0;
   line-height: 1.5;
-  margin: 0 0 24px 0;
 }
 
-.contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  text-align: left;
-}
-
-.form-group label {
-  font-size: 12.5px;
-  font-weight: 700;
-  color: #1e293b;
-  letter-spacing: 0.2px;
-}
-
-.form-group input,
-.form-group select,
-.form-group textarea {
-  padding: 12px 14px;
-  border: 1.5px solid #e2e8f0;
+.contact-success-banner {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+  padding: 12px 16px;
   border-radius: 10px;
-  font-size: 13.5px;
-  color: #0f172a;
-  background-color: #f8fafc;
-  transition: all 0.2s ease;
-  font-family: inherit;
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-  outline: none;
-  border-color: #071324;
-  background-color: #ffffff;
-  box-shadow: 0 0 0 3px rgba(7, 19, 36, 0.08);
-}
-
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-  color: #94a3b8;
-}
-
-.form-row {
   display: flex;
-  gap: 16px;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  font-size: 13px;
+  font-weight: 600;
 }
 
-.form-row .col {
+.contact-error-banner {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  padding: 12px 16px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  font-size: 13px;
+}
+
+.contact-form-elements {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.contact-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   flex: 1;
 }
 
-.btn-submit {
-  background: linear-gradient(135deg, #f8b400 0%, #e6a100 100%);
-  color: #071324;
-  padding: 14px;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 800;
-  border: 1px solid rgba(248, 180, 0, 0.4);
-  cursor: pointer;
+.contact-form-group label {
+  font-size: 11.5px;
+  font-weight: 750;
+  color: #334155;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.contact-form-row {
   display: flex;
+  gap: 14px;
+}
+
+.contact-custom-input,
+.contact-custom-select,
+.contact-custom-textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 10px;
+  border: 1.5px solid #e2e8f0;
+  background: #f8fafc;
+  font-size: 13px;
+  color: #071324;
+  font-weight: 550;
+  font-family: inherit;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.contact-custom-input:focus,
+.contact-custom-select:focus,
+.contact-custom-textarea:focus {
+  background: #ffffff;
+  border-color: #071324;
+  box-shadow: 0 0 0 3px rgba(7, 19, 36, 0.08);
+}
+
+.btn-contact-submit {
+  background: #071324;
+  color: #ffffff;
+  border: none;
+  padding: 13px 20px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   transition: all 0.25s ease;
-  box-shadow: 0 4px 14px rgba(248, 180, 0, 0.25);
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
-.btn-submit:hover {
-  background: linear-gradient(135deg, #ffc425 0%, #f8b400 100%);
+.btn-contact-submit:hover {
+  background: #0f2444;
+  color: #f8b400;
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(248, 180, 0, 0.4);
+  box-shadow: 0 4px 15px rgba(7, 19, 36, 0.15);
 }
 
-.btn-submit:disabled {
-  background: #cbd5e1;
+.contact-form-trust-pills {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 18px;
+  margin-top: 18px;
+  border-top: 1px solid #f1f5f9;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.trust-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
   color: #64748b;
-  border-color: transparent;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
+  font-weight: 600;
 }
 
-.success-banner {
-  background-color: #f0fdf4;
-  border: 1.5px solid #bbf7d0;
-  color: #166534;
-  padding: 14px 16px;
-  border-radius: 10px;
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  margin-bottom: 20px;
-  text-align: left;
-  font-size: 13.5px;
+.trust-pill i {
+  color: #f8b400;
+  font-size: 12px;
 }
 
-.success-banner i {
-  font-size: 16px;
-  color: #22c55e;
-  margin-top: 2px;
-}
-
-.error-banner {
-  background-color: #fef2f2;
-  border: 1.5px solid #fecaca;
-  color: #991b1b;
-  padding: 14px 16px;
-  border-radius: 10px;
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  margin-bottom: 20px;
-  text-align: left;
-  font-size: 13.5px;
-}
-
-.error-banner i {
-  font-size: 16px;
-  color: #ef4444;
-  margin-top: 2px;
-}
-
-@media (max-width: 768px) {
-  .contact-form-container {
-    padding: 24px 20px;
-  }
-  .form-row {
+@media (max-width: 600px) {
+  .contact-form-row {
     flex-direction: column;
-    gap: 16px;
+  }
+  .contact-bento-form-body,
+  .contact-bento-form-header {
+    padding: 18px 20px;
   }
 }

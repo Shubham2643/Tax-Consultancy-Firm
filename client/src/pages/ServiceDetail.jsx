@@ -60,123 +60,94 @@ const ServiceDetail = () => {
         setLoading(false);
       }
     };
-
     fetchServiceDetail();
   }, [id]);
 
-  const handleDocCheck = (doc) => {
-    setCheckedDocs((prev) => ({
-      ...prev,
-      [doc]: !prev[doc],
-    }));
-  };
-
+  // Tax Calculator logic
   useEffect(() => {
     if (service?.serviceType === 'tax') {
-      const { income, deductions } = taxInput;
-      const netIncomeOld = Math.max(0, income - deductions - 75000);
-      const netIncomeNew = Math.max(0, income - 75000);
+      const taxableOld = Math.max(0, taxInput.income - taxInput.deductions - 50000);
+      let oldTax = 0;
+      if (taxableOld > 1000000) oldTax = 112500 + (taxableOld - 1000000) * 0.3;
+      else if (taxableOld > 500000) oldTax = 12500 + (taxableOld - 500000) * 0.2;
+      else if (taxableOld > 250000) oldTax = (taxableOld - 250000) * 0.05;
 
-      let taxOld = 0;
-      if (netIncomeOld > 1000000) {
-        taxOld += (netIncomeOld - 1000000) * 0.3 + 112500;
-      } else if (netIncomeOld > 500000) {
-        taxOld += (netIncomeOld - 500000) * 0.2 + 12500;
-      } else if (netIncomeOld > 250000) {
-        taxOld += (netIncomeOld - 250000) * 0.05;
-      }
-      if (netIncomeOld <= 500000) taxOld = 0;
-
-      let taxNew = 0;
-      if (netIncomeNew > 1500000) {
-        taxNew += (netIncomeNew - 1500000) * 0.3 + 120000;
-      } else if (netIncomeNew > 1200000) {
-        taxNew += (netIncomeNew - 1200000) * 0.2 + 60000;
-      } else if (netIncomeNew > 1000000) {
-        taxNew += (netIncomeNew - 1000000) * 0.15 + 30000;
-      } else if (netIncomeNew > 700000) {
-        taxNew += (netIncomeNew - 700000) * 0.1 + 15000;
-      } else if (netIncomeNew > 300000) {
-        taxNew += (netIncomeNew - 300000) * 0.05;
-      }
-      if (netIncomeNew <= 700000) taxNew = 0;
+      const taxableNew = Math.max(0, taxInput.income - 75000);
+      let newTax = 0;
+      if (taxableNew > 1500000) newTax = 150000 + (taxableNew - 1500000) * 0.3;
+      else if (taxableNew > 1200000) newTax = 90000 + (taxableNew - 1200000) * 0.2;
+      else if (taxableNew > 1000000) newTax = 60000 + (taxableNew - 1000000) * 0.15;
+      else if (taxableNew > 700000) newTax = 30000 + (taxableNew - 700000) * 0.1;
+      else if (taxableNew > 300000) newTax = (taxableNew - 300000) * 0.05;
 
       setTaxResult({
-        oldTax: Math.round(taxOld * 1.04),
-        newTax: Math.round(taxNew * 1.04),
-        savings: Math.max(0, Math.round(taxOld * 1.04 - taxNew * 1.04)),
+        oldRegimeTax: Math.round(oldTax * 1.04),
+        newRegimeTax: Math.round(newTax * 1.04),
+        recommended: oldTax < newTax ? 'Old Regime' : 'New Regime',
+        savings: Math.abs(Math.round((oldTax - newTax) * 1.04)),
       });
     }
   }, [taxInput, service]);
 
+  // Startup Fee Calculator logic
   useEffect(() => {
     if (service?.serviceType === 'startup') {
-      const { structure } = startupInput;
-      let govFee = 0;
-      let profFee = 0;
-      const dscFee = 2000;
-
-      if (structure === 'Pvt Ltd') {
-        govFee = 1500;
-        profFee = 5500;
-      } else if (structure === 'LLP') {
-        govFee = 1000;
-        profFee = 4500;
-      } else if (structure === 'OPC') {
-        govFee = 1200;
-        profFee = 5000;
-      } else {
-        govFee = 500;
-        profFee = 3000;
-      }
-
-      setStartupResult({
-        govFee,
-        profFee,
-        dscFee,
-        total: govFee + profFee + dscFee,
-      });
+      const baseGov =
+        startupInput.structure === 'Pvt Ltd'
+          ? 2000
+          : startupInput.structure === 'LLP'
+          ? 1500
+          : startupInput.structure === 'OPC'
+          ? 1000
+          : 0;
+      const stampDuty = startupInput.state === 'Maharashtra' ? 1000 : 500;
+      const profFee =
+        startupInput.structure === 'Pvt Ltd'
+          ? 4999
+          : startupInput.structure === 'LLP'
+          ? 3999
+          : startupInput.structure === 'OPC'
+          ? 3499
+          : 1999;
+      const total = baseGov + stampDuty + profFee;
+      setStartupResult({ baseGov, stampDuty, profFee, total });
     }
   }, [startupInput, service]);
 
+  // Accounting Package Calculator logic
   useEffect(() => {
-    if (service?.serviceType === 'accounting') {
-      const { transactions, invoices } = accountingInput;
-      const baseFee = 2500;
-      const transactionFee = transactions * 15;
-      const invoiceFee = invoices * 10;
-      setAccountingResult({ estimatedFee: baseFee + transactionFee + invoiceFee });
+    if (service?.serviceType === 'accounting' || service?.slug === 'bookkeeping-services') {
+      let fee = 2999;
+      if (accountingInput.transactions > 200 || accountingInput.invoices > 100) fee = 9999;
+      else if (accountingInput.transactions > 100 || accountingInput.invoices > 50) fee = 5999;
+      setAccountingResult({ estimatedFee: fee });
     }
   }, [accountingInput, service]);
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleDocCheck = (docName) => {
+    setCheckedDocs((prev) => ({ ...prev, [docName]: !prev[docName] }));
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     setFormStatus({ submitting: true, success: false, error: null });
-
-    const messageText =
-      formData.message.trim() ||
-      `I would like to register for ${service.title}. Please contact me with the next steps.`;
-
-    const submissionData = {
-      ...formData,
-      message: messageText,
-      service: service.title,
-    };
-
     try {
-      await submitContact(submissionData);
+      await submitContact({
+        ...formData,
+        subject: `Service Inquiry: ${service?.title || 'General'}`,
+        serviceInterest: service?.title,
+      });
       setFormStatus({ submitting: false, success: true, error: null });
       setFormData({ name: '', email: '', phone: '', message: '' });
     } catch (err) {
       setFormStatus({
         submitting: false,
         success: false,
-        error: err.response?.data?.message || err.message || 'Submission failed. Please try again.',
+        error: err.message || 'Failed to submit inquiry. Please try again.',
       });
     }
   };
@@ -217,6 +188,7 @@ const ServiceDetail = () => {
 
   return (
     <div className="service-detail-page fade-in">
+      {/* Executive Hero Banner */}
       <div className="detail-hero">
         <div className="container">
           <div className="detail-hero-content">
@@ -241,465 +213,464 @@ const ServiceDetail = () => {
         </div>
       </div>
 
-      <div className="container detail-body-grid">
-        <div className="detail-main-col">
-          <section className="detail-section">
-            <h2>Overview</h2>
-            <p className="overview-text">{service.detailedOverview || service.description}</p>
+      {/* Symmetrical 50/50 Two-Column Layout */}
+      <div className="container detail-equal-two-col-grid">
+        {/* ========================================================
+            COLUMN 1 (50%): Overview, Benefits, Process & Deliverables
+            ======================================================== */}
+        <div className="detail-col-half detail-content-side">
+          {/* 1. Executive Overview */}
+          <section className="detail-bento-card">
+            <div className="detail-card-header">
+              <div className="card-header-icon">
+                <i className="fas fa-file-alt"></i>
+              </div>
+              <div className="card-header-text">
+                <span className="card-kicker">EXECUTIVE SUMMARY</span>
+                <h2>Service Overview</h2>
+              </div>
+            </div>
+            <div className="detail-card-body">
+              <p className="overview-text">{service.detailedOverview || service.description}</p>
+            </div>
           </section>
 
+          {/* 2. Key Benefits */}
           {service.keyBenefits?.length > 0 && (
-            <section className="detail-section benefits-section">
-              <h2>Key Benefits</h2>
-              <div className="benefits-grid">
-                {service.keyBenefits.map((benefit, idx) => (
-                  <div key={idx} className="benefit-item">
-                    <i className="fas fa-check-circle"></i>
-                    <span>{benefit}</span>
-                  </div>
-                ))}
-              </div>
-            </section>
-          )}
-
-          {service.eligibility?.length > 0 && (
-            <section className="detail-section eligibility-section">
-              <h2>Who Should Apply</h2>
-              <ul className="eligibility-list">
-                {service.eligibility.map((item, idx) => (
-                  <li key={idx}>
-                    <i className="fas fa-user-check"></i>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )}
-
-          {service.processSteps?.length > 0 && (
-            <section className="detail-section process-section">
-              <h2>Registration Process</h2>
-              <div className="process-timeline">
-                {service.processSteps.map((step) => (
-                  <div key={step.step} className="process-step">
-                    <div className="process-step-number">{step.step}</div>
-                    <div className="process-step-content">
-                      <h4>{step.title}</h4>
-                      <p>{step.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-          )}
-
-          {docNames.length > 0 && (
-            <section className="detail-section doc-checklist-section">
-              <h2>Required Document Checklist</h2>
-              <p className="section-instruction">
-                Tick the documents you have ready to see your submission preparedness:
-              </p>
-
-              <div className="checklist-progress-bar-wrapper">
-                <div className="progress-label">
-                  <span>Preparedness</span>
-                  <span>{progressPercent}%</span>
+            <section className="detail-bento-card">
+              <div className="detail-card-header">
+                <div className="card-header-icon">
+                  <i className="fas fa-gem"></i>
                 </div>
-                <div className="progress-bar-track">
-                  <div className="progress-bar-fill" style={{ width: `${progressPercent}%` }}></div>
+                <div className="card-header-text">
+                  <span className="card-kicker">KEY ADVANTAGES</span>
+                  <h2>Core Benefits</h2>
                 </div>
               </div>
-
-              <div className="checklist-grid">
-                {docNames.map((doc, idx) => (
-                  <div
-                    key={idx}
-                    className={`checklist-item ${checkedDocs[doc] ? 'checked' : ''}`}
-                    onClick={() => handleDocCheck(doc)}
-                    role="checkbox"
-                    aria-checked={checkedDocs[doc]}
-                    tabIndex={0}
-                    onKeyDown={(e) => e.key === 'Enter' && handleDocCheck(doc)}
-                  >
-                    <div className="checkbox-box">
-                      {checkedDocs[doc] && <i className="fas fa-check"></i>}
-                    </div>
-                    <span className="checkbox-label">{doc}</span>
-                  </div>
-                ))}
-              </div>
-            </section>
-          )}
-
-          {service.deliverables?.length > 0 && (
-            <section className="detail-section deliverables-section">
-              <h2>What You Will Receive</h2>
-              <div className="deliverables-list">
-                {service.deliverables.map((item, idx) => (
-                  <div key={idx} className="deliverable-item">
-                    <i className="fas fa-certificate"></i>
-                    <span>{item}</span>
-                  </div>
-                ))}
-              </div>
-            </section>
-          )}
-
-          {isRegistration && (
-            <section className="detail-section calculator-tool-section">
-              <h2>Fee Estimator</h2>
-              <div className="registration-calc-box">
-                <p className="calc-instruction">
-                  Transparent pricing breakdown for {service.title}. Select processing speed to see your estimated total.
-                </p>
-                <div className="calc-inputs-row">
-                  <div className="calc-input-group">
-                    <label>Processing Speed</label>
-                    <select value={urgency} onChange={(e) => setUrgency(e.target.value)}>
-                      <option value="standard">Standard ({service.timeline})</option>
-                      <option value="express">Express (Priority — 50% faster)</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="calc-results startup-results">
-                  <div className="breakdown-item">
-                    <span>Government Fees</span>
-                    <span>₹{(service.governmentFee || 0).toLocaleString('en-IN')}</span>
-                  </div>
-                  <div className="breakdown-item">
-                    <span>Professional Service Fee</span>
-                    <span>₹{(service.professionalFee || 0).toLocaleString('en-IN')}</span>
-                  </div>
-                  {urgency === 'express' && (
-                    <div className="breakdown-item">
-                      <span>Express Processing Surcharge</span>
-                      <span>
-                        ₹
-                        {Math.round(
-                          ((service.governmentFee || 0) + (service.professionalFee || 0)) * 0.5
-                        ).toLocaleString('en-IN')}
-                      </span>
-                    </div>
-                  )}
-                  <hr />
-                  <div className="breakdown-item total-item">
-                    <span>Estimated Total</span>
-                    <strong>₹{registrationTotal.toLocaleString('en-IN')}</strong>
-                  </div>
-                </div>
-                <p className="fee-disclaimer">
-                  <i className="fas fa-info-circle"></i> Final fee may vary based on entity type and additional
-                  documentation requirements. Contact us for a customized quote.
-                </p>
-              </div>
-            </section>
-          )}
-
-          {service.faqs?.length > 0 && (
-            <section className="detail-section faq-section">
-              <h2>Frequently Asked Questions</h2>
-              <div className="service-faq-list">
-                {service.faqs.map((faq, idx) => (
-                  <div key={idx} className={`service-faq-item ${openFaq === idx ? 'open' : ''}`}>
-                    <button
-                      type="button"
-                      className="service-faq-question"
-                      onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                      aria-expanded={openFaq === idx}
-                    >
-                      <span>{faq.question}</span>
-                      <i className={`fas fa-chevron-${openFaq === idx ? 'up' : 'down'}`}></i>
-                    </button>
-                    {openFaq === idx && <div className="service-faq-answer">{faq.answer}</div>}
-                  </div>
-                ))}
-              </div>
-            </section>
-          )}
-
-          {!isRegistration && (
-            <section className="detail-section calculator-tool-section">
-              <h2>
-                {['tax', 'startup'].includes(service.serviceType) || service.slug === 'bookkeeping-services'
-                  ? 'Interactive Estimator Tool'
-                  : 'Service Pricing Structure'}
-              </h2>
-
-              {service.serviceType === 'tax' && taxResult && (
-                <div className="tax-calc-box">
-                  <h4>Income Tax Slabs Estimator (2026)</h4>
-                  <p className="calc-instruction">
-                    Enter your annual income and total deductions below to compare tax regimes.
-                  </p>
-                  <div className="calc-inputs-row">
-                    <div className="calc-input-group">
-                      <label>Annual Gross Income (₹)</label>
-                      <input
-                        type="number"
-                        value={taxInput.income}
-                        onChange={(e) => setTaxInput({ ...taxInput, income: Number(e.target.value) })}
-                      />
-                    </div>
-                    <div className="calc-input-group">
-                      <label>Total Deductions (Sec 80C, 80D, etc.) (₹)</label>
-                      <input
-                        type="number"
-                        value={taxInput.deductions}
-                        onChange={(e) => setTaxInput({ ...taxInput, deductions: Number(e.target.value) })}
-                      />
-                    </div>
-                  </div>
-                  <div className="calc-results">
-                    <div className="result-pill">
-                      <span>Old Regime Tax (incl. Cess)</span>
-                      <strong>₹{taxResult.oldTax.toLocaleString('en-IN')}</strong>
-                    </div>
-                    <div className="result-pill">
-                      <span>New Regime Tax (incl. Cess)</span>
-                      <strong>₹{taxResult.newTax.toLocaleString('en-IN')}</strong>
-                    </div>
-                    {taxResult.savings > 0 && (
-                      <div className="savings-alert">
-                        <i className="fas fa-piggy-bank"></i>
-                        <span>You save ₹{taxResult.savings.toLocaleString('en-IN')} under the New Tax Regime!</span>
+              <div className="detail-card-body">
+                <div className="benefits-equal-grid">
+                  {service.keyBenefits.map((benefit, idx) => (
+                    <div key={idx} className="benefit-pill-item">
+                      <div className="benefit-check-icon">
+                        <i className="fas fa-check"></i>
                       </div>
-                    )}
-                  </div>
+                      <span>{benefit}</span>
+                    </div>
+                  ))}
                 </div>
-              )}
+              </div>
+            </section>
+          )}
 
-              {service.serviceType === 'startup' && startupResult && (
-                <div className="startup-calc-box">
-                  <h4>Startup Cost & Compliance Planner</h4>
-                  <p className="calc-instruction">Select the desired legal structure for your company.</p>
-                  <div className="calc-inputs-row">
-                    <div className="calc-input-group">
-                      <label>Company / Entity Type</label>
-                      <select
-                        value={startupInput.structure}
-                        onChange={(e) => setStartupInput({ ...startupInput, structure: e.target.value })}
-                      >
-                        <option value="Pvt Ltd">Private Limited Company</option>
-                        <option value="LLP">Limited Liability Partnership (LLP)</option>
-                        <option value="OPC">One Person Company (OPC)</option>
-                        <option value="Proprietorship">Sole Proprietorship</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="calc-results startup-results">
-                    <div className="breakdown-item">
-                      <span>Govt Registration Fee</span>
-                      <span>₹{startupResult.govFee.toLocaleString('en-IN')}</span>
-                    </div>
-                    <div className="breakdown-item">
-                      <span>Professional Service Fee</span>
-                      <span>₹{startupResult.profFee.toLocaleString('en-IN')}</span>
-                    </div>
-                    <div className="breakdown-item">
-                      <span>DSC & PAN Allocations</span>
-                      <span>₹{startupResult.dscFee.toLocaleString('en-IN')}</span>
-                    </div>
-                    <hr style={{ margin: '15px 0', border: 'none', borderTop: '1px solid rgba(0,0,0,0.08)' }} />
-                    <div className="breakdown-item total-item" style={{ marginTop: 0, paddingTop: 0, border: 'none' }}>
-                      <span>Total Estimated Cost</span>
-                      <strong style={{ color: 'var(--primary)', fontSize: '1.4rem' }}>
-                        ₹{startupResult.total.toLocaleString('en-IN')}
-                      </strong>
-                    </div>
-                  </div>
+          {/* 3. Step-by-Step Process */}
+          {service.processSteps?.length > 0 && (
+            <section className="detail-bento-card">
+              <div className="detail-card-header">
+                <div className="card-header-icon">
+                  <i className="fas fa-stream"></i>
                 </div>
-              )}
+                <div className="card-header-text">
+                  <span className="card-kicker">WORKFLOW</span>
+                  <h2>Execution Process</h2>
+                </div>
+              </div>
+              <div className="detail-card-body">
+                <div className="process-timeline-v2">
+                  {service.processSteps.map((step) => (
+                    <div key={step.step} className="process-v2-item">
+                      <div className="process-v2-badge">{step.step}</div>
+                      <div className="process-v2-content">
+                        <h4>{step.title}</h4>
+                        <p>{step.description}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
 
-              {service.serviceType === 'accounting' && service.slug === 'bookkeeping-services' && accountingResult && (
-                <div className="accounting-calc-box">
-                  <h4>Retainer Quote Calculator</h4>
-                  <p className="calc-instruction">
-                    Adjust the volumes to estimate your customized bookkeeping monthly retainer.
-                  </p>
-                  <div className="slider-group">
-                    <div className="slider-header">
-                      <span>Avg. Monthly Bank Transactions</span>
-                      <strong>{accountingInput.transactions}</strong>
-                    </div>
-                    <input
-                      type="range"
-                      min="10"
-                      max="500"
-                      step="10"
-                      value={accountingInput.transactions}
-                      onChange={(e) =>
-                        setAccountingInput({ ...accountingInput, transactions: Number(e.target.value) })
-                      }
-                      className="calc-range-slider"
-                    />
-                  </div>
-                  <div className="slider-group">
-                    <div className="slider-header">
-                      <span>Avg. Monthly Purchase/Sales Invoices</span>
-                      <strong>{accountingInput.invoices}</strong>
-                    </div>
-                    <input
-                      type="range"
-                      min="5"
-                      max="200"
-                      step="5"
-                      value={accountingInput.invoices}
-                      onChange={(e) =>
-                        setAccountingInput({ ...accountingInput, invoices: Number(e.target.value) })
-                      }
-                      className="calc-range-slider"
-                    />
-                  </div>
-                  <div className="calc-results text-center">
-                    <div className="estimated-fee-card">
-                      <span>Estimated Bookkeeping Plan</span>
-                      <h2>
-                        ₹{accountingResult.estimatedFee.toLocaleString('en-IN')}
-                        <span>/month</span>
-                      </h2>
-                    </div>
-                  </div>
+          {/* 4. Eligibility & Scope */}
+          {service.eligibility?.length > 0 && (
+            <section className="detail-bento-card">
+              <div className="detail-card-header">
+                <div className="card-header-icon">
+                  <i className="fas fa-user-check"></i>
                 </div>
-              )}
+                <div className="card-header-text">
+                  <span className="card-kicker">CRITERIA</span>
+                  <h2>Who Should Apply</h2>
+                </div>
+              </div>
+              <div className="detail-card-body">
+                <ul className="eligibility-v2-list">
+                  {service.eligibility.map((item, idx) => (
+                    <li key={idx}>
+                      <i className="fas fa-arrow-circle-right"></i>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </section>
+          )}
 
-              {((service.serviceType === 'accounting' && service.slug !== 'bookkeeping-services') ||
-                service.serviceType === 'general' ||
-                service.serviceType === 'return') && (
-                <div className="registration-calc-box">
-                  <h4>Standard Service Fee Breakdown</h4>
-                  <p className="calc-instruction">
-                    Transparent pricing structure for {service.title}.
-                  </p>
-                  <div className="calc-results">
-                    <div className="breakdown-item">
-                      <span>Professional Service Fee</span>
-                      <span>₹{(service.professionalFee || 0).toLocaleString('en-IN')}</span>
-                    </div>
-                    <div className="breakdown-item">
-                      <span>Government / Processing Fee</span>
-                      <span>₹{(service.governmentFee || 0).toLocaleString('en-IN')}</span>
-                    </div>
-                    <hr style={{ margin: '15px 0', border: 'none', borderTop: '1px solid rgba(0,0,0,0.08)' }} />
-                    <div className="breakdown-item total-item" style={{ marginTop: 0, paddingTop: 0, border: 'none' }}>
-                      <span>Total Service Cost</span>
-                      <strong style={{ color: 'var(--primary)', fontSize: '1.4rem' }}>
-                        ₹{((service.professionalFee || 0) + (service.governmentFee || 0)).toLocaleString('en-IN')}
-                      </strong>
-                    </div>
-                  </div>
+          {/* 5. Deliverables */}
+          {service.deliverables?.length > 0 && (
+            <section className="detail-bento-card">
+              <div className="detail-card-header">
+                <div className="card-header-icon">
+                  <i className="fas fa-certificate"></i>
                 </div>
-              )}
+                <div className="card-header-text">
+                  <span className="card-kicker">DELIVERABLES</span>
+                  <h2>What You Will Receive</h2>
+                </div>
+              </div>
+              <div className="detail-card-body">
+                <div className="deliverables-equal-grid">
+                  {service.deliverables.map((item, idx) => (
+                    <div key={idx} className="deliverable-card-item">
+                      <i className="fas fa-file-signature deliverable-gold-icon"></i>
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </section>
           )}
         </div>
 
-        <div className="detail-sidebar-col">
-          <div className="registration-card-wrapper sticky-sidebar">
-            <h3>Register For This Service</h3>
-            <p>Fill in your details and our experts will begin your {service.title} process.</p>
+        {/* ========================================================
+            COLUMN 2 (50%): Form, Fee Estimator, Document Checklist & FAQs
+            ======================================================== */}
+        <div className="detail-col-half detail-interactive-side">
+          {/* 1. Dedicated Registration / Consultation Form */}
+          <div className="detail-bento-card form-bento-card">
+            <div className="detail-card-header form-card-header">
+              <div className="card-header-icon">
+                <i className="fas fa-paper-plane"></i>
+              </div>
+              <div className="card-header-text">
+                <span className="card-kicker">FAST-TRACK ONBOARDING</span>
+                <h2>Register For This Service</h2>
+              </div>
+            </div>
 
-            {(isRegistration || ((service.serviceType === 'accounting' && service.slug !== 'bookkeeping-services') || service.serviceType === 'general' || service.serviceType === 'return')) && (
-              <div className="sidebar-fee-badge">
-                <span>Estimated Fee</span>
-                <strong>
-                  ₹{(isRegistration ? registrationTotal : ((service.professionalFee || 0) + (service.governmentFee || 0))).toLocaleString('en-IN')}
-                </strong>
-              </div>
-            )}
+            <div className="detail-card-body">
+              <p className="form-intro-text">
+                Fill in your details below. Our senior Chartered Accountants will review your requirements and begin your {service.title} process.
+              </p>
 
-            {formStatus.success && (
-              <div className="success-banner">
-                <i className="fas fa-check-circle"></i>
-                <p>Registration inquiry received! We will connect with you shortly.</p>
-              </div>
-            )}
+              {(isRegistration ||
+                ((service.serviceType === 'accounting' && service.slug !== 'bookkeeping-services') ||
+                  service.serviceType === 'general' ||
+                  service.serviceType === 'return')) && (
+                <div className="sidebar-fee-badge-v2">
+                  <span className="fee-badge-label">Estimated Service Fee</span>
+                  <strong className="fee-badge-amount">
+                    ₹
+                    {(isRegistration
+                      ? registrationTotal
+                      : (service.professionalFee || 0) + (service.governmentFee || 0)
+                    ).toLocaleString('en-IN')}
+                  </strong>
+                </div>
+              )}
 
-            {formStatus.error && (
-              <div className="error-banner">
-                <i className="fas fa-exclamation-circle"></i>
-                <p>{formStatus.error}</p>
-              </div>
-            )}
+              {formStatus.success && (
+                <div className="success-banner-v2">
+                  <i className="fas fa-check-circle"></i>
+                  <p>Inquiry received successfully! Our CA team will connect with you shortly.</p>
+                </div>
+              )}
 
-            <form onSubmit={handleFormSubmit} className="sidebar-form">
-              <div className="form-group">
-                <label>Service Selected</label>
-                <input type="text" value={service.title} disabled className="disabled-input" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="name">Full Name *</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  required
-                  minLength={2}
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  placeholder="John Doe"
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="email">Email Address *</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  required
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  placeholder="john@example.com"
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="phone">Phone Number *</label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  required
-                  pattern="[+]?[\d\s-]{10,15}"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  placeholder="+91 98765 43210"
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="message">Message / Notes</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows="3"
-                  minLength={10}
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  placeholder="Tell us about your business or any specific requirements..."
-                ></textarea>
-              </div>
-              <button type="submit" className="btn btn-submit-service" disabled={formStatus.submitting}>
-                {formStatus.submitting ? (
-                  <i className="fas fa-spinner fa-spin"></i>
-                ) : (
-                  'Submit Registration Inquiry'
-                )}
-              </button>
-            </form>
+              {formStatus.error && (
+                <div className="error-banner-v2">
+                  <i className="fas fa-exclamation-circle"></i>
+                  <p>{formStatus.error}</p>
+                </div>
+              )}
 
-            <div className="sidebar-trust-badges">
-              <div className="trust-badge">
-                <i className="fas fa-shield-alt"></i>
-                <span>100% Confidential</span>
-              </div>
-              <div className="trust-badge">
-                <i className="fas fa-headset"></i>
-                <span>Expert Support</span>
-              </div>
-              <div className="trust-badge">
-                <i className="fas fa-bolt"></i>
-                <span>Fast Processing</span>
+              <form onSubmit={handleFormSubmit} className="v2-registration-form">
+                <div className="v2-form-group">
+                  <label>Selected Practice Area</label>
+                  <input type="text" value={service.title} disabled className="v2-disabled-input" />
+                </div>
+
+                <div className="v2-form-group">
+                  <label htmlFor="name">Full Name *</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    minLength={2}
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    placeholder="e.g. Rahul Sharma"
+                    className="v2-input"
+                  />
+                </div>
+
+                <div className="v2-form-row">
+                  <div className="v2-form-group">
+                    <label htmlFor="email">Email Address *</label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      placeholder="rahul@company.com"
+                      className="v2-input"
+                    />
+                  </div>
+
+                  <div className="v2-form-group">
+                    <label htmlFor="phone">Phone Number *</label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      required
+                      pattern="[+]?[\d\s-]{10,15}"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      placeholder="+91 98765 43210"
+                      className="v2-input"
+                    />
+                  </div>
+                </div>
+
+                <div className="v2-form-group">
+                  <label htmlFor="message">Business Notes / Queries</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="3"
+                    minLength={10}
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    placeholder="Describe your business or specific filing deadline..."
+                    className="v2-textarea"
+                  ></textarea>
+                </div>
+
+                <button type="submit" className="btn-v2-submit" disabled={formStatus.submitting}>
+                  {formStatus.submitting ? (
+                    <span><i className="fas fa-spinner fa-spin"></i> Submitting...</span>
+                  ) : (
+                    <span>Submit Registration Inquiry <i className="fas fa-arrow-right"></i></span>
+                  )}
+                </button>
+              </form>
+
+              <div className="form-trust-badges-v2">
+                <div className="trust-v2-item">
+                  <i className="fas fa-lock"></i>
+                  <span>100% Confidential</span>
+                </div>
+                <div className="trust-v2-item">
+                  <i className="fas fa-user-shield"></i>
+                  <span>ICAI Compliant</span>
+                </div>
+                <div className="trust-v2-item">
+                  <i className="fas fa-bolt"></i>
+                  <span>Fast Turnaround</span>
+                </div>
               </div>
             </div>
           </div>
+
+          {/* 2. Interactive Fee Estimator */}
+          {isRegistration && (
+            <section className="detail-bento-card">
+              <div className="detail-card-header">
+                <div className="card-header-icon">
+                  <i className="fas fa-calculator"></i>
+                </div>
+                <div className="card-header-text">
+                  <span className="card-kicker">PRICING TRANSPARENCY</span>
+                  <h2>Fee &amp; Timeline Estimator</h2>
+                </div>
+              </div>
+              <div className="detail-card-body">
+                <p className="calc-instruction-v2">
+                  Transparent statutory fee breakdown for {service.title}.
+                </p>
+                <div className="v2-calc-inputs">
+                  <label className="v2-select-label">Select Processing Priority</label>
+                  <select
+                    value={urgency}
+                    onChange={(e) => setUrgency(e.target.value)}
+                    className="v2-calc-select"
+                  >
+                    <option value="standard">Standard Processing ({service.timeline})</option>
+                    <option value="express">Express Priority Processing (50% Faster)</option>
+                  </select>
+                </div>
+
+                <div className="v2-fee-breakdown-box">
+                  <div className="breakdown-row">
+                    <span>Government Portal Fees</span>
+                    <strong>₹{(service.governmentFee || 0).toLocaleString('en-IN')}</strong>
+                  </div>
+                  <div className="breakdown-row">
+                    <span>Professional CA Service Fee</span>
+                    <strong>₹{(service.professionalFee || 0).toLocaleString('en-IN')}</strong>
+                  </div>
+                  {urgency === 'express' && (
+                    <div className="breakdown-row">
+                      <span>Express Priority Surcharge</span>
+                      <strong>
+                        ₹
+                        {Math.round(
+                          ((service.governmentFee || 0) + (service.professionalFee || 0)) * 0.5
+                        ).toLocaleString('en-IN')}
+                      </strong>
+                    </div>
+                  )}
+                  <div className="breakdown-divider"></div>
+                  <div className="breakdown-row total-row">
+                    <span>Estimated Total Cost</span>
+                    <strong className="total-gold-amount">₹{registrationTotal.toLocaleString('en-IN')}</strong>
+                  </div>
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* Tax Slab Estimator if applicable */}
+          {!isRegistration && service.serviceType === 'tax' && taxResult && (
+            <section className="detail-bento-card">
+              <div className="detail-card-header">
+                <div className="card-header-icon">
+                  <i className="fas fa-chart-pie"></i>
+                </div>
+                <div className="card-header-text">
+                  <span className="card-kicker">INTERACTIVE TOOL</span>
+                  <h2>Tax Slabs Estimator</h2>
+                </div>
+              </div>
+              <div className="detail-card-body">
+                <div className="v2-form-row">
+                  <div className="v2-form-group">
+                    <label>Annual Gross Income (₹)</label>
+                    <input
+                      type="number"
+                      value={taxInput.income}
+                      onChange={(e) => setTaxInput({ ...taxInput, income: Number(e.target.value) })}
+                      className="v2-input"
+                    />
+                  </div>
+                  <div className="v2-form-group">
+                    <label>Total Deductions (80C, 80D) (₹)</label>
+                    <input
+                      type="number"
+                      value={taxInput.deductions}
+                      onChange={(e) => setTaxInput({ ...taxInput, deductions: Number(e.target.value) })}
+                      className="v2-input"
+                    />
+                  </div>
+                </div>
+                <div className="v2-fee-breakdown-box">
+                  <div className="breakdown-row">
+                    <span>Old Tax Regime</span>
+                    <strong>₹{taxResult.oldRegimeTax.toLocaleString('en-IN')}</strong>
+                  </div>
+                  <div className="breakdown-row">
+                    <span>New Tax Regime</span>
+                    <strong>₹{taxResult.newRegimeTax.toLocaleString('en-IN')}</strong>
+                  </div>
+                  <div className="breakdown-divider"></div>
+                  <div className="breakdown-row total-row">
+                    <span>Recommended Regime</span>
+                    <strong className="total-gold-amount">{taxResult.recommended}</strong>
+                  </div>
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* 3. Document Preparedness Checklist */}
+          {docNames.length > 0 && (
+            <section className="detail-bento-card">
+              <div className="detail-card-header">
+                <div className="card-header-icon">
+                  <i className="fas fa-clipboard-check"></i>
+                </div>
+                <div className="card-header-text">
+                  <span className="card-kicker">PREPAREDNESS CHECK</span>
+                  <h2>Required Documents</h2>
+                </div>
+              </div>
+              <div className="detail-card-body">
+                <div className="v2-progress-box">
+                  <div className="v2-progress-labels">
+                    <span>Document Readiness</span>
+                    <strong>{progressPercent}% Prepared</strong>
+                  </div>
+                  <div className="v2-progress-track">
+                    <div className="v2-progress-bar" style={{ width: `${progressPercent}%` }}></div>
+                  </div>
+                </div>
+
+                <div className="v2-checklist-grid">
+                  {docNames.map((doc, idx) => (
+                    <div
+                      key={idx}
+                      className={`v2-check-pill ${checkedDocs[doc] ? 'checked' : ''}`}
+                      onClick={() => handleDocCheck(doc)}
+                      role="checkbox"
+                      aria-checked={checkedDocs[doc]}
+                    >
+                      <div className="v2-custom-checkbox">
+                        {checkedDocs[doc] && <i className="fas fa-check"></i>}
+                      </div>
+                      <span className="v2-checkbox-title">{doc}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* 4. Frequently Asked Questions */}
+          {service.faqs?.length > 0 && (
+            <section className="detail-bento-card">
+              <div className="detail-card-header">
+                <div className="card-header-icon">
+                  <i className="fas fa-question-circle"></i>
+                </div>
+                <div className="card-header-text">
+                  <span className="card-kicker">KNOWLEDGE BASE</span>
+                  <h2>Frequently Asked Questions</h2>
+                </div>
+              </div>
+              <div className="detail-card-body">
+                <div className="v2-faq-stack">
+                  {service.faqs.map((faq, idx) => (
+                    <div key={idx} className={`v2-faq-item ${openFaq === idx ? 'open' : ''}`}>
+                      <button
+                        type="button"
+                        className="v2-faq-question-btn"
+                        onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                        aria-expanded={openFaq === idx}
+                      >
+                        <span>{faq.question}</span>
+                        <div className="v2-faq-icon">
+                          <i className={`fas fa-chevron-${openFaq === idx ? 'up' : 'down'}`}></i>
+                        </div>
+                      </button>
+                      {openFaq === idx && <div className="v2-faq-answer-box">{faq.answer}</div>}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
         </div>
       </div>
     </div>
