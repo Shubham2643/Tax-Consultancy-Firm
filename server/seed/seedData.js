@@ -222,20 +222,20 @@ const seedData = async () => {
     // --- FEATURES (3 cards) ---
     const features = [
       {
-        title: 'Saving Strategies',
-        description: 'A disciplined savings habit is your first defense against life\'s uncertainties. Beyond securing your emergency fund, savings can be strategically channeled into low-risk instruments like fixed deposits or debt mutual funds, offering steady growth without exposure to market volatility.',
+        title: 'Tax Optimization & Structuring',
+        description: 'Proactive direct tax and GST structuring tailored for Indian businesses, startups, and professionals. We identify legitimate exemptions, optimize operational expenses, and structure compliant revenue models to legally minimize your tax outflows.',
         icon: '/assets/economic_15587072.png',
         order: 1,
       },
       {
-        title: 'Competitive Pricing',
-        description: 'Competitive pricing is the process of selecting strategic price points to best take advantage of a product or service based market relative to competition.',
+        title: 'Transparent Flat-Rate Billing',
+        description: 'Upfront, predictable fee structures with all-inclusive statutory deliverables. No hourly surprises, no hidden surcharges—just fixed, milestone-based packages backed by strict ICAI professional standards.',
         icon: '/assets/badge_11455935.png',
         order: 2,
       },
       {
-        title: '24/7 Support',
-        description: '24/7 support means customers can get help and find answers to questions as soon as they come up—24/7 and in real-time. Demand for 24/7 support is almost certainly going to come as your business becomes successful scaling up beyond its initial audiences and markets.',
+        title: 'Direct CA Advisory Desk',
+        description: 'Direct 1-on-1 access to certified Chartered Accountants whenever statutory deadlines approach or urgent tax notices arrive. Real-time drafting, audit defense, and filing guidance via WhatsApp and phone.',
         icon: '/assets/gear_9449778.png',
         order: 3,
       },

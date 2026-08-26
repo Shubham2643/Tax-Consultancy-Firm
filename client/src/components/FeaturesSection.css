@@ -1,128 +1,413 @@
+/* ============================================================
+   WHY CHOOSE US / FEATURES SECTION — Executive Corporate Bento
+   ============================================================ */
 .features-section {
-  padding: 120px 20px;
-  background: linear-gradient(135deg, #0b1c34 0%, #152d52 100%);
+  background: #06101e;
+  color: #ffffff;
+  padding: 100px 0 110px 0;
   position: relative;
   overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* Subtle background accent glow */
+/* Glowing Gold Accent Line on Top of Features Section */
+.features-top-accent-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3.5px;
+  background: linear-gradient(90deg, #f8b400 0%, #ffdf70 50%, #f8b400 100%);
+  box-shadow: 0 0 16px rgba(248, 180, 0, 0.4);
+  z-index: 10;
+}
+
+/* Floating Ambient Glowing Bubbles */
+.features-section::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  right: 5%;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(248, 180, 0, 0.12) 0%, rgba(34, 197, 94, 0.05) 50%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: featFloatBubble 8s ease-in-out infinite alternate;
+}
+
 .features-section::after {
   content: '';
   position: absolute;
-  top: -20%;
-  right: -10%;
+  bottom: -80px;
+  left: 5%;
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, rgba(248, 180, 0, 0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
+  animation: featFloatBubble 10s ease-in-out infinite alternate-reverse;
 }
 
-.features-section .section-header {
+@keyframes featFloatBubble {
+  0% { transform: translateY(0) scale(1) rotate(0deg); }
+  50% { transform: translateY(-22px) scale(1.1) rotate(6deg); }
+  100% { transform: translateY(14px) scale(0.94) rotate(-6deg); }
+}
+
+.features-inner-wrapper {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ============================================
+   HEADER SECTION
+   ============================================ */
+.features-header-wrap {
   text-align: center;
   margin-bottom: 60px;
 }
 
-.features-section .section-header h2 {
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: white;
-  margin-bottom: 12px;
+.features-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(248, 180, 0, 0.08);
+  border: 1px solid rgba(248, 180, 0, 0.25);
+  color: #f8b400;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 16px;
 }
 
-.features-section .section-header p {
-  font-size: 1.15rem;
-  color: rgba(255, 255, 255, 0.7);
-  max-width: 600px;
+.features-badge-pill .live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+}
+
+.features-main-title {
+  font-size: 2.8rem;
+  font-weight: 850;
+  line-height: 1.18;
+  color: #ffffff;
+  letter-spacing: -1px;
+  margin: 0 0 16px 0;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.features-subtitle {
+  font-size: 1.1rem;
+  color: #94a3b8;
+  max-width: 740px;
   margin: 0 auto;
+  line-height: 1.65;
 }
 
-.features-container {
+/* ============================================
+   BENTO GRID (3 COLUMNS)
+   ============================================ */
+.features-bento-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 30px;
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-bottom: 50px;
 }
 
-.feature-card {
-  background: rgba(255, 255, 255, 0.04);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius-md);
-  padding: 45px 35px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  text-align: left;
+.feature-bento-card {
+  background: rgba(255, 255, 255, 0.035);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 36px 32px 32px 32px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  text-align: left;
   position: relative;
+  overflow: hidden;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 
-.feature-card:hover {
-  transform: translateY(-8px);
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(248, 180, 0, 0.35);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), 0 0 20px rgba(248, 180, 0, 0.1);
+.card-top-accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3.5px;
+  background: linear-gradient(90deg, #f8b400, #ffc425);
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
 }
 
-.feature-icon-box {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+.feature-bento-card:hover {
+  transform: translateY(-8px) scale(1.015);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(248, 180, 0, 0.45);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4), 0 0 25px rgba(248, 180, 0, 0.15);
+}
+
+.feature-bento-card:hover .card-top-accent {
+  opacity: 1;
+}
+
+/* Card Header with Icon & Pill */
+.feature-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.feature-icon-badge {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(248, 180, 0, 0.12);
+  border: 1.5px solid rgba(248, 180, 0, 0.3);
+  color: #f8b400;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 28px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 20px;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.feature-card:hover .feature-icon-box {
-  background: var(--secondary);
-  border-color: var(--secondary);
-  color: #0b1c34;
-  transform: scale(1.08);
+.feature-bento-card:hover .feature-icon-badge {
+  background: #f8b400;
+  color: #071324;
+  transform: rotate(8deg) scale(1.1);
+  box-shadow: 0 0 20px rgba(248, 180, 0, 0.4);
 }
 
-.feature-card-icon {
-  width: 32px;
-  height: 32px;
+.feature-custom-icon {
+  width: 26px;
+  height: 26px;
   object-fit: contain;
-  transition: all 0.3s ease;
 }
 
-.feature-card:hover .feature-card-icon {
-  filter: brightness(0) saturate(100%) invert(9%) sepia(26%) saturate(2250%) dial(212deg);
+.feature-tag-pill {
+  font-size: 10px;
+  font-weight: 800;
+  color: #f8b400;
+  background: rgba(248, 180, 0, 0.08);
+  border: 1px solid rgba(248, 180, 0, 0.25);
+  padding: 4px 10px;
+  border-radius: 12px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
 }
 
-.feature-card h3 {
+/* Card Heading & Text */
+.feature-card-heading {
   font-size: 1.45rem;
-  color: white;
-  margin-bottom: 15px;
-  font-weight: 700;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 12px 0;
   line-height: 1.3;
+  letter-spacing: -0.3px;
 }
 
-.feature-card p {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.98rem;
-  text-align: left;
+.feature-card-text {
+  font-size: 13.5px;
+  color: #94a3b8;
   line-height: 1.65;
+  margin: 0 0 20px 0;
+  flex-grow: 1;
+}
+
+/* Highlights Checkmarks */
+.feature-highlights-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 18px;
+}
+
+.feature-highlights-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 12.5px;
+  color: #cbd5e1;
+  line-height: 1.5;
+}
+
+.check-bullet-icon {
+  color: #22c55e;
+  font-size: 13px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+/* Card Footer Metric */
+.feature-card-footer {
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.feature-metric-chip {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #f8b400;
+  background: rgba(248, 180, 0, 0.08);
+  border: 1px solid rgba(248, 180, 0, 0.25);
+  padding: 5px 12px;
+  border-radius: 8px;
+}
+
+/* ============================================
+   BOTTOM TRUST METRICS RIBBON & CTA
+   ============================================ */
+.features-trust-ribbon {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 32px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.3);
+}
+
+.trust-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: center;
+}
+
+.trust-stat-box {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.trust-stat-number {
+  font-size: 2rem;
+  font-weight: 850;
+  color: #f8b400;
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+
+.trust-stat-label {
+  font-size: 12px;
+  color: #94a3b8;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.trust-cta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  text-align: left;
+}
+
+.trust-cta-text h4 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 4px 0;
+}
+
+.trust-cta-text p {
+  font-size: 13.5px;
+  color: #94a3b8;
   margin: 0;
+}
+
+.btn-features-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #25d366;
+  color: #ffffff;
+  border: none;
+  padding: 13px 26px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+  white-space: nowrap;
+}
+
+.btn-features-whatsapp:hover {
+  background: #20ba5a;
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 10px 25px rgba(37, 211, 102, 0.5);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 1024px) {
+  .features-bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .trust-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
 }
 
 @media (max-width: 768px) {
   .features-section {
-    padding: 80px 15px;
+    padding: 70px 0 80px 0;
   }
-  .features-section .section-header h2 {
-    font-size: 2rem;
+  .features-main-title {
+    font-size: 2.1rem;
   }
-  .features-container {
+  .features-bento-grid {
     grid-template-columns: 1fr;
-    max-width: 400px;
+  }
+  .feature-bento-card {
+    padding: 28px 24px;
+  }
+  .features-trust-ribbon {
+    padding: 24px 20px;
+  }
+  .trust-stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .trust-cta-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .btn-features-whatsapp {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .trust-stats-grid {
+    grid-template-columns: 1fr;
   }
 }
