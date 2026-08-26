@@ -999,7 +999,7 @@ const Admin = () => {
       pricing: 'Pricing Plans & Retainers',
       blogs: 'Article Publisher & Tax Insights',
       navmenu: 'Navigation Megamenu Builder',
-      features: 'Homepage Feature Highlights',
+      features: 'Why Choose Us (Features)',
       team: 'Chartered Partners & Team Profiles',
       settings: 'Global System Configuration'
     };
@@ -1155,10 +1155,10 @@ const Admin = () => {
           <button 
             className={`admin-nav-btn ${tab === 'features' ? 'active' : ''}`} 
             onClick={() => { setTab('features'); setIsMobileDrawerOpen(false); }}
-            title="Feature Highlights"
+            title="Why Choose Us (Features)"
           >
-            <div className="nav-icon-box"><i className="fas fa-star"></i></div>
-            <span className="nav-label">Feature Highlights</span>
+            <div className="nav-icon-box"><i className="fas fa-shield-alt"></i></div>
+            <span className="nav-label">Why Choose Us Cards</span>
           </button>
 
           <button 
@@ -2262,19 +2262,19 @@ const Admin = () => {
               )}
 
               {/* ========================================================
-                  TAB 12: FEATURE HIGHLIGHTS
+                  TAB 12: WHY CHOOSE US (FEATURES)
                   ======================================================== */}
               {tab === 'features' && (
                 <div className="features-tab-suite">
                   {/* Executive Hero Banner */}
                   <div className="admin-hero-banner">
                     <div className="hero-text-content">
-                      <h1>Homepage Feature Highlights</h1>
-                      <p>Customize the value proposition feature tiles displayed on the homepage.</p>
+                      <h1>Homepage "Why Choose Us" Feature Cards</h1>
+                      <p>Customize the 3 strategic value proposition cards displayed in the "Why Choose Us • The Chartered Advantage" section on the public homepage.</p>
                     </div>
                     <div className="hero-action-buttons">
                       <button className="btn-admin-hero-primary" onClick={() => handleOpenFeatureModal()}>
-                        <i className="fas fa-plus"></i> Add Feature Highlight
+                        <i className="fas fa-plus"></i> Add Feature Card
                       </button>
                     </div>
                   </div>
