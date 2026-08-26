@@ -586,8 +586,10 @@ const ServiceDetail = () => {
                   </div>
                   <div className="breakdown-divider"></div>
                   <div className="breakdown-row total-row">
-                    <span>Recommended Regime</span>
-                    <strong className="total-gold-amount">{taxResult.recommended}</strong>
+                    <span>Optimal Recommendation</span>
+                    <span className="regime-recommend-badge">
+                      <i className="fas fa-check-circle"></i> {taxResult.recommended}
+                    </span>
                   </div>
                 </div>
               </div>

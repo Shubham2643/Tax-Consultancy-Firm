@@ -608,7 +608,7 @@
   background: #f8fafc;
   border: 1px solid #e2e8f0;
   border-radius: 14px;
-  padding: 18px 20px;
+  padding: 16px 18px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -618,12 +618,19 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
   font-size: 13px;
   color: #475569;
 }
 
+.breakdown-row span {
+  font-weight: 550;
+}
+
 .breakdown-row strong {
   color: #071324;
+  font-weight: 750;
+  white-space: nowrap;
 }
 
 .breakdown-divider {
@@ -633,15 +640,34 @@
 }
 
 .breakdown-row.total-row {
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 800;
   color: #071324;
 }
 
 .total-gold-amount {
-  font-size: 1.35rem;
+  font-size: 1.25rem;
   color: #d99a00;
-  font-weight: 900;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.regime-recommend-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+  font-size: 12.5px;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.regime-recommend-badge i {
+  color: #22c55e;
 }
 
 /* 3. Document Checklist & Progress */
@@ -810,29 +836,214 @@
 }
 
 /* ============================================
-   RESPONSIVE DESIGN
+   RESPONSIVE DESIGN — Executive Mobile Experience
    ============================================ */
 @media (max-width: 1024px) {
   .detail-equal-two-col-grid {
     grid-template-columns: 1fr;
-    gap: 30px;
+    gap: 28px;
+    padding: 0 20px;
   }
 }
 
-@media (max-width: 680px) {
-  .detail-hero h1 {
-    font-size: 2.1rem;
+@media (max-width: 768px) {
+  .service-detail-page {
+    padding-bottom: 36px;
   }
+
+  .detail-hero {
+    padding: 38px 0 32px 0;
+    margin-bottom: 26px;
+  }
+
+  .detail-hero .container {
+    padding: 0 16px;
+  }
+
+  .service-type-badge {
+    font-size: 10px;
+    padding: 4px 12px;
+    margin-bottom: 12px;
+    letter-spacing: 0.6px;
+  }
+
+  .detail-hero h1 {
+    font-size: clamp(1.5rem, 6.5vw, 1.95rem);
+    line-height: 1.22;
+    letter-spacing: -0.4px;
+    margin: 0 0 10px 0;
+  }
+
+  .detail-hero-desc {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #94a3b8;
+    max-width: 95%;
+    margin: 0 auto 16px auto;
+  }
+
+  .detail-hero-meta {
+    gap: 8px;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  }
+
+  .detail-timeline,
+  .detail-fee-preview {
+    font-size: 11.5px;
+    padding: 5px 12px;
+    border-radius: 8px;
+  }
+
+  .detail-equal-two-col-grid {
+    padding: 0 16px;
+    gap: 18px;
+  }
+
+  .detail-bento-card {
+    border-radius: 16px;
+    margin-bottom: 16px;
+  }
+
+  .detail-card-header {
+    padding: 14px 16px;
+    gap: 12px;
+  }
+
+  .card-header-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+    border-radius: 10px;
+    flex-shrink: 0;
+  }
+
+  .card-kicker {
+    font-size: 9.5px;
+    letter-spacing: 0.6px;
+    font-weight: 800;
+  }
+
+  .detail-card-header h2 {
+    font-size: 1.15rem;
+    letter-spacing: -0.2px;
+  }
+
+  .detail-card-body {
+    padding: 14px 16px;
+  }
+
+  .overview-text {
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
   .benefits-equal-grid,
   .deliverables-equal-grid,
   .v2-checklist-grid {
     grid-template-columns: 1fr;
+    gap: 10px;
   }
+
+  .benefit-card-item,
+  .deliverable-card-item {
+    padding: 12px 14px;
+    border-radius: 10px;
+  }
+
+  .v2-form-group label {
+    font-size: 10.5px;
+    margin-bottom: 4px;
+  }
+
   .v2-form-row {
     flex-direction: column;
+    gap: 10px;
   }
-  .detail-card-body,
-  .detail-card-header {
-    padding: 18px 20px;
+
+  .v2-input,
+  .v2-textarea {
+    padding: 9px 12px;
+    font-size: 13px;
+    border-radius: 8px;
+  }
+
+  .v2-fee-breakdown-box {
+    padding: 12px 14px;
+    border-radius: 12px;
+    gap: 8px;
+  }
+
+  .breakdown-row {
+    font-size: 12.5px;
+    gap: 8px;
+  }
+
+  .breakdown-row.total-row {
+    font-size: 12.5px;
+  }
+
+  .total-gold-amount {
+    font-size: 1.15rem;
+  }
+
+  .regime-recommend-badge {
+    font-size: 11.5px;
+    padding: 3px 10px;
+  }
+
+  .v2-submit-btn {
+    height: 42px;
+    font-size: 13px;
+    border-radius: 10px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .v2-progress-box {
+    padding: 12px 14px;
+    margin-bottom: 14px;
+  }
+
+  .v2-check-pill {
+    padding: 10px 12px;
+    border-radius: 10px;
+  }
+
+  .v2-checkbox-title {
+    font-size: 12.5px;
+  }
+
+  .v2-faq-question-btn {
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+
+  .v2-faq-answer-box {
+    padding: 0 14px 14px 14px;
+    font-size: 12.5px;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 480px) {
+  .detail-hero {
+    padding: 30px 0 26px 0;
+    margin-bottom: 18px;
+  }
+
+  .detail-hero h1 {
+    font-size: 1.45rem;
+  }
+
+  .detail-equal-two-col-grid {
+    padding: 0 12px;
+    gap: 14px;
+  }
+
+  .detail-card-header,
+  .detail-card-body {
+    padding: 12px 14px;
   }
 }
