@@ -417,6 +417,14 @@ const Portal = () => {
               <span className="live-pulse-dot"></span> CA Audit Vault
             </span>
           </div>
+          <button 
+            type="button" 
+            className="portal-sidebar-mobile-close" 
+            onClick={() => setIsSidebarOpen(false)}
+            aria-label="Close navigation"
+          >
+            &times;
+          </button>
         </div>
 
         {/* User Profile Card */}
@@ -517,10 +525,10 @@ const Portal = () => {
                 <i className="fas fa-chevron-right breadcrumb-separator"></i>
                 <span className="breadcrumb-current">
                   {tab === 'overview' && 'Executive Overview'}
-                  {tab === 'inquiries' && 'Tax Filings & Milestones'}
+                  {tab === 'inquiries' && 'Tax Filings Tracker'}
                   {tab === 'documents' && 'Document Vault'}
-                  {tab === 'bookings' && 'Consultations Scheduler'}
-                  {tab === 'billing' && 'Invoices & Retainers'}
+                  {tab === 'bookings' && 'CA Consultations'}
+                  {tab === 'billing' && 'Invoices & Billing'}
                   {tab === 'upload' && 'Document Upload'}
                 </span>
               </div>
@@ -548,7 +556,12 @@ const Portal = () => {
 
             <div className="topbar-user-mini-chip">
               <div className="topbar-user-avatar">{user.name.charAt(0).toUpperCase()}</div>
-              <span className="topbar-user-name">{user.name}</span>
+              <div className="topbar-user-info">
+                <strong>{user.name}</strong>
+                <span className="topbar-user-badge">
+                  <span className="live-status-dot"></span> Verified Client
+                </span>
+              </div>
             </div>
           </div>
         </header>
@@ -780,14 +793,16 @@ const Portal = () => {
                         <div className="filing-card-top">
                           <div className="filing-header-left">
                             <span className="filing-badge-icon"><i className="fas fa-file-invoice"></i></span>
-                            <div>
-                              <h3>{inq.service || 'General Tax Consultation'}</h3>
+                            <div className="filing-title-group">
+                              <div className="filing-title-flex">
+                                <h3>{inq.service || 'General Tax Consultation'}</h3>
+                                <span className={`status-pill ${inq.status}`}>{inq.status}</span>
+                              </div>
                               <span className="filing-date-text">
                                 <i className="far fa-calendar-alt"></i> Initiated on {new Date(inq.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
                               </span>
                             </div>
                           </div>
-                          <span className={`status-pill ${inq.status}`}>{inq.status}</span>
                         </div>
 
                         <div className="filing-client-quote">
@@ -906,9 +921,7 @@ const Portal = () => {
                       <thead>
                         <tr>
                           <th>Document Title</th>
-                          <th>Practice Area</th>
-                          <th>Upload Date</th>
-                          <th>Size</th>
+                          <th>Category &amp; Date</th>
                           <th>CA Review Note</th>
                           <th style={{ textAlign: 'right' }}>Actions</th>
                         </tr>
@@ -919,23 +932,26 @@ const Portal = () => {
                           return (
                             <tr key={doc._id}>
                               <td>
-                                <div className="vault-file-cell">
-                                  <span className={`file-badge ${fileInfo.class}`}>
-                                    <i className={`fas ${fileInfo.icon}`}></i>
-                                  </span>
-                                  <button
-                                    type="button"
-                                    onClick={() => downloadPortalDocument(doc._id, doc.originalName)}
-                                    className="filename-download-trigger"
-                                    title={`Download ${doc.originalName}`}
-                                  >
-                                    {doc.originalName}
-                                  </button>
+                                <div className="table-card-head">
+                                  <div className="vault-file-cell">
+                                    <span className={`file-badge ${fileInfo.class}`}>
+                                      <i className={`fas ${fileInfo.icon}`}></i>
+                                    </span>
+                                    <button
+                                      type="button"
+                                      onClick={() => downloadPortalDocument(doc._id, doc.originalName)}
+                                      className="filename-download-trigger"
+                                      title={`Download ${doc.originalName}`}
+                                    >
+                                      {doc.originalName}
+                                    </button>
+                                  </div>
+                                  <span className="table-size">{(doc.fileSize / 1024).toFixed(1)} KB</span>
                                 </div>
                               </td>
-                              <td><span className="vault-tag-pill">{doc.serviceSlug || 'General'}</span></td>
-                              <td><span className="table-date">{new Date(doc.uploadedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span></td>
-                              <td><span className="table-size">{(doc.fileSize / 1024).toFixed(1)} KB</span></td>
+                              <td>
+                                <span className="vault-tag-pill">{doc.serviceSlug || 'General'}</span> &bull; <span className="table-date">{new Date(doc.uploadedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                              </td>
                               <td>
                                 {doc.adminNote ? (
                                   <span className="ca-note-chip" title={doc.adminNote}>
@@ -952,14 +968,14 @@ const Portal = () => {
                                     onClick={() => handleOpenEdit(doc)} 
                                     title="Edit Document"
                                   >
-                                    <i className="fas fa-edit"></i>
+                                    <i className="fas fa-edit"></i> <span>Edit</span>
                                   </button>
                                   <button 
                                     className="btn-table-action delete" 
                                     onClick={() => handleOpenDelete(doc)} 
                                     title="Delete Document"
                                   >
-                                    <i className="fas fa-trash-alt"></i>
+                                    <i className="fas fa-trash-alt"></i> <span>Delete</span>
                                   </button>
                                 </div>
                               </td>
@@ -980,43 +996,82 @@ const Portal = () => {
               {/* Executive Hero Banner */}
               <div className="portal-hero-card">
                 <div className="hero-text-content">
-                  <h1>Upload Tax &amp; Audit Documents</h1>
-                  <p>Securely transmit bank statements, invoices, and accounting ledgers directly to our auditing team. All files are encrypted at rest.</p>
+                  <h1>Fast &amp; Secure Document Drop</h1>
+                  <p>Upload bank statements, Form-16, invoices, and accounting ledgers directly to our CA audit desk.</p>
                 </div>
                 <div className="hero-action-buttons">
                   <button className="btn-hero-primary" onClick={() => setTab('documents')}>
-                    <i className="fas fa-folder-open"></i> View Document Vault
+                    <i className="fas fa-folder-open"></i> View Vault
                   </button>
                   <button className="btn-hero-secondary" onClick={() => setTab('inquiries')}>
-                    <i className="fas fa-tasks"></i> Active Filings
+                    <i className="fas fa-tasks"></i> Filings
                   </button>
                 </div>
               </div>
 
               <div className="portal-bento-card upload-center-card">
                 <div className="dropzone-core-box">
-                  <div className="dropzone-icon-ring"><i className="fas fa-cloud-upload-alt"></i></div>
-                  <h3>Select or Drop Target Document</h3>
-                  <p className="dropzone-formats">Supports PDF, JPG, PNG, DOCX, XLSX up to 10MB per file</p>
-
                   <input 
                     type="file" 
                     id="portal-file-picker" 
                     accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx" 
                     onChange={handleFileChange} 
                   />
-                  <label htmlFor="portal-file-picker" className="btn-file-select">
-                    <i className="fas fa-folder-open"></i> {uploadFile ? uploadFile.name : 'Choose File from Computer'}
-                  </label>
+
+                  {!uploadFile ? (
+                    <label htmlFor="portal-file-picker" className="mobile-upload-tapzone">
+                      <div className="dropzone-icon-ring"><i className="fas fa-cloud-upload-alt"></i></div>
+                      <h3>Tap to Choose Document</h3>
+                      <p className="dropzone-formats">PDF, JPG, PNG, DOCX, XLSX up to 10MB</p>
+                      <span className="btn-file-select">
+                        <i className="fas fa-folder-open"></i> Choose File from Device
+                      </span>
+                    </label>
+                  ) : (
+                    <div className="upload-file-ready-box">
+                      <div className="selected-file-preview-card">
+                        <div className="file-preview-icon">
+                          <i className={`fas ${getFileIcon(uploadFile.name).icon}`}></i>
+                        </div>
+                        <div className="file-preview-meta">
+                          <strong title={uploadFile.name}>{uploadFile.name}</strong>
+                          <span>{(uploadFile.size / 1024).toFixed(1)} KB &bull; Ready to transmit</span>
+                        </div>
+                        <button 
+                          type="button" 
+                          className="btn-clear-selected-file" 
+                          onClick={() => setUploadFile(null)}
+                          title="Remove file"
+                        >
+                          <i className="fas fa-times"></i>
+                        </button>
+                      </div>
+                      <label htmlFor="portal-file-picker" className="btn-change-file">
+                        <i className="fas fa-sync-alt"></i> Choose Different File
+                      </label>
+                    </div>
+                  )}
 
                   <div className="upload-meta-fields">
                     <div className="form-group-custom">
-                      <label><i className="fas fa-tag"></i> Associated Service Category (Optional)</label>
+                      <label><i className="fas fa-tag"></i> Select Category</label>
+                      <div className="quick-tags-list">
+                        {['GST Filing', 'ITR Return', 'Bank Statement', 'Form 16', 'KYC / PAN', 'Balance Sheet'].map(cat => (
+                          <button
+                            type="button"
+                            key={cat}
+                            className={`quick-tag-chip ${serviceSlug === cat ? 'active' : ''}`}
+                            onClick={() => setServiceSlug(cat)}
+                          >
+                            {cat}
+                          </button>
+                        ))}
+                      </div>
                       <input 
                         type="text" 
                         value={serviceSlug} 
                         onChange={(e) => setServiceSlug(e.target.value)} 
-                        placeholder="e.g. gst-filing, itr-return, or company-incorporation" 
+                        placeholder="Or enter custom category name" 
                       />
                     </div>
                   </div>
@@ -1029,7 +1084,7 @@ const Portal = () => {
                     {uploadLoading ? (
                       <span><i className="fas fa-spinner fa-spin"></i> Encrypting &amp; Uploading...</span>
                     ) : (
-                      <span><i className="fas fa-check-circle"></i> Save to Document Vault</span>
+                      <span><i className="fas fa-lock"></i> Encrypt &amp; Save to Vault</span>
                     )}
                   </button>
                 </div>
@@ -1203,22 +1258,28 @@ const Portal = () => {
                     <table className="portal-data-table">
                       <thead>
                         <tr>
-                          <th>Invoice Reference</th>
+                          <th>Invoice &amp; Status</th>
                           <th>Service Description</th>
-                          <th>Fee Amount</th>
-                          <th>Due Date</th>
-                          <th>Payment Status</th>
+                          <th>Fee &amp; Due Date</th>
                           <th style={{ textAlign: 'right' }}>Action</th>
                         </tr>
                       </thead>
                       <tbody>
                         {invoices.map(inv => (
                           <tr key={inv._id}>
-                            <td><span className="monospace-code">{inv.invoiceNumber}</span></td>
+                            <td>
+                              <div className="table-card-head">
+                                <span className="monospace-code">{inv.invoiceNumber}</span>
+                                <span className={`status-pill ${inv.status}`}>{inv.status}</span>
+                              </div>
+                            </td>
                             <td><strong>{inv.serviceName}</strong></td>
-                            <td><strong className="invoice-amount-text">₹{Number(inv.amount).toLocaleString('en-IN')}</strong></td>
-                            <td><span className="table-date">{new Date(inv.dueDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span></td>
-                            <td><span className={`status-pill ${inv.status}`}>{inv.status}</span></td>
+                            <td>
+                              <span className="table-meta-item">
+                                <span className="meta-key">Amount:</span> <strong className="invoice-amount-text">₹{Number(inv.amount).toLocaleString('en-IN')}</strong>
+                              </span>
+                              &bull; <span className="table-date">Due: {new Date(inv.dueDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                            </td>
                             <td style={{ textAlign: 'right' }}>
                               {inv.status === 'unpaid' ? (
                                 <button 

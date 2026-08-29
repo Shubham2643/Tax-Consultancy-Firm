@@ -59,13 +59,13 @@ const Admin = () => {
   const { user, loading: authLoading, logout } = useAuth();
   
   // Navigation
-  const [tab, setTab] = useState(() => localStorage.getItem('adminTab') || 'dashboard');
+  const [tab, setTab] = useState('dashboard');
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => localStorage.getItem('adminSidebarCollapsed') === 'true');
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('adminTab', tab);
-  }, [tab]);
+    localStorage.removeItem('adminTab');
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('adminSidebarCollapsed', isSidebarCollapsed);
@@ -988,20 +988,20 @@ const Admin = () => {
 
   const getSectionTitle = () => {
     const titles = {
-      dashboard: 'Executive Command Dashboard',
-      inquiries: 'Client Inquiries & Milestones',
-      documents: 'Document Verification Vault',
-      users: 'Client Directory & Access Control',
-      consultations: 'Advisory Sessions & Scheduler',
-      invoices: 'Billing Invoices & Clearances',
-      services: 'Practice Areas & Service Catalog',
-      faqs: 'Knowledge Base & FAQ Engine',
-      pricing: 'Pricing Plans & Retainers',
-      blogs: 'Article Publisher & Tax Insights',
-      navmenu: 'Navigation Megamenu Builder',
-      features: 'Why Choose Us (Features)',
-      team: 'Chartered Partners & Team Profiles',
-      settings: 'Global System Configuration'
+      dashboard: 'Dashboard Summary',
+      inquiries: 'Client Inquiries',
+      documents: 'Verification Vault',
+      users: 'Clients Database',
+      consultations: 'CA Consultations',
+      invoices: 'Invoices & Billing',
+      services: 'Services Directory',
+      faqs: 'Knowledge Base (FAQ)',
+      pricing: 'Pricing Retainers',
+      blogs: 'Article Publisher',
+      navmenu: 'Megamenu Builder',
+      features: 'Why Choose Us Cards',
+      team: 'Partners & Team',
+      settings: 'Global Firm Config'
     };
     return titles[tab] || 'Admin Console';
   };
@@ -1038,6 +1038,14 @@ const Admin = () => {
               <span className="live-pulse-dot"></span> Senior Auditor
             </span>
           </div>
+          <button 
+            type="button" 
+            className="admin-sidebar-mobile-close" 
+            onClick={() => setIsMobileDrawerOpen(false)}
+            aria-label="Close navigation"
+          >
+            &times;
+          </button>
         </div>
 
         {/* Sidebar Categorized Menu */}
@@ -1558,11 +1566,9 @@ const Admin = () => {
                         <table className="admin-modern-table">
                           <thead>
                             <tr>
-                              <th>Client</th>
-                              <th>Document Filename</th>
-                              <th>Category</th>
-                              <th>Uploaded On</th>
-                              <th>Status</th>
+                              <th>Client &amp; Status</th>
+                              <th>Document File</th>
+                              <th>Category &amp; Date</th>
                               <th>Auditor Review Note</th>
                               <th style={{ textAlign: 'right' }}>Actions</th>
                             </tr>
@@ -1571,8 +1577,21 @@ const Admin = () => {
                             {documents.map(doc => (
                               <tr key={doc._id}>
                                 <td>
-                                  <strong>{doc.user?.name || 'Client'}</strong>
-                                  <span className="table-sub-text">{doc.user?.email || 'N/A'}</span>
+                                  <div className="table-card-head">
+                                    <div>
+                                      <strong>{doc.user?.name || 'Client'}</strong>
+                                      <span className="table-sub-text">{doc.user?.email || 'N/A'}</span>
+                                    </div>
+                                    <select
+                                      value={doc.status}
+                                      onChange={(e) => handleDocStatus(doc._id, e.target.value)}
+                                      className={`admin-status-dropdown ${doc.status}`}
+                                    >
+                                      <option value="pending">Pending</option>
+                                      <option value="approved">Approved</option>
+                                      <option value="rejected">Rejected</option>
+                                    </select>
+                                  </div>
                                 </td>
                                 <td>
                                   <div className="vault-file-cell">
@@ -1587,19 +1606,7 @@ const Admin = () => {
                                     </button>
                                   </div>
                                 </td>
-                                <td><span className="vault-tag-pill">{doc.serviceSlug || 'General'}</span></td>
-                                <td><span className="table-date">{new Date(doc.uploadedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span></td>
-                                <td>
-                                  <select
-                                    value={doc.status}
-                                    onChange={(e) => handleDocStatus(doc._id, e.target.value)}
-                                    className={`admin-status-dropdown ${doc.status}`}
-                                  >
-                                    <option value="pending">Pending</option>
-                                    <option value="approved">Approved</option>
-                                    <option value="rejected">Rejected</option>
-                                  </select>
-                                </td>
+                                <td><span className="vault-tag-pill">{doc.serviceSlug || 'General'}</span> &bull; <span className="table-date">{new Date(doc.uploadedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span></td>
                                 <td>
                                   <input
                                     type="text"
@@ -1623,14 +1630,14 @@ const Admin = () => {
                                       onClick={() => downloadAdminDocument(doc._id, doc.originalName)}
                                       title="Download File"
                                     >
-                                      <i className="fas fa-download"></i>
+                                      <i className="fas fa-download"></i> <span>Download</span>
                                     </button>
                                     <button
                                       className="btn-table-icon delete"
                                       onClick={() => handleDocDelete(doc._id)}
                                       title="Delete Document"
                                     >
-                                      <i className="fas fa-trash-alt"></i>
+                                      <i className="fas fa-trash-alt"></i> <span>Delete</span>
                                     </button>
                                   </div>
                                 </td>
@@ -1687,10 +1694,8 @@ const Admin = () => {
                       <table className="admin-modern-table">
                         <thead>
                           <tr>
-                            <th>User Name</th>
-                            <th>Email Address</th>
-                            <th>Phone Contact</th>
-                            <th>Current Role</th>
+                            <th>User Name &amp; Role</th>
+                            <th>Contact Info</th>
                             <th>Joined Date</th>
                             <th style={{ textAlign: 'right' }}>Actions</th>
                           </tr>
@@ -1699,25 +1704,24 @@ const Admin = () => {
                           {paginatedUsers.map(u => (
                             <tr key={u._id}>
                               <td>
-                                <div className="user-table-cell">
-                                  <div className="user-avatar-tiny">{u.name.charAt(0).toUpperCase()}</div>
-                                  <strong>{u.name}</strong>
+                                <div className="table-card-head">
+                                  <div className="user-table-cell">
+                                    <div className="user-avatar-tiny">{u.name.charAt(0).toUpperCase()}</div>
+                                    <strong>{u.name}</strong>
+                                  </div>
+                                  <select
+                                    value={u.role}
+                                    onChange={(e) => handleRoleChange(u._id, e.target.value)}
+                                    className={`admin-status-dropdown role-${u.role}`}
+                                    disabled={u._id === user._id}
+                                  >
+                                    <option value="client">Client</option>
+                                    <option value="admin">Administrator</option>
+                                  </select>
                                 </div>
                               </td>
-                              <td><span className="monospace-text">{u.email}</span></td>
-                              <td><span>{u.phone || '-'}</span></td>
-                              <td>
-                                <select
-                                  value={u.role}
-                                  onChange={(e) => handleRoleChange(u._id, e.target.value)}
-                                  className={`admin-status-dropdown role-${u.role}`}
-                                  disabled={u._id === user._id}
-                                >
-                                  <option value="client">Client</option>
-                                  <option value="admin">Administrator</option>
-                                </select>
-                              </td>
-                              <td><span className="table-date">{new Date(u.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span></td>
+                              <td><span className="monospace-text">{u.email}</span> &bull; <span>{u.phone || 'No phone'}</span></td>
+                              <td><span className="table-date">Joined: {new Date(u.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span></td>
                               <td style={{ textAlign: 'right' }}>
                                 {u._id !== user._id && (
                                   <button
@@ -1725,7 +1729,7 @@ const Admin = () => {
                                     onClick={() => handleUserDelete(u._id)}
                                     title="Delete User Account"
                                   >
-                                    <i className="fas fa-trash-alt"></i>
+                                    <i className="fas fa-trash-alt"></i> <span>Delete</span>
                                   </button>
                                 )}
                               </td>
@@ -1858,35 +1862,40 @@ const Admin = () => {
                         <table className="admin-modern-table">
                           <thead>
                             <tr>
-                              <th>Invoice #</th>
-                              <th>Billed Client</th>
+                              <th>Invoice &amp; Client</th>
                               <th>Practice Area</th>
-                              <th>Fee Amount</th>
-                              <th>Due Date</th>
-                              <th>Status</th>
+                              <th>Fee &amp; Due Date</th>
                               <th style={{ textAlign: 'right' }}>Actions</th>
                             </tr>
                           </thead>
                           <tbody>
                             {invoices.map(inv => (
                               <tr key={inv._id}>
-                                <td><span className="monospace-code">{inv.invoiceNumber}</span></td>
                                 <td>
-                                  <strong>{inv.client?.name || 'Client'}</strong>
-                                  <span className="table-sub-text">{inv.client?.email || '-'}</span>
+                                  <div className="table-card-head">
+                                    <div>
+                                      <span className="monospace-code">{inv.invoiceNumber}</span> &bull; <strong>{inv.client?.name || 'Client'}</strong>
+                                    </div>
+                                    <span className={`status-pill ${inv.status}`}>{inv.status}</span>
+                                  </div>
                                 </td>
-                                <td><strong>{inv.serviceName}</strong></td>
-                                <td><strong className="invoice-amount-text">₹{Number(inv.amount).toLocaleString('en-IN')}</strong></td>
-                                <td><span className="table-date">{new Date(inv.dueDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span></td>
-                                <td><span className={`status-pill ${inv.status}`}>{inv.status}</span></td>
+                                <td><span className="table-meta-item"><span className="meta-key">Service:</span> <strong>{inv.serviceName}</strong></span></td>
+                                <td>
+                                  <span className="table-meta-item">
+                                    <span className="meta-key">Amount:</span> <strong className="invoice-amount-text">₹{Number(inv.amount).toLocaleString('en-IN')}</strong>
+                                  </span>
+                                  &bull; <span className="table-date">Due: {new Date(inv.dueDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                                </td>
                                 <td style={{ textAlign: 'right' }}>
-                                  <button
-                                    className="btn-table-icon delete"
-                                    onClick={() => handleDeleteInvoice(inv._id, inv.invoiceNumber)}
-                                    title="Delete Invoice"
-                                  >
-                                    <i className="fas fa-trash-alt"></i>
-                                  </button>
+                                  <div className="table-actions-stack">
+                                    <button
+                                      className="btn-table-icon delete"
+                                      onClick={() => handleDeleteInvoice(inv._id, inv.invoiceNumber)}
+                                      title="Delete Invoice"
+                                    >
+                                      <i className="fas fa-trash-alt"></i> <span>Delete</span>
+                                    </button>
+                                  </div>
                                 </td>
                               </tr>
                             ))}
@@ -1946,11 +1955,9 @@ const Admin = () => {
                         <thead>
                           <tr>
                             <th>Practice Area Title</th>
-                            <th>Category</th>
-                            <th>Slug</th>
-                            <th>Govt Fee</th>
+                            <th>Category &amp; Route</th>
                             <th>CA Fee</th>
-                            <th>Active</th>
+                            <th>Status</th>
                             <th style={{ textAlign: 'right' }}>Actions</th>
                           </tr>
                         </thead>
@@ -1958,23 +1965,24 @@ const Admin = () => {
                           {paginatedServices.map(s => (
                             <tr key={s._id}>
                               <td>
-                                <div className="service-title-cell">
-                                  <span className="service-icon-tile-tiny"><i className={s.icon || 'fas fa-file-invoice'}></i></span>
-                                  <strong>{s.title}</strong>
+                                <div className="table-card-head">
+                                  <div className="service-title-cell">
+                                    <span className="service-icon-tile-tiny"><i className={s.icon || 'fas fa-file-invoice'}></i></span>
+                                    <strong>{s.title}</strong>
+                                  </div>
+                                  <span className={`status-pill ${s.isActive ? 'approved' : 'rejected'}`}>{s.isActive ? 'Active' : 'Inactive'}</span>
                                 </div>
                               </td>
-                              <td><span className="vault-tag-pill">{s.serviceType || 'general'}</span></td>
-                              <td><span className="monospace-text">/{s.slug}</span></td>
-                              <td>₹{Number(s.governmentFee || 0).toLocaleString('en-IN')}</td>
-                              <td><strong className="invoice-amount-text">₹{Number(s.professionalFee || 0).toLocaleString('en-IN')}</strong></td>
+                              <td><span className="vault-tag-pill">{s.serviceType || 'general'}</span> <span className="monospace-text">/{s.slug}</span></td>
+                              <td><span className="table-meta-item"><span className="meta-key">CA Fee:</span> <strong className="invoice-amount-text">₹{Number(s.professionalFee || 0).toLocaleString('en-IN')}</strong></span></td>
                               <td><span className={`status-pill ${s.isActive ? 'approved' : 'rejected'}`}>{s.isActive ? 'Active' : 'Inactive'}</span></td>
                               <td style={{ textAlign: 'right' }}>
                                 <div className="table-actions-stack">
                                   <button className="btn-table-icon edit" onClick={() => handleOpenServiceModal(s)} title="Edit Service">
-                                    <i className="fas fa-edit"></i>
+                                    <i className="fas fa-edit"></i> <span>Edit</span>
                                   </button>
                                   <button className="btn-table-icon delete" onClick={() => handleServiceDelete(s._id)} title="Delete Service">
-                                    <i className="fas fa-trash-alt"></i>
+                                    <i className="fas fa-trash-alt"></i> <span>Delete</span>
                                   </button>
                                 </div>
                               </td>
@@ -2035,26 +2043,27 @@ const Admin = () => {
                         <thead>
                           <tr>
                             <th>Article Title</th>
-                            <th>Category</th>
-                            <th>Author</th>
-                            <th>Published On</th>
+                            <th>Author &amp; Date</th>
                             <th style={{ textAlign: 'right' }}>Actions</th>
                           </tr>
                         </thead>
                         <tbody>
                           {paginatedBlogs.map(b => (
                             <tr key={b._id}>
-                              <td><strong>{b.title}</strong></td>
-                              <td><span className="vault-tag-pill">{b.category || 'General'}</span></td>
-                              <td><span>{b.author || 'Admin'}</span></td>
-                              <td><span className="table-date">{new Date(b.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span></td>
+                              <td>
+                                <div className="table-card-head">
+                                  <strong>{b.title}</strong>
+                                  <span className="vault-tag-pill">{b.category || 'General'}</span>
+                                </div>
+                              </td>
+                              <td><span className="table-meta-item"><span className="meta-key">By:</span> <span>{b.author || 'Admin'}</span></span> &bull; <span className="table-date">{new Date(b.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span></td>
                               <td style={{ textAlign: 'right' }}>
                                 <div className="table-actions-stack">
                                   <button className="btn-table-icon edit" onClick={() => handleOpenBlogModal(b)} title="Edit Article">
-                                    <i className="fas fa-edit"></i>
+                                    <i className="fas fa-edit"></i> <span>Edit</span>
                                   </button>
                                   <button className="btn-table-icon delete" onClick={() => handleBlogDelete(b._id)} title="Delete Article">
-                                    <i className="fas fa-trash-alt"></i>
+                                    <i className="fas fa-trash-alt"></i> <span>Delete</span>
                                   </button>
                                 </div>
                               </td>
@@ -2103,9 +2112,7 @@ const Admin = () => {
                         <thead>
                           <tr>
                             <th>Plan Name</th>
-                            <th>Fee Amount</th>
-                            <th>Billing Period</th>
-                            <th>Featured Popular</th>
+                            <th>Pricing Structure</th>
                             <th>Status</th>
                             <th style={{ textAlign: 'right' }}>Actions</th>
                           </tr>
@@ -2113,18 +2120,27 @@ const Admin = () => {
                         <tbody>
                           {pricing.map(p => (
                             <tr key={p._id}>
-                              <td><strong>{p.name}</strong></td>
-                              <td><strong className="invoice-amount-text">₹{Number(p.price).toLocaleString('en-IN')}</strong></td>
-                              <td><span className="monospace-text">/{p.period}</span></td>
-                              <td><span className={`status-pill ${p.isPopular ? 'approved' : 'closed'}`}>{p.isPopular ? 'Popular' : 'Standard'}</span></td>
+                              <td>
+                                <div className="table-card-head">
+                                  <strong>{p.name}</strong>
+                                  <span className={`status-pill ${p.isPopular ? 'approved' : 'closed'}`}>{p.isPopular ? 'Popular' : 'Standard'}</span>
+                                </div>
+                              </td>
+                              <td>
+                                <span className="table-meta-item">
+                                  <span className="meta-key">Fee:</span> 
+                                  <strong className="invoice-amount-text">₹{Number(p.price).toLocaleString('en-IN')}</strong> 
+                                  <span className="monospace-text">/{p.period}</span>
+                                </span>
+                              </td>
                               <td><span className={`status-pill ${p.isActive ? 'approved' : 'rejected'}`}>{p.isActive ? 'Active' : 'Inactive'}</span></td>
                               <td style={{ textAlign: 'right' }}>
                                 <div className="table-actions-stack">
                                   <button className="btn-table-icon edit" onClick={() => handleOpenPricingModal(p)} title="Edit Plan">
-                                    <i className="fas fa-edit"></i>
+                                    <i className="fas fa-edit"></i> <span>Edit</span>
                                   </button>
                                   <button className="btn-table-icon delete" onClick={() => handlePricingDelete(p._id)} title="Delete Plan">
-                                    <i className="fas fa-trash-alt"></i>
+                                    <i className="fas fa-trash-alt"></i> <span>Delete</span>
                                   </button>
                                 </div>
                               </td>
@@ -2161,26 +2177,29 @@ const Admin = () => {
                         <thead>
                           <tr>
                             <th>Question</th>
-                            <th>Category</th>
-                            <th>Order</th>
-                            <th>Active</th>
+                            <th>Category &amp; Order</th>
+                            <th>Status</th>
                             <th style={{ textAlign: 'right' }}>Actions</th>
                           </tr>
                         </thead>
                         <tbody>
                           {paginatedFaqs.map(f => (
                             <tr key={f._id}>
-                              <td><strong>{f.question}</strong></td>
-                              <td><span className="vault-tag-pill">{f.category || 'General'}</span></td>
-                              <td><span>{f.order}</span></td>
+                              <td>
+                                <div className="table-card-head">
+                                  <strong>{f.question}</strong>
+                                  <span className={`status-pill ${f.isActive ? 'approved' : 'rejected'}`}>{f.isActive ? 'Active' : 'Inactive'}</span>
+                                </div>
+                              </td>
+                              <td><span className="vault-tag-pill">{f.category || 'General'}</span> &bull; <span className="table-meta-item"><span className="meta-key">Order:</span> <strong>{f.order}</strong></span></td>
                               <td><span className={`status-pill ${f.isActive ? 'approved' : 'rejected'}`}>{f.isActive ? 'Active' : 'Inactive'}</span></td>
                               <td style={{ textAlign: 'right' }}>
                                 <div className="table-actions-stack">
                                   <button className="btn-table-icon edit" onClick={() => handleOpenFAQModal(f)} title="Edit FAQ">
-                                    <i className="fas fa-edit"></i>
+                                    <i className="fas fa-edit"></i> <span>Edit</span>
                                   </button>
                                   <button className="btn-table-icon delete" onClick={() => handleFAQDelete(f._id)} title="Delete FAQ">
-                                    <i className="fas fa-trash-alt"></i>
+                                    <i className="fas fa-trash-alt"></i> <span>Delete</span>
                                   </button>
                                 </div>
                               </td>
@@ -2238,17 +2257,22 @@ const Admin = () => {
                         <tbody>
                           {paginatedTeam.map(t => (
                             <tr key={t._id}>
-                              <td><strong>{t.name}</strong></td>
-                              <td><span>{t.role}</span></td>
+                              <td>
+                                <div className="table-card-head">
+                                  <strong>{t.name}</strong>
+                                  <span className={`status-pill ${t.isActive ? 'approved' : 'rejected'}`}>{t.isActive ? 'Active' : 'Inactive'}</span>
+                                </div>
+                              </td>
+                              <td><span className="table-meta-item"><span className="meta-key">Role:</span> <span>{t.role}</span></span></td>
                               <td><span className="vault-tag-pill">{t.specialty}</span></td>
                               <td><span className={`status-pill ${t.isActive ? 'approved' : 'rejected'}`}>{t.isActive ? 'Active' : 'Inactive'}</span></td>
                               <td style={{ textAlign: 'right' }}>
                                 <div className="table-actions-stack">
                                   <button className="btn-table-icon edit" onClick={() => handleOpenTeamModal(t)} title="Edit Profile">
-                                    <i className="fas fa-edit"></i>
+                                    <i className="fas fa-edit"></i> <span>Edit</span>
                                   </button>
                                   <button className="btn-table-icon delete" onClick={() => handleTeamDelete(t._id)} title="Delete Profile">
-                                    <i className="fas fa-trash-alt"></i>
+                                    <i className="fas fa-trash-alt"></i> <span>Delete</span>
                                   </button>
                                 </div>
                               </td>
@@ -2286,7 +2310,6 @@ const Admin = () => {
                           <tr>
                             <th>Feature Title</th>
                             <th>Description</th>
-                            <th>Icon</th>
                             <th>Status</th>
                             <th style={{ textAlign: 'right' }}>Actions</th>
                           </tr>
@@ -2294,17 +2317,23 @@ const Admin = () => {
                         <tbody>
                           {siteFeatures.map(feat => (
                             <tr key={feat._id}>
-                              <td><strong>{feat.title}</strong></td>
+                              <td>
+                                <div className="table-card-head">
+                                  <div className="table-title-with-icon">
+                                    <i className={feat.icon || 'fas fa-star'}></i>
+                                    <strong>{feat.title}</strong>
+                                  </div>
+                                  <span className={`status-pill ${feat.isActive ? 'approved' : 'rejected'}`}>{feat.isActive ? 'Active' : 'Inactive'}</span>
+                                </div>
+                              </td>
                               <td><span className="table-desc-text">{feat.description}</span></td>
-                              <td><i className={feat.icon || 'fas fa-star'}></i></td>
-                              <td><span className={`status-pill ${feat.isActive ? 'approved' : 'rejected'}`}>{feat.isActive ? 'Active' : 'Inactive'}</span></td>
                               <td style={{ textAlign: 'right' }}>
                                 <div className="table-actions-stack">
                                   <button className="btn-table-icon edit" onClick={() => handleOpenFeatureModal(feat)} title="Edit Feature">
-                                    <i className="fas fa-edit"></i>
+                                    <i className="fas fa-edit"></i> <span>Edit</span>
                                   </button>
                                   <button className="btn-table-icon delete" onClick={() => handleFeatureDelete(feat._id)} title="Delete Feature">
-                                    <i className="fas fa-trash-alt"></i>
+                                    <i className="fas fa-trash-alt"></i> <span>Delete</span>
                                   </button>
                                 </div>
                               </td>
@@ -2342,7 +2371,6 @@ const Admin = () => {
                           <tr>
                             <th>Menu Label</th>
                             <th>Destination Route</th>
-                            <th>Submenu Entries</th>
                             <th>Display Order</th>
                             <th style={{ textAlign: 'right' }}>Actions</th>
                           </tr>
@@ -2350,17 +2378,21 @@ const Admin = () => {
                         <tbody>
                           {navMenus.map(m => (
                             <tr key={m._id}>
-                              <td><strong>{m.label}</strong></td>
-                              <td><span className="monospace-text">{m.href}</span></td>
-                              <td><span className="vault-tag-pill">{(m.children || []).length} Submenus</span></td>
-                              <td><span>{m.order}</span></td>
+                              <td>
+                                <div className="table-card-head">
+                                  <strong>{m.label}</strong>
+                                  <span className="vault-tag-pill">{(m.children || []).length} Submenus</span>
+                                </div>
+                              </td>
+                              <td><span className="table-meta-item"><span className="meta-key">Route:</span> <span className="monospace-text">{m.href}</span></span></td>
+                              <td><span className="table-meta-item"><span className="meta-key">Order:</span> <strong>{m.order}</strong></span></td>
                               <td style={{ textAlign: 'right' }}>
                                 <div className="table-actions-stack">
                                   <button className="btn-table-icon edit" onClick={() => handleOpenNavModal(m)} title="Edit Menu Item">
-                                    <i className="fas fa-edit"></i>
+                                    <i className="fas fa-edit"></i> <span>Edit</span>
                                   </button>
                                   <button className="btn-table-icon delete" onClick={() => handleNavDelete(m._id)} title="Delete Menu Item">
-                                    <i className="fas fa-trash-alt"></i>
+                                    <i className="fas fa-trash-alt"></i> <span>Delete</span>
                                   </button>
                                 </div>
                               </td>
