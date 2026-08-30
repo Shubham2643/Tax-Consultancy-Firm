@@ -1,0 +1,9 @@
+﻿# Robots.txt for Shree Chamunda Associates
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /portal
+Disallow: /auth/
+Disallow: /api/
+
+Sitemap: https://shreechamundaassociates.onrender.com/sitemap.xml
