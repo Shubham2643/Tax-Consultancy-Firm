@@ -1,15 +1,46 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect, useCallback } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { getServices } from '../api';
 import useFetch from '../hooks/useFetch';
 import ServiceCard from './ServiceCard';
 import './ServicesSection.css';
 
-const ServicesSection = ({ featured = false }) => {
+const ServicesSection = ({
+  featured = false,
+  activeFilter: controlledFilter,
+  onFilterChange,
+}) => {
+  const [searchParams] = useSearchParams();
   const { data: response, loading, error } = useFetch(getServices);
   const services = response?.data || [];
-  const [activeFilter, setActiveFilter] = useState('all');
+  
+  const [internalFilter, setInternalFilter] = useState(() => {
+    return searchParams?.get('category') || 'all';
+  });
   const [searchQuery, setSearchQuery] = useState('');
+
+  const activeFilter = controlledFilter !== undefined ? controlledFilter : internalFilter;
+
+  const setActiveFilter = useCallback(
+    (category) => {
+      if (onFilterChange) {
+        onFilterChange(category);
+      } else {
+        setInternalFilter(category);
+      }
+    },
+    [onFilterChange]
+  );
+
+  useEffect(() => {
+    const handleCustomFilter = (e) => {
+      if (e.detail?.category) {
+        setActiveFilter(e.detail.category);
+      }
+    };
+    window.addEventListener('filter-services-category', handleCustomFilter);
+    return () => window.removeEventListener('filter-services-category', handleCustomFilter);
+  }, [setActiveFilter]);
 
   // Filter services by category + search keyword
   const filteredServices = services.filter((service) => {
@@ -33,11 +64,13 @@ const ServicesSection = ({ featured = false }) => {
     return categoryMatch && searchMatch;
   });
 
-  // Limit display to 6 services in featured home-page mode
-  const displayServices = featured ? services.slice(0, 6) : filteredServices;
+  // Limit display in featured home-page mode
+  const displayServices = featured
+    ? (activeFilter === 'all' ? services.slice(0, 6) : filteredServices.slice(0, 6))
+    : filteredServices;
 
   return (
-    <section className="services" aria-labelledby="services-heading">
+    <section className="services" id="services-section" aria-labelledby="services-heading">
       <div className="container">
         <div className="section-header text-center">
           <div className="services-badge">
@@ -52,58 +85,58 @@ const ServicesSection = ({ featured = false }) => {
           </p>
         </div>
 
-        {/* Search Bar + Category Filters (Hidden in featured mode on home page) */}
+        {/* Search Bar (Full Services View) */}
         {!featured && (
-          <>
-            <div className="services-search-bar">
-              <i className="fas fa-search services-search-icon"></i>
-              <input
-                type="text"
-                className="services-search-input"
-                placeholder="Search services... (e.g. GST, TDS, PAN, Company)"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              {searchQuery && (
-                <button className="services-search-clear" onClick={() => setSearchQuery('')}>
-                  <i className="fas fa-times"></i>
-                </button>
-              )}
-            </div>
-            <div className="services-filter-nav">
-              <button
-                className={`filter-btn ${activeFilter === 'all' ? 'active' : ''}`}
-                onClick={() => setActiveFilter('all')}
-              >
-                All Services
+          <div className="services-search-bar">
+            <i className="fas fa-search services-search-icon"></i>
+            <input
+              type="text"
+              className="services-search-input"
+              placeholder="Search services... (e.g. GST, TDS, PAN, Company)"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            {searchQuery && (
+              <button className="services-search-clear" onClick={() => setSearchQuery('')}>
+                <i className="fas fa-times"></i>
               </button>
-              <button
-                className={`filter-btn ${activeFilter === 'startup' ? 'active' : ''}`}
-                onClick={() => setActiveFilter('startup')}
-              >
-                Start a Business
-              </button>
-              <button
-                className={`filter-btn ${activeFilter === 'registration' ? 'active' : ''}`}
-                onClick={() => setActiveFilter('registration')}
-              >
-                Registrations
-              </button>
-              <button
-                className={`filter-btn ${activeFilter === 'tax' ? 'active' : ''}`}
-                onClick={() => setActiveFilter('tax')}
-              >
-                Return Filings
-              </button>
-              <button
-                className={`filter-btn ${activeFilter === 'accounting' ? 'active' : ''}`}
-                onClick={() => setActiveFilter('accounting')}
-              >
-                Accounting & Audit
-              </button>
-            </div>
-          </>
+            )}
+          </div>
         )}
+
+        {/* Category Filter Tabs */}
+        <div className="services-filter-nav">
+          <button
+            className={`filter-btn ${activeFilter === 'all' ? 'active' : ''}`}
+            onClick={() => setActiveFilter('all')}
+          >
+            All Services
+          </button>
+          <button
+            className={`filter-btn ${activeFilter === 'startup' ? 'active' : ''}`}
+            onClick={() => setActiveFilter('startup')}
+          >
+            Start a Business
+          </button>
+          <button
+            className={`filter-btn ${activeFilter === 'registration' ? 'active' : ''}`}
+            onClick={() => setActiveFilter('registration')}
+          >
+            Registrations
+          </button>
+          <button
+            className={`filter-btn ${activeFilter === 'tax' ? 'active' : ''}`}
+            onClick={() => setActiveFilter('tax')}
+          >
+            Return Filings
+          </button>
+          <button
+            className={`filter-btn ${activeFilter === 'accounting' ? 'active' : ''}`}
+            onClick={() => setActiveFilter('accounting')}
+          >
+            Accounting &amp; Audit
+          </button>
+        </div>
 
         {loading ? (
           <div className="service-grid">
@@ -132,8 +165,12 @@ const ServicesSection = ({ featured = false }) => {
         {/* Explore All CTA for Home Page featured list */}
         {featured && (
           <div className="services-more-cta">
-            <Link to="/services" className="btn-services-more">
-              Explore All Services <i className="fas fa-arrow-right"></i>
+            <Link
+              to={activeFilter !== 'all' ? `/services?category=${activeFilter}` : "/services"}
+              className="btn-services-more"
+            >
+              {activeFilter !== 'all' ? 'Explore All In This Category' : 'Explore All Services'}{' '}
+              <i className="fas fa-arrow-right"></i>
             </Link>
           </div>
         )}

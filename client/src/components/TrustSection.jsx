@@ -2,9 +2,25 @@ import { useNavigate } from 'react-router-dom';
 import { useSiteContext } from '../context/SiteContext';
 import './TrustSection.css';
 
-const TrustSection = () => {
+const TrustSection = ({ onSelectCategory }) => {
   const { settings, loading } = useSiteContext();
   const navigate = useNavigate();
+
+  const handleCardClick = (category) => {
+    if (onSelectCategory) {
+      onSelectCategory(category);
+    } else {
+      const elem = document.getElementById('services-section');
+      if (elem) {
+        const yOffset = -80;
+        const y = elem.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+        window.dispatchEvent(new CustomEvent('filter-services-category', { detail: { category } }));
+      } else {
+        navigate(`/services?category=${category}#services-section`);
+      }
+    }
+  };
 
   if (loading) {
     return (
@@ -44,6 +60,8 @@ const TrustSection = () => {
       desc: 'End-to-end direct & indirect tax planning, advance tax forecasting, returns filing, and year-round advisory.',
       icon: 'fas fa-file-invoice-dollar',
       perk: 'Timely Filing Assured',
+      targetCategory: 'tax',
+      actionText: 'View Tax Returns',
     },
     {
       category: 'STATUTORY DEFENSE',
@@ -51,6 +69,8 @@ const TrustSection = () => {
       desc: 'Expert representation for scrutiny notices (Sec 143/148), GST summons, appeals, and tribunal defense.',
       icon: 'fas fa-gavel',
       perk: 'Senior CA Representation',
+      targetCategory: 'tax',
+      actionText: 'View Defense & Filings',
     },
     {
       category: 'COMPLIANCE EXCELLENCE',
@@ -60,6 +80,8 @@ const TrustSection = () => {
       isHighlighted: true,
       badgeText: 'CORE PILLAR',
       perk: 'Triple-Layer Verification',
+      targetCategory: 'accounting',
+      actionText: 'View Audit & Books',
     },
     {
       category: 'ICAI GOVERNANCE',
@@ -67,6 +89,8 @@ const TrustSection = () => {
       desc: 'Transparent, fixed-fee retainers with strict adherence to ICAI chartered codes of ethics and confidentiality.',
       icon: 'fas fa-balance-scale',
       perk: 'Fixed-Fee Retainers',
+      targetCategory: 'all',
+      actionText: 'View All Practices',
     },
     {
       category: 'EXECUTIVE ADVISORY',
@@ -74,6 +98,8 @@ const TrustSection = () => {
       desc: 'Senior tax consultants and chartered accountants with deep expertise across Indian corporate laws & FEMA.',
       icon: 'fas fa-user-tie',
       perk: '15+ Yrs Avg Experience',
+      targetCategory: 'startup',
+      actionText: 'View Startup Services',
     },
     {
       category: '24/7 PRIORITY',
@@ -81,6 +107,8 @@ const TrustSection = () => {
       desc: 'Direct WhatsApp CA desk, priority turnaround within 24 hours, and live statutory filing status updates.',
       icon: 'fas fa-headset',
       perk: '<24h SLA Guarantee',
+      targetCategory: 'registration',
+      actionText: 'View Registrations',
     },
   ];
 
@@ -201,6 +229,16 @@ const TrustSection = () => {
                 <div
                   key={index}
                   className={`offer-card card-animate ${card.isHighlighted ? 'featured-card' : ''}`}
+                  onClick={() => handleCardClick(card.targetCategory)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleCardClick(card.targetCategory);
+                    }
+                  }}
+                  aria-label={`Explore ${card.title} under ${card.category}`}
                 >
                   <div className="offer-card-top-row">
                     <div className="offer-icon-box">
@@ -219,9 +257,15 @@ const TrustSection = () => {
                   <h3 className="offer-card-title">{card.title}</h3>
                   <p className="offer-card-desc">{card.desc}</p>
 
-                  <div className="offer-card-perk">
-                    <i className="fas fa-check-circle"></i>
-                    <span>{card.perk}</span>
+                  <div className="offer-card-footer">
+                    <div className="offer-card-perk">
+                      <i className="fas fa-check-circle"></i>
+                      <span>{card.perk}</span>
+                    </div>
+                    <span className="offer-card-explore">
+                      <span>{card.actionText}</span>
+                      <i className="fas fa-arrow-right"></i>
+                    </span>
                   </div>
                 </div>
               ))}
