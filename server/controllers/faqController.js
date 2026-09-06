@@ -13,9 +13,10 @@ const getFAQs = async (req, res, next) => {
     }
 
     if (search) {
+      const escaped = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       query.$or = [
-        { question: { $regex: search, $options: 'i' } },
-        { answer: { $regex: search, $options: 'i' } },
+        { question: { $regex: escaped, $options: 'i' } },
+        { answer: { $regex: escaped, $options: 'i' } },
       ];
     }
 

@@ -50,15 +50,15 @@ const Hero = () => {
           {/* 3 Trust Checkmarks */}
           <div className="hero-trust-bullets">
             <div className="trust-bullet-item">
-              <i className="fas fa-check-circle"></i>
+              <span className="bullet-icon-box"><i className="fas fa-check"></i></span>
               <span>Zero-Penalty Track Record (99.8% Precision)</span>
             </div>
             <div className="trust-bullet-item">
-              <i className="fas fa-check-circle"></i>
+              <span className="bullet-icon-box"><i className="fas fa-check"></i></span>
               <span>100% Paperless Digital Filing Vault</span>
             </div>
             <div className="trust-bullet-item">
-              <i className="fas fa-check-circle"></i>
+              <span className="bullet-icon-box"><i className="fas fa-check"></i></span>
               <span>Dedicated Senior CA Advisor Assigned</span>
             </div>
           </div>
@@ -96,6 +96,10 @@ const Hero = () => {
             <span className="rating-caption">
               Trusted by <strong>200+ Gujarat Businesses</strong> &bull; <strong>4.9/5 Rating</strong>
             </span>
+            <div className="proof-verified-badge">
+              <i className="fas fa-certificate"></i>
+              <span>ICAI Aligned</span>
+            </div>
           </div>
         </div>
 
@@ -105,7 +109,7 @@ const Hero = () => {
             {/* Mockup Card Header */}
             <div className="mockup-header">
               <div className="mockup-brand">
-                <img src="/assets/logo_new.jpg?v=3" alt="Shree Chamunda Logo" className="mockup-logo" />
+                <img src="/assets/logo_new.jpg?v=4" alt="Shree Chamunda Logo" className="mockup-logo" />
                 <div className="mockup-title">
                   <strong>Shree Chamunda Workspace</strong>
                   <span>Client Compliance Dashboard</span>

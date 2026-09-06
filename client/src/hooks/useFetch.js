@@ -32,7 +32,7 @@ const useFetch = (fetchFunction) => {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [fetchFunction]);
 
   return { data, loading, error };
 };

@@ -175,3 +175,99 @@ img {
 .card-animate:nth-child(8) { animation-delay: 0.5s; }
 .card-animate:nth-child(9) { animation-delay: 0.55s; }
 
+/* ============================================
+   EXECUTIVE DARK MODE STYLES
+   ============================================ */
+[data-theme='dark'] {
+  --primary: #3b82f6;
+  --secondary: #f8b400;
+  --accent: #60a5fa;
+  --light: #121e33;
+  --dark: #f8fafc;
+  --text: #f1f5f9;
+  --text-light: #94a3b8;
+  --success: #10b981;
+}
+
+[data-theme='dark'] body {
+  background-color: #08101d;
+  color: #f1f5f9;
+}
+
+[data-theme='dark'] .features-section,
+[data-theme='dark'] .faq-section,
+[data-theme='dark'] .pricing-dynamic-section,
+[data-theme='dark'] .contact-section,
+[data-theme='dark'] .about-page,
+[data-theme='dark'] .services-page,
+[data-theme='dark'] .service-detail-page,
+[data-theme='dark'] .blog-page,
+[data-theme='dark'] .blog-detail-page,
+[data-theme='dark'] .legal-page-container {
+  background-color: #08101d !important;
+  color: #f1f5f9 !important;
+}
+
+[data-theme='dark'] .feature-bento-card,
+[data-theme='dark'] .faq-item-card,
+[data-theme='dark'] .executive-service-card,
+[data-theme='dark'] .blog-card,
+[data-theme='dark'] .contact-bento-form-wrap,
+[data-theme='dark'] .contact-card,
+[data-theme='dark'] .about-content-card,
+[data-theme='dark'] .team-member-card,
+[data-theme='dark'] .dynamic-pricing-card,
+[data-theme='dark'] .toast-alert,
+[data-theme='dark'] .legal-page-card {
+  background: #0f1c32 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  color: #f1f5f9 !important;
+}
+
+[data-theme='dark'] .features-section h2,
+[data-theme='dark'] .faq-section h2,
+[data-theme='dark'] .pricing-dynamic-section h2,
+[data-theme='dark'] .contact-section h2,
+[data-theme='dark'] .about-page h1,
+[data-theme='dark'] .about-page h2,
+[data-theme='dark'] .about-page h3,
+[data-theme='dark'] .services-page h1,
+[data-theme='dark'] .services-page h2,
+[data-theme='dark'] .service-detail-page h1,
+[data-theme='dark'] .service-detail-page h2,
+[data-theme='dark'] .blog-page h1,
+[data-theme='dark'] .blog-page h2,
+[data-theme='dark'] .faq-question-btn,
+[data-theme='dark'] .service-card-title,
+[data-theme='dark'] .pricing-card-title {
+  color: #f8fafc;
+}
+
+[data-theme='dark'] .features-section p,
+[data-theme='dark'] .faq-section p,
+[data-theme='dark'] .pricing-dynamic-section p,
+[data-theme='dark'] .contact-section p,
+[data-theme='dark'] .about-page p,
+[data-theme='dark'] .services-page p,
+[data-theme='dark'] .service-detail-page p,
+[data-theme='dark'] .blog-page p,
+[data-theme='dark'] .faq-answer-inner,
+[data-theme='dark'] .service-card-desc,
+[data-theme='dark'] .features-subtitle {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] input,
+[data-theme='dark'] textarea,
+[data-theme='dark'] select {
+  background-color: #0a1322 !important;
+  color: #f1f5f9 !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+[data-theme='dark'] input::placeholder,
+[data-theme='dark'] textarea::placeholder {
+  color: #64748b !important;
+}
+
+

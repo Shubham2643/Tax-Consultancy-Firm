@@ -96,7 +96,6 @@ const Admin = () => {
   const [faqs, setFaqs] = useState([]);
   const [pricing, setPricing] = useState([]);
   const [blogs, setBlogs] = useState([]);
-  const [settings, setSettings] = useState(null);
   const [navMenus, setNavMenus] = useState([]);
   const [siteFeatures, setSiteFeatures] = useState([]);
   const [teamMembers, setTeamMembers] = useState([]);
@@ -114,12 +113,12 @@ const Admin = () => {
   const [serviceTypeFilter, setServiceTypeFilter] = useState('all');
   const [servicePage, setServicePage] = useState(1);
 
-  const [faqSearch, setFaqSearch] = useState('');
-  const [faqCategoryFilter, setFaqCategoryFilter] = useState('all');
+  const faqSearch = '';
+  const faqCategoryFilter = 'all';
   const [faqPage, setFaqPage] = useState(1);
 
   const [blogSearch, setBlogSearch] = useState('');
-  const [blogCategoryFilter, setBlogCategoryFilter] = useState('all');
+  const blogCategoryFilter = 'all';
   const [blogPage, setBlogPage] = useState(1);
 
   const [inqSearch, setInqSearch] = useState('');
@@ -130,8 +129,8 @@ const Admin = () => {
   const [userRoleFilter, setUserRoleFilter] = useState('all');
   const [userPage, setUserPage] = useState(1);
   
-  const [teamSearch, setTeamSearch] = useState('');
-  const [teamPage, setTeamPage] = useState(1);
+  const teamSearch = '';
+  const [teamPage] = useState(1);
 
   const itemsPerPage = 8;
 
@@ -234,7 +233,6 @@ const Admin = () => {
       if (consRes.success) setConsultations(consRes.data || []);
       if (invRes.success) setInvoices(invRes.data || []);
       if (setRes.success) {
-        setSettings(setRes.data);
         setSettingsForm({
           ...setRes.data,
           socialLinks: {
@@ -971,7 +969,7 @@ const Admin = () => {
            (item.specialty || '').toLowerCase().includes(teamSearch.toLowerCase());
   });
   const paginatedTeam = filteredTeam.slice((teamPage - 1) * itemsPerPage, teamPage * itemsPerPage);
-  const totalTeamPages = Math.ceil(filteredTeam.length / itemsPerPage) || 1;
+  const _totalTeamPages = Math.ceil(filteredTeam.length / itemsPerPage) || 1;
 
   const pendingDocsCount = documents.filter(d => d.status === 'pending').length;
   const pendingConsCount = consultations.filter(c => c.status === 'pending').length;

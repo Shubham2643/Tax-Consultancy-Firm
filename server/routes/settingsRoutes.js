@@ -5,6 +5,10 @@ const {
   updateSettings,
 } = require('../controllers/settingsController');
 
-router.route('/').get(getSettings).put(updateSettings);
+const { authenticate, authorize } = require('../middleware/auth');
+
+router.route('/')
+  .get(getSettings)
+  .put(authenticate, authorize('admin'), updateSettings);
 
 module.exports = router;

@@ -46,6 +46,9 @@ router.post('/create-order', authenticate, async (req, res, next) => {
 
     const order = await razorpayInstance.orders.create(options);
 
+    invoice.razorpayOrderId = order.id;
+    await invoice.save();
+
     res.json({
       success: true,
       orderId: order.id,
@@ -70,6 +73,27 @@ router.post('/verify-signature', authenticate, async (req, res, next) => {
       return res.status(500).json({ success: false, message: 'Razorpay API credentials are missing from environment configurations' });
     }
 
+    // Find the invoice and verify ownership
+    const invoice = await Invoice.findOne({ _id: invoiceId, client: req.user._id });
+    if (!invoice) {
+      return res.status(404).json({ success: false, message: 'Invoice not found or unauthorized' });
+    }
+
+    if (invoice.status === 'paid') {
+      return res.status(400).json({ success: false, message: 'Invoice is already paid' });
+    }
+
+    // Verify order id binds to this invoice
+    if (invoice.razorpayOrderId && invoice.razorpayOrderId !== razorpay_order_id) {
+      return res.status(400).json({ success: false, message: 'Razorpay order ID does not match this invoice' });
+    }
+
+    // Replay attack check: ensure this payment ID was not already used
+    const existingPayment = await Invoice.findOne({ razorpayPaymentId: razorpay_payment_id });
+    if (existingPayment) {
+      return res.status(400).json({ success: false, message: 'This payment has already been credited to an invoice' });
+    }
+
     // Verify Razorpay signature: SHA256 HMAC of (order_id + "|" + payment_id) using secret key
     const body = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSignature = crypto
@@ -77,20 +101,22 @@ router.post('/verify-signature', authenticate, async (req, res, next) => {
       .update(body.toString())
       .digest('hex');
 
-    if (expectedSignature !== razorpay_signature) {
+    const expectedBuffer = Buffer.from(expectedSignature, 'utf8');
+    const actualBuffer = Buffer.from(razorpay_signature, 'utf8');
+
+    if (
+      expectedBuffer.length !== actualBuffer.length ||
+      !crypto.timingSafeEqual(expectedBuffer, actualBuffer)
+    ) {
       return res.status(400).json({ success: false, message: 'Invalid payment signature verification failed' });
     }
 
     // Update invoice status in database
-    const invoice = await Invoice.findOneAndUpdate(
-      { _id: invoiceId, client: req.user._id },
-      { status: 'paid', paidAt: new Date() },
-      { new: true }
-    );
-
-    if (!invoice) {
-      return res.status(404).json({ success: false, message: 'Invoice not found to clear' });
-    }
+    invoice.status = 'paid';
+    invoice.paidAt = new Date();
+    invoice.razorpayOrderId = razorpay_order_id;
+    invoice.razorpayPaymentId = razorpay_payment_id;
+    await invoice.save();
 
     // Dispatch live websocket update to user and admin rooms
     if (req.io) {

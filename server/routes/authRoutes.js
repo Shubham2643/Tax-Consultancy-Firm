@@ -19,9 +19,12 @@ function hashPassword(password) {
 }
 
 function verifyPassword(password, stored) {
-  const [salt, hash] = stored.split(':');
+  const [salt, hash] = (stored || '').split(':');
+  if (!salt || !hash) return false;
   const verifyHash = crypto.pbkdf2Sync(password, salt, ITERATIONS, KEY_LENGTH, DIGEST).toString('hex');
-  return hash === verifyHash;
+  const hashBuf = Buffer.from(hash, 'utf8');
+  const verifyBuf = Buffer.from(verifyHash, 'utf8');
+  return hashBuf.length === verifyBuf.length && crypto.timingSafeEqual(hashBuf, verifyBuf);
 }
 
 // GET /api/auth/config
@@ -194,6 +197,9 @@ router.post('/google', async (req, res, next) => {
     }
 
     const userInfo = await userInfoRes.json();
+    if (!userInfo.email_verified) {
+      return res.status(400).json({ success: false, message: 'Google email is not verified' });
+    }
     email = userInfo.email;
     name = userInfo.name;
 
@@ -243,12 +249,12 @@ router.post('/otp/send', async (req, res, next) => {
     }
 
     const cleanTarget = target.trim().toLowerCase();
-    const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+    const otpCode = crypto.randomInt(100000, 1000000).toString();
     const expiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes TTL
 
     await Otp.findOneAndUpdate(
       { target: cleanTarget },
-      { otpCode, expiresAt },
+      { otpCode, expiresAt, attempts: 0 },
       { upsert: true, new: true }
     );
 
@@ -260,7 +266,7 @@ router.post('/otp/send', async (req, res, next) => {
   }
 });
 
-// POST /api/auth/otp/verify — Verify an OTP code (validates only; does NOT consume)
+// POST /api/auth/otp/verify — Verify an OTP code with brute-force protection
 router.post('/otp/verify', async (req, res, next) => {
   try {
     const { target, otpCode, consume } = req.body;
@@ -269,9 +275,24 @@ router.post('/otp/verify', async (req, res, next) => {
     }
 
     const cleanTarget = target.trim().toLowerCase();
-    const otpRecord = await Otp.findOne({ target: cleanTarget, otpCode });
+    const otpRecord = await Otp.findOne({ target: cleanTarget });
 
     if (!otpRecord) {
+      return res.status(400).json({ success: false, message: 'Invalid or expired OTP' });
+    }
+
+    if (otpRecord.attempts >= 5) {
+      await Otp.deleteOne({ _id: otpRecord._id });
+      return res.status(429).json({ success: false, message: 'Too many failed attempts. Please request a new OTP.' });
+    }
+
+    const expectedBuf = Buffer.from(otpRecord.otpCode, 'utf8');
+    const actualBuf = Buffer.from(otpCode.toString(), 'utf8');
+    const isMatch = expectedBuf.length === actualBuf.length && crypto.timingSafeEqual(expectedBuf, actualBuf);
+
+    if (!isMatch) {
+      otpRecord.attempts += 1;
+      await otpRecord.save();
       return res.status(400).json({ success: false, message: 'Invalid or expired OTP' });
     }
 
@@ -311,12 +332,12 @@ router.post('/forgot-password/request', async (req, res, next) => {
       return res.status(400).json({ success: false, message: 'This account uses Google sign-in. Please log in with Google instead of resetting your password.' });
     }
 
-    const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+    const otpCode = crypto.randomInt(100000, 1000000).toString();
     const expiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes
 
     await Otp.findOneAndUpdate(
       { target: cleanTarget },
-      { otpCode, expiresAt },
+      { otpCode, expiresAt, attempts: 0 },
       { upsert: true, new: true }
     );
 
@@ -344,8 +365,23 @@ router.post('/forgot-password/reset', async (req, res, next) => {
     }
 
     const cleanTarget = target.trim().toLowerCase();
-    const otpRecord = await Otp.findOne({ target: cleanTarget, otpCode });
+    const otpRecord = await Otp.findOne({ target: cleanTarget });
     if (!otpRecord) {
+      return res.status(400).json({ success: false, message: 'Invalid or expired verification code' });
+    }
+
+    if (otpRecord.attempts >= 5) {
+      await Otp.deleteOne({ _id: otpRecord._id });
+      return res.status(429).json({ success: false, message: 'Too many failed attempts. Please request a new code.' });
+    }
+
+    const expectedBuf = Buffer.from(otpRecord.otpCode, 'utf8');
+    const actualBuf = Buffer.from(otpCode.toString(), 'utf8');
+    const isMatch = expectedBuf.length === actualBuf.length && crypto.timingSafeEqual(expectedBuf, actualBuf);
+
+    if (!isMatch) {
+      otpRecord.attempts += 1;
+      await otpRecord.save();
       return res.status(400).json({ success: false, message: 'Invalid or expired verification code' });
     }
 
@@ -364,6 +400,9 @@ router.post('/forgot-password/reset', async (req, res, next) => {
     await Otp.deleteOne({ _id: otpRecord._id });
     user.password = hashPassword(newPassword);
     await user.save();
+
+    // Invalidate any active sessions across devices
+    await Session.deleteMany({ userId: user._id });
 
     res.json({ success: true, message: 'Password reset successfully. You can now login.' });
   } catch (err) {

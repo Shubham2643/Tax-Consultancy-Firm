@@ -9,8 +9,18 @@ const {
   deleteFeature,
 } = require('../controllers/featureController');
 
-router.route('/').get(getFeatures).post(createFeature);
-router.route('/all').get(getAllFeatures);
-router.route('/:id').get(getFeature).put(updateFeature).delete(deleteFeature);
+const { authenticate, authorize } = require('../middleware/auth');
+
+router.route('/')
+  .get(getFeatures)
+  .post(authenticate, authorize('admin'), createFeature);
+
+router.route('/all')
+  .get(authenticate, authorize('admin'), getAllFeatures);
+
+router.route('/:id')
+  .get(getFeature)
+  .put(authenticate, authorize('admin'), updateFeature)
+  .delete(authenticate, authorize('admin'), deleteFeature);
 
 module.exports = router;

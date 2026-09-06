@@ -17,6 +17,10 @@ const OtpSchema = new mongoose.Schema({
   expiresAt: {
     type: Date,
     required: true,
+  },
+  attempts: {
+    type: Number,
+    default: 0,
   }
 });
 

@@ -47,7 +47,7 @@ const TermsConditions = () => {
               </p>
               <div className="legal-highlight-box">
                 <p>
-                  Important: It is the client\'s sole responsibility to upload document updates within specified portal deadlines. Late fees levied by GSTIN or MCA due to client-side delays will not be absorbed by our firm.
+                  Important: It is the client's sole responsibility to upload document updates within specified portal deadlines. Late fees levied by GSTIN or MCA due to client-side delays will not be absorbed by our firm.
                 </p>
               </div>
             </section>

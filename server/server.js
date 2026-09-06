@@ -32,18 +32,21 @@ const app = express();
 const server = http.createServer(app);
 
 // Allowed origins for CORS
-const allowedOrigins = [
-  process.env.FRONTEND_URL,
+const configuredOrigins = (process.env.FRONTEND_URL || '')
+  .split(',')
+  .map((o) => o.trim())
+  .filter(Boolean);
+
+const allowedOrigins = Array.from(new Set([
+  ...configuredOrigins,
   'https://shreechamundaassociates.onrender.com',
   'http://localhost:5173',
   'http://localhost:3000'
-].filter(Boolean);
+]));
 
 const isOriginAllowed = (origin) => {
   if (!origin) return true; // allow server-to-server / non-browser requests
-  if (allowedOrigins.includes(origin)) return true;
-  if (origin.endsWith('.onrender.com') || origin.endsWith('.vercel.app')) return true;
-  return false;
+  return allowedOrigins.includes(origin);
 };
 
 // Initialize Socket.io with room-based auth
@@ -118,8 +121,8 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
-app.use(express.json({ limit: '5mb' }));
-app.use(express.urlencoded({ extended: true, limit: '5mb' }));
+app.use(express.json({ limit: '15mb' }));
+app.use(express.urlencoded({ extended: true, limit: '15mb' }));
 
 // Inject Socket.io into the request context
 app.use((req, res, next) => {

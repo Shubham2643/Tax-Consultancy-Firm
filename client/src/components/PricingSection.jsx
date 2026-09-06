@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getPricing } from '../api';
 import useFetch from '../hooks/useFetch';
@@ -88,24 +88,61 @@ const DETAILED_PLANS = {
 };
 
 const PricingSection = () => {
-  const { data: response, loading } = useFetch(getPricing);
+  const { data: response } = useFetch(getPricing);
   const navigate = useNavigate();
 
-  // Active selected plan key (defaults to 'standard plan')
+  // If database contains active pricing plans, merge or dynamically expose them
+  const dynamicPlans = useMemo(() => {
+    const plansMap = { ...DETAILED_PLANS };
+    if (response?.data && Array.isArray(response.data) && response.data.length > 0) {
+      response.data.forEach((p) => {
+        const key = (p.name || '').toLowerCase();
+        const existing = DETAILED_PLANS[key] || {};
+        const deliverablesList = (p.features && p.features.length > 0)
+          ? p.features.map((feat) => ({
+              title: feat,
+              desc: 'Direct consultation & verified statutory filing',
+              icon: 'fas fa-check-circle',
+            }))
+          : [
+              { title: 'Statutory Compliance', desc: 'Direct oversight by certified CA', icon: 'fas fa-shield-alt' },
+              { title: 'Audit Ready Documentation', desc: 'Complete paperless digital vault', icon: 'fas fa-folder-open' },
+            ];
+
+        plansMap[key] = {
+          ...existing,
+          id: p._id || existing.id || key,
+          name: p.name || existing.name || 'Advisory Plan',
+          target: p.tagline || existing.target || 'Custom Advisory Retainer',
+          price: typeof p.price === 'number' ? p.price : (existing.price || 0),
+          period: p.period || p.billingPeriod || existing.period || 'month',
+          isPopular: p.isPopular !== undefined ? Boolean(p.isPopular) : Boolean(existing.isPopular),
+          badge: (p.isPopular || existing.isPopular) ? 'MOST POPULAR • BEST ROI' : (existing.badge || 'SPECIALIZED'),
+          icon: existing.icon || 'fas fa-award',
+          summary: p.description || p.tagline || existing.summary || 'Comprehensive compliance & chartered tax advisory retainer.',
+          deliverables: (existing.deliverables && existing.deliverables.length > 0) ? existing.deliverables : deliverablesList,
+          ctaText: p.ctaText || existing.ctaText || 'Consult With CA',
+        };
+      });
+    }
+    return plansMap;
+  }, [response]);
+
+  const planKeys = useMemo(() => Object.keys(dynamicPlans), [dynamicPlans]);
+
+  // Active selected plan key (defaults to first available or standard plan)
   const [selectedPlanKey, setSelectedPlanKey] = useState('standard plan');
 
-  const activePlan = DETAILED_PLANS[selectedPlanKey] || DETAILED_PLANS['standard plan'];
+  const activePlan = dynamicPlans[selectedPlanKey] || dynamicPlans[planKeys[0]] || DETAILED_PLANS['standard plan'] || {};
 
   const handleSelectPlan = (planName) => {
     navigate('/contact', { state: { planName } });
   };
 
   const handleWhatsAppQuote = () => {
-    const text = `Hello CA Team, I am interested in the ${activePlan.name} (₹${activePlan.price.toLocaleString('en-IN')}/${activePlan.period}) and would like to discuss my business requirements.`;
+    const text = `Hello CA Team, I am interested in the ${activePlan.name || 'Advisory Plan'} (₹${(activePlan.price || 0).toLocaleString('en-IN')}/${activePlan.period || 'mo'}) and would like to discuss my business requirements.`;
     window.open(`https://wa.me/919510984735?text=${encodeURIComponent(text)}`, '_blank');
   };
-
-  const planKeys = ['basic plan', 'standard plan', 'premium plan', 'incorporate plan'];
 
   return (
     <section className="pricing-dynamic-section">
@@ -133,7 +170,7 @@ const PricingSection = () => {
           {/* Top Interactive Plan Selector Bar */}
           <div className="dynamic-selector-tabs">
             {planKeys.map((key) => {
-              const plan = DETAILED_PLANS[key];
+              const plan = dynamicPlans[key] || DETAILED_PLANS[key] || {};
               const isSelected = selectedPlanKey === key;
               return (
                 <button
@@ -143,14 +180,14 @@ const PricingSection = () => {
                 >
                   <div className="tab-left-content">
                     <div className="tab-title-row">
-                      <h4 className="tab-plan-name">{plan.name}</h4>
+                      <h4 className="tab-plan-name">{plan.name || 'Advisory Plan'}</h4>
                       {plan.isPopular && <span className="tab-popular-tag">RECOMMENDED</span>}
                     </div>
                     <span className="tab-target-label">{plan.target}</span>
                   </div>
 
                   <div className="tab-right-price">
-                    <span className="tab-price-val">₹{plan.price.toLocaleString('en-IN')}</span>
+                    <span className="tab-price-val">₹{(plan.price || 0).toLocaleString('en-IN')}</span>
                     <span className="tab-price-period">/{plan.period === 'month' ? 'mo' : 'one-time'}</span>
                   </div>
                 </button>
@@ -163,7 +200,7 @@ const PricingSection = () => {
             {/* Left Column: Plan Summary & Price CTA */}
             <div className="stage-left-summary">
               <div className="stage-meta-tags">
-                <span className="stage-badge-pill">{activePlan.badge}</span>
+                <span className="stage-badge-pill">{activePlan.badge || 'POPULAR'}</span>
                 <span className="stage-target-pill">{activePlan.target}</span>
               </div>
 
@@ -173,8 +210,8 @@ const PricingSection = () => {
               <div className="stage-price-display">
                 <div className="stage-price-row">
                   <span className="stage-currency">₹</span>
-                  <span className="stage-amount">{activePlan.price.toLocaleString('en-IN')}</span>
-                  <span className="stage-period">/{activePlan.period}</span>
+                  <span className="stage-amount">{(activePlan.price || 0).toLocaleString('en-IN')}</span>
+                  <span className="stage-period">/{activePlan.period || 'mo'}</span>
                 </div>
                 <span className="stage-guarantee-line">
                   <i className="fas fa-check-shield"></i> All statutory taxes included &bull; 100% On-Time Guarantee
@@ -186,7 +223,7 @@ const PricingSection = () => {
                   className="btn-stage-primary"
                   onClick={() => handleSelectPlan(activePlan.name)}
                 >
-                  <span>{activePlan.ctaText}</span>
+                  <span>{activePlan.ctaText || 'Get Started'}</span>
                   <i className="fas fa-arrow-right"></i>
                 </button>
                 <button className="btn-stage-wa" onClick={handleWhatsAppQuote}>
@@ -207,10 +244,10 @@ const PricingSection = () => {
               </div>
 
               <div className="deliverables-bento-grid">
-                {activePlan.deliverables.map((item, idx) => (
+                {(activePlan.deliverables || []).map((item, idx) => (
                   <div key={idx} className="deliverable-bento-item">
                     <div className="deliverable-icon-box">
-                      <i className={item.icon}></i>
+                      <i className={item.icon || 'fas fa-check-circle'}></i>
                     </div>
                     <div className="deliverable-text-box">
                       <h5>{item.title}</h5>

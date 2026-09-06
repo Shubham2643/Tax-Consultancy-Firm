@@ -230,10 +230,10 @@ const returnServices = [
   },
   {
     title: 'PF & ESIC Return',
-    slug: 'pf-&-esic-return',
+    slug: 'pf-and-esic-return',
     description: 'Combined monthly compliance return filings for Provident Fund and Employee State Insurance.',
     icon: '/assets/bookkepping-2.svg',
-    link: '/services/pf-&-esic-return',
+    link: '/services/pf-and-esic-return',
     order: 26,
     isActive: true,
     serviceType: 'accounting',

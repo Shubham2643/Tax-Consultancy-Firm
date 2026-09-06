@@ -49,7 +49,8 @@ const getService = async (req, res, next) => {
 
       if (!service) {
         // Fall back to title-based slug match, allowing dashes or spaces
-        const pattern = `^${param.replace(/-/g, '[- ]')}$`;
+        const escaped = param.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const pattern = `^${escaped.replace(/-/g, '[- ]')}$`;
         service = await Service.findOne({
           title: { $regex: new RegExp(pattern, 'i') },
         });

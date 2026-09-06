@@ -21,7 +21,6 @@ const urlBase64ToUint8Array = (base64String) => {
 };
 
 const NotificationConsent = () => {
-  const [permission, setPermission] = useState('default');
   const [isVisible, setIsVisible] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -30,8 +29,6 @@ const NotificationConsent = () => {
       console.log('⚠️ Browser does not support push notifications');
       return;
     }
-
-    setPermission(Notification.permission);
     
     // Only show consent bar if permission is 'default' (not yet allowed or denied)
     if (Notification.permission === 'default') {
@@ -47,7 +44,6 @@ const NotificationConsent = () => {
     try {
       setIsSubmitting(true);
       const reqPermission = await Notification.requestPermission();
-      setPermission(reqPermission);
 
       if (reqPermission !== 'granted') {
         console.log('⚠️ Push permission denied by user');

@@ -30,12 +30,6 @@ const ServiceDetail = () => {
   const [taxInput, setTaxInput] = useState({ income: 800000, deductions: 150000 });
   const [taxResult, setTaxResult] = useState(null);
 
-  const [startupInput, setStartupInput] = useState({ structure: 'Pvt Ltd', state: 'Gujarat' });
-  const [startupResult, setStartupResult] = useState(null);
-
-  const [accountingInput, setAccountingInput] = useState({ transactions: 50, invoices: 20 });
-  const [accountingResult, setAccountingResult] = useState(null);
-
   useEffect(() => {
     const fetchServiceDetail = async () => {
       try {
@@ -88,41 +82,6 @@ const ServiceDetail = () => {
       });
     }
   }, [taxInput, service]);
-
-  // Startup Fee Calculator logic
-  useEffect(() => {
-    if (service?.serviceType === 'startup') {
-      const baseGov =
-        startupInput.structure === 'Pvt Ltd'
-          ? 2000
-          : startupInput.structure === 'LLP'
-          ? 1500
-          : startupInput.structure === 'OPC'
-          ? 1000
-          : 0;
-      const stampDuty = startupInput.state === 'Maharashtra' ? 1000 : 500;
-      const profFee =
-        startupInput.structure === 'Pvt Ltd'
-          ? 4999
-          : startupInput.structure === 'LLP'
-          ? 3999
-          : startupInput.structure === 'OPC'
-          ? 3499
-          : 1999;
-      const total = baseGov + stampDuty + profFee;
-      setStartupResult({ baseGov, stampDuty, profFee, total });
-    }
-  }, [startupInput, service]);
-
-  // Accounting Package Calculator logic
-  useEffect(() => {
-    if (service?.serviceType === 'accounting' || service?.slug === 'bookkeeping-services') {
-      let fee = 2999;
-      if (accountingInput.transactions > 200 || accountingInput.invoices > 100) fee = 9999;
-      else if (accountingInput.transactions > 100 || accountingInput.invoices > 50) fee = 5999;
-      setAccountingResult({ estimatedFee: fee });
-    }
-  }, [accountingInput, service]);
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

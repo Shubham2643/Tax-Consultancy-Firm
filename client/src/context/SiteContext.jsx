@@ -118,14 +118,14 @@ export const SiteContextProvider = ({ children }) => {
               { label: 'PF Return', href: '/services/pf-return' },
               { label: 'TDS Return', href: '/services/tds-return' },
               { label: 'E-way Bill', href: '/services/e-way-bill' },
-              { label: 'PF & ESIC Return', href: '/services/pf-&-esic-return' },
+              { label: 'PF & ESIC Return', href: '/services/pf-and-esic-return' },
             ],
           },
           {
             label: 'Accounting & Compliance',
             href: '#',
             children: [
-              { label: 'Book Keeping & Accounting', href: '/services/book-keeping-&-accounting' },
+              { label: 'Book Keeping & Accounting', href: '/services/bookkeeping-services' },
               { label: 'Auditing (Internal & Tax Audit)', href: '/services/auditing' },
               { label: 'TDS / TCS Compliance', href: '/services/tds-compliance' },
               { label: 'Company Annual Filing (ROC)', href: '/services/roc-compliance' },

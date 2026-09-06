@@ -90,10 +90,11 @@ router.get('/documents/download/:id', async (req, res, next) => {
     const fs = require('fs');
     const path = require('path');
     const uploadsDir = path.resolve(__dirname, '..', 'uploads');
-    const fullPath = path.resolve(__dirname, '..', doc.filePath);
+    const relativePath = (doc.filePath || '').replace(/^(\/|\\)+/, '');
+    const fullPath = path.resolve(__dirname, '..', relativePath);
 
-    // Path traversal protection
-    if (!fullPath.startsWith(uploadsDir)) {
+    // Path traversal protection with delimiter check
+    if (!fullPath.startsWith(uploadsDir + path.sep) && fullPath !== uploadsDir) {
       return res.status(400).json({ success: false, message: 'Invalid file path' });
     }
 
@@ -105,6 +106,11 @@ router.get('/documents/download/:id', async (req, res, next) => {
     res.setHeader('Content-Disposition', `inline; filename="${encodeURIComponent(doc.originalName)}"`);
 
     const fileStream = fs.createReadStream(fullPath);
+    fileStream.on('error', (err) => {
+      if (!res.headersSent) {
+        next(err);
+      }
+    });
     fileStream.pipe(res);
   } catch (err) {
     next(err);
@@ -240,6 +246,20 @@ router.delete('/documents/:id', async (req, res, next) => {
   try {
     const doc = await UserDocument.findByIdAndDelete(req.params.id);
     if (!doc) return res.status(404).json({ success: false, message: 'Document not found' });
+
+    // Clean up physical file on disk
+    if (doc.filePath) {
+      const fs = require('fs');
+      const path = require('path');
+      const relativePath = doc.filePath.replace(/^(\/|\\)+/, '');
+      const fullPath = path.resolve(__dirname, '..', relativePath);
+      try {
+        await fs.promises.unlink(fullPath);
+      } catch (fileErr) {
+        // File might not exist, proceed
+      }
+    }
+
     res.json({ success: true, message: 'Document deleted successfully' });
   } catch (err) {
     next(err);

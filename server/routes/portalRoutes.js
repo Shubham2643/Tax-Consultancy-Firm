@@ -28,7 +28,8 @@ const ALLOWED_MIME_TYPES = [
  */
 const isSafePath = (filePath) => {
   const resolved = path.resolve(filePath);
-  return resolved.startsWith(path.resolve(UPLOADS_DIR));
+  const targetDir = path.resolve(UPLOADS_DIR);
+  return resolved.startsWith(targetDir + path.sep) || resolved === targetDir;
 };
 
 // GET /api/portal/documents — Get logged-in user's uploaded documents
@@ -204,6 +205,11 @@ router.get('/documents/download/:id', authenticate, async (req, res, next) => {
 
     const { createReadStream } = require('fs');
     const fileStream = createReadStream(fullPath);
+    fileStream.on('error', (err) => {
+      if (!res.headersSent) {
+        next(err);
+      }
+    });
     fileStream.pipe(res);
   } catch (err) {
     next(err);

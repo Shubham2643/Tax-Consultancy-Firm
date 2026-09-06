@@ -7,12 +7,13 @@ const ServiceCard = ({ service }) => {
   // Icon mapping
   const getIconClass = (title, type) => {
     const t = (title || '').toLowerCase();
-    if (t.includes('accounting') || t.includes('bookkeeping')) return 'fas fa-calculator';
-    if (t.includes('personal tax') || t.includes('itr') || t.includes('income tax')) return 'fas fa-file-invoice-dollar';
+    const tp = (type || '').toLowerCase();
+    if (t.includes('accounting') || t.includes('bookkeeping') || tp === 'accounting') return 'fas fa-calculator';
+    if (t.includes('personal tax') || t.includes('itr') || t.includes('income tax') || tp === 'tax') return 'fas fa-file-invoice-dollar';
     if (t.includes('business tax') || t.includes('gst') || t.includes('return')) return 'fas fa-receipt';
     if (t.includes('payroll') || t.includes('salary')) return 'fas fa-money-check-alt';
     if (t.includes('statement') || t.includes('audit')) return 'fas fa-chart-line';
-    if (t.includes('registration') || t.includes('company') || t.includes('startup')) return 'fas fa-landmark';
+    if (t.includes('registration') || t.includes('company') || t.includes('startup') || tp === 'startup' || tp === 'registration') return 'fas fa-landmark';
     if (t.includes('dispute') || t.includes('notice') || t.includes('legal')) return 'fas fa-gavel';
     return 'fas fa-shield-alt';
   };

@@ -7,10 +7,10 @@ const User = require('../models/User');
  */
 const authenticate = async (req, res, next) => {
   try {
-    let token = req.query.token;
+    let token = null;
     const authHeader = req.headers.authorization;
     
-    if (!token && authHeader && authHeader.startsWith('Bearer ')) {
+    if (authHeader && authHeader.startsWith('Bearer ')) {
       token = authHeader.split(' ')[1];
     }
 

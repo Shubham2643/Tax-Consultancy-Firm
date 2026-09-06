@@ -9,8 +9,18 @@ const {
   deleteService,
 } = require('../controllers/serviceController');
 
-router.route('/').get(getServices).post(createService);
-router.route('/all').get(getAllServices);
-router.route('/:id').get(getService).put(updateService).delete(deleteService);
+const { authenticate, authorize } = require('../middleware/auth');
+
+router.route('/')
+  .get(getServices)
+  .post(authenticate, authorize('admin'), createService);
+
+router.route('/all')
+  .get(authenticate, authorize('admin'), getAllServices);
+
+router.route('/:id')
+  .get(getService)
+  .put(authenticate, authorize('admin'), updateService)
+  .delete(authenticate, authorize('admin'), deleteService);
 
 module.exports = router;

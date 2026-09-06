@@ -5,6 +5,8 @@ import useFetch from '../hooks/useFetch';
 import useSEO from '../hooks/useSEO';
 import './FAQ.css';
 
+const CATEGORIES = ['All', 'GST', 'Income Tax', 'Business Registration', 'Compliance'];
+
 const FAQ = () => {
   useSEO({
     title: 'FAQs & Help Desk | Shree Chamunda Associates',
@@ -12,26 +14,16 @@ const FAQ = () => {
   });
 
   const { data: response, loading, error } = useFetch(getFAQs);
-  const faqs = response?.data || [];
+  const faqs = useMemo(() => response?.data || [], [response]);
 
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
   const [openIndices, setOpenIndices] = useState(new Set([0])); // First item open by default
 
-  const categories = ['All', 'GST', 'Income Tax', 'Business Registration', 'Compliance'];
-
-  const trendingTopics = [
-    'GST Registration',
-    'ITR-4 Section 44ADA',
-    'ASMT-10 Notice',
-    'Startup Registration',
-    'TDS Rates',
-  ];
-
   // Count FAQs per category
   const categoryCounts = useMemo(() => {
     const counts = { All: faqs.length };
-    categories.forEach((cat) => {
+    CATEGORIES.forEach((cat) => {
       if (cat !== 'All') {
         counts[cat] = faqs.filter((f) => f.category === cat).length;
       }

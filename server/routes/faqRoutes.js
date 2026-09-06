@@ -7,7 +7,14 @@ const {
   deleteFAQ,
 } = require('../controllers/faqController');
 
-router.route('/').get(getFAQs).post(createFAQ);
-router.route('/:id').put(updateFAQ).delete(deleteFAQ);
+const { authenticate, authorize } = require('../middleware/auth');
+
+router.route('/')
+  .get(getFAQs)
+  .post(authenticate, authorize('admin'), createFAQ);
+
+router.route('/:id')
+  .put(authenticate, authorize('admin'), updateFAQ)
+  .delete(authenticate, authorize('admin'), deleteFAQ);
 
 module.exports = router;

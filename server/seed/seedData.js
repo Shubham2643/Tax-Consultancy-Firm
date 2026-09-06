@@ -20,6 +20,10 @@ const startupServices = require('./startupServices');
 
 const seedData = async () => {
   try {
+    if (process.env.NODE_ENV === 'production') {
+      console.error('❌ Refusing to run seed script in production: will wipe live database!');
+      process.exit(1);
+    }
     await connectDB();
     console.log('Connected to MongoDB. Seeding data...');
 

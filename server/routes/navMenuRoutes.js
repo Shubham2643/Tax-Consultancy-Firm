@@ -9,8 +9,18 @@ const {
   deleteNavMenuItem,
 } = require('../controllers/navMenuController');
 
-router.route('/').get(getNavMenu).post(createNavMenuItem);
-router.route('/all').get(getAllNavMenu);
-router.route('/:id').get(getNavMenuItem).put(updateNavMenuItem).delete(deleteNavMenuItem);
+const { authenticate, authorize } = require('../middleware/auth');
+
+router.route('/')
+  .get(getNavMenu)
+  .post(authenticate, authorize('admin'), createNavMenuItem);
+
+router.route('/all')
+  .get(authenticate, authorize('admin'), getAllNavMenu);
+
+router.route('/:id')
+  .get(getNavMenuItem)
+  .put(authenticate, authorize('admin'), updateNavMenuItem)
+  .delete(authenticate, authorize('admin'), deleteNavMenuItem);
 
 module.exports = router;

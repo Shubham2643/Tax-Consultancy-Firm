@@ -9,8 +9,18 @@ const {
   deletePricingPlan,
 } = require('../controllers/pricingController');
 
-router.route('/').get(getPricingPlans).post(createPricingPlan);
-router.route('/all').get(getAllPricingPlans);
-router.route('/:id').get(getPricingPlan).put(updatePricingPlan).delete(deletePricingPlan);
+const { authenticate, authorize } = require('../middleware/auth');
+
+router.route('/')
+  .get(getPricingPlans)
+  .post(authenticate, authorize('admin'), createPricingPlan);
+
+router.route('/all')
+  .get(authenticate, authorize('admin'), getAllPricingPlans);
+
+router.route('/:id')
+  .get(getPricingPlan)
+  .put(authenticate, authorize('admin'), updatePricingPlan)
+  .delete(authenticate, authorize('admin'), deletePricingPlan);
 
 module.exports = router;

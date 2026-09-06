@@ -7,9 +7,9 @@ const Session = require('../models/Session');
 // Helper to optionally get user from header session token
 const getOptionalUser = async (req) => {
   try {
-    let token = req.query.token;
     const authHeader = req.headers.authorization;
-    if (!token && authHeader && authHeader.startsWith('Bearer ')) {
+    let token = null;
+    if (authHeader && authHeader.startsWith('Bearer ')) {
       token = authHeader.substring(7);
     }
     if (token) {
@@ -30,7 +30,7 @@ router.post('/book', async (req, res, next) => {
       return res.status(400).json({ success: false, message: 'Required fields missing' });
     }
 
-    const clientId = (await getOptionalUser(req)) || req.body.clientId || null;
+    const clientId = await getOptionalUser(req);
 
     const booking = await Consultation.create({
       client: clientId,

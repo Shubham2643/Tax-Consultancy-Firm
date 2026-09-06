@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import Navbar from './components/Navbar';
@@ -10,23 +10,25 @@ import About from './pages/About';
 import Services from './pages/Services';
 import Contact from './pages/Contact';
 import Blog from './pages/Blog';
-import BlogDetail from './pages/BlogDetail';
 import FAQ from './pages/FAQ';
-import ServiceDetail from './pages/ServiceDetail';
-import TermsConditions from './pages/TermsConditions';
-import RefundPolicy from './pages/RefundPolicy';
-import PrivacyPolicy from './pages/PrivacyPolicy';
-import TermsOfService from './pages/TermsOfService';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Portal from './pages/Portal';
-import Admin from './pages/Admin';
-import OAuthCallback from './pages/OAuthCallback';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
-import NotFound from './pages/NotFound';
 import WhatsAppWidget from './components/WhatsAppWidget';
 import './App.css';
+
+// Dynamically split heavy pages to optimize initial bundle load
+const ServiceDetail = lazy(() => import('./pages/ServiceDetail'));
+const BlogDetail = lazy(() => import('./pages/BlogDetail'));
+const TermsConditions = lazy(() => import('./pages/TermsConditions'));
+const RefundPolicy = lazy(() => import('./pages/RefundPolicy'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const TermsOfService = lazy(() => import('./pages/TermsOfService'));
+const Login = lazy(() => import('./pages/Login'));
+const Register = lazy(() => import('./pages/Register'));
+const Portal = lazy(() => import('./pages/Portal'));
+const Admin = lazy(() => import('./pages/Admin'));
+const OAuthCallback = lazy(() => import('./pages/OAuthCallback'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 
 function App() {
@@ -66,7 +68,7 @@ function App() {
       addToast(`Filing status updated to "${inq.status}" for ${inq.service || 'General Inquiry'}`);
     });
 
-    socket.on('inquiry_comment_added', (data) => {
+    socket.on('inquiry_comment_added', () => {
       addToast(`New comment reply posted on inquiry discussion thread.`);
     });
 
@@ -113,26 +115,32 @@ function App() {
       </div>
 
       <main className={isFullPageLayout ? "" : "main-content"}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/services/:id" element={<ServiceDetail />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:id" element={<BlogDetail />} />
-          <Route path="/faqs" element={<FAQ />} />
-          <Route path="/terms-conditions" element={<TermsConditions />} />
-          <Route path="/refund-policy" element={<RefundPolicy />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/terms-of-service" element={<TermsOfService />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/portal" element={<ProtectedRoute><Portal /></ProtectedRoute>} />
-          <Route path="/admin" element={<ProtectedRoute requiredRole="admin"><Admin /></ProtectedRoute>} />
-          <Route path="/auth/google/callback" element={<OAuthCallback />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <Suspense fallback={
+          <div className="container py-5 text-center" style={{ minHeight: '50vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div className="skeleton skeleton-title" style={{ width: '200px', height: '24px' }}></div>
+          </div>
+        }>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/services/:id" element={<ServiceDetail />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:id" element={<BlogDetail />} />
+            <Route path="/faqs" element={<FAQ />} />
+            <Route path="/terms-conditions" element={<TermsConditions />} />
+            <Route path="/refund-policy" element={<RefundPolicy />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/portal" element={<ProtectedRoute><Portal /></ProtectedRoute>} />
+            <Route path="/admin" element={<ProtectedRoute requiredRole="admin"><Admin /></ProtectedRoute>} />
+            <Route path="/auth/google/callback" element={<OAuthCallback />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
       </main>
       
       {!isFullPageLayout && <WhatsAppWidget />}
@@ -142,8 +150,10 @@ function App() {
   );
 }
 
-export default () => (
+const RootApp = () => (
   <AuthProvider>
     <App />
   </AuthProvider>
 );
+
+export default RootApp;

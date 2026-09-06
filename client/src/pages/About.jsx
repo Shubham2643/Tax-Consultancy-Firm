@@ -6,7 +6,6 @@ import './About.css';
 const About = () => {
   const { settings, loading } = useSiteContext();
   const [team, setTeam] = useState([]);
-  const [teamLoading, setTeamLoading] = useState(true);
 
   useEffect(() => {
     const fetchTeam = async () => {
@@ -17,8 +16,6 @@ const About = () => {
         }
       } catch (err) {
         console.error('Failed to load team members:', err);
-      } finally {
-        setTeamLoading(false);
       }
     };
     fetchTeam();

@@ -7,7 +7,7 @@ import './Contact.css';
 
 const Contact = () => {
   const { settings, loading: settingsLoading } = useSiteContext();
-  const { data: faqResponse, loading: faqLoading } = useFetch(getFAQs);
+  const { data: faqResponse } = useFetch(getFAQs);
   const faqs = faqResponse?.data?.slice(0, 4) || [];
 
   const [openFaqIdx, setOpenFaqIdx] = useState(null);
