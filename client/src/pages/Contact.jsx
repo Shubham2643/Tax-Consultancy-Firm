@@ -27,7 +27,9 @@ const Contact = () => {
   const phone = settings?.phone || '+91 95109 84735';
   const cleanPhone = '+919510984735';
   const email = settings?.email || 'shreechamundaassociates0905@gmail.com';
-  const address = settings?.address || 'C-35, Zaveri Estate, Singarva, Kathwada, Ahmedabad, Gujarat - 382430';
+  const address = (settings?.address && !settings.address.includes('Zaveri') && !settings.address.includes('Kathwada') && !settings.address.includes('Singarva'))
+    ? settings.address
+    : 'Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad, Gujarat - 380049';
   const workingHours = settings?.workingHours || 'Mon - Sat: 10:00 AM - 7:00 PM';
   const whatsappUrl = `https://wa.me/919510984735?text=${encodeURIComponent('Hello Shree Chamunda Associates! I would like to schedule a consultation regarding Tax & Compliance.')}`;
 
@@ -153,8 +155,8 @@ const Contact = () => {
 
             <div className="contact-card-body map-body-wrap">
               <iframe
-                title="Shree Chamunda Associates Location"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3672.4285702206775!2d72.696144!3d23.0080352!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e638b97cbbcb7%3A0xc07cfb19f1ad47a5!2sZaveri%20Estate!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                title="Shree Chamunda Associates Location - Hill Town Square, Nikol"
+                src="https://maps.google.com/maps?q=Hill+Town+Square,+MG+Road,+near+Ganesh+Opera,+Nikol,+Ahmedabad,+Gujarat+380049&t=&z=15&ie=UTF8&iwloc=&output=embed"
                 width="100%"
                 height="280"
                 style={{ border: 0, borderRadius: '12px', display: 'block' }}

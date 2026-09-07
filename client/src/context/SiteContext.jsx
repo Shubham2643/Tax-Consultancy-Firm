@@ -25,7 +25,11 @@ export const SiteContextProvider = ({ children }) => {
           getSettings(),
           getNavMenu(),
         ]);
-        setSettings(settingsData.data);
+        const data = settingsData.data || {};
+        const cleanAddress = (!data.address || data.address.includes('Zaveri') || data.address.includes('Kathwada') || data.address.includes('Singarva'))
+          ? 'Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad, Gujarat - 380049'
+          : data.address;
+        setSettings({ ...data, address: cleanAddress });
         setNavMenu(navData.data);
       } catch (err) {
         console.error('Failed to load site data:', err);
@@ -35,7 +39,7 @@ export const SiteContextProvider = ({ children }) => {
           siteName: "Shree Chamunda Associates",
           phone: "+91 95109 84735",
           email: "shreechamundaassociates0905@gmail.com",
-          address: "Ahmedabad, Gujarat, India",
+          address: "Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad, Gujarat - 380049",
           workingHours: "Mon - Sat: 9:00 AM - 7:00 PM",
           heroTitle: "SHREE CHAMUNDA ASSOCIATES",
           heroSubtitle: "THE BEST TAX CONSULTANCY FIRM IN GUJARAT",

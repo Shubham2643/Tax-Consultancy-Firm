@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSiteContext } from '../context/SiteContext';
 import './Footer.css';
 
 const Footer = () => {
   const { settings, loading } = useSiteContext();
+  const [copiedAddress, setCopiedAddress] = useState(false);
 
   if (loading) {
     return (
@@ -21,10 +23,20 @@ const Footer = () => {
   const phone = settings?.phone || '+91 95109 84735';
   const rawPhone = '+919510984735';
   const email = settings?.email || 'shreechamundaassociates0905@gmail.com';
-  const address = settings?.address || 'C-35, Zaveri Estate, Singarva, Kathwada, Ahmedabad, Gujarat - 382430';
+  const address = (settings?.address && !settings.address.includes('Zaveri') && !settings.address.includes('Kathwada') && !settings.address.includes('Singarva'))
+    ? settings.address
+    : 'Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad, Gujarat - 380049';
   const workingHours = settings?.workingHours || 'Mon - Sat: 10:00 AM - 7:00 PM';
   const socialLinks = settings?.socialLinks || {};
   const currentYear = new Date().getFullYear();
+
+  const handleCopyAddress = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    navigator.clipboard.writeText(address);
+    setCopiedAddress(true);
+    setTimeout(() => setCopiedAddress(false), 2200);
+  };
 
   const practiceAreas = [
     { label: 'Direct Tax & ITR Filing', url: '/services' },
@@ -56,9 +68,12 @@ const Footer = () => {
   };
 
   return (
-    <footer className="executive-footer">
+    <footer className="executive-footer" id="footer-section">
       {/* Top Gold Accent Line */}
       <div className="footer-top-accent-line"></div>
+
+      {/* Architectural Fine Blueprint Grid Pattern */}
+      <div className="footer-grid-pattern" aria-hidden="true"></div>
 
       {/* Pre-Footer Action Banner */}
       <div className="footer-pre-banner-wrapper">
@@ -69,7 +84,10 @@ const Footer = () => {
                 <i className="fas fa-shield-alt"></i>
               </div>
               <div className="pre-banner-text">
-                <span className="pre-banner-kicker">🟢 STATUTORY ADVISORY DESK</span>
+                <div className="pre-banner-kicker">
+                  <span className="live-dot"></span>
+                  <span>Statutory Advisory Desk &bull; Rapid Response</span>
+                </div>
                 <h3>Need Immediate Notice Assistance or Tax Planning?</h3>
                 <p>Speak directly with certified Chartered Accountants for rapid scrutiny defense and error-free filings.</p>
               </div>
@@ -77,11 +95,17 @@ const Footer = () => {
 
             <div className="pre-banner-actions">
               <button className="btn-pre-wa" onClick={handleWhatsAppConsult}>
-                <i className="fab fa-whatsapp"></i> Chat on WhatsApp
+                <i className="fab fa-whatsapp"></i>
+                <span>Chat on WhatsApp</span>
               </button>
               <a href={`tel:${rawPhone}`} className="btn-pre-call">
-                <i className="fas fa-phone-alt"></i> +91 95109 84735
+                <i className="fas fa-phone-alt"></i>
+                <span>+91 95109 84735</span>
               </a>
+              <Link to="/contact" className="btn-pre-consult">
+                <i className="fas fa-calendar-check"></i>
+                <span>Book Free Review</span>
+              </Link>
             </div>
           </div>
         </div>
@@ -159,7 +183,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Column 4: Ahmedabad Desk & Contacts */}
+          {/* Column 4: Ahmedabad Desk & Contacts + Google Maps Office Card */}
           <div className="footer-col-contact">
             <h4 className="footer-col-title">Ahmedabad Desk</h4>
             <div className="footer-contact-stack">
@@ -193,20 +217,77 @@ const Footer = () => {
                 </div>
               </div>
 
-              <a
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="contact-entry-card"
-              >
-                <div className="contact-entry-icon">
-                  <i className="fas fa-map-marker-alt"></i>
+              {/* Interactive Office Location Card with Google Maps Thumbnail */}
+              <div className="footer-office-card">
+                <div className="office-card-header">
+                  <div className="office-pin-badge">
+                    <i className="fas fa-building-columns"></i>
+                  </div>
+                  <div className="office-header-info">
+                    <span className="office-tag">PHYSICAL OFFICE &bull; NIKOL, AHMEDABAD</span>
+                    <strong className="office-title">Hill Town Square</strong>
+                  </div>
                 </div>
-                <div className="contact-entry-text">
-                  <span className="contact-label">Head Office</span>
-                  <strong>{address}</strong>
+
+                <p className="office-address-text">
+                  <i className="fas fa-map-pin address-pin-icon"></i>
+                  <span>{address}</span>
+                </p>
+
+                {/* Stylized Google Maps Visual Thumbnail Preview */}
+                <a
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-map-thumbnail"
+                  title="Click to open turn-by-turn navigation in Google Maps"
+                >
+                  <div className="map-thumbnail-backdrop">
+                    <svg className="map-vector-grid" viewBox="0 0 300 100" preserveAspectRatio="none" aria-hidden="true">
+                      {/* Grid Roads and Coordinates */}
+                      <path d="M 0 30 Q 80 50 150 20 T 300 40" stroke="rgba(248, 180, 0, 0.3)" strokeWidth="3" fill="none" />
+                      <path d="M 40 0 Q 70 60 90 100" stroke="rgba(59, 130, 246, 0.25)" strokeWidth="2.5" fill="none" />
+                      <path d="M 180 0 Q 170 50 210 100" stroke="rgba(255, 255, 255, 0.15)" strokeWidth="2" fill="none" />
+                      <path d="M 0 75 Q 120 60 200 85 T 300 70" stroke="rgba(255, 255, 255, 0.12)" strokeWidth="2" fill="none" />
+                      <circle cx="150" cy="45" r="4" fill="#f8b400" />
+                    </svg>
+                    <span className="map-coord-stamp">23.0535° N &bull; 72.6712° E</span>
+                  </div>
+
+                  <div className="map-thumbnail-center">
+                    <div className="map-radar-pin">
+                      <span className="pin-pulse-ring"></span>
+                      <i className="fas fa-map-marker-alt"></i>
+                    </div>
+                    <span className="map-hover-pill">
+                      <i className="fas fa-diamond-turn-right"></i>
+                      <span>Get Directions</span>
+                    </span>
+                  </div>
+                </a>
+
+                {/* Direct Action Buttons */}
+                <div className="office-map-actions">
+                  <a
+                    href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-map-directions"
+                  >
+                    <i className="fas fa-diamond-turn-right"></i>
+                    <span>Directions</span>
+                  </a>
+                  <button
+                    type="button"
+                    className={`btn-copy-address ${copiedAddress ? 'copied' : ''}`}
+                    onClick={handleCopyAddress}
+                    title="Copy full office address"
+                  >
+                    <i className={copiedAddress ? 'fas fa-check' : 'fas fa-copy'}></i>
+                    <span>{copiedAddress ? 'Copied!' : 'Copy'}</span>
+                  </button>
                 </div>
-              </a>
+              </div>
             </div>
           </div>
         </div>
@@ -216,7 +297,7 @@ const Footer = () => {
       <div className="footer-bottom-bar">
         <div className="container footer-bottom-inner">
           <div className="footer-copy-left">
-            <p>&copy; {currentYear} Shree Chamunda Associates. All Rights Reserved. Certified Chartered Advisory.</p>
+            <p>&copy; {currentYear} Shree Chamunda Associates. All Rights Reserved. &bull; ICAI Regulated Firm &bull; Bank-Grade Confidentiality.</p>
           </div>
 
           <div className="footer-legal-links">

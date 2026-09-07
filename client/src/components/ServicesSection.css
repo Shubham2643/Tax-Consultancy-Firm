@@ -240,16 +240,127 @@
   color: #ffc425;
 }
 
+.service-header-badges {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
 .service-category-tag {
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.6px;
-  padding: 4px 10px;
+  padding: 3px 9px;
   border-radius: 20px;
   background: #f1f5f9;
   border: 1px solid #e2e8f0;
   color: #475569;
+}
+
+/* Estimated Turnaround Time Badge */
+.service-tat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #0369a1;
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  padding: 3px 9px;
+  border-radius: 14px;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(3, 105, 161, 0.06);
+}
+
+.service-tat-badge i {
+  font-size: 10px;
+  color: #0284c7;
+}
+
+/* High-Converting Turnaround Badge for Registration & Startup Cards */
+.service-tat-badge.tat-highlight {
+  color: #065f46;
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+  box-shadow: 0 1px 4px rgba(16, 185, 129, 0.12);
+}
+
+.service-tat-badge.tat-highlight i {
+  color: #059669;
+}
+
+.tat-pulse-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: #10b981;
+  box-shadow: 0 0 6px #10b981;
+  animation: tatDotPulse 2s infinite ease-in-out;
+}
+
+@keyframes tatDotPulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Pricing & Trust Meta Strip */
+.service-meta-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: #f8fafc;
+  border: 1px solid #edf2f7;
+  border-radius: 10px;
+  margin-bottom: 14px;
+}
+
+.service-price-block {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.service-price-block .price-label {
+  font-size: 10.5px;
+  color: #64748b;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.service-price-block .price-val {
+  font-size: 15px;
+  font-weight: 850;
+  color: #071324;
+  letter-spacing: -0.2px;
+}
+
+.service-sla-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #b45309;
+  background: rgba(248, 180, 0, 0.12);
+  border: 1px solid rgba(248, 180, 0, 0.25);
+  padding: 2px 7px;
+  border-radius: 6px;
+}
+
+.service-sla-tag i {
+  font-size: 9.5px;
 }
 
 /* Card Typography */

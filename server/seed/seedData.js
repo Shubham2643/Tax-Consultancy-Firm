@@ -345,7 +345,7 @@ const seedData = async () => {
         "Welcome to Shree Chamunda Associates, your trusted partner for comprehensive tax consultancy and financial advisory services. Founded with a commitment to excellence, we specialize in helping individuals and businesses navigate the complexities of taxation with ease and confidence.",
       phone: "+91 95109 84735",
       email: "shreechamundaassociates0905@gmail.com",
-      address: "C-35, Zaveri Estate, Singarva, Kathwada, Ahmedabad, Gujarat",
+      address: "Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad, Gujarat - 380049",
       workingHours: "Mon-Sat: 10.00 AM-7.00 PM",
       companyDescription:
         "Shree Chamunda Associates is a well reputed company providing complete solutions for Tax Services.",

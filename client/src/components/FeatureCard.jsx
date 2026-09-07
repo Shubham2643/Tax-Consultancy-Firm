@@ -1,32 +1,54 @@
-const TAG_MAP = {
-  0: 'MAXIMUM LEGAL ALPHA',
-  1: 'ZERO HIDDEN CHARGES',
-  2: 'RAPID TURNAROUND',
-};
+import { Link } from 'react-router-dom';
 
-const STAT_MAP = {
-  0: '✨ Avg. 35% Legitimate Tax Saved',
-  1: '🏷️ Fixed-Fee Guarantee',
-  2: '⚡ 100% On-Time Compliance',
-};
-
-const DEFAULT_HIGHLIGHTS = [
-  'Verified statutory compliance by certified Chartered Accountants',
-  'Proactive risk mitigation and error-free filing audits',
-  'Direct dedicated senior consultant advisory',
+const FEATURE_PRESETS = [
+  {
+    tag: 'MAXIMUM TAX SAVINGS',
+    stat: '✨ Avg. 25–35% Tax Legally Saved',
+    accent: 'accent-gold',
+    highlights: [
+      'Proactive advance tax structuring under Sec 80 / 44ADA',
+      'Legitimate deduction maximization with zero penalty risk',
+      'Quarterly P&L health & statutory outflow forecasts',
+    ],
+  },
+  {
+    tag: 'ZERO HIDDEN SURCHARGES',
+    stat: '🏷️ 100% Fixed-Price Assurance',
+    accent: 'accent-emerald',
+    highlights: [
+      '100% upfront clear scope with no hidden filing charges',
+      'Fixed retainers & predictable milestone disbursements',
+      'Detailed GST tax invoice with zero unexpected billing creep',
+    ],
+  },
+  {
+    tag: 'SENIOR CA OVERSIGHT',
+    stat: '⚡ <24h Response SLA Guarantee',
+    accent: 'accent-cyan',
+    highlights: [
+      '1-on-1 direct WhatsApp & phone access to Senior CA Partners',
+      'Rapid notice response & Section 143/148 scrutiny defense',
+      'Dual-level audit verification before department upload',
+    ],
+  },
 ];
 
 const FeatureCard = ({ feature, index = 0 }) => {
   const { title, description, icon } = feature;
 
-  const tag = TAG_MAP[index % 3] || 'CHARTERED ADVANTAGE';
-  const stat = STAT_MAP[index % 3] || '🛡️ 100% Verified Advisory';
+  const preset = FEATURE_PRESETS[index % 3] || FEATURE_PRESETS[0];
+  const tag = preset.tag;
+  const stat = preset.stat;
+  const accentClass = preset.accent;
+  const highlights = (feature.highlights && feature.highlights.length > 0)
+    ? feature.highlights
+    : preset.highlights;
 
   // Determine icon
   const isCustomImg = icon && (icon.startsWith('http') || icon.startsWith('/') || icon.includes('.png') || icon.includes('.svg'));
 
   return (
-    <div className={`feature-bento-card anim-stagger-${(index % 3) + 1}`}>
+    <div className={`feature-bento-card ${accentClass} anim-stagger-${(index % 3) + 1}`}>
       {/* Top Accent Gradient Border */}
       <div className="card-top-accent"></div>
 
@@ -48,7 +70,7 @@ const FeatureCard = ({ feature, index = 0 }) => {
 
       {/* Structured Value Highlights */}
       <ul className="feature-highlights-list">
-        {DEFAULT_HIGHLIGHTS.map((item, idx) => (
+        {highlights.map((item, idx) => (
           <li key={idx}>
             <i className="fas fa-check-circle check-bullet-icon"></i>
             <span>{item}</span>
@@ -56,9 +78,13 @@ const FeatureCard = ({ feature, index = 0 }) => {
         ))}
       </ul>
 
-      {/* Bottom Metric Chip */}
+      {/* Bottom Metric Chip & Action */}
       <div className="feature-card-footer">
         <span className="feature-metric-chip">{stat}</span>
+        <Link to="/contact" className="feature-card-action-link" title="Consult on this service">
+          <span>Inquire</span>
+          <i className="fas fa-arrow-right"></i>
+        </Link>
       </div>
     </div>
   );

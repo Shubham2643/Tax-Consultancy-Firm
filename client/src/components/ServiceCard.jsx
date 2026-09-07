@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { getServicePath } from '../utils/slugify';
 
 const ServiceCard = ({ service }) => {
-  const { title, description, serviceType, deliverables } = service;
+  const { title, description, serviceType, deliverables, timeline, professionalFee } = service;
 
   // Icon mapping
   const getIconClass = (title, type) => {
@@ -28,6 +28,30 @@ const ServiceCard = ({ service }) => {
   };
   const categoryBadge = categoryLabels[serviceType] || 'Tax & Advisory';
 
+  // Standardize Estimated Turnaround Time
+  const getTurnaroundText = () => {
+    if (timeline && timeline.trim()) {
+      let t = timeline.trim();
+      t = t.replace(/working\s*days?/i, 'Business Days');
+      t = t.replace(/days?/i, 'Business Days');
+      t = t.replace(/-/g, '–');
+      return t;
+    }
+    const tp = (serviceType || '').toLowerCase();
+    const tl = (title || '').toLowerCase();
+    if (tl.includes('gst reg') || tl.includes('udyam') || tl.includes('msme') || tl.includes('iec')) {
+      return '1–3 Business Days';
+    }
+    if (tp === 'registration') return '3–5 Business Days';
+    if (tp === 'startup') return '7–10 Business Days';
+    if (tp === 'tax') return '2–4 Business Days';
+    if (tp === 'accounting') return '3–5 Business Days';
+    return '3–5 Business Days';
+  };
+
+  const tatText = getTurnaroundText();
+  const isRegistrationOrStartup = serviceType === 'registration' || serviceType === 'startup';
+
   // Default value highlights if deliverables is empty
   const defaultHighlights = [
     '100% Statutory Compliance',
@@ -41,17 +65,43 @@ const ServiceCard = ({ service }) => {
       {/* Top illuminated accent bar */}
       <div className="card-top-beam"></div>
 
-      {/* Header Row */}
+      {/* Header Row: Icon + Category and Turnaround Time Badges */}
       <div className="service-card-header">
         <div className="service-icon-tile">
           <i className={getIconClass(title, serviceType)}></i>
         </div>
-        <span className="service-category-tag">{categoryBadge}</span>
+        <div className="service-header-badges">
+          <span className="service-category-tag">{categoryBadge}</span>
+          <span
+            className={`service-tat-badge ${isRegistrationOrStartup ? 'tat-highlight' : ''}`}
+            title="Estimated Turnaround Time"
+          >
+            <span className="tat-pulse-dot"></span>
+            <i className="far fa-clock"></i>
+            <span>{tatText}</span>
+          </span>
+        </div>
       </div>
 
       {/* Title & Body */}
       <h3 className="service-card-title">{title}</h3>
       <p className="service-card-desc">{description}</p>
+
+      {/* Pricing & Value Micro-Bar */}
+      <div className="service-meta-strip">
+        <div className="service-price-block">
+          <span className="price-label">Starting at</span>
+          <span className="price-val">
+            {professionalFee && professionalFee > 0
+              ? `₹${professionalFee.toLocaleString('en-IN')}`
+              : 'Fixed CA Retainer'}
+          </span>
+        </div>
+        <div className="service-sla-tag">
+          <i className="fas fa-shield-alt"></i>
+          <span>Zero Penalty</span>
+        </div>
+      </div>
 
       {/* Key Deliverables Box */}
       <div className="service-deliverables-box">

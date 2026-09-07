@@ -300,7 +300,7 @@ Our senior tax consultants and auditors are reviewing your requirements. We will
 If you have urgent inquiries, please contact our support desk directly:
 - Phone: +91 95109 84735
 - Email: ${adminTo}
-- Office: C-35, Zaveri Estate, Singarva, Kathwada, Ahmedabad, Gujarat
+- Office: Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad, Gujarat - 380049
 
 Best Regards,
 Shree Chamunda Associates
@@ -389,7 +389,7 @@ Tax & Financial Consultancy Firm
                 Shree Chamunda Associates
               </p>
               <p style="margin: 0 0 10px; color: #64748b; font-size: 12px;">
-                C-35, Zaveri Estate, Singarva, Kathwada, Ahmedabad, Gujarat 382430
+                Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad, Gujarat 380049
               </p>
               <p style="margin: 0; color: #94a3b8; font-size: 11px;">
                 &copy; ${new Date().getFullYear()} Shree Chamunda Associates. All rights reserved.
