@@ -1,5 +1,5 @@
 /* ============================================================
-   CONTACT FORM — Executive Bento Card Architecture
+   CONTACT FORM — Executive Bento Architecture (10/10 Standard)
    ============================================================ */
 .contact-bento-form-wrap {
   background: #ffffff;
@@ -9,26 +9,129 @@
   box-shadow: 0 4px 20px rgba(7, 19, 36, 0.03);
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   text-align: left;
+  position: relative;
 }
 
 .contact-bento-form-wrap:hover {
-  transform: translateY(-3px);
   border-color: rgba(248, 180, 0, 0.45);
   box-shadow: 0 10px 30px rgba(7, 19, 36, 0.06);
 }
 
-.contact-bento-form-header {
-  padding: 22px 28px;
+/* ============================================================
+   MODE SWITCHER TABS (Inquiry vs Book 1-on-1 Consultation)
+   ============================================================ */
+.contact-mode-tabs {
+  display: flex;
+  background: #071324;
+  padding: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 6px;
+  min-height: 52px;
+  box-sizing: border-box;
+}
+
+.mode-tab-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  color: #94a3b8;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+
+.mode-tab-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.mode-tab-btn.active {
   background: #ffffff;
+  color: #071324;
+  border-color: #ffffff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.mode-tab-btn .tab-icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  font-size: 13px;
+  transition: color 0.2s ease;
+}
+
+.mode-tab-btn.active .tab-icon-wrap {
+  color: #f8b400;
+}
+
+.tab-text-title {
+  letter-spacing: -0.1px;
+}
+
+.tab-pill-badge {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 6px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+}
+
+.tab-pill-badge.fast-response {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+}
+
+.tab-pill-badge.direct-ca {
+  background: rgba(248, 180, 0, 0.15);
+  color: #fbbf24;
+}
+
+.mode-tab-btn.active .tab-pill-badge.fast-response {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.mode-tab-btn.active .tab-pill-badge.direct-ca {
+  background: #071324;
+  color: #f8b400;
+}
+
+/* ============================================================
+   EXECUTIVE INTAKE HEADER
+   ============================================================ */
+.contact-bento-form-header.executive-intake-header {
+  padding: 22px 28px;
+  background: linear-gradient(180deg, #ffffff 0%, #fafcff 100%);
   border-bottom: 1px solid #f1f5f9;
   display: flex;
   align-items: center;
-  gap: 14px;
+  justify-content: space-between;
+  gap: 16px;
+  position: relative;
+}
+
+.form-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  min-width: 0;
 }
 
 .contact-bento-icon {
-  width: 42px;
-  height: 42px;
+  width: 46px;
+  height: 46px;
   border-radius: 12px;
   background: rgba(248, 180, 0, 0.1);
   border: 1px solid rgba(248, 180, 0, 0.25);
@@ -36,29 +139,105 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  font-size: 18px;
   flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(248, 180, 0, 0.08);
+}
+
+.contact-bento-icon.ca-consultation-icon {
+  background: #071324;
+  color: #f8b400;
+  border: 1.5px solid rgba(248, 180, 0, 0.45);
+  box-shadow: 0 4px 14px rgba(7, 19, 36, 0.15);
 }
 
 .contact-bento-title-wrap {
   display: flex;
   flex-direction: column;
+  min-width: 0;
+}
+
+.header-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
 }
 
 .contact-bento-kicker {
   font-size: 10px;
-  font-weight: 800;
+  font-weight: 850;
   color: #94a3b8;
   letter-spacing: 0.8px;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
-.contact-bento-form-header h3 {
-  font-size: 1.25rem;
+.header-confidential-pill,
+.header-icai-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  font-size: 9.5px;
+  font-weight: 750;
+  padding: 2px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  white-space: nowrap !important;
+  flex-shrink: 0;
+}
+
+.header-confidential-pill i {
+  color: #10b981;
+  font-size: 9px;
+}
+
+.header-icai-pill {
+  background: rgba(248, 180, 0, 0.1);
+  border-color: rgba(248, 180, 0, 0.3);
+  color: #92400e;
+}
+
+.header-icai-pill i {
+  color: #d97706;
+  font-size: 9px;
+}
+
+.contact-bento-form-header.executive-intake-header h3 {
+  font-size: 1.26rem;
   font-weight: 850;
   color: #071324;
   margin: 0;
   letter-spacing: -0.3px;
+  line-height: 1.25;
+}
+
+.header-triage-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 750;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.header-triage-badge .triage-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px #10b981;
 }
 
 .contact-bento-form-body {
@@ -68,37 +247,687 @@
 .contact-form-subtitle {
   font-size: 13px;
   color: #64748b;
-  margin: 0 0 20px 0;
-  line-height: 1.5;
+  margin: 0 0 16px 0;
+  line-height: 1.55;
 }
 
-.contact-success-banner {
+/* Session Scope & Deliverables Ribbon */
+.session-scope-ribbon {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #071324;
+  color: #ffffff;
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  gap: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.scope-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.scope-item i {
+  font-size: 16px;
+  color: #f8b400;
+  flex-shrink: 0;
+}
+
+.scope-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.scope-text strong {
+  font-size: 11px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.1px;
+}
+
+.scope-text span {
+  font-size: 9.5px;
+  color: #94a3b8;
+  line-height: 1.3;
+}
+
+.scope-divider {
+  width: 1px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ============================================================
+   CONSULTATION SPECIFIC SELECTORS
+   ============================================================ */
+.consultation-options-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 18px;
+  padding: 16px;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+}
+
+.form-sub-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* ============================================================
+   EXECUTIVE CONSULTATION CHANNEL CARDS
+   ============================================================ */
+.channel-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  gap: 10px;
+}
+
+.channel-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.channel-step-badge {
+  font-size: 10px;
+  font-weight: 850;
+  color: #d97706;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.channel-header-title {
+  font-size: 13.5px;
+  font-weight: 850;
+  color: #071324;
+  margin: 0;
+  letter-spacing: -0.2px;
+}
+
+.channel-header-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   background: #ecfdf5;
   border: 1px solid #a7f3d0;
   color: #065f46;
-  padding: 12px 16px;
+  font-size: 10.5px;
+  font-weight: 800;
+  padding: 3px 9px;
+  border-radius: 6px;
+  white-space: nowrap !important;
+  flex-shrink: 0;
+}
+
+.channel-header-tag i {
+  color: #10b981;
+  font-size: 10px;
+}
+
+/* Channel Cards Stack */
+.channel-cards-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.channel-tier-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 13px 16px;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 13px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  width: 100%;
+}
+
+.channel-tier-card:hover {
+  border-color: #cbd5e1;
+  background: #fafbfc;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(7, 19, 36, 0.05);
+}
+
+.channel-tier-card.selected {
+  background: #ffffff;
+  border-color: #071324;
+  border-left: 4.5px solid #f8b400;
+  box-shadow: 0 6px 20px rgba(7, 19, 36, 0.08);
+}
+
+/* Card Avatar Icon Box */
+.channel-card-avatar {
+  width: 40px;
+  height: 40px;
   border-radius: 10px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 18px;
-  font-size: 13px;
-  font-weight: 600;
+  justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  margin-top: 1px;
 }
 
-.contact-error-banner {
+.channel-card-avatar.office {
+  background: #071324;
+  color: #f8b400;
+  border: 1px solid rgba(248, 180, 0, 0.25);
+}
+
+.channel-card-avatar.virtual {
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+}
+
+.channel-card-avatar.phone {
+  background: #ecfdf5;
+  color: #10b981;
+  border: 1px solid #a7f3d0;
+}
+
+.channel-tier-card.selected .channel-card-avatar.office {
+  box-shadow: 0 0 10px rgba(248, 180, 0, 0.35);
+}
+
+.channel-tier-card.selected .channel-card-avatar.virtual {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 0 10px rgba(37, 99, 235, 0.35);
+}
+
+.channel-tier-card.selected .channel-card-avatar.phone {
+  background: #10b981;
+  color: #ffffff;
+  border-color: #10b981;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.35);
+}
+
+/* Card Content Area */
+.channel-card-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.channel-card-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.channel-title {
+  font-size: 13.5px;
+  font-weight: 850;
+  color: #071324;
+  letter-spacing: -0.2px;
+}
+
+.channel-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 5px;
+  white-space: nowrap !important;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+}
+
+.channel-pill.office {
+  background: #fffbeb;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+.channel-pill.virtual {
+  background: #eff6ff;
+  color: #1e40af;
+  border: 1px solid #dbeafe;
+}
+
+.channel-pill.phone {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.channel-desc {
+  font-size: 11.5px;
+  color: #64748b;
+  line-height: 1.45;
+  margin: 1px 0 3px 0;
+}
+
+.channel-perks-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.channel-perk-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #475569;
+  white-space: nowrap;
+}
+
+.channel-perk-item i {
+  font-size: 9px;
+  color: #10b981;
+}
+
+/* Radio Indicator Column */
+.channel-radio-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+  padding-left: 6px;
+  margin-top: 2px;
+}
+
+.custom-radio-circle {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.custom-radio-circle.checked {
+  color: #f8b400;
+  font-size: 18px;
+}
+
+.radio-unselected-ring {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #cbd5e1;
+  transition: border-color 0.2s ease;
+}
+
+.channel-tier-card:hover .radio-unselected-ring {
+  border-color: #94a3b8;
+}
+
+.radio-state-text {
+  font-size: 9.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: #94a3b8;
+}
+
+.channel-tier-card.selected .radio-state-text {
+  color: #071324;
+  font-weight: 850;
+}
+
+/* ============================================================
+   CONSULTATION TIME WINDOW (STEP 2)
+   ============================================================ */
+.consultation-slot-block {
+  margin-top: 6px;
+}
+
+.slot-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  gap: 10px;
+}
+
+.slot-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.slot-step-badge {
+  font-size: 10px;
+  font-weight: 850;
+  color: #d97706;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.slot-header-title {
+  font-size: 13.5px;
+  font-weight: 850;
+  color: #071324;
+  margin: 0;
+  letter-spacing: -0.2px;
+}
+
+.slot-schedule-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 3px 9px;
+  border-radius: 6px;
+  white-space: nowrap !important;
+  letter-spacing: 0.2px;
+  flex-shrink: 0;
+}
+
+.slot-schedule-tag i {
+  color: #64748b;
+  font-size: 10px;
+}
+
+/* Slot Cards Grid */
+.slot-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.slot-card-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  padding: 13px 14px;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  gap: 8px;
+}
+
+.slot-card-tile:hover {
+  border-color: #cbd5e1;
+  background: #fafbfc;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(7, 19, 36, 0.06);
+}
+
+.slot-card-tile.active {
+  background: #071324;
+  border-color: #071324;
+  border-top: 3.5px solid #f8b400;
+  box-shadow: 0 6px 20px rgba(7, 19, 36, 0.16);
+  transform: translateY(-2px);
+}
+
+.slot-tile-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.slot-icon-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.slot-icon-badge.morning {
+  background: #fffbeb;
+  color: #d97706;
+  border: 1px solid #fef3c7;
+}
+
+.slot-icon-badge.afternoon {
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #dbeafe;
+}
+
+.slot-icon-badge.evening {
+  background: #f5f3ff;
+  color: #7c3aed;
+  border: 1px solid #ede9fe;
+}
+
+.slot-card-tile.active .slot-icon-badge {
+  background: rgba(248, 180, 0, 0.15);
+  color: #f8b400;
+  border: 1px solid rgba(248, 180, 0, 0.35);
+}
+
+.slot-selection-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slot-selection-indicator i {
+  color: #f8b400;
+  font-size: 16px;
+}
+
+.slot-unselected-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid #cbd5e1;
+  transition: border-color 0.2s ease;
+}
+
+.slot-card-tile:hover .slot-unselected-dot {
+  border-color: #94a3b8;
+}
+
+.slot-tile-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 100%;
+}
+
+.slot-moniker {
+  font-size: 10px;
+  font-weight: 800;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: color 0.2s ease;
+}
+
+.slot-card-tile.active .slot-moniker {
+  color: #94a3b8;
+}
+
+.slot-time-range {
+  font-size: 12.5px;
+  font-weight: 850;
+  color: #071324;
+  letter-spacing: -0.2px;
+  line-height: 1.25;
+  transition: color 0.2s ease;
+}
+
+.slot-card-tile.active .slot-time-range {
+  color: #ffffff;
+}
+
+.slot-focus-tag {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 3px;
+}
+
+.slot-focus-tag span {
+  font-size: 9.5px;
+  font-weight: 750;
+  color: #475569;
+  background: #f1f5f9;
+  padding: 2px 6px;
+  border-radius: 4px;
+  line-height: 1.3;
+  transition: all 0.2s ease;
+}
+
+.slot-card-tile.active .slot-focus-tag span {
+  background: rgba(248, 180, 0, 0.12);
+  color: #f8b400;
+}
+
+.slot-meta-strip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(7, 19, 36, 0.03);
+  border: 1px dashed #cbd5e1;
+  border-radius: 9px;
+  padding: 8px 12px;
+  margin-top: 10px;
+  font-size: 10.5px;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+.slot-meta-strip i {
+  color: #10b981;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   URGENCY SELECTOR
+   ============================================================ */
+.urgency-selector-block {
+  margin-bottom: 18px;
+}
+
+.urgency-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.urgency-tip {
+  font-size: 11px;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+.urgency-chips-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.urgency-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 10px;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.urgency-chip .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.urgency-chip .dot.standard {
+  background: #10b981;
+}
+
+.urgency-chip .dot.priority {
+  background: #f59e0b;
+}
+
+.urgency-chip .dot.urgent {
+  background: #ef4444;
+  box-shadow: 0 0 6px rgba(239, 68, 68, 0.6);
+}
+
+.urgency-chip:hover {
+  background: #f1f5f9;
+}
+
+.urgency-chip.active.standard {
+  background: #ecfdf5;
+  border-color: #10b981;
+  color: #065f46;
+}
+
+.urgency-chip.active.priority {
+  background: #fffbeb;
+  border-color: #f59e0b;
+  color: #92400e;
+}
+
+.urgency-chip.active.urgent {
   background: #fef2f2;
-  border: 1px solid #fecaca;
+  border-color: #ef4444;
   color: #991b1b;
-  padding: 12px 16px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 18px;
-  font-size: 13px;
+  animation: urgentGlow 2s infinite alternate;
 }
 
+@keyframes urgentGlow {
+  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.2); }
+  100% { box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15); }
+}
+
+/* ============================================================
+   FORM INPUTS & LABELS
+   ============================================================ */
 .contact-form-elements {
   display: flex;
   flex-direction: column;
@@ -125,6 +954,47 @@
   gap: 14px;
 }
 
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input-icon {
+  position: absolute;
+  left: 14px;
+  font-size: 13px;
+  color: #94a3b8;
+  pointer-events: none;
+  transition: color 0.2s ease;
+}
+
+.input-with-icon:focus-within .input-icon {
+  color: #f8b400;
+}
+
+.input-with-prefix {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.phone-prefix {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #e2e8f0;
+  border: 1.5px solid #e2e8f0;
+  border-right: none;
+  border-radius: 10px 0 0 10px;
+  padding: 0 12px;
+  height: 42px;
+  font-size: 12.5px;
+  font-weight: 750;
+  color: #475569;
+}
+
 .contact-custom-input,
 .contact-custom-select,
 .contact-custom-textarea {
@@ -141,6 +1011,15 @@
   transition: all 0.2s ease;
 }
 
+.contact-custom-input.with-left-icon,
+.contact-custom-select.with-left-icon {
+  padding-left: 38px;
+}
+
+.contact-custom-input.with-prefix-input {
+  border-radius: 0 10px 10px 0;
+}
+
 .contact-custom-input:focus,
 .contact-custom-select:focus,
 .contact-custom-textarea:focus {
@@ -149,11 +1028,34 @@
   box-shadow: 0 0 0 3px rgba(7, 19, 36, 0.08);
 }
 
+.textarea-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.char-counter {
+  font-size: 11px;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.char-counter.near-limit {
+  color: #ef4444;
+}
+
+.contact-custom-textarea {
+  resize: vertical;
+  min-height: 90px;
+  line-height: 1.5;
+}
+
+/* Submit Button */
 .btn-contact-submit {
   background: #071324;
   color: #ffffff;
   border: none;
-  padding: 13px 20px;
+  padding: 14px 22px;
   border-radius: 10px;
   font-size: 13.5px;
   font-weight: 800;
@@ -166,13 +1068,33 @@
   margin-top: 4px;
 }
 
-.btn-contact-submit:hover {
+.btn-contact-submit:hover:not(:disabled) {
   background: #0f2444;
   color: #f8b400;
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(7, 19, 36, 0.15);
+  box-shadow: 0 4px 18px rgba(7, 19, 36, 0.18);
 }
 
+.btn-contact-submit:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+
+/* Error Banner */
+.contact-error-banner {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  padding: 12px 16px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  font-size: 13px;
+}
+
+/* Trust Pills Strip */
 .contact-form-trust-pills {
   display: flex;
   align-items: center;
@@ -190,7 +1112,7 @@
   gap: 6px;
   font-size: 11.5px;
   color: #64748b;
-  font-weight: 600;
+  font-weight: 650;
 }
 
 .trust-pill i {
@@ -198,12 +1120,258 @@
   font-size: 12px;
 }
 
+/* ============================================================
+   10/10 EXECUTIVE CONFIRMATION SCREEN
+   ============================================================ */
+.consultation-success-card {
+  text-align: center;
+  padding: 15px 5px;
+}
+
+.success-pulse-ring {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #ecfdf5;
+  color: #10b981;
+  border: 2px solid #a7f3d0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  margin-bottom: 16px;
+  box-shadow: 0 0 0 8px rgba(16, 185, 129, 0.1);
+  animation: pulseSuccess 2s infinite alternate;
+}
+
+@keyframes pulseSuccess {
+  0% { transform: scale(1); box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15); }
+  100% { transform: scale(1.04); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0.05); }
+}
+
+.success-header-text .success-kicker {
+  font-size: 10px;
+  font-weight: 850;
+  color: #059669;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.success-header-text h3 {
+  font-size: 1.4rem;
+  font-weight: 850;
+  color: #071324;
+  margin: 6px 0 8px 0;
+  letter-spacing: -0.3px;
+}
+
+.success-header-text p {
+  font-size: 13px;
+  color: #64748b;
+  max-width: 440px;
+  margin: 0 auto 20px auto;
+  line-height: 1.55;
+}
+
+.success-ticket-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: #f8fafc;
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 22px;
+}
+
+.ticket-field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ticket-label {
+  font-size: 10px;
+  font-weight: 750;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.ticket-value {
+  font-size: 14px;
+  font-weight: 800;
+  color: #071324;
+}
+
+.ticket-value.ref-code {
+  font-family: 'Courier New', Courier, monospace;
+  color: #071324;
+  letter-spacing: 0.5px;
+}
+
+.ticket-divider {
+  width: 1px;
+  height: 36px;
+  background: #e2e8f0;
+}
+
+.ticket-value.status-active {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #059669;
+}
+
+.ticket-value.status-active .pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+}
+
+/* Success Steps Roadmap */
+.success-steps-roadmap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 22px;
+}
+
+.step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.step-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #071324;
+  color: #f8b400;
+  font-size: 11px;
+  font-weight: 850;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.step-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.step-text strong {
+  font-size: 12.5px;
+  font-weight: 750;
+  color: #071324;
+}
+
+.step-text span {
+  font-size: 11.5px;
+  color: #64748b;
+}
+
+.success-card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-success-reset {
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  color: #334155;
+  padding: 11px 18px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-success-reset:hover {
+  background: #ffffff;
+  border-color: #071324;
+  color: #071324;
+}
+
+.btn-success-wa {
+  background: #25D366;
+  color: #ffffff;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.btn-success-wa:hover {
+  background: #1eb857;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
 @media (max-width: 600px) {
   .contact-form-row {
     flex-direction: column;
   }
+  .channel-tier-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .channel-radio-indicator {
+    align-self: flex-end;
+    flex-direction: row;
+    gap: 6px;
+    padding-left: 0;
+  }
+  .slot-cards-grid,
+  .urgency-chips-row {
+    grid-template-columns: 1fr;
+  }
+  .session-scope-ribbon {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .scope-divider {
+    display: none;
+  }
   .contact-bento-form-body,
   .contact-bento-form-header {
     padding: 18px 20px;
+  }
+  .contact-bento-form-header.executive-intake-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .header-triage-badge {
+    align-self: flex-start;
+  }
+  .success-ticket-box {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .ticket-divider {
+    width: 100%;
+    height: 1px;
   }
 }

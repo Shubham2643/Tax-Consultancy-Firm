@@ -1,40 +1,39 @@
 /* ============================================================
-   CONTACT PAGE — Symmetrical 50/50 Two-Column Architecture
+   CONTACT PAGE — Symmetrical 50/50 Architecture (10/10 Standard)
    ============================================================ */
 .contact-page {
   background-color: #f8fafc;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   color: #0f172a;
   min-height: 100vh;
-  padding-bottom: 60px; /* Equal 60px breathing room above footer */
+  padding-bottom: 70px;
 }
 
 /* ============================================
-   HERO BANNER & AMBIENT GLOW ORBS
+   HERO BANNER & 3-PILLAR REASSURANCE STRIP
    ============================================ */
 .contact-hero {
   background-color: #06101e;
   color: #ffffff;
-  padding: 60px 0 55px 0;
-  margin-bottom: 60px; /* Equal 60px spacing between header and below section */
+  padding: 65px 0 60px 0;
+  margin-bottom: 60px;
   text-align: center;
   position: relative;
   overflow: hidden;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Floating Ambient Glowing Bubbles */
 .contact-hero::before {
   content: '';
   position: absolute;
   top: -80px;
   right: 8%;
-  width: 360px;
-  height: 360px;
+  width: 380px;
+  height: 380px;
   background: radial-gradient(circle, rgba(248, 180, 0, 0.14) 0%, rgba(34, 197, 94, 0.06) 50%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
-  animation: contactFloatBubble 7s ease-in-out infinite alternate;
+  animation: contactFloatBubble 8s ease-in-out infinite alternate;
 }
 
 .contact-hero::after {
@@ -42,18 +41,18 @@
   position: absolute;
   bottom: -60px;
   left: 6%;
-  width: 300px;
-  height: 300px;
+  width: 320px;
+  height: 320px;
   background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
-  animation: contactFloatBubble 9s ease-in-out infinite alternate-reverse;
+  animation: contactFloatBubble 10s ease-in-out infinite alternate-reverse;
 }
 
 @keyframes contactFloatBubble {
   0% { transform: translateY(0) scale(1) rotate(0deg); }
-  50% { transform: translateY(-18px) scale(1.1) rotate(6deg); }
-  100% { transform: translateY(12px) scale(0.95) rotate(-6deg); }
+  50% { transform: translateY(-16px) scale(1.08) rotate(5deg); }
+  100% { transform: translateY(12px) scale(0.96) rotate(-5deg); }
 }
 
 .contact-hero .container {
@@ -71,13 +70,13 @@
   background: rgba(248, 180, 0, 0.08);
   border: 1px solid rgba(248, 180, 0, 0.25);
   color: #f8b400;
-  padding: 5px 14px;
+  padding: 6px 16px;
   border-radius: 20px;
   font-size: 11.5px;
-  font-weight: 700;
+  font-weight: 750;
   text-transform: uppercase;
   letter-spacing: 0.8px;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .contact-hero-badge .live-dot {
@@ -89,20 +88,55 @@
 }
 
 .contact-hero h1 {
-  font-size: 2.8rem;
+  font-size: 2.85rem;
   font-weight: 850;
   line-height: 1.15;
   color: #ffffff;
   letter-spacing: -1px;
-  margin: 0 0 10px 0;
+  margin: 0 0 12px 0;
 }
 
 .contact-hero p {
   font-size: 1.05rem;
   color: #94a3b8;
-  max-width: 620px;
-  margin: 0 auto;
-  line-height: 1.5;
+  max-width: 680px;
+  margin: 0 auto 24px auto;
+  line-height: 1.55;
+}
+
+/* 3-Pillar Institutional Reassurance Strip */
+.hero-reassurance-strip {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 20px;
+  border-radius: 30px;
+  backdrop-filter: blur(8px);
+  margin-top: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.reassurance-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #e2e8f0;
+}
+
+.reassurance-pill i {
+  color: #f8b400;
+  font-size: 13px;
+}
+
+.reassurance-divider {
+  width: 1px;
+  height: 14px;
+  background: rgba(255, 255, 255, 0.18);
 }
 
 /* ============================================
@@ -125,7 +159,7 @@
 }
 
 /* ============================================
-   BENTO CARDS (Uniform Section Design)
+   BENTO CARDS
    ============================================ */
 .contact-bento-card {
   background: #ffffff;
@@ -138,9 +172,72 @@
 }
 
 .contact-bento-card:hover {
-  transform: translateY(-3px);
   border-color: rgba(248, 180, 0, 0.45);
   box-shadow: 0 10px 30px rgba(7, 19, 36, 0.06);
+}
+
+/* Symmetrical Channels Top Bar (Matches Right Mode Tabs) */
+.channels-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #071324;
+  padding: 8px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  min-height: 52px;
+  box-sizing: border-box;
+}
+
+.channels-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 11.5px;
+  font-weight: 750;
+  letter-spacing: 0.2px;
+}
+
+.channels-status-pill.open {
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #34d399;
+}
+
+.channels-status-pill.after-hours {
+  background: rgba(148, 163, 184, 0.12);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  color: #94a3b8;
+}
+
+.channels-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.channels-status-pill.open .channels-pulse-dot {
+  background-color: #10b981;
+  box-shadow: 0 0 8px #10b981;
+}
+
+.channels-status-pill.after-hours .channels-pulse-dot {
+  background-color: #94a3b8;
+}
+
+.channels-top-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #94a3b8;
+}
+
+.channels-top-tag i {
+  color: #f8b400;
 }
 
 .contact-card-header {
@@ -149,12 +246,13 @@
   border-bottom: 1px solid #f1f5f9;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
+  position: relative;
 }
 
 .card-header-icon {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 12px;
   background: rgba(248, 180, 0, 0.1);
   border: 1px solid rgba(248, 180, 0, 0.25);
@@ -162,18 +260,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  font-size: 18px;
   flex-shrink: 0;
 }
 
 .card-header-text {
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
 
 .card-kicker {
   font-size: 10px;
-  font-weight: 800;
+  font-weight: 850;
   color: #94a3b8;
   letter-spacing: 0.8px;
   text-transform: uppercase;
@@ -183,8 +282,17 @@
   font-size: 1.25rem;
   font-weight: 850;
   color: #071324;
-  margin: 0;
+  margin: 2px 0 0 0;
   letter-spacing: -0.3px;
+}
+
+.contact-card-header.executive-header-style h2 {
+  font-size: 1.35rem;
+  font-weight: 850;
+  color: #071324;
+  margin: 2px 0 0 0;
+  letter-spacing: -0.3px;
+  line-height: 1.25;
 }
 
 .contact-card-body {
@@ -198,31 +306,43 @@
   margin: 0 0 20px 0;
 }
 
-/* Info Cards Stack */
+/* ============================================
+   INFO CARDS STACK & ACTION GROUPS
+   ============================================ */
 .info-cards-stack {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
-.contact-channel-card {
+.contact-interactive-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 14px 18px;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  gap: 12px;
+  box-shadow: 0 2px 8px rgba(7, 19, 36, 0.02);
+}
+
+.contact-interactive-card:hover {
+  border-color: #cbd5e1;
+  border-left: 3.5px solid #f8b400;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(7, 19, 36, 0.06);
+}
+
+.interactive-card-left {
   display: flex;
   align-items: flex-start;
   gap: 14px;
-  background: #f8fafc;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 14px;
-  padding: 16px 18px;
   text-decoration: none;
   color: inherit;
-  transition: all 0.25s ease;
-}
-
-.contact-channel-card:hover {
-  background: #ffffff;
-  border-color: #f8b400;
-  transform: translateX(4px);
-  box-shadow: 0 4px 15px rgba(7, 19, 36, 0.05);
+  flex: 1;
+  min-width: 0;
 }
 
 .channel-icon-box {
@@ -242,22 +362,27 @@
 .channel-text-box {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .channel-label {
-  font-size: 10.5px;
-  font-weight: 750;
+  font-size: 10px;
+  font-weight: 800;
   text-transform: uppercase;
   color: #94a3b8;
   letter-spacing: 0.5px;
   margin-bottom: 2px;
 }
 
-.channel-text-box strong {
-  font-size: 14px;
-  font-weight: 800;
+.channel-primary-val {
+  font-size: 13.5px;
+  font-weight: 850;
   color: #071324;
   margin-bottom: 2px;
+}
+
+.text-break-email {
+  word-break: break-all;
 }
 
 .channel-sub {
@@ -265,72 +390,265 @@
   color: #64748b;
 }
 
-/* WhatsApp Urgent Card */
-.contact-wa-action-card {
+/* Channel Action Group (Call/Mail/Map + Copy) */
+.channel-action-group {
   display: flex;
   align-items: center;
-  gap: 14px;
-  background: #ecfdf5;
-  border: 1.5px solid #a7f3d0;
-  border-radius: 14px;
-  padding: 16px 18px;
-  text-decoration: none;
-  transition: all 0.25s ease;
-  margin-top: 4px;
-}
-
-.contact-wa-action-card:hover {
-  background: #25D366;
-  border-color: #25D366;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
-}
-
-.wa-action-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  background: #25D366;
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
+  gap: 8px;
   flex-shrink: 0;
 }
 
-.contact-wa-action-card:hover .wa-action-icon {
-  background: #ffffff;
-  color: #25D366;
+.btn-channel-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #071324;
+  color: #ffffff;
+  border: 1.5px solid #071324;
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 11.5px;
+  font-weight: 750;
+  text-decoration: none;
+  transition: all 0.2s ease;
 }
 
-.wa-action-text {
+.btn-channel-action:hover {
+  background: #0f2444;
+  color: #f8b400;
+  border-color: #0f2444;
+  transform: translateY(-1px);
+}
+
+.btn-channel-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 11.5px;
+  font-weight: 750;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.btn-channel-copy:hover {
+  background: #071324;
+  color: #ffffff;
+  border-color: #071324;
+}
+
+.btn-channel-copy.copied {
+  background: #ecfdf5;
+  border-color: #10b981;
+  color: #065f46;
+}
+
+/* ============================================
+   DIGITAL VCARD BENTO WIDGET
+   ============================================ */
+.vcard-bento-widget {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8fafc;
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 14px;
+  padding: 12px 18px;
+  gap: 14px;
+  transition: all 0.2s ease;
+}
+
+.vcard-bento-widget:hover {
+  background: #ffffff;
+  border-color: #071324;
+  box-shadow: 0 4px 15px rgba(7, 19, 36, 0.04);
+}
+
+.vcard-widget-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.vcard-icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(7, 19, 36, 0.06);
+  color: #071324;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.vcard-text-box {
   display: flex;
   flex-direction: column;
 }
 
-.wa-action-text strong {
-  font-size: 14px;
-  color: #065f46;
-  font-weight: 850;
+.vcard-text-box strong {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #071324;
 }
 
-.wa-action-text span {
-  font-size: 12px;
-  color: #059669;
-  font-weight: 600;
+.vcard-text-box span {
+  font-size: 11px;
+  color: #64748b;
 }
 
-.contact-wa-action-card:hover .wa-action-text strong,
-.contact-wa-action-card:hover .wa-action-text span {
+.btn-vcard-action {
+  background: #ffffff;
+  border: 1.5px solid #071324;
+  color: #071324;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 11.5px;
+  font-weight: 750;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.btn-vcard-action:hover {
+  background: #071324;
+  color: #f8b400;
+}
+
+/* ============================================
+   EXECUTIVE WHATSAPP CHANNEL CARD
+   ============================================ */
+.wa-channel-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.wa-channel-card:hover {
+  border-color: #25D366;
+  border-left: 3.5px solid #25D366;
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.1);
+}
+
+.wa-icon-box {
+  background: #25D366 !important;
   color: #ffffff !important;
 }
 
-/* Map Card Header with button */
+.wa-card-header-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.wa-live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+  font-size: 9.5px;
+  font-weight: 800;
+  padding: 1px 7px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.wa-pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px #10b981;
+  animation: pulseDot 2s infinite;
+}
+
+@keyframes pulseDot {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+.btn-channel-action.wa-action-btn {
+  background: #25D366;
+  border-color: #25D366;
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.btn-channel-action.wa-action-btn:hover {
+  background: #1eb857;
+  border-color: #1eb857;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.35);
+}
+
+/* Minimalist Quick Prompts Bar */
+.wa-quick-prompts-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 6px 0 6px;
+  flex-wrap: wrap;
+}
+
+.prompts-title {
+  font-size: 11px;
+  font-weight: 750;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.prompts-links-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.prompt-link {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #065f46;
+  text-decoration: none;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  padding: 3px 9px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.prompt-link:hover {
+  background: #065f46;
+  color: #ffffff;
+  border-color: #065f46;
+}
+
+.prompt-separator {
+  color: #cbd5e1;
+  font-size: 10px;
+}
+
+/* ============================================
+   MAP CARD & LANDMARK CUES
+   ============================================ */
 .map-card-header {
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
 }
 
 .card-header-left {
@@ -345,7 +663,7 @@
   border: none;
   padding: 8px 16px;
   border-radius: 8px;
-  font-size: 12.5px;
+  font-size: 12px;
   font-weight: 750;
   text-decoration: none;
   display: inline-flex;
@@ -363,7 +681,97 @@
   padding: 20px;
 }
 
-/* Quick FAQs Stack */
+.office-landmarks-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.landmark-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #475569;
+}
+
+.landmark-pill i {
+  color: #f8b400;
+  font-size: 11px;
+}
+
+.map-iframe-container {
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1.5px solid #e2e8f0;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.map-bottom-address-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-top: 12px;
+  gap: 12px;
+}
+
+.map-address-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #334155;
+  min-width: 0;
+}
+
+.map-address-left i {
+  color: #f8b400;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.btn-map-copy-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 750;
+  color: #071324;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.btn-map-copy-pill:hover {
+  background: #071324;
+  color: #ffffff;
+  border-color: #071324;
+}
+
+.btn-map-copy-pill.copied {
+  background: #ecfdf5;
+  border-color: #10b981;
+  color: #065f46;
+}
+
+/* ============================================
+   QUICK FAQS ACCORDION
+   ============================================ */
 .contact-faq-stack {
   display: flex;
   flex-direction: column;
@@ -377,14 +785,19 @@
   background: #f8fafc;
   padding: 14px 18px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
 }
 
-.contact-faq-item:hover,
+.contact-faq-item:hover {
+  border-color: #cbd5e1;
+  background: #ffffff;
+}
+
 .contact-faq-item.open {
   border-color: #071324;
+  border-left: 3.5px solid #f8b400;
   background: #ffffff;
-  box-shadow: 0 4px 15px rgba(7, 19, 36, 0.04);
+  box-shadow: 0 6px 20px rgba(7, 19, 36, 0.05);
 }
 
 .contact-faq-question-row {
@@ -392,6 +805,28 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+}
+
+.faq-num-and-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.faq-index-tag {
+  font-size: 11px;
+  font-weight: 850;
+  color: #94a3b8;
+  font-family: 'Courier New', Courier, monospace;
+  background: #f1f5f9;
+  padding: 2px 7px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.contact-faq-item.open .faq-index-tag {
+  background: #071324;
+  color: #f8b400;
 }
 
 .contact-faq-question-row h4 {
@@ -409,16 +844,63 @@
 }
 
 .contact-faq-item.open .faq-toggle-icon {
-  color: #d99a00;
+  color: #d97706;
 }
 
 .contact-faq-answer-box p {
   font-size: 13px;
   color: #64748b;
-  line-height: 1.6;
+  line-height: 1.65;
   margin: 10px 0 0 0;
   padding-top: 10px;
   border-top: 1px solid #f1f5f9;
+}
+
+.faq-footer-note {
+  margin-top: 18px;
+  padding: 14px 18px;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.faq-footer-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(248, 180, 0, 0.1);
+  color: #d97706;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.faq-footer-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 12.5px;
+  color: #334155;
+}
+
+.faq-footer-text strong {
+  color: #071324;
+  font-weight: 800;
+}
+
+.faq-footer-text a {
+  color: #071324;
+  font-weight: 750;
+  text-decoration: underline;
+}
+
+.faq-footer-text a:hover {
+  color: #d97706;
 }
 
 /* ============================================
@@ -438,5 +920,41 @@
   .contact-card-body,
   .contact-card-header {
     padding: 18px 20px;
+  }
+  .contact-interactive-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .channel-action-group {
+    justify-content: flex-end;
+  }
+  .vcard-bento-widget {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .btn-vcard-action {
+    justify-content: center;
+  }
+  .wa-bento-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .wa-bento-btn {
+    width: 100%;
+    text-align: center;
+  }
+  .hero-reassurance-strip {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .reassurance-divider {
+    display: none;
+  }
+  .map-bottom-address-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .btn-map-copy-pill {
+    justify-content: center;
   }
 }
