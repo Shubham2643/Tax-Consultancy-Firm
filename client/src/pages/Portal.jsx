@@ -29,8 +29,10 @@ const Portal = () => {
   const [consultations, setConsultations] = useState([]);
   const [invoices, setInvoices] = useState([]);
   const [loadingData, setLoadingData] = useState(false);
-  const [uploadLoading, setUploadLoading] = useState(false);
-  const [uploadFile, setUploadFile] = useState(null);
+  const [uploadQueue, setUploadQueue] = useState([]);
+  const [isDragging, setIsDragging] = useState(false);
+  const [batchUploading, setBatchUploading] = useState(false);
+  const [batchProgress, setBatchProgress] = useState({ current: 0, total: 0 });
   
   // Razorpay state handlers
   const [paymentProcessing, setPaymentProcessing] = useState(false);
@@ -97,43 +99,178 @@ const Portal = () => {
     }
   }, [user, fetchDocuments, fetchInquiries, fetchConsultations, fetchInvoices]);
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file && file.size > 10 * 1024 * 1024) {
-      setMessage({ type: 'error', text: 'File size must be under 10MB' });
-      return;
+  const handleAddFiles = (newFiles) => {
+    if (!newFiles || newFiles.length === 0) return;
+    const fileArray = Array.from(newFiles);
+    const validExtensions = ['pdf', 'jpg', 'jpeg', 'png', 'doc', 'docx', 'xls', 'xlsx'];
+    const MAX_SIZE = 10 * 1024 * 1024; // 10MB
+
+    const errors = [];
+    const validQueueItems = [];
+
+    fileArray.forEach((file) => {
+      const ext = file.name.split('.').pop().toLowerCase();
+      if (!validExtensions.includes(ext)) {
+        errors.push(`"${file.name}" has an unsupported format (.${ext})`);
+        return;
+      }
+      if (file.size > MAX_SIZE) {
+        errors.push(`"${file.name}" exceeds 10MB limit (${(file.size / (1024 * 1024)).toFixed(1)}MB)`);
+        return;
+      }
+      const isDuplicate = uploadQueue.some(q => q.name === file.name && q.size === file.size);
+      if (isDuplicate) {
+        errors.push(`"${file.name}" is already in the upload queue`);
+        return;
+      }
+
+      validQueueItems.push({
+        id: `${file.name}-${file.size}-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+        file,
+        name: file.name,
+        size: file.size,
+        formattedSize: file.size < 1024 * 1024 
+          ? `${(file.size / 1024).toFixed(1)} KB` 
+          : `${(file.size / (1024 * 1024)).toFixed(2)} MB`,
+        category: serviceSlug || 'GST Filing',
+        status: 'pending',
+        errorMsg: null,
+      });
+    });
+
+    if (errors.length > 0) {
+      setMessage({ 
+        type: 'error', 
+        text: errors.length === 1 ? errors[0] : `${errors.length} files skipped: ${errors.slice(0, 2).join(', ')}${errors.length > 2 ? '...' : ''}` 
+      });
+    } else {
+      setMessage({ type: '', text: '' });
     }
-    setUploadFile(file);
+
+    if (validQueueItems.length > 0) {
+      setUploadQueue(prev => [...prev, ...validQueueItems]);
+    }
   };
 
-  const handleUpload = async () => {
-    if (!uploadFile) return;
-    setUploadLoading(true);
+  const handleFilePickerChange = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      handleAddFiles(e.target.files);
+      e.target.value = '';
+    }
+  };
+
+  const handleRemoveFromQueue = (id) => {
+    setUploadQueue(prev => prev.filter(item => item.id !== id));
+  };
+
+  const handleUpdateItemCategory = (id, newCat) => {
+    setUploadQueue(prev => prev.map(item => item.id === id ? { ...item, category: newCat } : item));
+  };
+
+  const handleApplyCategoryToAll = (newCat) => {
+    setServiceSlug(newCat);
+    setUploadQueue(prev => prev.map(item => ({ ...item, category: newCat })));
+  };
+
+  const handleClearQueue = () => {
+    setUploadQueue([]);
     setMessage({ type: '', text: '' });
-    try {
-      const reader = new FileReader();
-      reader.onload = async () => {
-        try {
-          await uploadDocument({
-            fileData: reader.result,
-            originalName: uploadFile.name,
-            mimeType: uploadFile.type,
-            serviceSlug,
-          });
-          setMessage({ type: 'success', text: 'Document uploaded successfully to your vault!' });
-          setUploadFile(null);
-          setServiceSlug('');
-          setTab('documents');
-          fetchDocuments();
-        } catch (err) {
-          setMessage({ type: 'error', text: err.response?.data?.message || 'Upload failed' });
-        } finally {
-          setUploadLoading(false);
-        }
-      };
-      reader.readAsDataURL(uploadFile);
-    } catch {
-      setUploadLoading(false);
+  };
+
+  const handleDragEnter = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.currentTarget.contains(e.relatedTarget)) return;
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+    if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      handleAddFiles(e.dataTransfer.files);
+    }
+  };
+
+  const handleBatchUpload = async () => {
+    if (uploadQueue.length === 0 || batchUploading) return;
+    
+    setBatchUploading(true);
+    setMessage({ type: '', text: '' });
+
+    let successCount = 0;
+    let failCount = 0;
+    const total = uploadQueue.length;
+
+    for (let i = 0; i < total; i++) {
+      const item = uploadQueue[i];
+      if (item.status === 'success') {
+        successCount++;
+        continue;
+      }
+
+      setBatchProgress({ current: i + 1, total });
+      setUploadQueue(prev => prev.map(q => q.id === item.id ? { ...q, status: 'uploading' } : q));
+
+      try {
+        const fileData = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(item.file);
+        });
+
+        await uploadDocument({
+          fileData,
+          originalName: item.name,
+          mimeType: item.file.type || 'application/pdf',
+          serviceSlug: item.category || serviceSlug || 'General'
+        });
+
+        successCount++;
+        setUploadQueue(prev => prev.map(q => q.id === item.id ? { ...q, status: 'success' } : q));
+      } catch (err) {
+        failCount++;
+        const errMsg = err.response?.data?.message || 'Upload failed';
+        setUploadQueue(prev => prev.map(q => q.id === item.id ? { ...q, status: 'error', errorMsg: errMsg } : q));
+      }
+    }
+
+    setBatchUploading(false);
+    fetchDocuments();
+
+    if (failCount === 0) {
+      setMessage({ 
+        type: 'success', 
+        text: `Successfully encrypted and uploaded all ${successCount} document${successCount > 1 ? 's' : ''} to your vault!` 
+      });
+      setTimeout(() => {
+        setUploadQueue([]);
+        setTab('documents');
+      }, 1400);
+    } else if (successCount > 0) {
+      setMessage({ 
+        type: 'error', 
+        text: `${successCount} documents uploaded, ${failCount} failed. Please review the queue.` 
+      });
+    } else {
+      setMessage({ 
+        type: 'error', 
+        text: 'Failed to upload documents. Please check your connection and try again.' 
+      });
     }
   };
 
@@ -371,6 +508,11 @@ const Portal = () => {
     if (['xls', 'xlsx', 'csv'].includes(ext)) return { icon: 'fa-file-excel', class: 'excel' };
     return { icon: 'fa-file-alt', class: 'generic' };
   };
+
+  const totalBatchSize = uploadQueue.reduce((acc, item) => acc + item.size, 0);
+  const formattedTotalBatchSize = totalBatchSize < 1024 * 1024 
+    ? `${(totalBatchSize / 1024).toFixed(1)} KB` 
+    : `${(totalBatchSize / (1024 * 1024)).toFixed(2)} MB`;
 
   const totalDocs = documents.length;
   const activeInquiries = inquiries.filter(i => ['new', 'pending', 'in-progress'].includes(i.status)).length;
@@ -990,104 +1132,247 @@ const Portal = () => {
             </div>
           ) : tab === 'upload' ? (
             /* ========================================================
-               TAB: UPLOAD FILE
+               TAB: UPLOAD FILE (DRAG & DROP MULTI-DOCUMENT BATCH)
                ======================================================== */
             <div className="upload-flow fade-in">
               {/* Executive Hero Banner */}
               <div className="portal-hero-card">
                 <div className="hero-text-content">
-                  <h1>Fast &amp; Secure Document Drop</h1>
-                  <p>Upload bank statements, Form-16, invoices, and accounting ledgers directly to our CA audit desk.</p>
+                  <div className="hero-kicker-badge">
+                    <i className="fas fa-shield-halved"></i>
+                    <span>256-BIT ENCRYPTED VAULT</span>
+                  </div>
+                  <h1>Fast &amp; Secure Document Vault</h1>
+                  <p>Batch upload financial statements, ITR computations, Form-16, and GST ledgers with instant virus scan and direct CA partner triage.</p>
                 </div>
                 <div className="hero-action-buttons">
                   <button className="btn-hero-primary" onClick={() => setTab('documents')}>
-                    <i className="fas fa-folder-open"></i> View Vault
+                    <i className="fas fa-folder-open"></i> View Vault ({documents.length})
                   </button>
                   <button className="btn-hero-secondary" onClick={() => setTab('inquiries')}>
-                    <i className="fas fa-tasks"></i> Filings
+                    <i className="fas fa-tasks"></i> Active Filings
                   </button>
                 </div>
               </div>
 
-              <div className="portal-bento-card upload-center-card">
-                <div className="dropzone-core-box">
-                  <input 
-                    type="file" 
-                    id="portal-file-picker" 
-                    accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx" 
-                    onChange={handleFileChange} 
-                  />
+              {/* Status Message Banner if any */}
+              {message.text && (
+                <div className={`portal-status-alert ${message.type} fade-in`}>
+                  <i className={`fas ${message.type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}`}></i>
+                  <span>{message.text}</span>
+                </div>
+              )}
 
-                  {!uploadFile ? (
+              <div className="portal-bento-card upload-center-card">
+                {/* Global File Input (Hidden) */}
+                <input 
+                  type="file" 
+                  id="portal-file-picker" 
+                  multiple
+                  accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx" 
+                  onChange={handleFilePickerChange} 
+                />
+
+                {/* Drag-and-Drop Zone */}
+                <div 
+                  className={`dropzone-core-box ${isDragging ? 'dragging' : ''} ${uploadQueue.length > 0 ? 'has-queue' : ''}`}
+                  onDragEnter={handleDragEnter}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                >
+                  {isDragging ? (
+                    <div className="dropzone-drag-overlay">
+                      <div className="drag-pulse-icon">
+                        <i className="fas fa-cloud-arrow-up"></i>
+                      </div>
+                      <h3>Release to Add Files to Vault Batch</h3>
+                      <p>Multi-document batch upload in progress...</p>
+                    </div>
+                  ) : uploadQueue.length === 0 ? (
                     <label htmlFor="portal-file-picker" className="mobile-upload-tapzone">
-                      <div className="dropzone-icon-ring"><i className="fas fa-cloud-upload-alt"></i></div>
-                      <h3>Tap to Choose Document</h3>
-                      <p className="dropzone-formats">PDF, JPG, PNG, DOCX, XLSX up to 10MB</p>
+                      <div className="dropzone-icon-ring">
+                        <i className="fas fa-cloud-upload-alt"></i>
+                      </div>
+                      <h3>Drag &amp; Drop Documents Here</h3>
+                      <p className="dropzone-subtext">or click to browse from your device &bull; Batch upload multiple files simultaneously</p>
+                      <p className="dropzone-formats">
+                        <span className="format-tag">PDF</span>
+                        <span className="format-tag">JPG/PNG</span>
+                        <span className="format-tag">DOCX</span>
+                        <span className="format-tag">XLSX</span>
+                        <span className="format-limit">&bull; Up to 10MB per file</span>
+                      </p>
                       <span className="btn-file-select">
-                        <i className="fas fa-folder-open"></i> Choose File from Device
+                        <i className="fas fa-plus-circle"></i> Browse Files to Upload
                       </span>
+                      <div className="dropzone-security-trust">
+                        <span><i className="fas fa-lock"></i> 256-Bit SSL Encrypted</span>
+                        <span className="trust-dot">&bull;</span>
+                        <span><i className="fas fa-shield-virus"></i> Automated Anti-Virus Scan</span>
+                        <span className="trust-dot">&bull;</span>
+                        <span><i className="fas fa-user-shield"></i> Client Privilege Protected</span>
+                      </div>
                     </label>
                   ) : (
-                    <div className="upload-file-ready-box">
-                      <div className="selected-file-preview-card">
-                        <div className="file-preview-icon">
-                          <i className={`fas ${getFileIcon(uploadFile.name).icon}`}></i>
-                        </div>
-                        <div className="file-preview-meta">
-                          <strong title={uploadFile.name}>{uploadFile.name}</strong>
-                          <span>{(uploadFile.size / 1024).toFixed(1)} KB &bull; Ready to transmit</span>
-                        </div>
-                        <button 
-                          type="button" 
-                          className="btn-clear-selected-file" 
-                          onClick={() => setUploadFile(null)}
-                          title="Remove file"
-                        >
-                          <i className="fas fa-times"></i>
-                        </button>
-                      </div>
-                      <label htmlFor="portal-file-picker" className="btn-change-file">
-                        <i className="fas fa-sync-alt"></i> Choose Different File
+                    /* When Queue has files: Compact Add-More Drop Bar */
+                    <div className="dropzone-compact-dropbar">
+                      <label htmlFor="portal-file-picker" className="compact-drop-label">
+                        <i className="fas fa-cloud-arrow-up"></i>
+                        <span>Drag &amp; drop more files here, or <strong>click to browse</strong></span>
                       </label>
                     </div>
                   )}
+                </div>
 
-                  <div className="upload-meta-fields">
-                    <div className="form-group-custom">
-                      <label><i className="fas fa-tag"></i> Select Category</label>
+                {/* Batch Upload Queue List (When files are queued) */}
+                {uploadQueue.length > 0 && (
+                  <div className="batch-upload-workspace fade-in">
+                    <div className="batch-queue-header">
+                      <div className="batch-header-title">
+                        <h4>Selected Document Queue</h4>
+                        <span className="batch-count-pill">
+                          {uploadQueue.length} {uploadQueue.length === 1 ? 'File' : 'Files'} &bull; {formattedTotalBatchSize}
+                        </span>
+                      </div>
+                      <div className="batch-header-actions">
+                        <label htmlFor="portal-file-picker" className="btn-batch-add-more">
+                          <i className="fas fa-plus"></i> Add Files
+                        </label>
+                        <button 
+                          type="button" 
+                          className="btn-batch-clear-all" 
+                          onClick={handleClearQueue}
+                          disabled={batchUploading}
+                        >
+                          <i className="fas fa-trash-can"></i> Clear All
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Batch Items List */}
+                    <div className="batch-items-list">
+                      {uploadQueue.map((item, idx) => {
+                        const fileInfo = getFileIcon(item.name);
+                        return (
+                          <div key={item.id} className={`batch-item-row ${item.status}`}>
+                            <div className="batch-item-left">
+                              <span className="batch-item-index">{idx + 1}</span>
+                              <div className={`batch-file-avatar ${fileInfo.class}`}>
+                                <i className={`fas ${fileInfo.icon}`}></i>
+                              </div>
+                              <div className="batch-file-meta">
+                                <strong className="batch-file-name" title={item.name}>{item.name}</strong>
+                                <span className="batch-file-size">{item.formattedSize}</span>
+                              </div>
+                            </div>
+
+                            <div className="batch-item-middle">
+                              {/* Inline Category Quick Selector */}
+                              <div className="batch-category-selector">
+                                <span className="category-label"><i className="fas fa-tag"></i> Category:</span>
+                                <select 
+                                  value={item.category} 
+                                  onChange={(e) => handleUpdateItemCategory(item.id, e.target.value)}
+                                  disabled={batchUploading}
+                                  className="batch-category-select"
+                                >
+                                  {['GST Filing', 'ITR Return', 'Bank Statement', 'Form 16', 'KYC / PAN', 'Balance Sheet', 'Audit Report', 'General'].map(cat => (
+                                    <option key={cat} value={cat}>{cat}</option>
+                                  ))}
+                                </select>
+                              </div>
+                            </div>
+
+                            <div className="batch-item-right">
+                              {/* Status indicator */}
+                              {item.status === 'pending' && (
+                                <span className="item-status-pill pending">
+                                  <span className="status-dot"></span> Ready
+                                </span>
+                              )}
+                              {item.status === 'uploading' && (
+                                <span className="item-status-pill uploading">
+                                  <i className="fas fa-spinner fa-spin"></i> Encrypting...
+                                </span>
+                              )}
+                              {item.status === 'success' && (
+                                <span className="item-status-pill success">
+                                  <i className="fas fa-circle-check"></i> Uploaded
+                                </span>
+                              )}
+                              {item.status === 'error' && (
+                                <span className="item-status-pill error" title={item.errorMsg || 'Failed'}>
+                                  <i className="fas fa-exclamation-triangle"></i> Failed
+                                </span>
+                              )}
+
+                              <button 
+                                type="button" 
+                                className="btn-remove-queue-item"
+                                onClick={() => handleRemoveFromQueue(item.id)}
+                                disabled={batchUploading}
+                                title="Remove document from batch"
+                              >
+                                <i className="fas fa-times"></i>
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {/* Batch Category Quick Apply Strip */}
+                    <div className="batch-quick-tags-strip">
+                      <div className="quick-tags-label">
+                        <i className="fas fa-wand-magic-sparkles"></i>
+                        <span>Apply Category to All Files:</span>
+                      </div>
                       <div className="quick-tags-list">
                         {['GST Filing', 'ITR Return', 'Bank Statement', 'Form 16', 'KYC / PAN', 'Balance Sheet'].map(cat => (
                           <button
                             type="button"
                             key={cat}
                             className={`quick-tag-chip ${serviceSlug === cat ? 'active' : ''}`}
-                            onClick={() => setServiceSlug(cat)}
+                            onClick={() => handleApplyCategoryToAll(cat)}
+                            disabled={batchUploading}
                           >
                             {cat}
                           </button>
                         ))}
                       </div>
-                      <input 
-                        type="text" 
-                        value={serviceSlug} 
-                        onChange={(e) => setServiceSlug(e.target.value)} 
-                        placeholder="Or enter custom category name" 
-                      />
                     </div>
-                  </div>
 
-                  <button 
-                    className="btn-submit-upload" 
-                    disabled={!uploadFile || uploadLoading} 
-                    onClick={handleUpload}
-                  >
-                    {uploadLoading ? (
-                      <span><i className="fas fa-spinner fa-spin"></i> Encrypting &amp; Uploading...</span>
-                    ) : (
-                      <span><i className="fas fa-lock"></i> Encrypt &amp; Save to Vault</span>
+                    {/* Progress Bar (during upload) */}
+                    {batchUploading && (
+                      <div className="batch-progress-wrapper fade-in">
+                        <div className="batch-progress-header">
+                          <span>Transmitting {batchProgress.current} of {batchProgress.total} documents...</span>
+                          <strong>{Math.round((batchProgress.current / batchProgress.total) * 100)}%</strong>
+                        </div>
+                        <div className="batch-progress-track">
+                          <div 
+                            className="batch-progress-fill" 
+                            style={{ width: `${(batchProgress.current / batchProgress.total) * 100}%` }}
+                          ></div>
+                        </div>
+                      </div>
                     )}
-                  </button>
-                </div>
+
+                    {/* Submit Batch Button */}
+                    <button 
+                      className="btn-submit-batch-upload" 
+                      disabled={batchUploading || uploadQueue.length === 0}
+                      onClick={handleBatchUpload}
+                    >
+                      {batchUploading ? (
+                        <span><i className="fas fa-spinner fa-spin"></i> Encrypting &amp; Uploading Batch ({batchProgress.current}/{batchProgress.total})...</span>
+                      ) : (
+                        <span><i className="fas fa-lock"></i> Encrypt &amp; Upload Batch ({uploadQueue.length} {uploadQueue.length === 1 ? 'Document' : 'Documents'} &bull; {formattedTotalBatchSize})</span>
+                      )}
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           ) : tab === 'bookings' ? (

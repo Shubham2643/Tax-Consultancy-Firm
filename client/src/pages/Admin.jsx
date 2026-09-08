@@ -975,6 +975,219 @@ const Admin = () => {
   const pendingConsCount = consultations.filter(c => c.status === 'pending').length;
   const unpaidInvoicesCount = invoices.filter(i => i.status === 'unpaid').length;
 
+  // ============================================
+  // EXPORT UTILITIES (CSV / EXCEL XML)
+  // ============================================
+  const downloadExportFile = (content, fileName, mimeType) => {
+    const blob = new Blob([content], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', fileName);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  const generateCSVContent = (headers, rows) => {
+    const escapeCSV = (val) => {
+      if (val === null || val === undefined) return '""';
+      const str = String(val).replace(/"/g, '""');
+      return `"${str}"`;
+    };
+
+    const headerLine = headers.map(h => escapeCSV(h.label)).join(',');
+    const rowLines = rows.map(row => 
+      headers.map(h => escapeCSV(row[h.key] ?? '')).join(',')
+    );
+
+    return '\uFEFF' + [headerLine, ...rowLines].join('\r\n');
+  };
+
+  const generateExcelXMLContent = (sheetName, headers, rows) => {
+    const escapeXML = (str) => {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&apos;');
+    };
+
+    let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Alignment ss:Vertical="Center"/>
+   <Font ss:FontName="Calibri" ss:Size="11" ss:Color="#0F172A"/>
+  </Style>
+  <Style ss:ID="HeaderStyle">
+   <Alignment ss:Vertical="Center" ss:Horizontal="Center"/>
+   <Font ss:FontName="Calibri" ss:Size="11" ss:Color="#FFFFFF" ss:Bold="1"/>
+   <Interior ss:Color="#071324" ss:Pattern="Solid"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2" ss:Color="#F8B400"/>
+   </Borders>
+  </Style>
+  <Style ss:ID="CurrencyStyle">
+   <Alignment ss:Vertical="Center" ss:Horizontal="Right"/>
+   <NumberFormat ss:Format="₹#,##0.00"/>
+  </Style>
+  <Style ss:ID="DateStyle">
+   <Alignment ss:Vertical="Center" ss:Horizontal="Center"/>
+  </Style>
+  <Style ss:ID="StatusPaid">
+   <Alignment ss:Vertical="Center" ss:Horizontal="Center"/>
+   <Font ss:Color="#065F46" ss:Bold="1"/>
+   <Interior ss:Color="#D1FAE5" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="StatusUnpaid">
+   <Alignment ss:Vertical="Center" ss:Horizontal="Center"/>
+   <Font ss:Color="#991B1B" ss:Bold="1"/>
+   <Interior ss:Color="#FEE2E2" ss:Pattern="Solid"/>
+  </Style>
+ </Styles>
+ <Worksheet ss:Name="${escapeXML(sheetName)}">
+  <Table>
+`;
+
+    headers.forEach(h => {
+      xml += `   <Column ss:Width="${h.width || 120}"/>\n`;
+    });
+
+    xml += '   <Row ss:Height="26">\n';
+    headers.forEach(h => {
+      xml += `    <Cell ss:StyleID="HeaderStyle"><Data ss:Type="String">${escapeXML(h.label)}</Data></Cell>\n`;
+    });
+    xml += '   </Row>\n';
+
+    rows.forEach(row => {
+      xml += '   <Row ss:Height="22">\n';
+      headers.forEach(h => {
+        const val = row[h.key];
+        const isNum = typeof val === 'number';
+        let styleID = '';
+        if (h.isCurrency) styleID = ' ss:StyleID="CurrencyStyle"';
+        else if (h.isDate) styleID = ' ss:StyleID="DateStyle"';
+        else if (h.key === 'status') {
+          const s = String(val).toLowerCase();
+          if (s === 'paid' || s === 'resolved') styleID = ' ss:StyleID="StatusPaid"';
+          else if (s === 'unpaid' || s === 'new') styleID = ' ss:StyleID="StatusUnpaid"';
+        }
+
+        if (isNum) {
+          xml += `    <Cell${styleID}><Data ss:Type="Number">${val}</Data></Cell>\n`;
+        } else {
+          xml += `    <Cell${styleID}><Data ss:Type="String">${escapeXML(val ?? '')}</Data></Cell>\n`;
+        }
+      });
+      xml += '   </Row>\n';
+    });
+
+    xml += `  </Table>
+ </Worksheet>
+</Workbook>`;
+    return xml;
+  };
+
+  const handleExportInquiries = (format = 'csv') => {
+    const dataToExport = filteredInqs.length > 0 ? filteredInqs : inquiries;
+    if (dataToExport.length === 0) {
+      showToast('error', 'No inquiries available to export');
+      return;
+    }
+
+    const headers = [
+      { key: 'date', label: 'Date Received', isDate: true, width: 110 },
+      { key: 'name', label: 'Client Name', width: 160 },
+      { key: 'email', label: 'Email Address', width: 210 },
+      { key: 'phone', label: 'Phone Number', width: 130 },
+      { key: 'service', label: 'Practice Area / Service', width: 180 },
+      { key: 'status', label: 'Status', width: 110 },
+      { key: 'commentsCount', label: 'Replies Count', width: 90 },
+      { key: 'message', label: 'Inquiry Message Brief', width: 320 },
+    ];
+
+    const rows = dataToExport.map(inq => ({
+      date: new Date(inq.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }),
+      name: inq.name || 'N/A',
+      email: inq.email || 'N/A',
+      phone: inq.phone || 'N/A',
+      service: inq.service || 'General Tax Advisory',
+      status: (inq.status || 'new').toUpperCase(),
+      commentsCount: (inq.comments || []).length,
+      message: inq.message || '',
+    }));
+
+    const dateStr = new Date().toISOString().slice(0, 10);
+    const fileName = `SCA_Inquiries_Export_${dateStr}.${format === 'excel' ? 'xls' : 'csv'}`;
+
+    if (format === 'excel') {
+      const xml = generateExcelXMLContent('Client Inquiries', headers, rows);
+      downloadExportFile(xml, fileName, 'application/vnd.ms-excel');
+    } else {
+      const csv = generateCSVContent(headers, rows);
+      downloadExportFile(csv, fileName, 'text/csv;charset=utf-8;');
+    }
+
+    showToast('success', `Exported ${rows.length} inquiries to ${format.toUpperCase()}`);
+  };
+
+  const handleExportInvoices = (format = 'csv') => {
+    if (invoices.length === 0) {
+      showToast('error', 'No invoices available to export');
+      return;
+    }
+
+    const headers = [
+      { key: 'invoiceNumber', label: 'Invoice #', width: 120 },
+      { key: 'issueDate', label: 'Issue Date', isDate: true, width: 110 },
+      { key: 'clientName', label: 'Client Name', width: 160 },
+      { key: 'clientEmail', label: 'Client Email', width: 200 },
+      { key: 'clientPhone', label: 'Client Phone', width: 130 },
+      { key: 'serviceName', label: 'Service / Practice Area', width: 200 },
+      { key: 'amount', label: 'Amount (INR)', isCurrency: true, width: 120 },
+      { key: 'dueDate', label: 'Due Date', isDate: true, width: 110 },
+      { key: 'status', label: 'Settlement Status', width: 120 },
+      { key: 'paidDate', label: 'Paid On', isDate: true, width: 110 },
+      { key: 'paymentId', label: 'Razorpay Payment ID', width: 190 },
+    ];
+
+    const rows = invoices.map(inv => ({
+      invoiceNumber: inv.invoiceNumber || 'INV',
+      issueDate: new Date(inv.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }),
+      clientName: inv.client?.name || 'N/A',
+      clientEmail: inv.client?.email || 'N/A',
+      clientPhone: inv.client?.phone || 'N/A',
+      serviceName: inv.serviceName || 'Tax Consultancy Retainer',
+      amount: Number(inv.amount) || 0,
+      dueDate: new Date(inv.dueDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }),
+      status: (inv.status || 'unpaid').toUpperCase(),
+      paidDate: inv.paidAt ? new Date(inv.paidAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Pending',
+      paymentId: inv.razorpayPaymentId || (inv.status === 'paid' ? 'Settled Offline / Online' : 'Unpaid'),
+    }));
+
+    const dateStr = new Date().toISOString().slice(0, 10);
+    const fileName = `SCA_Invoices_Billing_${dateStr}.${format === 'excel' ? 'xls' : 'csv'}`;
+
+    if (format === 'excel') {
+      const xml = generateExcelXMLContent('Invoices & Billing', headers, rows);
+      downloadExportFile(xml, fileName, 'application/vnd.ms-excel');
+    } else {
+      const csv = generateCSVContent(headers, rows);
+      downloadExportFile(csv, fileName, 'text/csv;charset=utf-8;');
+    }
+
+    showToast('success', `Exported ${rows.length} invoices to ${format.toUpperCase()}`);
+  };
+
   if (authLoading || !user || user.role !== 'admin') {
     return (
       <div className="admin-loading-screen">
@@ -1400,8 +1613,35 @@ const Admin = () => {
                   {/* Executive Hero Banner */}
                   <div className="admin-hero-banner">
                     <div className="hero-text-content">
+                      <div className="hero-kicker-pill">
+                        <i className="fas fa-inbox"></i>
+                        <span>CASE MANAGEMENT &bull; CLIENT DESK</span>
+                      </div>
                       <h1>Client Inquiries &amp; Service Filings</h1>
                       <p>Manage tax compliance requests, update milestone statuses, and collaborate directly with clients through live discussion threads.</p>
+                    </div>
+                    <div className="hero-action-buttons">
+                      <div className="export-action-cluster">
+                        <span className="export-cluster-label"><i className="fas fa-file-export"></i> Export Data:</span>
+                        <button 
+                          type="button" 
+                          className="btn-admin-export csv"
+                          onClick={() => handleExportInquiries('csv')}
+                          title="Export inquiries to CSV"
+                          disabled={inquiries.length === 0}
+                        >
+                          <i className="fas fa-file-csv"></i> CSV
+                        </button>
+                        <button 
+                          type="button" 
+                          className="btn-admin-export excel"
+                          onClick={() => handleExportInquiries('excel')}
+                          title="Export inquiries to Excel Workbook (.xls)"
+                          disabled={inquiries.length === 0}
+                        >
+                          <i className="fas fa-file-excel"></i> Excel
+                        </button>
+                      </div>
                     </div>
                   </div>
 
@@ -1427,6 +1667,10 @@ const Admin = () => {
                           {st === 'all' ? 'All Inquiries' : st}
                         </button>
                       ))}
+                    </div>
+
+                    <div className="filter-stats-badge">
+                      <span>Showing <strong>{filteredInqs.length}</strong> of <strong>{inquiries.length}</strong></span>
                     </div>
                   </div>
 
@@ -1835,15 +2079,88 @@ const Admin = () => {
                   {/* Executive Hero Banner */}
                   <div className="admin-hero-banner">
                     <div className="hero-text-content">
+                      <div className="hero-kicker-pill">
+                        <i className="fas fa-file-invoice-dollar"></i>
+                        <span>BILLING &amp; SETTLEMENTS &bull; RETAINER DESK</span>
+                      </div>
                       <h1>Client Invoices &amp; Razorpay Retainers</h1>
                       <p>Issue professional accounting fee invoices, track online settlements, and manage automated payment links.</p>
                     </div>
                     <div className="hero-action-buttons">
+                      <div className="export-action-cluster">
+                        <span className="export-cluster-label"><i className="fas fa-file-export"></i> Export Data:</span>
+                        <button 
+                          type="button" 
+                          className="btn-admin-export csv"
+                          onClick={() => handleExportInvoices('csv')}
+                          title="Export invoices to CSV"
+                          disabled={invoices.length === 0}
+                        >
+                          <i className="fas fa-file-csv"></i> CSV
+                        </button>
+                        <button 
+                          type="button" 
+                          className="btn-admin-export excel"
+                          onClick={() => handleExportInvoices('excel')}
+                          title="Export invoices to Excel Workbook (.xls)"
+                          disabled={invoices.length === 0}
+                        >
+                          <i className="fas fa-file-excel"></i> Excel
+                        </button>
+                      </div>
                       <button className="btn-admin-hero-primary" onClick={() => setInvoiceModalOpen(true)}>
                         <i className="fas fa-plus"></i> Generate New Invoice
                       </button>
                     </div>
                   </div>
+
+                  {/* Financial KPI Summary Bar */}
+                  {invoices.length > 0 && (
+                    <div className="invoice-summary-bar">
+                      <div className="summary-stat-card">
+                        <div className="summary-stat-icon total">
+                          <i className="fas fa-receipt"></i>
+                        </div>
+                        <div className="summary-stat-info">
+                          <span className="summary-stat-label">Total Invoices</span>
+                          <strong className="summary-stat-value">{invoices.length}</strong>
+                          <span className="summary-stat-sub">
+                            ₹{invoices.reduce((acc, inv) => acc + (Number(inv.amount) || 0), 0).toLocaleString('en-IN')} billed
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="summary-stat-card">
+                        <div className="summary-stat-icon paid">
+                          <i className="fas fa-check-circle"></i>
+                        </div>
+                        <div className="summary-stat-info">
+                          <span className="summary-stat-label">Settled / Paid</span>
+                          <strong className="summary-stat-value">
+                            {invoices.filter(i => i.status === 'paid').length}
+                          </strong>
+                          <span className="summary-stat-sub text-success">
+                            ₹{invoices.filter(i => i.status === 'paid').reduce((acc, inv) => acc + (Number(inv.amount) || 0), 0).toLocaleString('en-IN')} collected
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="summary-stat-card">
+                        <div className="summary-stat-icon unpaid">
+                          <i className="fas fa-clock"></i>
+                        </div>
+                        <div className="summary-stat-info">
+                          <span className="summary-stat-label">Pending / Unpaid</span>
+                          <strong className="summary-stat-value">
+                            {invoices.filter(i => i.status === 'unpaid').length}
+                          </strong>
+                          <span className="summary-stat-sub text-warning">
+                            ₹{invoices.filter(i => i.status === 'unpaid').reduce((acc, inv) => acc + (Number(inv.amount) || 0), 0).toLocaleString('en-IN')} outstanding
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
                   {invoices.length === 0 ? (
                     <div className="admin-empty-state-box">
