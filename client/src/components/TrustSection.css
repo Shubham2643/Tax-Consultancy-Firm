@@ -1,9 +1,11 @@
-/* ============================================
-   TRUST & "WHAT WE OFFER" SECTION (LUXURY LIGHT THEME)
-   ============================================ */
+/* ============================================================
+   TRUST & "INSTITUTIONAL ASSURANCE" SECTION (10/10 MASTERPIECE)
+   Shree Chamunda Associates • Chartered Governance Standard
+   ============================================================ */
+
 .trust {
-  padding: 95px 0 105px 0;
-  background: linear-gradient(180deg, #ffffff 0%, #f9fafb 45%, #ffffff 100%);
+  padding: 100px 0 110px 0;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfcfd 50%, #f8fafc 100%);
   border-bottom: 1px solid #e2e8f0;
   position: relative;
   overflow: hidden;
@@ -15,231 +17,690 @@
 .trust-top-accent-line {
   position: absolute;
   top: 0;
-  left: 10%;
-  right: 10%;
-  height: 1.5px;
-  background: linear-gradient(90deg, transparent, rgba(248, 180, 0, 0.45), transparent);
+  left: 8%;
+  right: 8%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, rgba(248, 180, 0, 0.75) 50%, transparent 100%);
   pointer-events: none;
+}
+
+/* Background Architectural Blueprint Dot Matrix Pattern */
+.trust-ambient-grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(7, 19, 36, 0.045) 1px, transparent 1px);
+  background-size: 26px 26px;
+  mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, #000 35%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, #000 35%, transparent 100%);
+  pointer-events: none;
+  opacity: 0.85;
 }
 
 /* Ambient Subtle Lighting Orbs */
 .trust-ambient-orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(100px);
+  filter: blur(95px);
   pointer-events: none;
-  opacity: 0.65;
   z-index: 0;
 }
 
 .trust-ambient-orb.orb-gold {
-  width: 480px;
-  height: 480px;
-  top: 0;
+  width: 580px;
+  height: 580px;
+  top: -100px;
   left: -120px;
-  background: radial-gradient(circle, rgba(248, 180, 0, 0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(248, 180, 0, 0.12) 0%, transparent 70%);
+  opacity: 0.9;
 }
 
 .trust-ambient-orb.orb-blue {
-  width: 520px;
-  height: 520px;
-  bottom: -60px;
+  width: 620px;
+  height: 620px;
+  bottom: -100px;
   right: -100px;
-  background: radial-gradient(circle, rgba(26, 62, 114, 0.06) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.08) 0%, transparent 70%);
+  opacity: 0.8;
 }
 
 .tst-container {
-  max-width: 1240px;
+  max-width: 1260px;
   margin: 0 auto;
   padding: 0 24px;
   position: relative;
   z-index: 1;
 }
 
-.trust-content {
-  display: grid;
-  grid-template-columns: 1.05fr 1.25fr;
-  gap: 52px;
-  align-items: center;
-}
-
-/* ============================================
-   LEFT COLUMN — Pillars & Institutional Trust
-   ============================================ */
-.trust-left {
-  text-align: left;
+/* ============================================================
+   1. SECTION MASTER HEADER: Centered Institutional Authority
+   ============================================================ */
+.trust-master-header {
+  text-align: center;
+  max-width: 860px;
+  margin: 0 auto 48px auto;
 }
 
 .trust-badge-label {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(248, 180, 0, 0.09);
+  background: rgba(248, 180, 0, 0.1);
   border: 1px solid rgba(248, 180, 0, 0.35);
   color: #b47500;
-  padding: 6px 14px;
+  padding: 6px 16px;
   border-radius: 20px;
-  font-size: 11px;
-  font-weight: 750;
+  font-size: 11.5px;
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 1.1px;
-  margin-bottom: 16px;
-  box-shadow: 0 2px 8px rgba(248, 180, 0, 0.08);
+  margin-bottom: 18px;
+  box-shadow: 0 2px 10px rgba(248, 180, 0, 0.08);
+  backdrop-filter: blur(8px);
 }
 
 .badge-pulse-dot {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: #f8b400;
-  box-shadow: 0 0 0 3px rgba(248, 180, 0, 0.25);
+  box-shadow: 0 0 8px #f8b400;
   display: inline-block;
+  animation: pulseBeacon 1.8s infinite;
 }
 
-.trust-badge-label i {
-  font-size: 11px;
+@keyframes pulseBeacon {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(248, 180, 0, 0.6); }
+  70% { transform: scale(1.1); box-shadow: 0 0 0 6px rgba(248, 180, 0, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(248, 180, 0, 0); }
 }
 
-.trust-title {
-  font-size: clamp(2.1rem, 3.2vw, 2.55rem);
+.trust-master-title {
+  font-size: clamp(2.2rem, 3.6vw, 2.9rem);
   font-weight: 850;
-  line-height: 1.22;
-  color: #071324 !important;
-  margin-bottom: 14px;
-  letter-spacing: -0.025em;
+  line-height: 1.2;
+  color: #071324;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.035em;
 }
 
-.trust-title-highlight {
-  background: linear-gradient(135deg, #071324 25%, #b47500 100%);
+.title-gradient-gold {
+  background: linear-gradient(135deg, #071324 15%, #b47500 70%, #d97706 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline;
 }
 
-.trust-intro-lead {
-  font-size: 15px;
-  color: #475569 !important;
-  line-height: 1.62;
-  margin-bottom: 24px;
-  font-weight: 450;
+.trust-master-subtext {
+  font-size: 16px;
+  color: #475569;
+  line-height: 1.65;
+  margin: 0 auto;
+  max-width: 760px;
 }
 
-/* Credibility Pillar Cards */
-.trust-pillars-list {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin-bottom: 28px;
-}
-
-.trust-pillar-card {
-  display: flex;
-  gap: 16px;
+/* ============================================================
+   2. FOUR-COLUMN QUANTITATIVE METRICS RIBBON
+   ============================================================ */
+.trust-metrics-ribbon {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
   background: #ffffff;
   border: 1.5px solid #e2e8f0;
-  padding: 16px 18px;
-  border-radius: 14px;
-  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
-  box-shadow: 0 2px 8px rgba(7, 19, 36, 0.03);
+  border-radius: 20px;
+  padding: 24px 28px;
+  box-shadow: 0 8px 30px rgba(7, 19, 36, 0.04);
+  margin-bottom: 48px;
+  position: relative;
+  overflow: hidden;
 }
 
-.trust-pillar-card:hover {
+.trust-metrics-ribbon::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3.5px;
+  background: linear-gradient(90deg, #f8b400 0%, #10b981 50%, #3b82f6 100%);
+}
+
+.metric-ribbon-col {
+  display: flex;
+  flex-direction: column;
+  padding: 4px 12px;
+  border-right: 1px solid #f1f5f9;
+}
+
+.metric-ribbon-col:last-child {
+  border-right: none;
+}
+
+.metric-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.metric-large-num {
+  font-size: 2.15rem;
+  font-weight: 900;
+  color: #071324;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.metric-pill-tag {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.metric-pill-tag.badge-gold {
+  background: rgba(248, 180, 0, 0.12);
+  color: #b47500;
+  border: 1px solid rgba(248, 180, 0, 0.28);
+}
+
+.metric-pill-tag.badge-green {
+  background: rgba(16, 185, 129, 0.1);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.metric-pill-tag.badge-blue {
+  background: rgba(59, 130, 246, 0.1);
+  color: #2563eb;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.metric-pill-tag.badge-purple {
+  background: rgba(139, 92, 246, 0.1);
+  color: #7c3aed;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.metric-bold-label {
+  font-size: 14.5px;
+  font-weight: 750;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.metric-muted-caption {
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   3. DUAL ASYMMETRIC INSTITUTIONAL WINGS
+   ============================================================ */
+.trust-architecture-split {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 32px;
+  margin-bottom: 42px;
+  align-items: stretch;
+}
+
+/* ------------------------------------------------------------
+   WING A: Pre-Filing Verification Pipeline Card
+   ------------------------------------------------------------ */
+.pipeline-wing-card {
   background: #ffffff;
-  border-color: rgba(248, 180, 0, 0.5);
-  box-shadow: 0 8px 24px rgba(7, 19, 36, 0.06);
-  transform: translateY(-2px);
+  border: 1.5px solid #e2e8f0;
+  border-radius: 22px;
+  padding: 34px 32px;
+  box-shadow: 0 8px 30px rgba(7, 19, 36, 0.04);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  border-left: 4px solid #f8b400;
 }
 
-.pillar-icon-box {
-  width: 44px;
-  height: 44px;
+.pipeline-wing-header {
+  margin-bottom: 22px;
+}
+
+.pipeline-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.9px;
+  color: #b47500;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.live-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px #10b981;
+}
+
+.pipeline-wing-header h3 {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #071324;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.3px;
+}
+
+.pipeline-wing-header p {
+  font-size: 13.5px;
+  color: #64748b;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Step Selector Tabs */
+.pipeline-step-nav {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  background: #f8fafc;
+  padding: 6px;
   border-radius: 12px;
-  background: #071324;
-  color: #f8b400;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 24px;
+}
+
+.pipeline-nav-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  font-family: inherit;
+}
+
+.pipeline-step-num {
+  font-size: 11px;
+  font-weight: 850;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #e2e8f0;
+  color: #071324;
+}
+
+.pipeline-step-phase {
+  font-size: 12.5px;
+  font-weight: 750;
+}
+
+.pipeline-nav-btn:hover {
+  color: #071324;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.pipeline-nav-btn.active {
+  background: #071324;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(7, 19, 36, 0.15);
+}
+
+.pipeline-nav-btn.active .pipeline-step-num {
+  background: #f8b400;
+  color: #071324;
+}
+
+/* Active Stage Presentation Box */
+.pipeline-stage-display {
+  background: #fbfcfd;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px 22px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.pipeline-display-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(7, 19, 36, 0.06);
+  color: #071324;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  width: fit-content;
+  margin-bottom: 12px;
+}
+
+.pipeline-display-badge i {
+  color: #b47500;
+  font-size: 11px;
+}
+
+.pipeline-display-title {
+  font-size: 16.5px;
+  font-weight: 800;
+  color: #071324;
+  margin: 0 0 10px 0;
+  letter-spacing: -0.25px;
+}
+
+.pipeline-display-summary {
+  font-size: 13.5px;
+  color: #475569;
+  line-height: 1.6;
+  margin: 0 0 18px 0;
+}
+
+/* Checkpoints List */
+.pipeline-checkpoints-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.pipeline-checkpoint-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.checkpoint-check-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #ecfdf5;
+  border: 1.5px solid #a7f3d0;
+  color: #059669;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
   flex-shrink: 0;
-  box-shadow: 0 4px 12px rgba(7, 19, 36, 0.15);
+}
+
+.checkpoint-check-icon i {
+  color: #059669;
+  font-size: 10px;
+}
+
+.pipeline-guarantee-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(248, 180, 0, 0.1);
+  border: 1px solid rgba(248, 180, 0, 0.3);
+  color: #925800;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 750;
+  margin-top: auto;
+}
+
+.pipeline-guarantee-tag i {
+  color: #b47500;
+  font-size: 13px;
+}
+
+/* ------------------------------------------------------------
+   WING B: Fiduciary Vault & Partner Column
+   ------------------------------------------------------------ */
+.fiduciary-wing-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.fiduciary-feature-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 26px 26px;
+  box-shadow: 0 6px 24px rgba(7, 19, 36, 0.035);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.fiduciary-feature-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(248, 180, 0, 0.5);
+  box-shadow: 0 12px 32px rgba(7, 19, 36, 0.07);
+}
+
+.fiduciary-card-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.fiduciary-icon-box {
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+  flex-shrink: 0;
   transition: transform 0.25s ease;
 }
 
-.trust-pillar-card:hover .pillar-icon-box {
+.fiduciary-feature-card:hover .fiduciary-icon-box {
   transform: scale(1.08) rotate(3deg);
 }
 
-.pillar-text {
+.fiduciary-icon-box.box-emerald {
+  background: linear-gradient(135deg, #064e3b, #047857);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(4, 120, 87, 0.25);
+}
+
+.fiduciary-icon-box.box-gold {
+  background: linear-gradient(135deg, #071324, #163664);
+  color: #f8b400;
+  box-shadow: 0 4px 14px rgba(7, 19, 36, 0.2);
+}
+
+.fiduciary-card-meta {
   flex: 1;
 }
 
-.pillar-text h4 {
-  font-size: 15px;
-  font-weight: 750;
-  color: #0f172a !important;
-  margin: 0 0 5px 0;
+.fiduciary-kicker {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  color: #64748b;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.fiduciary-card-meta h4 {
+  font-size: 16.5px;
+  font-weight: 800;
+  color: #071324;
+  margin: 0;
   letter-spacing: -0.2px;
 }
 
-.pillar-text p {
+.fiduciary-desc {
   font-size: 13px;
-  color: #475569 !important;
-  line-height: 1.55;
-  margin: 0 0 8px 0;
+  color: #475569;
+  line-height: 1.58;
+  margin: 0 0 16px 0;
 }
 
-.pillar-footer-tag {
+.fiduciary-benefits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-bottom: 18px;
+}
+
+.fiduciary-benefit-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 12.5px;
+  color: #334155;
+  font-weight: 550;
+  line-height: 1.45;
+}
+
+.fiduciary-benefit-row i {
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.text-emerald {
+  color: #059669;
+}
+
+.text-gold {
+  color: #b47500;
+}
+
+.fiduciary-footer-badge {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   font-size: 11px;
-  font-weight: 650;
-  color: #0284c7;
-  background: #f0f9ff;
-  border: 1px solid #e0f2fe;
-  padding: 3px 9px;
-  border-radius: 6px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 8px;
+  width: fit-content;
+  margin-top: auto;
 }
 
-.pillar-footer-tag i {
-  font-size: 10px;
+.fiduciary-footer-badge.badge-secure {
+  background: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #dcfce7;
 }
 
-/* Action Buttons */
-.trust-actions {
+.fiduciary-footer-badge.badge-sla {
+  background: #fffdf0;
+  color: #a16207;
+  border: 1px solid #fef3c7;
+}
+
+/* ============================================================
+   4. BOTTOM CHARTERED ASSURANCE & CALL-TO-ACTION
+   ============================================================ */
+.trust-bottom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 18px 24px;
+  box-shadow: 0 4px 20px rgba(7, 19, 36, 0.03);
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.trust-credentials-cluster {
   display: flex;
   align-items: center;
   gap: 14px;
   flex-wrap: wrap;
-  margin-bottom: 22px;
+}
+
+.cred-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12.5px;
+  color: #475569;
+}
+
+.cred-stars {
+  color: #f59e0b;
+  font-size: 11px;
+  display: inline-flex;
+  gap: 2px;
+}
+
+.cred-dot {
+  color: #cbd5e1;
+  font-size: 14px;
+}
+
+.trust-cta-cluster {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .btn-trust-primary {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: #071324;
+  background: linear-gradient(135deg, #071324 0%, #0e2444 100%);
   color: #ffffff;
-  padding: 14px 26px;
+  padding: 13px 24px;
   border-radius: 12px;
-  font-weight: 700;
-  font-size: 14px;
+  font-weight: 750;
+  font-size: 13.5px;
   letter-spacing: 0.2px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   cursor: pointer;
   transition: all 0.25s ease;
-  box-shadow: 0 4px 16px rgba(7, 19, 36, 0.18);
+  box-shadow: 0 4px 16px rgba(7, 19, 36, 0.2), 0 0 12px rgba(248, 180, 0, 0.12);
+  position: relative;
+  overflow: hidden;
+  font-family: inherit;
+}
+
+.btn-trust-primary .btn-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+}
+
+.btn-trust-primary:hover .btn-shine {
+  left: 150%;
+}
+
+.btn-trust-primary:hover {
+  background: linear-gradient(135deg, #0d223f 0%, #163664 100%);
+  border-color: rgba(248, 180, 0, 0.45);
+  box-shadow: 0 8px 24px rgba(7, 19, 36, 0.25), 0 0 18px rgba(248, 180, 0, 0.2);
+  transform: translateY(-2px);
 }
 
 .btn-trust-primary .btn-arrow {
   font-size: 11px;
   transition: transform 0.2s ease;
-}
-
-.btn-trust-primary:hover {
-  background: #112644;
-  box-shadow: 0 8px 24px rgba(7, 19, 36, 0.28), 0 0 16px rgba(248, 180, 0, 0.15);
-  transform: translateY(-2px);
 }
 
 .btn-trust-primary:hover .btn-arrow {
@@ -252,14 +713,14 @@
   gap: 8px;
   background: #ffffff;
   color: #071324;
-  padding: 13px 22px;
+  padding: 12px 20px;
   border-radius: 12px;
-  font-weight: 700;
-  font-size: 14px;
+  font-weight: 750;
+  font-size: 13.5px;
   border: 1.5px solid #cbd5e1;
   cursor: pointer;
   transition: all 0.25s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+  font-family: inherit;
 }
 
 .btn-trust-secondary:hover {
@@ -268,364 +729,156 @@
   transform: translateY(-2px);
 }
 
-/* Social Proof & Credibility Ribbon */
-.trust-social-proof {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 16px;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(7, 19, 36, 0.03);
-}
-
-.proof-rating {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.proof-stars {
-  color: #f59e0b;
-  font-size: 12px;
-  display: inline-flex;
-  gap: 2px;
-}
-
-.proof-score {
-  font-size: 12px;
-  color: #475569;
-}
-
-.proof-score strong {
-  color: #0f172a;
-}
-
-.proof-sep {
-  color: #cbd5e1;
-}
-
-.proof-badge {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  color: #475569;
-}
-
-.proof-badge i {
-  color: #059669;
-  font-size: 13px;
-}
-
-.proof-badge strong {
-  color: #0f172a;
-}
-
-/* ============================================
-   RIGHT COLUMN — Bento Feature Grid Cards
-   ============================================ */
-.trust-right {
-  width: 100%;
-}
-
-.offer-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-}
-
-.offer-card {
-  background: #ffffff;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 16px;
-  padding: 22px 20px;
-  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  user-select: none;
-}
-
-.offer-card:active {
-  transform: translateY(-2px) scale(0.99);
-}
-
-.offer-card:focus-visible {
-  outline: 2px solid #f8b400;
-  outline-offset: 3px;
-}
-
-.offer-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #f8b400, #ffc425);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.offer-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(248, 180, 0, 0.55);
-  box-shadow: 0 16px 32px -4px rgba(7, 19, 36, 0.09), 0 0 18px rgba(248, 180, 0, 0.08);
-}
-
-.offer-card:hover::before {
-  opacity: 1;
-}
-
-/* Highlighted Featured Card */
-.offer-card.featured-card {
-  border-color: rgba(248, 180, 0, 0.55);
-  background: linear-gradient(180deg, #ffffff 0%, #fffdf8 100%);
-  box-shadow: 0 4px 18px rgba(248, 180, 0, 0.09);
-}
-
-.offer-card.featured-card::before {
-  opacity: 1;
-}
-
-.offer-card-top-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 14px;
-}
-
-.offer-icon-box {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: rgba(248, 180, 0, 0.12);
-  border: 1px solid rgba(248, 180, 0, 0.25);
-  color: #b47500;
+/* ============================================================
+   5. PRACTICE QUICK JUMP RIBBON
+   ============================================================ */
+.trust-practice-jump-ribbon {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
-  transition: all 0.3s ease;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 10px 16px;
+  background: rgba(7, 19, 36, 0.025);
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
 }
 
-.offer-card:hover .offer-icon-box {
-  background: #071324;
-  color: #f8b400;
-  border-color: #071324;
-  transform: scale(1.08) rotate(3deg);
-  box-shadow: 0 4px 14px rgba(7, 19, 36, 0.16);
-}
-
-.offer-category-tag {
-  font-size: 10px;
-  font-weight: 750;
-  letter-spacing: 0.8px;
+.jump-label {
+  font-size: 11.5px;
+  font-weight: 800;
   color: #64748b;
   text-transform: uppercase;
-}
-
-.offer-featured-tag {
+  letter-spacing: 0.6px;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  font-size: 10px;
-  font-weight: 750;
-  color: #b47500;
-  background: rgba(248, 180, 0, 0.12);
-  border: 1px solid rgba(248, 180, 0, 0.3);
-  padding: 3px 8px;
-  border-radius: 20px;
-  letter-spacing: 0.5px;
+  gap: 6px;
 }
 
-.offer-featured-tag i {
-  font-size: 10px;
-}
-
-.offer-card-title {
-  font-size: 16px;
-  font-weight: 750;
-  color: #0f172a !important;
-  margin: 0 0 8px 0;
-  letter-spacing: -0.25px;
-}
-
-.offer-card-desc {
-  font-size: 13px;
-  color: #475569 !important;
-  margin: 0 0 14px 0;
-  line-height: 1.55;
-  font-weight: 400;
-  flex-grow: 1;
-}
-
-.offer-card-footer {
+.jump-chips-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 8px;
-  margin-top: auto;
-  padding-top: 12px;
-  border-top: 1px solid #f1f5f9;
+  flex-wrap: wrap;
 }
 
-.offer-card-perk {
+.jump-chip {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  font-size: 11px;
-  font-weight: 650;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
   color: #0f172a;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  padding: 4px 8px;
-  border-radius: 6px;
-  width: fit-content;
-}
-
-.offer-card-perk i {
-  color: #10b981;
-  font-size: 10px;
-}
-
-.offer-card-explore {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 11.5px;
-  font-weight: 750;
-  color: #071324;
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 650;
+  cursor: pointer;
   transition: all 0.2s ease;
-  white-space: nowrap;
-  opacity: 0.85;
+  font-family: inherit;
 }
 
-.offer-card-explore i {
-  font-size: 9.5px;
+.jump-chip i {
   color: #b47500;
-  transition: transform 0.2s ease;
+  font-size: 11px;
 }
 
-.offer-card:hover .offer-card-explore {
-  color: #b47500;
-  opacity: 1;
+.jump-chip:hover {
+  border-color: #071324;
+  background: #071324;
+  color: #ffffff;
+  transform: translateY(-1px);
 }
 
-.offer-card:hover .offer-card-explore i {
-  transform: translateX(4px);
+.jump-chip:hover i {
+  color: #f8b400;
 }
 
-/* ============================================
-   RESPONSIVE DESIGN — Mobile Experience
-   ============================================ */
+/* ============================================================
+   RESPONSIVE DESIGN — Multi-Screen Adaptability
+   ============================================================ */
 @media (max-width: 1024px) {
   .trust {
     padding: 75px 0 85px 0;
   }
-  .trust-content {
-    grid-template-columns: 1fr;
-    gap: 42px;
+  .trust-metrics-ribbon {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 20px;
   }
-  .trust-title {
-    font-size: 2.2rem;
+  .metric-ribbon-col {
+    border-right: none;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 14px;
+  }
+  .metric-ribbon-col:nth-child(3),
+  .metric-ribbon-col:nth-child(4) {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .trust-architecture-split {
+    grid-template-columns: 1fr;
+    gap: 28px;
   }
 }
 
 @media (max-width: 768px) {
   .trust {
-    padding: 50px 0 60px 0;
+    padding: 55px 0 65px 0;
   }
   .tst-container {
-    padding: 0 18px;
+    padding: 0 16px;
   }
-  .trust-badge-label {
-    font-size: 10px;
-    padding: 4px 12px;
-    margin-bottom: 12px;
-    letter-spacing: 0.8px;
+  .trust-master-title {
+    font-size: clamp(1.65rem, 5.5vw, 2.1rem);
   }
-  .trust-title {
-    font-size: clamp(1.6rem, 5.5vw, 1.95rem);
-    line-height: 1.25;
-    letter-spacing: -0.4px;
-    margin-bottom: 12px;
-  }
-  .trust-intro-lead {
-    font-size: 14px;
-    margin-bottom: 20px;
-  }
-  .trust-pillars-list {
-    gap: 12px;
-    margin-bottom: 22px;
-  }
-  .trust-pillar-card {
-    padding: 14px 16px;
-    gap: 14px;
-    border-radius: 12px;
-  }
-  .pillar-icon-box {
-    width: 38px;
-    height: 38px;
-    font-size: 15px;
-  }
-  .pillar-text h4 {
+  .trust-master-subtext {
     font-size: 14px;
   }
-  .pillar-text p {
-    font-size: 12px;
+  .trust-metrics-ribbon {
+    grid-template-columns: 1fr;
+    padding: 16px;
+    gap: 16px;
   }
-  .trust-actions {
+  .metric-ribbon-col {
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 12px;
+  }
+  .metric-ribbon-col:last-child {
+    border-bottom: none;
+  }
+  .pipeline-wing-card {
+    padding: 24px 20px;
+  }
+  .pipeline-step-nav {
+    grid-template-columns: 1fr;
+  }
+  .fiduciary-feature-card {
+    padding: 20px 18px;
+  }
+  .trust-bottom-bar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 18px;
+  }
+  .trust-cta-cluster {
     flex-direction: column;
     width: 100%;
-    gap: 10px;
   }
   .btn-trust-primary,
   .btn-trust-secondary {
     width: 100%;
-    height: 46px;
-    padding: 0 18px;
-    font-size: 13.5px;
-    border-radius: 12px;
     justify-content: center;
+    height: 48px;
   }
-  .trust-social-proof {
-    width: 100%;
+  .trust-credentials-cluster {
     justify-content: center;
-    flex-wrap: wrap;
+    text-align: center;
   }
-  .offer-grid {
-    grid-template-columns: 1fr;
-    gap: 14px;
+  .trust-practice-jump-ribbon {
+    flex-direction: column;
   }
-  .offer-card {
-    padding: 18px 16px;
-    border-radius: 14px;
-  }
-  .offer-icon-box {
-    width: 38px;
-    height: 38px;
-    font-size: 15px;
-  }
-  .offer-card-title {
-    font-size: 15px;
-  }
-  .offer-card-desc {
-    font-size: 12.5px;
-  }
-}
-
-@media (max-width: 480px) {
-  .trust {
-    padding: 40px 0 50px 0;
-  }
-  .trust-title {
-    font-size: 1.55rem;
+  .jump-chips-row {
+    justify-content: center;
   }
 }

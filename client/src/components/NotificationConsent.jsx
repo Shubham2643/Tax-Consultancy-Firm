@@ -30,12 +30,20 @@ const NotificationConsent = () => {
       return;
     }
     
+    // Do not show if user dismissed during this session
+    if (sessionStorage.getItem('push_consent_dismissed') === 'true') {
+      return;
+    }
+
     // Only show consent bar if permission is 'default' (not yet allowed or denied)
     if (Notification.permission === 'default') {
-      // Small delay to let the page load smoothly
+      const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+      // On mobile, defer prompt to 10s to avoid interrupting initial reading
       const timer = setTimeout(() => {
-        setIsVisible(true);
-      }, 3000);
+        if (sessionStorage.getItem('push_consent_dismissed') !== 'true') {
+          setIsVisible(true);
+        }
+      }, isMobile ? 10000 : 3500);
       return () => clearTimeout(timer);
     }
   }, []);
@@ -77,6 +85,7 @@ const NotificationConsent = () => {
       await axios.post(`${API_BASE_URL}/notifications/subscribe`, subscription);
       console.log('✅ Subscription saved successfully in database');
 
+      sessionStorage.setItem('push_consent_dismissed', 'true');
       setIsVisible(false);
     } catch (error) {
       console.error('❌ Failed to subscribe to push notifications:', error);
@@ -87,6 +96,7 @@ const NotificationConsent = () => {
   };
 
   const handleDismiss = () => {
+    sessionStorage.setItem('push_consent_dismissed', 'true');
     setIsVisible(false);
   };
 
@@ -94,6 +104,14 @@ const NotificationConsent = () => {
 
   return (
     <div className="push-consent-bar card-animate">
+      <button
+        type="button"
+        className="push-close-btn"
+        onClick={handleDismiss}
+        aria-label="Dismiss notification prompt"
+      >
+        &times;
+      </button>
       <div className="push-consent-inner">
         <div className="push-consent-content">
           <div className="push-consent-icon-box">

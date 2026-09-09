@@ -13,13 +13,25 @@ const WhatsAppWidget = () => {
   )}`;
 
   useEffect(() => {
-    // Show polite prompt badge after 3 seconds on page load
+    const isMobile = window.innerWidth < 640;
+    // Show prompt badge after delay
     const timer = setTimeout(() => {
       if (!isDismissed) {
         setShowTooltip(true);
       }
-    }, 3000);
-    return () => clearTimeout(timer);
+    }, isMobile ? 8000 : 3500);
+
+    const handleScroll = () => {
+      if (isMobile && window.scrollY > 250) {
+        setShowTooltip(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, [isDismissed]);
 
   return (

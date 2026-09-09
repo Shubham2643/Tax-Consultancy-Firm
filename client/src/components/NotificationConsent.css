@@ -18,6 +18,24 @@
   text-align: left;
 }
 
+.push-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px;
+  transition: color 0.2s ease;
+}
+
+.push-close-btn:hover {
+  color: #ffffff;
+}
+
 @keyframes pushSlideUp {
   from {
     opacity: 0;
@@ -138,13 +156,67 @@
 }
 
 /* ============================================
-   RESPONSIVE
+   RESPONSIVE — Sleek Mobile Top Banner
    ============================================ */
 @media (max-width: 580px) {
   .push-consent-bar {
-    left: 20px;
-    right: 20px;
-    bottom: 20px;
-    max-width: calc(100% - 40px);
+    position: fixed;
+    top: 74px;
+    bottom: auto;
+    left: 14px;
+    right: 14px;
+    max-width: calc(100% - 28px);
+    padding: 14px 16px;
+    border-radius: 14px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+    animation: pushSlideDownMobile 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes pushSlideDownMobile {
+    from {
+      opacity: 0;
+      transform: translateY(-16px) scale(0.97);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .push-consent-inner {
+    gap: 12px;
+  }
+
+  .push-consent-content {
+    gap: 12px;
+  }
+
+  .push-consent-icon-box {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    border-radius: 10px;
+    font-size: 14px;
+  }
+
+  .push-consent-text h4 {
+    font-size: 0.94rem;
+    margin-bottom: 2px;
+  }
+
+  .push-consent-text p {
+    font-size: 0.78rem;
+    line-height: 1.35;
+  }
+
+  .push-consent-actions {
+    gap: 8px;
+  }
+
+  .push-btn-secondary,
+  .push-btn-primary {
+    padding: 7px 14px;
+    font-size: 0.78rem;
+    border-radius: 7px;
   }
 }

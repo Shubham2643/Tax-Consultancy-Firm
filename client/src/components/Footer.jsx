@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useSiteContext } from '../context/SiteContext';
 import './Footer.css';
 
 const Footer = () => {
+  const location = useLocation();
+  const isAboutPage = location.pathname === '/about';
   const { settings, loading } = useSiteContext();
   const [copiedAddress, setCopiedAddress] = useState(false);
 
@@ -75,41 +77,43 @@ const Footer = () => {
       {/* Architectural Fine Blueprint Grid Pattern */}
       <div className="footer-grid-pattern" aria-hidden="true"></div>
 
-      {/* Pre-Footer Action Banner */}
-      <div className="footer-pre-banner-wrapper">
-        <div className="container">
-          <div className="footer-pre-banner">
-            <div className="pre-banner-left">
-              <div className="pre-banner-icon">
-                <i className="fas fa-shield-alt"></i>
-              </div>
-              <div className="pre-banner-text">
-                <div className="pre-banner-kicker">
-                  <span className="live-dot"></span>
-                  <span>Statutory Advisory Desk &bull; Rapid Response</span>
+      {/* Pre-Footer Action Banner (Suppressed on /about to eliminate duplicate CTA collision) */}
+      {!isAboutPage && (
+        <div className="footer-pre-banner-wrapper">
+          <div className="container">
+            <div className="footer-pre-banner">
+              <div className="pre-banner-left">
+                <div className="pre-banner-icon">
+                  <i className="fas fa-shield-alt"></i>
                 </div>
-                <h3>Need Immediate Notice Assistance or Tax Planning?</h3>
-                <p>Speak directly with certified Chartered Accountants for rapid scrutiny defense and error-free filings.</p>
+                <div className="pre-banner-text">
+                  <div className="pre-banner-kicker">
+                    <span className="live-dot"></span>
+                    <span>Statutory Advisory Desk &bull; Rapid Response</span>
+                  </div>
+                  <h3>Need Immediate Notice Assistance or Tax Planning?</h3>
+                  <p>Speak directly with certified Chartered Accountants for rapid scrutiny defense and error-free filings.</p>
+                </div>
               </div>
-            </div>
 
-            <div className="pre-banner-actions">
-              <button className="btn-pre-wa" onClick={handleWhatsAppConsult}>
-                <i className="fab fa-whatsapp"></i>
-                <span>Chat on WhatsApp</span>
-              </button>
-              <a href={`tel:${rawPhone}`} className="btn-pre-call">
-                <i className="fas fa-phone-alt"></i>
-                <span>+91 95109 84735</span>
-              </a>
-              <Link to="/contact" className="btn-pre-consult">
-                <i className="fas fa-calendar-check"></i>
-                <span>Book Free Review</span>
-              </Link>
+              <div className="pre-banner-actions">
+                <button className="btn-pre-wa" onClick={handleWhatsAppConsult}>
+                  <i className="fab fa-whatsapp"></i>
+                  <span>Chat on WhatsApp</span>
+                </button>
+                <a href={`tel:${rawPhone}`} className="btn-pre-call">
+                  <i className="fas fa-phone-alt"></i>
+                  <span>+91 95109 84735</span>
+                </a>
+                <Link to="/contact" className="btn-pre-consult">
+                  <i className="fas fa-calendar-check"></i>
+                  <span>Book Free Review</span>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Main 4-Column Footer Content */}
       <div className="footer-main-area">

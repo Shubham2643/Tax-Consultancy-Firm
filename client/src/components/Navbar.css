@@ -725,23 +725,32 @@
   }
 
   .navbar-mobile-drawer {
-    display: flex;
+    display: none;
     flex-direction: column;
     position: fixed;
     top: 0;
-    right: -100%;
+    right: 0;
     width: 300px;
     max-width: 85vw;
     height: 100vh;
     background: #ffffff;
     box-shadow: -10px 0 25px rgba(7, 19, 36, 0.12);
     z-index: 1005;
-    transition: right 0.3s ease;
     overflow: hidden;
   }
 
   .navbar-mobile-drawer.drawer-open {
-    right: 0;
+    display: flex;
+    animation: drawerSlideIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes drawerSlideIn {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
   }
 
   .mobile-drawer-header {
