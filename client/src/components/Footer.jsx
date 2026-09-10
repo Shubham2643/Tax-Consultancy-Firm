@@ -5,7 +5,7 @@ import './Footer.css';
 
 const Footer = () => {
   const location = useLocation();
-  const isAboutPage = location.pathname === '/about';
+  const suppressPreBanner = location.pathname === '/about' || location.pathname === '/services';
   const { settings, loading } = useSiteContext();
   const [copiedAddress, setCopiedAddress] = useState(false);
 
@@ -77,8 +77,8 @@ const Footer = () => {
       {/* Architectural Fine Blueprint Grid Pattern */}
       <div className="footer-grid-pattern" aria-hidden="true"></div>
 
-      {/* Pre-Footer Action Banner (Suppressed on /about to eliminate duplicate CTA collision) */}
-      {!isAboutPage && (
+      {/* Pre-Footer Action Banner (Suppressed on /about and /services to eliminate duplicate CTA collision) */}
+      {!suppressPreBanner && (
         <div className="footer-pre-banner-wrapper">
           <div className="container">
             <div className="footer-pre-banner">

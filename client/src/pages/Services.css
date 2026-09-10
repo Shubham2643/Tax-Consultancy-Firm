@@ -5,28 +5,29 @@
   background-color: #ffffff;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   min-height: 100vh;
-  padding-bottom: 80px;
+  padding-bottom: 0;
+  overflow-x: hidden;
 }
 
 .services-hero {
   background-color: #06101e;
   color: #ffffff;
-  padding: 60px 0 55px 0;
+  padding: 65px 0 60px 0;
   text-align: center;
   position: relative;
   overflow: hidden;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Floating Ambient Glowing Bubbles */
+/* Floating Ambient Glowing Orbs */
 .services-hero::before {
   content: '';
   position: absolute;
-  top: -80px;
-  right: 8%;
-  width: 360px;
-  height: 360px;
-  background: radial-gradient(circle, rgba(248, 180, 0, 0.14) 0%, rgba(34, 197, 94, 0.06) 50%, transparent 70%);
+  top: -90px;
+  right: 6%;
+  width: 380px;
+  height: 380px;
+  background: radial-gradient(circle, rgba(248, 180, 0, 0.16) 0%, rgba(34, 197, 94, 0.06) 50%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
   animation: servicesFloatBubble 7s ease-in-out infinite alternate;
@@ -35,11 +36,11 @@
 .services-hero::after {
   content: '';
   position: absolute;
-  bottom: -60px;
-  left: 6%;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 70%);
+  bottom: -70px;
+  left: 5%;
+  width: 340px;
+  height: 340px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.14) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
   animation: servicesFloatBubble 9s ease-in-out infinite alternate-reverse;
@@ -84,66 +85,989 @@
 }
 
 .services-hero h1 {
-  font-size: 2.8rem;
+  font-size: 2.85rem;
   font-weight: 850;
   line-height: 1.15;
   color: #ffffff;
   letter-spacing: -1px;
-  margin: 0 0 10px 0;
+  margin: 0 0 12px 0;
 }
 
 .services-hero p {
   font-size: 1.05rem;
   color: #94a3b8;
-  max-width: 680px;
+  max-width: 700px;
   margin: 0 auto;
+  line-height: 1.55;
+}
+
+/* ============================================
+   4-PILLAR LIVE ASSURANCE RIBBON
+   ============================================ */
+.services-sla-ribbon {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 38px;
+  max-width: 1140px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sla-ribbon-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 14px;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+  backdrop-filter: blur(8px);
+  transition: all 0.25s ease;
+}
+
+.sla-ribbon-card:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(248, 180, 0, 0.35);
+  transform: translateY(-2px);
+}
+
+.sla-icon-box {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: rgba(248, 180, 0, 0.12);
+  border: 1px solid rgba(248, 180, 0, 0.25);
+  color: #f8b400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+
+.sla-text-box {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sla-card-title {
+  font-size: 13.5px;
+  font-weight: 750;
+  color: #ffffff;
+  letter-spacing: -0.2px;
+}
+
+.sla-card-desc {
+  font-size: 11.5px;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+
+/* ============================================
+   4-STAGE CHARTERED DELIVERY PROTOCOL
+   ============================================ */
+.practice-protocol-section {
+  padding: 85px 0 95px 0;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.practice-protocol-section .container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.protocol-timeline-wrapper {
+  position: relative;
+}
+
+.protocol-timeline-rail {
+  position: absolute;
+  top: 45px;
+  left: 60px;
+  right: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, #e2e8f0 0%, #cbd5e1 50%, #e2e8f0 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.protocol-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  margin-top: 36px;
+  position: relative;
+  z-index: 2;
+}
+
+.protocol-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px 20px;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.protocol-card:hover {
+  transform: translateY(-5px);
+  border-color: #071324;
+  box-shadow: 0 16px 36px -8px rgba(7, 19, 36, 0.1);
+  background: #ffffff;
+}
+
+.protocol-flow-arrow {
+  position: absolute;
+  right: -15px;
+  top: 30px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  color: #0284c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.25s ease;
+}
+
+.protocol-card:hover .protocol-flow-arrow {
+  border-color: #0284c7;
+  background: #0284c7;
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+.desktop-arrow {
+  display: block;
+}
+
+.mobile-arrow {
+  display: none;
+}
+
+.protocol-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.protocol-step-num {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #cbd5e1;
+  letter-spacing: -1px;
+}
+
+.protocol-icon-circle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #071324;
+  color: #f8b400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  box-shadow: 0 4px 12px rgba(7, 19, 36, 0.15);
+}
+
+.protocol-tag {
+  font-size: 10.5px;
+  font-weight: 750;
+  color: #0284c7;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 8px;
+}
+
+.protocol-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #071324;
+  margin: 0 0 10px 0;
+  line-height: 1.3;
+}
+
+.protocol-desc {
+  font-size: 12.8px;
+  color: #64748b;
+  line-height: 1.55;
+  margin: 0 0 18px 0;
+  flex: 1;
+}
+
+.protocol-checkpoints {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 14px;
+  border-top: 1px solid #edf2f7;
+}
+
+.protocol-badge {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #334155;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.protocol-badge i {
+  color: #10b981;
+  font-size: 10.5px;
+}
+
+/* ============================================
+   INSTITUTIONAL COMPARISON MATRIX
+   ============================================ */
+.practice-comparison-section {
+  padding: 85px 0 95px 0;
+  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.practice-comparison-section .container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.comparison-table-wrapper {
+  max-width: 1060px;
+  margin: 36px auto 0;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 6px 28px rgba(15, 23, 42, 0.05);
+}
+
+.comparison-table-header {
+  display: flex;
+  background: #f1f5f9;
+  border-bottom: 1.5px solid #e2e8f0;
+}
+
+.comparison-table-header .col-metric {
+  flex: 1.2;
+  padding: 16px 22px;
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #475569;
+  border-right: 1px solid #e2e8f0;
+}
+
+.comparison-table-header .col-generic {
+  flex: 2;
+  padding: 16px 22px;
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #64748b;
+  border-right: 1px solid #e2e8f0;
+}
+
+.comparison-table-header .col-firm {
+  flex: 2.4;
+  padding: 14px 22px;
+  font-size: 12px;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #f8b400;
+  background: #071324;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.firm-header-title {
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0.6px;
+  color: #f8b400;
+}
+
+.firm-header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(248, 180, 0, 0.15);
+  border: 1px solid rgba(248, 180, 0, 0.4);
+  color: #f8b400;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  white-space: nowrap;
+  box-shadow: 0 0 10px rgba(248, 180, 0, 0.15);
+}
+
+.firm-header-badge i {
+  font-size: 8.5px;
+}
+
+.comparison-table-row {
+  display: flex;
+  border-bottom: 1px solid #edf2f7;
+  transition: background 0.2s ease;
+}
+
+.comparison-table-row:last-child {
+  border-bottom: none;
+}
+
+.comparison-table-row:hover {
+  background: #fafbfc;
+}
+
+.comparison-table-row .col-metric {
+  flex: 1.2;
+  padding: 18px 22px;
+  background: #f8fafc;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #071324;
+  border-right: 1px solid #edf2f7;
+  display: flex;
+  align-items: center;
+}
+
+.comparison-table-row .col-generic {
+  flex: 2;
+  padding: 18px 22px;
+  font-size: 13px;
+  color: #64748b;
   line-height: 1.5;
+  border-right: 1px solid #edf2f7;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.comparison-table-row .col-firm {
+  flex: 2.4;
+  padding: 18px 22px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #071324;
+  line-height: 1.5;
+  background: rgba(248, 180, 0, 0.03);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.comparison-mobile-label {
+  display: none;
+}
+
+.comparison-cell-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  flex: 1;
+}
+
+.row-icon-cross {
+  color: #ef4444;
+  font-size: 14px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.row-icon-check {
+  color: #10b981;
+  font-size: 14px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ============================================
+   STATUTORY ADVISORY FAQ ACCORDION
+   ============================================ */
+.practice-faq-section {
+  padding: 85px 0 95px 0;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.practice-faq-section .container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.practice-faq-list {
+  max-width: 860px;
+  margin: 36px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.faq-accordion-item {
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  background: #ffffff;
+  overflow: hidden;
+  transition: all 0.25s ease;
+}
+
+.faq-accordion-item.open {
+  border-color: #071324;
+  box-shadow: 0 4px 18px rgba(7, 19, 36, 0.06);
+}
+
+.faq-accordion-btn {
+  width: 100%;
+  padding: 18px 22px;
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14.5px;
+  font-weight: 750;
+  color: #071324;
+  gap: 14px;
+  font-family: inherit;
+  transition: color 0.2s ease;
+}
+
+.faq-accordion-btn:hover {
+  color: #0369a1;
+}
+
+.faq-question-text {
+  flex: 1;
+}
+
+.faq-arrow {
+  font-size: 12.5px;
+  color: #64748b;
+  transition: transform 0.25s ease;
+}
+
+.faq-accordion-content {
+  padding: 0 22px 20px 22px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.faq-accordion-content p {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: #475569;
+  margin: 14px 0 0 0;
+}
+
+/* ============================================
+   PRE-FOOTER SENIOR COUNSEL RETAINER CTA
+   ============================================ */
+.practice-cta-section {
+  padding: 70px 0 85px 0;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.practice-cta-section .container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.practice-cta-card {
+  max-width: 1100px;
+  margin: 0 auto;
+  background: #06101e;
+  border-radius: 24px;
+  padding: 55px 45px;
+  position: relative;
+  overflow: hidden;
+  color: #ffffff;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 24px 60px -12px rgba(7, 19, 36, 0.45);
+}
+
+.practice-cta-glow {
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(248, 180, 0, 0.16) 0%, rgba(3, 105, 161, 0.1) 50%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.practice-cta-content {
+  position: relative;
+  z-index: 2;
+}
+
+.cta-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(248, 180, 0, 0.1);
+  border: 1px solid rgba(248, 180, 0, 0.28);
+  color: #f8b400;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.8px;
+  margin-bottom: 16px;
+}
+
+.cta-badge .live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+}
+
+.practice-cta-card h2 {
+  font-size: 2.3rem;
+  font-weight: 850;
+  color: #ffffff;
+  letter-spacing: -0.6px;
+  margin: 0 0 12px 0;
+}
+
+.practice-cta-card p {
+  font-size: 14.5px;
+  color: #94a3b8;
+  max-width: 640px;
+  margin: 0 auto 28px;
+  line-height: 1.6;
+}
+
+.practice-cta-meta {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.cta-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #cbd5e1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 8px 16px;
+  border-radius: 10px;
+}
+
+.cta-meta-item i {
+  color: #f8b400;
+  font-size: 12px;
+}
+
+.cta-meta-item a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.cta-meta-item a:hover {
+  color: #f8b400;
+}
+
+.practice-cta-actions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.btn-cta-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8b400;
+  color: #071324;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 13px 26px;
+  border-radius: 10px;
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(248, 180, 0, 0.3);
+  transition: all 0.25s ease;
+}
+
+.btn-cta-primary:hover {
+  background: #ffc425;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(248, 180, 0, 0.4);
+}
+
+.btn-cta-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #25d366;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 13px 24px;
+  border-radius: 10px;
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.25);
+  transition: all 0.25s ease;
+}
+
+.btn-cta-whatsapp:hover {
+  background: #22bf5b;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(37, 211, 102, 0.35);
 }
 
 /* ============================================
    RESPONSIVE DESIGN — Executive Mobile Experience
    ============================================ */
+@media (max-width: 1024px) {
+  .services-sla-ribbon {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .protocol-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+  .protocol-timeline-rail {
+    display: none;
+  }
+  .protocol-flow-arrow {
+    display: none;
+  }
+}
+
 @media (max-width: 768px) {
-  .services-page {
-    padding-bottom: 40px;
-  }
-
   .services-hero {
-    padding: 38px 0 32px 0;
+    padding: 38px 0 34px 0;
   }
-
   .services-hero .container {
     padding: 0 16px;
   }
-
   .services-hero-badge {
     font-size: 10px;
     padding: 4px 12px;
     margin-bottom: 12px;
     letter-spacing: 0.6px;
   }
-
   .services-hero h1 {
-    font-size: clamp(1.55rem, 6.5vw, 2rem);
+    font-size: clamp(1.55rem, 6.5vw, 2.05rem);
     line-height: 1.22;
     letter-spacing: -0.4px;
     margin-bottom: 8px;
   }
-
   .services-hero p {
     font-size: 13px;
     line-height: 1.5;
-    color: #94a3b8;
     max-width: 95%;
+  }
+
+  /* SLA Ribbon on Mobile */
+  .services-sla-ribbon {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 24px;
+  }
+  .sla-ribbon-card {
+    padding: 12px 14px;
+    border-radius: 12px;
+    gap: 12px;
+  }
+  .sla-icon-box {
+    width: 36px;
+    height: 36px;
+    font-size: 15px;
+  }
+  .sla-card-title {
+    font-size: 13px;
+  }
+  .sla-card-desc {
+    font-size: 11px;
+  }
+
+  /* Protocol Section Mobile */
+  .practice-protocol-section {
+    padding: 42px 0 48px 0;
+  }
+  .practice-protocol-section .container {
+    padding: 0 16px;
+  }
+  .protocol-timeline-wrapper {
+    position: relative;
+    padding-left: 0;
+  }
+  .protocol-timeline-rail {
+    display: none;
+  }
+  .protocol-grid {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    margin-top: 22px;
+  }
+  .protocol-card {
+    padding: 20px 18px;
+    border-radius: 16px;
+    position: relative;
+    background: #ffffff;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+  }
+  .protocol-step-num {
+    font-size: 1.5rem;
+  }
+  .protocol-icon-circle {
+    width: 38px;
+    height: 38px;
+    font-size: 15px;
+  }
+  .protocol-title {
+    font-size: 1.08rem;
+  }
+  .protocol-desc {
+    font-size: 12.5px;
+    margin-bottom: 14px;
+  }
+  .protocol-badge {
+    font-size: 11px;
+  }
+  .protocol-flow-arrow {
+    display: flex;
+    position: absolute;
+    bottom: -14px;
+    left: 50%;
+    right: auto;
+    top: auto;
+    transform: translateX(-50%);
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #071324;
+    border: 2px solid #f8b400;
+    color: #f8b400;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    z-index: 10;
+    box-shadow: 0 3px 8px rgba(7, 19, 36, 0.25);
+  }
+  .desktop-arrow {
+    display: none;
+  }
+  .mobile-arrow {
+    display: block;
+  }
+
+  /* Comparison Table Mobile */
+  .practice-comparison-section {
+    padding: 42px 0 48px 0;
+  }
+  .practice-comparison-section .container {
+    padding: 0 16px;
+  }
+  .comparison-table-wrapper {
+    margin-top: 22px;
+    border-radius: 14px;
+    border: 1.5px solid #e2e8f0;
+  }
+  .comparison-table-header {
+    display: none;
+  }
+  .comparison-table-row {
+    flex-direction: column;
+    border-bottom: 1.5px solid #e2e8f0;
+    padding: 16px 14px;
+    gap: 10px;
+  }
+  .comparison-table-row .col-metric {
+    border-right: none;
+    padding: 0 0 4px 0;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 800;
+    color: #071324;
+    border-bottom: 1px dashed #e2e8f0;
+    padding-bottom: 8px;
+  }
+  .comparison-table-row .col-generic {
+    border-right: none;
+    padding: 10px 12px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .comparison-table-row .col-firm {
+    padding: 12px 14px;
+    background: linear-gradient(135deg, #fffdf5 0%, #fffbeb 100%);
+    border: 1.5px solid #fde68a;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    box-shadow: 0 2px 8px rgba(248, 180, 0, 0.08);
+  }
+  .comparison-mobile-label {
+    display: block;
+  }
+  .generic-mobile-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #94a3b8;
+    background: #ffffff;
+    padding: 2px 8px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+  }
+  .generic-mobile-tag i {
+    color: #ef4444;
+    font-size: 9px;
+  }
+  .firm-mobile-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #b45309;
+    background: #fef3c7;
+    padding: 2px 9px;
+    border-radius: 12px;
+    border: 1px solid #fcd34d;
+  }
+  .firm-mobile-tag i {
+    color: #d97706;
+    font-size: 9.5px;
+  }
+  .comparison-cell-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .comparison-cell-content span {
+    font-size: 12.5px;
+    line-height: 1.45;
+  }
+  .comparison-table-row .col-generic .comparison-cell-content span {
+    color: #64748b;
+  }
+  .comparison-table-row .col-firm .comparison-cell-content span {
+    color: #071324;
+    font-weight: 600;
+  }
+
+  /* FAQs Mobile */
+  .practice-faq-section {
+    padding: 42px 0 48px 0;
+  }
+  .practice-faq-section .container {
+    padding: 0 16px;
+  }
+  .practice-faq-list {
+    margin-top: 22px;
+    gap: 10px;
+  }
+  .faq-accordion-btn {
+    padding: 14px 16px;
+    font-size: 13.5px;
+  }
+  .faq-accordion-content {
+    padding: 0 16px 16px 16px;
+  }
+  .faq-accordion-content p {
+    font-size: 12.8px;
+    margin-top: 10px;
+  }
+
+  /* CTA Banner Mobile */
+  .practice-cta-section {
+    padding: 38px 0 55px 0;
+  }
+  .practice-cta-section .container {
+    padding: 0 16px;
+  }
+  .practice-cta-card {
+    padding: 32px 18px;
+    border-radius: 18px;
+  }
+  .practice-cta-card h2 {
+    font-size: 1.55rem;
+  }
+  .practice-cta-card p {
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+  .practice-cta-meta {
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 22px;
+  }
+  .cta-meta-item {
+    font-size: 12px;
+    padding: 7px 12px;
+    justify-content: center;
+  }
+  .practice-cta-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .btn-cta-primary,
+  .btn-cta-whatsapp {
+    width: 100%;
+    justify-content: center;
+    font-size: 13px;
+    padding: 12px 18px;
   }
 }
 
 @media (max-width: 480px) {
   .services-hero {
-    padding: 32px 0 28px 0;
+    padding: 30px 0 26px 0;
   }
-
   .services-hero h1 {
-    font-size: 1.45rem;
+    font-size: 1.48rem;
+  }
+  .practice-cta-card h2 {
+    font-size: 1.42rem;
   }
 }

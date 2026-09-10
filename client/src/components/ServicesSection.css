@@ -2,12 +2,18 @@
    SERVICES SECTION — Executive Corporate Layout
    ============================================ */
 .services {
-  padding: 90px 0 100px 0;
+  padding: 85px 0 95px 0;
   background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
   position: relative;
   border-bottom: 1px solid #e2e8f0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   scroll-margin-top: 85px;
+}
+
+.services.services-embedded {
+  padding: 0 0 70px 0;
+  background: transparent;
+  border-bottom: none;
 }
 
 .services .container {
@@ -18,7 +24,7 @@
 
 .section-header {
   text-align: center;
-  margin-bottom: 45px;
+  margin-bottom: 40px;
 }
 
 .services-badge {
@@ -57,78 +63,359 @@
   margin: 0 auto;
 }
 
-/* Search Bar (All Services View) */
-.services-search-bar {
-  display: flex;
-  align-items: center;
-  max-width: 540px;
-  margin: 0 auto 26px;
+/* ============================================
+   PRACTICE COMMAND CONSOLE (Unified Executive Panel)
+   ============================================ */
+.practice-command-console {
+  width: 100%;
+  max-width: 1240px;
+  margin: -48px auto 38px;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-top: 3.5px solid #f8b400;
+  border-radius: 20px;
+  box-shadow: 0 20px 48px -12px rgba(7, 19, 36, 0.14), 0 4px 14px rgba(7, 19, 36, 0.04);
+  padding: 18px 24px 16px;
   position: relative;
+  z-index: 25;
+  transition: box-shadow 0.25s ease;
 }
 
-.services-search-icon {
+.practice-command-console:hover {
+  box-shadow: 0 24px 54px -12px rgba(7, 19, 36, 0.18), 0 6px 18px rgba(7, 19, 36, 0.06);
+}
+
+/* Tier 1: Category Strip (Segmented Track) */
+.console-category-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.console-category-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f1f5f9;
+  padding: 5px;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+}
+
+.console-tab-btn {
+  background: transparent;
+  border: none;
+  color: #475569;
+  padding: 8px 18px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+.console-tab-btn i {
+  font-size: 12px;
+  color: #64748b;
+  transition: color 0.2s ease;
+}
+
+.console-tab-badge {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 8px;
+  background: #e2e8f0;
+  color: #475569;
+  transition: all 0.2s ease;
+}
+
+.console-tab-btn:hover {
+  color: #071324;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.console-tab-btn:hover i {
+  color: #071324;
+}
+
+/* Active Category Button */
+.console-tab-btn.active {
+  background: #071324;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(7, 19, 36, 0.22);
+}
+
+.console-tab-btn.active i {
+  color: #f8b400;
+}
+
+.console-tab-btn.active .console-tab-badge {
+  background: rgba(248, 180, 0, 0.25);
+  color: #f8b400;
+  font-weight: 800;
+}
+
+/* Console Divider */
+.console-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, #e2e8f0 15%, #e2e8f0 85%, transparent 100%);
+  margin: 14px 0 14px;
+}
+
+/* Tier 2: Full-Width Search Row */
+.console-search-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.console-search-bar {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.console-search-icon {
   position: absolute;
   left: 18px;
   color: #94a3b8;
   font-size: 15px;
   pointer-events: none;
+  transition: color 0.2s ease;
 }
 
-.services-search-input {
+.console-search-input {
   width: 100%;
-  padding: 13px 44px 13px 46px;
+  padding: 13px 80px 13px 48px;
+  background: #f8fafc;
   border: 1.5px solid #e2e8f0;
   border-radius: 12px;
   font-size: 14px;
   font-family: inherit;
   color: #0f172a;
-  background: #ffffff;
-  transition: all 0.25s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  transition: all 0.22s ease;
 }
 
-.services-search-input:focus {
+.console-search-input::placeholder {
+  color: #94a3b8;
+  font-size: 13.5px;
+}
+
+.console-search-input:focus {
   outline: none;
+  background: #ffffff;
   border-color: #071324;
   box-shadow: 0 0 0 3.5px rgba(7, 19, 36, 0.08);
 }
 
-.services-search-clear {
-  position: absolute;
-  right: 14px;
-  background: none;
-  border: none;
-  color: #94a3b8;
-  cursor: pointer;
-  font-size: 14px;
-  padding: 4px;
-  transition: color 0.2s ease;
-}
-
-.services-search-clear:hover {
+.console-search-bar:focus-within .console-search-icon {
   color: #071324;
 }
 
-/* Category Filter Tabs */
+.console-search-hint {
+  position: absolute;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  pointer-events: none;
+}
+
+.console-search-hint kbd {
+  background: #e2e8f0;
+  border: 1px solid #cbd5e1;
+  color: #64748b;
+  font-size: 10.5px;
+  font-weight: 700;
+  font-family: inherit;
+  padding: 2px 5px;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.console-search-clear {
+  position: absolute;
+  right: 14px;
+  background: #e2e8f0;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  cursor: pointer;
+  font-size: 11px;
+  transition: all 0.2s ease;
+}
+
+.console-search-clear:hover {
+  background: #071324;
+  color: #ffffff;
+}
+
+/* Tier 3: Centered Quick Mandate Shortcuts */
+.console-quick-mandates {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: 13px;
+  flex-wrap: wrap;
+}
+
+.console-quick-label {
+  font-size: 11.5px;
+  font-weight: 750;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.console-quick-label i {
+  color: #f59e0b;
+}
+
+.console-quick-list {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.console-quick-chip {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+
+.console-quick-chip:hover {
+  background: #071324;
+  color: #ffffff;
+  border-color: #071324;
+  transform: translateY(-1px);
+}
+
+.console-quick-chip.active {
+  background: #071324;
+  color: #f8b400;
+  border-color: #071324;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(7, 19, 36, 0.18);
+}
+
+/* Tier 3: Filter Result Status Bar */
+.console-status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  padding: 8px 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 12.5px;
+  color: #475569;
+}
+
+.console-status-bar .status-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.console-status-bar .status-info i {
+  color: #d97706;
+}
+
+.console-status-bar .btn-reset-filters {
+  background: #071324;
+  border: none;
+  color: #ffffff;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.console-status-bar .btn-reset-filters:hover {
+  background: #b45309;
+}
+
+/* ============================================
+   CATEGORY FILTER TABS & DYNAMIC COUNTS
+   ============================================ */
+.services-filter-nav-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
 .services-filter-nav {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 40px;
 }
 
 .filter-btn {
   background: #ffffff;
   border: 1.5px solid #e2e8f0;
   color: #475569;
-  padding: 9px 20px;
-  border-radius: 20px;
+  padding: 9px 18px;
+  border-radius: 22px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 650;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  transition: all 0.22s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.filter-btn i {
+  font-size: 11.5px;
+  opacity: 0.85;
+}
+
+.filter-count-badge {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 10px;
+  background: #f1f5f9;
+  color: #64748b;
+  margin-left: 2px;
   transition: all 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
 .filter-btn:hover {
@@ -137,33 +424,143 @@
   transform: translateY(-1px);
 }
 
-.filter-btn.active {
+/* Category-specific active states */
+.filter-btn.active.filter-btn-all {
   background: #071324;
   border-color: #071324;
   color: #ffffff;
-  box-shadow: 0 4px 12px rgba(7, 19, 36, 0.2);
+  box-shadow: 0 4px 14px rgba(7, 19, 36, 0.25);
+}
+.filter-btn.active.filter-btn-all .filter-count-badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
 }
 
-/* Empty State */
+.filter-btn.active.filter-btn-startup {
+  background: #4338ca;
+  border-color: #4338ca;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(67, 56, 202, 0.28);
+}
+.filter-btn.active.filter-btn-startup .filter-count-badge {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+.filter-btn.active.filter-btn-registration {
+  background: #047857;
+  border-color: #047857;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(4, 120, 87, 0.28);
+}
+.filter-btn.active.filter-btn-registration .filter-count-badge {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+.filter-btn.active.filter-btn-tax {
+  background: #b45309;
+  border-color: #b45309;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(180, 83, 9, 0.28);
+}
+.filter-btn.active.filter-btn-tax .filter-count-badge {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+.filter-btn.active.filter-btn-accounting {
+  background: #0369a1;
+  border-color: #0369a1;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(3, 105, 161, 0.28);
+}
+.filter-btn.active.filter-btn-accounting .filter-count-badge {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+/* ============================================
+   ACTIVE SEARCH STATUS BAR
+   ============================================ */
+.search-status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 18px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  margin-bottom: 26px;
+  font-size: 13px;
+  color: #475569;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+
+.status-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-info i {
+  color: #b45309;
+}
+
+.btn-reset-filters {
+  background: none;
+  border: none;
+  color: #0369a1;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn-reset-filters:hover {
+  background: #f0f9ff;
+  color: #0284c7;
+}
+
+/* ============================================
+   EMPTY STATE
+   ============================================ */
 .services-no-results {
   text-align: center;
-  padding: 50px 20px;
+  padding: 60px 20px;
+  background: #ffffff;
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 16px;
   color: #64748b;
+  margin: 20px 0;
 }
 
 .services-no-results i {
-  font-size: 2.2rem;
-  margin-bottom: 12px;
-  opacity: 0.4;
+  font-size: 2.4rem;
+  margin-bottom: 14px;
+  color: #94a3b8;
 }
 
 .services-no-results h3 {
-  font-size: 1.3rem;
+  font-size: 1.35rem;
   color: #071324;
   margin-bottom: 6px;
+  font-weight: 750;
 }
 
-/* Grid Structure */
+.services-no-results p {
+  font-size: 13.5px;
+  color: #64748b;
+}
+
+/* ============================================
+   GRID STRUCTURE
+   ============================================ */
 .service-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -172,7 +569,7 @@
 }
 
 /* ============================================
-   SERVICE CARD — Executive Bento Styling
+   SERVICE CARD — Luxury Bento Architecture
    ============================================ */
 .service-card {
   background: #ffffff;
@@ -194,20 +591,103 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
+  height: 2.5px;
   background: linear-gradient(90deg, #f8b400, #ffc425);
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  opacity: 0.85;
+  transition: all 0.3s ease;
 }
 
 .service-card:hover {
   transform: translateY(-6px);
-  border-color: rgba(248, 180, 0, 0.5);
   box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.12), 0 0 20px rgba(248, 180, 0, 0.08);
 }
 
 .service-card:hover .card-top-beam {
+  height: 4px;
   opacity: 1;
+}
+
+/* --------------------------------------------
+   CATEGORY-SPECIFIC COLOR PALETTES
+   -------------------------------------------- */
+/* 1. STARTUP / BUSINESS SETUP (Indigo Theme) */
+.service-card.card-cat-startup .card-top-beam {
+  background: linear-gradient(90deg, #4f46e5, #818cf8);
+}
+.service-card.card-cat-startup:hover {
+  border-color: rgba(79, 70, 229, 0.45);
+  box-shadow: 0 20px 45px -10px rgba(79, 70, 229, 0.14), 0 2px 10px rgba(79, 70, 229, 0.06);
+}
+.service-card.card-cat-startup .service-icon-tile {
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+  color: #a5b4fc;
+  border: 1px solid rgba(99, 102, 241, 0.35);
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.2);
+}
+.service-card.card-cat-startup .service-category-tag {
+  background: #eef2ff;
+  color: #4338ca;
+  border-color: #c7d2fe;
+}
+
+/* 2. REGISTRATIONS / LICENSES (Emerald Theme) */
+.service-card.card-cat-registration .card-top-beam {
+  background: linear-gradient(90deg, #059669, #34d399);
+}
+.service-card.card-cat-registration:hover {
+  border-color: rgba(5, 150, 105, 0.45);
+  box-shadow: 0 20px 45px -10px rgba(5, 150, 105, 0.14), 0 2px 10px rgba(5, 150, 105, 0.06);
+}
+.service-card.card-cat-registration .service-icon-tile {
+  background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+  color: #6ee7b7;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.2);
+}
+.service-card.card-cat-registration .service-category-tag {
+  background: #ecfdf5;
+  color: #047857;
+  border-color: #a7f3d0;
+}
+
+/* 3. TAX & COMPLIANCE (Warm Amber / Gold Theme) */
+.service-card.card-cat-tax .card-top-beam {
+  background: linear-gradient(90deg, #d97706, #fbbf24);
+}
+.service-card.card-cat-tax:hover {
+  border-color: rgba(217, 119, 6, 0.45);
+  box-shadow: 0 20px 45px -10px rgba(217, 119, 6, 0.14), 0 2px 10px rgba(217, 119, 6, 0.06);
+}
+.service-card.card-cat-tax .service-icon-tile {
+  background: linear-gradient(135deg, #451a03 0%, #78350f 100%);
+  color: #fcd34d;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.2);
+}
+.service-card.card-cat-tax .service-category-tag {
+  background: #fffbeb;
+  color: #b45309;
+  border-color: #fde68a;
+}
+
+/* 4. AUDIT & ACCOUNTS (Cyan / Sovereign Steel Theme) */
+.service-card.card-cat-accounting .card-top-beam {
+  background: linear-gradient(90deg, #0284c7, #38bdf8);
+}
+.service-card.card-cat-accounting:hover {
+  border-color: rgba(2, 132, 199, 0.45);
+  box-shadow: 0 20px 45px -10px rgba(2, 132, 199, 0.14), 0 2px 10px rgba(2, 132, 199, 0.06);
+}
+.service-card.card-cat-accounting .service-icon-tile {
+  background: linear-gradient(135deg, #082f49 0%, #0c4a6e 100%);
+  color: #7dd3fc;
+  border: 1px solid rgba(2, 132, 199, 0.35);
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.2);
+}
+.service-card.card-cat-accounting .service-category-tag {
+  background: #f0f9ff;
+  color: #0369a1;
+  border-color: #bae6fd;
 }
 
 /* Card Header */
@@ -215,7 +695,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
+  gap: 12px;
+  min-height: 48px;
 }
 
 .service-icon-tile {
@@ -228,35 +710,65 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 19px;
   box-shadow: 0 4px 12px rgba(7, 19, 36, 0.15);
   transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
 .service-card:hover .service-icon-tile {
-  background: #0f2444;
   transform: scale(1.08) rotate(3deg);
-  box-shadow: 0 6px 16px rgba(7, 19, 36, 0.25);
-  color: #ffc425;
 }
 
-.service-header-badges {
+.service-statutory-strip {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 6px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0 0 12px 0;
+  min-height: 26px;
+}
+
+.service-statutory-pill {
+  font-size: 9.5px;
+  font-weight: 750;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2.5px 8px;
+  border-radius: 6px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.service-statutory-pill i {
+  color: #f59e0b;
+  font-size: 9.5px;
 }
 
 .service-category-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5.5px;
   font-size: 10.5px;
-  font-weight: 700;
+  font-weight: 750;
   text-transform: uppercase;
-  letter-spacing: 0.6px;
-  padding: 3px 9px;
-  border-radius: 20px;
+  letter-spacing: 0.5px;
+  padding: 3px 9.5px;
+  border-radius: 14px;
   background: #f1f5f9;
   border: 1px solid #e2e8f0;
   color: #475569;
+  white-space: nowrap;
+}
+
+.service-category-tag i {
+  font-size: 9.5px;
+  opacity: 0.85;
 }
 
 /* Estimated Turnaround Time Badge */
@@ -279,18 +791,6 @@
 .service-tat-badge i {
   font-size: 10px;
   color: #0284c7;
-}
-
-/* High-Converting Turnaround Badge for Registration & Startup Cards */
-.service-tat-badge.tat-highlight {
-  color: #065f46;
-  background: #ecfdf5;
-  border-color: #a7f3d0;
-  box-shadow: 0 1px 4px rgba(16, 185, 129, 0.12);
-}
-
-.service-tat-badge.tat-highlight i {
-  color: #059669;
 }
 
 .tat-pulse-dot {
@@ -332,7 +832,7 @@
 }
 
 .service-price-block .price-label {
-  font-size: 10.5px;
+  font-size: 10px;
   color: #64748b;
   font-weight: 600;
   text-transform: uppercase;
@@ -352,25 +852,29 @@
   gap: 4px;
   font-size: 10.5px;
   font-weight: 700;
-  color: #b45309;
-  background: rgba(248, 180, 0, 0.12);
-  border: 1px solid rgba(248, 180, 0, 0.25);
-  padding: 2px 7px;
+  color: #065f46;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  padding: 2.5px 7.5px;
   border-radius: 6px;
 }
 
 .service-sla-tag i {
   font-size: 9.5px;
+  color: #059669;
 }
 
 /* Card Typography */
 .service-card-title {
-  font-size: 1.25rem;
+  font-size: 1.22rem;
   font-weight: 800;
   color: #071324;
   margin: 0 0 8px 0;
-  line-height: 1.3;
+  line-height: 1.35;
   letter-spacing: -0.3px;
+  min-height: 3.2rem;
+  display: flex;
+  align-items: flex-start;
 }
 
 .service-card-desc {
@@ -379,7 +883,11 @@
   line-height: 1.5;
   margin: 0 0 16px 0;
   font-weight: 400;
-  min-height: 38px;
+  min-height: 39px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* Deliverables Container Box */
@@ -394,11 +902,11 @@
 .deliverables-heading {
   display: block;
   font-size: 10.5px;
-  font-weight: 700;
+  font-weight: 750;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: #94a3b8;
-  margin-bottom: 6px;
+  color: #64748b;
+  margin-bottom: 8px;
 }
 
 .deliverables-list {
@@ -407,7 +915,7 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 6px;
 }
 
 .deliverables-list li {
@@ -421,7 +929,7 @@
 
 .deliverables-list li i {
   color: #10b981;
-  font-size: 11px;
+  font-size: 11.5px;
   flex-shrink: 0;
 }
 
@@ -432,6 +940,7 @@
   gap: 10px;
   padding-top: 14px;
   border-top: 1px solid #f1f5f9;
+  margin-top: auto;
 }
 
 .btn-service-action {
@@ -469,15 +978,16 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(248, 180, 0, 0.1);
-  border: 1px solid rgba(248, 180, 0, 0.3);
-  color: #b45309;
+  background: #fffdf5;
+  border: 1.5px solid #f59e0b;
+  color: #92400e;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 750;
   text-decoration: none;
-  padding: 9px 12px;
+  padding: 9.5px 13px;
   border-radius: 8px;
   transition: all 0.25s ease;
+  white-space: nowrap;
 }
 
 .btn-service-consult:hover {
@@ -485,6 +995,7 @@
   color: #071324;
   border-color: #f8b400;
   box-shadow: 0 4px 12px rgba(248, 180, 0, 0.25);
+  transform: translateY(-1px);
 }
 
 /* Explore More CTA */
@@ -523,12 +1034,77 @@
   transform: translateX(4px);
 }
 
+/* Load More Progressive Controls */
+.services-load-more-container {
+  text-align: center;
+  margin-top: 36px;
+}
+
+.btn-load-more-services {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #ffffff;
+  border: 1.5px solid #071324;
+  color: #071324;
+  padding: 12px 28px;
+  border-radius: 26px;
+  font-size: 13.5px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 3px 12px rgba(7, 19, 36, 0.06);
+}
+
+.btn-load-more-services:hover {
+  background: #071324;
+  color: #f8b400;
+  border-color: #071324;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(7, 19, 36, 0.2);
+}
+
+.btn-load-more-services .load-more-count {
+  font-size: 12px;
+  opacity: 0.75;
+  font-weight: 600;
+}
+
+.btn-load-more-services i {
+  font-size: 11px;
+  transition: transform 0.25s ease;
+}
+
+.btn-load-more-services:hover i {
+  transform: translateY(2px);
+}
+
+.services-all-loaded-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 32px;
+  font-size: 12.5px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.services-all-loaded-indicator i {
+  color: #10b981;
+  font-size: 14px;
+}
+
 /* ============================================
    RESPONSIVE DESIGN — Mobile Experience
    ============================================ */
 @media (max-width: 1024px) {
   .services {
     padding: 65px 0 75px 0;
+  }
+  .services.services-embedded {
+    padding: 30px 0 60px 0;
   }
   .service-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -538,7 +1114,10 @@
 
 @media (max-width: 768px) {
   .services {
-    padding: 42px 0 48px 0;
+    padding: 38px 0 46px 0;
+  }
+  .services.services-embedded {
+    padding: 20px 0 40px 0;
   }
   .services .container {
     padding: 0 16px;
@@ -564,6 +1143,163 @@
     color: #64748b;
     max-width: 95%;
   }
+
+  /* Practice Command Console on Mobile */
+  .practice-command-console {
+    margin: -24px auto 24px;
+    padding: 12px 12px 14px;
+    border-radius: 16px;
+    border-top: 3px solid #f8b400;
+  }
+
+  .console-category-strip {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    justify-content: flex-start;
+    padding-bottom: 2px;
+    width: 100%;
+  }
+
+  .console-category-strip::-webkit-scrollbar {
+    display: none;
+  }
+
+  .console-category-nav {
+    width: max-content;
+    gap: 4px;
+    padding: 3px;
+  }
+
+  .console-tab-btn {
+    padding: 7px 12px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .console-tab-badge {
+    font-size: 10px;
+    padding: 1px 5px;
+  }
+
+  .console-divider {
+    margin: 10px 0 10px;
+  }
+
+  .console-search-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .console-search-bar {
+    max-width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .console-search-input {
+    padding: 10px 36px 10px 38px;
+    font-size: 13px;
+    border-radius: 10px;
+  }
+
+  .console-search-icon {
+    left: 13px;
+    font-size: 13px;
+  }
+
+  .console-search-hint {
+    display: none;
+  }
+
+  .console-quick-mandates {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .console-quick-label {
+    font-size: 10px;
+  }
+
+  .console-quick-list {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    padding-bottom: 2px;
+  }
+
+  .console-quick-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .console-quick-chip {
+    font-size: 11px;
+    padding: 4px 10px;
+    flex-shrink: 0;
+  }
+
+  .console-status-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  .console-status-bar .btn-reset-filters {
+    align-self: flex-end;
+  }
+
+  /* Filter Navigation Horizontal Scroll On Mobile */
+  .services-filter-nav-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin-bottom: 18px;
+    justify-content: flex-start;
+    padding-bottom: 4px;
+    width: 100%;
+  }
+  .services-filter-nav-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+  .services-filter-nav {
+    flex-wrap: nowrap;
+    width: max-content;
+    gap: 8px;
+    padding: 2px 2px 6px 2px;
+  }
+  .filter-btn {
+    white-space: nowrap;
+    padding: 8px 14px;
+    font-size: 12px;
+    border-radius: 20px;
+  }
+  .filter-count-badge {
+    font-size: 10px;
+    padding: 1px 6px;
+  }
+
+  /* Search Status Bar on Mobile */
+  .search-status-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 10px 14px;
+    font-size: 12px;
+    margin-bottom: 18px;
+  }
+  .btn-reset-filters {
+    padding: 0;
+    align-self: flex-end;
+  }
+
+  /* Cards on Mobile */
   .service-grid {
     grid-template-columns: 1fr;
     gap: 16px;
@@ -573,17 +1309,28 @@
     border-radius: 16px;
   }
   .service-icon-tile {
-    width: 42px;
-    height: 42px;
-    font-size: 16px;
-    border-radius: 10px;
+    width: 44px;
+    height: 44px;
+    font-size: 17px;
+    border-radius: 11px;
+  }
+  .service-badge-row {
+    gap: 4px;
+  }
+  .service-statutory-pill {
+    font-size: 9px;
+    padding: 1.5px 6px;
   }
   .service-category-tag {
+    font-size: 9.5px;
+    padding: 2px 7px;
+  }
+  .service-tat-badge {
     font-size: 10px;
-    padding: 3px 8px;
+    padding: 2.5px 8px;
   }
   .service-card-title {
-    font-size: 1.15rem;
+    font-size: 1.18rem;
     margin-bottom: 6px;
   }
   .service-card-desc {
@@ -591,6 +1338,17 @@
     line-height: 1.45;
     margin-bottom: 12px;
     min-height: auto;
+  }
+  .service-meta-strip {
+    padding: 7px 10px;
+    margin-bottom: 12px;
+  }
+  .service-price-block .price-val {
+    font-size: 14px;
+  }
+  .service-sla-tag {
+    font-size: 10px;
+    padding: 2px 6px;
   }
   .service-deliverables-box {
     padding: 10px 12px;
@@ -626,19 +1384,22 @@
 
 @media (max-width: 480px) {
   .services {
-    padding: 34px 0 40px 0;
+    padding: 26px 0 34px 0;
   }
   .section-header {
-    margin-bottom: 20px;
+    margin-bottom: 18px;
   }
   #services-heading {
-    font-size: 1.45rem;
+    font-size: 1.42rem;
   }
   .section-subtitle {
     font-size: 12.5px;
     line-height: 1.48;
   }
   .service-card {
-    padding: 18px 16px;
+    padding: 18px 15px;
+  }
+  .service-card-title {
+    font-size: 1.12rem;
   }
 }
