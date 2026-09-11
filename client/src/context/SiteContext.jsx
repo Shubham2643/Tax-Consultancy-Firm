@@ -145,7 +145,7 @@ export const SiteContextProvider = ({ children }) => {
               { label: 'ISO Certification', href: '/services/iso-certification' },
             ],
           },
-          { label: 'Services', href: '/services', children: [] },
+          { label: 'About Us', href: '/about', children: [] },
         ]);
       } finally {
         setLoading(false);
