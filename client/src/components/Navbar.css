@@ -730,13 +730,15 @@
     position: fixed;
     top: 0;
     right: 0;
-    width: 300px;
-    max-width: 85vw;
+    width: 320px;
+    max-width: 86vw;
     height: 100vh;
+    height: 100dvh;
     background: #ffffff;
-    box-shadow: -10px 0 25px rgba(7, 19, 36, 0.12);
-    z-index: 1005;
+    box-shadow: -10px 0 30px rgba(7, 19, 36, 0.2);
+    z-index: 10005;
     overflow: hidden;
+    touch-action: pan-y;
   }
 
   .navbar-mobile-drawer.drawer-open {
@@ -766,6 +768,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    text-decoration: none;
   }
 
   .mobile-drawer-logo {
@@ -912,37 +915,44 @@
   .mobile-nav-link {
     flex: 1;
     display: block;
-    padding: 8px 6px;
-    font-size: 13.5px;
+    padding: 10px 8px;
+    font-size: 14px;
     font-weight: 650;
     color: #0f172a;
     text-decoration: none;
     border-radius: 6px;
+    transition: background-color 0.15s ease, color 0.15s ease;
   }
 
   .mobile-nav-link:hover,
   .mobile-nav-link.active {
     color: #b47500;
+    background-color: rgba(248, 180, 0, 0.08);
   }
 
   .mobile-accordion-toggle {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     border-radius: 6px;
     border: none;
     background: transparent;
     color: #64748b;
-    font-size: 11px;
+    font-size: 12px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, background-color 0.15s ease;
+  }
+
+  .mobile-accordion-toggle:hover {
+    background-color: #f1f5f9;
   }
 
   .mobile-accordion-toggle.expanded {
     transform: rotate(180deg);
     color: #b47500;
+    background-color: rgba(248, 180, 0, 0.1);
   }
 
   /* Mobile Sub-Accordion */
@@ -1071,8 +1081,13 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(7, 19, 36, 0.4);
-    z-index: 1004;
+    height: 100dvh;
+    background: rgba(7, 19, 36, 0.55);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    z-index: 10000;
+    cursor: pointer;
+    touch-action: manipulation;
   }
 }
 
