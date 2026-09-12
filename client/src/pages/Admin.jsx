@@ -38,10 +38,6 @@ import {
   createFeature,
   updateFeature,
   deleteFeature,
-  getAdminTeamMembers,
-  createTeamMember,
-  updateTeamMember,
-  deleteTeamMember,
   getAdminConsultations,
   updateConsultation,
   getAdminInvoices,
@@ -98,7 +94,6 @@ const Admin = () => {
   const [blogs, setBlogs] = useState([]);
   const [navMenus, setNavMenus] = useState([]);
   const [siteFeatures, setSiteFeatures] = useState([]);
-  const [teamMembers, setTeamMembers] = useState([]);
   const [consultations, setConsultations] = useState([]);
   const [invoices, setInvoices] = useState([]);
 
@@ -128,9 +123,6 @@ const Admin = () => {
   const [userSearch, setUserSearch] = useState('');
   const [userRoleFilter, setUserRoleFilter] = useState('all');
   const [userPage, setUserPage] = useState(1);
-  
-  const teamSearch = '';
-  const [teamPage] = useState(1);
 
   const itemsPerPage = 8;
 
@@ -184,10 +176,6 @@ const Admin = () => {
     title: '', description: '', icon: 'fas fa-star', order: 0, isActive: true
   });
 
-  const [teamForm, setTeamForm] = useState({
-    name: '', role: '', specialty: '', img: '/assets/shreeChamundalogo.png', order: 0, isActive: true
-  });
-
   useEffect(() => {
     if (!authLoading) {
       if (!user || user.role !== 'admin') navigate('/login');
@@ -202,7 +190,7 @@ const Admin = () => {
   const loadData = useCallback(async () => {
     setLoading(true);
     try {
-      const [statsRes, inqRes, docRes, userRes, srvRes, faqRes, prcRes, blogRes, setRes, navRes, featRes, teamRes, consRes, invRes] = await Promise.all([
+      const [statsRes, inqRes, docRes, userRes, srvRes, faqRes, prcRes, blogRes, setRes, navRes, featRes, consRes, invRes] = await Promise.all([
         getAdminStats(),
         getAdminInquiries(),
         getAdminDocuments(),
@@ -214,7 +202,6 @@ const Admin = () => {
         getAdminSettings(),
         getAdminNavMenu(),
         getAdminFeatures(),
-        getAdminTeamMembers(),
         getAdminConsultations(),
         getAdminInvoices()
       ]);
@@ -229,7 +216,6 @@ const Admin = () => {
       if (blogRes.success) setBlogs(blogRes.data || []);
       if (navRes.success) setNavMenus(navRes.data || []);
       if (featRes.success) setSiteFeatures(featRes.data || []);
-      if (teamRes.success) setTeamMembers(teamRes.data || []);
       if (consRes.success) setConsultations(consRes.data || []);
       if (invRes.success) setInvoices(invRes.data || []);
       if (setRes.success) {
@@ -754,64 +740,6 @@ const Admin = () => {
     });
   };
 
-  // TEAM MEMBERS CRUD
-  const handleOpenTeamModal = (item = null) => {
-    if (item) {
-      setEditingItem(item);
-      setTeamForm({
-        name: item.name || '',
-        role: item.role || '',
-        specialty: item.specialty || '',
-        img: item.img || '/assets/shreeChamundalogo.png',
-        order: item.order || 0,
-        isActive: item.isActive !== undefined ? item.isActive : true
-      });
-    } else {
-      setEditingItem(null);
-      setTeamForm({
-        name: '', role: '', specialty: '', img: '/assets/shreeChamundalogo.png', order: 0, isActive: true
-      });
-    }
-    setModalType('team');
-  };
-
-  const handleTeamSubmit = async (e) => {
-    e.preventDefault();
-    setActionLoading(true);
-    try {
-      if (editingItem) {
-        const res = await updateTeamMember(editingItem._id, teamForm);
-        if (res.success) {
-          setTeamMembers(prev => prev.map(item => item._id === editingItem._id ? res.data : item));
-          showToast('success', 'Team member updated');
-        }
-      } else {
-        const res = await createTeamMember(teamForm);
-        if (res.success) {
-          setTeamMembers(prev => [...prev, res.data]);
-          showToast('success', 'Team member created');
-        }
-      }
-      setModalType('');
-    } catch {
-      showToast('error', 'Team member update failed');
-    } finally {
-      setActionLoading(false);
-    }
-  };
-
-  const handleTeamDelete = (id) => {
-    confirmDelete('this team member profile', async () => {
-      try {
-        await deleteTeamMember(id);
-        setTeamMembers(prev => prev.filter(item => item._id !== id));
-        showToast('success', 'Team member deleted');
-      } catch {
-        showToast('error', 'Delete failed');
-      }
-    });
-  };
-
   // SETTINGS
   const handleSettingsSubmit = async (e) => {
     e.preventDefault();
@@ -962,14 +890,6 @@ const Admin = () => {
   });
   const paginatedUsers = filteredUsers.slice((userPage - 1) * itemsPerPage, userPage * itemsPerPage);
   const totalUserPages = Math.ceil(filteredUsers.length / itemsPerPage) || 1;
-
-  const filteredTeam = teamMembers.filter(item => {
-    return (item.name || '').toLowerCase().includes(teamSearch.toLowerCase()) ||
-           (item.role || '').toLowerCase().includes(teamSearch.toLowerCase()) ||
-           (item.specialty || '').toLowerCase().includes(teamSearch.toLowerCase());
-  });
-  const paginatedTeam = filteredTeam.slice((teamPage - 1) * itemsPerPage, teamPage * itemsPerPage);
-  const _totalTeamPages = Math.ceil(filteredTeam.length / itemsPerPage) || 1;
 
   const pendingDocsCount = documents.filter(d => d.status === 'pending').length;
   const pendingConsCount = consultations.filter(c => c.status === 'pending').length;
@@ -1211,7 +1131,6 @@ const Admin = () => {
       blogs: 'Article Publisher',
       navmenu: 'Megamenu Builder',
       features: 'Why Choose Us Cards',
-      team: 'Partners & Team',
       settings: 'Global Firm Config'
     };
     return titles[tab] || 'Admin Console';
@@ -1360,15 +1279,6 @@ const Admin = () => {
           >
             <div className="nav-icon-box"><i className="fas fa-question-circle"></i></div>
             <span className="nav-label">Knowledge Base (FAQ)</span>
-          </button>
-
-          <button 
-            className={`admin-nav-btn ${tab === 'team' ? 'active' : ''}`} 
-            onClick={() => { setTab('team'); setIsMobileDrawerOpen(false); }}
-            title="Team Members"
-          >
-            <div className="nav-icon-box"><i className="fas fa-user-tie"></i></div>
-            <span className="nav-label">Partners &amp; Team</span>
           </button>
 
           <button 
@@ -2540,68 +2450,7 @@ const Admin = () => {
               )}
 
               {/* ========================================================
-                  TAB 11: TEAM PROFILES
-                  ======================================================== */}
-              {tab === 'team' && (
-                <div className="team-tab-suite">
-                  {/* Executive Hero Banner */}
-                  <div className="admin-hero-banner">
-                    <div className="hero-text-content">
-                      <h1>Chartered Partners &amp; Team Profiles</h1>
-                      <p>Manage firm leadership profiles, credentials, and practice areas displayed on the public website.</p>
-                    </div>
-                    <div className="hero-action-buttons">
-                      <button className="btn-admin-hero-primary" onClick={() => handleOpenTeamModal()}>
-                        <i className="fas fa-plus"></i> Add Team Member
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="admin-bento-card data-table-bento">
-                    <div className="table-responsive-wrapper">
-                      <table className="admin-modern-table">
-                        <thead>
-                          <tr>
-                            <th>Partner Name</th>
-                            <th>Role / Designation</th>
-                            <th>Practice Specialty</th>
-                            <th>Status</th>
-                            <th style={{ textAlign: 'right' }}>Actions</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {paginatedTeam.map(t => (
-                            <tr key={t._id}>
-                              <td>
-                                <div className="table-card-head">
-                                  <strong>{t.name}</strong>
-                                  <span className={`status-pill ${t.isActive ? 'approved' : 'rejected'}`}>{t.isActive ? 'Active' : 'Inactive'}</span>
-                                </div>
-                              </td>
-                              <td><span className="table-meta-item"><span className="meta-key">Role:</span> <span>{t.role}</span></span></td>
-                              <td><span className="vault-tag-pill">{t.specialty}</span></td>
-                              <td><span className={`status-pill ${t.isActive ? 'approved' : 'rejected'}`}>{t.isActive ? 'Active' : 'Inactive'}</span></td>
-                              <td style={{ textAlign: 'right' }}>
-                                <div className="table-actions-stack">
-                                  <button className="btn-table-icon edit" onClick={() => handleOpenTeamModal(t)} title="Edit Profile">
-                                    <i className="fas fa-edit"></i> <span>Edit</span>
-                                  </button>
-                                  <button className="btn-table-icon delete" onClick={() => handleTeamDelete(t._id)} title="Delete Profile">
-                                    <i className="fas fa-trash-alt"></i> <span>Delete</span>
-                                  </button>
-                                </div>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* ========================================================
-                  TAB 12: WHY CHOOSE US (FEATURES)
+                  TAB 11: WHY CHOOSE US (FEATURES)
                   ======================================================== */}
               {tab === 'features' && (
                 <div className="features-tab-suite">
@@ -3244,59 +3093,6 @@ const Admin = () => {
                 <button type="button" className="btn-modal-cancel" onClick={() => setModalType('')}>Cancel</button>
                 <button type="submit" className="btn-admin-hero-primary" disabled={actionLoading}>
                   {actionLoading ? 'Saving...' : 'Save Plan'}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* ========================================================
-          MODAL: TEAM FORM
-          ======================================================== */}
-      {modalType === 'team' && (
-        <div className="admin-modal-overlay">
-          <div className="admin-modal-window">
-            <div className="modal-top-bar">
-              <div className="modal-title-wrap">
-                <i className="fas fa-user-tie"></i>
-                <h3>{editingItem ? 'Edit Partner Profile' : 'Add Partner Profile'}</h3>
-              </div>
-              <button className="btn-modal-close" onClick={() => setModalType('')}>&times;</button>
-            </div>
-            <form onSubmit={handleTeamSubmit}>
-              <div className="modal-body-content">
-                <div className="admin-form-group">
-                  <label>Full Name *</label>
-                  <input
-                    type="text"
-                    value={teamForm.name}
-                    onChange={(e) => setTeamForm({ ...teamForm, name: e.target.value })}
-                    required
-                  />
-                </div>
-                <div className="admin-form-group">
-                  <label>Role / Designation *</label>
-                  <input
-                    type="text"
-                    value={teamForm.role}
-                    onChange={(e) => setTeamForm({ ...teamForm, role: e.target.value })}
-                    required
-                  />
-                </div>
-                <div className="admin-form-group">
-                  <label>Practice Specialty</label>
-                  <input
-                    type="text"
-                    value={teamForm.specialty}
-                    onChange={(e) => setTeamForm({ ...teamForm, specialty: e.target.value })}
-                  />
-                </div>
-              </div>
-              <div className="modal-bottom-bar">
-                <button type="button" className="btn-modal-cancel" onClick={() => setModalType('')}>Cancel</button>
-                <button type="submit" className="btn-admin-hero-primary" disabled={actionLoading}>
-                  {actionLoading ? 'Saving...' : 'Save Profile'}
                 </button>
               </div>
             </form>

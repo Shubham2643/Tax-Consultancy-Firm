@@ -24,7 +24,6 @@ const notificationRoutes = require('./routes/notificationRoutes');
 const authRoutes = require('./routes/authRoutes');
 const portalRoutes = require('./routes/portalRoutes');
 const adminRoutes = require('./routes/adminRoutes');
-const teamRoutes = require('./routes/teamRoutes');
 const consultationRoutes = require('./routes/consultationRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 
@@ -175,7 +174,6 @@ app.use('/api/notifications', notificationRoutes);
 app.use('/api/auth', authLimiter, authRoutes);
 app.use('/api/portal', portalRoutes);
 app.use('/api/admin', adminRoutes);
-app.use('/api/team', teamRoutes);
 app.use('/api/consultations', consultationRoutes);
 app.use('/api/portal/payments', paymentRoutes);
 

@@ -13,7 +13,6 @@ const BlogPost = require('../models/BlogPost');
 const FAQ = require('../models/FAQ');
 const User = require('../models/User');
 const Session = require('../models/Session');
-const TeamMember = require('../models/TeamMember');
 const registrationServices = require('./registrationServices');
 const returnServices = require('./returnServices');
 const startupServices = require('./startupServices');
@@ -37,7 +36,6 @@ const seedData = async () => {
     await FAQ.deleteMany({});
     await User.deleteMany({});
     await Session.deleteMany({});
-    await TeamMember.deleteMany({});
 
     // --- SERVICES (10 cards) ---
     const services = [
@@ -482,7 +480,7 @@ const seedData = async () => {
         summary: 'Received a GST notice (ASMT-10, DRC-01A, or GSTR-2B mismatch)? Learn the exact steps, timelines, and reconciliation strategies to reply legally without inviting fines.',
         content: 'Receiving a GST notice from the tax department can be stressful for any business owner. However, most notices in 2026 are system-generated algorithmic discrepancies between your GSTR-1, GSTR-3B, and supplier filings in GSTR-2B.\n\n### Common Types of GST Notices:\n1. **Form GST ASMT-10 (Scrutiny Notice)**: Discrepancies between output tax declared in GSTR-1 vs tax paid in GSTR-3B, or excess Input Tax Credit (ITC) claimed.\n2. **Form DRC-01A (Intimation of Tax Liability)**: Advance intimation before a formal show-cause notice is issued under Section 73 or 74.\n3. **GSTR-3A (Default Notice)**: Issued if you fail to file returns within the due date.\n\n### Immediate Steps to Take Upon Receiving a Notice:\n1. **Check the DIN (Document Identification Number)**: Ensure the notice is authentic. Any official communication without a valid DIN is invalid under CBIC guidelines.\n2. **Verify the Deadline**: Most scrutiny notices provide a 30-day window to respond in Form GST ASMT-11.\n3. **Perform Invoice-by-Invoice Reconciliation**: Match your purchase invoices with GSTR-2B records on the GST portal to identify missing vendor uploads or credit note adjustments.\n4. **Draft a Clear Factual Reply**: Provide invoice numbers, proof of payment (banking challans), and E-Way bills if applicable. If tax is genuinely owed, pay via DRC-03 immediately with interest under Section 50 to minimize penalties.\n\n### How Shree Chamunda Associates Can Help\nOur team assists you in drafting legal responses, appearing before GST appellate officers, and resolving assessment disputes efficiently.',
         category: 'GST',
-        author: 'Pragnesh Adiyecha, Principal Tax Consultant',
+        author: 'Shree Chamunda Associates Tax Editorial',
         readTime: '6 min read',
         tags: ['GST Notice', 'Scrutiny', 'ASMT-10', 'ITC Reconciliation', 'Penalties'],
         image: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=800&q=80',
@@ -502,7 +500,7 @@ const seedData = async () => {
         summary: 'Planning to launch your business or crossing the GST threshold? Here is a comprehensive guide to documents, steps, and compliance requirements to secure your GSTIN seamlessly.',
         content: 'Obtaining a Goods and Services Tax Identification Number (GSTIN) is one of the crucial first milestones for a growing business in India. In 2026, the GST registration portal has become highly automated, meaning clean documentation leads to instant approval.\n\n### Who Needs GST Registration?\n1. **Turnover exceeds limit**: ₹40 Lakhs for manufacturers/traders of goods, or ₹20 Lakhs for service providers.\n2. **Inter-state sales**: If you sell goods across state borders (even online), registration is mandatory from day one.\n3. **E-commerce sellers**: Anyone listing products on platforms like Amazon, Flipkart, or Shopify.\n4. **Casual Taxable Persons**: Setting up temporary business stalls at exhibitions.\n\n### Documents Checklist\n- **PAN Card** of the Proprietor / Company / LLP.\n- **Aadhaar Card** of directors/proprietor for biometric e-verification.\n- **Proof of Business Address**: Electricity bill, municipal tax receipt, or lease agreement. If rented, a signed NOC (No Objection Certificate) from the owner is compulsory.\n- **Bank Details**: Cancelled cheque or bank statement showing IFSC.\n- **Company Incorporation Docs**: COI, Partnership deed, or LLP Agreement if applicable.\n\n### The Registration Process\nRegistering involves filling out Part-A of Form GST REG-01 on the GST Common Portal, uploading the documents, and completing Aadhaar authentication. Biometric verification may be scheduled if flagged by the risk management system. Once approved, you will receive your 15-digit GSTIN via email. Ensure you file GSTR-1 and GSTR-3B timely to avoid penalties.',
         category: 'GST',
-        author: 'Pragnesh Patel, Tax Consultant',
+        author: 'Shree Chamunda Associates Tax Editorial',
         readTime: '6 min read',
         tags: ['GST', 'Small Business', 'Registration', 'Tax Guide'],
         image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80',
@@ -540,36 +538,6 @@ const seedData = async () => {
     ];
     await BlogPost.insertMany(blogs);
     console.log('✅ Blog posts seeded');
-
-    // --- TEAM MEMBERS ---
-    const teamMembers = [
-      {
-        name: 'Pragnesh Adiyecha',
-        role: 'Founder & Principal Consultant',
-        specialty: 'GST & Corporate Tax Advisory',
-        img: '/assets/shreeChamundalogo.png',
-        order: 1,
-        isActive: true
-      },
-      {
-        name: 'CA Gaurav Vyas',
-        role: 'Senior Chartered Accountant',
-        specialty: 'Statutory Audits & Presumptive Taxation',
-        img: '/assets/shreeChamundalogo.png',
-        order: 2,
-        isActive: true
-      },
-      {
-        name: 'Shubham Adiyecha',
-        role: 'Web Developer & Digital Solutions Lead',
-        specialty: 'Website Development & Digital Tax Tools',
-        img: '/assets/shreeChamundalogo.png',
-        order: 3,
-        isActive: true
-      }
-    ];
-    await TeamMember.insertMany(teamMembers);
-    console.log('✅ Team members seeded');
 
     // --- DEFAULT ADMIN USER ---
     const salt = crypto.randomBytes(32).toString('hex');

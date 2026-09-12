@@ -93,8 +93,8 @@ const mailTransporter = configureTransporter();
 
 // Sender Identity
 const SENDER_NAME = 'Shree Chamunda Associates';
-const getSenderEmail = () => `"${SENDER_NAME}" <${process.env.SMTP_USER || 'shubhamadiyecha26@gmail.com'}>`;
-const getSecuritySenderEmail = () => `"Shree Chamunda Security" <${process.env.SMTP_USER || 'shubhamadiyecha26@gmail.com'}>`;
+const getSenderEmail = () => `"${SENDER_NAME}" <${process.env.SMTP_USER || 'shreechamundaassociates0905@gmail.com'}>`;
+const getSecuritySenderEmail = () => `"Shree Chamunda Security" <${process.env.SMTP_USER || 'shreechamundaassociates0905@gmail.com'}>`;
 const getAdminEmail = () => process.env.ADMIN_EMAIL || 'shreechamundaassociates0905@gmail.com';
 
 /**

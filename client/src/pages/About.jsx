@@ -336,35 +336,7 @@ const About = () => {
     },
   ];
 
-  // 5. Leadership Dossier
-  const leadershipProfiles = [
-    {
-      name: 'Pragnesh Adiyecha',
-      role: 'Founder & Principal Consultant',
-      credentials: 'Senior Tax Strategist & Corporate Advisor',
-      initials: 'PA',
-      experience: '15+ Years Industry Knowledge',
-      specialty: 'Direct Tax Planning • Appellate Scrutiny Defense • Corporate Structuring',
-      bio: 'Directs the firm’s strategic tax advisory and dispute resolution practice. Has successfully represented growing enterprises and trading firms before appellate authorities, structured tax-efficient business mergers, and insulated over 250+ clients against statutory penalties.',
-      badges: ['Appellate Specialist', 'Direct Tax Strategist', 'ICAI Aligned Practice'],
-      icon: <Icons.Scale />,
-      isFounder: true,
-    },
-    {
-      name: 'Shubham Adiyecha',
-      role: 'Head of Compliance Technology & Digital Systems',
-      credentials: 'Compliance Automation & Systems Architect',
-      initials: 'SA',
-      experience: 'Fintech & Cloud Systems Specialist',
-      specialty: 'Digital Client Vaults • Real-Time Tracking • Paperless Accounting',
-      bio: 'Architects the secure digital infrastructure, automated reconciliation pipelines, and client portal architecture for Shree Chamunda Associates. Specializes in real-time GST reconciliation tools, paperless accounting workflows, and 256-bit encrypted document repositories.',
-      badges: ['Security & Automation', 'Digital Client Vault', 'Cloud Compliance'],
-      icon: <Icons.CodeTerminal />,
-      isFounder: false,
-    },
-  ];
-
-  // 6. Unified Growth Milestones Track
+  // 5. Unified Growth Milestones Track
   const growthMilestones = [
     {
       year: '2023',
@@ -411,11 +383,6 @@ const About = () => {
 
   const handleWhatsAppConsult = () => {
     const text = 'Hello CA Team, I would like to schedule an in-person advisory session at your Ahmedabad office.';
-    window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(text)}`, '_blank');
-  };
-
-  const handlePartnerDirect = (partnerName) => {
-    const text = `Hello Shree Chamunda Associates, I would like to schedule a private consultation with ${partnerName}.`;
     window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(text)}`, '_blank');
   };
 
@@ -514,8 +481,8 @@ const About = () => {
 
             <div className="manifesto-sign-off">
               <div className="sign-off-identity">
-                <strong className="founder-signature-name">Pragnesh Adiyecha</strong>
-                <span className="founder-signature-title">Founder &amp; Principal Consultant &bull; Shree Chamunda Associates</span>
+                <strong className="founder-signature-name">Executive Advisory Board</strong>
+                <span className="founder-signature-title">Office of the Managing Partners &bull; Shree Chamunda Associates</span>
                 <span className="founder-signature-loc">Ahmedabad, Gujarat</span>
               </div>
               <div className="firm-seal-block">
@@ -887,87 +854,6 @@ const About = () => {
           </div>
         </section>
 
-        {/* ============================================================
-            6. EXECUTIVE LEADERSHIP & SENIOR ADVISORY DOSSIER
-            ============================================================ */}
-        <section className="about-leadership-section" aria-labelledby="leadership-title">
-          <div className="section-header-centered">
-            <div className="about-eyebrow-tag">
-              <Icons.Users />
-              <span>PRACTICE LEADERSHIP &bull; DIRECT ACCOUNTABILITY</span>
-            </div>
-            <h2 id="leadership-title">Leadership &amp; Advisory Panel</h2>
-            <p className="section-subtext">
-              Direct partner accessibility without bureaucratic intermediaries. Meet the professionals stewarding your corporate compliance architecture.
-            </p>
-          </div>
-
-          <div className="leadership-cards-grid">
-            {leadershipProfiles.map((profile, idx) => (
-              <div key={idx} className={`leadership-executive-card ${profile.isFounder ? 'founder-card' : ''}`}>
-                <div className="leader-card-header">
-                  <div className="leader-avatar-badge">
-                    <div className="partner-avatar-monogram">
-                      <span className="monogram-text">{profile.initials}</span>
-                    </div>
-                    {profile.isFounder && <span className="founder-ribbon">FOUNDER</span>}
-                  </div>
-
-                  <div className="leader-identity">
-                    <h3 className="leader-name">{profile.name}</h3>
-                    <strong className="leader-role">{profile.role}</strong>
-                    <span className="leader-cred">{profile.credentials}</span>
-                  </div>
-                </div>
-
-                <div className="leader-experience-strip">
-                  <span className="exp-icon">{profile.icon}</span>
-                  <span className="exp-text">{profile.experience}</span>
-                </div>
-
-                <p className="leader-bio-text">{profile.bio}</p>
-
-                <div className="leader-focus-box">
-                  <span className="focus-label">PRACTICE FOCUS:</span>
-                  <p className="focus-list">{profile.specialty}</p>
-                </div>
-
-                <div className="leader-badges-wrap">
-                  {profile.badges.map((badge, bIdx) => (
-                    <span key={bIdx} className="practice-badge-chip">
-                      <Icons.Check />
-                      <span>{badge}</span>
-                    </span>
-                  ))}
-                </div>
-
-                <div className="leader-card-footer">
-                  <button
-                    type="button"
-                    className="btn-leader-consult"
-                    onClick={() => handlePartnerDirect(profile.name)}
-                  >
-                    <span>Request Private Consultation</span>
-                    <Icons.ArrowRight />
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Senior Advisory Network Note */}
-          <div className="senior-advisory-panel-note">
-            <div className="panel-note-icon">
-              <Icons.Scale />
-            </div>
-            <div className="panel-note-content">
-              <strong>Multidisciplinary Senior Associate &amp; Legal Advisory Panel</strong>
-              <p>
-                For high-stakes appellate proceedings and cross-border commercial restructuring, our practice engages a select panel of Senior Advocates, Chartered Accountants, and Company Secretaries, providing dual-tier cross-examination on complex tax litigation matters.
-              </p>
-            </div>
-          </div>
-        </section>
 
         {/* ============================================================
             7. UNIFIED CHRONOLOGICAL GROWTH TRACK (Zero Dead Space)

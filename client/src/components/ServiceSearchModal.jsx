@@ -239,7 +239,7 @@ const ServiceSearchModal = ({ isOpen, onClose, navMenu = [] }) => {
 
     // Core firm pages
     list.push(
-      { title: 'About Shree Chamunda Associates', href: '/about', category: 'Firm', icon: 'fas fa-building-user', desc: 'Firm leadership, credentials, mission & client track record', keywords: ['about', 'ca pragnesh', 'firm profile', 'experience'] },
+      { title: 'About Shree Chamunda Associates', href: '/about', category: 'Firm', icon: 'fas fa-building-user', desc: 'Firm leadership, credentials, mission & client track record', keywords: ['about', 'ca firm', 'firm profile', 'experience'] },
       { title: 'Comprehensive Services Overview', href: '/services', category: 'Overview', icon: 'fas fa-briefcase', desc: 'All 30+ chartered accounting, tax, MCA & advisory solutions', keywords: ['all services', 'directory', 'catalog'] },
       { title: 'Tax Insights & Knowledge Articles', href: '/blog', category: 'Knowledge', icon: 'fas fa-newspaper', desc: 'Latest updates on GST amendments, budget analysis & compliance', keywords: ['blog', 'articles', 'gst news', 'updates'] },
       { title: 'Book Free CA Consultation', href: '/contact', category: 'Advisory', icon: 'fas fa-comments', desc: 'Schedule a 1-on-1 strategic advisory session with our senior CA', keywords: ['consultation', 'contact', 'appointment', 'phone', 'email'] }
