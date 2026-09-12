@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { submitContact } from '../api';
+import ExecutiveSelect from './ExecutiveSelect';
 import './ContactForm.css';
 
 const ContactForm = () => {
@@ -300,258 +301,95 @@ const ContactForm = () => {
             <form onSubmit={handleSubmit} className="contact-form-elements">
               {/* Consultation Specific Selectors */}
               {activeTab === 'consultation' && (
-                <div className="consultation-options-stack fade-in">
-                  <div className="consultation-mode-block">
-                    <div className="channel-section-header">
-                      <div className="channel-header-left">
-                        <span className="channel-step-badge">CONSULTATION CHANNEL</span>
-                        <h4 className="channel-header-title">Choose How You'd Like to Meet</h4>
-                      </div>
-                      <div className="channel-header-tag">
-                        <i className="fas fa-shield-halved"></i>
-                        <span>100% Partner-Led</span>
-                      </div>
+                <div className="consultation-compact-stack fade-in">
+                  {/* Channel Selector */}
+                  <div className="compact-selector-block">
+                    <div className="compact-header-row">
+                      <span className="compact-step-label">CONSULTATION CHANNEL</span>
+                      <span className="compact-tag-pill">
+                        <i className="fas fa-shield-halved"></i> 100% Partner-Led
+                      </span>
                     </div>
-
-                    <div className="channel-cards-stack">
-                      {/* In-Person Chambers */}
+                    <div className="consultation-mode-grid-3">
                       <button
                         type="button"
-                        className={`channel-tier-card ${consultationMode === 'office' ? 'selected' : ''}`}
+                        className={`compact-mode-card ${consultationMode === 'office' ? 'active' : ''}`}
                         onClick={() => setConsultationMode('office')}
                       >
-                        <div className="channel-card-avatar office">
-                          <i className="fas fa-building-columns"></i>
+                        <div className="compact-card-icon"><i className="fas fa-building-columns"></i></div>
+                        <div className="compact-card-info">
+                          <strong>In-Person Chambers</strong>
+                          <span>Nikol, Ahmedabad</span>
                         </div>
-                        <div className="channel-card-content">
-                          <div className="channel-card-topline">
-                            <strong className="channel-title">In-Person Chambers</strong>
-                            <span className="channel-pill office">
-                              <i className="fas fa-map-pin"></i> Nikol Office &bull; Boardroom
-                            </span>
-                          </div>
-                          <p className="channel-desc">
-                            Confidential face-to-face consultation at our Nikol headquarters. Bring physical notice files, ledgers, and books of accounts for immediate scrutiny.
-                          </p>
-                          <div className="channel-perks-row">
-                            <span className="channel-perk-item">
-                              <i className="fas fa-check"></i> Physical Document Scrutiny
-                            </span>
-                            <span className="channel-perk-item">
-                              <i className="fas fa-check"></i> 1-on-1 Partner Advisory
-                            </span>
-                            <span className="channel-perk-item">
-                              <i className="fas fa-check"></i> Dedicated Meeting Chamber
-                            </span>
-                          </div>
-                        </div>
-                        <div className="channel-radio-indicator">
-                          <div className={`custom-radio-circle ${consultationMode === 'office' ? 'checked' : ''}`}>
-                            {consultationMode === 'office' ? (
-                              <i className="fas fa-circle-check"></i>
-                            ) : (
-                              <span className="radio-unselected-ring"></span>
-                            )}
-                          </div>
-                          <span className="radio-state-text">
-                            {consultationMode === 'office' ? 'Selected' : 'Select'}
-                          </span>
-                        </div>
+                        {consultationMode === 'office' && <i className="fas fa-check-circle compact-check"></i>}
                       </button>
 
-                      {/* Virtual Video Session */}
                       <button
                         type="button"
-                        className={`channel-tier-card ${consultationMode === 'virtual' ? 'selected' : ''}`}
+                        className={`compact-mode-card ${consultationMode === 'virtual' ? 'active' : ''}`}
                         onClick={() => setConsultationMode('virtual')}
                       >
-                        <div className="channel-card-avatar virtual">
-                          <i className="fas fa-video"></i>
+                        <div className="compact-card-icon"><i className="fas fa-video"></i></div>
+                        <div className="compact-card-info">
+                          <strong>Virtual Video</strong>
+                          <span>Google Meet HD</span>
                         </div>
-                        <div className="channel-card-content">
-                          <div className="channel-card-topline">
-                            <strong className="channel-title">Encrypted Video Session</strong>
-                            <span className="channel-pill virtual">
-                              <i className="fas fa-laptop"></i> Google Meet HD
-                            </span>
-                          </div>
-                          <p className="channel-desc">
-                            Encrypted HD virtual conference with live screen-sharing. Ideal for PAN-India corporate filings, IT portal notice audits, and NRI tax advisory.
-                          </p>
-                          <div className="channel-perks-row">
-                            <span className="channel-perk-item">
-                              <i className="fas fa-check"></i> Live Portal Screen Share
-                            </span>
-                            <span className="channel-perk-item">
-                              <i className="fas fa-check"></i> PAN-India &amp; NRI Ready
-                            </span>
-                            <span className="channel-perk-item">
-                              <i className="fas fa-check"></i> Encrypted Meeting Room
-                            </span>
-                          </div>
-                        </div>
-                        <div className="channel-radio-indicator">
-                          <div className={`custom-radio-circle ${consultationMode === 'virtual' ? 'checked' : ''}`}>
-                            {consultationMode === 'virtual' ? (
-                              <i className="fas fa-circle-check"></i>
-                            ) : (
-                              <span className="radio-unselected-ring"></span>
-                            )}
-                          </div>
-                          <span className="radio-state-text">
-                            {consultationMode === 'virtual' ? 'Selected' : 'Select'}
-                          </span>
-                        </div>
+                        {consultationMode === 'virtual' && <i className="fas fa-check-circle compact-check"></i>}
                       </button>
 
-                      {/* Direct Phone Advisory */}
                       <button
                         type="button"
-                        className={`channel-tier-card ${consultationMode === 'phone' ? 'selected' : ''}`}
+                        className={`compact-mode-card ${consultationMode === 'phone' ? 'active' : ''}`}
                         onClick={() => setConsultationMode('phone')}
                       >
-                        <div className="channel-card-avatar phone">
-                          <i className="fas fa-phone-volume"></i>
+                        <div className="compact-card-icon"><i className="fas fa-phone-volume"></i></div>
+                        <div className="compact-card-info">
+                          <strong>Direct CA Line</strong>
+                          <span>Immediate Triage</span>
                         </div>
-                        <div className="channel-card-content">
-                          <div className="channel-card-topline">
-                            <strong className="channel-title">Direct Phone Advisory</strong>
-                            <span className="channel-pill phone">
-                              <i className="fas fa-bolt"></i> Fast Callback &lt; 30m
-                            </span>
-                          </div>
-                          <p className="channel-desc">
-                            Direct telephonic assessment with a Senior CA Partner. Immediate verbal triage for urgent statutory deadlines, notice relief, and fee quotation.
-                          </p>
-                          <div className="channel-perks-row">
-                            <span className="channel-perk-item">
-                              <i className="fas fa-check"></i> Fastest Callback Window
-                            </span>
-                            <span className="channel-perk-item">
-                              <i className="fas fa-check"></i> Direct Senior CA Line
-                            </span>
-                            <span className="channel-perk-item">
-                              <i className="fas fa-check"></i> Immediate Verbal Action Plan
-                            </span>
-                          </div>
-                        </div>
-                        <div className="channel-radio-indicator">
-                          <div className={`custom-radio-circle ${consultationMode === 'phone' ? 'checked' : ''}`}>
-                            {consultationMode === 'phone' ? (
-                              <i className="fas fa-circle-check"></i>
-                            ) : (
-                              <span className="radio-unselected-ring"></span>
-                            )}
-                          </div>
-                          <span className="radio-state-text">
-                            {consultationMode === 'phone' ? 'Selected' : 'Select'}
-                          </span>
-                        </div>
+                        {consultationMode === 'phone' && <i className="fas fa-check-circle compact-check"></i>}
                       </button>
                     </div>
                   </div>
 
-                  <div className="consultation-slot-block">
-                    <div className="slot-section-header">
-                      <div className="slot-header-left">
-                        <span className="slot-step-badge">CONSULTATION TIMING</span>
-                        <h4 className="slot-header-title">Preferred Time Window (IST)</h4>
-                      </div>
-                      <div className="slot-schedule-tag">
-                        <i className="far fa-clock"></i>
-                        <span>Mon &ndash; Sat &bull; 10:30 AM &ndash; 7:00 PM</span>
-                      </div>
+                  {/* Timing Slot Selector */}
+                  <div className="compact-selector-block">
+                    <div className="compact-header-row">
+                      <span className="compact-step-label">PREFERRED ADVISORY WINDOW</span>
+                      <span className="compact-tag-pill">
+                        <i className="far fa-clock"></i> Mon – Sat (IST)
+                      </span>
                     </div>
-
-                    <div className="slot-cards-grid">
-                      {/* Morning Session */}
+                    <div className="consultation-slot-grid-3">
                       <button
                         type="button"
-                        className={`slot-card-tile ${preferredSlot === 'morning' ? 'active' : ''}`}
+                        className={`compact-slot-card ${preferredSlot === 'morning' ? 'active' : ''}`}
                         onClick={() => setPreferredSlot('morning')}
                       >
-                        <div className="slot-tile-top">
-                          <div className="slot-icon-badge morning">
-                            <i className="fas fa-sun"></i>
-                          </div>
-                          <div className="slot-selection-indicator">
-                            {preferredSlot === 'morning' ? (
-                              <i className="fas fa-circle-check"></i>
-                            ) : (
-                              <span className="slot-unselected-dot"></span>
-                            )}
-                          </div>
-                        </div>
-
-                        <div className="slot-tile-body">
-                          <span className="slot-moniker">Morning Briefing</span>
-                          <strong className="slot-time-range">10:30 AM &ndash; 1:00 PM</strong>
-                          <div className="slot-focus-tag">
-                            <span>Notice Scrutiny &amp; Triage</span>
-                          </div>
-                        </div>
+                        <i className="fas fa-sun"></i>
+                        <span className="slot-title">Morning</span>
+                        <span className="slot-time">10:30 AM – 1:00 PM</span>
                       </button>
 
-                      {/* Afternoon Session */}
                       <button
                         type="button"
-                        className={`slot-card-tile ${preferredSlot === 'afternoon' ? 'active' : ''}`}
+                        className={`compact-slot-card ${preferredSlot === 'afternoon' ? 'active' : ''}`}
                         onClick={() => setPreferredSlot('afternoon')}
                       >
-                        <div className="slot-tile-top">
-                          <div className="slot-icon-badge afternoon">
-                            <i className="fas fa-cloud-sun"></i>
-                          </div>
-                          <div className="slot-selection-indicator">
-                            {preferredSlot === 'afternoon' ? (
-                              <i className="fas fa-circle-check"></i>
-                            ) : (
-                              <span className="slot-unselected-dot"></span>
-                            )}
-                          </div>
-                        </div>
-
-                        <div className="slot-tile-body">
-                          <span className="slot-moniker">Core Afternoon</span>
-                          <strong className="slot-time-range">2:00 PM &ndash; 5:00 PM</strong>
-                          <div className="slot-focus-tag">
-                            <span>Corporate &amp; GST Audit</span>
-                          </div>
-                        </div>
+                        <i className="fas fa-cloud-sun"></i>
+                        <span className="slot-title">Afternoon</span>
+                        <span className="slot-time">2:00 PM – 5:00 PM</span>
                       </button>
 
-                      {/* Executive Evening */}
                       <button
                         type="button"
-                        className={`slot-card-tile ${preferredSlot === 'evening' ? 'active' : ''}`}
+                        className={`compact-slot-card ${preferredSlot === 'evening' ? 'active' : ''}`}
                         onClick={() => setPreferredSlot('evening')}
                       >
-                        <div className="slot-tile-top">
-                          <div className="slot-icon-badge evening">
-                            <i className="fas fa-moon"></i>
-                          </div>
-                          <div className="slot-selection-indicator">
-                            {preferredSlot === 'evening' ? (
-                              <i className="fas fa-circle-check"></i>
-                            ) : (
-                              <span className="slot-unselected-dot"></span>
-                            )}
-                          </div>
-                        </div>
-
-                        <div className="slot-tile-body">
-                          <span className="slot-moniker">Executive Evening</span>
-                          <strong className="slot-time-range">5:00 PM &ndash; 7:00 PM</strong>
-                          <div className="slot-focus-tag">
-                            <span>Founder &amp; HNI Counsel</span>
-                          </div>
-                        </div>
+                        <i className="fas fa-moon"></i>
+                        <span className="slot-title">Evening</span>
+                        <span className="slot-time">5:00 PM – 7:00 PM</span>
                       </button>
-                    </div>
-
-                    <div className="slot-meta-strip">
-                      <i className="fas fa-shield-check"></i>
-                      <span>30&ndash;45 Min Focused Strategy &bull; Direct Google Calendar / Outlook invite sent immediately upon partner confirmation</span>
                     </div>
                   </div>
                 </div>
@@ -583,14 +421,16 @@ const ContactForm = () => {
                     className={`urgency-chip ${urgency === 'urgent' ? 'active urgent' : ''}`}
                     onClick={() => setUrgency('urgent')}
                   >
-                    <span className="dot urgent"></span> 🚨 Urgent Notice &lt; 48h
+                    <span className="dot urgent"></span> <i className="fas fa-triangle-exclamation"></i> Urgent Notice &lt; 48h
                   </button>
                 </div>
               </div>
 
               {/* Core Contact Inputs */}
               <div className="contact-form-group">
-                <label htmlFor="contact-name">Full Name or Firm Name *</label>
+                <label htmlFor="contact-name" className="luxury-input-label">
+                  Full Name or Organization <span className="req-star">*</span>
+                </label>
                 <div className="input-with-icon">
                   <i className="fas fa-user input-icon"></i>
                   <input
@@ -600,7 +440,7 @@ const ContactForm = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    placeholder="e.g. Rajeshbhai Patel / Patel Enterprises"
+                    placeholder="e.g. Rajesh Patel / Enterprise Group"
                     className="contact-custom-input with-left-icon"
                   />
                 </div>
@@ -608,7 +448,9 @@ const ContactForm = () => {
 
               <div className="contact-form-row">
                 <div className="contact-form-group">
-                  <label htmlFor="contact-email">Email Address *</label>
+                  <label htmlFor="contact-email" className="luxury-input-label">
+                    Official Email Address <span className="req-star">*</span>
+                  </label>
                   <div className="input-with-icon">
                     <i className="fas fa-envelope input-icon"></i>
                     <input
@@ -618,16 +460,21 @@ const ContactForm = () => {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      placeholder="rajesh@enterprises.com"
+                      placeholder="client@enterprise.com"
                       className="contact-custom-input with-left-icon"
                     />
                   </div>
                 </div>
 
                 <div className="contact-form-group">
-                  <label htmlFor="contact-phone">Phone Number (WhatsApp Preferred)</label>
-                  <div className="input-with-prefix">
-                    <span className="phone-prefix">+91</span>
+                  <label htmlFor="contact-phone" className="luxury-input-label">
+                    Phone Number <span className="label-sub-tag">WhatsApp Ready</span>
+                  </label>
+                  <div className="unified-phone-box">
+                    <div className="phone-flag-segment">
+                      <span className="country-flag-icon">🇮🇳</span>
+                      <span className="prefix-code">+91</span>
+                    </div>
                     <input
                       type="tel"
                       id="contact-phone"
@@ -635,54 +482,30 @@ const ContactForm = () => {
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="98765 43210"
-                      className="contact-custom-input with-prefix-input"
+                      className="unified-phone-field"
                     />
                   </div>
                 </div>
               </div>
 
               <div className="contact-form-group">
-                <label htmlFor="contact-service">Primary Area of Interest</label>
-                <div className="input-with-icon">
-                  <i className="fas fa-briefcase input-icon"></i>
-                  <select
-                    id="contact-service"
-                    name="service"
-                    value={formData.service}
-                    onChange={handleChange}
-                    className="contact-custom-select with-left-icon"
-                  >
-                    <option value="">Select a practice area or advisory domain</option>
-                    <optgroup label="Direct Taxation &amp; Audit">
-                      <option value="Income Tax Return & Direct Tax Advisory">Income Tax Return &amp; Direct Tax Advisory</option>
-                      <option value="Tax Audit under Sec 44AB & 44AD">Tax Audit under Sec 44AB &amp; 44AD</option>
-                      <option value="Capital Gains & Real Estate Tax Advisory">Capital Gains &amp; Real Estate Tax Advisory</option>
-                    </optgroup>
-                    <optgroup label="Goods &amp; Services Tax (GST)">
-                      <option value="GST Registration & Monthly Compliance">GST Registration &amp; Monthly Compliance</option>
-                      <option value="GST Audit & Annual Return (GSTR-9/9C)">GST Audit &amp; Annual Return (GSTR-9/9C)</option>
-                      <option value="GST Scrutiny & ASMT-10 Notice Defense">GST Scrutiny &amp; ASMT-10 Notice Defense</option>
-                    </optgroup>
-                    <optgroup label="Corporate &amp; Startup Services">
-                      <option value="Company / LLP Turnkey Incorporation">Company / LLP Turnkey Incorporation</option>
-                      <option value="ROC & MCA Annual Statutory Filings">ROC &amp; MCA Annual Statutory Filings</option>
-                      <option value="Startup India & Trademark Registration">Startup India &amp; Trademark Registration</option>
-                    </optgroup>
-                    <optgroup label="Finance &amp; Leadership Retainer">
-                      <option value="Complete Accounting & Bookkeeping Retainer">Complete Accounting &amp; Bookkeeping Retainer</option>
-                      <option value="Virtual CFO & Financial Leadership">Virtual CFO &amp; Financial Leadership</option>
-                    </optgroup>
-                    <optgroup label="Statutory Notices &amp; Litigation">
-                      <option value="Income Tax Sec 148 / 144 Notice Defense">Income Tax Sec 148 / 144 Notice Defense</option>
-                      <option value="High-Stakes Faceless Assessment Defense">High-Stakes Faceless Assessment Defense</option>
-                    </optgroup>
-                  </select>
-                </div>
+                <label htmlFor="contact-service" className="luxury-input-label">
+                  Primary Practice Domain or Service Needed
+                </label>
+                <ExecutiveSelect
+                  id="contact-service"
+                  name="service"
+                  value={formData.service}
+                  onChange={handleChange}
+                  placeholder="Select a practice area or advisory domain"
+                />
               </div>
 
               <div className="contact-form-group">
                 <div className="textarea-label-row">
-                  <label htmlFor="contact-message">Case Details or Business Inquiry *</label>
+                  <label htmlFor="contact-message" className="luxury-input-label">
+                    Case Details or Business Inquiry <span className="req-star">*</span>
+                  </label>
                   <span className={`char-counter ${formData.message.length > 1800 ? 'near-limit' : ''}`}>
                     {formData.message.length} / 2000
                   </span>
@@ -711,30 +534,61 @@ const ContactForm = () => {
                 disabled={status.submitting}
               >
                 {status.submitting ? (
-                  <span>
-                    <i className="fas fa-circle-notch fa-spin"></i> Dispatching Request...
+                  <span className="submit-btn-content">
+                    <span className="submit-btn-icon-seal">
+                      <i className="fas fa-circle-notch fa-spin"></i>
+                    </span>
+                    <span className="submit-btn-title">Dispatching Request to Partners...</span>
                   </span>
                 ) : (
-                  <span>
-                    {activeTab === 'consultation' ? 'Schedule 1-on-1 Consultation' : 'Submit Official Inquiry'}{' '}
-                    <i className="fas fa-arrow-right"></i>
+                  <span className="submit-btn-content">
+                    <span className="submit-btn-icon-seal">
+                      <i className={activeTab === 'consultation' ? 'fas fa-calendar-check' : 'fas fa-paper-plane'}></i>
+                    </span>
+                    <span className="submit-btn-title">
+                      {activeTab === 'consultation' ? 'Reserve 1-on-1 CA Consultation' : 'Submit Official Inquiry'}
+                    </span>
+                    <span className="submit-btn-arrow-disc">
+                      <i className="fas fa-arrow-right"></i>
+                    </span>
                   </span>
                 )}
               </button>
             </form>
 
-            <div className="contact-form-trust-pills">
-              <div className="trust-pill">
-                <i className="fas fa-shield-alt"></i>
-                <span>Bank-Grade 256-Bit SSL</span>
+            <div className="form-security-ribbon">
+              <div className="security-ribbon-item">
+                <div className="security-icon-circle">
+                  <i className="fas fa-shield-halved"></i>
+                </div>
+                <div className="security-text-group">
+                  <strong className="security-title">Bank-Grade SSL</strong>
+                  <span className="security-subtitle">256-Bit Encryption</span>
+                </div>
               </div>
-              <div className="trust-pill">
-                <i className="fas fa-balance-scale"></i>
-                <span>ICAI Professional Privilege</span>
+
+              <div className="security-ribbon-divider"></div>
+
+              <div className="security-ribbon-item">
+                <div className="security-icon-circle">
+                  <i className="fas fa-scale-balanced"></i>
+                </div>
+                <div className="security-text-group">
+                  <strong className="security-title">ICAI Regulated</strong>
+                  <span className="security-subtitle">Statutory Privilege</span>
+                </div>
               </div>
-              <div className="trust-pill">
-                <i className="fas fa-bolt"></i>
-                <span>Priority &lt; 30-Min Queue</span>
+
+              <div className="security-ribbon-divider"></div>
+
+              <div className="security-ribbon-item">
+                <div className="security-icon-circle">
+                  <i className="fas fa-bolt"></i>
+                </div>
+                <div className="security-text-group">
+                  <strong className="security-title">Priority Callback</strong>
+                  <span className="security-subtitle">Under 30-Min SLA</span>
+                </div>
               </div>
             </div>
           </>

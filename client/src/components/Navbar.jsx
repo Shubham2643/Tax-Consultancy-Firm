@@ -50,7 +50,10 @@ const getDropdownMeta = (label) => {
   if (normalized.includes('roc') || normalized.includes('annual filing')) return { icon: 'fas fa-file-contract', desc: 'AOC-4 & MGT-7 annual statutory reporting' };
   if (normalized.includes('cfo')) return { icon: 'fas fa-crown', desc: 'Executive financial leadership' };
 
-  // Others
+  // Others / Resources & Direct Reach
+  if (normalized.includes('blog')) return { icon: 'fas fa-newspaper', desc: 'Tax circulars, case studies & updates' };
+  if (normalized.includes('faq')) return { icon: 'fas fa-circle-question', desc: 'Common compliance queries answered' };
+  if (normalized.includes('contact')) return { icon: 'fas fa-headset', desc: 'Direct access to senior advisory chambers' };
   if (normalized.includes('trademark') || normalized.includes('ipr')) return { icon: 'fas fa-trademark', desc: 'Brand protection & IP registry' };
   if (normalized.includes('copyright')) return { icon: 'fas fa-copyright', desc: 'Creative work & software protection' };
   if (normalized.includes('food') || normalized.includes('fssai')) return { icon: 'fas fa-utensils', desc: 'Food business statutory licensing' };
@@ -488,10 +491,12 @@ const Navbar = () => {
                               <i className={getTopCategoryIcon(item.label)}></i>
                               <span>{item.label}</span>
                             </span>
-                            <span className="megamenu-sublabel">Statutory Compliance & Filings</span>
+                            <span className="megamenu-sublabel">
+                              {item.label === 'Others' ? 'Knowledge Hub & Practice Support' : 'Statutory Compliance & Filings'}
+                            </span>
                           </div>
                           <span className="megamenu-count-badge">
-                            {item.children.length} Services
+                            {item.children.length} {item.label === 'Others' ? 'Resources' : 'Services'}
                           </span>
                         </div>
 
@@ -573,7 +578,7 @@ const Navbar = () => {
 
             {/* 11/10 Executive Free Consultation CTA */}
             <Link to="/contact" className="nav-consultation-btn">
-              <span className="consultation-btn-text">Free Consultation</span>
+              <span className="consultation-btn-text">Book Consultation</span>
               <span className="consultation-arrow-badge">
                 <i className="fas fa-arrow-right"></i>
               </span>

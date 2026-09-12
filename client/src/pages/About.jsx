@@ -196,7 +196,9 @@ const About = () => {
 
   const phone = settings?.phone || '+91 95109 84735';
   const cleanPhone = '919510984735';
-  const address = settings?.address || 'Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad, Gujarat - 380049';
+  const address = (settings?.address && !settings.address.includes('Zaveri') && !settings.address.includes('Kathwada') && !settings.address.includes('Singarva'))
+    ? (settings.address.includes('612') ? settings.address : '612, ' + settings.address)
+    : '612, Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad, Gujarat - 380049';
 
   // 1. Quantitative Benchmarks (Standardized equal length descriptions for identical card heights)
   const stats = [
@@ -970,7 +972,7 @@ const About = () => {
 
               <div className="chambers-cta-row">
                 <a
-                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad, Gujarat 380049')}`}
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('612, Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad, Gujarat 380049')}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-directions"

@@ -329,7 +329,7 @@ const Services = () => {
                 </div>
                 <div className="cta-meta-item">
                   <i className="fas fa-location-dot"></i>
-                  <span>Hill Town Square, Nikol, Ahmedabad - 380049</span>
+                  <span>612, Hill Town Square, Nikol, Ahmedabad - 380049</span>
                 </div>
               </div>
 

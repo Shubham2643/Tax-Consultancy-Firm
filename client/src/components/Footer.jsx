@@ -26,8 +26,8 @@ const Footer = () => {
   const rawPhone = '+919510984735';
   const email = settings?.email || 'shreechamundaassociates0905@gmail.com';
   const address = (settings?.address && !settings.address.includes('Zaveri') && !settings.address.includes('Kathwada') && !settings.address.includes('Singarva'))
-    ? settings.address
-    : 'Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad, Gujarat - 380049';
+    ? (settings.address.includes('612') ? settings.address : '612, ' + settings.address)
+    : '612, Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad, Gujarat - 380049';
   const workingHours = settings?.workingHours || 'Mon - Sat: 10:00 AM - 7:00 PM';
   const socialLinks = settings?.socialLinks || {};
   const currentYear = new Date().getFullYear();
@@ -229,7 +229,7 @@ const Footer = () => {
                   </div>
                   <div className="office-header-info">
                     <span className="office-tag">PHYSICAL OFFICE &bull; NIKOL, AHMEDABAD</span>
-                    <strong className="office-title">Hill Town Square</strong>
+                    <strong className="office-title">612, Hill Town Square</strong>
                   </div>
                 </div>
 

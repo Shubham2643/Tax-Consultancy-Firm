@@ -255,9 +255,16 @@ const seedData = async () => {
         isActive: true,
       },
       {
+        label: 'Services',
+        href: '/services',
+        order: 2,
+        children: [],
+        isActive: true,
+      },
+      {
         label: 'Start a Business',
         href: '#',
-        order: 2,
+        order: 3,
         children: [
           { label: 'Private Limited Company', href: '/services/private-limited-company' },
           { label: 'Limited Liability Partnership Firm', href: '/services/limited-liability-partnership-firm' },
@@ -273,7 +280,7 @@ const seedData = async () => {
       {
         label: 'Registration',
         href: '#',
-        order: 3,
+        order: 4,
         children: [
           { label: 'Government Registration', href: '/services/government-registration' },
           { label: 'GST Registration', href: '/services/gst-registration' },
@@ -291,7 +298,7 @@ const seedData = async () => {
       {
         label: 'Return',
         href: '#',
-        order: 4,
+        order: 5,
         children: [
           { label: 'GST Return Filing', href: '/services/gst-return-filing' },
           { label: 'Income Tax Return Filing', href: '/services/income-tax-return-filing' },
@@ -305,7 +312,7 @@ const seedData = async () => {
       {
         label: 'Accounting & Compliance',
         href: '#',
-        order: 5,
+        order: 6,
         children: [
           { label: 'Accounting & Bookkeeping', href: '/services/bookkeeping-services' },
           { label: 'Payroll', href: '/services/payroll-services' },
@@ -315,19 +322,18 @@ const seedData = async () => {
       {
         label: 'Others',
         href: '#',
-        order: 6,
+        order: 7,
         children: [
           { label: 'Blog', href: '/blog' },
           { label: 'FAQs', href: '/faqs' },
-          { label: 'About Us', href: '/about' },
           { label: 'Contact Us', href: '/contact' },
         ],
         isActive: true,
       },
       {
-        label: 'Services',
-        href: '/services',
-        order: 7,
+        label: 'About Us',
+        href: '/about',
+        order: 8,
         children: [],
         isActive: true,
       },
@@ -343,7 +349,7 @@ const seedData = async () => {
         "Welcome to Shree Chamunda Associates, your trusted partner for comprehensive tax consultancy and financial advisory services. Founded with a commitment to excellence, we specialize in helping individuals and businesses navigate the complexities of taxation with ease and confidence.",
       phone: "+91 95109 84735",
       email: "shreechamundaassociates0905@gmail.com",
-      address: "Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad, Gujarat - 380049",
+      address: "612, Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad, Gujarat - 380049",
       workingHours: "Mon-Sat: 10.00 AM-7.00 PM",
       companyDescription:
         "Shree Chamunda Associates is a well reputed company providing complete solutions for Tax Services.",

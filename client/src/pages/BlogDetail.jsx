@@ -763,7 +763,7 @@ const BlogDetail = () => {
           {/* Official Verification Stamp */}
           <div className="statutory-official-seal-bar">
             <i className="fas fa-stamp"></i>
-            <span>Verified Official Analysis &bull; Registered Office: Hill Town Square, Nikol, Ahmedabad - 380049</span>
+            <span>Verified Official Analysis &bull; Registered Office: 612, Hill Town Square, Nikol, Ahmedabad - 380049</span>
           </div>
 
           {/* Bottom Navigation */}
@@ -851,7 +851,7 @@ const BlogDetail = () => {
                 <span>Shree Chamunda Associates</span>
               </div>
               <p className="chambers-meta-address">
-                Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad, Gujarat - 380049
+                612, Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad, Gujarat - 380049
               </p>
               <div className="chambers-meta-contact">
                 <a href="tel:+919510984735" className="meta-tel-link">

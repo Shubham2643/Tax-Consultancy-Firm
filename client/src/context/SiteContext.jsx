@@ -26,8 +26,8 @@ export const SiteContextProvider = ({ children }) => {
           getNavMenu(),
         ]);
         const data = settingsData.data || {};
-        const cleanAddress = (!data.address || data.address.includes('Zaveri') || data.address.includes('Kathwada') || data.address.includes('Singarva'))
-          ? 'Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad, Gujarat - 380049'
+        const cleanAddress = (!data.address || data.address.includes('Zaveri') || data.address.includes('Kathwada') || data.address.includes('Singarva') || !data.address.includes('612'))
+          ? '612, Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad, Gujarat - 380049'
           : data.address;
         setSettings({ ...data, address: cleanAddress });
         setNavMenu(navData.data);
@@ -39,7 +39,7 @@ export const SiteContextProvider = ({ children }) => {
           siteName: "Shree Chamunda Associates",
           phone: "+91 95109 84735",
           email: "shreechamundaassociates0905@gmail.com",
-          address: "Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad, Gujarat - 380049",
+          address: "612, Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad, Gujarat - 380049",
           workingHours: "Mon - Sat: 9:00 AM - 7:00 PM",
           heroTitle: "SHREE CHAMUNDA ASSOCIATES",
           heroSubtitle: "THE BEST TAX CONSULTANCY FIRM IN GUJARAT",
@@ -139,10 +139,9 @@ export const SiteContextProvider = ({ children }) => {
             label: 'Others',
             href: '#',
             children: [
-              { label: 'Trademark Registration', href: '/services/trademark-registration' },
-              { label: 'Copyright Registration', href: '/services/copyright-registration' },
-              { label: 'Food License (FSSAI)', href: '/services/fssai-license' },
-              { label: 'ISO Certification', href: '/services/iso-certification' },
+              { label: 'Blog', href: '/blog' },
+              { label: 'FAQs', href: '/faqs' },
+              { label: 'Contact Us', href: '/contact' },
             ],
           },
           { label: 'About Us', href: '/about', children: [] },
