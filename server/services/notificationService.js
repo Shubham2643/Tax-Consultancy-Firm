@@ -42,21 +42,41 @@ webPush.setVapidDetails(
 const configureTransporter = () => {
   const user = process.env.SMTP_USER;
   const pass = process.env.SMTP_PASS;
+  const host = process.env.SMTP_HOST;
+  const port = parseInt(process.env.SMTP_PORT, 10) || 587;
 
   if (user && pass) {
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      pool: true,
-      maxConnections: 5,
-      maxMessages: 100,
-      auth: {
-        user: user.trim(),
-        pass: pass.trim()
-      },
-      tls: {
-        rejectUnauthorized: false
-      }
-    });
+    const transportConfig = (host && host !== 'smtp.gmail.com')
+      ? {
+          host,
+          port,
+          secure: port === 465,
+          pool: true,
+          maxConnections: 5,
+          maxMessages: 100,
+          auth: {
+            user: user.trim(),
+            pass: pass.trim()
+          },
+          tls: {
+            rejectUnauthorized: process.env.NODE_ENV === 'production'
+          }
+        }
+      : {
+          service: 'gmail',
+          pool: true,
+          maxConnections: 5,
+          maxMessages: 100,
+          auth: {
+            user: user.trim(),
+            pass: pass.trim()
+          },
+          tls: {
+            rejectUnauthorized: process.env.NODE_ENV === 'production'
+          }
+        };
+
+    const transporter = nodemailer.createTransport(transportConfig);
 
     transporter.verify((error) => {
       if (error) {
@@ -93,8 +113,8 @@ const mailTransporter = configureTransporter();
 
 // Sender Identity
 const SENDER_NAME = 'Shree Chamunda Associates';
-const getSenderEmail = () => `"${SENDER_NAME}" <${process.env.SMTP_USER || 'shreechamundaassociates0905@gmail.com'}>`;
-const getSecuritySenderEmail = () => `"Shree Chamunda Security" <${process.env.SMTP_USER || 'shreechamundaassociates0905@gmail.com'}>`;
+const getSenderEmail = () => `"${SENDER_NAME}" <${process.env.SENDER_EMAIL || process.env.ADMIN_EMAIL || 'shreechamundaassociates0905@gmail.com'}>`;
+const getSecuritySenderEmail = () => `"Shree Chamunda Security" <${process.env.SENDER_EMAIL || process.env.ADMIN_EMAIL || 'shreechamundaassociates0905@gmail.com'}>`;
 const getAdminEmail = () => process.env.ADMIN_EMAIL || 'shreechamundaassociates0905@gmail.com';
 
 /**
@@ -720,6 +740,16 @@ Shree Chamunda Associates Security Team
    * Dispatch SMS alerts via Twilio (fallback to logging)
    */
   sendSMS: async (phone, textMessage) => {
+    let toPhone = (phone || '').toString().trim();
+    if (toPhone) {
+      const digitsOnly = toPhone.replace(/[^0-9]/g, '');
+      if (digitsOnly.length === 10) {
+        toPhone = `+91${digitsOnly}`;
+      } else if (digitsOnly.length > 10 && !toPhone.startsWith('+')) {
+        toPhone = `+${digitsOnly}`;
+      }
+    }
+
     const accountSid = process.env.TWILIO_ACCOUNT_SID;
     const authToken = process.env.TWILIO_AUTH_TOKEN;
     const fromPhone = process.env.TWILIO_PHONE_NUMBER;
@@ -735,9 +765,9 @@ Shree Chamunda Associates Security Team
         await client.messages.create({
           body: textMessage,
           from: fromPhone,
-          to: phone
+          to: toPhone
         });
-        console.log(`✅ SMS successfully delivered via Twilio to: ${phone}`);
+        console.log(`✅ SMS successfully delivered via Twilio to: ${toPhone}`);
       } catch (err) {
         console.error('❌ Twilio SMS delivery failed:', err);
       }
@@ -745,7 +775,7 @@ Shree Chamunda Associates Security Team
       console.log(`
 =========================================
 💬 [SIMULATED SMS DISPATCHED]
-To: ${phone || 'Proprietor/Admin'}
+To: ${toPhone || 'Proprietor/Admin'}
 Message Content:
 -----------------------------------------
 ${textMessage}

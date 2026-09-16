@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense } from 'react';
+import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import Navbar from './components/Navbar';
@@ -11,13 +11,14 @@ import Services from './pages/Services';
 import Contact from './pages/Contact';
 import Blog from './pages/Blog';
 import FAQ from './pages/FAQ';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import WhatsAppWidget from './components/WhatsAppWidget';
 import './App.css';
 
 // Dynamically split heavy pages to optimize initial bundle load
 const ServiceDetail = lazy(() => import('./pages/ServiceDetail'));
+const TaxTools = lazy(() => import('./pages/TaxTools'));
 const BlogDetail = lazy(() => import('./pages/BlogDetail'));
 const TermsConditions = lazy(() => import('./pages/TermsConditions'));
 const RefundPolicy = lazy(() => import('./pages/RefundPolicy'));
@@ -32,11 +33,14 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 
 
 function App() {
+  const { user } = useAuth();
   const [toasts, setToasts] = useState([]);
+  const socketRef = useRef(null);
 
   useEffect(() => {
     // Connect to backend Socket.io server
     const socket = io(import.meta.env.VITE_API_URL || 'http://localhost:5000');
+    socketRef.current = socket;
 
     socket.on('connect', () => {
       console.log('🔌 Connected to Socket.io backend server');
@@ -84,10 +88,30 @@ function App() {
       addToast(`Appointment slot status updated to "${booking.status}" on ${new Date(booking.date).toLocaleDateString('en-IN')}`);
     });
 
+    socket.on('document_status_changed', (doc) => {
+      addToast(`Document "${doc.originalName || doc.fileName}" has been ${doc.status} by auditor.`);
+    });
+
+    socket.on('invoice_paid', (inv) => {
+      addToast(`Invoice #${inv.invoiceNumber} (₹${inv.amount}) marked as Paid.`);
+    });
+
     return () => {
       socket.disconnect();
+      socketRef.current = null;
     };
   }, []);
+
+  // Dynamically re-authenticate or de-authenticate socket on user login/logout
+  useEffect(() => {
+    if (!socketRef.current) return;
+    const token = localStorage.getItem('authToken');
+    if (user && token) {
+      socketRef.current.emit('authenticate', token);
+    } else if (!user && socketRef.current.connected) {
+      socketRef.current.emit('deauthenticate');
+    }
+  }, [user]);
 
   const location = useLocation();
   const isFullPageLayout = 
@@ -125,6 +149,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
             <Route path="/services/:id" element={<ServiceDetail />} />
+            <Route path="/tax-tools" element={<TaxTools />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:id" element={<BlogDetail />} />

@@ -13,24 +13,21 @@ const WhatsAppWidget = () => {
   )}`;
 
   useEffect(() => {
-    const isMobile = window.innerWidth < 640;
-    // Show prompt badge after delay
+    const isMobile = window.innerWidth < 768;
+    // On mobile devices, do not auto-popup the floating card to prevent obscuring mobile content
+    if (isMobile) {
+      return;
+    }
+
+    // Show prompt badge after delay on desktop only
     const timer = setTimeout(() => {
       if (!isDismissed) {
         setShowTooltip(true);
       }
-    }, isMobile ? 8000 : 3500);
+    }, 3500);
 
-    const handleScroll = () => {
-      if (isMobile && window.scrollY > 250) {
-        setShowTooltip(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
       clearTimeout(timer);
-      window.removeEventListener('scroll', handleScroll);
     };
   }, [isDismissed]);
 

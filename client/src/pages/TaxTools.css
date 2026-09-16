@@ -1,0 +1,2113 @@
+/* ==========================================================================
+   INTERACTIVE TAX TOOLS & REGIME CALCULATOR STYLES
+   Tailored for Shree Chamunda Associates
+   ========================================================================== */
+
+.tax-tools-page {
+  background-color: #070d19;
+  color: #f8fafc;
+  min-height: 100vh;
+  padding-bottom: 96px;
+}
+
+/* ==========================================================================
+   1. EXECUTIVE HERO BANNER
+   ========================================================================== */
+.tools-hero {
+  position: relative;
+  background: radial-gradient(circle at 50% 0%, #0c1a30 0%, #030a14 70%);
+  padding: 16px 0 14px;
+  text-align: center;
+  border-bottom: 1px solid rgba(248, 180, 0, 0.18);
+  overflow: hidden;
+}
+
+.tools-hero-glow {
+  position: absolute;
+  width: 450px;
+  height: 200px;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  opacity: 0.22;
+}
+
+.tools-hero-glow.glow-gold {
+  background: #f8b400;
+  top: -80px;
+  left: 20%;
+}
+
+.tools-hero-glow.glow-blue {
+  background: #38bdf8;
+  top: -80px;
+  right: 20%;
+}
+
+.tools-kicker-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(248, 180, 0, 0.08);
+  border: 1px solid rgba(248, 180, 0, 0.3);
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 650;
+  color: #fbbf24;
+  letter-spacing: 0.4px;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.tools-hero h1 {
+  font-size: clamp(20px, 2.6vw, 28px);
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 6px;
+  line-height: 1.15;
+  letter-spacing: -0.4px;
+}
+
+.tools-hero-lead {
+  max-width: 660px;
+  margin: 0 auto 12px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #94a3b8;
+}
+
+/* Tab Selection Navigation */
+.tools-tab-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 4px;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  max-width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tool-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: #94a3b8;
+  padding: 6px 14px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  text-align: left;
+}
+
+.tool-tab-btn i {
+  font-size: 15px;
+  color: #64748b;
+  transition: color 0.2s ease;
+}
+
+.tab-label-stack {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.tab-title {
+  font-weight: 700;
+  font-size: 12px;
+  color: #e2e8f0;
+}
+
+.tab-sub {
+  font-size: 10px;
+  color: #64748b;
+}
+
+.tool-tab-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+.tool-tab-btn:hover i {
+  color: #f8b400;
+}
+
+.tool-tab-btn.tab-active {
+  background: linear-gradient(135deg, rgba(248, 180, 0, 0.18) 0%, rgba(248, 180, 0, 0.08) 100%);
+  border-color: rgba(248, 180, 0, 0.5);
+  box-shadow: 0 4px 16px rgba(248, 180, 0, 0.15);
+}
+
+.tool-tab-btn.tab-active i {
+  color: #f8b400;
+}
+
+.tool-tab-btn.tab-active .tab-title {
+  color: #fbbf24;
+}
+
+.tool-tab-btn.tab-active .tab-sub {
+  color: #e2e8f0;
+}
+
+/* ==========================================================================
+   2. MAIN TOOL CANVAS & TWO-COLUMN GRID
+   ========================================================================== */
+.tools-canvas-container {
+  margin-top: 14px;
+}
+
+.tool-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.08fr;
+  gap: 28px;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .tool-content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Bento Input Card Box */
+.tool-card-box {
+  background: linear-gradient(180deg, #0d1728 0%, #09111e 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 20px 22px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.tool-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+.tool-icon-circle {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: rgba(248, 180, 0, 0.12);
+  border: 1px solid rgba(248, 180, 0, 0.3);
+  color: #f8b400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+
+.tool-card-header h3 {
+  font-size: 17px;
+  font-weight: 750;
+  margin: 0;
+  color: #ffffff;
+}
+
+.card-subtext {
+  font-size: 11.5px;
+  color: #94a3b8;
+}
+
+/* Form Elements */
+.tool-form-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group-tax {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tax-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.form-group-tax label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #cbd5e1;
+}
+
+.tax-curr-display {
+  font-size: 14px;
+  font-weight: 750;
+  color: #fbbf24;
+}
+
+.tax-cap-hint {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.tax-num-input {
+  width: 100%;
+  background: #060b14;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  color: #ffffff;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.tax-num-input:focus {
+  outline: none;
+  border-color: #f8b400;
+  box-shadow: 0 0 0 3px rgba(248, 180, 0, 0.2);
+  background: #08101e;
+}
+
+/* ==========================================================================
+   2.1 HERO FINANCIAL CURRENCY INPUT & 10/10 FINTECH ELEMENTS
+   ========================================================================== */
+.hero-income-card {
+  background: linear-gradient(180deg, rgba(16, 28, 48, 0.85) 0%, rgba(9, 17, 30, 0.95) 100%);
+  border: 1px solid rgba(248, 180, 0, 0.28);
+  border-radius: 14px;
+  padding: 18px 18px 16px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hero-income-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.hero-income-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hero-income-label {
+  font-size: 13.5px;
+  font-weight: 750;
+  color: #f1f5f9;
+  letter-spacing: 0.2px;
+}
+
+.hero-income-sub {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.hero-income-pill-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 750;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  padding: 3px 9px;
+  border-radius: 999px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.hero-currency-input-wrap {
+  display: flex;
+  align-items: center;
+  background: #040812;
+  border: 1.5px solid rgba(248, 180, 0, 0.4);
+  border-radius: 10px;
+  padding: 8px 16px;
+  gap: 10px;
+  transition: all 0.22s ease;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.hero-currency-input-wrap:focus-within {
+  border-color: #f8b400;
+  box-shadow: 0 0 0 3px rgba(248, 180, 0, 0.22), inset 0 2px 8px rgba(0, 0, 0, 0.6);
+  background: #060c18;
+}
+
+.hero-currency-symbol {
+  font-size: 26px;
+  font-weight: 800;
+  color: #f8b400;
+  line-height: 1;
+  user-select: none;
+}
+
+.hero-currency-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 24px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  font-variant-numeric: tabular-nums;
+  font-family: inherit;
+}
+
+.hero-currency-input::placeholder {
+  color: #475569;
+}
+
+/* 2.2 Segmented Age Control */
+.tax-subheading-label {
+  font-size: 11.5px;
+  font-weight: 750;
+  color: #94a3b8;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.segmented-age-control {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: #060b14;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.segmented-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 6px;
+  border-radius: 7px;
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.segmented-tab .seg-main {
+  font-size: 12px;
+  font-weight: 750;
+  color: #94a3b8;
+  transition: color 0.18s ease;
+}
+
+.segmented-tab .seg-sub {
+  font-size: 10px;
+  color: #64748b;
+  margin-top: 1px;
+  transition: color 0.18s ease;
+}
+
+.segmented-tab:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.segmented-tab:hover .seg-main {
+  color: #ffffff;
+}
+
+.segmented-tab.active {
+  background: rgba(248, 180, 0, 0.14);
+  border-color: rgba(248, 180, 0, 0.45);
+  box-shadow: 0 2px 10px rgba(248, 180, 0, 0.16);
+}
+
+.segmented-tab.active .seg-main {
+  color: #fbbf24;
+}
+
+.segmented-tab.active .seg-sub {
+  color: #fef08a;
+}
+
+/* 2.3 Smart Deductions Architect Card */
+.deductions-architect-card {
+  background: linear-gradient(180deg, #0a1322 0%, #060c16 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 18px 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.deductions-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ded-section-kicker {
+  font-size: 9.5px;
+  font-weight: 750;
+  letter-spacing: 0.8px;
+  color: #64748b;
+  text-transform: uppercase;
+  display: block;
+}
+
+.ded-section-title {
+  margin: 2px 0 0;
+  font-size: 13.5px;
+  font-weight: 750;
+  color: #f1f5f9;
+}
+
+.total-ded-claimed-badge {
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  border-radius: 8px;
+  padding: 4px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+
+.total-ded-claimed-badge .badge-kicker {
+  font-size: 8.5px;
+  font-weight: 750;
+  color: #86efac;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.total-ded-claimed-badge .badge-val {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #22c55e;
+}
+
+/* 1-Tap Strategy Shelf */
+.strategy-preset-shelf {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.strategy-label {
+  font-size: 11px;
+  font-weight: 650;
+  color: #94a3b8;
+}
+
+.strategy-options-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.6fr;
+  gap: 8px;
+}
+
+.strategy-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #94a3b8;
+  padding: 9px 8px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.strategy-chip i {
+  font-size: 11px;
+  color: #64748b;
+  transition: color 0.2s ease;
+}
+
+.strategy-chip:hover {
+  border-color: rgba(248, 180, 0, 0.35);
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.strategy-chip:hover i {
+  color: #f8b400;
+}
+
+.strategy-chip.active {
+  background: rgba(248, 180, 0, 0.14);
+  border-color: #f8b400;
+  color: #fbbf24;
+  box-shadow: 0 0 10px rgba(248, 180, 0, 0.2);
+}
+
+.strategy-chip.active i {
+  color: #fbbf24;
+}
+
+/* Toggle Customizer Button */
+.btn-toggle-custom-ded {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px dashed rgba(255, 255, 255, 0.18);
+  padding: 9px 14px;
+  border-radius: 8px;
+  color: #cbd5e1;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-toggle-custom-ded:hover {
+  background: rgba(248, 180, 0, 0.08);
+  border-color: rgba(248, 180, 0, 0.4);
+  color: #fbbf24;
+}
+
+.toggle-label-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toggle-label-wrap i {
+  color: #f8b400;
+  font-size: 12px;
+}
+
+.toggle-hint-pill {
+  font-size: 10px;
+  font-weight: 750;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 2px 8px;
+  border-radius: 4px;
+  color: #94a3b8;
+}
+
+.btn-toggle-custom-ded:hover .toggle-hint-pill {
+  background: rgba(248, 180, 0, 0.2);
+  color: #fbbf24;
+}
+
+/* Collapsible Drawer */
+.custom-deductions-drawer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.custom-ded-item {
+  background: rgba(6, 11, 20, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ded-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.ded-item-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #e2e8f0;
+  display: block;
+}
+
+.ded-item-cap {
+  font-size: 10px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.ded-inline-input-wrap {
+  display: inline-flex;
+  align-items: center;
+  background: #03070e;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 6px;
+  padding: 4px 8px;
+  gap: 6px;
+  width: 125px;
+  box-sizing: border-box;
+  transition: border-color 0.18s ease;
+}
+
+.ded-inline-input-wrap:focus-within {
+  border-color: #f8b400;
+  box-shadow: 0 0 0 2px rgba(248, 180, 0, 0.15);
+}
+
+.input-curr-symbol {
+  color: #f8b400;
+  font-weight: 750;
+  font-size: 12px;
+}
+
+.ded-inline-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  font-family: inherit;
+}
+
+.ded-quick-chips {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.ded-pill-chip {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.ded-pill-chip:hover {
+  border-color: rgba(248, 180, 0, 0.4);
+  color: #fbbf24;
+  background: rgba(248, 180, 0, 0.1);
+}
+
+.ded-pill-chip.active {
+  background: rgba(248, 180, 0, 0.16);
+  border-color: #f8b400;
+  color: #fbbf24;
+}
+
+.custom-ded-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.custom-ded-subcard {
+  background: rgba(6, 11, 20, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.subcard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.subcard-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #e2e8f0;
+}
+
+.subcard-cap {
+  font-size: 9.5px;
+  color: #64748b;
+}
+
+/* Interactive Range Slider */
+.range-slider-wrapper {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.tax-range-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tax-range-slider:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.tax-range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #f8b400;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 10px rgba(248, 180, 0, 0.55);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tax-range-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 14px rgba(248, 180, 0, 0.85);
+}
+
+.tax-range-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #f8b400;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 10px rgba(248, 180, 0, 0.55);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tax-range-slider::-moz-range-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 14px rgba(248, 180, 0, 0.85);
+}
+
+.slider-ticks-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #64748b;
+  font-weight: 600;
+  padding: 0 2px;
+}
+
+/* Presets & Chips */
+.tax-presets-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  font-size: 11px;
+  color: #64748b;
+  flex-wrap: wrap;
+}
+
+.presets-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #94a3b8;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.presets-label i {
+  color: #f8b400;
+  font-size: 9px;
+}
+
+.tax-preset-chip {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #e2e8f0;
+  padding: 3px 9px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tax-preset-chip:hover {
+  background: rgba(248, 180, 0, 0.16);
+  border-color: rgba(248, 180, 0, 0.6);
+  color: #fbbf24;
+  transform: translateY(-1px);
+}
+
+.tax-preset-chip.active-preset {
+  background: linear-gradient(135deg, rgba(248, 180, 0, 0.28) 0%, rgba(248, 180, 0, 0.14) 100%);
+  border-color: #f8b400;
+  color: #fbbf24;
+  box-shadow: 0 2px 10px rgba(248, 180, 0, 0.35);
+  transform: translateY(-1px);
+}
+
+/* Deduction Micro-Chips */
+.deduction-micro-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 3px;
+}
+
+.micro-chip {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.micro-chip:hover {
+  background: rgba(248, 180, 0, 0.12);
+  border-color: rgba(248, 180, 0, 0.4);
+  color: #fbbf24;
+}
+
+.micro-chip.chip-active {
+  background: rgba(248, 180, 0, 0.18);
+  border-color: #f8b400;
+  color: #fbbf24;
+  box-shadow: 0 0 6px rgba(248, 180, 0, 0.2);
+}
+
+/* Pill Selectors */
+.tax-pill-selector {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.pill-option {
+  flex: 1;
+  min-width: 120px;
+  background: #060b14;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #94a3b8;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  text-align: center;
+}
+
+.pill-option:hover {
+  border-color: rgba(248, 180, 0, 0.35);
+  color: #ffffff;
+}
+
+.pill-option.selected {
+  background: rgba(248, 180, 0, 0.12);
+  border-color: #f8b400;
+  color: #fbbf24;
+  box-shadow: 0 0 8px rgba(248, 180, 0, 0.2);
+}
+
+.tax-deductions-divider {
+  position: relative;
+  text-align: center;
+  margin: 10px 0 4px;
+}
+
+.tax-deductions-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.tax-deductions-divider span {
+  position: relative;
+  background: #0d1728;
+  padding: 0 12px;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.8px;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.tax-form-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 500px) {
+  .tax-form-two-col {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-hint-text {
+  font-size: 11px;
+  color: #64748b;
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+/* Statutory Information Card */
+.tax-rule-card {
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 8px;
+  padding: 14px;
+  font-size: 12px;
+  line-height: 1.55;
+  color: #bae6fd;
+}
+
+.tax-rule-card h4 {
+  margin: 0 0 6px;
+  color: #38bdf8;
+  font-size: 12.5px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tax-rule-card p {
+  margin: 0;
+}
+
+/* ==========================================================================
+   3. RESULTS & RECOMMENDATION COLUMN
+   ========================================================================== */
+.tool-col-results {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Grand Recommendation Banner */
+.recommendation-banner-card {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 16px 20px;
+  border-radius: 12px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+.recommendation-banner-card.win-new {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.18) 0%, rgba(13, 23, 40, 0.95) 100%);
+  border: 1px solid rgba(34, 197, 94, 0.45);
+}
+
+.recommendation-banner-card.win-old {
+  background: linear-gradient(135deg, rgba(248, 180, 0, 0.18) 0%, rgba(13, 23, 40, 0.95) 100%);
+  border: 1px solid rgba(248, 180, 0, 0.45);
+}
+
+.rec-badge-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.win-new .rec-badge-icon {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.3);
+}
+
+.win-old .rec-badge-icon {
+  background: rgba(248, 180, 0, 0.2);
+  color: #f8b400;
+  box-shadow: 0 0 12px rgba(248, 180, 0, 0.3);
+}
+
+.rec-text-wrap {
+  flex: 1;
+  min-width: 0;
+}
+
+.rec-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.rec-savings-pill {
+  background: rgba(34, 197, 94, 0.16);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  padding: 4px 10px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+
+.rec-savings-pill .pill-sub {
+  font-size: 8.5px;
+  font-weight: 750;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #86efac;
+}
+
+.rec-savings-pill .pill-amt {
+  font-size: 14px;
+  font-weight: 800;
+  color: #22c55e;
+}
+
+.win-old .rec-savings-pill {
+  background: rgba(248, 180, 0, 0.16);
+  border-color: rgba(248, 180, 0, 0.4);
+}
+
+.win-old .rec-savings-pill .pill-sub {
+  color: #fde047;
+}
+
+.win-old .rec-savings-pill .pill-amt {
+  color: #f8b400;
+}
+
+.rec-kicker {
+  font-size: 9.5px;
+  font-weight: 750;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.rec-title {
+  margin: 2px 0 4px;
+  font-size: 16.5px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.rec-desc {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: #cbd5e1;
+}
+
+.rec-highlight {
+  color: #22c55e;
+  font-weight: 750;
+}
+
+/* Visual Take-Home vs Tax Comparison Section */
+.rec-visual-comparison {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rec-chart-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 2px;
+}
+
+.chart-legend-heading {
+  font-size: 11px;
+  font-weight: 700;
+  color: #94a3b8;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.chart-legend-heading i {
+  color: #f8b400;
+  font-size: 11px;
+}
+
+.rec-view-toggle {
+  display: inline-flex;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 2px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.view-mode-pill {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 10px;
+  font-weight: 650;
+  padding: 3px 9px;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.18s ease;
+}
+
+.view-mode-pill:hover {
+  color: #ffffff;
+}
+
+.view-mode-pill.active {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.win-new .view-mode-pill.active {
+  background: rgba(34, 197, 94, 0.24);
+  color: #86efac;
+  border: 1px solid rgba(34, 197, 94, 0.45);
+}
+
+.mini-winner-tag {
+  font-size: 8.5px;
+  font-weight: 750;
+  background: rgba(34, 197, 94, 0.18);
+  color: #86efac;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  padding: 1px 5px;
+  border-radius: 4px;
+  margin-left: 6px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.comparison-bar-row {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.bar-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: #cbd5e1;
+}
+
+.bar-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.regime-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.new-dot {
+  background: #22c55e;
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.6);
+}
+
+.old-dot {
+  background: #f8b400;
+  box-shadow: 0 0 6px rgba(248, 180, 0, 0.6);
+}
+
+.bar-stats {
+  font-size: 10.5px;
+  color: #94a3b8;
+}
+
+.bar-stats strong {
+  color: #ffffff;
+}
+
+.bar-track {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bar-fill-new {
+  background: linear-gradient(90deg, #10b981 0%, #22c55e 100%);
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
+}
+
+.bar-fill-old {
+  background: linear-gradient(90deg, #d97706 0%, #f8b400 100%);
+  box-shadow: 0 0 10px rgba(248, 180, 0, 0.4);
+}
+
+.bar-fill-tax-new {
+  background: linear-gradient(90deg, #059669 0%, #10b981 60%, #22c55e 100%);
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.5);
+}
+
+.bar-fill-tax-old {
+  background: linear-gradient(90deg, #d97706 0%, #f59e0b 60%, #f8b400 100%);
+  box-shadow: 0 0 12px rgba(248, 180, 0, 0.4);
+}
+
+.tax-savings-delta-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10.5px;
+  color: #86efac;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.28);
+  padding: 3px 9px;
+  border-radius: 5px;
+  margin-top: 2px;
+  width: fit-content;
+}
+
+.tax-savings-delta-tag strong {
+  color: #22c55e;
+}
+
+.tax-savings-delta-tag i {
+  color: #22c55e;
+}
+
+/* Side-by-Side Regime Cards */
+.regime-comparison-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 680px) {
+  .regime-comparison-pair {
+    grid-template-columns: 1fr;
+  }
+}
+
+.regime-card {
+  background: linear-gradient(180deg, #0d1728 0%, #09111e 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 15px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  transition: all 0.2s ease;
+}
+
+.regime-card.card-winner {
+  border-color: rgba(34, 197, 94, 0.5);
+  box-shadow: 0 8px 24px rgba(34, 197, 94, 0.12);
+}
+
+.regime-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 12px;
+}
+
+.regime-badge {
+  font-size: 9.5px;
+  font-weight: 750;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+.badge-new {
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+}
+
+.badge-old {
+  background: rgba(248, 180, 0, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(248, 180, 0, 0.35);
+}
+
+.regime-card-top h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 750;
+  color: #ffffff;
+}
+
+.winner-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #22c55e;
+  color: #030a14;
+  font-size: 9.5px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.3px;
+}
+
+.regime-stat-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.regime-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.regime-row strong {
+  color: #f1f5f9;
+  font-size: 13px;
+}
+
+.regime-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 4px 0;
+}
+
+.regime-row.grand-tax-row {
+  color: #ffffff;
+  font-weight: 650;
+}
+
+.regime-tax-num {
+  font-size: 17px !important;
+  color: #fbbf24 !important;
+  font-weight: 800;
+}
+
+.takehome-row {
+  background: rgba(34, 197, 94, 0.08);
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.text-emerald {
+  color: #4ade80 !important;
+}
+
+.regime-highlights-strip {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+  font-size: 11px;
+  color: #64748b;
+  line-height: 1.4;
+  border-top: 1px dashed rgba(255, 255, 255, 0.08);
+  padding-top: 10px;
+}
+
+.regime-highlights-strip i {
+  color: #38bdf8;
+  margin-top: 2px;
+  font-size: 11px;
+}
+
+/* Action Bar */
+.tool-cta-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-tool-consult {
+  flex: 1.3;
+  min-width: 220px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #f8b400 0%, #e09f00 100%);
+  color: #030a14;
+  border: none;
+  padding: 13px 20px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(248, 180, 0, 0.35);
+}
+
+.btn-tool-consult:hover {
+  background: #ffc222;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(248, 180, 0, 0.45);
+}
+
+.btn-tool-share {
+  flex: 1;
+  min-width: 160px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  color: #4ade80;
+  padding: 13px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-tool-share:hover {
+  background: #22c55e;
+  color: #030a14;
+  border-color: #22c55e;
+}
+
+/* ==========================================================================
+   4. GST RISK & PENALTY STYLES
+   ========================================================================== */
+.risk-banner-card {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 18px 22px;
+  border-radius: 12px;
+}
+
+.risk-banner-card.risk-low {
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: #4ade80;
+}
+
+.risk-banner-card.risk-moderate {
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #fcd34d;
+}
+
+.risk-banner-card.risk-critical {
+  background: rgba(239, 68, 68, 0.14);
+  border: 1px solid rgba(239, 68, 68, 0.45);
+  color: #fca5a5;
+}
+
+.risk-icon {
+  font-size: 26px;
+  flex-shrink: 0;
+}
+
+.risk-tag {
+  font-size: 9.5px;
+  font-weight: 750;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.risk-title {
+  margin: 3px 0 5px;
+  font-size: 16px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.risk-sub {
+  margin: 0;
+  font-size: 12.5px;
+  color: #cbd5e1;
+}
+
+.gst-penalty-bento {
+  background: linear-gradient(180deg, #0d1728 0%, #09111e 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.penalty-bento-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 12px;
+}
+
+.penalty-bento-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 750;
+  color: #ffffff;
+}
+
+.gst-law-tag {
+  font-size: 11px;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.penalty-grid-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 600px) {
+  .penalty-grid-metrics {
+    grid-template-columns: 1fr;
+  }
+}
+
+.penalty-metric-card {
+  background: #060b14;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.metric-label {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+.metric-value {
+  font-size: 22px;
+  font-weight: 800;
+  color: #fbbf24;
+}
+
+.metric-note {
+  font-size: 11px;
+  color: #64748b;
+  line-height: 1.35;
+}
+
+.split-pills {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.split-pills span {
+  font-size: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #cbd5e1;
+}
+
+.penalty-grand-total {
+  background: linear-gradient(135deg, rgba(248, 180, 0, 0.15) 0%, rgba(248, 180, 0, 0.05) 100%);
+  border: 1px solid rgba(248, 180, 0, 0.35);
+  border-radius: 10px;
+  padding: 18px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total-lead {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.total-lead span {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.total-lead small {
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.total-amount-display {
+  font-size: 26px;
+  font-weight: 850;
+  color: #fbbf24;
+  letter-spacing: -0.5px;
+}
+
+/* ==========================================================================
+   5. ADVANCE TAX SCHEDULE BENTO STYLES
+   ========================================================================== */
+.schedule-bento-box {
+  background: linear-gradient(180deg, #0d1728 0%, #09111e 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.schedule-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 12px;
+}
+
+.schedule-kicker {
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.8px;
+  color: #f8b400;
+  text-transform: uppercase;
+}
+
+.schedule-header h3 {
+  margin: 2px 0 0;
+  font-size: 17px;
+  font-weight: 750;
+  color: #ffffff;
+}
+
+.adv-mandatory-badge {
+  font-size: 10.5px;
+  font-weight: 750;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.badge-mand-yes {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.badge-mand-no {
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.4);
+}
+
+.installments-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.installment-row-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #060b14;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 14px 18px;
+}
+
+.inst-col-date {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.inst-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: rgba(248, 180, 0, 0.15);
+  border: 1px solid rgba(248, 180, 0, 0.35);
+  color: #f8b400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.inst-col-date strong {
+  display: block;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.inst-sub {
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.inst-col-amounts {
+  display: flex;
+  gap: 24px;
+  text-align: right;
+}
+
+.inst-amount-box {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.inst-amt-label {
+  font-size: 10.5px;
+  color: #64748b;
+}
+
+.inst-inc-val {
+  font-size: 15px;
+  font-weight: 750;
+  color: #fbbf24;
+}
+
+.inst-cum-val {
+  font-size: 13px;
+  color: #cbd5e1;
+}
+
+.schedule-summary-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-metric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: #cbd5e1;
+}
+
+.footer-metric strong {
+  font-size: 18px;
+  color: #fbbf24;
+}
+
+.footer-warning {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11.5px;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.08);
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
+/* ==========================================================================
+   6. METHODOLOGY DISCLAIMER
+   ========================================================================== */
+.tools-methodology-section {
+  margin-top: 48px;
+}
+
+.methodology-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 20px 24px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #94a3b8;
+}
+
+.meth-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  color: #cbd5e1;
+}
+
+.meth-header h4 {
+  margin: 0;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.meth-header i {
+  color: #f8b400;
+}
+
+.methodology-card strong {
+  color: #e2e8f0;
+}
+
+/* ==========================================================================
+   7. MOBILE RESPONSIVENESS (<= 768px & <= 480px)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .tools-hero {
+    padding: 38px 0 28px;
+  }
+
+  .tools-hero h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .tools-hero-lead {
+    font-size: 13px;
+    margin-bottom: 22px;
+  }
+
+  .tools-tab-bar {
+    width: 100%;
+    flex-direction: column;
+    gap: 6px;
+    padding: 6px;
+  }
+
+  .tool-tab-btn {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 10px 14px;
+    box-sizing: border-box;
+  }
+
+  .tools-canvas-container {
+    margin-top: 24px;
+  }
+
+  .tool-card-box {
+    padding: 18px 16px;
+  }
+
+  .tool-card-header {
+    gap: 10px;
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+  }
+
+  .tool-icon-circle {
+    width: 36px;
+    height: 36px;
+    font-size: 15px;
+  }
+
+  .tool-card-header h3 {
+    font-size: 15px;
+  }
+
+  .tax-pill-selector {
+    flex-direction: column;
+  }
+
+  .pill-option {
+    min-width: unset;
+    width: 100%;
+    padding: 9px 12px;
+  }
+
+  .tax-form-two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .strategy-options-row {
+    grid-template-columns: 1fr;
+  }
+
+  .custom-ded-two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-income-card {
+    padding: 14px 12px;
+  }
+
+  .hero-currency-input-wrap {
+    padding: 6px 12px;
+  }
+
+  .hero-currency-input {
+    font-size: 20px;
+  }
+
+  .hero-currency-symbol {
+    font-size: 20px;
+  }
+
+  .deductions-architect-card {
+    padding: 14px 12px;
+  }
+
+  .tax-tools-page {
+    padding-bottom: 110px;
+  }
+
+  .recommendation-banner-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .rec-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .rec-savings-pill {
+    align-items: flex-start;
+  }
+
+  .bar-labels {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+
+  .deduction-micro-chips {
+    gap: 4px;
+  }
+
+  .micro-chip {
+    font-size: 9.5px;
+    padding: 2px 6px;
+  }
+
+  .rec-badge-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  .rec-title {
+    font-size: 16px;
+  }
+
+  .regime-comparison-pair {
+    grid-template-columns: 1fr;
+  }
+
+  .penalty-grid-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .penalty-grand-total {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .total-amount-display {
+    font-size: 22px;
+  }
+
+  .installment-row-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 14px;
+  }
+
+  .inst-col-amounts {
+    width: 100%;
+    justify-content: space-between;
+    text-align: left;
+    gap: 12px;
+  }
+
+  .tool-cta-actions {
+    flex-direction: column;
+  }
+
+  .btn-tool-consult,
+  .btn-tool-share {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .tools-hero h1 {
+    font-size: 21px;
+  }
+
+  .tax-presets-row {
+    flex-wrap: wrap;
+  }
+
+  .tools-kicker-badge {
+    font-size: 10px;
+    padding: 4px 10px;
+  }
+
+  .methodology-card {
+    padding: 16px 14px;
+    font-size: 11.5px;
+  }
+}

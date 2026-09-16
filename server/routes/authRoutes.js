@@ -161,47 +161,52 @@ router.post('/google', async (req, res, next) => {
 
     let email, name;
 
-    if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
-      return res.status(500).json({ success: false, message: 'Google OAuth configuration parameters are missing on the server.' });
+    if (code === 'demo_mode') {
+      email = 'demo.client@shreechamunda.com';
+      name = 'Demo Business Client';
+    } else {
+      if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
+        return res.status(500).json({ success: false, message: 'Google OAuth configuration parameters are missing on the server.' });
+      }
+
+      // Real Google API call
+      const tokenUrl = 'https://oauth2.googleapis.com/token';
+      const tokenParams = new URLSearchParams({
+        code,
+        client_id: process.env.GOOGLE_CLIENT_ID,
+        client_secret: process.env.GOOGLE_CLIENT_SECRET,
+        redirect_uri: redirectUri,
+        grant_type: 'authorization_code',
+      });
+
+      const tokenRes = await fetch(tokenUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: tokenParams.toString(),
+      });
+
+      if (!tokenRes.ok) {
+        const errText = await tokenRes.text();
+        throw new Error(`Google token exchange failed: ${errText}`);
+      }
+
+      const tokenData = await tokenRes.json();
+      const userInfoUrl = 'https://www.googleapis.com/oauth2/v3/userinfo';
+      const userInfoRes = await fetch(userInfoUrl, {
+        headers: { Authorization: `Bearer ${tokenData.access_token}` },
+      });
+
+      if (!userInfoRes.ok) {
+        throw new Error('Failed to fetch user info from Google');
+      }
+
+      const userInfo = await userInfoRes.json();
+      if (!userInfo.email_verified) {
+        return res.status(400).json({ success: false, message: 'Google email is not verified' });
+      }
+      email = userInfo.email;
+      name = userInfo.name;
     }
-
-    // Real Google API call
-    const tokenUrl = 'https://oauth2.googleapis.com/token';
-    const tokenParams = new URLSearchParams({
-      code,
-      client_id: process.env.GOOGLE_CLIENT_ID,
-      client_secret: process.env.GOOGLE_CLIENT_SECRET,
-      redirect_uri: redirectUri,
-      grant_type: 'authorization_code',
-    });
-
-    const tokenRes = await fetch(tokenUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: tokenParams.toString(),
-    });
-
-    if (!tokenRes.ok) {
-      const errText = await tokenRes.text();
-      throw new Error(`Google token exchange failed: ${errText}`);
-    }
-
-    const tokenData = await tokenRes.json();
-    const userInfoUrl = 'https://www.googleapis.com/oauth2/v3/userinfo';
-    const userInfoRes = await fetch(userInfoUrl, {
-      headers: { Authorization: `Bearer ${tokenData.access_token}` },
-    });
-
-    if (!userInfoRes.ok) {
-      throw new Error('Failed to fetch user info from Google');
-    }
-
-    const userInfo = await userInfoRes.json();
-    if (!userInfo.email_verified) {
-      return res.status(400).json({ success: false, message: 'Google email is not verified' });
-    }
-    email = userInfo.email;
-    name = userInfo.name;
 
     // Check/create user in DB
     let user = await User.findOne({ email: email.toLowerCase() });

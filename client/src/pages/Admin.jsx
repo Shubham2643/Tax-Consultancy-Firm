@@ -108,12 +108,12 @@ const Admin = () => {
   const [serviceTypeFilter, setServiceTypeFilter] = useState('all');
   const [servicePage, setServicePage] = useState(1);
 
-  const faqSearch = '';
-  const faqCategoryFilter = 'all';
+  const [faqSearch, setFaqSearch] = useState('');
+  const [faqCategoryFilter, setFaqCategoryFilter] = useState('all');
   const [faqPage, setFaqPage] = useState(1);
 
   const [blogSearch, setBlogSearch] = useState('');
-  const blogCategoryFilter = 'all';
+  const [blogCategoryFilter, setBlogCategoryFilter] = useState('all');
   const [blogPage, setBlogPage] = useState(1);
 
   const [inqSearch, setInqSearch] = useState('');
@@ -2260,6 +2260,19 @@ const Admin = () => {
                         onChange={(e) => { setBlogSearch(e.target.value); setBlogPage(1); }}
                       />
                     </div>
+                    <div className="filter-select-group">
+                      <select
+                        className="admin-filter-select"
+                        value={blogCategoryFilter}
+                        onChange={(e) => { setBlogCategoryFilter(e.target.value); setBlogPage(1); }}
+                      >
+                        <option value="all">All Categories</option>
+                        <option value="Income Tax">Income Tax</option>
+                        <option value="GST & Indirect Tax">GST & Indirect Tax</option>
+                        <option value="Corporate Law & ROC">Corporate Law & ROC</option>
+                        <option value="General">General</option>
+                      </select>
+                    </div>
                   </div>
 
                   <div className="admin-bento-card data-table-bento">
@@ -2393,6 +2406,32 @@ const Admin = () => {
                       <button className="btn-admin-hero-primary" onClick={() => handleOpenFAQModal()}>
                         <i className="fas fa-plus"></i> Add New FAQ
                       </button>
+                    </div>
+                  </div>
+
+                  <div className="admin-filter-bar-card">
+                    <div className="filter-search-box">
+                      <i className="fas fa-search"></i>
+                      <input
+                        type="text"
+                        placeholder="Search questions or answers..."
+                        value={faqSearch}
+                        onChange={(e) => { setFaqSearch(e.target.value); setFaqPage(1); }}
+                      />
+                    </div>
+                    <div className="filter-select-group">
+                      <select
+                        className="admin-filter-select"
+                        value={faqCategoryFilter}
+                        onChange={(e) => { setFaqCategoryFilter(e.target.value); setFaqPage(1); }}
+                      >
+                        <option value="all">All Categories</option>
+                        <option value="Income Tax">Income Tax</option>
+                        <option value="GST">GST</option>
+                        <option value="Company Formation">Company Formation</option>
+                        <option value="Audit & Accounts">Audit & Accounts</option>
+                        <option value="General">General</option>
+                      </select>
                     </div>
                   </div>
 

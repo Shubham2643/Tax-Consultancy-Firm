@@ -134,4 +134,71 @@ router.post('/verify-signature', authenticate, async (req, res, next) => {
   }
 });
 
+// POST /api/portal/payments/webhook — Asynchronous Razorpay Webhook Handler
+router.post('/webhook', async (req, res, next) => {
+  try {
+    const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET || process.env.RAZORPAY_KEY_SECRET;
+    const signature = req.headers['x-razorpay-signature'];
+
+    if (!webhookSecret) {
+      console.warn('⚠️ Razorpay webhook secret is not configured');
+      return res.status(200).json({ received: true });
+    }
+
+    if (!signature) {
+      return res.status(400).json({ success: false, message: 'Missing Razorpay signature header' });
+    }
+
+    const payload = req.rawBody || (typeof req.body === 'string' ? req.body : JSON.stringify(req.body));
+    const expectedSignature = crypto
+      .createHmac('sha256', webhookSecret)
+      .update(payload)
+      .digest('hex');
+
+    const expectedBuffer = Buffer.from(expectedSignature, 'utf8');
+    const actualBuffer = Buffer.from(signature, 'utf8');
+
+    const isValid = expectedBuffer.length === actualBuffer.length && crypto.timingSafeEqual(expectedBuffer, actualBuffer);
+    if (!isValid) {
+      return res.status(400).json({ success: false, message: 'Invalid webhook signature' });
+    }
+
+    const event = req.body?.event;
+    const paymentEntity = req.body?.payload?.payment?.entity;
+    const orderEntity = req.body?.payload?.order?.entity;
+
+    if (event === 'payment.captured' || event === 'order.paid') {
+      const orderId = paymentEntity?.order_id || orderEntity?.id;
+      const paymentId = paymentEntity?.id;
+      const invoiceId = paymentEntity?.notes?.invoiceId || orderEntity?.notes?.invoiceId;
+
+      let invoice = null;
+      if (invoiceId) {
+        invoice = await Invoice.findById(invoiceId);
+      } else if (orderId) {
+        invoice = await Invoice.findOne({ razorpayOrderId: orderId });
+      }
+
+      if (invoice && invoice.status !== 'paid') {
+        invoice.status = 'paid';
+        invoice.paidAt = invoice.paidAt || new Date();
+        if (orderId) invoice.razorpayOrderId = orderId;
+        if (paymentId) invoice.razorpayPaymentId = paymentId;
+        await invoice.save();
+
+        if (req.io) {
+          req.io.to(`user:${invoice.client.toString()}`).emit('invoice_paid', invoice);
+          req.io.to('admin').emit('invoice_paid', invoice);
+        }
+        console.log(`✅ Webhook updated invoice ${invoice.invoiceNumber} to paid.`);
+      }
+    }
+
+    res.status(200).json({ status: 'ok', received: true });
+  } catch (err) {
+    console.error('Webhook error:', err.message);
+    res.status(500).json({ success: false, message: 'Webhook processing error' });
+  }
+});
+
 module.exports = router;

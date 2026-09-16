@@ -51,6 +51,7 @@ const getDropdownMeta = (label) => {
   if (normalized.includes('cfo')) return { icon: 'fas fa-crown', desc: 'Executive financial leadership' };
 
   // Others / Resources & Direct Reach
+  if (normalized.includes('tax tool') || normalized.includes('calculator') || normalized.includes('due date')) return { icon: 'fas fa-calculator', desc: 'Budget 2024 slabs & statutory due dates' };
   if (normalized.includes('blog')) return { icon: 'fas fa-newspaper', desc: 'Tax circulars, case studies & updates' };
   if (normalized.includes('faq')) return { icon: 'fas fa-circle-question', desc: 'Common compliance queries answered' };
   if (normalized.includes('contact')) return { icon: 'fas fa-headset', desc: 'Direct access to senior advisory chambers' };
@@ -77,16 +78,46 @@ const getTopCategoryIcon = (label) => {
 };
 
 const Navbar = () => {
-  const { settings, navMenu } = useSiteContext();
+  const { settings, navMenu: rawNavMenu } = useSiteContext();
   const { user, logout } = useAuth();
+
+  // Defensively filter out 'Contact Us' (/contact) completely from navbar items and dropdowns
+  const navMenu = (rawNavMenu || [])
+    .filter((item) => {
+      const label = (item?.label || '').toLowerCase().trim();
+      const href = (item?.href || '').trim();
+      return !label.includes('contact') && href !== '/contact';
+    })
+    .map((item) => {
+      const label = (item?.label || '').toLowerCase().trim();
+      let children = (item.children || []).filter((child) => {
+        const childLabel = (child?.label || '').toLowerCase().trim();
+        const childHref = (child?.href || '').trim();
+        return !childLabel.includes('contact') && childHref !== '/contact';
+      });
+
+      // Add Tax Tools & Statutory Due Dates into Others category
+      if (label.includes('other') && !children.some(c => (c.href || '').includes('tax-tools'))) {
+        children = [
+          ...children,
+          { label: 'Tax Tools & Statutory Due Dates', href: '/tax-tools' }
+        ];
+      }
+
+      return {
+        ...item,
+        children
+      };
+    });
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [mobileExpandedIndex, setMobileExpandedIndex] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
   const location = useLocation();
-  const isMac = typeof navigator !== 'undefined' && /Mac|iPod|iPhone|iPad/.test(navigator.userAgent);
+  const isDarkPage = location.pathname.startsWith('/tax-tools');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -98,6 +129,7 @@ const Navbar = () => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
         setActiveDropdown(null);
+        setMobileExpandedIndex(null);
         setIsMobileOpen(false);
       }
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
@@ -132,6 +164,7 @@ const Navbar = () => {
     }
     setIsMobileOpen(false);
     setActiveDropdown(null);
+    setMobileExpandedIndex(null);
   }, [location]);
 
   useEffect(() => {
@@ -149,11 +182,18 @@ const Navbar = () => {
   }, [isMobileOpen]);
 
   const toggleMobile = () => {
-    setIsMobileOpen(!isMobileOpen);
+    setIsMobileOpen((prev) => {
+      if (prev) setMobileExpandedIndex(null);
+      return !prev;
+    });
   };
 
   const handleDropdownToggle = (index) => {
     setActiveDropdown(activeDropdown === index ? null : index);
+  };
+
+  const handleMobileDropdownToggle = (index) => {
+    setMobileExpandedIndex((prev) => (prev === index ? null : index));
   };
 
   const handleMouseEnter = (index) => {
@@ -198,9 +238,9 @@ const Navbar = () => {
     }
   };
 
-  // Close dropdown on outside click or window scroll
+  // Close desktop megamenu on outside click or window scroll
   useEffect(() => {
-    if (activeDropdown === null) return;
+    if (activeDropdown === null || isMobile) return;
     const handleOutsideClick = (e) => {
       if (!e.target.closest('.navbar-center-nav') && !e.target.closest('.dropdown-megamenu-panel')) {
         setActiveDropdown(null);
@@ -215,18 +255,7 @@ const Navbar = () => {
       document.removeEventListener('click', handleOutsideClick);
       window.removeEventListener('scroll', handleScrollClose);
     };
-  }, [activeDropdown]);
-
-  const handleMobileItemClick = (e, item, index) => {
-    if (item.children && item.children.length > 0) {
-      e.preventDefault();
-      e.stopPropagation();
-      handleDropdownToggle(index);
-    } else {
-      setIsMobileOpen(false);
-      setActiveDropdown(null);
-    }
-  };
+  }, [activeDropdown, isMobile]);
 
   const phone = settings?.phone || '+91 95109 84735';
   const email = settings?.email || 'shreechamundaassociates0905@gmail.com';
@@ -427,7 +456,7 @@ const Navbar = () => {
       </div>
 
       {/* Main Navbar — Executive Sticky Header */}
-      <nav className={`navbar ${isScrolled ? "navbar-scrolled" : ""} ${isMobileOpen ? "navbar-mobile-active" : ""}`}>
+      <nav className={`navbar ${isDarkPage ? "navbar-theme-dark" : ""} ${isScrolled ? "navbar-scrolled" : ""} ${isMobileOpen ? "navbar-mobile-active" : ""}`}>
         <div className="navbar-inner">
           {/* Logo with Halo Accent & Geometric Wordmark */}
           <Link to="/" className="navbar-logo" aria-label="Shree Chamunda Associates Home">
@@ -559,6 +588,16 @@ const Navbar = () => {
 
           {/* Desktop Right Action Suite */}
           <div className="navbar-right-actions">
+            {/* Mobile Direct Quick-Call Button */}
+            <a
+              href={`tel:${phone.replace(/[^0-9+]/g, '')}`}
+              className="nav-mobile-call-btn"
+              title={`Direct Call CA Office (${phone})`}
+              aria-label="Direct Call CA Office"
+            >
+              <i className="fas fa-phone-alt"></i>
+            </a>
+
             {/* Ultra-Modern Search Bar with Micro-Badge & Interactive Hover Beam */}
             <button
               type="button"
@@ -614,7 +653,6 @@ const Navbar = () => {
           <Link to="/" className="mobile-drawer-brand" onClick={() => setIsMobileOpen(false)}>
             <div className="mobile-drawer-badge">
               <img src="/assets/logo_circle_full.png?v=7" alt="Shree Chamunda Associates" className="mobile-drawer-logo" />
-              <span className="mobile-logo-ring"></span>
             </div>
             <div className="mobile-drawer-title">
               <strong>SHREE CHAMUNDA</strong>
@@ -626,89 +664,96 @@ const Navbar = () => {
           </button>
         </div>
 
-        <div className="mobile-drawer-body">
-          {/* Mobile Client Portal Access Card */}
-          <div className="mobile-auth-block">
-            {user ? (
-              <div className="mobile-auth-strip">
-                <Link 
-                  to={user.role === 'admin' ? '/admin' : '/portal'} 
-                  className="mobile-portal-btn logged-in"
-                  onClick={() => setIsMobileOpen(false)}
-                >
-                  <span className="live-pulse-dot"></span>
-                  <i className="fas fa-user-circle"></i>
-                  <span>{user.role === 'admin' ? 'Admin Panel' : 'My Client Portal'}</span>
-                </Link>
-                <button onClick={logout} className="mobile-logout-btn" title="Logout Session">
-                  <i className="fas fa-sign-out-alt"></i>
-                </button>
-              </div>
-            ) : (
+        {/* Sleek App Utility Strip: Vault + Search in 1 row (Height: 32px) */}
+        <div className="mobile-drawer-top-strip">
+          {user ? (
+            <div className="mobile-strip-auth">
               <Link 
-                to="/login" 
-                className="mobile-portal-btn"
+                to={user.role === 'admin' ? '/admin' : '/portal'} 
+                className="mobile-strip-vault-btn logged-in"
                 onClick={() => setIsMobileOpen(false)}
               >
-                <div className="mobile-portal-left">
-                  <span className="mobile-lock-icon"><i className="fas fa-lock"></i></span>
-                  <div className="mobile-portal-meta">
-                    <strong>Client Document Vault</strong>
-                    <span>Login to track filings & pay</span>
-                  </div>
-                </div>
-                <i className="fas fa-chevron-right mobile-arrow-icon"></i>
+                <span className="live-pulse-dot"></span>
+                <i className="fas fa-user-shield"></i>
+                <span className="mobile-strip-text">{user.role === 'admin' ? 'Admin Panel' : 'Client Vault'}</span>
               </Link>
-            )}
-          </div>
+              <button onClick={logout} className="mobile-strip-logout-btn" title="Logout Session">
+                <i className="fas fa-sign-out-alt"></i>
+              </button>
+            </div>
+          ) : (
+            <Link 
+              to="/login" 
+              className="mobile-strip-vault-btn"
+              onClick={() => setIsMobileOpen(false)}
+            >
+              <div className="mobile-strip-left">
+                <i className="fas fa-shield-alt mobile-strip-icon"></i>
+                <span className="mobile-strip-text">Client Vault</span>
+              </div>
+              <span className="mobile-strip-cta">Login <i className="fas fa-chevron-right"></i></span>
+            </Link>
+          )}
 
-          {/* Mobile Quick Search Bar */}
           <button 
             type="button" 
-            className="mobile-search-trigger"
+            className="mobile-strip-search-btn"
             onClick={() => {
               setIsMobileOpen(false);
               setIsSearchOpen(true);
             }}
+            aria-label="Search Services"
           >
             <i className="fas fa-search"></i>
-            <span>Search 30+ CA & Tax Services...</span>
           </button>
+        </div>
 
-          {/* Mobile Nav Links with Smooth Accordion */}
+        {/* Mobile Nav Links with Sleek List Rows */}
+        <div className="mobile-drawer-body">
           <ul className="mobile-nav-list">
             {navMenu.map((item, index) => {
               const active = isItemActive(item);
               const hasChildren = item.children && item.children.length > 0;
-              const isExpanded = activeDropdown === index;
+              const isExpanded = mobileExpandedIndex === index;
               return (
                 <li key={index} className={`mobile-nav-item ${active ? 'item-active' : ''}`}>
                   <div className="mobile-nav-row">
-                    <Link
-                      to={item.href}
-                      className={`mobile-nav-link ${location.pathname === item.href ? 'active' : ''}`}
-                      onClick={(e) => handleMobileItemClick(e, item, index)}
-                    >
-                      <div className="mobile-nav-link-content">
-                        <span className="mobile-item-icon">
-                          <i className={getTopCategoryIcon(item.label)}></i>
-                        </span>
-                        <span className="mobile-item-title">{item.label}</span>
-                      </div>
-                      {hasChildren && (
-                        <span className="mobile-item-count">{item.children.length}</span>
-                      )}
-                    </Link>
-                    {hasChildren && (
+                    {hasChildren ? (
                       <button
                         type="button"
-                        className={`mobile-accordion-toggle ${isExpanded ? 'expanded' : ''}`}
-                        onClick={() => handleDropdownToggle(index)}
-                        aria-label={`Toggle ${item.label} submenu`}
+                        className={`mobile-nav-link ${isExpanded ? 'expanded' : ''}`}
+                        onClick={() => handleMobileDropdownToggle(index)}
                         aria-expanded={isExpanded}
                       >
-                        <i className="fas fa-chevron-down"></i>
+                        <div className="mobile-nav-link-left">
+                          <span className="mobile-item-icon">
+                            <i className={getTopCategoryIcon(item.label)}></i>
+                          </span>
+                          <span className="mobile-nav-title">{item.label}</span>
+                        </div>
+                        <div className="mobile-nav-link-right">
+                          <span className="mobile-item-count">{item.children.length}</span>
+                          <span className={`mobile-row-chevron ${isExpanded ? 'expanded' : ''}`}>
+                            <i className="fas fa-chevron-down"></i>
+                          </span>
+                        </div>
                       </button>
+                    ) : (
+                      <Link
+                        to={item.href}
+                        className={`mobile-nav-link ${location.pathname === item.href ? 'active' : ''}`}
+                        onClick={() => {
+                          setIsMobileOpen(false);
+                          setMobileExpandedIndex(null);
+                        }}
+                      >
+                        <div className="mobile-nav-link-left">
+                          <span className="mobile-item-icon">
+                            <i className={getTopCategoryIcon(item.label)}></i>
+                          </span>
+                          <span className="mobile-nav-title">{item.label}</span>
+                        </div>
+                      </Link>
                     )}
                   </div>
 
@@ -725,7 +770,7 @@ const Navbar = () => {
                               to={child.href}
                               className={`mobile-sub-tile ${isChildActive ? 'child-active' : ''}`}
                               onClick={() => {
-                                setActiveDropdown(null);
+                                setMobileExpandedIndex(null);
                                 setIsMobileOpen(false);
                               }}
                             >
@@ -749,36 +794,25 @@ const Navbar = () => {
           </ul>
         </div>
 
+        {/* Compact 1-Row App Action Footer (Height: 52px) */}
         <div className="mobile-drawer-footer">
-          <Link to="/contact" className="mobile-consultation-btn" onClick={() => setIsMobileOpen(false)}>
-            <div className="mobile-consultation-left">
-              <span className="mobile-cta-status-dot"></span>
-              <span className="mobile-consultation-text">Book Free Consultation</span>
-            </div>
-            <span className="mobile-consultation-arrow">
-              <i className="fas fa-arrow-right"></i>
-            </span>
+          <a href={`tel:${phone.replace(/[^0-9+]/g, '')}`} className="mobile-footer-icon-btn call" title="Call Us">
+            <i className="fas fa-phone-alt"></i>
+          </a>
+          <a
+            href={`https://wa.me/919510984735?text=${encodeURIComponent('Hello CA Team, I would like to consult with a Chartered Accountant.')}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mobile-footer-icon-btn wa"
+            title="Chat on WhatsApp"
+          >
+            <i className="fab fa-whatsapp"></i>
+          </a>
+          <Link to="/contact" className="mobile-footer-consult-btn" onClick={() => setIsMobileOpen(false)}>
+            <span className="mobile-footer-pulse-dot"></span>
+            <span className="mobile-footer-consult-text">Book Consultation</span>
+            <i className="fas fa-arrow-right mobile-footer-arrow"></i>
           </Link>
-
-          <div className="mobile-quick-contacts">
-            <a href={`tel:${phone.replace(/[^0-9+]/g, '')}`} className="mobile-contact-pill call">
-              <i className="fas fa-phone-alt"></i>
-              <span>Call</span>
-            </a>
-            <a
-              href={`https://wa.me/919510984735?text=${encodeURIComponent('Hello CA Team, I would like to consult with a Chartered Accountant.')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mobile-contact-pill wa"
-            >
-              <i className="fab fa-whatsapp"></i>
-              <span>WhatsApp</span>
-            </a>
-            <a href={`mailto:${email}`} className="mobile-contact-pill email">
-              <i className="fas fa-envelope"></i>
-              <span>Email</span>
-            </a>
-          </div>
         </div>
       </div>
 

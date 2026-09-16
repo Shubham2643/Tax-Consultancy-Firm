@@ -398,8 +398,13 @@ export const getClientInvoices = async () => {
   return response.data;
 };
 
-export const payInvoice = async (id) => {
-  const response = await API.put(`/portal/invoices/${id}/pay`);
+export const createPaymentOrder = async (invoiceId) => {
+  const response = await API.post('/portal/payments/create-order', { invoiceId });
+  return response.data;
+};
+
+export const verifyPaymentSignature = async (data) => {
+  const response = await API.post('/portal/payments/verify-signature', data);
   return response.data;
 };
 

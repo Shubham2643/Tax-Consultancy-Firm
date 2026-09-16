@@ -261,21 +261,30 @@
 /* Mobile Responsiveness */
 @media (max-width: 640px) {
   .wa-float-container {
-    bottom: 20px;
-    right: 20px;
+    bottom: 14px;
+    right: 14px;
   }
 
   .wa-float-btn {
-    width: 52px;
-    height: 52px;
+    width: 44px;
+    height: 44px;
+    box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
   }
 
   .wa-btn-inner {
-    font-size: 28px;
+    font-size: 22px;
+  }
+
+  .wa-status-badge {
+    width: 16px;
+    height: 16px;
+    font-size: 9px;
+    top: -1px;
+    right: -1px;
   }
 
   .wa-chat-bubble {
-    width: 270px;
-    right: -6px;
+    width: 260px;
+    right: -4px;
   }
 }

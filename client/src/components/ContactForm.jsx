@@ -99,10 +99,20 @@ const ContactForm = () => {
         `${formData.message.trim()}`;
     }
 
+    let formattedPhone = formData.phone.trim();
+    if (formattedPhone) {
+      const digitsOnly = formattedPhone.replace(/[^0-9]/g, '');
+      if (digitsOnly.length === 10) {
+        formattedPhone = `+91${digitsOnly}`;
+      } else if (digitsOnly.length > 10 && !formattedPhone.startsWith('+')) {
+        formattedPhone = `+${digitsOnly}`;
+      }
+    }
+
     const payload = {
       name: formData.name.trim(),
       email: formData.email.trim(),
-      phone: formData.phone.trim(),
+      phone: formattedPhone,
       service: formattedService,
       message: formattedMessage,
     };

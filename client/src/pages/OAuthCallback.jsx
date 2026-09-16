@@ -34,8 +34,9 @@ const OAuthCallback = () => {
         if (res.success) {
           login(res.data.user, res.data.token);
           setStatus('success');
+          const destination = res.data.user?.role === 'admin' ? '/admin' : '/portal';
           setTimeout(() => {
-            navigate('/portal');
+            navigate(destination);
           }, 1500);
         } else {
           throw new Error('Authentication failed.');

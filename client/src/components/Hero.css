@@ -671,65 +671,78 @@
 
 @media (max-width: 680px) {
   .hero {
-    padding: 38px 0 46px 0;
+    padding: 22px 0 60px 0;
   }
   .hero-layout-container {
-    padding: 0 16px;
-    gap: 30px;
+    padding: 0 14px;
+    gap: 20px;
   }
   .hero-pill-badge {
-    font-size: 10px;
-    padding: 4px 12px;
-    margin-bottom: 14px;
-    letter-spacing: 0.5px;
+    font-size: 9.5px;
+    padding: 3px 11px;
+    margin-bottom: 10px;
+    letter-spacing: 0.6px;
   }
   .hero-main-title {
-    font-size: clamp(1.55rem, 6.8vw, 1.95rem);
-    line-height: 1.22;
+    font-size: clamp(1.42rem, 6.2vw, 1.85rem);
+    line-height: 1.18;
     letter-spacing: -0.4px;
-    margin: 0 0 12px 0;
+    margin: 0 0 10px 0;
     max-width: 100%;
   }
   .hero-subtext {
-    font-size: 13px;
-    line-height: 1.55;
-    color: rgba(226, 232, 240, 0.82);
-    margin: 0 auto 18px auto;
-    max-width: 100%;
-  }
-  .hero-trust-bullets {
-    margin: 0 auto 20px auto;
-    gap: 7px;
-    width: 100%;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: rgba(226, 232, 240, 0.85);
+    margin: 0 auto 12px auto;
     max-width: 320px;
   }
+  .hero-trust-bullets {
+    margin: 0 auto 14px auto;
+    gap: 6px;
+    width: 100%;
+    max-width: 310px;
+  }
   .trust-bullet-item {
-    font-size: 12px;
-    gap: 8px;
+    font-size: 11.5px;
+    gap: 7px;
+  }
+  .bullet-icon-box {
+    width: 17px;
+    height: 17px;
+    font-size: 9.5px;
   }
   .trust-bullet-item i {
-    font-size: 12.5px;
+    font-size: 10px;
   }
   .hero-cta-group {
     flex-direction: column;
     width: 100%;
-    max-width: 320px;
-    margin: 0 auto 18px auto;
-    gap: 10px;
+    max-width: 295px;
+    margin: 0 auto 14px auto;
+    gap: 8px;
   }
-  .btn-hero-primary,
-  .btn-hero-whatsapp {
+  .btn-hero-primary {
     width: 100%;
     height: 42px;
-    padding: 0 18px;
+    padding: 0 16px;
     font-size: 13px;
     font-weight: 750;
-    border-radius: 12px;
+    border-radius: 10px;
+    justify-content: center;
+  }
+  .btn-hero-whatsapp {
+    width: 100%;
+    height: 38px;
+    padding: 0 16px;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 10px;
     justify-content: center;
   }
   .hero-social-proof {
-    font-size: 11.5px;
-    gap: 6px;
+    font-size: 11px;
+    gap: 5px;
   }
   .mockup-header {
     flex-direction: row;
@@ -747,14 +760,23 @@
 
 @media (max-width: 360px) {
   .hero-main-title {
-    font-size: 1.45rem;
+    font-size: 1.38rem;
     letter-spacing: -0.3px;
+    line-height: 1.16;
   }
   .hero-subtext {
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .hero-cta-group {
+    max-width: 280px;
+  }
+  .btn-hero-primary {
+    height: 40px;
     font-size: 12.5px;
   }
-  .btn-hero-primary,
   .btn-hero-whatsapp {
-    font-size: 12.5px;
+    height: 36px;
+    font-size: 11.5px;
   }
 }

@@ -1,0 +1,452 @@
+/* ==========================================================================
+   STATUTORY COMPLIANCE & DUE DATE TICKER
+   Tailored for Shree Chamunda Associates
+   ========================================================================== */
+
+.compliance-ticker-strip {
+  background: linear-gradient(90deg, #020710 0%, #071326 50%, #020710 100%);
+  border-bottom: 1px solid rgba(248, 180, 0, 0.28);
+  color: #f1f5f9;
+  font-size: 12px;
+  position: relative;
+  z-index: 999;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+
+.compliance-ticker-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 clamp(14px, 2vw, 28px);
+  box-sizing: border-box;
+  gap: 14px;
+}
+
+/* Left Status Beacon & Kicker */
+.compliance-ticker-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: rgba(248, 180, 0, 0.1);
+  border: 1px solid rgba(248, 180, 0, 0.35);
+  border-radius: 6px;
+  padding: 3px 10px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  z-index: 2;
+}
+
+.ticker-live-beacon {
+  position: relative;
+  display: inline-flex;
+  width: 8px;
+  height: 8px;
+}
+
+.ticker-live-beacon .beacon-ping {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background-color: #22c55e;
+  opacity: 0.85;
+  animation: tickerPing 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.ticker-live-beacon .beacon-core {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #22c55e;
+  box-shadow: 0 0 6px #22c55e;
+}
+
+@keyframes tickerPing {
+  0% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  }
+  70% {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+  }
+  100% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
+}
+
+.ticker-label-group {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  line-height: 1;
+}
+
+.ticker-title {
+  color: #f8b400;
+  font-weight: 750;
+  font-size: 10.5px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.ticker-sub {
+  color: #94a3b8;
+  font-size: 9.5px;
+  font-weight: 500;
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .ticker-sub {
+    display: inline;
+  }
+}
+
+/* Scrolling Marquee Container */
+.compliance-marquee-wrapper {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
+}
+
+.compliance-marquee-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 28px;
+  animation: complianceScroll 48s linear infinite;
+  will-change: transform;
+}
+
+.marquee-paused {
+  animation-play-state: paused !important;
+}
+
+@keyframes complianceScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Individual Ticker Items */
+.compliance-ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  flex-shrink: 0;
+  font-size: 11.5px;
+  color: #e2e8f0;
+}
+
+.compliance-pill-badge {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+.badge-urgent {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.badge-warning {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fcd34d;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.badge-info {
+  background: rgba(56, 189, 248, 0.2);
+  color: #7dd3fc;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+}
+
+.compliance-date-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #fbbf24;
+  font-size: 11px;
+}
+
+.compliance-date-chip i {
+  font-size: 10px;
+  opacity: 0.85;
+}
+
+.compliance-item-name {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.compliance-statute-tag {
+  color: #64748b;
+  font-size: 10.5px;
+}
+
+.compliance-inline-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #38bdf8;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 11px;
+  padding: 2px 8px;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.compliance-inline-action:hover {
+  background: rgba(56, 189, 248, 0.22);
+  border-color: #38bdf8;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.compliance-inline-action i {
+  font-size: 8px;
+  transition: transform 0.2s ease;
+}
+
+.compliance-inline-action:hover i {
+  transform: translateX(2px);
+}
+
+.compliance-item-sep {
+  color: rgba(248, 180, 0, 0.4);
+  margin-left: 10px;
+  font-weight: 700;
+}
+
+/* Right Tools Hub CTA & Dismiss */
+.compliance-ticker-tools {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  z-index: 2;
+}
+
+.ticker-tools-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, rgba(248, 180, 0, 0.18) 0%, rgba(248, 180, 0, 0.08) 100%);
+  border: 1px solid rgba(248, 180, 0, 0.4);
+  color: #fbbf24;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 650;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.ticker-tools-btn:hover {
+  background: #f8b400;
+  color: #030a14;
+  border-color: #f8b400;
+  box-shadow: 0 0 10px rgba(248, 180, 0, 0.4);
+}
+
+.ticker-tools-btn i {
+  font-size: 10px;
+}
+
+.ticker-dismiss-btn {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  padding: 4px;
+  font-size: 11px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.ticker-dismiss-btn:hover {
+  color: #f87171;
+  background: rgba(239, 68, 68, 0.12);
+}
+
+/* View Toggle Modes */
+.desktop-ticker-view {
+  display: flex;
+}
+
+.mobile-ticker-view {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .compliance-statute-tag {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .desktop-ticker-view {
+    display: none !important;
+  }
+
+  .mobile-ticker-view {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 8px;
+    gap: 7px;
+    box-sizing: border-box;
+  }
+
+  /* Mobile Integrated Radar & Date Badge */
+  .mobile-radar-date-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    font-weight: 750;
+    padding: 2.5px 7px;
+    border-radius: 5px;
+    flex-shrink: 0;
+    line-height: 1.1;
+    white-space: nowrap;
+    letter-spacing: 0.3px;
+  }
+
+  .mobile-radar-date-badge .ticker-live-beacon {
+    width: 6px;
+    height: 6px;
+  }
+
+  .mobile-radar-date-badge .beacon-core,
+  .mobile-radar-date-badge .beacon-ping {
+    width: 6px;
+    height: 6px;
+  }
+
+  /* Mobile Rotating Carousel */
+  .mobile-item-carousel {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+
+  .mobile-item-chip-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    min-width: 0;
+    text-decoration: none;
+    color: #ffffff !important;
+    animation: mobItemSlide 0.22s ease-out;
+  }
+
+  .mobile-item-chip-link:visited,
+  .mobile-item-chip-link:hover,
+  .mobile-item-chip-link:active {
+    color: #ffffff !important;
+    text-decoration: none;
+  }
+
+  @keyframes mobItemSlide {
+    0% {
+      opacity: 0.88;
+      transform: translateY(3px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .compliance-ticker-strip .mobile-item-title {
+    font-size: 11px;
+    font-weight: 650;
+    color: #ffffff !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+    letter-spacing: 0.1px;
+  }
+
+  .mobile-arrow-icon {
+    font-size: 9px;
+    color: #38bdf8 !important;
+    flex-shrink: 0;
+    opacity: 0.9;
+  }
+
+  /* Mobile Actions */
+  .mobile-ticker-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .mobile-tools-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    background: rgba(248, 180, 0, 0.15);
+    border: 1px solid rgba(248, 180, 0, 0.35);
+    color: #fbbf24;
+    font-size: 10.5px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-tools-btn:hover {
+    background: #f8b400;
+    color: #020710;
+  }
+}
+
+@media (max-width: 360px) {
+  .mobile-ticker-view {
+    padding: 0 4px;
+    gap: 4px;
+  }
+  .mobile-radar-date-badge {
+    padding: 2px 5px;
+    font-size: 9.5px;
+    gap: 4px;
+  }
+  .compliance-ticker-strip .mobile-item-title {
+    font-size: 10.5px;
+  }
+}

@@ -51,9 +51,13 @@ router.put('/inquiries/:id', async (req, res, next) => {
       return res.status(404).json({ success: false, message: 'Inquiry not found' });
     }
 
-    // Emit to admin room
+    // Emit to admin and user rooms
     if (req.io) {
       req.io.to('admin').emit('inquiry_status_changed', inquiry);
+      const clientUser = await User.findOne({ email: inquiry.email });
+      if (clientUser) {
+        req.io.to(`user:${clientUser._id}`).emit('inquiry_status_changed', inquiry);
+      }
     }
 
     res.json({ success: true, data: inquiry });
@@ -90,8 +94,8 @@ router.get('/documents/download/:id', async (req, res, next) => {
     const fs = require('fs');
     const path = require('path');
     const uploadsDir = path.resolve(__dirname, '..', 'uploads');
-    const relativePath = (doc.filePath || '').replace(/^(\/|\\)+/, '');
-    const fullPath = path.resolve(__dirname, '..', relativePath);
+    const targetFile = path.basename(doc.filePath || '');
+    const fullPath = path.join(uploadsDir, targetFile);
 
     // Path traversal protection with delimiter check
     if (!fullPath.startsWith(uploadsDir + path.sep) && fullPath !== uploadsDir) {
@@ -133,6 +137,15 @@ router.put('/documents/:id', async (req, res, next) => {
 
     if (!doc) {
       return res.status(404).json({ success: false, message: 'Document not found' });
+    }
+
+    // Emit live update to client user room and admin room
+    if (req.io) {
+      const recipientId = doc.userId?._id ? doc.userId._id.toString() : doc.userId?.toString();
+      if (recipientId) {
+        req.io.to(`user:${recipientId}`).emit('document_status_changed', doc);
+      }
+      req.io.to('admin').emit('document_status_changed', doc);
     }
 
     res.json({ success: true, data: doc });
@@ -496,9 +509,13 @@ router.post('/inquiries/:id/comment', async (req, res, next) => {
     inquiry.comments.push(newComment);
     await inquiry.save();
 
-    // Emit to admin room
+    // Emit to admin room and user room if user exists
     if (req.io) {
       req.io.to('admin').emit('inquiry_comment_added', { inquiryId: inquiry._id, comment: newComment });
+      const clientUser = await User.findOne({ email: inquiry.email });
+      if (clientUser) {
+        req.io.to(`user:${clientUser._id}`).emit('inquiry_comment_added', { inquiryId: inquiry._id, comment: newComment });
+      }
     }
 
     res.json({ success: true, data: inquiry });

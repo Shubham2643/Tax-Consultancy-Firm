@@ -141,7 +141,6 @@ export const SiteContextProvider = ({ children }) => {
             children: [
               { label: 'Blog', href: '/blog' },
               { label: 'FAQs', href: '/faqs' },
-              { label: 'Contact Us', href: '/contact' },
             ],
           },
           { label: 'About Us', href: '/about', children: [] },

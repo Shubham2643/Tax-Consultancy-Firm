@@ -11,10 +11,11 @@ import {
   bookConsultation, 
   getClientInvoices, 
   postClientComment,
-  downloadPortalDocument
+  downloadPortalDocument,
+  createPaymentOrder,
+  verifyPaymentSignature
 } from '../api';
 import useSEO from '../hooks/useSEO';
-import axios from 'axios';
 import './Portal.css';
 
 const Portal = () => {
@@ -395,21 +396,11 @@ const Portal = () => {
         return;
       }
 
-      const token = localStorage.getItem('authToken');
       const invoiceObj = invoices.find(inv => inv._id === invoiceId);
+      const res = await createPaymentOrder(invoiceId);
 
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/portal/payments/create-order`,
-        { invoiceId },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (res.data.success) {
-        const { orderId, amount, currency, keyId } = res.data;
+      if (res.success) {
+        const { orderId, amount, currency, keyId } = res;
 
         const options = {
           key: keyId,
@@ -423,26 +414,18 @@ const Portal = () => {
             try {
               setPaymentProcessing(true);
               setProcessingInvoiceId(invoiceObj._id);
-              const verifyRes = await axios.post(
-                `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/portal/payments/verify-signature`,
-                {
-                  razorpay_payment_id: response.razorpay_payment_id,
-                  razorpay_order_id: response.razorpay_order_id,
-                  razorpay_signature: response.razorpay_signature,
-                  invoiceId: invoiceObj._id
-                },
-                {
-                  headers: {
-                    Authorization: `Bearer ${token}`,
-                  },
-                }
-              );
+              const verifyRes = await verifyPaymentSignature({
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_signature: response.razorpay_signature,
+                invoiceId: invoiceObj._id
+              });
 
-              if (verifyRes.data.success) {
+              if (verifyRes.success) {
                 setMessage({ type: 'success', text: 'Payment verified! Invoice marked as paid.' });
                 fetchInvoices();
               } else {
-                setMessage({ type: 'error', text: verifyRes.data.message || 'Signature verification failed.' });
+                setMessage({ type: 'error', text: verifyRes.message || 'Signature verification failed.' });
               }
             } catch (err) {
               setMessage({ type: 'error', text: err.response?.data?.message || 'Verification failed.' });

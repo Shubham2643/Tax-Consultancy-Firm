@@ -79,10 +79,10 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-// Global rate limiter — 100 requests per minute per IP
+// Global rate limiter — 300 requests per minute per IP (safe for NAT networks)
 const globalLimiter = rateLimit({
   windowMs: 60 * 1000,
-  max: 100,
+  max: 300,
   standardHeaders: true,
   legacyHeaders: false,
   message: { success: false, message: 'Too many requests, please try again later.' },
@@ -120,7 +120,12 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
-app.use(express.json({ limit: '15mb' }));
+app.use(express.json({
+  limit: '15mb',
+  verify: (req, res, buf) => {
+    req.rawBody = buf;
+  }
+}));
 app.use(express.urlencoded({ extended: true, limit: '15mb' }));
 
 // Inject Socket.io into the request context
@@ -153,6 +158,14 @@ io.on('connection', (socket) => {
       }
     } catch (err) {
       console.error('Socket auth error:', err.message);
+    }
+  });
+
+  socket.on('deauthenticate', () => {
+    if (socket.userId) {
+      socket.leave(`user:${socket.userId}`);
+      socket.leave('admin');
+      delete socket.userId;
     }
   });
 

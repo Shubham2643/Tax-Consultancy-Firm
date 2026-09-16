@@ -326,7 +326,6 @@ const seedData = async () => {
         children: [
           { label: 'Blog', href: '/blog' },
           { label: 'FAQs', href: '/faqs' },
-          { label: 'Contact Us', href: '/contact' },
         ],
         isActive: true,
       },

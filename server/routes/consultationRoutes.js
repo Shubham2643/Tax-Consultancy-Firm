@@ -111,8 +111,10 @@ router.put('/admin/:id', authenticate, async (req, res, next) => {
     // Emit to admin room and user room if applicable
     if (req.io) {
       req.io.to('admin').emit('consultation_updated', booking);
+      req.io.to('admin').emit('consultation_status_changed', booking);
       if (booking.client) {
         req.io.to(`user:${booking.client.toString()}`).emit('consultation_updated', booking);
+        req.io.to(`user:${booking.client.toString()}`).emit('consultation_status_changed', booking);
       }
     }
 

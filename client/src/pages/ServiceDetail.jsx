@@ -24,6 +24,7 @@ const ServiceDetail = () => {
   });
 
   const [checkedDocs, setCheckedDocs] = useState({});
+  const [copiedChecklist, setCopiedChecklist] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
   const [urgency, setUrgency] = useState('standard');
 
@@ -138,6 +139,110 @@ const ServiceDetail = () => {
   const docNames = Object.keys(checkedDocs);
   const checkedCount = docNames.filter((doc) => checkedDocs[doc]).length;
   const progressPercent = docNames.length > 0 ? Math.round((checkedCount / docNames.length) * 100) : 0;
+
+  const handleCopyChecklist = () => {
+    const lines = [
+      `📋 MANDATORY STATUTORY DOCUMENT CHECKLIST`,
+      `Service: ${service?.title || 'Statutory Filing'}`,
+      `Firm: Shree Chamunda Associates | Chartered Tax Practice`,
+      `Chambers: 612, Hill Town Square, Nikol, Ahmedabad - 380049`,
+      `Advisory Hotline: +91 95109 84735`,
+      `--------------------------------------------------`,
+      ...docNames.map((d, i) => `${checkedDocs[d] ? '[✓]' : '[ ]'} ${i + 1}. ${d}`),
+      `--------------------------------------------------`,
+      `Readiness: ${checkedCount} of ${docNames.length} verified (${progressPercent}%)`,
+      `Date Generated: ${new Date().toLocaleDateString('en-IN')}`,
+    ];
+    navigator.clipboard.writeText(lines.join('\n'));
+    setCopiedChecklist(true);
+    setTimeout(() => setCopiedChecklist(false), 2400);
+  };
+
+  const handlePrintChecklist = () => {
+    const printWin = window.open('', '_blank', 'width=800,height=900');
+    if (!printWin) {
+      window.print();
+      return;
+    }
+    printWin.document.write(`
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Document Checklist - ${service?.title} - Shree Chamunda Associates</title>
+        <style>
+          @page { size: A4 portrait; margin: 15mm; }
+          body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; padding: 20px; color: #0f172a; margin: 0; line-height: 1.5; }
+          .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2.5px solid #f8b400; padding-bottom: 16px; margin-bottom: 24px; }
+          .firm-title { font-size: 20px; font-weight: 850; color: #071324; text-transform: uppercase; letter-spacing: 0.5px; }
+          .firm-sub { font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase; margin-top: 3px; letter-spacing: 0.4px; }
+          .firm-contact { text-align: right; font-size: 11px; color: #334155; line-height: 1.4; }
+          .badge { display: inline-block; background: #071324; color: #f8b400; font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px; }
+          .service-title { font-size: 22px; font-weight: 800; color: #071324; margin-bottom: 6px; }
+          .lead { font-size: 12.5px; color: #475569; margin-bottom: 24px; }
+          .checklist-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+          .checklist-table th { background: #071324; color: #f8fafc; padding: 10px 12px; text-align: left; font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
+          .checklist-table td { padding: 11px 12px; border-bottom: 1px solid #e2e8f0; font-size: 12.5px; }
+          .status-box { width: 16px; height: 16px; border: 1.5px solid #071324; display: inline-block; text-align: center; line-height: 16px; font-weight: bold; font-size: 11px; border-radius: 3px; }
+          .status-box.checked { background: #071324; color: #f8b400; }
+          .notes-card { border: 1.5px dashed #cbd5e1; border-radius: 8px; padding: 14px 16px; margin-bottom: 24px; min-height: 70px; }
+          .notes-card strong { font-size: 11.5px; color: #071324; text-transform: uppercase; letter-spacing: 0.4px; display: block; margin-bottom: 4px; }
+          .footer { border-top: 1px solid #e2e8f0; padding-top: 12px; display: flex; justify-content: space-between; font-size: 10.5px; color: #64748b; }
+          @media print { .no-print { display: none; } }
+        </style>
+      </head>
+      <body>
+        <div class="header">
+          <div>
+            <div class="firm-title">Shree Chamunda Associates</div>
+            <div class="firm-sub">Chartered Tax & Corporate Advisory Chambers</div>
+          </div>
+          <div class="firm-contact">
+            612, Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad - 380049<br/>
+            Practice Hotline: +91 95109 84735 &bull; shreechamundaassociates0905@gmail.com
+          </div>
+        </div>
+        <span class="badge">Statutory Onboarding Protocol</span>
+        <div class="service-title">${service?.title}</div>
+        <p class="lead">Please assemble the following mandatory KYC, financial, and regulatory records. You may submit digital scans via the Client Portal or bring original paperwork to our Nikol Chambers.</p>
+        <table class="checklist-table">
+          <thead>
+            <tr>
+              <th style="width: 44px; text-align: center;">Ready</th>
+              <th style="width: 36px;">#</th>
+              <th>Required Statutory Document</th>
+              <th style="width: 130px; text-align: center;">Original Verified</th>
+              <th style="width: 130px; text-align: center;">Digital PDF Uploaded</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${docNames.map((doc, idx) => `
+              <tr>
+                <td style="text-align: center;">
+                  <span class="status-box ${checkedDocs[doc] ? 'checked' : ''}">${checkedDocs[doc] ? '✓' : ''}</span>
+                </td>
+                <td style="color: #64748b; font-weight: 600;">${idx + 1}</td>
+                <td><strong>${doc}</strong></td>
+                <td style="text-align: center; color: #94a3b8;">[&nbsp;&nbsp;&nbsp;&nbsp;]</td>
+                <td style="text-align: center; color: #94a3b8;">[&nbsp;&nbsp;&nbsp;&nbsp;]</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+        <div class="notes-card">
+          <strong>Senior CA Verification Notes & Case File ID:</strong>
+        </div>
+        <div class="footer">
+          <span>Date Generated: ${new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+          <span>Shree Chamunda Associates &bull; Confidential Client Compliance File</span>
+        </div>
+        <script>
+          window.onload = function() { window.print(); }
+        </script>
+      </body>
+      </html>
+    `);
+    printWin.document.close();
+  };
 
   const isRegistration = service.serviceType === 'registration';
   const urgencyMultiplier = urgency === 'express' ? 1.5 : 1;
@@ -557,21 +662,48 @@ const ServiceDetail = () => {
 
           {/* 3. Document Preparedness Checklist */}
           {docNames.length > 0 && (
-            <section className="detail-bento-card">
-              <div className="detail-card-header">
-                <div className="card-header-icon">
-                  <i className="fas fa-clipboard-check"></i>
+            <section className="detail-bento-card checklist-bento-card">
+              <div className="detail-card-header checklist-header-flex">
+                <div className="checklist-header-left">
+                  <div className="card-header-icon">
+                    <i className="fas fa-clipboard-check"></i>
+                  </div>
+                  <div className="card-header-text">
+                    <span className="card-kicker">STATUTORY KYC &amp; FILING PROTOCOL</span>
+                    <h2>Required Documents</h2>
+                  </div>
                 </div>
-                <div className="card-header-text">
-                  <span className="card-kicker">PREPAREDNESS CHECK</span>
-                  <h2>Required Documents</h2>
+
+                {/* Exporter Toolbar */}
+                <div className="checklist-action-toolbar">
+                  <button
+                    type="button"
+                    className={`btn-checklist-action ${copiedChecklist ? 'btn-copied' : ''}`}
+                    onClick={handleCopyChecklist}
+                    title="Copy formatted checklist to clipboard"
+                    aria-label="Copy Checklist"
+                  >
+                    <i className={copiedChecklist ? 'fas fa-check' : 'far fa-copy'}></i>
+                    <span>{copiedChecklist ? 'Copied!' : 'Copy Checklist'}</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="btn-checklist-action btn-print-action"
+                    onClick={handlePrintChecklist}
+                    title="Print or save PDF checklist on firm letterhead"
+                    aria-label="Print Checklist"
+                  >
+                    <i className="fas fa-print"></i>
+                    <span>Print Sheet</span>
+                  </button>
                 </div>
               </div>
+
               <div className="detail-card-body">
                 <div className="v2-progress-box">
                   <div className="v2-progress-labels">
                     <span>Document Readiness</span>
-                    <strong>{progressPercent}% Prepared</strong>
+                    <strong>{checkedCount} of {docNames.length} Ready ({progressPercent}%)</strong>
                   </div>
                   <div className="v2-progress-track">
                     <div className="v2-progress-bar" style={{ width: `${progressPercent}%` }}></div>
@@ -588,11 +720,19 @@ const ServiceDetail = () => {
                       aria-checked={checkedDocs[doc]}
                     >
                       <div className="v2-custom-checkbox">
-                        {checkedDocs[doc] && <i className="fas fa-check"></i>}
+                        {checkedDocs[doc] ? <i className="fas fa-check"></i> : <span>{idx + 1}</span>}
                       </div>
                       <span className="v2-checkbox-title">{doc}</span>
+                      <span className={`doc-status-badge ${checkedDocs[doc] ? 'badge-verified' : 'badge-pending'}`}>
+                        {checkedDocs[doc] ? 'Ready' : 'Pending'}
+                      </span>
                     </div>
                   ))}
+                </div>
+
+                <div className="checklist-sub-note">
+                  <i className="fas fa-info-circle"></i>
+                  <span>Click documents to track your progress. You can upload digital scans directly into your Client Vault or submit originals at our Nikol practice chambers.</span>
                 </div>
               </div>
             </section>

@@ -374,7 +374,59 @@ const About = () => {
     },
   ];
 
-  // 7. Authentic Regulatory Framework
+  // 7. Master Institutional Credential Seals & Regulatory Authority
+  const credentialSeals = [
+    {
+      id: 'icai-seal',
+      badge: 'STATUTORY FIDUCIARY COMPLIANCE',
+      code: 'ICAI-ETHICS-STD',
+      authority: 'Chartered Accountants Act, 1949',
+      title: 'ICAI Code of Ethics & Quality Review Aligned',
+      subtitle: 'Fiduciary Independence & Uncompromised Confidentiality',
+      desc: 'Strict adherence to ICAI standards of professional independence, mandatory NDA confidentiality, and fiduciary objectivity. Zero contingent fee conflicts and strict ethical segregation.',
+      highlights: ['Mandatory NDA Protection', 'Independence by Statute', 'Objectivity in Audit'],
+      icon: <Icons.Certificate />,
+      sealClass: 'seal-icai',
+    },
+    {
+      id: 'itat-seal',
+      badge: 'APPELLATE BENCH AUTHORITY',
+      code: 'ITAT-CGST-AUTH',
+      authority: 'Sec 288 Income Tax Act • Sec 116 CGST Act',
+      title: 'Authorized Appellate Tax Representation',
+      subtitle: 'CIT(Appeals), ITAT Benches & GST Revisional Jurisprudence',
+      desc: 'Authorized statutory standing to represent corporate and individual assessees before Commissioner (Appeals), Income Tax Appellate Tribunal (ITAT), and GST Appellate Revisional benches.',
+      highlights: ['CIT(A) Submissions', 'ITAT Case Jurisprudence', 'DRC-01A / ASMT-10 Defense'],
+      icon: <Icons.Scale />,
+      sealClass: 'seal-itat',
+    },
+    {
+      id: 'dual-tier-seal',
+      badge: 'SQC 1 QUALITY ASSURANCE',
+      code: 'DUAL-TIER-SIGN',
+      authority: 'Standard on Quality Control (SQC 1)',
+      title: 'Mandatory Dual-Tier Senior Partner Sign-Off',
+      subtitle: 'Pre-Filing Algorithmic Cross-Verification',
+      desc: 'Rigorous two-stage verification protocol: every tax return, computational schedule, and financial ledger is reviewed by a Lead Preparer and countersigned by a Senior Advisory Partner prior to portal transmission.',
+      highlights: ['Pre-Filing 26AS/AIS Match', 'Partner Co-Signature', 'Zero Portal Errors Guarantee'],
+      icon: <Icons.ShieldCheck />,
+      sealClass: 'seal-quality',
+    },
+    {
+      id: 'chambers-seal',
+      badge: 'ACTIVE COMMERCIAL PRACTICE',
+      code: 'GUJ-COM-REG',
+      authority: 'Gujarat Commercial Registry • Nikol Central',
+      title: 'Nikol Central Practice Chambers Accreditation',
+      subtitle: 'Physical Chambers at 612 Hill Town Square, Nikol',
+      desc: 'Physical corporate practice chambers established at 612 Hill Town Square, Nikol, Ahmedabad. Fully equipped with private partner consultation suites and 256-bit encrypted archival terminals.',
+      highlights: ['In-Person Advisory Chambers', 'Confidential Consultation Rooms', 'Bank-Grade Vault Terminals'],
+      icon: <Icons.Building />,
+      sealClass: 'seal-chambers',
+    },
+  ];
+
+  // 8. Authentic Regulatory Framework & Technical Protocols
   const accreditations = [
     { code: 'ICAI-ETHICS', title: 'ICAI Code of Ethics Aligned', desc: 'Strict observance of professional independence, fiduciary duty, and non-disclosure standards' },
     { code: 'MCA-SPICE', title: 'MCA 21 SPICe+ Intermediary', desc: 'Turnkey corporate incorporations, LLP agreements, and statutory board resolutions' },
@@ -900,24 +952,66 @@ const About = () => {
         </section>
 
         {/* ============================================================
-            8. AUTHENTIC REGULATORY FRAMEWORK & GOVERNANCE STANDARDS
+            8. INSTITUTIONAL ACCREDITATIONS & REGULATORY AUTHORITY SEALS
             ============================================================ */}
-        <section className="about-accreditations-section" aria-label="Institutional Accreditations & Governance">
+        <section className="about-accreditations-section" aria-label="Institutional Accreditations & Regulatory Seals">
           <div className="accreditations-header">
-            <span className="accred-eyebrow">STATUTORY GOVERNANCE &bull; ETHICAL MANDATE</span>
-            <h3>Engineered for Absolute Statutory Compliance</h3>
+            <span className="accred-eyebrow">INSTITUTIONAL ASSURANCE &bull; REGULATORY BENCHMARK</span>
+            <h3>Practice Credentials &amp; Regulatory Authority Seals</h3>
             <p className="accred-sub">
-              Our firm operates strictly within the ethical framework of Indian regulatory statutes, ensuring full insulation for your enterprise.
+              Operating strictly within statutory charters enacted by the Parliament of India, ensuring uncompromised fiduciary independence, authorized appellate representation, and algorithmic zero-error filing defense.
             </p>
           </div>
-          <div className="accreditations-grid">
-            {accreditations.map((item, idx) => (
-              <div key={idx} className="accred-card">
-                <div className="accred-code-badge">{item.code}</div>
-                <strong className="accred-title">{item.title}</strong>
-                <p className="accred-desc">{item.desc}</p>
+
+          {/* 4 Master Authority Seals Grid */}
+          <div className="master-seals-grid">
+            {credentialSeals.map((seal) => (
+              <div key={seal.id} className={`master-seal-card ${seal.sealClass}`}>
+                <div className="seal-card-header">
+                  <div className="seal-icon-emblem">
+                    {seal.icon}
+                    <span className="seal-emblem-ring"></span>
+                  </div>
+                  <div className="seal-meta-header">
+                    <span className="seal-authority-badge">{seal.badge}</span>
+                    <span className="seal-statute-tag">{seal.authority}</span>
+                  </div>
+                </div>
+
+                <div className="seal-card-body">
+                  <strong className="seal-card-title">{seal.title}</strong>
+                  <span className="seal-card-subtitle">{seal.subtitle}</span>
+                  <p className="seal-card-desc">{seal.desc}</p>
+                </div>
+
+                <div className="seal-card-footer">
+                  <div className="seal-highlights-list">
+                    {seal.highlights.map((h, i) => (
+                      <span key={i} className="seal-highlight-pill">
+                        <Icons.Check />
+                        <span>{h}</span>
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
             ))}
+          </div>
+
+          {/* Secondary Statutory Protocol Assurance Strip */}
+          <div className="technical-protocols-strip">
+            <div className="protocols-strip-header">
+              <span className="protocols-label">VERIFIED STATUTORY TECHNICAL PROTOCOLS:</span>
+            </div>
+            <div className="accreditations-grid">
+              {accreditations.map((item, idx) => (
+                <div key={idx} className="accred-card">
+                  <div className="accred-code-badge">{item.code}</div>
+                  <strong className="accred-title">{item.title}</strong>
+                  <p className="accred-desc">{item.desc}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 

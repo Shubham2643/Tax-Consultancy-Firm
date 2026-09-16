@@ -1,8 +1,6 @@
 import { useState, useMemo } from 'react';
 import ContactForm from '../components/ContactForm';
 import { useSiteContext } from '../context/SiteContext';
-import { getFAQs } from '../api';
-import useFetch from '../hooks/useFetch';
 import './Contact.css';
 
 const CONSULTATION_FAQS = [

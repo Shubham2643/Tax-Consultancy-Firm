@@ -6,15 +6,33 @@ import useSEO from '../hooks/useSEO';
 import './FAQ.css';
 
 const CATEGORIES = ['All', 'GST', 'Income Tax', 'Business Registration', 'Compliance'];
+const TRENDING_TOPICS = ['GSTR-2B', 'ASMT-10', 'Sec 44ADA', 'LLP Agreement', 'Startup 80-IAC', 'TDS Refund'];
 
 const FAQ = () => {
+  const { data: response, loading, error } = useFetch(getFAQs);
+  const faqs = useMemo(() => response?.data || [], [response]);
+
+  const faqSchema = useMemo(() => {
+    if (!faqs || faqs.length === 0) return null;
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqs.slice(0, 25).map((f) => ({
+        '@type': 'Question',
+        name: f.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: f.answer,
+        },
+      })),
+    };
+  }, [faqs]);
+
   useSEO({
     title: 'FAQs & Help Desk | Shree Chamunda Associates',
     description: 'Find verified answers to common GST, Income Tax, Corporate Registration, and Statutory Audit questions.',
+    jsonLd: faqSchema,
   });
-
-  const { data: response, loading, error } = useFetch(getFAQs);
-  const faqs = useMemo(() => response?.data || [], [response]);
 
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
@@ -89,7 +107,7 @@ const FAQ = () => {
         <div className="faq-toolbar-card">
           <div className="faq-toolbar-left">
             <div className="faq-category-tabs">
-              {categories.map((cat) => (
+              {CATEGORIES.map((cat) => (
                 <button
                   key={cat}
                   className={`faq-tab ${activeCategory === cat ? 'active' : ''}`}
@@ -137,7 +155,7 @@ const FAQ = () => {
         <div className="faq-trending-row">
           <span className="trending-title"><i className="fas fa-fire"></i> Popular:</span>
           <div className="trending-chips-wrap">
-            {trendingTopics.map((topic) => (
+            {TRENDING_TOPICS.map((topic) => (
               <button
                 key={topic}
                 className={`trending-tag-btn ${search === topic ? 'active' : ''}`}

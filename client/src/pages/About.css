@@ -1947,6 +1947,234 @@
   margin: 0;
 }
 
+/* Master Authority Seals Grid (2x2 Matrix) */
+.master-seals-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+  margin-bottom: 32px;
+}
+
+@media (max-width: 900px) {
+  .master-seals-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.master-seal-card {
+  background: linear-gradient(180deg, #ffffff 0%, #fbfcfe 100%);
+  border: 1.5px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px;
+  position: relative;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 16px rgba(7, 19, 36, 0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.master-seal-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(7, 19, 36, 0.08);
+}
+
+.seal-card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.seal-icon-emblem {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.seal-icon-emblem svg {
+  width: 24px;
+  height: 24px;
+}
+
+.seal-meta-header {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.seal-authority-badge {
+  display: inline-block;
+  font-size: 9.5px;
+  font-weight: 850;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 4px;
+  width: fit-content;
+}
+
+.seal-statute-tag {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+/* Card Body */
+.seal-card-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #071324;
+  display: block;
+  margin-bottom: 3px;
+  line-height: 1.3;
+}
+
+.seal-card-subtitle {
+  font-size: 12px;
+  font-weight: 650;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.seal-card-desc {
+  font-size: 13px;
+  color: #475569;
+  line-height: 1.58;
+  margin: 0 0 16px;
+}
+
+/* Seal Card Footer & Highlights */
+.seal-card-footer {
+  margin-top: auto;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 14px;
+}
+
+.seal-highlights-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.seal-highlight-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 4px 9px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.seal-highlight-pill svg {
+  width: 11px;
+  height: 11px;
+}
+
+/* Color Theming for Master Seals */
+.seal-icai {
+  border-left: 4px solid #f8b400;
+}
+.seal-icai .seal-icon-emblem {
+  background: rgba(248, 180, 0, 0.12);
+  border: 1.5px solid rgba(248, 180, 0, 0.35);
+  color: #b47500;
+}
+.seal-icai .seal-authority-badge {
+  background: rgba(248, 180, 0, 0.15);
+  color: #925c00;
+}
+.seal-icai .seal-card-subtitle {
+  color: #b47500;
+}
+.seal-icai .seal-highlight-pill svg {
+  color: #b47500;
+}
+
+.seal-itat {
+  border-left: 4px solid #0284c7;
+}
+.seal-itat .seal-icon-emblem {
+  background: rgba(2, 132, 199, 0.1);
+  border: 1.5px solid rgba(2, 132, 199, 0.35);
+  color: #0284c7;
+}
+.seal-itat .seal-authority-badge {
+  background: rgba(2, 132, 199, 0.12);
+  color: #0369a1;
+}
+.seal-itat .seal-card-subtitle {
+  color: #0284c7;
+}
+.seal-itat .seal-highlight-pill svg {
+  color: #0284c7;
+}
+
+.seal-quality {
+  border-left: 4px solid #10b981;
+}
+.seal-quality .seal-icon-emblem {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1.5px solid rgba(16, 185, 129, 0.35);
+  color: #059669;
+}
+.seal-quality .seal-authority-badge {
+  background: rgba(16, 185, 129, 0.12);
+  color: #047857;
+}
+.seal-quality .seal-card-subtitle {
+  color: #059669;
+}
+.seal-quality .seal-highlight-pill svg {
+  color: #059669;
+}
+
+.seal-chambers {
+  border-left: 4px solid #071324;
+}
+.seal-chambers .seal-icon-emblem {
+  background: #071324;
+  border: 1.5px solid #f8b400;
+  color: #f8b400;
+}
+.seal-chambers .seal-authority-badge {
+  background: #071324;
+  color: #f8b400;
+}
+.seal-chambers .seal-card-subtitle {
+  color: #071324;
+}
+.seal-chambers .seal-highlight-pill svg {
+  color: #071324;
+}
+
+/* Secondary Statutory Protocols Strip */
+.technical-protocols-strip {
+  border-top: 1px dashed #cbd5e1;
+  padding-top: 24px;
+}
+
+.protocols-strip-header {
+  margin-bottom: 14px;
+}
+
+.protocols-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: #64748b;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
 .accreditations-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);

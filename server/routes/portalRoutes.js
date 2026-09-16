@@ -32,6 +32,29 @@ const isSafePath = (filePath) => {
   return resolved.startsWith(targetDir + path.sep) || resolved === targetDir;
 };
 
+/**
+ * Verify file magic bytes against extension
+ */
+const verifyMagicBytes = (buffer, ext) => {
+  if (!buffer || buffer.length < 4) return false;
+  if (ext === '.pdf') {
+    return buffer.toString('utf8', 0, 4) === '%PDF';
+  }
+  if (ext === '.png') {
+    return buffer[0] === 0x89 && buffer[1] === 0x50 && buffer[2] === 0x4e && buffer[3] === 0x47;
+  }
+  if (ext === '.jpg' || ext === '.jpeg') {
+    return buffer[0] === 0xff && buffer[1] === 0xd8 && buffer[2] === 0xff;
+  }
+  if (ext === '.docx' || ext === '.xlsx') {
+    return buffer[0] === 0x50 && buffer[1] === 0x4b;
+  }
+  if (ext === '.doc' || ext === '.xls') {
+    return buffer[0] === 0xd0 && buffer[1] === 0xcf;
+  }
+  return true;
+};
+
 // GET /api/portal/documents — Get logged-in user's uploaded documents
 router.get('/documents', authenticate, async (req, res, next) => {
   try {
@@ -72,6 +95,11 @@ router.post('/upload', authenticate, async (req, res, next) => {
       return res.status(400).json({ success: false, message: 'File size must be under 10MB' });
     }
 
+    // Magic bytes verification
+    if (!verifyMagicBytes(buffer, ext)) {
+      return res.status(400).json({ success: false, message: 'File content signature does not match file extension' });
+    }
+
     const fileName = `${req.user._id}_${crypto.randomBytes(8).toString('hex')}${ext}`;
     const filePath = path.join(UPLOADS_DIR, fileName);
 
@@ -107,7 +135,8 @@ router.delete('/documents/:id', authenticate, async (req, res, next) => {
     }
 
     // Remove file from disk
-    const fullPath = path.join(__dirname, '..', doc.filePath);
+    const targetFile = path.basename(doc.filePath);
+    const fullPath = path.join(UPLOADS_DIR, targetFile);
     if (isSafePath(fullPath)) {
       try { await fs.unlink(fullPath); } catch { /* file may already be gone */ }
     }
@@ -132,7 +161,7 @@ router.put('/documents/:id', authenticate, async (req, res, next) => {
     if (originalName) doc.originalName = originalName;
     if (serviceSlug !== undefined) doc.serviceSlug = serviceSlug;
 
-    // If new file binary content is sent, replace the file on disk
+    // If new file binary content is sent, safely replace the file on disk
     if (fileData) {
       const ext = path.extname(originalName || doc.originalName).toLowerCase();
       if (!ALLOWED_EXTENSIONS.includes(ext)) {
@@ -152,13 +181,12 @@ router.put('/documents/:id', authenticate, async (req, res, next) => {
         return res.status(400).json({ success: false, message: 'File size must be under 10MB' });
       }
 
-      // Delete old file from disk
-      const oldFullPath = path.join(__dirname, '..', doc.filePath);
-      if (isSafePath(oldFullPath)) {
-        try { await fs.unlink(oldFullPath); } catch { /* file may already be gone */ }
+      // Magic bytes verification
+      if (!verifyMagicBytes(buffer, ext)) {
+        return res.status(400).json({ success: false, message: 'File content signature does not match file extension' });
       }
 
-      // Save new file to disk
+      // Save new file to disk FIRST
       const fileName = `${req.user._id}_${crypto.randomBytes(8).toString('hex')}${ext}`;
       const newFilePath = path.join(UPLOADS_DIR, fileName);
 
@@ -167,6 +195,13 @@ router.put('/documents/:id', authenticate, async (req, res, next) => {
       }
 
       await fs.writeFile(newFilePath, buffer);
+
+      // Now that new file write succeeded, safely unlink the old file
+      const oldFileName = path.basename(doc.filePath);
+      const oldFullPath = path.join(UPLOADS_DIR, oldFileName);
+      if (isSafePath(oldFullPath) && oldFileName !== fileName) {
+        try { await fs.unlink(oldFullPath); } catch { /* file may already be gone */ }
+      }
 
       doc.fileName = fileName;
       doc.filePath = `/uploads/${fileName}`;
@@ -189,7 +224,8 @@ router.get('/documents/download/:id', authenticate, async (req, res, next) => {
       return res.status(404).json({ success: false, message: 'Document not found' });
     }
 
-    const fullPath = path.join(__dirname, '..', doc.filePath);
+    const targetFile = path.basename(doc.filePath);
+    const fullPath = path.join(UPLOADS_DIR, targetFile);
     if (!isSafePath(fullPath)) {
       return res.status(400).json({ success: false, message: 'Invalid file path' });
     }
@@ -253,9 +289,10 @@ router.post('/inquiries/:id/comment', authenticate, async (req, res, next) => {
     inquiry.comments.push(newComment);
     await inquiry.save();
 
-    // Emit to admin room only
+    // Emit to admin room and user room
     if (req.io) {
       req.io.to('admin').emit('inquiry_comment_added', { inquiryId: inquiry._id, comment: newComment });
+      req.io.to(`user:${req.user._id}`).emit('inquiry_comment_added', { inquiryId: inquiry._id, comment: newComment });
     }
 
     res.json({ success: true, data: inquiry });
