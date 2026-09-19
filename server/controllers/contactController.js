@@ -17,9 +17,13 @@ const createInquiry = async (req, res, next) => {
 
     const inquiry = await ContactInquiry.create(req.body);
 
-    // Trigger Notification Integrations asynchronously
+    // Trigger Notification Integrations
     // 1. Email alerts (Admin and Client confirmation)
-    notificationService.sendEmails(inquiry);
+    try {
+      await notificationService.sendEmails(inquiry);
+    } catch (emailErr) {
+      console.error('Email dispatch error in createInquiry:', emailErr.message);
+    }
 
     // 2. SMS alert
     const smsMessage = `Hello ${inquiry.name}, thank you for contacting Shree Chamunda Associates regarding: ${inquiry.service || 'Tax Services'}. We will review your request and get back to you shortly.`;

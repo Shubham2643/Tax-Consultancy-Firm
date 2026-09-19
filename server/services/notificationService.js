@@ -56,7 +56,7 @@ const configureTransporter = () => {
           maxMessages: 100,
           auth: {
             user: user.trim(),
-            pass: pass.trim()
+            pass: pass.replace(/\s+/g, '')
           },
           tls: {
             rejectUnauthorized: process.env.NODE_ENV === 'production'
@@ -69,7 +69,7 @@ const configureTransporter = () => {
           maxMessages: 100,
           auth: {
             user: user.trim(),
-            pass: pass.trim()
+            pass: pass.replace(/\s+/g, '')
           },
           tls: {
             rejectUnauthorized: process.env.NODE_ENV === 'production'
