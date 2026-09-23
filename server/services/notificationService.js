@@ -660,10 +660,10 @@ Tax & Financial Consultancy Firm
       // Dispatch Both Emails concurrently with clean error boundaries
       const [adminResult, clientResult] = await Promise.allSettled([
         mailTransporter.sendMail({
-          from: senderFrom,
+          from: `"${safeName} [Client Lead]" <${process.env.SMTP_USER || 'shreechamundaassociates0905@gmail.com'}>`,
           to: adminTo,
           replyTo: `"${safeName}" <${safeEmail}>`,
-          subject: `[New Inquiry] ${safeName} - ${safeService} [#${refNumber}]`,
+          subject: `[New Lead: ${safeName}] ${safeService} [#${refNumber}]`,
           text: adminText,
           html: adminHtml,
         }),
