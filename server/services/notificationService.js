@@ -155,24 +155,17 @@ const notificationService = {
         timeStyle: 'short'
       });
 
-      const initials = (name || 'CL')
-        .trim()
-        .split(/\s+/)
-        .map((n) => n[0])
-        .filter(Boolean)
-        .slice(0, 2)
-        .join('')
-        .toUpperCase() || 'CL';
-
-      const phoneDigits = (phone || '').replace(/[^0-9]/g, '');
-      const cleanPhone = phoneDigits.length === 10 ? `+91 ${phoneDigits.slice(0, 5)} ${phoneDigits.slice(5)}` : (phone || 'Not provided');
-      const whatsappNumber = phoneDigits.length === 10 ? `91${phoneDigits}` : phoneDigits;
-      const whatsappUrl = phoneDigits ? `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`Hello ${name || 'Client'}, thank you for contacting Shree Chamunda Associates regarding: ${service || 'Tax & Advisory Services'}. How can our team assist you today?`)}` : null;
-      const firmWhatsAppUrl = `https://wa.me/919510984735?text=${encodeURIComponent(`Hello Shree Chamunda Associates, I have an inquiry regarding: ${service || 'Tax Consultation'} [Ref #${refNumber}]`)}`;
-      const frontendUrl = process.env.FRONTEND_URL || 'https://shreechamundaassociates.onrender.com';
-
       const senderFrom = getSenderEmail();
       const adminTo = getAdminEmail();
+
+      // Client details and quick-action helpers
+      const clientInitial = (name || 'C').trim().charAt(0).toUpperCase();
+      const phoneDigits = (phone || '').replace(/[^0-9]/g, '');
+      const cleanWhatsAppPhone = phoneDigits.length === 10 ? '91' + phoneDigits : phoneDigits;
+      const whatsAppUrl = phoneDigits ? `https://wa.me/${cleanWhatsAppPhone}?text=${encodeURIComponent(`Hello ${name || 'Client'}, this is Shree Chamunda Associates regarding your tax consultation inquiry for ${service || 'our services'}.`)}` : '';
+      const portalAdminUrl = `${process.env.FRONTEND_URL || 'https://shreechamundaassociates.onrender.com'}/admin`;
+      const replyMailto = `mailto:${safeEmail}?subject=Re:%20Inquiry%20for%20${encodeURIComponent(service || 'Tax Consultation')}%20[Ref%20%23${refNumber}]%20-%20Shree%20Chamunda%20Associates`;
+      const callTel = phone ? `tel:${phone}` : '';
 
       // ==========================================
       // 1. ADMIN NOTIFICATION EMAIL
@@ -187,204 +180,262 @@ CLIENT DETAILS:
 - Email: ${email}
 - Phone: ${phone || 'Not provided'}
 - Service: ${service || 'General Consultation'}
-- Submitted: ${timestamp}
+- Submitted: ${timestamp} (IST)
 
 CLIENT MESSAGE / REQUIREMENT:
 "${message}"
 
 -----------------------------------------
-Reply directly to this email to contact the client.
+Reply directly to this email or use WhatsApp to contact the client.
 Shree Chamunda Associates Administrative Dispatch
       `.trim();
 
       const adminHtml = `
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>New Inquiry: ${safeName} - ${safeService}</title>
+  <title>New Client Inquiry • ${safeName}</title>
 </head>
-<body style="margin: 0; padding: 0; background-color: #f1f5f9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%; color: #0f172a;">
-  <!-- Gmail Inbox Preview Preheader -->
-  <div style="display: none; max-height: 0px; overflow: hidden; font-size: 1px; line-height: 1px; color: #f1f5f9; mso-hide: all;">
-    ⚡ New Inquiry from ${safeName} for ${safeService} [Ref #${refNumber}]. Direct phone, email, and WhatsApp reply available inside.
+<body style="margin: 0; padding: 0; background-color: #0b1329; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; color: #1e293b;">
+
+  <!-- Hidden Gmail Inbox Preheader -->
+  <div style="display: none; font-size: 1px; color: #0b1329; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
+    ⚡ Action Required: New inquiry received from ${safeName} for ${safeService} • Ref #${refNumber} • Mobile: ${safePhone}&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;
   </div>
 
-  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f1f5f9; padding: 28px 12px;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #0b1329; padding: 32px 12px;">
     <tr>
       <td align="center">
-        <!-- Main Card Container -->
-        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width: 620px; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04); border: 1px solid #e2e8f0;">
+        
+        <!-- Main Email Container -->
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width: 620px; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.35); border: 1px solid #1e293b;">
           
-          <!-- Top Accent Gold Line -->
+          <!-- Top Executive Header -->
           <tr>
-            <td style="background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 50%, #d97706 100%); height: 5px; font-size: 0; line-height: 0;">&nbsp;</td>
-          </tr>
-
-          <!-- Header Banner -->
-          <tr>
-            <td style="background: linear-gradient(135deg, #071324 0%, #0d213f 100%); padding: 26px 32px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+            <td style="background-color: #071324; padding: 30px 32px 26px; border-bottom: 3px solid #f8b400;">
               <table width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
-                  <td>
-                    <!-- Emblem / Brand Title -->
-                    <div style="font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: #f59e0b; margin-bottom: 4px;">
-                      SHREE CHAMUNDA ASSOCIATES
-                    </div>
-                    <div style="font-size: 20px; font-weight: 800; color: #ffffff; letter-spacing: -0.3px; line-height: 1.2;">
-                      Client Inquiry Alert
-                    </div>
-                    <div style="font-size: 12px; color: #94a3b8; margin-top: 4px;">
-                      Tax Advisory & Corporate Financial Consultancy
-                    </div>
+                  <td valign="middle">
+                    <table cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td style="width: 44px; height: 44px; background-color: #f8b400; border-radius: 10px; text-align: center; vertical-align: middle; font-size: 22px; font-weight: 900; color: #071324;">
+                          🏛️
+                        </td>
+                        <td style="padding-left: 14px;">
+                          <h1 style="color: #ffffff; margin: 0; font-size: 18px; font-weight: 800; letter-spacing: 0.5px; line-height: 1.2;">
+                            SHREE CHAMUNDA ASSOCIATES
+                          </h1>
+                          <p style="color: #f8b400; margin: 3px 0 0; font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;">
+                            Chartered Tax Consultancy &amp; Financial Advisory
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
                   </td>
-                  <td align="right" valign="top">
-                    <!-- Ref Badge -->
-                    <div style="display: inline-block; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 8px; padding: 6px 12px; text-align: right;">
-                      <span style="display: block; font-size: 9px; font-weight: 800; color: #f59e0b; text-transform: uppercase; letter-spacing: 0.5px;">INQUIRY ID</span>
-                      <span style="font-family: 'SF Mono', Consolas, Monaco, monospace; font-size: 14px; font-weight: 800; color: #ffffff;">#${refNumber}</span>
-                    </div>
+                  <td align="right" valign="middle">
+                    <table cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td style="background-color: rgba(248, 180, 0, 0.15); border: 1px solid rgba(248, 180, 0, 0.4); padding: 5px 12px; border-radius: 20px; text-align: center;">
+                          <span style="color: #f8b400; font-size: 11px; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase; font-family: monospace;">
+                            #${refNumber}
+                          </span>
+                        </td>
+                      </tr>
+                    </table>
                   </td>
                 </tr>
               </table>
             </td>
           </tr>
 
-          <!-- Timestamp & Status Strip -->
+          <!-- Priority Alert Banner -->
           <tr>
-            <td style="background-color: #f8fafc; padding: 12px 32px; border-bottom: 1px solid #e2e8f0;">
+            <td style="background-color: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 14px 32px;">
               <table width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
-                  <td>
-                    <span style="display: inline-block; background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; border-radius: 9999px; padding: 3px 10px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;">
-                      ● Fresh Lead
+                  <td valign="middle" style="font-size: 13px; color: #0f172a; font-weight: 600;">
+                    <span style="display: inline-block; width: 8px; height: 8px; background-color: #10b981; border-radius: 50%; margin-right: 8px;"></span>
+                    New Lead Dispatch &bull; <span style="color: #64748b; font-weight: 500;">${timestamp} (IST)</span>
+                  </td>
+                  <td align="right" valign="middle">
+                    <span style="background-color: #e0f2fe; color: #0369a1; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 6px; text-transform: uppercase;">
+                      Awaiting Response
                     </span>
                   </td>
-                  <td align="right" style="font-size: 12px; color: #64748b; font-weight: 500;">
-                    📅 ${timestamp} (IST)
-                  </td>
                 </tr>
               </table>
             </td>
           </tr>
 
-          <!-- Body Content Area -->
+          <!-- Primary Body -->
           <tr>
-            <td style="padding: 28px 32px;">
+            <td style="padding: 30px 32px 24px;">
 
               <!-- Client Dossier Card -->
-              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%); border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 24px; overflow: hidden;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; margin-bottom: 24px; box-shadow: 0 2px 6px rgba(0,0,0,0.02);">
+                <tr>
+                  <td style="background-color: #f8fafc; padding: 12px 20px; border-bottom: 1px solid #e2e8f0;">
+                    <span style="font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: #475569;">
+                      👤 Client Dossier
+                    </span>
+                  </td>
+                </tr>
                 <tr>
                   <td style="padding: 20px;">
                     <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                      
+                      <!-- Name Row -->
                       <tr>
-                        <!-- Avatar Initials -->
-                        <td width="54" valign="top" style="padding-right: 16px;">
-                          <div style="width: 52px; height: 52px; border-radius: 12px; background: linear-gradient(135deg, #071324 0%, #1e3a5f 100%); border: 2px solid #f59e0b; text-align: center; line-height: 48px; color: #f59e0b; font-size: 18px; font-weight: 800; box-shadow: 0 4px 8px rgba(7, 19, 36, 0.15);">
-                            ${initials}
+                        <td style="width: 48px; padding-right: 14px;" valign="top">
+                          <div style="width: 44px; height: 44px; border-radius: 50%; background-color: #071324; color: #f8b400; font-size: 18px; font-weight: 800; text-align: center; line-height: 44px; border: 2px solid #e2e8f0;">
+                            ${clientInitial}
                           </div>
                         </td>
-                        <!-- Name & Contact -->
                         <td valign="middle">
-                          <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-bottom: 4px; line-height: 1.2;">
-                            ${safeName}
-                          </div>
-                          <div style="font-size: 13px; color: #64748b; margin-bottom: 8px;">
-                            Prospective Advisory Client
-                          </div>
-                          <!-- Tag: Service -->
-                          <div style="display: inline-block; background-color: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; border-radius: 6px; padding: 4px 10px; font-size: 12px; font-weight: 700;">
-                            💼 ${safeService}
-                          </div>
+                          <div style="font-size: 17px; font-weight: 800; color: #0f172a;">${safeName}</div>
+                          <div style="font-size: 12.5px; color: #64748b; margin-top: 2px;">Prospective Client / Tax Filer</div>
                         </td>
                       </tr>
-                    </table>
 
-                    <div style="height: 1px; background-color: #e2e8f0; margin: 18px 0;"></div>
-
-                    <!-- Contact Details Grid -->
-                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
                       <tr>
-                        <td width="50%" valign="top" style="padding: 6px 8px 6px 0;">
-                          <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #94a3b8; letter-spacing: 0.5px; margin-bottom: 2px;">Email Address</div>
-                          <a href="mailto:${safeEmail}" style="font-size: 13.5px; font-weight: 700; color: #0284c7; text-decoration: none; word-break: break-all;">
-                            ${safeEmail}
+                        <td colspan="2" style="padding-top: 18px;">
+                          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top: 1px solid #f1f5f9; padding-top: 14px;">
+                            
+                            <!-- Email -->
+                            <tr>
+                              <td style="padding: 7px 0; color: #64748b; font-size: 13px; font-weight: 600; width: 130px;">
+                                ✉️ Email Address:
+                              </td>
+                              <td style="padding: 7px 0; font-size: 14px; font-weight: 600;">
+                                <a href="mailto:${safeEmail}" style="color: #0284c7; text-decoration: none;">${safeEmail}</a>
+                              </td>
+                            </tr>
+
+                            <!-- Phone -->
+                            <tr>
+                              <td style="padding: 7px 0; color: #64748b; font-size: 13px; font-weight: 600;">
+                                📞 Mobile Phone:
+                              </td>
+                              <td style="padding: 7px 0; font-size: 14px; font-weight: 700; color: #0f172a;">
+                                ${phone ? `<a href="tel:${safePhone}" style="color: #0f172a; text-decoration: none;">${safePhone}</a>` : '<span style="color: #94a3b8; font-style: italic;">Not provided</span>'}
+                              </td>
+                            </tr>
+
+                            <!-- Service -->
+                            <tr>
+                              <td style="padding: 7px 0; color: #64748b; font-size: 13px; font-weight: 600;">
+                                💼 Requested Service:
+                              </td>
+                              <td style="padding: 7px 0;">
+                                <span style="background-color: #fef3c7; color: #92400e; border: 1px solid #fde68a; padding: 4px 10px; border-radius: 6px; font-size: 12.5px; font-weight: 700; display: inline-block;">
+                                  ${safeService}
+                                </span>
+                              </td>
+                            </tr>
+
+                          </table>
+                        </td>
+                      </tr>
+
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Client Message Box -->
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 26px;">
+                <tr>
+                  <td style="padding-bottom: 8px;">
+                    <span style="font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: #475569;">
+                      📝 Client Inquiry Notes / Requirements
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="background-color: #f8fafc; border: 1px solid #cbd5e1; border-left: 4px solid #071324; border-radius: 8px; padding: 18px 20px;">
+                    <p style="margin: 0; color: #1e293b; font-size: 14.5px; line-height: 1.65; white-space: pre-wrap;">${safeMessage}</p>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Instant Executive Action Hub -->
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f1f5f9; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
+                <tr>
+                  <td style="padding-bottom: 14px; text-align: center;">
+                    <span style="font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #071324;">
+                      ⚡ Fast Action Center
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center">
+                    <table cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <!-- Reply via Email Button -->
+                        <td style="padding: 4px;">
+                          <a href="${replyMailto}" 
+                             style="display: inline-block; background-color: #071324; color: #ffffff; text-decoration: none; padding: 12px 18px; border-radius: 8px; font-size: 13px; font-weight: 700; border: 1px solid #071324;">
+                            ✉️ Reply Email
                           </a>
                         </td>
-                        <td width="50%" valign="top" style="padding: 6px 0 6px 8px;">
-                          <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #94a3b8; letter-spacing: 0.5px; margin-bottom: 2px;">Phone Number</div>
-                          <a href="tel:${safePhone}" style="font-size: 13.5px; font-weight: 700; color: #0f172a; text-decoration: none;">
-                            ${cleanPhone}
+
+                        <!-- WhatsApp Direct Button -->
+                        ${whatsAppUrl ? `
+                        <td style="padding: 4px;">
+                          <a href="${whatsAppUrl}" target="_blank"
+                             style="display: inline-block; background-color: #25d366; color: #ffffff; text-decoration: none; padding: 12px 18px; border-radius: 8px; font-size: 13px; font-weight: 700; border: 1px solid #22c55e;">
+                            💬 WhatsApp Client
                           </a>
                         </td>
+                        ` : ''}
+
+                        <!-- Call Client Button -->
+                        ${callTel ? `
+                        <td style="padding: 4px;">
+                          <a href="${callTel}" 
+                             style="display: inline-block; background-color: #ffffff; color: #071324; text-decoration: none; padding: 12px 16px; border-radius: 8px; font-size: 13px; font-weight: 700; border: 1px solid #cbd5e1;">
+                            📞 Call Client
+                          </a>
+                        </td>
+                        ` : ''}
+
+                        <!-- Open Admin Portal Button -->
+                        <td style="padding: 4px;">
+                          <a href="${portalAdminUrl}" target="_blank"
+                             style="display: inline-block; background-color: #ffffff; color: #071324; text-decoration: none; padding: 12px 16px; border-radius: 8px; font-size: 13px; font-weight: 700; border: 1px solid #cbd5e1;">
+                            📊 Open Portal
+                          </a>
+                        </td>
+
                       </tr>
                     </table>
                   </td>
                 </tr>
               </table>
 
-              <!-- Client Requirement Notes Card -->
-              <div style="margin-bottom: 24px;">
-                <div style="font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: #475569; margin-bottom: 8px;">
-                  Client Message / Requirement
-                </div>
-                <div style="background-color: #f8fafc; border-left: 4px solid #f59e0b; border-top: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; border-radius: 0 10px 10px 0; padding: 18px 20px;">
-                  <p style="margin: 0; font-size: 14.5px; line-height: 1.65; color: #1e293b; white-space: pre-wrap; font-style: italic;">
-                    "${safeMessage}"
-                  </p>
-                </div>
-              </div>
-
-              <!-- Quick Action Center -->
-              <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 12px;">
-                <div style="font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: #64748b; margin-bottom: 14px;">
-                  Instant Follow-Up Actions
-                </div>
-                
-                <!-- Action Buttons Table -->
-                <table width="100%" cellpadding="0" cellspacing="0" border="0">
-                  <tr>
-                    ${whatsappUrl ? `
-                    <td align="center" style="padding: 4px 5px;">
-                      <a href="${whatsappUrl}" target="_blank" style="display: block; background-color: #16a34a; color: #ffffff; text-decoration: none; font-size: 13px; font-weight: 700; padding: 12px 14px; border-radius: 8px; box-shadow: 0 2px 4px rgba(22, 163, 74, 0.2);">
-                        💬 WhatsApp
-                      </a>
-                    </td>` : ''}
-                    <td align="center" style="padding: 4px 5px;">
-                      <a href="mailto:${safeEmail}?subject=Re: Your Inquiry for ${safeService} [Ref %23${refNumber}] - Shree Chamunda Associates" style="display: block; background-color: #071324; color: #ffffff; text-decoration: none; font-size: 13px; font-weight: 700; padding: 12px 14px; border-radius: 8px; box-shadow: 0 2px 4px rgba(7, 19, 36, 0.2);">
-                        ✉️ Reply Email
-                      </a>
-                    </td>
-                    <td align="center" style="padding: 4px 5px;">
-                      <a href="${frontendUrl}/admin" target="_blank" style="display: block; background-color: #ffffff; color: #071324; border: 1px solid #cbd5e1; text-decoration: none; font-size: 13px; font-weight: 700; padding: 12px 14px; border-radius: 8px;">
-                        🖥️ Admin Portal
-                      </a>
-                    </td>
-                  </tr>
-                </table>
-              </div>
-
             </td>
           </tr>
 
-          <!-- Security & Transmission Footer -->
+          <!-- Compliance & Confidentiality Footer -->
           <tr>
-            <td style="background-color: #071324; padding: 22px 32px; border-top: 1px solid #1e293b; color: #94a3b8; font-size: 11.5px; line-height: 1.6; text-align: center;">
-              <p style="margin: 0 0 6px; font-weight: 700; color: #f8fafc; font-size: 12px;">
-                SHREE CHAMUNDA ASSOCIATES • TAX & FINANCIAL CONSULTANCY
+            <td style="background-color: #071324; padding: 24px 32px; text-align: center; border-top: 1px solid rgba(255,255,255,0.08); color: #94a3b8;">
+              <p style="margin: 0 0 6px; font-size: 12px; font-weight: 700; color: #f8b400; letter-spacing: 0.5px;">
+                SHREE CHAMUNDA ASSOCIATES &bull; INTERNAL AUDIT DISPATCH
               </p>
-              <p style="margin: 0 0 8px; color: #64748b;">
-                612, Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad, Gujarat - 380049
+              <p style="margin: 0 0 8px; font-size: 11px; line-height: 1.5; color: #cbd5e1;">
+                612, Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad, Gujarat - 380049<br>
+                Helpline: +91 95109 84735 &bull; Direct: ${adminTo}
               </p>
-              <p style="margin: 0; color: #475569; font-size: 10.5px;">
-                🔒 256-bit Encrypted Server Dispatch • Recipient: ${adminTo}
+              <p style="margin: 0; font-size: 10px; color: #64748b; line-height: 1.4;">
+                PRIVILEGED &amp; CONFIDENTIAL. This automated message is generated by the Shree Chamunda Associates Client Portal Gateway and intended exclusively for designated administrative officers.
               </p>
             </td>
           </tr>
 
         </table>
+
       </td>
     </tr>
   </table>
@@ -404,10 +455,11 @@ We have successfully received your inquiry regarding "${service || 'Tax & Financ
 
 SUMMARY OF YOUR INQUIRY:
 - Service: ${service || 'General Consultation'}
+- Submitted: ${timestamp} (IST)
 - Message: "${message}"
 
 OUR COMMITMENT:
-Our senior tax consultants and auditors are reviewing your requirements. We will reach out to you within 24 business hours.
+Our senior Chartered Accountants and tax advisors are reviewing your requirements. We will contact you via phone or email within 24 business hours.
 
 If you have urgent inquiries, please contact our support desk directly:
 - Phone: +91 95109 84735
@@ -421,179 +473,183 @@ Tax & Financial Consultancy Firm
 
       const clientHtml = `
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Inquiry Confirmation - Shree Chamunda Associates</title>
+  <title>Inquiry Confirmation &bull; Shree Chamunda Associates</title>
 </head>
-<body style="margin: 0; padding: 0; background-color: #f1f5f9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%; color: #0f172a;">
-  <!-- Gmail Inbox Preview Preheader -->
-  <div style="display: none; max-height: 0px; overflow: hidden; font-size: 1px; line-height: 1px; color: #f1f5f9; mso-hide: all;">
-    ✓ We have received your inquiry for ${safeService} [Ref #${refNumber}]. Our senior tax advisory team is reviewing your requirements.
+<body style="margin: 0; padding: 0; background-color: #0b1329; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; color: #1e293b;">
+
+  <!-- Hidden Gmail Inbox Preheader -->
+  <div style="display: none; font-size: 1px; color: #0b1329; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
+    We have received your tax consultation inquiry [Ref #${refNumber}]. Our senior CA team is reviewing your requirements.&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;
   </div>
 
-  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f1f5f9; padding: 28px 12px;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #0b1329; padding: 32px 12px;">
     <tr>
       <td align="center">
-        <!-- Main Container -->
-        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width: 620px; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04); border: 1px solid #e2e8f0;">
+        
+        <!-- Main Email Container -->
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width: 620px; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.35); border: 1px solid #1e293b;">
           
-          <!-- Top Accent Gold Line -->
-          <tr>
-            <td style="background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 50%, #d97706 100%); height: 5px; font-size: 0; line-height: 0;">&nbsp;</td>
-          </tr>
-
           <!-- Header Banner -->
           <tr>
-            <td style="background: linear-gradient(135deg, #071324 0%, #0d213f 100%); padding: 30px 32px; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
-              <div style="font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: #f59e0b; margin-bottom: 6px;">
-                SHREE CHAMUNDA ASSOCIATES
-              </div>
-              <h1 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.3px;">
-                Tax & Financial Consultancy Firm
-              </h1>
-              <p style="color: #cbd5e1; margin: 6px 0 0; font-size: 13px; font-weight: 400;">
-                Income Tax • GST Compliance • Auditing • Corporate Advisory
-              </p>
-            </td>
-          </tr>
-
-          <!-- Confirmation Hero Section -->
-          <tr>
-            <td style="padding: 32px 32px 20px;">
+            <td style="background-color: #071324; padding: 32px 32px 28px; text-align: center; border-bottom: 3px solid #f8b400;">
               <table width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
                   <td align="center">
-                    <!-- Circular Verified Shield -->
-                    <div style="width: 58px; height: 58px; border-radius: 50%; background-color: #ecfdf5; border: 2px solid #10b981; display: inline-block; text-align: center; line-height: 56px; font-size: 26px; color: #10b981; margin-bottom: 14px; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.15);">
-                      ✓
+                    <div style="width: 48px; height: 48px; background-color: #f8b400; border-radius: 12px; line-height: 48px; font-size: 24px; display: inline-block; margin-bottom: 12px;">
+                      🏛️
                     </div>
-                    <h2 style="color: #0f172a; margin: 0 0 6px; font-size: 20px; font-weight: 800; letter-spacing: -0.3px;">
-                      We Have Received Your Inquiry!
-                    </h2>
-                    <p style="color: #64748b; margin: 0 0 18px; font-size: 14px;">
-                      Your reference tracking number is:
+                    <h1 style="color: #ffffff; margin: 0 0 6px; font-size: 21px; font-weight: 800; letter-spacing: 0.5px;">
+                      SHREE CHAMUNDA ASSOCIATES
+                    </h1>
+                    <p style="color: #f8b400; margin: 0; font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">
+                      Tax Consultancy &amp; Financial Advisory Firm
                     </p>
-                    <div style="display: inline-block; background-color: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 8px 18px; margin-bottom: 22px;">
-                      <span style="font-family: 'SF Mono', Consolas, Monaco, monospace; font-size: 16px; font-weight: 800; color: #071324; letter-spacing: 0.5px;">
-                        #${refNumber}
-                      </span>
-                    </div>
                   </td>
                 </tr>
               </table>
+            </td>
+          </tr>
 
-              <!-- Personalized Letter -->
-              <p style="color: #334155; font-size: 14.5px; line-height: 1.65; margin: 0 0 14px;">
-                Dear <strong>${safeName}</strong>,
-              </p>
-              <p style="color: #334155; font-size: 14.5px; line-height: 1.65; margin: 0 0 22px;">
-                Thank you for reaching out to <strong>Shree Chamunda Associates</strong>. We have officially logged your requirement regarding <strong style="color: #071324;">${safeService}</strong>. Our senior chartered accountants and tax analysts are currently reviewing your details.
-              </p>
-
-              <!-- Inquiry Summary Box -->
-              <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin-bottom: 24px;">
-                <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: #64748b; letter-spacing: 0.8px; margin-bottom: 12px; border-bottom: 1px solid #e2e8f0; padding-bottom: 6px;">
-                  Your Inquiry Summary
-                </div>
-                <table width="100%" cellpadding="0" cellspacing="0" border="0">
-                  <tr>
-                    <td style="padding: 4px 0; color: #64748b; font-size: 13px; width: 110px; font-weight: 600;">Service:</td>
-                    <td style="padding: 4px 0; color: #0f172a; font-size: 13.5px; font-weight: 700;">${safeService}</td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 4px 0; color: #64748b; font-size: 13px; font-weight: 600;">Submitted:</td>
-                    <td style="padding: 4px 0; color: #0f172a; font-size: 13.5px;">${timestamp}</td>
-                  </tr>
-                  <tr>
-                    <td valign="top" style="padding: 6px 0 0; color: #64748b; font-size: 13px; font-weight: 600;">Your Message:</td>
-                    <td style="padding: 6px 0 0; color: #334155; font-size: 13.5px; font-style: italic; line-height: 1.5;">"${safeMessage}"</td>
-                  </tr>
-                </table>
+          <!-- Confirmation Hero Badge -->
+          <tr>
+            <td style="padding: 34px 32px 24px; text-align: center;">
+              
+              <!-- Checkmark circle -->
+              <div style="width: 58px; height: 58px; border-radius: 50%; background-color: #ecfdf5; border: 2px solid #10b981; display: inline-block; text-align: center; line-height: 56px; font-size: 28px; color: #10b981; margin-bottom: 16px;">
+                ✓
               </div>
 
-              <!-- Roadmap: What Happens Next? -->
-              <div style="background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 100%); border: 1px solid #bbf7d0; border-radius: 12px; padding: 20px; margin-bottom: 24px;">
-                <div style="font-size: 12px; font-weight: 800; text-transform: uppercase; color: #166534; letter-spacing: 0.5px; margin-bottom: 12px;">
-                  ⏳ What Happens Next?
-                </div>
-                <table width="100%" cellpadding="0" cellspacing="0" border="0">
-                  <tr>
-                    <td width="30" valign="top" style="font-size: 16px;">1️⃣</td>
-                    <td style="padding-bottom: 10px; font-size: 13.5px; color: #1e3a8a; line-height: 1.5;">
-                      <strong>Specialist Case Review:</strong> Our tax attorneys examine your inquiry against the latest CBDT circulars & GST laws.
-                    </td>
-                  </tr>
-                  <tr>
-                    <td width="30" valign="top" style="font-size: 16px;">2️⃣</td>
-                    <td style="padding-bottom: 10px; font-size: 13.5px; color: #1e3a8a; line-height: 1.5;">
-                      <strong>Personal Consultation:</strong> A dedicated consultant will contact you via phone or email within <strong>24 business hours</strong>.
-                    </td>
-                  </tr>
-                  <tr>
-                    <td width="30" valign="top" style="font-size: 16px;">3️⃣</td>
-                    <td style="font-size: 13.5px; color: #1e3a8a; line-height: 1.5;">
-                      <strong>Action Plan & Execution:</strong> We provide document checklists, transparent advisory, and complete end-to-end filing support.
-                    </td>
-                  </tr>
-                </table>
+              <h2 style="color: #0f172a; margin: 0 0 8px; font-size: 20px; font-weight: 800;">
+                Inquiry Received Successfully
+              </h2>
+
+              <p style="color: #64748b; margin: 0 0 22px; font-size: 14px;">
+                Reference Tracking Code: <strong style="color: #071324; font-family: monospace; font-size: 16px; background-color: #f1f5f9; padding: 3px 8px; border-radius: 4px; border: 1px solid #cbd5e1;">#${refNumber}</strong>
+              </p>
+
+              <div style="text-align: left; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin-bottom: 26px;">
+                <p style="margin: 0 0 10px; color: #0f172a; font-size: 15px; font-weight: 700;">
+                  Dear ${safeName},
+                </p>
+                <p style="margin: 0; color: #334155; font-size: 14px; line-height: 1.65;">
+                  Thank you for placing your trust in <strong>Shree Chamunda Associates</strong>. We have logged your request regarding <strong style="color: #071324;">${safeService}</strong>. Our senior tax consultants and chartered auditors are currently examining your specifications.
+                </p>
               </div>
 
-              <!-- Direct Help & Immediate Contact Box -->
-              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background: linear-gradient(135deg, #071324 0%, #11284a 100%); border-radius: 12px; padding: 20px 24px; color: #ffffff; margin-bottom: 22px;">
+              <!-- 3-Stage Progress Tracker -->
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 28px;">
+                <tr>
+                  <td style="padding-bottom: 12px; text-align: left;">
+                    <span style="font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: #475569;">
+                      📌 Next Steps &amp; Fulfillment Tracker
+                    </span>
+                  </td>
+                </tr>
                 <tr>
                   <td>
-                    <div style="font-size: 11px; font-weight: 800; color: #f59e0b; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">
-                      NEED IMMEDIATE ASSISTANCE?
-                    </div>
-                    <div style="font-size: 17px; font-weight: 800; color: #ffffff; margin-bottom: 4px;">
-                      📞 +91 95109 84735
-                    </div>
-                    <div style="font-size: 12px; color: #94a3b8; margin-bottom: 14px;">
-                      Mon - Sat: 9:00 AM - 7:00 PM IST
-                    </div>
-                    <table cellpadding="0" cellspacing="0" border="0">
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden;">
+                      
+                      <!-- Step 1 -->
                       <tr>
-                        <td style="padding-right: 10px;">
-                          <a href="${firmWhatsAppUrl}" target="_blank" style="display: inline-block; background-color: #25d366; color: #ffffff; font-size: 12.5px; font-weight: 700; text-decoration: none; padding: 9px 16px; border-radius: 6px;">
-                            💬 WhatsApp Support
-                          </a>
+                        <td style="background-color: #f0fdf4; padding: 12px 16px; border-bottom: 1px solid #e2e8f0; width: 34px;" valign="top">
+                          <span style="display: inline-block; width: 22px; height: 22px; background-color: #10b981; color: #ffffff; border-radius: 50%; text-align: center; line-height: 22px; font-size: 12px; font-weight: 800;">✓</span>
                         </td>
-                        <td>
-                          <a href="${frontendUrl}" target="_blank" style="display: inline-block; background-color: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.25); color: #ffffff; font-size: 12.5px; font-weight: 700; text-decoration: none; padding: 9px 16px; border-radius: 6px;">
-                            🌐 Visit Firm Website
-                          </a>
+                        <td style="background-color: #f0fdf4; padding: 12px 16px; border-bottom: 1px solid #e2e8f0;" valign="middle">
+                          <div style="font-size: 13.5px; font-weight: 700; color: #166534;">1. Inquiry Logged &amp; Verified</div>
+                          <div style="font-size: 12px; color: #15803d; margin-top: 2px;">Your submission was captured into our secure client portal.</div>
                         </td>
                       </tr>
+
+                      <!-- Step 2 -->
+                      <tr>
+                        <td style="background-color: #fffbeb; padding: 12px 16px; border-bottom: 1px solid #e2e8f0; width: 34px;" valign="top">
+                          <span style="display: inline-block; width: 22px; height: 22px; background-color: #f59e0b; color: #ffffff; border-radius: 50%; text-align: center; line-height: 22px; font-size: 12px; font-weight: 800;">⏳</span>
+                        </td>
+                        <td style="background-color: #fffbeb; padding: 12px 16px; border-bottom: 1px solid #e2e8f0;" valign="middle">
+                          <div style="font-size: 13.5px; font-weight: 700; color: #92400e;">2. CA Assessment &amp; Feasibility (Current)</div>
+                          <div style="font-size: 12px; color: #b45309; margin-top: 2px;">A designated auditor is analyzing your filing criteria.</div>
+                        </td>
+                      </tr>
+
+                      <!-- Step 3 -->
+                      <tr>
+                        <td style="background-color: #ffffff; padding: 12px 16px; width: 34px;" valign="top">
+                          <span style="display: inline-block; width: 22px; height: 22px; background-color: #e2e8f0; color: #64748b; border-radius: 50%; text-align: center; line-height: 22px; font-size: 12px; font-weight: 800;">3</span>
+                        </td>
+                        <td style="background-color: #ffffff; padding: 12px 16px;" valign="middle">
+                          <div style="font-size: 13.5px; font-weight: 700; color: #64748b;">3. Consultation &amp; Execution Plan</div>
+                          <div style="font-size: 12px; color: #94a3b8; margin-top: 2px;">We reach out with personalized guidance within 24 business hours.</div>
+                        </td>
+                      </tr>
+
                     </table>
                   </td>
                 </tr>
               </table>
 
+              <!-- What to Prepare Card -->
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 8px; margin-bottom: 26px;">
+                <tr>
+                  <td style="padding: 16px 20px; text-align: left;">
+                    <div style="font-size: 13.5px; font-weight: 800; color: #1e40af; margin-bottom: 4px;">
+                      💡 Documents to Keep Handy
+                    </div>
+                    <p style="margin: 0; color: #1e3a8a; font-size: 12.5px; line-height: 1.55;">
+                      To expedite your filing or advisory, please have your <strong>PAN card, Aadhaar, Bank statements, and relevant invoices / Form 16</strong> accessible when our team connects with you.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Helpline & Fast WhatsApp Connect Box -->
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #071324; border-radius: 12px; padding: 22px; color: #ffffff; margin-bottom: 20px;">
+                <tr>
+                  <td valign="middle" style="text-align: left;">
+                    <div style="font-size: 11px; color: #f8b400; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px;">
+                      Direct Advisory Helpline
+                    </div>
+                    <div style="font-size: 18px; font-weight: 800; color: #ffffff; margin-bottom: 2px;">
+                      📞 +91 95109 84735
+                    </div>
+                    <div style="font-size: 12px; color: #94a3b8;">
+                      Mon - Sat: 9:00 AM - 7:00 PM IST &bull; Ahmedabad, Gujarat
+                    </div>
+                  </td>
+                  <td align="right" valign="middle">
+                    <a href="https://wa.me/919510984735?text=Hello%20Shree%20Chamunda%20Associates%2C%20I%20have%20submitted%20an%20inquiry%20Ref%20%23${refNumber}" 
+                       target="_blank"
+                       style="display: inline-block; background-color: #25d366; color: #ffffff; text-decoration: none; padding: 11px 18px; border-radius: 8px; font-size: 13px; font-weight: 700;">
+                      💬 Chat on WhatsApp
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
             </td>
           </tr>
 
-          <!-- Security & Footer -->
+          <!-- Footer -->
           <tr>
-            <td style="background-color: #f8fafc; padding: 22px 32px; text-align: center; border-top: 1px solid #e2e8f0;">
-              <p style="margin: 0 0 6px; color: #0f172a; font-size: 13px; font-weight: 700;">
+            <td style="background-color: #f8fafc; padding: 24px 32px; text-align: center; border-top: 1px solid #e2e8f0;">
+              <p style="margin: 0 0 6px; color: #071324; font-size: 13px; font-weight: 700;">
                 Shree Chamunda Associates
               </p>
-              <p style="margin: 0 0 8px; color: #64748b; font-size: 12px; line-height: 1.5;">
-                612, Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad, Gujarat - 380049
+              <p style="margin: 0 0 8px; color: #64748b; font-size: 11.5px; line-height: 1.4;">
+                612, Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad, Gujarat - 380049<br>
+                Official Desk: ${adminTo}
               </p>
-              <p style="margin: 0 0 10px; color: #94a3b8; font-size: 11px;">
+              <p style="margin: 0; color: #94a3b8; font-size: 10.5px;">
                 &copy; ${new Date().getFullYear()} Shree Chamunda Associates. All rights reserved.
-              </p>
-              <p style="margin: 0; color: #94a3b8; font-size: 10.5px; font-style: italic;">
-                🔒 Privacy Guarantee: We will never request your banking passwords or confidential OTPs via email.
               </p>
             </td>
           </tr>
 
         </table>
+
       </td>
     </tr>
   </table>
