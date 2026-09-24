@@ -297,17 +297,34 @@ const TaxTools = () => {
     window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(text)}`, '_blank');
   };
 
+  // Dynamic slider fill computations
+  const incomeSliderPct = Math.min(
+    100,
+    Math.max(0, (((Math.min(5000000, Math.max(300000, income || 300000))) - 300000) / (5000000 - 300000)) * 100)
+  );
+
+  const daysSliderPct = Math.min(
+    100,
+    Math.max(0, (((Math.min(180, Math.max(1, daysDelayed || 1))) - 1) / (180 - 1)) * 100)
+  );
+
+  const advTaxSliderPct = Math.min(
+    100,
+    Math.max(0, (((Math.min(2000000, Math.max(0, estimatedAnnualTax || 0))) - 10000) / (2000000 - 10000)) * 100)
+  );
+
   return (
     <div className="tax-tools-page fade-in">
       {/* Executive Midnight Header */}
       <section className="tools-hero">
         <div className="tools-hero-glow glow-gold"></div>
         <div className="tools-hero-glow glow-blue"></div>
+        <div className="tools-hero-glow glow-emerald"></div>
         <div className="container">
           <div className="tools-kicker-badge">
             <span className="live-dot pulse"></span>
-            <i className="fas fa-shield-alt"></i>
-            <span>Institutional Compliance Engine &bull; FY 2024-25</span>
+            <i className="fas fa-shield-halved"></i>
+            <span>Institutional Compliance Engine &bull; FY 2024-25 (AY 2025-26)</span>
           </div>
           <h1>
             Interactive <span className="hero-gradient-text">Tax &amp; Statutory Tools</span> Hub
@@ -435,6 +452,9 @@ const TaxTools = () => {
                         onChange={(e) => setIncome(Number(e.target.value))}
                         className="tax-range-slider"
                         aria-label="Gross Annual Income Slider"
+                        style={{
+                          background: `linear-gradient(90deg, #f59e0b 0%, #10b981 ${incomeSliderPct}%, rgba(255, 255, 255, 0.12) ${incomeSliderPct}%)`,
+                        }}
                       />
                       <div className="slider-ticks-row">
                         <span>₹3L</span>
@@ -479,6 +499,7 @@ const TaxTools = () => {
                         className={`segmented-tab ${ageGroup === 'below60' ? 'active' : ''}`}
                         onClick={() => setAgeGroup('below60')}
                       >
+                        <span className="seg-icon-box"><i className="fas fa-user"></i></span>
                         <span className="seg-main">&lt; 60 Yrs</span>
                         <span className="seg-sub">Individual</span>
                       </button>
@@ -489,6 +510,7 @@ const TaxTools = () => {
                         className={`segmented-tab ${ageGroup === '60to80' ? 'active' : ''}`}
                         onClick={() => setAgeGroup('60to80')}
                       >
+                        <span className="seg-icon-box"><i className="fas fa-user-tie"></i></span>
                         <span className="seg-main">60–80 Yrs</span>
                         <span className="seg-sub">Senior Citizen</span>
                       </button>
@@ -499,6 +521,7 @@ const TaxTools = () => {
                         className={`segmented-tab ${ageGroup === 'above80' ? 'active' : ''}`}
                         onClick={() => setAgeGroup('above80')}
                       >
+                        <span className="seg-icon-box"><i className="fas fa-medal"></i></span>
                         <span className="seg-main">&gt; 80 Yrs</span>
                         <span className="seg-sub">Super Senior</span>
                       </button>
@@ -535,8 +558,11 @@ const TaxTools = () => {
                             setOtherDeductions(0);
                           }}
                         >
-                          <i className="fas fa-briefcase"></i>
-                          <span>Salaried Standard (₹2.25L)</span>
+                          <span className="strategy-icon-box"><i className="fas fa-briefcase"></i></span>
+                          <span className="strategy-chip-text">
+                            <span className="chip-name">Salaried Standard</span>
+                            <span className="chip-val">₹2.25 Lakhs</span>
+                          </span>
                         </button>
 
                         <button
@@ -552,8 +578,11 @@ const TaxTools = () => {
                             setOtherDeductions(0);
                           }}
                         >
-                          <i className="fas fa-home"></i>
-                          <span>Home Loan Max (₹4.25L)</span>
+                          <span className="strategy-icon-box"><i className="fas fa-house-chimney"></i></span>
+                          <span className="strategy-chip-text">
+                            <span className="chip-name">Home Loan Max</span>
+                            <span className="chip-val">₹4.25 Lakhs</span>
+                          </span>
                         </button>
 
                         <button
@@ -569,8 +598,11 @@ const TaxTools = () => {
                             setOtherDeductions(0);
                           }}
                         >
-                          <i className="fas fa-ban"></i>
-                          <span>Zero / Nil</span>
+                          <span className="strategy-icon-box"><i className="fas fa-circle-xmark"></i></span>
+                          <span className="strategy-chip-text">
+                            <span className="chip-name">Zero / Nil</span>
+                            <span className="chip-val">No Deductions</span>
+                          </span>
                         </button>
                       </div>
                     </div>
@@ -582,8 +614,8 @@ const TaxTools = () => {
                       onClick={() => setShowCustomDeductions(!showCustomDeductions)}
                     >
                       <span className="toggle-label-wrap">
-                        <i className={`fas fa-${showCustomDeductions ? 'chevron-up' : 'sliders-h'}`}></i>
-                        <span>{showCustomDeductions ? 'Hide Fine-Tune Breakdown' : 'Fine-Tune Specific Deductions (80C, 80D, NPS, Home Loan, HRA)'}</span>
+                        <span className="toggle-icon-box"><i className={`fas fa-${showCustomDeductions ? 'chevron-up' : 'sliders'}`}></i></span>
+                        <span>{showCustomDeductions ? 'Hide Fine-Tune Deductions' : 'Fine-Tune Specific Deductions (80C, 80D, NPS, Home Loan, HRA)'}</span>
                       </span>
                       <span className="toggle-hint-pill">{showCustomDeductions ? 'Collapse' : 'Customize ▾'}</span>
                     </button>
@@ -1123,11 +1155,12 @@ const TaxTools = () => {
               {/* Action Bar */}
               <div className="tool-cta-actions">
                 <button type="button" className="btn-tool-consult" onClick={handleConsultDesk}>
-                  <i className="fas fa-user-shield"></i>
-                  <span>Book Senior CA Return Filing</span>
+                  <span className="btn-icon-wrap"><i className="fas fa-user-shield"></i></span>
+                  <span>Book Senior CA Consultation</span>
+                  <i className="fas fa-arrow-right btn-arrow"></i>
                 </button>
                 <button type="button" className="btn-tool-share" onClick={handleShareCalculation}>
-                  <i className="fab fa-whatsapp"></i>
+                  <span className="btn-icon-wrap"><i className="fab fa-whatsapp"></i></span>
                   <span>Share Breakdown</span>
                 </button>
               </div>
@@ -1216,6 +1249,9 @@ const TaxTools = () => {
                         onChange={(e) => setDaysDelayed(Number(e.target.value))}
                         className="tax-range-slider"
                         aria-label="Days delayed slider"
+                        style={{
+                          background: `linear-gradient(90deg, #f59e0b 0%, #ef4444 ${daysSliderPct}%, rgba(255, 255, 255, 0.12) ${daysSliderPct}%)`,
+                        }}
                       />
                       <div className="slider-ticks-row">
                         <span>1 Day</span>
@@ -1369,11 +1405,12 @@ const TaxTools = () => {
               {/* Action Bar */}
               <div className="tool-cta-actions">
                 <button type="button" className="btn-tool-consult" onClick={handleConsultDesk}>
-                  <i className="fas fa-paper-plane"></i>
-                  <span>Engage GST Desk to File Before Notice</span>
+                  <span className="btn-icon-wrap"><i className="fas fa-paper-plane"></i></span>
+                  <span>Engage GST Desk Before Notice</span>
+                  <i className="fas fa-arrow-right btn-arrow"></i>
                 </button>
                 <button type="button" className="btn-tool-share" onClick={handleShareCalculation}>
-                  <i className="fab fa-whatsapp"></i>
+                  <span className="btn-icon-wrap"><i className="fab fa-whatsapp"></i></span>
                   <span>Share Estimate</span>
                 </button>
               </div>
@@ -1423,6 +1460,9 @@ const TaxTools = () => {
                         onChange={(e) => setEstimatedAnnualTax(Number(e.target.value))}
                         className="tax-range-slider"
                         aria-label="Estimated Annual Tax Slider"
+                        style={{
+                          background: `linear-gradient(90deg, #38bdf8 0%, #3b82f6 ${advTaxSliderPct}%, rgba(255, 255, 255, 0.12) ${advTaxSliderPct}%)`,
+                        }}
                       />
                       <div className="slider-ticks-row">
                         <span>₹10k</span>
@@ -1545,11 +1585,12 @@ const TaxTools = () => {
               {/* Action Bar */}
               <div className="tool-cta-actions">
                 <button type="button" className="btn-tool-consult" onClick={handleConsultDesk}>
-                  <i className="fas fa-calculator"></i>
-                  <span>Schedule Advance Tax Computation</span>
+                  <span className="btn-icon-wrap"><i className="fas fa-calculator"></i></span>
+                  <span>Schedule Advance Tax Filing</span>
+                  <i className="fas fa-arrow-right btn-arrow"></i>
                 </button>
                 <button type="button" className="btn-tool-share" onClick={handleShareCalculation}>
-                  <i className="fab fa-whatsapp"></i>
+                  <span className="btn-icon-wrap"><i className="fab fa-whatsapp"></i></span>
                   <span>Share Schedule</span>
                 </button>
               </div>

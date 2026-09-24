@@ -449,9 +449,9 @@ Shree Chamunda Associates Administrative Dispatch
       const clientText = `
 Dear ${name},
 
-Thank you for reaching out to Shree Chamunda Associates.
+Thank you for connecting with Shree Chamunda Associates (SCA)!
 
-We have successfully received your inquiry regarding "${service || 'Tax & Financial Consultation'}". Your reference number is #${refNumber}.
+We sincerely appreciate your interest and trust in our firm. We have successfully registered your inquiry regarding "${service || 'Tax & Financial Consultation'}". Your reference tracking number is #${refNumber}.
 
 SUMMARY OF YOUR INQUIRY:
 - Service: ${service || 'General Consultation'}
@@ -459,15 +459,17 @@ SUMMARY OF YOUR INQUIRY:
 - Message: "${message}"
 
 OUR COMMITMENT:
-Our senior Chartered Accountants and tax advisors are reviewing your requirements. We will contact you via phone or email within 24 business hours.
+Our senior Chartered Accountants and tax advisors are reviewing your requirements. We will contact you via phone or email within 24 business hours to guide you forward.
 
 If you have urgent inquiries, please contact our support desk directly:
 - Phone: +91 95109 84735
 - Email: ${adminTo}
 - Office: 612, Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad, Gujarat - 380049
 
+Thank you once again for choosing Shree Chamunda Associates (SCA).
+
 Best Regards,
-Shree Chamunda Associates
+Shree Chamunda Associates (SCA)
 Tax & Financial Consultancy Firm
       `.trim();
 
@@ -477,13 +479,13 @@ Tax & Financial Consultancy Firm
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inquiry Confirmation &bull; Shree Chamunda Associates</title>
+  <title>Thank You for Connecting with SCA &bull; Shree Chamunda Associates</title>
 </head>
 <body style="margin: 0; padding: 0; background-color: #0b1329; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; color: #1e293b;">
 
   <!-- Hidden Gmail Inbox Preheader -->
   <div style="display: none; font-size: 1px; color: #0b1329; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
-    We have received your tax consultation inquiry [Ref #${refNumber}]. Our senior CA team is reviewing your requirements.&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;
+    Thank you for reaching out to Shree Chamunda Associates (SCA). We have received your inquiry [Ref #${refNumber}] and our senior CA team is reviewing it.&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;
   </div>
 
   <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #0b1329; padding: 32px 12px;">
@@ -523,9 +525,12 @@ Tax & Financial Consultancy Firm
                 ✓
               </div>
 
-              <h2 style="color: #0f172a; margin: 0 0 8px; font-size: 20px; font-weight: 800;">
-                Inquiry Received Successfully
+              <h2 style="color: #0f172a; margin: 0 0 6px; font-size: 22px; font-weight: 800;">
+                Thank You for Connecting with SCA!
               </h2>
+              <p style="color: #15803d; font-weight: 700; font-size: 13.5px; margin: 0 0 16px; text-transform: uppercase; letter-spacing: 0.5px;">
+                Your Inquiry Has Been Registered Successfully
+              </p>
 
               <p style="color: #64748b; margin: 0 0 22px; font-size: 14px;">
                 Reference Tracking Code: <strong style="color: #071324; font-family: monospace; font-size: 16px; background-color: #f1f5f9; padding: 3px 8px; border-radius: 4px; border: 1px solid #cbd5e1;">#${refNumber}</strong>
@@ -536,7 +541,7 @@ Tax & Financial Consultancy Firm
                   Dear ${safeName},
                 </p>
                 <p style="margin: 0; color: #334155; font-size: 14px; line-height: 1.65;">
-                  Thank you for placing your trust in <strong>Shree Chamunda Associates</strong>. We have logged your request regarding <strong style="color: #071324;">${safeService}</strong>. Our senior tax consultants and chartered auditors are currently examining your specifications.
+                  Thank you for reaching out and choosing <strong>Shree Chamunda Associates (SCA)</strong> for your tax advisory and financial planning needs. We have successfully logged your inquiry regarding <strong style="color: #071324;">${safeService}</strong>. Our senior Chartered Accountants and tax consultants are currently reviewing your specifications and will connect with you within 24 business hours.
                 </p>
               </div>
 
@@ -671,7 +676,7 @@ Tax & Financial Consultancy Firm
           from: senderFrom,
           to: email,
           replyTo: adminTo,
-          subject: `Inquiry Confirmation - Shree Chamunda Associates [#${refNumber}]`,
+          subject: `Thank You for Connecting with Shree Chamunda Associates (SCA) [#${refNumber}]`,
           text: clientText,
           html: clientHtml,
         })
