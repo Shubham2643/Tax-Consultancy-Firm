@@ -1155,14 +1155,13 @@ const TaxTools = () => {
               {/* Action Bar */}
               <div className="tool-cta-actions">
                 <button type="button" className="btn-tool-consult" onClick={handleConsultDesk}>
-                  <span className="btn-icon-wrap"><i className="fas fa-user-shield"></i></span>
+                  <i className="fas fa-user-shield btn-consult-icon"></i>
                   <span className="btn-text">Book Senior CA Consultation</span>
                   <i className="fas fa-arrow-right btn-arrow"></i>
                 </button>
                 <button type="button" className="btn-tool-share" onClick={handleShareCalculation}>
-                  <span className="btn-icon-wrap"><i className="fab fa-whatsapp"></i></span>
-                  <span className="btn-text">Share Breakdown</span>
-                  <i className="fas fa-share-nodes btn-arrow"></i>
+                  <i className="fab fa-whatsapp btn-share-icon"></i>
+                  <span className="btn-text">Share via WhatsApp</span>
                 </button>
               </div>
             </div>
@@ -1406,14 +1405,13 @@ const TaxTools = () => {
               {/* Action Bar */}
               <div className="tool-cta-actions">
                 <button type="button" className="btn-tool-consult" onClick={handleConsultDesk}>
-                  <span className="btn-icon-wrap"><i className="fas fa-paper-plane"></i></span>
+                  <i className="fas fa-paper-plane btn-consult-icon"></i>
                   <span className="btn-text">Engage GST Desk Before Notice</span>
                   <i className="fas fa-arrow-right btn-arrow"></i>
                 </button>
                 <button type="button" className="btn-tool-share" onClick={handleShareCalculation}>
-                  <span className="btn-icon-wrap"><i className="fab fa-whatsapp"></i></span>
-                  <span className="btn-text">Share Estimate</span>
-                  <i className="fas fa-share-nodes btn-arrow"></i>
+                  <i className="fab fa-whatsapp btn-share-icon"></i>
+                  <span className="btn-text">Share via WhatsApp</span>
                 </button>
               </div>
             </div>
@@ -1587,14 +1585,13 @@ const TaxTools = () => {
               {/* Action Bar */}
               <div className="tool-cta-actions">
                 <button type="button" className="btn-tool-consult" onClick={handleConsultDesk}>
-                  <span className="btn-icon-wrap"><i className="fas fa-calculator"></i></span>
+                  <i className="fas fa-calculator btn-consult-icon"></i>
                   <span className="btn-text">Schedule Advance Tax Filing</span>
                   <i className="fas fa-arrow-right btn-arrow"></i>
                 </button>
                 <button type="button" className="btn-tool-share" onClick={handleShareCalculation}>
-                  <span className="btn-icon-wrap"><i className="fab fa-whatsapp"></i></span>
-                  <span className="btn-text">Share Schedule</span>
-                  <i className="fas fa-share-nodes btn-arrow"></i>
+                  <i className="fab fa-whatsapp btn-share-icon"></i>
+                  <span className="btn-text">Share via WhatsApp</span>
                 </button>
               </div>
             </div>
