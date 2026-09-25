@@ -22,11 +22,21 @@ const TaxTools = () => {
   const cleanPhone = phone.replace(/[^0-9]/g, '');
 
   useSEO({
-    title: 'Interactive Tax Tools & Budget 2024 Slabs Hub',
+    title: 'Interactive Tax Tools & Budget 2024 Slabs Hub | Shree Chamunda Associates',
     description:
-      'Compare New vs Old Tax Regime under Budget 2024, compute GST Section 47 Late Fees & Section 50 Interest, and calculate statutory Advance Tax quarterly liability with Shree Chamunda Associates.',
+      'Compare New vs Old Tax Regime under Budget 2024, compute GST Section 47 Late Fees & Section 50 Interest, and calculate statutory Advance Tax quarterly liability with senior Chartered Accountants.',
     url: typeof window !== 'undefined' ? window.location.href : '',
   });
+
+  // Ensure seamless dark mode styling across header and body on Tax Tools Hub
+  useEffect(() => {
+    const root = document.documentElement;
+    const prevTheme = root.getAttribute('data-theme');
+    root.setAttribute('data-theme', 'dark');
+    return () => {
+      root.setAttribute('data-theme', prevTheme || 'light');
+    };
+  }, []);
 
   // -------------------------------------------------------------
   // TOOL 1: INCOME TAX REGIME COMPARATOR (BUDGET 2024 UPDATED)
@@ -42,16 +52,6 @@ const TaxTools = () => {
   const [deductionStrategy, setDeductionStrategy] = useState('standard'); // 'standard', 'homeowner', 'zero', 'custom'
   const [showCustomDeductions, setShowCustomDeductions] = useState(false);
   const [comparisonViewMode, setComparisonViewMode] = useState('tax'); // 'tax' or 'takeHome'
-
-  // Ensure seamless dark mode styling across header and body on Tax Tools Hub
-  useEffect(() => {
-    const root = document.documentElement;
-    const prevTheme = root.getAttribute('data-theme');
-    root.setAttribute('data-theme', 'dark');
-    return () => {
-      root.setAttribute('data-theme', prevTheme || 'light');
-    };
-  }, []);
 
   const taxCalculation = useMemo(() => {
     const gross = Math.max(0, Number(income) || 0);
@@ -133,8 +133,15 @@ const TaxTools = () => {
 
     const newEffectiveRate = gross > 0 ? ((finalNewTax / gross) * 100).toFixed(1) : '0.0';
     const oldEffectiveRate = gross > 0 ? ((finalOldTax / gross) * 100).toFixed(1) : '0.0';
-    const newTakeHomePct = gross > 0 ? Math.max(0, Math.min(100, Math.round(((gross - finalNewTax) / gross) * 100))) : 100;
-    const oldTakeHomePct = gross > 0 ? Math.max(0, Math.min(100, Math.round(((gross - finalOldTax) / gross) * 100))) : 100;
+    
+    const newTakeHome = gross - finalNewTax;
+    const oldTakeHome = gross - finalOldTax;
+    const newMonthlyTakeHome = Math.round(newTakeHome / 12);
+    const oldMonthlyTakeHome = Math.round(oldTakeHome / 12);
+    const monthlySavings = Math.round(savings / 12);
+
+    const newTakeHomePct = gross > 0 ? Math.max(0, Math.min(100, Math.round((newTakeHome / gross) * 100))) : 100;
+    const oldTakeHomePct = gross > 0 ? Math.max(0, Math.min(100, Math.round((oldTakeHome / gross) * 100))) : 100;
 
     return {
       gross,
@@ -149,12 +156,19 @@ const TaxTools = () => {
       diff,
       recommended,
       savings,
-      oldTakeHome: gross - finalOldTax,
-      newTakeHome: gross - finalNewTax,
+      oldTakeHome,
+      newTakeHome,
+      oldMonthlyTakeHome,
+      newMonthlyTakeHome,
+      monthlySavings,
       newEffectiveRate,
       oldEffectiveRate,
       newTakeHomePct,
       oldTakeHomePct,
+      capped80C,
+      capped80D,
+      cappedNps,
+      cappedHomeLoan,
     };
   }, [income, ageGroup, sec80C, sec80D, nps80CCD, homeLoan24b, hraExempt, otherDeductions]);
 
@@ -190,20 +204,21 @@ const TaxTools = () => {
     const sgstLateFee = Math.round(lateFee / 2);
 
     // Section 50(1) Interest (18% p.a. on delayed Net Cash Liability)
-    // Interest is calculated pro-rata: (Net Cash Liability * 18% * Days) / 365
     const interest = Math.round((liability * 0.18 * days) / 365);
-
     const totalPayable = lateFee + interest;
 
     // Notice Risk Level
-    let riskLevel = 'Low';
+    let riskLevel = 'Low Risk — Standard Compliance Alert';
     let riskClass = 'risk-low';
+    let riskIcon = 'fa-check-circle';
     if (days > 60 || liability > 100000) {
-      riskLevel = 'Critical — Section 73 / DRC-01A Notice Risk';
+      riskLevel = 'Critical Exposure — DRC-01A / Sec 73 Notice Trigger';
       riskClass = 'risk-critical';
+      riskIcon = 'fa-triangle-exclamation';
     } else if (days > 30 || liability > 50000) {
-      riskLevel = 'Moderate — Automated GSTN Scrutiny Alert';
+      riskLevel = 'Moderate Exposure — Automated GSTN Scrutiny Radar';
       riskClass = 'risk-moderate';
+      riskIcon = 'fa-circle-exclamation';
     }
 
     return {
@@ -218,6 +233,7 @@ const TaxTools = () => {
       totalPayable,
       riskLevel,
       riskClass,
+      riskIcon,
     };
   }, [isNilReturn, netCashLiability, annualTurnover, daysDelayed]);
 
@@ -238,6 +254,7 @@ const TaxTools = () => {
         quarter: 'Q1',
         due: '15 June',
         percentage: '15%',
+        pctNum: 15,
         cumulativeDue: Math.round(netAdvanceLiability * 0.15),
         incrementalDue: Math.round(netAdvanceLiability * 0.15),
       },
@@ -245,6 +262,7 @@ const TaxTools = () => {
         quarter: 'Q2',
         due: '15 September',
         percentage: '45%',
+        pctNum: 45,
         cumulativeDue: Math.round(netAdvanceLiability * 0.45),
         incrementalDue: Math.round(netAdvanceLiability * 0.3),
       },
@@ -252,6 +270,7 @@ const TaxTools = () => {
         quarter: 'Q3',
         due: '15 December',
         percentage: '75%',
+        pctNum: 75,
         cumulativeDue: Math.round(netAdvanceLiability * 0.75),
         incrementalDue: Math.round(netAdvanceLiability * 0.3),
       },
@@ -259,7 +278,8 @@ const TaxTools = () => {
         quarter: 'Q4',
         due: '15 March',
         percentage: '100%',
-        cumulativeDue: netAdvanceLiability,
+        pctNum: 100,
+        cumulativeDue: Math.round(netAdvanceLiability * 1.0),
         incrementalDue: Math.round(netAdvanceLiability * 0.25),
       },
     ];
@@ -273,13 +293,13 @@ const TaxTools = () => {
     };
   }, [estimatedAnnualTax, tdsCredits]);
 
-  // Share calculation on WhatsApp
+  // Actions: Share & Consult
   const handleShareCalculation = () => {
     let msg = '';
     if (activeTab === 'regime') {
-      msg = `*Tax Regime Calculation by Shree Chamunda Associates*\nGross Income: ${formatINR(taxCalculation.gross)}\nOld Regime Tax: ${formatINR(taxCalculation.finalOldTax)}\nNew Regime Tax: ${formatINR(taxCalculation.finalNewTax)}\nRecommended: *${taxCalculation.recommended}* (Savings: ${formatINR(taxCalculation.savings)})\n\nNeed assistance with e-filing? Contact CA Desk: ${phone}`;
+      msg = `*Tax Regime Calculation by Shree Chamunda Associates*\nGross Income: ${formatINR(taxCalculation.gross)}\nOld Regime Tax: ${formatINR(taxCalculation.finalOldTax)} (Monthly: ${formatINR(taxCalculation.oldMonthlyTakeHome)})\nNew Regime Tax: ${formatINR(taxCalculation.finalNewTax)} (Monthly: ${formatINR(taxCalculation.newMonthlyTakeHome)})\nRecommended: *${taxCalculation.recommended}* (Annual Savings: ${formatINR(taxCalculation.savings)})\n\nNeed assistance with ITR filing? Contact CA Desk: ${phone}`;
     } else if (activeTab === 'gst') {
-      msg = `*GST Late Fee & Sec 50 Interest Estimate by Shree Chamunda Associates*\nReturn: ${gstReturnType}\nDays Delayed: ${gstPenaltyCalculation.days} days\nLate Fee: ${formatINR(gstPenaltyCalculation.lateFee)}\nInterest (18% p.a.): ${formatINR(gstPenaltyCalculation.interest)}\nTotal Exposure: *${formatINR(gstPenaltyCalculation.totalPayable)}*\n\nConsult CA Desk to file: ${phone}`;
+      msg = `*GST Late Fee & Sec 50 Interest Estimate by Shree Chamunda Associates*\nReturn: ${gstReturnType}\nDays Delayed: ${gstPenaltyCalculation.days} days\nLate Fee: ${formatINR(gstPenaltyCalculation.lateFee)}\nInterest (18% p.a.): ${formatINR(gstPenaltyCalculation.interest)}\nTotal Exposure: *${formatINR(gstPenaltyCalculation.totalPayable)}*\n\nConsult CA Desk before notice: ${phone}`;
     } else {
       msg = `*Advance Tax Schedule by Shree Chamunda Associates*\nNet Advance Tax: ${formatINR(advanceTaxSchedule.netAdvanceLiability)}\nMandatory Advance Tax: ${advanceTaxSchedule.isMandatory ? 'Yes (>= ₹10,000)' : 'No'}\n\nPlan with CA Desk: ${phone}`;
     }
@@ -287,13 +307,13 @@ const TaxTools = () => {
   };
 
   const handleConsultDesk = () => {
-    const text = `Hello CA Team at Shree Chamunda Associates, I ran calculations on your Tax Tools Hub for ${
+    const text = `Hello CA Team at Shree Chamunda Associates, I ran statutory calculations on your Tax Tools Hub for ${
       activeTab === 'regime'
-        ? `Income ₹${income.toLocaleString('en-IN')}`
+        ? `Income ${formatINR(income)} (Recommended: ${taxCalculation.recommended}, Savings: ${formatINR(taxCalculation.savings)})`
         : activeTab === 'gst'
-        ? `GST ${gstReturnType} delay of ${daysDelayed} days`
-        : `Advance Tax of ₹${advanceTaxSchedule.netAdvanceLiability.toLocaleString('en-IN')}`
-    }. I would like expert advice.`;
+        ? `GST ${gstReturnType} delay of ${daysDelayed} days (Total Exposure: ${formatINR(gstPenaltyCalculation.totalPayable)})`
+        : `Advance Tax of ${formatINR(advanceTaxSchedule.netAdvanceLiability)}`
+    }. I would like to book a consultation with a Senior Chartered Accountant.`;
     window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(text)}`, '_blank');
   };
 
@@ -310,12 +330,12 @@ const TaxTools = () => {
 
   const advTaxSliderPct = Math.min(
     100,
-    Math.max(0, (((Math.min(2000000, Math.max(0, estimatedAnnualTax || 0))) - 10000) / (2000000 - 10000)) * 100)
+    Math.max(0, (((Math.min(2000000, Math.max(10000, estimatedAnnualTax || 10000))) - 10000) / (2000000 - 10000)) * 100)
   );
 
   return (
     <div className="tax-tools-page fade-in">
-      {/* Executive Midnight Header */}
+      {/* Executive Midnight Hero Header */}
       <section className="tools-hero">
         <div className="tools-hero-glow glow-gold"></div>
         <div className="tools-hero-glow glow-blue"></div>
@@ -326,20 +346,29 @@ const TaxTools = () => {
             <i className="fas fa-shield-halved"></i>
             <span>Institutional Compliance Engine &bull; FY 2024-25 (AY 2025-26)</span>
           </div>
+
           <h1>
-            Interactive <span className="hero-gradient-text">Tax &amp; Statutory Tools</span> Hub
+            Executive <span className="hero-gradient-text">Tax &amp; Statutory Tools</span> Hub
           </h1>
+
           <p className="tools-hero-lead">
-            Instantly compute your statutory tax liability under revised Budget 2024 slabs vs. Old Regime deductions, backed by verified CBDT &amp; GSTN rules.
+            Calibrated with CBDT Budget 2024 notifications &amp; GSTN statutory rules. Real-time tax intelligence trusted by Gujarat's leading founders &amp; salaried executives.
           </p>
 
+          {/* Institutional Trust Verification Row */}
           <div className="tools-hero-trust-row">
-            <span className="hero-trust-chip"><i className="fas fa-check-circle"></i> Finance (No. 2) Act, 2024</span>
-            <span className="hero-trust-chip"><i className="fas fa-check-circle"></i> AY 2025-26 CBDT Calibrated</span>
-            <span className="hero-trust-chip"><i className="fas fa-shield-halved"></i> 100% Free &amp; Confidential</span>
+            <span className="hero-trust-chip">
+              <i className="fas fa-check-circle"></i> Finance (No. 2) Act, 2024 Verified
+            </span>
+            <span className="hero-trust-chip">
+              <i className="fas fa-check-circle"></i> AY 2025-26 CBDT Slabs &amp; 87A Relief
+            </span>
+            <span className="hero-trust-chip">
+              <i className="fas fa-shield-halved"></i> 100% Free &amp; Confidential CA Advisory
+            </span>
           </div>
 
-          {/* Tab Selection Navigation */}
+          {/* High-End Segmented Navigation Dock */}
           <div className="tools-tab-bar" role="tablist">
             <button
               type="button"
@@ -351,10 +380,12 @@ const TaxTools = () => {
                 setSearchParams({ tool: 'regime' });
               }}
             >
-              <i className="fas fa-scale-balanced"></i>
+              <div className="tab-btn-icon-circle">
+                <i className="fas fa-scale-balanced"></i>
+              </div>
               <div className="tab-label-stack">
                 <span className="tab-title">Budget 2024 Regime Calculator</span>
-                <span className="tab-sub">New vs. Old Tax Slabs</span>
+                <span className="tab-sub">New vs. Old Tax Slabs &bull; AY 2025-26</span>
               </div>
             </button>
 
@@ -368,10 +399,12 @@ const TaxTools = () => {
                 setSearchParams({ tool: 'gst-fee' });
               }}
             >
-              <i className="fas fa-file-invoice-dollar"></i>
+              <div className="tab-btn-icon-circle">
+                <i className="fas fa-file-invoice-dollar"></i>
+              </div>
               <div className="tab-label-stack">
                 <span className="tab-title">GST Late Fee &amp; Interest</span>
-                <span className="tab-sub">Sec 47 &amp; 50 Estimator</span>
+                <span className="tab-sub">Sec 47 &amp; 50 Estimator &bull; Risk Radar</span>
               </div>
             </button>
 
@@ -385,10 +418,12 @@ const TaxTools = () => {
                 setSearchParams({ tool: 'advance-tax' });
               }}
             >
-              <i className="fas fa-calendar-check"></i>
+              <div className="tab-btn-icon-circle">
+                <i className="fas fa-calendar-check"></i>
+              </div>
               <div className="tab-label-stack">
                 <span className="tab-title">Advance Tax Radar</span>
-                <span className="tab-sub">Quarterly Statutory Schedule</span>
+                <span className="tab-sub">Quarterly Calendar &bull; Section 208</span>
               </div>
             </button>
           </div>
@@ -398,11 +433,11 @@ const TaxTools = () => {
       {/* Main Tool Canvas */}
       <div className="container tools-canvas-container">
         {/* =======================================================
-            TAB 1: BUDGET 2024 NEW VS OLD REGIME
+            TAB 1: BUDGET 2024 NEW VS OLD REGIME COMPARATOR
             ======================================================= */}
         {activeTab === 'regime' && (
           <div className="tool-content-grid">
-            {/* Left Inputs Column */}
+            {/* Left Inputs Column (Financial Configuration Studio) */}
             <div className="tool-col-inputs">
               <div className="tool-card-box">
                 <div className="tool-card-header">
@@ -410,8 +445,8 @@ const TaxTools = () => {
                     <i className="fas fa-sliders"></i>
                   </div>
                   <div>
-                    <h3>Enter Income &amp; Investments</h3>
-                    <span className="card-subtext">FY 2024-25 (Assessment Year 2025-26)</span>
+                    <h3>Income &amp; Deductions Studio</h3>
+                    <span className="card-subtext">Assessment Year 2025-26 &bull; CBDT Verified</span>
                   </div>
                 </div>
 
@@ -423,7 +458,7 @@ const TaxTools = () => {
                         <label htmlFor="income-input" className="hero-income-label">
                           Gross Annual Income (CTC / Turnover)
                         </label>
-                        <span className="hero-income-sub">Official CBDT FY 2024-25 Assessment</span>
+                        <span className="hero-income-sub">Total compensation or business profit before deductions</span>
                       </div>
                       <span className="hero-income-pill-badge">
                         <i className="fas fa-chart-pie"></i> Slabs Linked
@@ -445,6 +480,24 @@ const TaxTools = () => {
                         aria-label="Gross Annual Income"
                         placeholder="0"
                       />
+                      <div className="quick-step-buttons">
+                        <button
+                          type="button"
+                          className="step-btn"
+                          onClick={() => setIncome((prev) => Math.max(300000, (Number(prev) || 0) - 50000))}
+                          title="Subtract ₹50,000"
+                        >
+                          -50k
+                        </button>
+                        <button
+                          type="button"
+                          className="step-btn"
+                          onClick={() => setIncome((prev) => Math.min(50000000, (Number(prev) || 0) + 100000))}
+                          title="Add ₹1,00,000"
+                        >
+                          +1L
+                        </button>
+                      </div>
                     </div>
 
                     {/* Interactive Range Slider */}
@@ -473,7 +526,7 @@ const TaxTools = () => {
 
                     {/* Curated Presets */}
                     <div className="tax-presets-row">
-                      <span className="presets-label"><i className="fas fa-bolt"></i> Quick:</span>
+                      <span className="presets-label"><i className="fas fa-bolt"></i> Quick Jump:</span>
                       {[
                         { label: '₹7.5L (0-Tax)', val: 750000 },
                         { label: '₹10L', val: 1000000 },
@@ -481,6 +534,7 @@ const TaxTools = () => {
                         { label: '₹15L', val: 1500000 },
                         { label: '₹20L', val: 2000000 },
                         { label: '₹30L', val: 3000000 },
+                        { label: '₹50L', val: 5000000 },
                       ].map((item) => (
                         <button
                           key={item.val}
@@ -496,7 +550,7 @@ const TaxTools = () => {
 
                   {/* Age Group Segmented Control */}
                   <div className="form-group-tax">
-                    <label className="tax-subheading-label">Taxpayer Category</label>
+                    <label className="tax-subheading-label">Taxpayer Category (Old Regime Exemptions)</label>
                     <div className="segmented-age-control" role="radiogroup">
                       <button
                         type="button"
@@ -534,12 +588,12 @@ const TaxTools = () => {
                     </div>
                   </div>
 
-                  {/* Smart Old Regime Deductions Architect */}
+                  {/* Smart Chapter VI-A Deductions Architect */}
                   <div className="deductions-architect-card">
                     <div className="deductions-card-header">
                       <div>
                         <span className="ded-section-kicker">CHAPTER VI-A DEDUCTIONS</span>
-                        <h4 className="ded-section-title">Old Regime Investments &amp; Deductions</h4>
+                        <h4 className="ded-section-title">Old Regime Investments &amp; Exemptions</h4>
                       </div>
                       <div className="total-ded-claimed-badge">
                         <span className="badge-kicker">Total Claimed</span>
@@ -547,7 +601,7 @@ const TaxTools = () => {
                       </div>
                     </div>
 
-                    {/* 1-Tap Strategy Profiles */}
+                    {/* 1-Tap Strategy Profiles (100% Equal Symmetrical 3 Columns) */}
                     <div className="strategy-preset-shelf">
                       <span className="strategy-label">1-Tap Deduction Profile:</span>
                       <div className="strategy-options-row">
@@ -607,7 +661,7 @@ const TaxTools = () => {
                           <span className="strategy-icon-box"><i className="fas fa-circle-xmark"></i></span>
                           <span className="strategy-chip-text">
                             <span className="chip-name">Zero / Nil</span>
-                            <span className="chip-val">No Deductions</span>
+                            <span className="chip-val">Pure Slabs</span>
                           </span>
                         </button>
                       </div>
@@ -620,9 +674,13 @@ const TaxTools = () => {
                       onClick={() => setShowCustomDeductions(!showCustomDeductions)}
                     >
                       <span className="toggle-label-wrap">
-                        <span className="toggle-icon-box"><i className={`fas fa-${showCustomDeductions ? 'chevron-up' : 'sliders'}`}></i></span>
+                        <span className="toggle-icon-box">
+                          <i className={`fas fa-${showCustomDeductions ? 'chevron-up' : 'sliders'}`}></i>
+                        </span>
                         <span className="toggle-text-main">
-                          {showCustomDeductions ? 'Hide Fine-Tune Deductions' : 'Fine-Tune Specific Deductions (80C, 80D, NPS, Home Loan, HRA)'}
+                          {showCustomDeductions
+                            ? 'Hide Fine-Tune Deductions'
+                            : 'Fine-Tune Deductions (80C, 80D, NPS, Home Loan, HRA)'}
                         </span>
                       </span>
                       <span className="toggle-hint-pill">{showCustomDeductions ? 'Collapse' : 'Customize ▾'}</span>
@@ -636,7 +694,9 @@ const TaxTools = () => {
                           <div className="ded-item-top">
                             <div>
                               <span className="ded-item-title">Section 80C (PPF, ELSS, EPF, LIC, Tuition)</span>
-                              <span className="ded-item-cap">Max Cap ₹1,50,000</span>
+                              <span className="ded-item-cap">
+                                Max Limit: ₹1,50,000 &bull; {Math.round((taxCalculation.capped80C / 150000) * 100)}% Claimed
+                              </span>
                             </div>
                             <div className="ded-inline-input-wrap">
                               <span className="input-curr-symbol">₹</span>
@@ -653,6 +713,12 @@ const TaxTools = () => {
                                 placeholder="0"
                               />
                             </div>
+                          </div>
+                          <div className="ded-progress-track">
+                            <div
+                              className="ded-progress-fill fill-amber"
+                              style={{ width: `${(taxCalculation.capped80C / 150000) * 100}%` }}
+                            ></div>
                           </div>
                           <div className="ded-quick-chips">
                             {[
@@ -681,7 +747,7 @@ const TaxTools = () => {
                           <div className="ded-item-top">
                             <div>
                               <span className="ded-item-title">Section 80D (Health Insurance Premium)</span>
-                              <span className="ded-item-cap">Self + Senior Parents</span>
+                              <span className="ded-item-cap">Self, Family + Senior Parents (Max ₹1 Lakh)</span>
                             </div>
                             <div className="ded-inline-input-wrap">
                               <span className="input-curr-symbol">₹</span>
@@ -726,7 +792,7 @@ const TaxTools = () => {
                           <div className="custom-ded-subcard">
                             <div className="subcard-header">
                               <span className="subcard-title">80CCD(1B) NPS</span>
-                              <span className="subcard-cap">Max ₹50k</span>
+                              <span className="subcard-cap">Max ₹50,000</span>
                             </div>
                             <div className="ded-inline-input-wrap">
                               <span className="input-curr-symbol">₹</span>
@@ -767,7 +833,7 @@ const TaxTools = () => {
                           <div className="custom-ded-subcard">
                             <div className="subcard-header">
                               <span className="subcard-title">Sec 24 Home Loan</span>
-                              <span className="subcard-cap">Max ₹2L</span>
+                              <span className="subcard-cap">Max ₹2,00,000</span>
                             </div>
                             <div className="ded-inline-input-wrap">
                               <span className="input-curr-symbol">₹</span>
@@ -811,6 +877,7 @@ const TaxTools = () => {
                           <div className="custom-ded-subcard">
                             <div className="subcard-header">
                               <span className="subcard-title">HRA Exemption</span>
+                              <span className="subcard-cap">House Rent Allowance</span>
                             </div>
                             <div className="ded-inline-input-wrap">
                               <span className="input-curr-symbol">₹</span>
@@ -851,6 +918,7 @@ const TaxTools = () => {
                           <div className="custom-ded-subcard">
                             <div className="subcard-header">
                               <span className="subcard-title">Other (80E/80G)</span>
+                              <span className="subcard-cap">Edu Loan / Donations</span>
                             </div>
                             <div className="ded-inline-input-wrap">
                               <span className="input-curr-symbol">₹</span>
@@ -895,7 +963,7 @@ const TaxTools = () => {
               </div>
             </div>
 
-            {/* Right Comparison & Recommendation Column */}
+            {/* Right Comparison & Recommendation Column (Live Intelligence Output) */}
             <div className="tool-col-results">
               {/* Grand Recommendation Banner */}
               <div className={`recommendation-banner-card ${taxCalculation.diff >= 0 ? 'win-new' : 'win-old'}`}>
@@ -916,19 +984,22 @@ const TaxTools = () => {
                     </div>
                     {taxCalculation.savings > 0 && (
                       <div className="rec-savings-pill">
-                        <span className="pill-sub">Net Savings</span>
+                        <span className="pill-sub">Net Annual Savings</span>
                         <strong className="pill-amt">{formatINR(taxCalculation.savings)}</strong>
+                        <span className="pill-sub-monthly">+{formatINR(taxCalculation.monthlySavings)} / month</span>
                       </div>
                     )}
                   </div>
+
                   <p className="rec-desc">
                     {taxCalculation.savings > 0 ? (
                       <>
-                        By choosing <strong>{taxCalculation.recommended}</strong>, you legally preserve{' '}
-                        <strong className="rec-highlight">{formatINR(taxCalculation.savings)}</strong> in net tax liability.
+                        By opting for the <strong>{taxCalculation.recommended}</strong>, you legally preserve{' '}
+                        <strong className="rec-highlight">{formatINR(taxCalculation.savings)}</strong> annually, putting an extra{' '}
+                        <strong className="rec-highlight">{formatINR(taxCalculation.monthlySavings)}/month</strong> in take-home cash.
                       </>
                     ) : (
-                      'Your deductions exactly offset the slab differentials between regimes.'
+                      'Your Chapter VI-A deductions offset the slab differentials between regimes.'
                     )}
                   </p>
 
@@ -946,7 +1017,7 @@ const TaxTools = () => {
                         <div className="rec-chart-top-bar">
                           <span className="chart-legend-heading">
                             <i className="fas fa-chart-simple"></i>
-                            {comparisonViewMode === 'tax' ? 'Statutory Tax Liability Comparison' : 'Annual Take-Home Wealth Comparison'}
+                            {comparisonViewMode === 'tax' ? 'Statutory Tax Liability Differential' : 'Monthly Take-Home Cash Comparison'}
                           </span>
                           <div className="rec-view-toggle" role="tablist" aria-label="Comparison View Toggle">
                             <button
@@ -957,7 +1028,7 @@ const TaxTools = () => {
                               onClick={() => setComparisonViewMode('tax')}
                               title="Compare tax liability in rupees"
                             >
-                              <i className="fas fa-file-invoice-dollar"></i> Tax Payable
+                              <i className="fas fa-file-invoice-dollar"></i> Tax Liability
                             </button>
                             <button
                               type="button"
@@ -965,9 +1036,9 @@ const TaxTools = () => {
                               aria-selected={comparisonViewMode === 'takeHome'}
                               className={`view-mode-pill ${comparisonViewMode === 'takeHome' ? 'active' : ''}`}
                               onClick={() => setComparisonViewMode('takeHome')}
-                              title="Compare take-home percentage"
+                              title="Compare monthly take-home salary"
                             >
-                              <i className="fas fa-wallet"></i> Take-Home %
+                              <i className="fas fa-wallet"></i> Monthly Take-Home
                             </button>
                           </div>
                         </div>
@@ -1020,21 +1091,24 @@ const TaxTools = () => {
                               <div className="tax-savings-delta-tag">
                                 <i className="fas fa-bolt"></i>
                                 <span>
-                                  <strong>{formatINR(taxCalculation.savings)} ({taxSavedPercent}%)</strong> less tax under {taxCalculation.recommended}
+                                  <strong>{formatINR(taxCalculation.savings)} ({taxSavedPercent}%)</strong> lower tax liability under {taxCalculation.recommended}
                                 </span>
                               </div>
                             )}
                           </>
                         ) : (
                           <>
-                            {/* Take-Home View */}
+                            {/* Monthly Take-Home View */}
                             <div className="comparison-bar-row">
                               <div className="bar-labels">
                                 <span className="bar-title">
-                                  <span className="regime-dot new-dot"></span> New Regime Take-Home
+                                  <span className="regime-dot new-dot"></span> New Regime Monthly In-Hand
+                                  {taxCalculation.newMonthlyTakeHome > taxCalculation.oldMonthlyTakeHome && (
+                                    <span className="mini-winner-tag">Higher Cash</span>
+                                  )}
                                 </span>
                                 <span className="bar-stats">
-                                  <strong>{taxCalculation.newTakeHomePct}%</strong> ({formatINR(taxCalculation.newTakeHome)}) &bull; Tax: {taxCalculation.newEffectiveRate}%
+                                  <strong>{formatINR(taxCalculation.newMonthlyTakeHome)}/mo</strong> ({taxCalculation.newTakeHomePct}% of CTC)
                                 </span>
                               </div>
                               <div className="bar-track">
@@ -1048,10 +1122,13 @@ const TaxTools = () => {
                             <div className="comparison-bar-row">
                               <div className="bar-labels">
                                 <span className="bar-title">
-                                  <span className="regime-dot old-dot"></span> Old Regime Take-Home
+                                  <span className="regime-dot old-dot"></span> Old Regime Monthly In-Hand
+                                  {taxCalculation.oldMonthlyTakeHome > taxCalculation.newMonthlyTakeHome && (
+                                    <span className="mini-winner-tag">Higher Cash</span>
+                                  )}
                                 </span>
                                 <span className="bar-stats">
-                                  <strong>{taxCalculation.oldTakeHomePct}%</strong> ({formatINR(taxCalculation.oldTakeHome)}) &bull; Tax: {taxCalculation.oldEffectiveRate}%
+                                  <strong>{formatINR(taxCalculation.oldMonthlyTakeHome)}/mo</strong> ({taxCalculation.oldTakeHomePct}% of CTC)
                                 </span>
                               </div>
                               <div className="bar-track">
@@ -1069,7 +1146,7 @@ const TaxTools = () => {
                 </div>
               </div>
 
-              {/* Side-by-Side Regime Cards */}
+              {/* Side-by-Side Symmetrical Regime Cards */}
               <div className="regime-comparison-pair">
                 {/* New Tax Regime Card (Budget 2024) */}
                 <div className={`regime-card ${taxCalculation.recommended === 'NEW REGIME' ? 'card-winner' : ''}`}>
@@ -1087,7 +1164,7 @@ const TaxTools = () => {
 
                   <div className="regime-stat-rows">
                     <div className="regime-row">
-                      <span>Gross Total Income</span>
+                      <span>Gross Annual CTC</span>
                       <strong>{formatINR(taxCalculation.gross)}</strong>
                     </div>
                     <div className="regime-row">
@@ -1104,14 +1181,14 @@ const TaxTools = () => {
                       <strong className="regime-tax-num">{formatINR(taxCalculation.finalNewTax)}</strong>
                     </div>
                     <div className="regime-row takehome-row">
-                      <span>Net Annual Take-Home</span>
-                      <strong className="text-emerald">{formatINR(taxCalculation.newTakeHome)}</strong>
+                      <span>Monthly In-Hand</span>
+                      <strong className="text-emerald">{formatINR(taxCalculation.newMonthlyTakeHome)} / mo</strong>
                     </div>
                   </div>
 
                   <div className="regime-highlights-strip">
                     <i className="fas fa-info-circle"></i>
-                    <span>Includes ₹75,000 standard deduction &amp; Sec 87A rebate up to ₹7 Lakhs</span>
+                    <span>Includes revised ₹75k standard deduction &amp; Sec 87A rebate up to ₹7 Lakhs</span>
                   </div>
                 </div>
 
@@ -1131,7 +1208,7 @@ const TaxTools = () => {
 
                   <div className="regime-stat-rows">
                     <div className="regime-row">
-                      <span>Gross Total Income</span>
+                      <span>Gross Annual CTC</span>
                       <strong>{formatINR(taxCalculation.gross)}</strong>
                     </div>
                     <div className="regime-row">
@@ -1148,8 +1225,8 @@ const TaxTools = () => {
                       <strong className="regime-tax-num">{formatINR(taxCalculation.finalOldTax)}</strong>
                     </div>
                     <div className="regime-row takehome-row">
-                      <span>Net Annual Take-Home</span>
-                      <strong className="text-emerald">{formatINR(taxCalculation.oldTakeHome)}</strong>
+                      <span>Monthly In-Hand</span>
+                      <strong className="text-emerald">{formatINR(taxCalculation.oldMonthlyTakeHome)} / mo</strong>
                     </div>
                   </div>
 
@@ -1160,7 +1237,7 @@ const TaxTools = () => {
                 </div>
               </div>
 
-              {/* Action Bar */}
+              {/* Symmetrical Action Bar */}
               <div className="tool-cta-actions">
                 <button type="button" className="btn-tool-consult" onClick={handleConsultDesk}>
                   <i className="fas fa-user-shield btn-consult-icon"></i>
@@ -1189,14 +1266,14 @@ const TaxTools = () => {
                   </div>
                   <div>
                     <h3>GST Filing Delay Parameters</h3>
-                    <span className="card-subtext">Central Goods &amp; Services Tax Act, 2017</span>
+                    <span className="card-subtext">Central Goods &amp; Services Tax Act, 2017 &bull; Sections 47 &amp; 50</span>
                   </div>
                 </div>
 
                 <div className="tool-form-body">
                   {/* Return Type */}
                   <div className="form-group-tax">
-                    <label>GST Return Type</label>
+                    <label>GST Return Form</label>
                     <div className="tax-pill-selector">
                       {['GSTR-3B', 'GSTR-1', 'GSTR-4 (Composition)', 'CMP-08'].map((t) => (
                         <button
@@ -1213,7 +1290,7 @@ const TaxTools = () => {
 
                   {/* Return Status: Nil vs Regular */}
                   <div className="form-group-tax">
-                    <label>Return Nature</label>
+                    <label>Filing Nature</label>
                     <div className="tax-pill-selector">
                       <button
                         type="button"
@@ -1236,7 +1313,7 @@ const TaxTools = () => {
                   <div className="form-group-tax">
                     <div className="tax-label-row">
                       <label htmlFor="days-input">Days Delayed Past Statutory Due Date (20th)</label>
-                      <span className="tax-curr-display">{gstPenaltyCalculation.days} Days</span>
+                      <span className="tax-curr-display">{gstPenaltyCalculation.days} Days Late</span>
                     </div>
                     <input
                       id="days-input"
@@ -1270,7 +1347,7 @@ const TaxTools = () => {
                       </div>
                     </div>
                     <div className="tax-presets-row">
-                      <span className="presets-label">Quick:</span>
+                      <span className="presets-label"><i className="fas fa-clock"></i> Quick Delay:</span>
                       {[7, 15, 30, 45, 60, 90].map((d) => (
                         <button
                           key={d}
@@ -1278,7 +1355,7 @@ const TaxTools = () => {
                           className={`tax-preset-chip ${daysDelayed === d ? 'active-preset' : ''}`}
                           onClick={() => setDaysDelayed(d)}
                         >
-                          {d}d
+                          {d} Days
                         </button>
                       ))}
                     </div>
@@ -1288,8 +1365,8 @@ const TaxTools = () => {
                   {!isNilReturn && (
                     <div className="form-group-tax">
                       <div className="tax-label-row">
-                        <label htmlFor="liability-input">Net Cash Tax Liability (Payable in Cash) (₹)</label>
-                        <span className="tax-cap-hint">Excluding ITC</span>
+                        <label htmlFor="liability-input">Net Cash Tax Liability Discharged (₹)</label>
+                        <span className="tax-cap-hint">Payable via Cash Ledger (Excl. ITC)</span>
                       </div>
                       <input
                         id="liability-input"
@@ -1301,7 +1378,7 @@ const TaxTools = () => {
                         className="tax-num-input"
                       />
                       <div className="tax-presets-row">
-                        <span className="presets-label">Presets:</span>
+                        <span className="presets-label"><i className="fas fa-coins"></i> Cash Presets:</span>
                         {[25000, 50000, 100000, 250000, 500000].map((val) => (
                           <button
                             key={val}
@@ -1314,7 +1391,7 @@ const TaxTools = () => {
                         ))}
                       </div>
                       <small className="form-hint-text">
-                        Section 50(1) interest applies only on the net cash liability discharged via Electronic Cash Ledger.
+                        Section 50(1) 18% annual interest applies strictly to cash ledger discharge under Finance Act amendment.
                       </small>
                     </div>
                   )}
@@ -1322,14 +1399,14 @@ const TaxTools = () => {
                   {/* Aggregate Turnover Tier */}
                   {!isNilReturn && (
                     <div className="form-group-tax">
-                      <label>Prior FY Turnover (Determines Section 47 Fee Cap)</label>
+                      <label>Prior FY Annual Turnover (Determines Section 47 Fee Cap)</label>
                       <div className="tax-pill-selector">
                         <button
                           type="button"
                           className={`pill-option ${annualTurnover === 'upto1.5cr' ? 'selected' : ''}`}
                           onClick={() => setAnnualTurnover('upto1.5cr')}
                         >
-                          &le; ₹1.5 Crore (Cap ₹2,000)
+                          &le; ₹1.5 Cr (Cap ₹2,000)
                         </button>
                         <button
                           type="button"
@@ -1343,7 +1420,7 @@ const TaxTools = () => {
                           className={`pill-option ${annualTurnover === 'above5cr' ? 'selected' : ''}`}
                           onClick={() => setAnnualTurnover('above5cr')}
                         >
-                          &gt; ₹5 Crore (Cap ₹10,000)
+                          &gt; ₹5 Cr (Cap ₹10,000)
                         </button>
                       </div>
                     </div>
@@ -1357,13 +1434,13 @@ const TaxTools = () => {
               {/* Risk Status Indicator */}
               <div className={`risk-banner-card ${gstPenaltyCalculation.riskClass}`}>
                 <div className="risk-icon">
-                  <i className="fas fa-exclamation-triangle"></i>
+                  <i className={`fas ${gstPenaltyCalculation.riskIcon}`}></i>
                 </div>
                 <div>
-                  <span className="risk-tag">COMPLIANCE RISK ASSESSMENT</span>
+                  <span className="risk-tag">COMPLIANCE RISK RADAR</span>
                   <h3 className="risk-title">{gstPenaltyCalculation.riskLevel}</h3>
                   <p className="risk-sub">
-                    Delay of {gstPenaltyCalculation.days} days beyond due date triggers automated interest calculations on GSTN portal.
+                    Delay of {gstPenaltyCalculation.days} days beyond statutory deadline triggers daily automated interest accumulation on GSTN portal.
                   </p>
                 </div>
               </div>
@@ -1371,8 +1448,11 @@ const TaxTools = () => {
               {/* Penalty Breakdown Bento Box */}
               <div className="gst-penalty-bento">
                 <div className="penalty-bento-header">
-                  <h3>Statutory Penalty &amp; Interest Breakdown</h3>
-                  <span className="gst-law-tag">CGST Act Sections 47 &amp; 50</span>
+                  <div>
+                    <span className="rec-kicker">STATUTORY LIABILITY BREAKDOWN</span>
+                    <h3>Statutory Penalty &amp; Interest Ledger</h3>
+                  </div>
+                  <span className="gst-law-tag">CGST Act Sec 47 &amp; 50</span>
                 </div>
 
                 <div className="penalty-grid-metrics">
@@ -1380,7 +1460,7 @@ const TaxTools = () => {
                     <span className="metric-label">Section 47 Late Fee</span>
                     <strong className="metric-value">{formatINR(gstPenaltyCalculation.lateFee)}</strong>
                     <span className="metric-note">
-                      ₹{gstPenaltyCalculation.dailyRate}/day ({gstPenaltyCalculation.days} days) &bull; Capped at {formatINR(gstPenaltyCalculation.maxCap)}
+                      ₹{gstPenaltyCalculation.dailyRate}/day for {gstPenaltyCalculation.days} days &bull; Capped at {formatINR(gstPenaltyCalculation.maxCap)}
                     </span>
                     <div className="split-pills">
                       <span>CGST: {formatINR(gstPenaltyCalculation.cgstLateFee)}</span>
@@ -1389,13 +1469,13 @@ const TaxTools = () => {
                   </div>
 
                   <div className="penalty-metric-card">
-                    <span className="metric-label">Section 50(1) Interest</span>
+                    <span className="metric-label">Section 50(1) Cash Interest</span>
                     <strong className="metric-value">{formatINR(gstPenaltyCalculation.interest)}</strong>
                     <span className="metric-note">
-                      18% p.a. pro-rata on net cash liability ({formatINR(netCashLiability)})
+                      18% p.a. pro-rata on cash liability ({formatINR(netCashLiability)})
                     </span>
                     <div className="split-pills">
-                      <span>Accruing Daily</span>
+                      <span>Accrues Daily</span>
                       <span>Mandatory on Portal</span>
                     </div>
                   </div>
@@ -1410,7 +1490,7 @@ const TaxTools = () => {
                 </div>
               </div>
 
-              {/* Action Bar */}
+              {/* Symmetrical Action Bar */}
               <div className="tool-cta-actions">
                 <button type="button" className="btn-tool-consult" onClick={handleConsultDesk}>
                   <i className="fas fa-paper-plane btn-consult-icon"></i>
@@ -1439,14 +1519,14 @@ const TaxTools = () => {
                   </div>
                   <div>
                     <h3>Advance Tax Estimation</h3>
-                    <span className="card-subtext">Section 208/211 Income Tax Act, 1961</span>
+                    <span className="card-subtext">Section 208/211 Income Tax Act, 1961 &bull; FY 2024-25</span>
                   </div>
                 </div>
 
                 <div className="tool-form-body">
                   <div className="form-group-tax">
                     <div className="tax-label-row">
-                      <label htmlFor="adv-tax-input">Total Estimated Tax for FY 2024-25 (₹)</label>
+                      <label htmlFor="adv-tax-input">Total Estimated Gross Tax Liability (₹)</label>
                       <span className="tax-curr-display">{formatINR(advanceTaxSchedule.totalTax)}</span>
                     </div>
                     <input
@@ -1464,7 +1544,7 @@ const TaxTools = () => {
                         min="10000"
                         max="2000000"
                         step="10000"
-                        value={Math.min(2000000, Math.max(0, estimatedAnnualTax || 0))}
+                        value={Math.min(2000000, Math.max(10000, estimatedAnnualTax || 10000))}
                         onChange={(e) => setEstimatedAnnualTax(Number(e.target.value))}
                         className="tax-range-slider"
                         aria-label="Estimated Annual Tax Slider"
@@ -1481,7 +1561,7 @@ const TaxTools = () => {
                       </div>
                     </div>
                     <div className="tax-presets-row">
-                      <span className="presets-label">Presets:</span>
+                      <span className="presets-label"><i className="fas fa-calculator"></i> Presets:</span>
                       {[50000, 100000, 250000, 500000, 1000000].map((val) => (
                         <button
                           key={val}
@@ -1498,7 +1578,7 @@ const TaxTools = () => {
                   <div className="form-group-tax">
                     <div className="tax-label-row">
                       <label htmlFor="tds-input">Estimated TDS / TCS Credits (Form 26AS) (₹)</label>
-                      <span className="tax-cap-hint">TDS deducted by payers</span>
+                      <span className="tax-cap-hint">Tax already deducted by payers</span>
                     </div>
                     <input
                       id="tds-input"
@@ -1510,7 +1590,7 @@ const TaxTools = () => {
                       className="tax-num-input"
                     />
                     <div className="tax-presets-row">
-                      <span className="presets-label">Quick:</span>
+                      <span className="presets-label"><i className="fas fa-percentage"></i> Quick TDS:</span>
                       {[
                         { label: '₹0 TDS', val: 0 },
                         { label: '25% TDS', val: Math.round(estimatedAnnualTax * 0.25) },
@@ -1560,17 +1640,17 @@ const TaxTools = () => {
                         <span className="inst-badge">{inst.quarter}</span>
                         <div>
                           <strong>{inst.due}</strong>
-                          <span className="inst-sub">Cumulative {inst.percentage}</span>
+                          <span className="inst-sub">Cumulative {inst.percentage} of Net Tax</span>
                         </div>
                       </div>
 
                       <div className="inst-col-amounts">
                         <div className="inst-amount-box">
-                          <span className="inst-amt-label">Installment Due</span>
+                          <span className="inst-amt-label">Quarterly Installment</span>
                           <strong className="inst-inc-val">{formatINR(inst.incrementalDue)}</strong>
                         </div>
                         <div className="inst-amount-box">
-                          <span className="inst-amt-label">Total Cumulative Paid</span>
+                          <span className="inst-amt-label">Cumulative Paid</span>
                           <span className="inst-cum-val">{formatINR(inst.cumulativeDue)}</span>
                         </div>
                       </div>
@@ -1590,7 +1670,7 @@ const TaxTools = () => {
                 </div>
               </div>
 
-              {/* Action Bar */}
+              {/* Symmetrical Action Bar */}
               <div className="tool-cta-actions">
                 <button type="button" className="btn-tool-consult" onClick={handleConsultDesk}>
                   <i className="fas fa-calculator btn-consult-icon"></i>
@@ -1648,7 +1728,7 @@ const TaxTools = () => {
               <h4>Statutory Basis &amp; Calculation Methodology</h4>
             </div>
             <p>
-              Calculations on this portal are based on the Finance (No. 2) Act, 2024 (Budget 2024) effective for Assessment Year 2025-26, the Income Tax Act, 1961, and notifications issued under Section 47 and Section 50 of the Central Goods &amp; Services Tax (CGST) Act, 2017. Results are computed strictly for indicative assessment. Final tax liability, surcharge thresholds (for high net worth individuals), and MAT/AMT provisions are customized during formal client advisory sessions by senior Chartered Accountants at <strong>Shree Chamunda Associates</strong>.
+              Calculations on this portal are based on the Finance (No. 2) Act, 2024 effective for Assessment Year 2025-26, the Income Tax Act, 1961, and statutory notifications under Section 47 and Section 50 of the Central Goods &amp; Services Tax (CGST) Act, 2017. Results are computed strictly for indicative assessment. Final tax liability, surcharge thresholds (for high net worth individuals), and MAT/AMT provisions are customized during formal client advisory sessions by senior Chartered Accountants at <strong>Shree Chamunda Associates</strong>.
             </p>
           </div>
         </div>
