@@ -593,27 +593,30 @@ const TaxTools = () => {
                     </div>
                   </div>
 
-                  {/* Benchmark Presets Bar */}
-                  <div className="income-benchmarks-bar">
-                    <span className="benchmarks-caption">
-                      <i className="fas fa-bolt text-gold"></i> Presets:
-                    </span>
-                    <div className="benchmarks-grid">
+                  {/* Benchmark Presets Grid (Strict 5-Column Non-Wrapping Deck) */}
+                  <div className="income-benchmarks-section">
+                    <div className="benchmarks-header-row">
+                      <span className="benchmarks-caption">
+                        <i className="fas fa-bolt text-gold"></i> POPULAR ASSESSMENT TIERS
+                      </span>
+                      <span className="benchmarks-hint">Click tier to auto-calibrate</span>
+                    </div>
+                    <div className="benchmarks-grid-5">
                       {[
-                        { label: '₹7.5L', badge: '0-Tax', val: 750000 },
-                        { label: '₹10 Lakhs', val: 1000000 },
-                        { label: '₹15 Lakhs', val: 1500000 },
-                        { label: '₹25 Lakhs', val: 2500000 },
-                        { label: '₹50 Lakhs', val: 5000000 },
+                        { label: '₹7.5L', sub: 'Zero-Tax', val: 750000, isZeroTax: true },
+                        { label: '₹10L', sub: 'Standard', val: 1000000 },
+                        { label: '₹15L', sub: 'Mid-Tier', val: 1500000 },
+                        { label: '₹25L', sub: 'Senior', val: 2500000 },
+                        { label: '₹50L', sub: 'HNW Tier', val: 5000000 },
                       ].map((item) => (
                         <button
                           key={item.val}
                           type="button"
-                          className={`benchmark-btn ${income === item.val ? 'active' : ''}`}
+                          className={`tier-card-btn ${income === item.val ? 'active' : ''} ${item.isZeroTax ? 'tier-zero-tax' : ''}`}
                           onClick={() => setIncome(item.val)}
                         >
-                          <span className="b-label">{item.label}</span>
-                          {item.badge && <span className="b-badge">{item.badge}</span>}
+                          <span className="tier-card-amt">{item.label}</span>
+                          <span className={`tier-card-sub ${item.isZeroTax ? 'sub-emerald' : ''}`}>{item.sub}</span>
                         </button>
                       ))}
                     </div>

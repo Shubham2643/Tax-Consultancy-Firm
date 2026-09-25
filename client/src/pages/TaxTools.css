@@ -783,23 +783,30 @@
   letter-spacing: 0.3px;
 }
 
-/* Benchmark Presets Bar */
-.income-benchmarks-bar {
+/* Benchmark Assessment Tiers (Strict 5-Column Non-Wrapping Grid) */
+.income-benchmarks-section {
   display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.benchmarks-header-row {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  padding-top: 2px;
+  padding: 0 2px;
 }
 
 .benchmarks-caption {
-  font-size: 11.5px;
-  color: #94a3b8;
-  font-weight: 700;
-  flex-shrink: 0;
+  font-size: 10.5px;
+  color: var(--tt-gold-light);
+  font-weight: 850;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
 }
 
 .benchmarks-caption i {
@@ -807,57 +814,88 @@
   font-size: 11px;
 }
 
-.benchmarks-grid {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  flex: 1;
-  align-items: center;
+.benchmarks-hint {
+  font-size: 10px;
+  color: var(--tt-text-muted);
+  font-weight: 600;
 }
 
-.benchmark-btn {
-  display: inline-flex;
+.benchmarks-grid-5 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  width: 100%;
+}
+
+.tier-card-btn {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 6px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #cbd5e1;
-  font-size: 11.5px;
-  font-weight: 650;
-  padding: 6px 12px;
-  border-radius: var(--tt-radius-pill);
+  justify-content: center;
+  gap: 3px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 8px 4px;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   user-select: none;
+  text-align: center;
 }
 
-.benchmark-btn:hover {
-  background: rgba(255, 255, 255, 0.09);
-  border-color: rgba(245, 158, 11, 0.35);
-  color: #ffffff;
+.tier-card-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(212, 175, 55, 0.35);
   transform: translateY(-1px);
 }
 
-.benchmark-btn.active {
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.22) 0%, rgba(245, 158, 11, 0.08) 100%);
+.tier-card-btn.active {
+  background: linear-gradient(180deg, rgba(212, 175, 55, 0.22) 0%, rgba(212, 175, 55, 0.06) 100%);
   border-color: var(--tt-gold);
-  color: #fef08a;
-  font-weight: 750;
-  box-shadow: 0 0 14px rgba(245, 158, 11, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 14px rgba(212, 175, 55, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
   transform: translateY(-1px);
 }
 
-.b-badge {
-  background: rgba(16, 185, 129, 0.2);
-  color: #34d399;
-  border: 1px solid rgba(16, 185, 129, 0.4);
-  font-size: 9.5px;
-  font-weight: 800;
-  padding: 1px 6px;
-  border-radius: 4px;
-  letter-spacing: 0.3px;
-  line-height: 1.2;
+.tier-card-btn.active .tier-card-amt {
+  color: #fef08a;
+}
+
+.tier-card-amt {
+  font-size: 13px;
+  font-weight: 850;
+  color: #f1f5f9;
+  letter-spacing: -0.2px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.tier-card-sub {
+  font-size: 9px;
+  font-weight: 750;
+  color: #64748b;
   text-transform: uppercase;
+  letter-spacing: 0.3px;
+  line-height: 1;
+}
+
+.tier-card-sub.sub-emerald {
+  color: #34d399;
+  font-weight: 800;
+}
+
+.tier-card-btn.tier-zero-tax {
+  border-color: rgba(16, 185, 129, 0.25);
+  background: rgba(16, 185, 129, 0.04);
+}
+
+.tier-card-btn.tier-zero-tax:hover {
+  border-color: rgba(16, 185, 129, 0.45);
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.tier-card-btn.tier-zero-tax.active {
+  border-color: var(--tt-gold);
+  background: linear-gradient(180deg, rgba(212, 175, 55, 0.22) 0%, rgba(212, 175, 55, 0.06) 100%);
 }
 
 /* Taxpayer Category Segmented Control */
@@ -2588,13 +2626,21 @@
     max-width: 140px;
   }
 
-  .benchmarks-grid {
+  .benchmarks-grid-5 {
     gap: 4px;
   }
 
-  .benchmark-btn {
-    font-size: 10.5px;
-    padding: 4px 8px;
+  .tier-card-btn {
+    padding: 6px 2px;
+  }
+
+  .tier-card-amt {
+    font-size: 11px;
+  }
+
+  .tier-card-sub {
+    font-size: 8px;
+    letter-spacing: 0;
   }
 
   .segment-btn .segment-primary {
