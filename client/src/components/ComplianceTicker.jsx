@@ -12,8 +12,8 @@ const COMPLIANCE_DEADLINES = [
     mobileTitle: 'Advance Tax Q2 Due',
     description: 'Mandatory second installment (45% cumulative) for all eligible corporate & individual taxpayers.',
     statute: 'Sec 208/211 Income Tax Act',
-    actionText: 'Calculate Advance Tax',
-    link: '/tax-tools?tool=advance-tax',
+    actionText: 'Book Tax Advisory',
+    link: '/services',
   },
   {
     id: 2,
@@ -24,8 +24,8 @@ const COMPLIANCE_DEADLINES = [
     mobileTitle: 'GSTR-3B Return Due',
     description: 'Monthly summary return & net cash liability payment with GSTR-2B inward ITC reconciliation.',
     statute: 'CGST Act Sec 39',
-    actionText: 'Estimate GST Late Fee',
-    link: '/tax-tools?tool=gst-fee',
+    actionText: 'Book GST Filing',
+    link: '/services',
   },
   {
     id: 3,
@@ -127,12 +127,8 @@ const ComplianceTicker = () => {
           </div>
         </div>
 
-        {/* Right Tools Hub CTA & Dismiss */}
+        {/* Right Dismiss Button */}
         <div className="compliance-ticker-tools">
-          <Link to="/tax-tools" className="ticker-tools-btn" title="Open Interactive Tax & Late Fee Calculators">
-            <i className="fas fa-calculator"></i>
-            <span>Tax Tools Hub</span>
-          </Link>
           <button 
             type="button" 
             className="ticker-dismiss-btn" 
@@ -173,11 +169,8 @@ const ComplianceTicker = () => {
           </Link>
         </div>
 
-        {/* Compact Tool & Dismiss Actions */}
+        {/* Compact Dismiss Action */}
         <div className="mobile-ticker-actions">
-          <Link to="/tax-tools" className="mobile-tools-btn" title="Open Tax Tools Hub" aria-label="Tax Tools">
-            <i className="fas fa-calculator"></i>
-          </Link>
           <button 
             type="button" 
             className="ticker-dismiss-btn" 

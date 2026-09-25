@@ -52,7 +52,6 @@ const Footer = () => {
   const quickLinks = [
     { label: 'Firm Overview', url: '/about' },
     { label: 'Tax Knowledge Hub', url: '/blog' },
-    { label: 'Tax & GST Tools Hub', url: '/tax-tools' },
     { label: 'Frequently Asked Questions', url: '/faqs' },
     { label: 'Client Portal & Vault', url: '/login' },
     { label: 'Income Tax Portal', url: 'https://www.incometax.gov.in', external: true },

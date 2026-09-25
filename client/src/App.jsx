@@ -18,7 +18,6 @@ import './App.css';
 
 // Dynamically split heavy pages to optimize initial bundle load
 const ServiceDetail = lazy(() => import('./pages/ServiceDetail'));
-const TaxTools = lazy(() => import('./pages/TaxTools'));
 const BlogDetail = lazy(() => import('./pages/BlogDetail'));
 const TermsConditions = lazy(() => import('./pages/TermsConditions'));
 const RefundPolicy = lazy(() => import('./pages/RefundPolicy'));
@@ -149,7 +148,6 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
             <Route path="/services/:id" element={<ServiceDetail />} />
-            <Route path="/tax-tools" element={<TaxTools />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:id" element={<BlogDetail />} />

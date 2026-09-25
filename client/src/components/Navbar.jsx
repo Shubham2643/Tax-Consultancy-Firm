@@ -50,8 +50,7 @@ const getDropdownMeta = (label) => {
   if (normalized.includes('roc') || normalized.includes('annual filing')) return { icon: 'fas fa-file-contract', desc: 'AOC-4 & MGT-7 annual statutory reporting' };
   if (normalized.includes('cfo')) return { icon: 'fas fa-crown', desc: 'Executive financial leadership' };
 
-  // Others / Resources & Direct Reach
-  if (normalized.includes('tax tool') || normalized.includes('calculator') || normalized.includes('due date')) return { icon: 'fas fa-calculator', desc: 'Budget 2024 slabs & statutory due dates' };
+  if (normalized.includes('calculator') || normalized.includes('due date')) return { icon: 'fas fa-calendar-check', desc: 'Statutory compliance & due dates' };
   if (normalized.includes('blog')) return { icon: 'fas fa-newspaper', desc: 'Tax circulars, case studies & updates' };
   if (normalized.includes('faq')) return { icon: 'fas fa-circle-question', desc: 'Common compliance queries answered' };
   if (normalized.includes('contact')) return { icon: 'fas fa-headset', desc: 'Direct access to senior advisory chambers' };
@@ -81,7 +80,6 @@ const Navbar = () => {
   const { settings, navMenu: rawNavMenu } = useSiteContext();
   const { user, logout } = useAuth();
 
-  // Defensively filter out 'Contact Us' (/contact) completely from navbar items and dropdowns
   const navMenu = (rawNavMenu || [])
     .filter((item) => {
       const label = (item?.label || '').toLowerCase().trim();
@@ -89,20 +87,11 @@ const Navbar = () => {
       return !label.includes('contact') && href !== '/contact';
     })
     .map((item) => {
-      const label = (item?.label || '').toLowerCase().trim();
       let children = (item.children || []).filter((child) => {
         const childLabel = (child?.label || '').toLowerCase().trim();
         const childHref = (child?.href || '').trim();
-        return !childLabel.includes('contact') && childHref !== '/contact';
+        return !childLabel.includes('contact') && childHref !== '/contact' && !childHref.includes('tax-tools') && !childLabel.includes('tax tool');
       });
-
-      // Add Tax Tools & Statutory Due Dates into Others category
-      if (label.includes('other') && !children.some(c => (c.href || '').includes('tax-tools'))) {
-        children = [
-          ...children,
-          { label: 'Tax Tools & Statutory Due Dates', href: '/tax-tools' }
-        ];
-      }
 
       return {
         ...item,
@@ -117,7 +106,6 @@ const Navbar = () => {
   const [mobileExpandedIndex, setMobileExpandedIndex] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
   const location = useLocation();
-  const isDarkPage = location.pathname.startsWith('/tax-tools');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -456,7 +444,7 @@ const Navbar = () => {
       </div>
 
       {/* Main Navbar — Executive Sticky Header */}
-      <nav className={`navbar ${isDarkPage ? "navbar-theme-dark" : ""} ${isScrolled ? "navbar-scrolled" : ""} ${isMobileOpen ? "navbar-mobile-active" : ""}`}>
+      <nav className={`navbar ${isScrolled ? "navbar-scrolled" : ""} ${isMobileOpen ? "navbar-mobile-active" : ""}`}>
         <div className="navbar-inner">
           {/* Logo with Halo Accent & Geometric Wordmark */}
           <Link to="/" className="navbar-logo" aria-label="Shree Chamunda Associates Home">
