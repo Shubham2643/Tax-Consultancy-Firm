@@ -452,69 +452,52 @@ const TaxTools = () => {
           <div className="tool-content-grid">
             {/* Left Inputs Column (Streamlined Financial Configurator Panel) */}
             <div className="tool-col-inputs">
-              <div className="config-panel">
-                {/* 1. Header */}
-                <div className="config-panel-header">
-                  <div className="config-header-text">
-                    <span className="config-eyebrow">STATUTORY PARAMETERS &bull; AY 2025-26</span>
-                    <h2 className="config-main-title">Tax Assessment Parameters</h2>
-                  </div>
-                  <span className="config-badge-verified">
-                    <i className="fas fa-check-circle"></i> Budget 2024 Verified
-                  </span>
-                </div>
-
-                {/* 2. Primary Gross Income Section */}
-                {/* 2. Primary Gross Income Studio */}
-                <div className="income-studio-card">
+                {/* 1. Statutory Assessment Parameters & Income Cockpit */}
+                <div className="statutory-assessment-studio">
                   {/* Studio Header */}
-                  <div className="income-studio-header">
-                    <div className="income-header-titles">
-                      <div className="income-eyebrow-row">
-                        <span className="income-eyebrow">
-                          <i className="fas fa-coins text-gold"></i> ANNUAL TAXABLE BASE
+                  <div className="studio-card-header">
+                    <div className="studio-header-titles">
+                      <div className="studio-eyebrow-row">
+                        <span className="studio-eyebrow">
+                          <i className="fas fa-sliders text-gold"></i> STATUTORY PARAMETERS &bull; AY 2025-26
                         </span>
-                        <span className="income-slab-tag">
-                          {income <= 750000
-                            ? 'Zero-Tax Threshold'
-                            : income <= 1000000
-                            ? '10% Tax Slab'
-                            : income <= 1500000
-                            ? '15%–20% Slabs'
-                            : income <= 5000000
-                            ? '30% Peak Slab'
-                            : 'Surcharge Bracket'}
+                        <span className="studio-tag-verified">
+                          <i className="fas fa-shield-check text-emerald"></i> Budget 2024 Verified
                         </span>
                       </div>
-                      <h3 className="income-title">Annual Gross CTC / Total Profit</h3>
-                      <span className="income-sub">Before statutory standard deduction &amp; exemptions</span>
+                      <h2 className="studio-main-title">Annual Gross CTC &amp; Taxpayer Category</h2>
+                      <span className="studio-subtitle">
+                        Configure annual compensation and statutory age classification to compute Old vs New Regime
+                      </span>
                     </div>
 
-                    <div className="income-monthly-badge">
-                      <span className="monthly-badge-lbl">MONTHLY RUN-RATE</span>
-                      <strong className="monthly-badge-val">
-                        {formatINR(Math.round(income / 12))}
-                        <small>/mo</small>
-                      </strong>
+                    <div className="studio-header-badge-stack">
+                      <span className="studio-slab-pill">
+                        <i className="fas fa-layer-group"></i>
+                        {income <= 750000
+                          ? 'Zero-Tax Threshold (Sec 87A)'
+                          : income <= 1000000
+                          ? '10% Marginal Slab'
+                          : income <= 1500000
+                          ? '15%–20% Intermediate Slabs'
+                          : income <= 5000000
+                          ? '30% Peak Marginal Slab'
+                          : 'High Net-Worth Surcharge Zone'}
+                      </span>
                     </div>
                   </div>
 
-                  {/* Symmetrical Hero Number Display */}
-                  <div className="income-hero-stage">
-                    <button
-                      type="button"
-                      className="stage-stepper-btn stepper-sub"
-                      onClick={() => setIncome((prev) => Math.max(300000, (Number(prev) || 0) - 50000))}
-                      title="Decrease by ₹50,000"
-                      aria-label="Decrease income by ₹50,000"
-                    >
-                      <i className="fas fa-minus"></i>
-                      <span className="stepper-sub-label">50k</span>
-                    </button>
+                  {/* High-Impact 2-Part Income Cockpit */}
+                  <div className="income-cockpit-grid">
+                    {/* Left: Primary Currency Input & Quick Nudge Chips */}
+                    <div className="income-display-tile">
+                      <div className="cockpit-tile-head">
+                        <span className="cockpit-tile-kicker">GROSS ANNUAL REVENUE / CTC</span>
+                        <span className="cockpit-tile-hint">Type or drag slider</span>
+                      </div>
 
-                    <div className="stage-center-box">
-                      <div className="stage-input-row">
-                        <span className="stage-rupee">₹</span>
+                      <div className="cockpit-currency-hero">
+                        <span className="cockpit-currency-symbol">₹</span>
                         <input
                           id="income-input"
                           type="text"
@@ -524,149 +507,249 @@ const TaxTools = () => {
                             const raw = e.target.value.replace(/[^0-9]/g, '');
                             setIncome(raw ? Math.min(100000000, Number(raw)) : 0);
                           }}
-                          className="stage-amount-input"
+                          className="cockpit-amount-input"
                           aria-label="Annual Gross Income"
                           placeholder="0"
                         />
                       </div>
-                      <div className="stage-caption-row">
-                        <span className="stage-denomination">{getDenominationText(income)}</span>
-                        <span className="stage-sep">&bull;</span>
-                        <span className="stage-status-desc">
+
+                      <div className="cockpit-sub-row">
+                        <span className="cockpit-denomination-tag">
+                          <i className="fas fa-tag text-gold"></i> {getDenominationText(income)}
+                        </span>
+                        <span className="cockpit-sub-divider">&bull;</span>
+                        <span className="cockpit-status-note">
                           {income <= 750000 ? (
-                            <span className="text-emerald">Budget 2024 Full Rebate Active</span>
+                            <span className="text-emerald">Budget 2024 Full ₹7.5L Rebate Active</span>
                           ) : (
-                            <span>Tax Assessment AY 2025-26</span>
+                            <span>Assessment Year 2025-26</span>
                           )}
                         </span>
                       </div>
-                    </div>
 
-                    <button
-                      type="button"
-                      className="stage-stepper-btn stepper-add"
-                      onClick={() => setIncome((prev) => Math.min(50000000, (Number(prev) || 0) + 100000))}
-                      title="Increase by ₹1,00,000"
-                      aria-label="Increase income by ₹1,00,000"
-                    >
-                      <i className="fas fa-plus"></i>
-                      <span className="stepper-sub-label">1L</span>
-                    </button>
-                  </div>
-
-                  {/* Range Slider Track */}
-                  <div className="income-slider-section">
-                    <input
-                      type="range"
-                      min="300000"
-                      max="5000000"
-                      step="25000"
-                      value={Math.min(5000000, Math.max(300000, income || 300000))}
-                      onChange={(e) => setIncome(Number(e.target.value))}
-                      className="clean-slider"
-                      aria-label="Gross Annual Income Slider"
-                      style={{
-                        background: `linear-gradient(90deg, #d4af37 0%, #f59e0b ${incomeSliderPct}%, rgba(255, 255, 255, 0.08) ${incomeSliderPct}%)`,
-                      }}
-                    />
-                    <div className="slider-milestone-bar">
-                      <span className="milestone-item">
-                        <span className="milestone-dot"></span>
-                        <span className="milestone-val">₹3L</span>
-                        <span className="milestone-desc">Exemption</span>
-                      </span>
-                      <span className="milestone-item milestone-center">
-                        <span className="milestone-dot"></span>
-                        <span className="milestone-val">₹7.5L</span>
-                        <span className="milestone-desc">Zero-Tax</span>
-                      </span>
-                      <span className="milestone-item milestone-center">
-                        <span className="milestone-dot"></span>
-                        <span className="milestone-val">₹15L</span>
-                        <span className="milestone-desc">Mid-Level</span>
-                      </span>
-                      <span className="milestone-item milestone-right">
-                        <span className="milestone-dot"></span>
-                        <span className="milestone-val">₹50L+</span>
-                        <span className="milestone-desc">HNW Tier</span>
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Benchmark Presets Grid (Strict 5-Column Non-Wrapping Deck) */}
-                  <div className="income-benchmarks-section">
-                    <div className="benchmarks-header-row">
-                      <span className="benchmarks-caption">
-                        <i className="fas fa-bolt text-gold"></i> POPULAR ASSESSMENT TIERS
-                      </span>
-                      <span className="benchmarks-hint">Click tier to auto-calibrate</span>
-                    </div>
-                    <div className="benchmarks-grid-5">
-                      {[
-                        { label: '₹7.5L', sub: 'Zero-Tax', val: 750000, isZeroTax: true },
-                        { label: '₹10L', sub: 'Standard', val: 1000000 },
-                        { label: '₹15L', sub: 'Mid-Tier', val: 1500000 },
-                        { label: '₹25L', sub: 'Senior', val: 2500000 },
-                        { label: '₹50L', sub: 'HNW Tier', val: 5000000 },
-                      ].map((item) => (
+                      {/* Quick Nudge Micro-Chips */}
+                      <div className="cockpit-nudge-chips">
+                        <span className="nudge-chips-caption">Nudge CTC:</span>
                         <button
-                          key={item.val}
                           type="button"
-                          className={`tier-card-btn ${income === item.val ? 'active' : ''} ${item.isZeroTax ? 'tier-zero-tax' : ''}`}
-                          onClick={() => setIncome(item.val)}
+                          className="nudge-chip"
+                          onClick={() => setIncome((prev) => Math.max(300000, (Number(prev) || 0) - 50000))}
+                          title="Decrease by ₹50,00,000"
+                          aria-label="Decrease income by ₹50,000"
                         >
-                          <span className="tier-card-amt">{item.label}</span>
-                          <span className={`tier-card-sub ${item.isZeroTax ? 'sub-emerald' : ''}`}>{item.sub}</span>
+                          <i className="fas fa-minus"></i> 50k
+                        </button>
+                        <button
+                          type="button"
+                          className="nudge-chip"
+                          onClick={() => setIncome((prev) => Math.min(50000000, (Number(prev) || 0) + 50000))}
+                          title="Increase by ₹50,000"
+                          aria-label="Increase income by ₹50,000"
+                        >
+                          <i className="fas fa-plus"></i> 50k
+                        </button>
+                        <button
+                          type="button"
+                          className="nudge-chip"
+                          onClick={() => setIncome((prev) => Math.min(50000000, (Number(prev) || 0) + 100000))}
+                          title="Increase by ₹1,00,000"
+                          aria-label="Increase income by ₹1,00,000"
+                        >
+                          <i className="fas fa-plus"></i> 1L
+                        </button>
+                        <button
+                          type="button"
+                          className="nudge-chip"
+                          onClick={() => setIncome((prev) => Math.min(50000000, (Number(prev) || 0) + 500000))}
+                          title="Increase by ₹5,00,000"
+                          aria-label="Increase income by ₹5,00,000"
+                        >
+                          <i className="fas fa-plus"></i> 5L
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Right: Operational Run-Rate & Statutory Metric Cards */}
+                    <div className="income-intelligence-tile">
+                      <div className="intel-metric-row">
+                        <div className="intel-metric-item">
+                          <span className="intel-metric-lbl">MONTHLY GROSS RUN-RATE</span>
+                          <strong className="intel-metric-val">
+                            {formatINR(Math.round(income / 12))}
+                            <small>/mo</small>
+                          </strong>
+                          <span className="intel-metric-sub">Prorated 12-month base</span>
+                        </div>
+
+                        <div className="intel-metric-item">
+                          <span className="intel-metric-lbl">SEC 16(ia) STD. DEDUCTION</span>
+                          <strong className="intel-metric-val val-std-ded">
+                            ₹75k <small className="intel-vs">New</small> / ₹50k <small className="intel-vs">Old</small>
+                          </strong>
+                          <span className="intel-metric-sub">Auto-credited for salaried</span>
+                        </div>
+                      </div>
+
+                      <div className="intel-taxable-strip">
+                        <span className="strip-lbl">Taxable Base (New Regime):</span>
+                        <strong className="strip-amt">{formatINR(Math.max(0, income - 75000))}</strong>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Precision Interactive Range Slider with Clickable Milestones */}
+                  <div className="cockpit-slider-module">
+                    <div className="slider-track-wrap">
+                      <input
+                        type="range"
+                        min="300000"
+                        max="5000000"
+                        step="25000"
+                        value={Math.min(5000000, Math.max(300000, income || 300000))}
+                        onChange={(e) => setIncome(Number(e.target.value))}
+                        className="cockpit-slider"
+                        aria-label="Gross Annual Income Range Slider"
+                        style={{
+                          background: `linear-gradient(90deg, #d4af37 0%, #f59e0b ${incomeSliderPct}%, rgba(255, 255, 255, 0.08) ${incomeSliderPct}%)`,
+                        }}
+                      />
+                    </div>
+
+                    <div className="slider-milestone-ticks">
+                      <button
+                        type="button"
+                        className={`milestone-tick-btn ${income === 300000 ? 'active' : ''}`}
+                        onClick={() => setIncome(300000)}
+                        title="Set to ₹3,00,000 Basic Exemption"
+                      >
+                        <span className="tick-dot"></span>
+                        <strong className="tick-amt">₹3L</strong>
+                        <span className="tick-desc">Basic Exemption</span>
+                      </button>
+                      <button
+                        type="button"
+                        className={`milestone-tick-btn tick-zero-tax ${income === 750000 ? 'active' : ''}`}
+                        onClick={() => setIncome(750000)}
+                        title="Set to ₹7,50,000 Zero-Tax Threshold"
+                      >
+                        <span className="tick-dot"></span>
+                        <strong className="tick-amt">₹7.5L</strong>
+                        <span className="tick-desc">Zero-Tax Rebate</span>
+                      </button>
+                      <button
+                        type="button"
+                        className={`milestone-tick-btn ${income === 1500000 ? 'active' : ''}`}
+                        onClick={() => setIncome(1500000)}
+                        title="Set to ₹15,00,000 Mid-Executive"
+                      >
+                        <span className="tick-dot"></span>
+                        <strong className="tick-amt">₹15L</strong>
+                        <span className="tick-desc">Mid-Executive</span>
+                      </button>
+                      <button
+                        type="button"
+                        className={`milestone-tick-btn ${income >= 5000000 ? 'active' : ''}`}
+                        onClick={() => setIncome(5000000)}
+                        title="Set to ₹50,00,000 HNW Surcharge Tier"
+                      >
+                        <span className="tick-dot"></span>
+                        <strong className="tick-amt">₹50L+</strong>
+                        <span className="tick-desc">HNW Surcharge</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Popular Assessment Tiers (Sleek Horizontal Dock) */}
+                  <div className="cockpit-preset-tiers">
+                    <span className="tiers-dock-title">
+                      <i className="fas fa-bolt text-gold"></i> POPULAR ASSESSMENT TIERS:
+                    </span>
+                    <div className="tiers-dock-chips" role="radiogroup" aria-label="Popular Assessment Tiers">
+                      {[
+                        { label: '₹7.5 Lakh', sub: 'Zero-Tax', val: 750000, isZeroTax: true },
+                        { label: '₹10 Lakh', sub: 'Standard', val: 1000000 },
+                        { label: '₹15 Lakh', sub: 'Mid-Tier', val: 1500000 },
+                        { label: '₹25 Lakh', sub: 'Senior Exec', val: 2500000 },
+                        { label: '₹50 Lakh', sub: 'HNW Bracket', val: 5000000 },
+                      ].map((tier) => (
+                        <button
+                          key={tier.val}
+                          type="button"
+                          role="radio"
+                          aria-checked={income === tier.val}
+                          className={`tier-pill-btn ${income === tier.val ? 'active' : ''} ${tier.isZeroTax ? 'tier-zero-tax' : ''}`}
+                          onClick={() => setIncome(tier.val)}
+                        >
+                          <span className="tier-pill-amt">{tier.label}</span>
+                          <span className="tier-pill-sub">{tier.sub}</span>
                         </button>
                       ))}
                     </div>
                   </div>
-                </div>
 
-                <div className="config-divider"></div>
+                  {/* Taxpayer Category (3-Way Segmented Control Bar) */}
+                  <div className="cockpit-category-module">
+                    <div className="category-header-row">
+                      <div className="category-title-stack">
+                        <span className="category-kicker">ASSESSEE STATUTORY CATEGORY</span>
+                        <h4 className="category-title">Taxpayer Category &amp; Exemption Limit</h4>
+                      </div>
+                      <span className="category-guidance">
+                        Determines Old Regime basic exemption threshold
+                      </span>
+                    </div>
 
-                {/* 3. Taxpayer Age Group Segment */}
-                <div className="config-section">
-                  <div className="section-label-group">
-                    <label className="section-title">Taxpayer Category</label>
-                    <span className="section-desc">Determines basic exemption limit under Old Regime</span>
+                    <div className="category-segmented-dock" role="radiogroup" aria-label="Taxpayer Category">
+                      <button
+                        type="button"
+                        role="radio"
+                        aria-checked={ageGroup === 'below60'}
+                        className={`category-dock-btn ${ageGroup === 'below60' ? 'active' : ''}`}
+                        onClick={() => setAgeGroup('below60')}
+                      >
+                        <div className="category-btn-icon">
+                          <i className="fas fa-user"></i>
+                        </div>
+                        <div className="category-btn-text">
+                          <span className="category-name">Individual / General</span>
+                          <span className="category-meta">&lt; 60 Years &bull; ₹2.5L Exemption</span>
+                        </div>
+                      </button>
+
+                      <button
+                        type="button"
+                        role="radio"
+                        aria-checked={ageGroup === '60to80'}
+                        className={`category-dock-btn ${ageGroup === '60to80' ? 'active' : ''}`}
+                        onClick={() => setAgeGroup('60to80')}
+                      >
+                        <div className="category-btn-icon">
+                          <i className="fas fa-user-tie"></i>
+                        </div>
+                        <div className="category-btn-text">
+                          <span className="category-name">Senior Citizen</span>
+                          <span className="category-meta">60–80 Years &bull; ₹3.0L Exemption</span>
+                        </div>
+                      </button>
+
+                      <button
+                        type="button"
+                        role="radio"
+                        aria-checked={ageGroup === 'above80'}
+                        className={`category-dock-btn ${ageGroup === 'above80' ? 'active' : ''}`}
+                        onClick={() => setAgeGroup('above80')}
+                      >
+                        <div className="category-btn-icon">
+                          <i className="fas fa-medal"></i>
+                        </div>
+                        <div className="category-btn-text">
+                          <span className="category-name">Super Senior Citizen</span>
+                          <span className="category-meta">&gt; 80 Years &bull; ₹5.0L Exemption</span>
+                        </div>
+                      </button>
+                    </div>
                   </div>
-
-                  <div className="segmented-control-bar" role="radiogroup">
-                    <button
-                      type="button"
-                      role="radio"
-                      aria-checked={ageGroup === 'below60'}
-                      className={`segment-btn ${ageGroup === 'below60' ? 'active' : ''}`}
-                      onClick={() => setAgeGroup('below60')}
-                    >
-                      <span className="segment-primary">Individual</span>
-                      <span className="segment-secondary">&lt; 60 Yrs</span>
-                    </button>
-                    <button
-                      type="button"
-                      role="radio"
-                      aria-checked={ageGroup === '60to80'}
-                      className={`segment-btn ${ageGroup === '60to80' ? 'active' : ''}`}
-                      onClick={() => setAgeGroup('60to80')}
-                    >
-                      <span className="segment-primary">Senior Citizen</span>
-                      <span className="segment-secondary">60–80 Yrs</span>
-                    </button>
-                    <button
-                      type="button"
-                      role="radio"
-                      aria-checked={ageGroup === 'above80'}
-                      className={`segment-btn ${ageGroup === 'above80' ? 'active' : ''}`}
-                      onClick={() => setAgeGroup('above80')}
-                    >
-                      <span className="segment-primary">Super Senior</span>
-                      <span className="segment-secondary">&gt; 80 Yrs</span>
-                    </button>
-                  </div>
                 </div>
-
-                <div className="config-divider"></div>
 
                 {/* 4. Chapter VI-A Deductions Studio (FinTech Direct Matrix) */}
                 <div className="deductions-studio-card">
@@ -1238,7 +1321,6 @@ const TaxTools = () => {
                     )}
                   </div>
                 </div>
-              </div>
             </div>
 
             {/* Results & Live Statutory Intelligence (Single-Column Architecture) */}
