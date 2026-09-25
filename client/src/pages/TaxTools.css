@@ -978,6 +978,22 @@
   pointer-events: none;
 }
 
+/* ==========================================================================
+   DEDUCTIONS STUDIO (CHAPTER VI-A FINTECH MATRIX)
+   ========================================================================== */
+
+.deductions-studio-card {
+  background: rgba(10, 16, 31, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  position: relative;
+}
+
 /* Deductions Header */
 .deductions-studio-header {
   display: flex;
@@ -1030,7 +1046,7 @@
 }
 
 .deductions-desc {
-  font-size: 11px;
+  font-size: 11.5px;
   color: var(--tt-text-muted);
 }
 
@@ -1041,8 +1057,9 @@
   background: rgba(16, 185, 129, 0.08);
   border: 1px solid rgba(16, 185, 129, 0.28);
   border-radius: 12px;
-  padding: 6px 12px;
+  padding: 8px 14px;
   flex-shrink: 0;
+  box-shadow: 0 2px 10px rgba(16, 185, 129, 0.06);
 }
 
 .claimed-chip-label {
@@ -1060,10 +1077,11 @@
 }
 
 .claimed-chip-amount {
-  font-size: 15px;
-  font-weight: 850;
+  font-size: 18px;
+  font-weight: 900;
   color: #ffffff;
   font-variant-numeric: tabular-nums;
+  letter-spacing: -0.3px;
 }
 
 .claimed-chip-sub {
@@ -1072,331 +1090,479 @@
   font-weight: 600;
 }
 
-/* 3 Precision Profile Cards Grid */
-.deduction-profiles-grid {
+/* Real-time Math Breakdown Ribbon */
+.deductions-math-ribbon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  background: rgba(2, 6, 23, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 8px 14px;
+}
+
+.math-ribbon-title {
+  font-size: 10px;
+  font-weight: 850;
+  color: var(--tt-gold-light);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.math-ribbon-items {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.math-pill {
+  padding: 2px 7px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #94a3b8;
+  font-variant-numeric: tabular-nums;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.math-pill-std {
+  background: rgba(56, 189, 248, 0.1);
+  color: #38bdf8;
+  border-color: rgba(56, 189, 248, 0.25);
+}
+
+.math-pill-active {
+  background: rgba(245, 158, 11, 0.12);
+  color: #fef08a;
+  border-color: rgba(245, 158, 11, 0.3);
+  font-weight: 800;
+}
+
+.math-pill-total {
+  background: rgba(16, 185, 129, 0.14);
+  color: #34d399;
+  border-color: rgba(16, 185, 129, 0.35);
+  font-weight: 850;
+}
+
+.math-op {
+  color: #64748b;
+  font-weight: 700;
+  font-size: 11.5px;
+}
+
+.math-op.math-equals {
+  color: var(--tt-gold-light);
+  font-weight: 900;
+}
+
+/* Sleek Scenario Presets Bar (Pill Dock) */
+.deductions-scenario-dock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: rgba(2, 6, 23, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 8px 12px;
+}
+
+.scenario-dock-label {
+  font-size: 10px;
+  font-weight: 850;
+  color: var(--tt-text-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.scenario-dock-buttons {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  flex: 1;
+}
+
+.scenario-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 7px 10px;
+  color: #cbd5e1;
+  font-size: 11.5px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: inherit;
+  user-select: none;
+}
+
+.scenario-btn:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(212, 175, 55, 0.3);
+  color: #ffffff;
+}
+
+.scenario-btn.active {
+  background: rgba(212, 175, 55, 0.14);
+  border-color: var(--tt-gold);
+  color: #fef08a;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.2);
+  font-weight: 750;
+}
+
+.scenario-name {
+  white-space: nowrap;
+}
+
+.scenario-val {
+  font-size: 10.5px;
+  opacity: 0.75;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.scenario-btn.active .scenario-val {
+  opacity: 1;
+  color: var(--tt-gold-light);
+}
+
+/* Direct 4-Pillar FinTech Deduction Grid (2x2) */
+.deduction-matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 12px;
 }
 
-.deduction-profile-card {
+.deduction-tile {
   background: rgba(3, 7, 18, 0.65);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
+  border-radius: 12px;
   padding: 14px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  text-align: left;
-  user-select: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
 }
 
-.deduction-profile-card:hover {
+.deduction-tile:hover {
+  border-color: rgba(212, 175, 55, 0.3);
   background: rgba(3, 7, 18, 0.85);
-  border-color: rgba(212, 175, 55, 0.35);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
-.deduction-profile-card.active {
-  background: linear-gradient(180deg, rgba(212, 175, 55, 0.12) 0%, rgba(15, 23, 42, 0.9) 100%);
-  border: 1.5px solid var(--tt-gold);
-  box-shadow: 0 0 16px rgba(212, 175, 55, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  transform: translateY(-2px);
+.deduction-tile.has-value {
+  border-color: rgba(212, 175, 55, 0.32);
+  background: linear-gradient(180deg, rgba(212, 175, 55, 0.04) 0%, rgba(3, 7, 18, 0.75) 100%);
 }
 
-.profile-card-top {
+.tile-head {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  gap: 8px;
 }
 
-.profile-icon-badge {
-  width: 32px;
-  height: 32px;
-  border-radius: 9px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+.tile-title-group {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.tile-icon-box {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--tt-text-secondary);
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.tile-title {
   font-size: 13px;
-  transition: all 0.2s ease;
-}
-
-.deduction-profile-card:hover .profile-icon-badge {
+  font-weight: 800;
   color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.2);
-}
-
-.deduction-profile-card.active .profile-icon-badge {
-  background: rgba(212, 175, 55, 0.2);
-  border-color: var(--tt-gold);
-  color: #fef08a;
-  box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
-}
-
-.profile-check-indicator {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(255, 255, 255, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: transparent;
-  font-size: 9px;
-  transition: all 0.2s ease;
-}
-
-.deduction-profile-card.active .profile-check-indicator {
-  border-color: #34d399;
-  background: rgba(16, 185, 129, 0.2);
-  color: #34d399;
-}
-
-.profile-card-body {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.profile-card-title {
-  font-size: 12.5px;
-  font-weight: 750;
-  color: #e2e8f0;
+  margin: 0;
   letter-spacing: -0.1px;
 }
 
-.profile-card-value {
-  font-size: 18px;
-  font-weight: 850;
-  color: #ffffff;
-  font-variant-numeric: tabular-nums;
-  line-height: 1.2;
-}
-
-.deduction-profile-card.active .profile-card-value {
-  color: var(--tt-gold-light);
-}
-
-.profile-card-value .val-nil {
-  font-size: 12px;
-  color: #64748b;
-  font-weight: 600;
-}
-
-.profile-card-breakdown {
+.tile-sub {
   font-size: 10px;
-  color: #94a3b8;
-  font-weight: 600;
+  color: var(--tt-text-muted);
+  font-weight: 500;
+  display: block;
+}
+
+.tile-cap-tag {
+  font-size: 10px;
+  font-weight: 750;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  padding: 2px 7px;
+  border-radius: 6px;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
-/* Fine-Tune Interactive Trigger Bar */
-.fine-tune-trigger-bar {
-  width: 100%;
-}
-
-.btn-fine-tune-toggle {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(2, 6, 23, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  padding: 12px 16px;
-  cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  color: #cbd5e1;
-  font-family: inherit;
-  text-align: left;
-}
-
-.btn-fine-tune-toggle:hover {
-  background: rgba(2, 6, 23, 0.85);
-  border-color: rgba(212, 175, 55, 0.35);
-  color: #ffffff;
-  transform: translateY(-1px);
-}
-
-.btn-fine-tune-toggle.expanded {
-  background: rgba(15, 23, 42, 0.9);
-  border-color: rgba(212, 175, 55, 0.4);
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
-}
-
-.toggle-left {
+.tile-input-row {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.toggle-icon-box {
-  width: 34px;
-  height: 34px;
-  border-radius: 9px;
-  background: rgba(245, 158, 11, 0.12);
-  border: 1px solid rgba(245, 158, 11, 0.25);
+.tile-input-wrap {
+  flex: 1;
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  flex-shrink: 0;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 6px 10px;
+  gap: 6px;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.toggle-label-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+.tile-input-wrap:focus-within {
+  border-color: var(--tt-gold);
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
 }
 
-.toggle-heading {
-  font-size: 13px;
-  font-weight: 750;
-  color: #f1f5f9;
-}
-
-.toggle-sub {
-  font-size: 10.5px;
-  color: var(--tt-text-muted);
-}
-
-.toggle-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-}
-
-.toggle-badge-action {
-  font-size: 11px;
+.tile-curr {
+  font-size: 14px;
   font-weight: 750;
   color: var(--tt-gold-light);
-  background: rgba(245, 158, 11, 0.1);
-  border: 1px solid rgba(245, 158, 11, 0.25);
-  padding: 3px 10px;
-  border-radius: var(--tt-radius-pill);
-  transition: all 0.2s ease;
 }
 
-.btn-fine-tune-toggle:hover .toggle-badge-action {
-  background: rgba(245, 158, 11, 0.2);
-  border-color: var(--tt-gold);
+.tile-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  font-weight: 800;
+  color: #ffffff;
+  font-variant-numeric: tabular-nums;
+  font-family: inherit;
+  width: 100%;
+}
+
+.tile-cap-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+  min-width: 58px;
+  flex-shrink: 0;
+}
+
+.cap-progress-pct {
+  font-size: 10px;
+  font-weight: 750;
+  color: var(--tt-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.deduction-tile.has-value .cap-progress-pct {
+  color: #fef08a;
+}
+
+.cap-mini-track {
+  width: 58px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.cap-mini-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #d4af37, #f59e0b);
+  border-radius: 999px;
+  transition: width 0.25s ease;
+}
+
+.cap-mini-fill.fill-max {
+  background: linear-gradient(90deg, #10b981, #34d399);
+}
+
+/* Quick Chips */
+.tile-quick-chips {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+
+.chip-btn {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #cbd5e1;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 6px;
+  padding: 3px 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+  user-select: none;
+}
+
+.chip-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(212, 175, 55, 0.4);
   color: #ffffff;
 }
 
-.toggle-chevron-circle {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.05);
+.chip-btn.active {
+  background: rgba(212, 175, 55, 0.2);
+  border-color: var(--tt-gold);
+  color: #fef08a;
+  font-weight: 800;
+}
+
+.chip-btn.chip-clear {
+  color: #94a3b8;
+}
+
+.chip-btn.chip-clear.active {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #cbd5e1;
+}
+
+/* Additional Exemptions (HRA & 80E / 80G Donations) */
+.additional-exemptions-section {
+  margin-top: 4px;
+}
+
+.btn-additional-exemptions-toggle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(2, 6, 23, 0.5);
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  color: #cbd5e1;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.btn-additional-exemptions-toggle:hover {
+  border-color: rgba(212, 175, 55, 0.4);
+  background: rgba(2, 6, 23, 0.75);
+  color: #ffffff;
+}
+
+.btn-additional-exemptions-toggle.open {
+  background: rgba(2, 6, 23, 0.85);
+  border-style: solid;
+  border-color: rgba(212, 175, 55, 0.35);
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.add-toggle-left {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 8px;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.add-active-badge {
+  font-size: 10px;
+  font-weight: 800;
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.28);
+  padding: 1px 7px;
+  border-radius: 999px;
+}
+
+.add-toggle-arrow {
   font-size: 10px;
   color: #94a3b8;
-  transition: transform 0.2s ease;
 }
 
-.btn-fine-tune-toggle.expanded .toggle-chevron-circle {
-  background: rgba(245, 158, 11, 0.15);
-  color: var(--tt-gold-light);
+.additional-exemptions-drawer {
+  padding-top: 8px;
+  animation: ttFadeIn 0.2s ease-out;
 }
 
-.fine-tune-drawer {
-  display: flex;
-  flex-direction: column;
-  padding-top: 4px;
-  animation: ttFadeIn 0.25s ease-out;
-}
-
-.fine-tune-grid {
+.additional-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
 
-.fine-tune-field {
+.additional-field {
   background: rgba(2, 6, 23, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 10px;
   padding: 10px 12px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
-.field-top-row {
+.add-field-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.field-name {
+.add-field-name {
   font-size: 11.5px;
-  font-weight: 700;
+  font-weight: 750;
   color: #f1f5f9;
 }
 
-.field-cap {
-  font-size: 10px;
+.add-field-cap {
+  font-size: 9.5px;
   font-weight: 600;
-  color: var(--tt-cyan);
+  color: #38bdf8;
   background: rgba(56, 189, 248, 0.1);
   padding: 1px 6px;
   border-radius: 4px;
 }
 
-.field-input-box {
+.add-input-wrap {
   display: flex;
   align-items: center;
   background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
-  padding: 5px 10px;
-  gap: 6px;
-  transition: var(--tt-transition);
+  padding: 4px 8px;
+  gap: 5px;
 }
 
-.field-input-box:focus-within {
-  border-color: var(--tt-gold);
-  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
-}
-
-.field-curr {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--tt-gold-light);
-}
-
-.field-num-input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  outline: none;
-  font-size: 13.5px;
-  font-weight: 700;
-  color: #ffffff;
-  font-variant-numeric: tabular-nums;
-  font-family: inherit;
-  width: 100%;
-}
-
-.field-desc {
-  font-size: 9.5px;
-  color: var(--tt-text-muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.add-chips {
+  margin-top: 2px;
 }
 
 /* ==========================================================================
@@ -2656,8 +2822,16 @@
     gap: 14px;
   }
 
-  .fine-tune-grid {
+  .deduction-matrix-grid {
     grid-template-columns: 1fr;
+  }
+
+  .additional-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .scenario-dock-buttons {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -2812,21 +2986,34 @@
   }
 
   .deductions-studio-card {
-    padding: 16px 14px;
-    gap: 16px;
+    padding: 14px 12px;
+    gap: 12px;
   }
 
-  .deduction-profiles-grid {
-    grid-template-columns: 1fr;
-    gap: 8px;
+  .deductions-math-ribbon {
+    padding: 8px 10px;
+    font-size: 10px;
   }
 
-  .btn-fine-tune-toggle {
-    padding: 10px 12px;
+  .scenario-dock-buttons {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .toggle-sub {
-    display: none;
+  .deduction-tile {
+    padding: 12px;
+  }
+
+  .tile-head {
+    flex-wrap: wrap;
+  }
+
+  .tile-quick-chips {
+    gap: 4px;
+  }
+
+  .chip-btn {
+    padding: 3px 6px;
+    font-size: 10px;
   }
 }
 
