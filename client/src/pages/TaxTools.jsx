@@ -437,109 +437,100 @@ const TaxTools = () => {
             ======================================================= */}
         {activeTab === 'regime' && (
           <div className="tool-content-grid">
-            {/* Left Inputs Column (Financial Configuration Studio) */}
+            {/* Left Inputs Column (Streamlined Financial Configurator Panel) */}
             <div className="tool-col-inputs">
-              <div className="tool-card-box">
-                <div className="tool-card-header">
-                  <div className="tool-icon-circle">
-                    <i className="fas fa-sliders"></i>
+              <div className="config-panel">
+                {/* 1. Header */}
+                <div className="config-panel-header">
+                  <div className="config-header-text">
+                    <span className="config-eyebrow">STATUTORY PARAMETERS &bull; AY 2025-26</span>
+                    <h2 className="config-main-title">Tax Assessment Parameters</h2>
                   </div>
-                  <div>
-                    <h3>Income &amp; Deductions Studio</h3>
-                    <span className="card-subtext">Assessment Year 2025-26 &bull; CBDT Verified</span>
-                  </div>
+                  <span className="config-badge-verified">
+                    <i className="fas fa-check-circle"></i> Budget 2024 Verified
+                  </span>
                 </div>
 
-                <div className="tool-form-body">
-                  {/* Hero Gross Annual Income Box */}
-                  <div className="hero-income-card">
-                    <div className="hero-income-top">
-                      <div className="hero-income-meta">
-                        <label htmlFor="income-input" className="hero-income-label">
-                          Gross Annual Income (CTC / Turnover)
-                        </label>
-                        <span className="hero-income-sub">Total compensation or business profit before deductions</span>
-                      </div>
-                      <span className="hero-income-pill-badge">
-                        <i className="fas fa-chart-pie"></i> Slabs Linked
-                      </span>
-                    </div>
+                {/* 2. Primary Gross Income Section */}
+                <div className="config-section income-hero-section">
+                  <div className="section-label-group">
+                    <label htmlFor="income-input" className="section-title">
+                      Annual Gross CTC / Total Profit
+                    </label>
+                    <span className="section-desc">Gross compensation before standard deduction &amp; exemptions</span>
+                  </div>
 
-                    <div className="hero-currency-input-wrap">
-                      <span className="hero-currency-symbol">₹</span>
-                      <input
-                        id="income-input"
-                        type="text"
-                        inputMode="numeric"
-                        value={income ? Number(income).toLocaleString('en-IN') : ''}
-                        onChange={(e) => {
-                          const raw = e.target.value.replace(/[^0-9]/g, '');
-                          setIncome(raw ? Math.min(100000000, Number(raw)) : 0);
-                        }}
-                        className="hero-currency-input"
-                        aria-label="Gross Annual Income"
-                        placeholder="0"
-                      />
-                      <div className="quick-step-buttons">
-                        <button
-                          type="button"
-                          className="step-btn"
-                          onClick={() => setIncome((prev) => Math.max(300000, (Number(prev) || 0) - 50000))}
-                          title="Subtract ₹50,000"
-                        >
-                          -50k
-                        </button>
-                        <button
-                          type="button"
-                          className="step-btn"
-                          onClick={() => setIncome((prev) => Math.min(50000000, (Number(prev) || 0) + 100000))}
-                          title="Add ₹1,00,000"
-                        >
-                          +1L
-                        </button>
-                      </div>
+                  <div className="income-display-box">
+                    <span className="income-currency-prefix">₹</span>
+                    <input
+                      id="income-input"
+                      type="text"
+                      inputMode="numeric"
+                      value={income ? Number(income).toLocaleString('en-IN') : ''}
+                      onChange={(e) => {
+                        const raw = e.target.value.replace(/[^0-9]/g, '');
+                        setIncome(raw ? Math.min(100000000, Number(raw)) : 0);
+                      }}
+                      className="income-large-input"
+                      aria-label="Annual Gross Income"
+                      placeholder="0"
+                    />
+                    <div className="income-stepper-pills">
+                      <button
+                        type="button"
+                        className="stepper-pill"
+                        onClick={() => setIncome((prev) => Math.max(300000, (Number(prev) || 0) - 50000))}
+                        title="Deduct ₹50,000"
+                      >
+                        -50k
+                      </button>
+                      <button
+                        type="button"
+                        className="stepper-pill"
+                        onClick={() => setIncome((prev) => Math.min(50000000, (Number(prev) || 0) + 100000))}
+                        title="Add ₹1,00,000"
+                      >
+                        +1L
+                      </button>
                     </div>
+                  </div>
 
-                    {/* Interactive Range Slider */}
-                    <div className="range-slider-wrapper">
-                      <input
-                        type="range"
-                        min="300000"
-                        max="5000000"
-                        step="25000"
-                        value={Math.min(5000000, Math.max(300000, income || 300000))}
-                        onChange={(e) => setIncome(Number(e.target.value))}
-                        className="tax-range-slider"
-                        aria-label="Gross Annual Income Slider"
-                        style={{
-                          background: `linear-gradient(90deg, #f59e0b 0%, #10b981 ${incomeSliderPct}%, rgba(255, 255, 255, 0.12) ${incomeSliderPct}%)`,
-                        }}
-                      />
-                      <div className="slider-ticks-row">
-                        <span>₹3L</span>
-                        <span>₹10L</span>
-                        <span>₹15L</span>
-                        <span>₹25L</span>
-                        <span>₹50L+</span>
-                      </div>
+                  {/* Clean Slider */}
+                  <div className="slider-container">
+                    <input
+                      type="range"
+                      min="300000"
+                      max="5000000"
+                      step="25000"
+                      value={Math.min(5000000, Math.max(300000, income || 300000))}
+                      onChange={(e) => setIncome(Number(e.target.value))}
+                      className="clean-slider"
+                      aria-label="Gross Annual Income Slider"
+                      style={{
+                        background: `linear-gradient(90deg, #f59e0b 0%, #10b981 ${incomeSliderPct}%, rgba(255, 255, 255, 0.1) ${incomeSliderPct}%)`,
+                      }}
+                    />
+                    <div className="slider-limits">
+                      <span>₹3 Lakhs</span>
+                      <span>₹50+ Lakhs</span>
                     </div>
+                  </div>
 
-                    {/* Curated Presets */}
-                    <div className="tax-presets-row">
-                      <span className="presets-label"><i className="fas fa-bolt"></i> Quick Jump:</span>
+                  {/* Clean Quick Presets (5 chips that never awkwardly wrap!) */}
+                  <div className="quick-presets-bar">
+                    <span className="presets-caption">Quick Jump:</span>
+                    <div className="presets-chips-wrap">
                       {[
                         { label: '₹7.5L (0-Tax)', val: 750000 },
-                        { label: '₹10L', val: 1000000 },
-                        { label: '₹12.5L', val: 1250000 },
-                        { label: '₹15L', val: 1500000 },
-                        { label: '₹20L', val: 2000000 },
-                        { label: '₹30L', val: 3000000 },
-                        { label: '₹50L', val: 5000000 },
+                        { label: '₹10 Lakhs', val: 1000000 },
+                        { label: '₹15 Lakhs', val: 1500000 },
+                        { label: '₹25 Lakhs', val: 2500000 },
+                        { label: '₹50 Lakhs', val: 5000000 },
                       ].map((item) => (
                         <button
                           key={item.val}
                           type="button"
-                          className={`tax-preset-chip ${income === item.val ? 'active-preset' : ''}`}
+                          className={`preset-pill ${income === item.val ? 'active' : ''}`}
                           onClick={() => setIncome(item.val)}
                         >
                           {item.label}
@@ -547,418 +538,295 @@ const TaxTools = () => {
                       ))}
                     </div>
                   </div>
+                </div>
 
-                  {/* Age Group Segmented Control */}
-                  <div className="form-group-tax">
-                    <label className="tax-subheading-label">Taxpayer Category (Old Regime Exemptions)</label>
-                    <div className="segmented-age-control" role="radiogroup">
-                      <button
-                        type="button"
-                        role="radio"
-                        aria-checked={ageGroup === 'below60'}
-                        className={`segmented-tab ${ageGroup === 'below60' ? 'active' : ''}`}
-                        onClick={() => setAgeGroup('below60')}
-                      >
-                        <span className="seg-icon-box"><i className="fas fa-user"></i></span>
-                        <span className="seg-main">&lt; 60 Yrs</span>
-                        <span className="seg-sub">Individual</span>
-                      </button>
-                      <button
-                        type="button"
-                        role="radio"
-                        aria-checked={ageGroup === '60to80'}
-                        className={`segmented-tab ${ageGroup === '60to80' ? 'active' : ''}`}
-                        onClick={() => setAgeGroup('60to80')}
-                      >
-                        <span className="seg-icon-box"><i className="fas fa-user-tie"></i></span>
-                        <span className="seg-main">60–80 Yrs</span>
-                        <span className="seg-sub">Senior Citizen</span>
-                      </button>
-                      <button
-                        type="button"
-                        role="radio"
-                        aria-checked={ageGroup === 'above80'}
-                        className={`segmented-tab ${ageGroup === 'above80' ? 'active' : ''}`}
-                        onClick={() => setAgeGroup('above80')}
-                      >
-                        <span className="seg-icon-box"><i className="fas fa-medal"></i></span>
-                        <span className="seg-main">&gt; 80 Yrs</span>
-                        <span className="seg-sub">Super Senior</span>
-                      </button>
+                <div className="config-divider"></div>
+
+                {/* 3. Taxpayer Age Group Segment */}
+                <div className="config-section">
+                  <div className="section-label-group">
+                    <label className="section-title">Taxpayer Category</label>
+                    <span className="section-desc">Determines basic exemption limit under Old Regime</span>
+                  </div>
+
+                  <div className="segmented-control-bar" role="radiogroup">
+                    <button
+                      type="button"
+                      role="radio"
+                      aria-checked={ageGroup === 'below60'}
+                      className={`segment-btn ${ageGroup === 'below60' ? 'active' : ''}`}
+                      onClick={() => setAgeGroup('below60')}
+                    >
+                      <span className="segment-primary">Individual</span>
+                      <span className="segment-secondary">&lt; 60 Yrs</span>
+                    </button>
+                    <button
+                      type="button"
+                      role="radio"
+                      aria-checked={ageGroup === '60to80'}
+                      className={`segment-btn ${ageGroup === '60to80' ? 'active' : ''}`}
+                      onClick={() => setAgeGroup('60to80')}
+                    >
+                      <span className="segment-primary">Senior Citizen</span>
+                      <span className="segment-secondary">60–80 Yrs</span>
+                    </button>
+                    <button
+                      type="button"
+                      role="radio"
+                      aria-checked={ageGroup === 'above80'}
+                      className={`segment-btn ${ageGroup === 'above80' ? 'active' : ''}`}
+                      onClick={() => setAgeGroup('above80')}
+                    >
+                      <span className="segment-primary">Super Senior</span>
+                      <span className="segment-secondary">&gt; 80 Yrs</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div className="config-divider"></div>
+
+                {/* 4. Chapter VI-A Deductions Architecture */}
+                <div className="config-section deductions-section">
+                  <div className="deductions-header-line">
+                    <div className="section-label-group">
+                      <label className="section-title">Chapter VI-A Deductions</label>
+                      <span className="section-desc">Investments &amp; exemptions under Old Tax Regime</span>
+                    </div>
+                    <div className="claimed-counter-pill">
+                      <span className="counter-lbl">Claimed</span>
+                      <strong className="counter-val">{formatINR(taxCalculation.totalOldDeductions)}</strong>
                     </div>
                   </div>
 
-                  {/* Smart Chapter VI-A Deductions Architect */}
-                  <div className="deductions-architect-card">
-                    <div className="deductions-card-header">
-                      <div>
-                        <span className="ded-section-kicker">CHAPTER VI-A DEDUCTIONS</span>
-                        <h4 className="ded-section-title">Old Regime Investments &amp; Exemptions</h4>
-                      </div>
-                      <div className="total-ded-claimed-badge">
-                        <span className="badge-kicker">Total Claimed</span>
-                        <strong className="badge-val">{formatINR(taxCalculation.totalOldDeductions)}</strong>
-                      </div>
-                    </div>
-
-                    {/* 1-Tap Strategy Profiles (100% Equal Symmetrical 3 Columns) */}
-                    <div className="strategy-preset-shelf">
-                      <span className="strategy-label">1-Tap Deduction Profile:</span>
-                      <div className="strategy-options-row">
-                        <button
-                          type="button"
-                          className={`strategy-chip ${deductionStrategy === 'standard' ? 'active' : ''}`}
-                          onClick={() => {
-                            setDeductionStrategy('standard');
-                            setSec80C(150000);
-                            setSec80D(25000);
-                            setNps80CCD(50000);
-                            setHomeLoan24b(0);
-                            setHraExempt(0);
-                            setOtherDeductions(0);
-                          }}
-                        >
-                          <span className="strategy-icon-box"><i className="fas fa-briefcase"></i></span>
-                          <span className="strategy-chip-text">
-                            <span className="chip-name">Salaried Standard</span>
-                            <span className="chip-val">₹2.25 Lakhs</span>
-                          </span>
-                        </button>
-
-                        <button
-                          type="button"
-                          className={`strategy-chip ${deductionStrategy === 'homeowner' ? 'active' : ''}`}
-                          onClick={() => {
-                            setDeductionStrategy('homeowner');
-                            setSec80C(150000);
-                            setSec80D(25000);
-                            setNps80CCD(50000);
-                            setHomeLoan24b(200000);
-                            setHraExempt(0);
-                            setOtherDeductions(0);
-                          }}
-                        >
-                          <span className="strategy-icon-box"><i className="fas fa-house-chimney"></i></span>
-                          <span className="strategy-chip-text">
-                            <span className="chip-name">Home Loan Max</span>
-                            <span className="chip-val">₹4.25 Lakhs</span>
-                          </span>
-                        </button>
-
-                        <button
-                          type="button"
-                          className={`strategy-chip ${deductionStrategy === 'zero' ? 'active' : ''}`}
-                          onClick={() => {
-                            setDeductionStrategy('zero');
-                            setSec80C(0);
-                            setSec80D(0);
-                            setNps80CCD(0);
-                            setHomeLoan24b(0);
-                            setHraExempt(0);
-                            setOtherDeductions(0);
-                          }}
-                        >
-                          <span className="strategy-icon-box"><i className="fas fa-circle-xmark"></i></span>
-                          <span className="strategy-chip-text">
-                            <span className="chip-name">Zero / Nil</span>
-                            <span className="chip-val">Pure Slabs</span>
-                          </span>
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Toggle Customizer Button */}
+                  {/* 1-Tap Strategy Profiles */}
+                  <div className="strategy-selector-grid">
                     <button
                       type="button"
-                      className="btn-toggle-custom-ded"
-                      onClick={() => setShowCustomDeductions(!showCustomDeductions)}
+                      className={`strategy-selector-card ${deductionStrategy === 'standard' ? 'selected' : ''}`}
+                      onClick={() => {
+                        setDeductionStrategy('standard');
+                        setSec80C(150000);
+                        setSec80D(25000);
+                        setNps80CCD(50000);
+                        setHomeLoan24b(0);
+                        setHraExempt(0);
+                        setOtherDeductions(0);
+                      }}
                     >
-                      <span className="toggle-label-wrap">
-                        <span className="toggle-icon-box">
-                          <i className={`fas fa-${showCustomDeductions ? 'chevron-up' : 'sliders'}`}></i>
-                        </span>
-                        <span className="toggle-text-main">
-                          {showCustomDeductions
-                            ? 'Hide Fine-Tune Deductions'
-                            : 'Fine-Tune Deductions (80C, 80D, NPS, Home Loan, HRA)'}
-                        </span>
-                      </span>
-                      <span className="toggle-hint-pill">{showCustomDeductions ? 'Collapse' : 'Customize ▾'}</span>
+                      <div className="strategy-top">
+                        <i className="fas fa-briefcase strategy-icon"></i>
+                        <span className="strategy-name">Salaried Standard</span>
+                      </div>
+                      <div className="strategy-amount">₹2,25,000</div>
+                      <span className="strategy-sub">80C + 80D + NPS</span>
                     </button>
 
-                    {/* Collapsible Clean Deduction Cards */}
-                    {showCustomDeductions && (
-                      <div className="custom-deductions-drawer">
+                    <button
+                      type="button"
+                      className={`strategy-selector-card ${deductionStrategy === 'homeowner' ? 'selected' : ''}`}
+                      onClick={() => {
+                        setDeductionStrategy('homeowner');
+                        setSec80C(150000);
+                        setSec80D(25000);
+                        setNps80CCD(50000);
+                        setHomeLoan24b(200000);
+                        setHraExempt(0);
+                        setOtherDeductions(0);
+                      }}
+                    >
+                      <div className="strategy-top">
+                        <i className="fas fa-house-chimney strategy-icon"></i>
+                        <span className="strategy-name">Homeowner Max</span>
+                      </div>
+                      <div className="strategy-amount">₹4,25,000</div>
+                      <span className="strategy-sub">80C + Home Loan 24b</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      className={`strategy-selector-card ${deductionStrategy === 'zero' ? 'selected' : ''}`}
+                      onClick={() => {
+                        setDeductionStrategy('zero');
+                        setSec80C(0);
+                        setSec80D(0);
+                        setNps80CCD(0);
+                        setHomeLoan24b(0);
+                        setHraExempt(0);
+                        setOtherDeductions(0);
+                      }}
+                    >
+                      <div className="strategy-top">
+                        <i className="fas fa-ban strategy-icon"></i>
+                        <span className="strategy-name">Zero / Nil</span>
+                      </div>
+                      <div className="strategy-amount">Pure Slabs</div>
+                      <span className="strategy-sub">No Deductions</span>
+                    </button>
+                  </div>
+
+                  {/* Fine-Tune Accordion Button */}
+                  <button
+                    type="button"
+                    className={`btn-fine-tune-accordion ${showCustomDeductions ? 'expanded' : ''}`}
+                    onClick={() => setShowCustomDeductions(!showCustomDeductions)}
+                  >
+                    <span className="accordion-label">
+                      <i className="fas fa-sliders"></i>
+                      <span>Fine-Tune Individual Deductions (80C, 80D, 80CCD, Home Loan, HRA)</span>
+                    </span>
+                    <i className={`fas fa-chevron-${showCustomDeductions ? 'up' : 'down'} accordion-arrow`}></i>
+                  </button>
+
+                  {/* Refined Custom Deductions Form (Clean 2-Column Grid) */}
+                  {showCustomDeductions && (
+                    <div className="fine-tune-drawer">
+                      <div className="fine-tune-grid">
                         {/* Section 80C */}
-                        <div className="custom-ded-item">
-                          <div className="ded-item-top">
-                            <div>
-                              <span className="ded-item-title">Section 80C (PPF, ELSS, EPF, LIC, Tuition)</span>
-                              <span className="ded-item-cap">
-                                Max Limit: ₹1,50,000 &bull; {Math.round((taxCalculation.capped80C / 150000) * 100)}% Claimed
-                              </span>
-                            </div>
-                            <div className="ded-inline-input-wrap">
-                              <span className="input-curr-symbol">₹</span>
-                              <input
-                                type="text"
-                                inputMode="numeric"
-                                value={sec80C ? Number(sec80C).toLocaleString('en-IN') : ''}
-                                onChange={(e) => {
-                                  const raw = e.target.value.replace(/[^0-9]/g, '');
-                                  setSec80C(raw ? Math.min(150000, Number(raw)) : 0);
-                                  setDeductionStrategy('custom');
-                                }}
-                                className="ded-inline-input"
-                                placeholder="0"
-                              />
-                            </div>
+                        <div className="fine-tune-field">
+                          <div className="field-top-row">
+                            <span className="field-name">Section 80C</span>
+                            <span className="field-cap">Max ₹1.5L</span>
                           </div>
-                          <div className="ded-progress-track">
-                            <div
-                              className="ded-progress-fill fill-amber"
-                              style={{ width: `${(taxCalculation.capped80C / 150000) * 100}%` }}
-                            ></div>
+                          <div className="field-input-box">
+                            <span className="field-curr">₹</span>
+                            <input
+                              type="text"
+                              inputMode="numeric"
+                              value={sec80C ? Number(sec80C).toLocaleString('en-IN') : ''}
+                              onChange={(e) => {
+                                const raw = e.target.value.replace(/[^0-9]/g, '');
+                                setSec80C(raw ? Math.min(150000, Number(raw)) : 0);
+                                setDeductionStrategy('custom');
+                              }}
+                              className="field-num-input"
+                              placeholder="0"
+                            />
                           </div>
-                          <div className="ded-quick-chips">
-                            {[
-                              { label: 'Max ₹1.5L', val: 150000 },
-                              { label: '₹1.0L', val: 100000 },
-                              { label: '₹50k', val: 50000 },
-                              { label: '₹0', val: 0 },
-                            ].map((chip) => (
-                              <button
-                                key={chip.val}
-                                type="button"
-                                className={`ded-pill-chip ${sec80C === chip.val ? 'active' : ''}`}
-                                onClick={() => {
-                                  setSec80C(chip.val);
-                                  setDeductionStrategy('custom');
-                                }}
-                              >
-                                {chip.label}
-                              </button>
-                            ))}
-                          </div>
+                          <span className="field-desc">PPF, ELSS, EPF, LIC, School Fees</span>
                         </div>
 
                         {/* Section 80D */}
-                        <div className="custom-ded-item">
-                          <div className="ded-item-top">
-                            <div>
-                              <span className="ded-item-title">Section 80D (Health Insurance Premium)</span>
-                              <span className="ded-item-cap">Self, Family + Senior Parents (Max ₹1 Lakh)</span>
-                            </div>
-                            <div className="ded-inline-input-wrap">
-                              <span className="input-curr-symbol">₹</span>
-                              <input
-                                type="text"
-                                inputMode="numeric"
-                                value={sec80D ? Number(sec80D).toLocaleString('en-IN') : ''}
-                                onChange={(e) => {
-                                  const raw = e.target.value.replace(/[^0-9]/g, '');
-                                  setSec80D(raw ? Math.min(100000, Number(raw)) : 0);
-                                  setDeductionStrategy('custom');
-                                }}
-                                className="ded-inline-input"
-                                placeholder="0"
-                              />
-                            </div>
+                        <div className="fine-tune-field">
+                          <div className="field-top-row">
+                            <span className="field-name">Section 80D</span>
+                            <span className="field-cap">Max ₹1.0L</span>
                           </div>
-                          <div className="ded-quick-chips">
-                            {[
-                              { label: 'Self (₹25k)', val: 25000 },
-                              { label: '+Parents (₹50k)', val: 50000 },
-                              { label: 'Sr. Parents (₹1L)', val: 100000 },
-                              { label: '₹0', val: 0 },
-                            ].map((chip) => (
-                              <button
-                                key={chip.val}
-                                type="button"
-                                className={`ded-pill-chip ${sec80D === chip.val ? 'active' : ''}`}
-                                onClick={() => {
-                                  setSec80D(chip.val);
-                                  setDeductionStrategy('custom');
-                                }}
-                              >
-                                {chip.label}
-                              </button>
-                            ))}
+                          <div className="field-input-box">
+                            <span className="field-curr">₹</span>
+                            <input
+                              type="text"
+                              inputMode="numeric"
+                              value={sec80D ? Number(sec80D).toLocaleString('en-IN') : ''}
+                              onChange={(e) => {
+                                const raw = e.target.value.replace(/[^0-9]/g, '');
+                                setSec80D(raw ? Math.min(100000, Number(raw)) : 0);
+                                setDeductionStrategy('custom');
+                              }}
+                              className="field-num-input"
+                              placeholder="0"
+                            />
                           </div>
+                          <span className="field-desc">Health Insurance (Self + Parents)</span>
                         </div>
 
-                        {/* Two Column Grid: NPS & Home Loan */}
-                        <div className="custom-ded-two-col">
-                          <div className="custom-ded-subcard">
-                            <div className="subcard-header">
-                              <span className="subcard-title">80CCD(1B) NPS</span>
-                              <span className="subcard-cap">Max ₹50,000</span>
-                            </div>
-                            <div className="ded-inline-input-wrap">
-                              <span className="input-curr-symbol">₹</span>
-                              <input
-                                type="text"
-                                inputMode="numeric"
-                                value={nps80CCD ? Number(nps80CCD).toLocaleString('en-IN') : ''}
-                                onChange={(e) => {
-                                  const raw = e.target.value.replace(/[^0-9]/g, '');
-                                  setNps80CCD(raw ? Math.min(50000, Number(raw)) : 0);
-                                  setDeductionStrategy('custom');
-                                }}
-                                className="ded-inline-input"
-                                placeholder="0"
-                              />
-                            </div>
-                            <div className="ded-quick-chips">
-                              {[
-                                { label: 'Max ₹50k', val: 50000 },
-                                { label: '₹25k', val: 25000 },
-                                { label: '₹0', val: 0 },
-                              ].map((chip) => (
-                                <button
-                                  key={chip.val}
-                                  type="button"
-                                  className={`ded-pill-chip ${nps80CCD === chip.val ? 'active' : ''}`}
-                                  onClick={() => {
-                                    setNps80CCD(chip.val);
-                                    setDeductionStrategy('custom');
-                                  }}
-                                >
-                                  {chip.label}
-                                </button>
-                              ))}
-                            </div>
+                        {/* Section 80CCD(1B) NPS */}
+                        <div className="fine-tune-field">
+                          <div className="field-top-row">
+                            <span className="field-name">80CCD(1B) NPS</span>
+                            <span className="field-cap">Max ₹50k</span>
                           </div>
-
-                          <div className="custom-ded-subcard">
-                            <div className="subcard-header">
-                              <span className="subcard-title">Sec 24 Home Loan</span>
-                              <span className="subcard-cap">Max ₹2,00,000</span>
-                            </div>
-                            <div className="ded-inline-input-wrap">
-                              <span className="input-curr-symbol">₹</span>
-                              <input
-                                type="text"
-                                inputMode="numeric"
-                                value={homeLoan24b ? Number(homeLoan24b).toLocaleString('en-IN') : ''}
-                                onChange={(e) => {
-                                  const raw = e.target.value.replace(/[^0-9]/g, '');
-                                  setHomeLoan24b(raw ? Math.min(200000, Number(raw)) : 0);
-                                  setDeductionStrategy('custom');
-                                }}
-                                className="ded-inline-input"
-                                placeholder="0"
-                              />
-                            </div>
-                            <div className="ded-quick-chips">
-                              {[
-                                { label: 'Max ₹2L', val: 200000 },
-                                { label: '₹1L', val: 100000 },
-                                { label: '₹0', val: 0 },
-                              ].map((chip) => (
-                                <button
-                                  key={chip.val}
-                                  type="button"
-                                  className={`ded-pill-chip ${homeLoan24b === chip.val ? 'active' : ''}`}
-                                  onClick={() => {
-                                    setHomeLoan24b(chip.val);
-                                    setDeductionStrategy('custom');
-                                  }}
-                                >
-                                  {chip.label}
-                                </button>
-                              ))}
-                            </div>
+                          <div className="field-input-box">
+                            <span className="field-curr">₹</span>
+                            <input
+                              type="text"
+                              inputMode="numeric"
+                              value={nps80CCD ? Number(nps80CCD).toLocaleString('en-IN') : ''}
+                              onChange={(e) => {
+                                const raw = e.target.value.replace(/[^0-9]/g, '');
+                                setNps80CCD(raw ? Math.min(50000, Number(raw)) : 0);
+                                setDeductionStrategy('custom');
+                              }}
+                              className="field-num-input"
+                              placeholder="0"
+                            />
                           </div>
+                          <span className="field-desc">National Pension Scheme Additional</span>
                         </div>
 
-                        {/* Special Allowances: HRA & Other */}
-                        <div className="custom-ded-two-col">
-                          <div className="custom-ded-subcard">
-                            <div className="subcard-header">
-                              <span className="subcard-title">HRA Exemption</span>
-                              <span className="subcard-cap">House Rent Allowance</span>
-                            </div>
-                            <div className="ded-inline-input-wrap">
-                              <span className="input-curr-symbol">₹</span>
-                              <input
-                                type="text"
-                                inputMode="numeric"
-                                value={hraExempt ? Number(hraExempt).toLocaleString('en-IN') : ''}
-                                onChange={(e) => {
-                                  const raw = e.target.value.replace(/[^0-9]/g, '');
-                                  setHraExempt(raw ? Number(raw) : 0);
-                                  setDeductionStrategy('custom');
-                                }}
-                                className="ded-inline-input"
-                                placeholder="0"
-                              />
-                            </div>
-                            <div className="ded-quick-chips">
-                              {[
-                                { label: '₹1.2L', val: 120000 },
-                                { label: '₹2.4L', val: 240000 },
-                                { label: '₹0', val: 0 },
-                              ].map((chip) => (
-                                <button
-                                  key={chip.val}
-                                  type="button"
-                                  className={`ded-pill-chip ${hraExempt === chip.val ? 'active' : ''}`}
-                                  onClick={() => {
-                                    setHraExempt(chip.val);
-                                    setDeductionStrategy('custom');
-                                  }}
-                                >
-                                  {chip.label}
-                                </button>
-                              ))}
-                            </div>
+                        {/* Section 24(b) Home Loan */}
+                        <div className="fine-tune-field">
+                          <div className="field-top-row">
+                            <span className="field-name">Sec 24(b) Home Loan</span>
+                            <span className="field-cap">Max ₹2.0L</span>
                           </div>
+                          <div className="field-input-box">
+                            <span className="field-curr">₹</span>
+                            <input
+                              type="text"
+                              inputMode="numeric"
+                              value={homeLoan24b ? Number(homeLoan24b).toLocaleString('en-IN') : ''}
+                              onChange={(e) => {
+                                const raw = e.target.value.replace(/[^0-9]/g, '');
+                                setHomeLoan24b(raw ? Math.min(200000, Number(raw)) : 0);
+                                setDeductionStrategy('custom');
+                              }}
+                              className="field-num-input"
+                              placeholder="0"
+                            />
+                          </div>
+                          <span className="field-desc">Housing Loan Interest Deduction</span>
+                        </div>
 
-                          <div className="custom-ded-subcard">
-                            <div className="subcard-header">
-                              <span className="subcard-title">Other (80E/80G)</span>
-                              <span className="subcard-cap">Edu Loan / Donations</span>
-                            </div>
-                            <div className="ded-inline-input-wrap">
-                              <span className="input-curr-symbol">₹</span>
-                              <input
-                                type="text"
-                                inputMode="numeric"
-                                value={otherDeductions ? Number(otherDeductions).toLocaleString('en-IN') : ''}
-                                onChange={(e) => {
-                                  const raw = e.target.value.replace(/[^0-9]/g, '');
-                                  setOtherDeductions(raw ? Number(raw) : 0);
-                                  setDeductionStrategy('custom');
-                                }}
-                                className="ded-inline-input"
-                                placeholder="0"
-                              />
-                            </div>
-                            <div className="ded-quick-chips">
-                              {[
-                                { label: '₹25k', val: 25000 },
-                                { label: '₹50k', val: 50000 },
-                                { label: '₹0', val: 0 },
-                              ].map((chip) => (
-                                <button
-                                  key={chip.val}
-                                  type="button"
-                                  className={`ded-pill-chip ${otherDeductions === chip.val ? 'active' : ''}`}
-                                  onClick={() => {
-                                    setOtherDeductions(chip.val);
-                                    setDeductionStrategy('custom');
-                                  }}
-                                >
-                                  {chip.label}
-                                </button>
-                              ))}
-                            </div>
+                        {/* HRA Exemption */}
+                        <div className="fine-tune-field">
+                          <div className="field-top-row">
+                            <span className="field-name">HRA Exemption</span>
+                            <span className="field-cap">Sec 10(13A)</span>
                           </div>
+                          <div className="field-input-box">
+                            <span className="field-curr">₹</span>
+                            <input
+                              type="text"
+                              inputMode="numeric"
+                              value={hraExempt ? Number(hraExempt).toLocaleString('en-IN') : ''}
+                              onChange={(e) => {
+                                const raw = e.target.value.replace(/[^0-9]/g, '');
+                                setHraExempt(raw ? Number(raw) : 0);
+                                setDeductionStrategy('custom');
+                              }}
+                              className="field-num-input"
+                              placeholder="0"
+                            />
+                          </div>
+                          <span className="field-desc">House Rent Allowance Exemption</span>
+                        </div>
+
+                        {/* Other Deductions */}
+                        <div className="fine-tune-field">
+                          <div className="field-top-row">
+                            <span className="field-name">Other Deductions</span>
+                            <span className="field-cap">80E / 80G</span>
+                          </div>
+                          <div className="field-input-box">
+                            <span className="field-curr">₹</span>
+                            <input
+                              type="text"
+                              inputMode="numeric"
+                              value={otherDeductions ? Number(otherDeductions).toLocaleString('en-IN') : ''}
+                              onChange={(e) => {
+                                const raw = e.target.value.replace(/[^0-9]/g, '');
+                                setOtherDeductions(raw ? Number(raw) : 0);
+                                setDeductionStrategy('custom');
+                              }}
+                              className="field-num-input"
+                              placeholder="0"
+                            />
+                          </div>
+                          <span className="field-desc">Higher Education Interest / Donations</span>
                         </div>
                       </div>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -1293,18 +1161,18 @@ const TaxTools = () => {
         {activeTab === 'gst' && (
           <div className="tool-content-grid">
             <div className="tool-col-inputs">
-              <div className="tool-card-box">
-                <div className="tool-card-header">
-                  <div className="tool-icon-circle">
-                    <i className="fas fa-gavel"></i>
+              <div className="config-panel">
+                <div className="config-panel-header">
+                  <div className="config-header-text">
+                    <span className="config-eyebrow">CGST ACT &bull; SECTIONS 47 &amp; 50</span>
+                    <h2 className="config-main-title">GST Delay Parameters</h2>
                   </div>
-                  <div>
-                    <h3>GST Filing Delay Parameters</h3>
-                    <span className="card-subtext">Central Goods &amp; Services Tax Act, 2017 &bull; Sections 47 &amp; 50</span>
-                  </div>
+                  <span className="config-badge-verified">
+                    <i className="fas fa-gavel"></i> Statutory Ledger
+                  </span>
                 </div>
 
-                <div className="tool-form-body">
+                <div className="config-body">
                   {/* Return Type */}
                   <div className="form-group-tax">
                     <label>GST Return Form</label>
@@ -1546,18 +1414,18 @@ const TaxTools = () => {
         {activeTab === 'advance' && (
           <div className="tool-content-grid">
             <div className="tool-col-inputs">
-              <div className="tool-card-box">
-                <div className="tool-card-header">
-                  <div className="tool-icon-circle">
-                    <i className="fas fa-coins"></i>
+              <div className="config-panel">
+                <div className="config-panel-header">
+                  <div className="config-header-text">
+                    <span className="config-eyebrow">INCOME TAX ACT &bull; SEC 208 / 211</span>
+                    <h2 className="config-main-title">Advance Tax Parameters</h2>
                   </div>
-                  <div>
-                    <h3>Advance Tax Estimation</h3>
-                    <span className="card-subtext">Section 208/211 Income Tax Act, 1961 &bull; FY 2024-25</span>
-                  </div>
+                  <span className="config-badge-verified">
+                    <i className="fas fa-coins"></i> FY 2024-25 Schedule
+                  </span>
                 </div>
 
-                <div className="tool-form-body">
+                <div className="config-body">
                   <div className="form-group-tax">
                     <div className="tax-label-row">
                       <label htmlFor="adv-tax-input">Total Estimated Gross Tax Liability (₹)</label>
