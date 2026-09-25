@@ -816,8 +816,8 @@ const TaxTools = () => {
                     </div>
                   </div>
 
-                  {/* Direct 4-Pillar FinTech Deduction Grid (Always Visible) */}
-                  <div className="deduction-matrix-grid">
+                  {/* Direct 4-Pillar FinTech Deduction Stack (Single Column Layout) */}
+                  <div className="deduction-matrix-grid deduction-stack-single">
                     {/* Tile 1: Section 80C */}
                     <div className={`deduction-tile ${sec80C > 0 ? 'has-value' : ''}`}>
                       <div className="tile-head">
@@ -827,13 +827,26 @@ const TaxTools = () => {
                           </div>
                           <div>
                             <h4 className="tile-title">Section 80C</h4>
-                            <span className="tile-sub">EPF, PPF, ELSS, Life Ins., School Fees</span>
+                            <span className="tile-sub">EPF, PPF, ELSS, Life Insurance, School Tuition</span>
                           </div>
                         </div>
-                        <span className="tile-cap-tag">Cap: ₹1.5L</span>
+                        <div className="tile-cap-status-cluster">
+                          <div className="tile-cap-indicator">
+                            <span className="cap-progress-pct">
+                              {Math.round(((sec80C || 0) / 150000) * 100)}%
+                            </span>
+                            <div className="cap-mini-track">
+                              <div
+                                className={`cap-mini-fill ${sec80C >= 150000 ? 'fill-max' : ''}`}
+                                style={{ width: `${Math.min(100, Math.round(((sec80C || 0) / 150000) * 100))}%` }}
+                              ></div>
+                            </div>
+                          </div>
+                          <span className="tile-cap-tag">Cap: ₹1.5L</span>
+                        </div>
                       </div>
 
-                      <div className="tile-input-row">
+                      <div className="tile-controls-row">
                         <div className="tile-input-wrap">
                           <span className="tile-curr">₹</span>
                           <input
@@ -850,48 +863,37 @@ const TaxTools = () => {
                             aria-label="Section 80C Deduction Amount"
                           />
                         </div>
-                        <div className="tile-cap-indicator">
-                          <span className="cap-progress-pct">
-                            {Math.round(((sec80C || 0) / 150000) * 100)}%
-                          </span>
-                          <div className="cap-mini-track">
-                            <div
-                              className={`cap-mini-fill ${sec80C >= 150000 ? 'fill-max' : ''}`}
-                              style={{ width: `${Math.min(100, Math.round(((sec80C || 0) / 150000) * 100))}%` }}
-                            ></div>
-                          </div>
-                        </div>
-                      </div>
 
-                      <div className="tile-quick-chips">
-                        <button
-                          type="button"
-                          className={`chip-btn ${sec80C === 150000 ? 'active' : ''}`}
-                          onClick={() => { setSec80C(150000); setDeductionStrategy('custom'); }}
-                        >
-                          ₹1.5L Max
-                        </button>
-                        <button
-                          type="button"
-                          className={`chip-btn ${sec80C === 100000 ? 'active' : ''}`}
-                          onClick={() => { setSec80C(100000); setDeductionStrategy('custom'); }}
-                        >
-                          ₹1.0L
-                        </button>
-                        <button
-                          type="button"
-                          className={`chip-btn ${sec80C === 50000 ? 'active' : ''}`}
-                          onClick={() => { setSec80C(50000); setDeductionStrategy('custom'); }}
-                        >
-                          ₹50k
-                        </button>
-                        <button
-                          type="button"
-                          className={`chip-btn chip-clear ${sec80C === 0 ? 'active' : ''}`}
-                          onClick={() => { setSec80C(0); setDeductionStrategy('custom'); }}
-                        >
-                          Nil
-                        </button>
+                        <div className="tile-quick-chips">
+                          <button
+                            type="button"
+                            className={`chip-btn ${sec80C === 150000 ? 'active' : ''}`}
+                            onClick={() => { setSec80C(150000); setDeductionStrategy('custom'); }}
+                          >
+                            ₹1.5L Max
+                          </button>
+                          <button
+                            type="button"
+                            className={`chip-btn ${sec80C === 100000 ? 'active' : ''}`}
+                            onClick={() => { setSec80C(100000); setDeductionStrategy('custom'); }}
+                          >
+                            ₹1.0L
+                          </button>
+                          <button
+                            type="button"
+                            className={`chip-btn ${sec80C === 50000 ? 'active' : ''}`}
+                            onClick={() => { setSec80C(50000); setDeductionStrategy('custom'); }}
+                          >
+                            ₹50k
+                          </button>
+                          <button
+                            type="button"
+                            className={`chip-btn chip-clear ${sec80C === 0 ? 'active' : ''}`}
+                            onClick={() => { setSec80C(0); setDeductionStrategy('custom'); }}
+                          >
+                            Nil
+                          </button>
+                        </div>
                       </div>
                     </div>
 
@@ -904,13 +906,26 @@ const TaxTools = () => {
                           </div>
                           <div>
                             <h4 className="tile-title">Section 80D Health</h4>
-                            <span className="tile-sub">Self, Spouse, Children &amp; Parents Mediclaim</span>
+                            <span className="tile-sub">Mediclaim &amp; Checkups (Self, Family &amp; Senior Parents)</span>
                           </div>
                         </div>
-                        <span className="tile-cap-tag">Cap: ₹1.0L</span>
+                        <div className="tile-cap-status-cluster">
+                          <div className="tile-cap-indicator">
+                            <span className="cap-progress-pct">
+                              {Math.round(((sec80D || 0) / 100000) * 100)}%
+                            </span>
+                            <div className="cap-mini-track">
+                              <div
+                                className={`cap-mini-fill ${sec80D >= 100000 ? 'fill-max' : ''}`}
+                                style={{ width: `${Math.min(100, Math.round(((sec80D || 0) / 100000) * 100))}%` }}
+                              ></div>
+                            </div>
+                          </div>
+                          <span className="tile-cap-tag">Cap: ₹1.0L</span>
+                        </div>
                       </div>
 
-                      <div className="tile-input-row">
+                      <div className="tile-controls-row">
                         <div className="tile-input-wrap">
                           <span className="tile-curr">₹</span>
                           <input
@@ -927,48 +942,37 @@ const TaxTools = () => {
                             aria-label="Section 80D Health Insurance Deduction Amount"
                           />
                         </div>
-                        <div className="tile-cap-indicator">
-                          <span className="cap-progress-pct">
-                            {Math.round(((sec80D || 0) / 100000) * 100)}%
-                          </span>
-                          <div className="cap-mini-track">
-                            <div
-                              className={`cap-mini-fill ${sec80D >= 100000 ? 'fill-max' : ''}`}
-                              style={{ width: `${Math.min(100, Math.round(((sec80D || 0) / 100000) * 100))}%` }}
-                            ></div>
-                          </div>
-                        </div>
-                      </div>
 
-                      <div className="tile-quick-chips">
-                        <button
-                          type="button"
-                          className={`chip-btn ${sec80D === 25000 ? 'active' : ''}`}
-                          onClick={() => { setSec80D(25000); setDeductionStrategy('custom'); }}
-                        >
-                          ₹25k (Self)
-                        </button>
-                        <button
-                          type="button"
-                          className={`chip-btn ${sec80D === 50000 ? 'active' : ''}`}
-                          onClick={() => { setSec80D(50000); setDeductionStrategy('custom'); }}
-                        >
-                          ₹50k (+Parents)
-                        </button>
-                        <button
-                          type="button"
-                          className={`chip-btn ${sec80D === 100000 ? 'active' : ''}`}
-                          onClick={() => { setSec80D(100000); setDeductionStrategy('custom'); }}
-                        >
-                          ₹1.0L Max
-                        </button>
-                        <button
-                          type="button"
-                          className={`chip-btn chip-clear ${sec80D === 0 ? 'active' : ''}`}
-                          onClick={() => { setSec80D(0); setDeductionStrategy('custom'); }}
-                        >
-                          Nil
-                        </button>
+                        <div className="tile-quick-chips">
+                          <button
+                            type="button"
+                            className={`chip-btn ${sec80D === 25000 ? 'active' : ''}`}
+                            onClick={() => { setSec80D(25000); setDeductionStrategy('custom'); }}
+                          >
+                            ₹25k (Self)
+                          </button>
+                          <button
+                            type="button"
+                            className={`chip-btn ${sec80D === 50000 ? 'active' : ''}`}
+                            onClick={() => { setSec80D(50000); setDeductionStrategy('custom'); }}
+                          >
+                            ₹50k (+Parents)
+                          </button>
+                          <button
+                            type="button"
+                            className={`chip-btn ${sec80D === 100000 ? 'active' : ''}`}
+                            onClick={() => { setSec80D(100000); setDeductionStrategy('custom'); }}
+                          >
+                            ₹1.0L Max
+                          </button>
+                          <button
+                            type="button"
+                            className={`chip-btn chip-clear ${sec80D === 0 ? 'active' : ''}`}
+                            onClick={() => { setSec80D(0); setDeductionStrategy('custom'); }}
+                          >
+                            Nil
+                          </button>
+                        </div>
                       </div>
                     </div>
 
@@ -981,13 +985,26 @@ const TaxTools = () => {
                           </div>
                           <div>
                             <h4 className="tile-title">NPS 80CCD(1B)</h4>
-                            <span className="tile-sub">National Pension System (Over &amp; above 80C)</span>
+                            <span className="tile-sub">National Pension Scheme (Exclusive over &amp; above 80C)</span>
                           </div>
                         </div>
-                        <span className="tile-cap-tag">Cap: ₹50k</span>
+                        <div className="tile-cap-status-cluster">
+                          <div className="tile-cap-indicator">
+                            <span className="cap-progress-pct">
+                              {Math.round(((nps80CCD || 0) / 50000) * 100)}%
+                            </span>
+                            <div className="cap-mini-track">
+                              <div
+                                className={`cap-mini-fill ${nps80CCD >= 50000 ? 'fill-max' : ''}`}
+                                style={{ width: `${Math.min(100, Math.round(((nps80CCD || 0) / 50000) * 100))}%` }}
+                              ></div>
+                            </div>
+                          </div>
+                          <span className="tile-cap-tag">Cap: ₹50k</span>
+                        </div>
                       </div>
 
-                      <div className="tile-input-row">
+                      <div className="tile-controls-row">
                         <div className="tile-input-wrap">
                           <span className="tile-curr">₹</span>
                           <input
@@ -1004,41 +1021,30 @@ const TaxTools = () => {
                             aria-label="NPS Section 80CCD 1B Deduction Amount"
                           />
                         </div>
-                        <div className="tile-cap-indicator">
-                          <span className="cap-progress-pct">
-                            {Math.round(((nps80CCD || 0) / 50000) * 100)}%
-                          </span>
-                          <div className="cap-mini-track">
-                            <div
-                              className={`cap-mini-fill ${nps80CCD >= 50000 ? 'fill-max' : ''}`}
-                              style={{ width: `${Math.min(100, Math.round(((nps80CCD || 0) / 50000) * 100))}%` }}
-                            ></div>
-                          </div>
-                        </div>
-                      </div>
 
-                      <div className="tile-quick-chips">
-                        <button
-                          type="button"
-                          className={`chip-btn ${nps80CCD === 50000 ? 'active' : ''}`}
-                          onClick={() => { setNps80CCD(50000); setDeductionStrategy('custom'); }}
-                        >
-                          ₹50k Max
-                        </button>
-                        <button
-                          type="button"
-                          className={`chip-btn ${nps80CCD === 25000 ? 'active' : ''}`}
-                          onClick={() => { setNps80CCD(25000); setDeductionStrategy('custom'); }}
-                        >
-                          ₹25k
-                        </button>
-                        <button
-                          type="button"
-                          className={`chip-btn chip-clear ${nps80CCD === 0 ? 'active' : ''}`}
-                          onClick={() => { setNps80CCD(0); setDeductionStrategy('custom'); }}
-                        >
-                          Nil
-                        </button>
+                        <div className="tile-quick-chips">
+                          <button
+                            type="button"
+                            className={`chip-btn ${nps80CCD === 50000 ? 'active' : ''}`}
+                            onClick={() => { setNps80CCD(50000); setDeductionStrategy('custom'); }}
+                          >
+                            ₹50k Max
+                          </button>
+                          <button
+                            type="button"
+                            className={`chip-btn ${nps80CCD === 25000 ? 'active' : ''}`}
+                            onClick={() => { setNps80CCD(25000); setDeductionStrategy('custom'); }}
+                          >
+                            ₹25k
+                          </button>
+                          <button
+                            type="button"
+                            className={`chip-btn chip-clear ${nps80CCD === 0 ? 'active' : ''}`}
+                            onClick={() => { setNps80CCD(0); setDeductionStrategy('custom'); }}
+                          >
+                            Nil
+                          </button>
+                        </div>
                       </div>
                     </div>
 
@@ -1050,14 +1056,27 @@ const TaxTools = () => {
                             <i className="fas fa-house-chimney text-gold"></i>
                           </div>
                           <div>
-                            <h4 className="tile-title">Sec 24(b) Home Loan</h4>
-                            <span className="tile-sub">Interest on Housing Loan (Self-Occupied)</span>
+                            <h4 className="tile-title">Sec 24(b) Home Loan Interest</h4>
+                            <span className="tile-sub">Interest on Housing Loan for Self-Occupied Property</span>
                           </div>
                         </div>
-                        <span className="tile-cap-tag">Cap: ₹2.0L</span>
+                        <div className="tile-cap-status-cluster">
+                          <div className="tile-cap-indicator">
+                            <span className="cap-progress-pct">
+                              {Math.round(((homeLoan24b || 0) / 200000) * 100)}%
+                            </span>
+                            <div className="cap-mini-track">
+                              <div
+                                className={`cap-mini-fill ${homeLoan24b >= 200000 ? 'fill-max' : ''}`}
+                                style={{ width: `${Math.min(100, Math.round(((homeLoan24b || 0) / 200000) * 100))}%` }}
+                              ></div>
+                            </div>
+                          </div>
+                          <span className="tile-cap-tag">Cap: ₹2.0L</span>
+                        </div>
                       </div>
 
-                      <div className="tile-input-row">
+                      <div className="tile-controls-row">
                         <div className="tile-input-wrap">
                           <span className="tile-curr">₹</span>
                           <input
@@ -1074,41 +1093,30 @@ const TaxTools = () => {
                             aria-label="Section 24b Home Loan Interest Deduction Amount"
                           />
                         </div>
-                        <div className="tile-cap-indicator">
-                          <span className="cap-progress-pct">
-                            {Math.round(((homeLoan24b || 0) / 200000) * 100)}%
-                          </span>
-                          <div className="cap-mini-track">
-                            <div
-                              className={`cap-mini-fill ${homeLoan24b >= 200000 ? 'fill-max' : ''}`}
-                              style={{ width: `${Math.min(100, Math.round(((homeLoan24b || 0) / 200000) * 100))}%` }}
-                            ></div>
-                          </div>
-                        </div>
-                      </div>
 
-                      <div className="tile-quick-chips">
-                        <button
-                          type="button"
-                          className={`chip-btn ${homeLoan24b === 200000 ? 'active' : ''}`}
-                          onClick={() => { setHomeLoan24b(200000); setDeductionStrategy('custom'); }}
-                        >
-                          ₹2.0L Max
-                        </button>
-                        <button
-                          type="button"
-                          className={`chip-btn ${homeLoan24b === 100000 ? 'active' : ''}`}
-                          onClick={() => { setHomeLoan24b(100000); setDeductionStrategy('custom'); }}
-                        >
-                          ₹1.0L
-                        </button>
-                        <button
-                          type="button"
-                          className={`chip-btn chip-clear ${homeLoan24b === 0 ? 'active' : ''}`}
-                          onClick={() => { setHomeLoan24b(0); setDeductionStrategy('custom'); }}
-                        >
-                          Nil
-                        </button>
+                        <div className="tile-quick-chips">
+                          <button
+                            type="button"
+                            className={`chip-btn ${homeLoan24b === 200000 ? 'active' : ''}`}
+                            onClick={() => { setHomeLoan24b(200000); setDeductionStrategy('custom'); }}
+                          >
+                            ₹2.0L Max
+                          </button>
+                          <button
+                            type="button"
+                            className={`chip-btn ${homeLoan24b === 100000 ? 'active' : ''}`}
+                            onClick={() => { setHomeLoan24b(100000); setDeductionStrategy('custom'); }}
+                          >
+                            ₹1.0L
+                          </button>
+                          <button
+                            type="button"
+                            className={`chip-btn chip-clear ${homeLoan24b === 0 ? 'active' : ''}`}
+                            onClick={() => { setHomeLoan24b(0); setDeductionStrategy('custom'); }}
+                          >
+                            Nil
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1143,94 +1151,104 @@ const TaxTools = () => {
                           {/* HRA Exemption */}
                           <div className="additional-field">
                             <div className="add-field-top">
-                              <span className="add-field-name">HRA Exemption (Sec 10(13A))</span>
+                              <div>
+                                <span className="add-field-name">HRA Exemption (Sec 10(13A))</span>
+                                <span className="add-field-sub">House Rent Allowance Exemption</span>
+                              </div>
                               <span className="add-field-cap">Rent Paid Exemption</span>
                             </div>
-                            <div className="add-input-wrap">
-                              <span className="tile-curr">₹</span>
-                              <input
-                                type="text"
-                                inputMode="numeric"
-                                value={hraExempt ? Number(hraExempt).toLocaleString('en-IN') : ''}
-                                onChange={(e) => {
-                                  const raw = e.target.value.replace(/[^0-9]/g, '');
-                                  setHraExempt(raw ? Number(raw) : 0);
-                                  setDeductionStrategy('custom');
-                                }}
-                                className="tile-input"
-                                placeholder="0"
-                                aria-label="HRA Exemption Amount"
-                              />
-                            </div>
-                            <div className="tile-quick-chips add-chips">
-                              <button
-                                type="button"
-                                className={`chip-btn ${hraExempt === 120000 ? 'active' : ''}`}
-                                onClick={() => { setHraExempt(120000); setDeductionStrategy('custom'); }}
-                              >
-                                ₹1.2L (10k/mo)
-                              </button>
-                              <button
-                                type="button"
-                                className={`chip-btn ${hraExempt === 240000 ? 'active' : ''}`}
-                                onClick={() => { setHraExempt(240000); setDeductionStrategy('custom'); }}
-                              >
-                                ₹2.4L (20k/mo)
-                              </button>
-                              <button
-                                type="button"
-                                className={`chip-btn chip-clear ${hraExempt === 0 ? 'active' : ''}`}
-                                onClick={() => { setHraExempt(0); setDeductionStrategy('custom'); }}
-                              >
-                                Nil
-                              </button>
+                            <div className="tile-controls-row">
+                              <div className="tile-input-wrap">
+                                <span className="tile-curr">₹</span>
+                                <input
+                                  type="text"
+                                  inputMode="numeric"
+                                  value={hraExempt ? Number(hraExempt).toLocaleString('en-IN') : ''}
+                                  onChange={(e) => {
+                                    const raw = e.target.value.replace(/[^0-9]/g, '');
+                                    setHraExempt(raw ? Number(raw) : 0);
+                                    setDeductionStrategy('custom');
+                                  }}
+                                  className="tile-input"
+                                  placeholder="0"
+                                  aria-label="HRA Exemption Amount"
+                                />
+                              </div>
+                              <div className="tile-quick-chips add-chips">
+                                <button
+                                  type="button"
+                                  className={`chip-btn ${hraExempt === 120000 ? 'active' : ''}`}
+                                  onClick={() => { setHraExempt(120000); setDeductionStrategy('custom'); }}
+                                >
+                                  ₹1.2L (10k/mo)
+                                </button>
+                                <button
+                                  type="button"
+                                  className={`chip-btn ${hraExempt === 240000 ? 'active' : ''}`}
+                                  onClick={() => { setHraExempt(240000); setDeductionStrategy('custom'); }}
+                                >
+                                  ₹2.4L (20k/mo)
+                                </button>
+                                <button
+                                  type="button"
+                                  className={`chip-btn chip-clear ${hraExempt === 0 ? 'active' : ''}`}
+                                  onClick={() => { setHraExempt(0); setDeductionStrategy('custom'); }}
+                                >
+                                  Nil
+                                </button>
+                              </div>
                             </div>
                           </div>
 
                           {/* Other Deductions 80E/80G */}
                           <div className="additional-field">
                             <div className="add-field-top">
-                              <span className="add-field-name">Other Deductions (80E / 80G)</span>
+                              <div>
+                                <span className="add-field-name">Other Deductions (80E / 80G)</span>
+                                <span className="add-field-sub">Higher Education Loan Interest / Eligible Donations</span>
+                              </div>
                               <span className="add-field-cap">Edu Loan / Donations</span>
                             </div>
-                            <div className="add-input-wrap">
-                              <span className="tile-curr">₹</span>
-                              <input
-                                type="text"
-                                inputMode="numeric"
-                                value={otherDeductions ? Number(otherDeductions).toLocaleString('en-IN') : ''}
-                                onChange={(e) => {
-                                  const raw = e.target.value.replace(/[^0-9]/g, '');
-                                  setOtherDeductions(raw ? Number(raw) : 0);
-                                  setDeductionStrategy('custom');
-                                }}
-                                className="tile-input"
-                                placeholder="0"
-                                aria-label="Other Deductions Section 80E or 80G Amount"
-                              />
-                            </div>
-                            <div className="tile-quick-chips add-chips">
-                              <button
-                                type="button"
-                                className={`chip-btn ${otherDeductions === 25000 ? 'active' : ''}`}
-                                onClick={() => { setOtherDeductions(25000); setDeductionStrategy('custom'); }}
-                              >
-                                ₹25k
-                              </button>
-                              <button
-                                type="button"
-                                className={`chip-btn ${otherDeductions === 50000 ? 'active' : ''}`}
-                                onClick={() => { setOtherDeductions(50000); setDeductionStrategy('custom'); }}
-                              >
-                                ₹50k
-                              </button>
-                              <button
-                                type="button"
-                                className={`chip-btn chip-clear ${otherDeductions === 0 ? 'active' : ''}`}
-                                onClick={() => { setOtherDeductions(0); setDeductionStrategy('custom'); }}
-                              >
-                                Nil
-                              </button>
+                            <div className="tile-controls-row">
+                              <div className="tile-input-wrap">
+                                <span className="tile-curr">₹</span>
+                                <input
+                                  type="text"
+                                  inputMode="numeric"
+                                  value={otherDeductions ? Number(otherDeductions).toLocaleString('en-IN') : ''}
+                                  onChange={(e) => {
+                                    const raw = e.target.value.replace(/[^0-9]/g, '');
+                                    setOtherDeductions(raw ? Number(raw) : 0);
+                                    setDeductionStrategy('custom');
+                                  }}
+                                  className="tile-input"
+                                  placeholder="0"
+                                  aria-label="Other Deductions Section 80E or 80G Amount"
+                                />
+                              </div>
+                              <div className="tile-quick-chips add-chips">
+                                <button
+                                  type="button"
+                                  className={`chip-btn ${otherDeductions === 25000 ? 'active' : ''}`}
+                                  onClick={() => { setOtherDeductions(25000); setDeductionStrategy('custom'); }}
+                                >
+                                  ₹25k
+                                </button>
+                                <button
+                                  type="button"
+                                  className={`chip-btn ${otherDeductions === 50000 ? 'active' : ''}`}
+                                  onClick={() => { setOtherDeductions(50000); setDeductionStrategy('custom'); }}
+                                >
+                                  ₹50k
+                                </button>
+                                <button
+                                  type="button"
+                                  className={`chip-btn chip-clear ${otherDeductions === 0 ? 'active' : ''}`}
+                                  onClick={() => { setOtherDeductions(0); setDeductionStrategy('custom'); }}
+                                >
+                                  Nil
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>

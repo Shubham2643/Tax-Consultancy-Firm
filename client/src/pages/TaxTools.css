@@ -1243,64 +1243,64 @@
   color: var(--tt-gold-light);
 }
 
-/* Direct 4-Pillar FinTech Deduction Grid (2x2) */
+/* Direct 4-Pillar FinTech Deduction Stack (1-Column Layout) */
 .deduction-matrix-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 12px;
 }
 
 .deduction-tile {
   background: rgba(3, 7, 18, 0.65);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  padding: 14px;
+  border-radius: 14px;
+  padding: 16px 18px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
 }
 
 .deduction-tile:hover {
-  border-color: rgba(212, 175, 55, 0.3);
+  border-color: rgba(212, 175, 55, 0.32);
   background: rgba(3, 7, 18, 0.85);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
 }
 
 .deduction-tile.has-value {
-  border-color: rgba(212, 175, 55, 0.32);
-  background: linear-gradient(180deg, rgba(212, 175, 55, 0.04) 0%, rgba(3, 7, 18, 0.75) 100%);
+  border-color: rgba(212, 175, 55, 0.35);
+  background: linear-gradient(180deg, rgba(212, 175, 55, 0.04) 0%, rgba(3, 7, 18, 0.8) 100%);
 }
 
 .tile-head {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  gap: 8px;
+  align-items: center;
+  gap: 12px;
 }
 
 .tile-title-group {
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 12px;
 }
 
 .tile-icon-box {
-  width: 30px;
-  height: 30px;
-  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
   background: rgba(245, 158, 11, 0.1);
   border: 1px solid rgba(245, 158, 11, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 14px;
   flex-shrink: 0;
 }
 
 .tile-title {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 800;
   color: #ffffff;
   margin: 0;
@@ -1308,79 +1308,44 @@
 }
 
 .tile-sub {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--tt-text-muted);
   font-weight: 500;
   display: block;
 }
 
+.tile-cap-status-cluster {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
 .tile-cap-tag {
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 750;
   color: #38bdf8;
   background: rgba(56, 189, 248, 0.1);
   border: 1px solid rgba(56, 189, 248, 0.25);
-  padding: 2px 7px;
+  padding: 3px 8px;
   border-radius: 6px;
   white-space: nowrap;
 }
 
-.tile-input-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.tile-input-wrap {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 8px;
-  padding: 6px 10px;
-  gap: 6px;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.tile-input-wrap:focus-within {
-  border-color: var(--tt-gold);
-  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
-}
-
-.tile-curr {
-  font-size: 14px;
-  font-weight: 750;
-  color: var(--tt-gold-light);
-}
-
-.tile-input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  outline: none;
-  font-size: 15px;
-  font-weight: 800;
-  color: #ffffff;
-  font-variant-numeric: tabular-nums;
-  font-family: inherit;
-  width: 100%;
-}
-
 .tile-cap-indicator {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 3px;
-  min-width: 58px;
+  align-items: center;
+  gap: 6px;
   flex-shrink: 0;
 }
 
 .cap-progress-pct {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 750;
   color: var(--tt-text-muted);
   font-variant-numeric: tabular-nums;
+  min-width: 28px;
+  text-align: right;
 }
 
 .deduction-tile.has-value .cap-progress-pct {
@@ -1389,7 +1354,7 @@
 
 .cap-mini-track {
   width: 58px;
-  height: 5px;
+  height: 6px;
   background: rgba(255, 255, 255, 0.08);
   border-radius: 999px;
   overflow: hidden;
@@ -1406,23 +1371,66 @@
   background: linear-gradient(90deg, #10b981, #34d399);
 }
 
-/* Quick Chips */
+.tile-controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.tile-input-wrap {
+  flex: 0 0 190px;
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 9px;
+  padding: 7px 12px;
+  gap: 6px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.tile-input-wrap:focus-within {
+  border-color: var(--tt-gold);
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+}
+
+.tile-curr {
+  font-size: 15px;
+  font-weight: 750;
+  color: var(--tt-gold-light);
+}
+
+.tile-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  font-weight: 800;
+  color: #ffffff;
+  font-variant-numeric: tabular-nums;
+  font-family: inherit;
+  width: 100%;
+}
+
 .tile-quick-chips {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   flex-wrap: wrap;
-  margin-top: 2px;
+  justify-content: flex-end;
+  flex: 1;
 }
 
 .chip-btn {
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 700;
   color: #cbd5e1;
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: 6px;
-  padding: 3px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 7px;
+  padding: 5px 12px;
   cursor: pointer;
   transition: all 0.15s ease;
   font-family: inherit;
@@ -1440,6 +1448,7 @@
   border-color: var(--tt-gold);
   color: #fef08a;
   font-weight: 800;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.25);
 }
 
 .chip-btn.chip-clear {
@@ -1515,19 +1524,19 @@
 }
 
 .additional-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 10px;
 }
 
 .additional-field {
   background: rgba(2, 6, 23, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 10px;
-  padding: 10px 12px;
+  border-radius: 12px;
+  padding: 14px 16px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 12px;
 }
 
 .add-field-top {
@@ -1537,9 +1546,15 @@
 }
 
 .add-field-name {
-  font-size: 11.5px;
+  font-size: 13px;
   font-weight: 750;
   color: #f1f5f9;
+}
+
+.add-field-sub {
+  font-size: 10.5px;
+  color: var(--tt-text-muted);
+  display: block;
 }
 
 .add-field-cap {
@@ -1547,8 +1562,8 @@
   font-weight: 600;
   color: #38bdf8;
   background: rgba(56, 189, 248, 0.1);
-  padding: 1px 6px;
-  border-radius: 4px;
+  padding: 2px 7px;
+  border-radius: 5px;
 }
 
 .add-input-wrap {
@@ -3005,10 +3020,28 @@
 
   .tile-head {
     flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tile-cap-status-cluster {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .tile-controls-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .tile-input-wrap {
+    flex: 1;
+    width: 100%;
   }
 
   .tile-quick-chips {
     gap: 4px;
+    justify-content: flex-start;
   }
 
   .chip-btn {
