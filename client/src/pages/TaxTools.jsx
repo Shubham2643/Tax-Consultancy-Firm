@@ -668,24 +668,39 @@ const TaxTools = () => {
 
                 <div className="config-divider"></div>
 
-                {/* 4. Chapter VI-A Deductions Architecture */}
-                <div className="config-section deductions-section">
-                  <div className="deductions-header-line">
-                    <div className="section-label-group">
-                      <label className="section-title">Chapter VI-A Deductions</label>
-                      <span className="section-desc">Investments &amp; exemptions under Old Tax Regime</span>
+                {/* 4. Chapter VI-A Deductions Studio */}
+                <div className="deductions-studio-card">
+                  {/* Header Row with Total Claimed Intelligence */}
+                  <div className="deductions-studio-header">
+                    <div className="deductions-header-text">
+                      <div className="deductions-eyebrow-row">
+                        <span className="deductions-eyebrow">
+                          <i className="fas fa-shield-halved text-gold"></i> CHAPTER VI-A OPTIMIZER
+                        </span>
+                        <span className="deductions-regime-tag">Old Tax Regime Only</span>
+                      </div>
+                      <h3 className="deductions-title">Statutory Deductions &amp; Exemptions</h3>
+                      <span className="deductions-desc">
+                        Select an investment profile or itemize individual sections below
+                      </span>
                     </div>
-                    <div className="claimed-counter-pill">
-                      <span className="counter-lbl">Claimed</span>
-                      <strong className="counter-val">{formatINR(taxCalculation.totalOldDeductions)}</strong>
+
+                    <div className="claimed-total-chip">
+                      <span className="claimed-chip-label">TOTAL OLD DEDUCTIONS</span>
+                      <div className="claimed-chip-amount-wrap">
+                        <strong className="claimed-chip-amount">
+                          {formatINR(taxCalculation.totalOldDeductions)}
+                        </strong>
+                        <span className="claimed-chip-sub">(incl. ₹50k Std. Ded.)</span>
+                      </div>
                     </div>
                   </div>
 
-                  {/* 1-Tap Strategy Profiles */}
-                  <div className="strategy-selector-grid">
+                  {/* 3 Precision Profile Cards */}
+                  <div className="deduction-profiles-grid">
                     <button
                       type="button"
-                      className={`strategy-selector-card ${deductionStrategy === 'standard' ? 'selected' : ''}`}
+                      className={`deduction-profile-card ${deductionStrategy === 'standard' ? 'active' : ''}`}
                       onClick={() => {
                         setDeductionStrategy('standard');
                         setSec80C(150000);
@@ -696,17 +711,24 @@ const TaxTools = () => {
                         setOtherDeductions(0);
                       }}
                     >
-                      <div className="strategy-top">
-                        <i className="fas fa-briefcase strategy-icon"></i>
-                        <span className="strategy-name">Salaried Standard</span>
+                      <div className="profile-card-top">
+                        <div className="profile-icon-badge">
+                          <i className="fas fa-briefcase"></i>
+                        </div>
+                        <span className="profile-check-indicator">
+                          <i className="fas fa-check"></i>
+                        </span>
                       </div>
-                      <div className="strategy-amount">₹2,25,000</div>
-                      <span className="strategy-sub">80C + 80D + NPS</span>
+                      <div className="profile-card-body">
+                        <span className="profile-card-title">Salaried Standard</span>
+                        <div className="profile-card-value">₹2,25,000</div>
+                        <span className="profile-card-breakdown">80C + 80D + NPS</span>
+                      </div>
                     </button>
 
                     <button
                       type="button"
-                      className={`strategy-selector-card ${deductionStrategy === 'homeowner' ? 'selected' : ''}`}
+                      className={`deduction-profile-card ${deductionStrategy === 'homeowner' ? 'active' : ''}`}
                       onClick={() => {
                         setDeductionStrategy('homeowner');
                         setSec80C(150000);
@@ -717,17 +739,24 @@ const TaxTools = () => {
                         setOtherDeductions(0);
                       }}
                     >
-                      <div className="strategy-top">
-                        <i className="fas fa-house-chimney strategy-icon"></i>
-                        <span className="strategy-name">Homeowner Max</span>
+                      <div className="profile-card-top">
+                        <div className="profile-icon-badge">
+                          <i className="fas fa-house"></i>
+                        </div>
+                        <span className="profile-check-indicator">
+                          <i className="fas fa-check"></i>
+                        </span>
                       </div>
-                      <div className="strategy-amount">₹4,25,000</div>
-                      <span className="strategy-sub">80C + Home Loan 24b</span>
+                      <div className="profile-card-body">
+                        <span className="profile-card-title">Homeowner Max</span>
+                        <div className="profile-card-value">₹4,25,000</div>
+                        <span className="profile-card-breakdown">80C + 80D + Sec 24(b)</span>
+                      </div>
                     </button>
 
                     <button
                       type="button"
-                      className={`strategy-selector-card ${deductionStrategy === 'zero' ? 'selected' : ''}`}
+                      className={`deduction-profile-card ${deductionStrategy === 'zero' ? 'active' : ''}`}
                       onClick={() => {
                         setDeductionStrategy('zero');
                         setSec80C(0);
@@ -738,27 +767,53 @@ const TaxTools = () => {
                         setOtherDeductions(0);
                       }}
                     >
-                      <div className="strategy-top">
-                        <i className="fas fa-ban strategy-icon"></i>
-                        <span className="strategy-name">Zero / Nil</span>
+                      <div className="profile-card-top">
+                        <div className="profile-icon-badge">
+                          <i className="fas fa-layer-group"></i>
+                        </div>
+                        <span className="profile-check-indicator">
+                          <i className="fas fa-check"></i>
+                        </span>
                       </div>
-                      <div className="strategy-amount">Pure Slabs</div>
-                      <span className="strategy-sub">No Deductions</span>
+                      <div className="profile-card-body">
+                        <span className="profile-card-title">Standard Slabs Only</span>
+                        <div className="profile-card-value">₹0 <small className="val-nil">(Nil)</small></div>
+                        <span className="profile-card-breakdown">No Chapter VI-A Claimed</span>
+                      </div>
                     </button>
                   </div>
 
-                  {/* Fine-Tune Accordion Button */}
-                  <button
-                    type="button"
-                    className={`btn-fine-tune-accordion ${showCustomDeductions ? 'expanded' : ''}`}
-                    onClick={() => setShowCustomDeductions(!showCustomDeductions)}
-                  >
-                    <span className="accordion-label">
-                      <i className="fas fa-sliders"></i>
-                      <span>Fine-Tune Individual Deductions (80C, 80D, 80CCD, Home Loan, HRA)</span>
-                    </span>
-                    <i className={`fas fa-chevron-${showCustomDeductions ? 'up' : 'down'} accordion-arrow`}></i>
-                  </button>
+                  {/* Fine-Tune Interactive Trigger Bar */}
+                  <div className="fine-tune-trigger-bar">
+                    <button
+                      type="button"
+                      className={`btn-fine-tune-toggle ${showCustomDeductions ? 'expanded' : ''}`}
+                      onClick={() => setShowCustomDeductions(!showCustomDeductions)}
+                      aria-expanded={showCustomDeductions}
+                    >
+                      <div className="toggle-left">
+                        <div className="toggle-icon-box">
+                          <i className="fas fa-sliders text-gold"></i>
+                        </div>
+                        <div className="toggle-label-stack">
+                          <span className="toggle-heading">
+                            Itemize Individual Deductions
+                          </span>
+                          <span className="toggle-sub">
+                            Customize 80C, 80D, 80CCD (NPS), Sec 24(b) &amp; HRA Exemptions
+                          </span>
+                        </div>
+                      </div>
+                      <div className="toggle-right">
+                        <span className="toggle-badge-action">
+                          {showCustomDeductions ? 'Hide Breakdown' : 'Customize Breakdown'}
+                        </span>
+                        <span className="toggle-chevron-circle">
+                          <i className={`fas fa-chevron-${showCustomDeductions ? 'up' : 'down'}`}></i>
+                        </span>
+                      </div>
+                    </button>
+                  </div>
 
                   {/* Refined Custom Deductions Form (Clean 2-Column Grid) */}
                   {showCustomDeductions && (
