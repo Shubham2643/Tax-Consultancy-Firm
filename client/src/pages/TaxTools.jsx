@@ -465,58 +465,97 @@ const TaxTools = () => {
                 </div>
 
                 {/* 2. Primary Gross Income Section */}
-                <div className="config-section income-hero-section">
-                  <div className="section-label-group">
-                    <div className="section-label-top-row">
-                      <label htmlFor="income-input" className="section-title">
-                        <i className="fas fa-wallet text-gold"></i> Annual Gross CTC / Total Profit
-                      </label>
-                      <span className="income-denomination-pill">
-                        {getDenominationText(income)}
-                      </span>
+                {/* 2. Primary Gross Income Studio */}
+                <div className="income-studio-card">
+                  {/* Studio Header */}
+                  <div className="income-studio-header">
+                    <div className="income-header-titles">
+                      <div className="income-eyebrow-row">
+                        <span className="income-eyebrow">
+                          <i className="fas fa-coins text-gold"></i> ANNUAL TAXABLE BASE
+                        </span>
+                        <span className="income-slab-tag">
+                          {income <= 750000
+                            ? 'Zero-Tax Threshold'
+                            : income <= 1000000
+                            ? '10% Tax Slab'
+                            : income <= 1500000
+                            ? '15%–20% Slabs'
+                            : income <= 5000000
+                            ? '30% Peak Slab'
+                            : 'Surcharge Bracket'}
+                        </span>
+                      </div>
+                      <h3 className="income-title">Annual Gross CTC / Total Profit</h3>
+                      <span className="income-sub">Before statutory standard deduction &amp; exemptions</span>
                     </div>
-                    <span className="section-desc">Gross compensation before standard deduction &amp; statutory exemptions</span>
-                  </div>
 
-                  <div className="income-display-box">
-                    <span className="income-currency-prefix">₹</span>
-                    <input
-                      id="income-input"
-                      type="text"
-                      inputMode="numeric"
-                      value={income ? Number(income).toLocaleString('en-IN') : ''}
-                      onChange={(e) => {
-                        const raw = e.target.value.replace(/[^0-9]/g, '');
-                        setIncome(raw ? Math.min(100000000, Number(raw)) : 0);
-                      }}
-                      className="income-large-input"
-                      aria-label="Annual Gross Income"
-                      placeholder="0"
-                    />
-                    <div className="income-stepper-pills">
-                      <button
-                        type="button"
-                        className="stepper-pill stepper-pill-sub"
-                        onClick={() => setIncome((prev) => Math.max(300000, (Number(prev) || 0) - 50000))}
-                        title="Deduct ₹50,000"
-                      >
-                        <i className="fas fa-minus"></i>
-                        <span>50k</span>
-                      </button>
-                      <button
-                        type="button"
-                        className="stepper-pill stepper-pill-add"
-                        onClick={() => setIncome((prev) => Math.min(50000000, (Number(prev) || 0) + 100000))}
-                        title="Add ₹1,00,000"
-                      >
-                        <i className="fas fa-plus"></i>
-                        <span>1L</span>
-                      </button>
+                    <div className="income-monthly-badge">
+                      <span className="monthly-badge-lbl">MONTHLY RUN-RATE</span>
+                      <strong className="monthly-badge-val">
+                        {formatINR(Math.round(income / 12))}
+                        <small>/mo</small>
+                      </strong>
                     </div>
                   </div>
 
-                  {/* Clean Slider */}
-                  <div className="slider-container">
+                  {/* Symmetrical Hero Number Display */}
+                  <div className="income-hero-stage">
+                    <button
+                      type="button"
+                      className="stage-stepper-btn stepper-sub"
+                      onClick={() => setIncome((prev) => Math.max(300000, (Number(prev) || 0) - 50000))}
+                      title="Decrease by ₹50,000"
+                      aria-label="Decrease income by ₹50,000"
+                    >
+                      <i className="fas fa-minus"></i>
+                      <span className="stepper-sub-label">50k</span>
+                    </button>
+
+                    <div className="stage-center-box">
+                      <div className="stage-input-row">
+                        <span className="stage-rupee">₹</span>
+                        <input
+                          id="income-input"
+                          type="text"
+                          inputMode="numeric"
+                          value={income ? Number(income).toLocaleString('en-IN') : ''}
+                          onChange={(e) => {
+                            const raw = e.target.value.replace(/[^0-9]/g, '');
+                            setIncome(raw ? Math.min(100000000, Number(raw)) : 0);
+                          }}
+                          className="stage-amount-input"
+                          aria-label="Annual Gross Income"
+                          placeholder="0"
+                        />
+                      </div>
+                      <div className="stage-caption-row">
+                        <span className="stage-denomination">{getDenominationText(income)}</span>
+                        <span className="stage-sep">&bull;</span>
+                        <span className="stage-status-desc">
+                          {income <= 750000 ? (
+                            <span className="text-emerald">Budget 2024 Full Rebate Active</span>
+                          ) : (
+                            <span>Tax Assessment AY 2025-26</span>
+                          )}
+                        </span>
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      className="stage-stepper-btn stepper-add"
+                      onClick={() => setIncome((prev) => Math.min(50000000, (Number(prev) || 0) + 100000))}
+                      title="Increase by ₹1,00,000"
+                      aria-label="Increase income by ₹1,00,000"
+                    >
+                      <i className="fas fa-plus"></i>
+                      <span className="stepper-sub-label">1L</span>
+                    </button>
+                  </div>
+
+                  {/* Range Slider Track */}
+                  <div className="income-slider-section">
                     <input
                       type="range"
                       min="300000"
@@ -530,25 +569,38 @@ const TaxTools = () => {
                         background: `linear-gradient(90deg, #d4af37 0%, #f59e0b ${incomeSliderPct}%, rgba(255, 255, 255, 0.08) ${incomeSliderPct}%)`,
                       }}
                     />
-                    <div className="slider-limits">
-                      <span className="slider-limit-label">
-                        <span className="limit-dot"></span> ₹3 Lakhs <small>(Min)</small>
+                    <div className="slider-milestone-bar">
+                      <span className="milestone-item">
+                        <span className="milestone-dot"></span>
+                        <span className="milestone-val">₹3L</span>
+                        <span className="milestone-desc">Exemption</span>
                       </span>
-                      <span className="slider-mid-hint">Drag slider or choose bracket below</span>
-                      <span className="slider-limit-label">
-                        ₹50+ Lakhs <small>(HNW Bracket)</small> <span className="limit-dot"></span>
+                      <span className="milestone-item milestone-center">
+                        <span className="milestone-dot"></span>
+                        <span className="milestone-val">₹7.5L</span>
+                        <span className="milestone-desc">Zero-Tax</span>
+                      </span>
+                      <span className="milestone-item milestone-center">
+                        <span className="milestone-dot"></span>
+                        <span className="milestone-val">₹15L</span>
+                        <span className="milestone-desc">Mid-Level</span>
+                      </span>
+                      <span className="milestone-item milestone-right">
+                        <span className="milestone-dot"></span>
+                        <span className="milestone-val">₹50L+</span>
+                        <span className="milestone-desc">HNW Tier</span>
                       </span>
                     </div>
                   </div>
 
-                  {/* Clean Quick Presets (5 chips that never awkwardly wrap!) */}
-                  <div className="quick-presets-bar">
-                    <span className="presets-caption">
-                      <i className="fas fa-bolt text-gold"></i> Quick Jump:
+                  {/* Benchmark Presets Bar */}
+                  <div className="income-benchmarks-bar">
+                    <span className="benchmarks-caption">
+                      <i className="fas fa-bolt text-gold"></i> Presets:
                     </span>
-                    <div className="presets-chips-wrap">
+                    <div className="benchmarks-grid">
                       {[
-                        { label: '₹7.5 Lakhs', badge: '0-Tax', val: 750000 },
+                        { label: '₹7.5L', badge: '0-Tax', val: 750000 },
                         { label: '₹10 Lakhs', val: 1000000 },
                         { label: '₹15 Lakhs', val: 1500000 },
                         { label: '₹25 Lakhs', val: 2500000 },
@@ -557,11 +609,11 @@ const TaxTools = () => {
                         <button
                           key={item.val}
                           type="button"
-                          className={`preset-pill ${income === item.val ? 'active' : ''}`}
+                          className={`benchmark-btn ${income === item.val ? 'active' : ''}`}
                           onClick={() => setIncome(item.val)}
                         >
-                          <span>{item.label}</span>
-                          {item.badge && <span className="preset-pill-badge">{item.badge}</span>}
+                          <span className="b-label">{item.label}</span>
+                          {item.badge && <span className="b-badge">{item.badge}</span>}
                         </button>
                       ))}
                     </div>
