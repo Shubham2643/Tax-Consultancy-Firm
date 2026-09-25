@@ -1150,89 +1150,123 @@ const TaxTools = () => {
               <div className="regime-comparison-pair">
                 {/* New Tax Regime Card (Budget 2024) */}
                 <div className={`regime-card ${taxCalculation.recommended === 'NEW REGIME' ? 'card-winner' : ''}`}>
-                  <div className="regime-card-top">
-                    <div>
-                      <span className="regime-badge badge-new">BUDGET 2024 REVISED</span>
-                      <h3>New Tax Regime</h3>
-                    </div>
-                    {taxCalculation.recommended === 'NEW REGIME' && (
-                      <span className="winner-tag">
-                        <i className="fas fa-check"></i> RECOMMENDED
+                  {/* Top Status Capsule (Identical height slot for both cards) */}
+                  <div className="regime-status-slot">
+                    <span className="regime-badge badge-new">
+                      <i className="fas fa-bolt"></i> Budget 2024 Revised
+                    </span>
+                    {taxCalculation.recommended === 'NEW REGIME' ? (
+                      <span className="winner-pill-tag">
+                        <i className="fas fa-check-circle"></i> Recommended
+                      </span>
+                    ) : (
+                      <span className="alt-pill-tag">
+                        Alternative
                       </span>
                     )}
                   </div>
 
+                  {/* Title & Statutory Reference */}
+                  <div className="regime-title-block">
+                    <h3 className="regime-card-title">New Tax Regime</h3>
+                    <span className="regime-section-ref">AY 2025-26 &bull; Section 115BAC (Revised)</span>
+                  </div>
+
+                  {/* Deductions & Taxable Income Rows */}
                   <div className="regime-stat-rows">
                     <div className="regime-row">
-                      <span>Gross Annual CTC</span>
-                      <strong>{formatINR(taxCalculation.gross)}</strong>
+                      <span className="row-item-label">Gross Annual CTC</span>
+                      <strong className="row-item-val">{formatINR(taxCalculation.gross)}</strong>
                     </div>
                     <div className="regime-row">
-                      <span>Standard Deduction</span>
-                      <strong className="text-emerald">- {formatINR(taxCalculation.newStdDeduction)}</strong>
+                      <span className="row-item-label">Standard Deduction</span>
+                      <strong className="row-item-val val-deduction">- {formatINR(taxCalculation.newStdDeduction)}</strong>
                     </div>
                     <div className="regime-row">
-                      <span>Net Taxable Income</span>
-                      <strong>{formatINR(taxCalculation.taxableNew)}</strong>
-                    </div>
-                    <div className="regime-divider"></div>
-                    <div className="regime-row grand-tax-row">
-                      <span>Final Tax + 4% Cess</span>
-                      <strong className="regime-tax-num">{formatINR(taxCalculation.finalNewTax)}</strong>
-                    </div>
-                    <div className="regime-row takehome-row">
-                      <span>Monthly In-Hand</span>
-                      <strong className="text-emerald">{formatINR(taxCalculation.newMonthlyTakeHome)} / mo</strong>
+                      <span className="row-item-label">Net Taxable Income</span>
+                      <strong className="row-item-val">{formatINR(taxCalculation.taxableNew)}</strong>
                     </div>
                   </div>
 
-                  <div className="regime-highlights-strip">
-                    <i className="fas fa-info-circle"></i>
-                    <span>Includes revised ₹75k standard deduction &amp; Sec 87A rebate up to ₹7 Lakhs</span>
+                  {/* Executive Result Scorecard (Integrated 2-Cell Dual Metric) */}
+                  <div className="regime-result-scorecard">
+                    <div className="scorecard-cell cell-tax">
+                      <span className="scorecard-cell-label">Total Tax Liability</span>
+                      <div className="scorecard-cell-val tax-amount">{formatINR(taxCalculation.finalNewTax)}</div>
+                      <span className="scorecard-cell-sub">Effective: {taxCalculation.newEffectiveRate}%</span>
+                    </div>
+                    <div className="scorecard-cell cell-inhand">
+                      <span className="scorecard-cell-label">Monthly In-Hand</span>
+                      <div className="scorecard-cell-val inhand-amount">{formatINR(taxCalculation.newMonthlyTakeHome)}</div>
+                      <span className="scorecard-cell-sub">Take-home / mo</span>
+                    </div>
+                  </div>
+
+                  {/* Hairline Statutory Footer */}
+                  <div className="regime-card-footer">
+                    <i className="fas fa-shield-halved"></i>
+                    <span>Includes ₹75,000 std. deduction &amp; 87A rebate up to ₹7L</span>
                   </div>
                 </div>
 
                 {/* Old Tax Regime Card */}
                 <div className={`regime-card ${taxCalculation.recommended === 'OLD REGIME' ? 'card-winner' : ''}`}>
-                  <div className="regime-card-top">
-                    <div>
-                      <span className="regime-badge badge-old">CHAPTER VI-A DEDUCTIONS</span>
-                      <h3>Old Tax Regime</h3>
-                    </div>
-                    {taxCalculation.recommended === 'OLD REGIME' && (
-                      <span className="winner-tag">
-                        <i className="fas fa-check"></i> RECOMMENDED
+                  {/* Top Status Capsule (Identical height slot for both cards) */}
+                  <div className="regime-status-slot">
+                    <span className="regime-badge badge-old">
+                      <i className="fas fa-receipt"></i> Chapter VI-A Deductions
+                    </span>
+                    {taxCalculation.recommended === 'OLD REGIME' ? (
+                      <span className="winner-pill-tag">
+                        <i className="fas fa-check-circle"></i> Recommended
+                      </span>
+                    ) : (
+                      <span className="alt-pill-tag">
+                        Alternative
                       </span>
                     )}
                   </div>
 
+                  {/* Title & Statutory Reference */}
+                  <div className="regime-title-block">
+                    <h3 className="regime-card-title">Old Tax Regime</h3>
+                    <span className="regime-section-ref">AY 2025-26 &bull; Slabs with Exemptions</span>
+                  </div>
+
+                  {/* Deductions & Taxable Income Rows */}
                   <div className="regime-stat-rows">
                     <div className="regime-row">
-                      <span>Gross Annual CTC</span>
-                      <strong>{formatINR(taxCalculation.gross)}</strong>
+                      <span className="row-item-label">Gross Annual CTC</span>
+                      <strong className="row-item-val">{formatINR(taxCalculation.gross)}</strong>
                     </div>
                     <div className="regime-row">
-                      <span>Total Exemptions &amp; 80C</span>
-                      <strong className="text-emerald">- {formatINR(taxCalculation.totalOldDeductions)}</strong>
+                      <span className="row-item-label">Exemptions &amp; 80C/80D</span>
+                      <strong className="row-item-val val-deduction">- {formatINR(taxCalculation.totalOldDeductions)}</strong>
                     </div>
                     <div className="regime-row">
-                      <span>Net Taxable Income</span>
-                      <strong>{formatINR(taxCalculation.taxableOld)}</strong>
-                    </div>
-                    <div className="regime-divider"></div>
-                    <div className="regime-row grand-tax-row">
-                      <span>Final Tax + 4% Cess</span>
-                      <strong className="regime-tax-num">{formatINR(taxCalculation.finalOldTax)}</strong>
-                    </div>
-                    <div className="regime-row takehome-row">
-                      <span>Monthly In-Hand</span>
-                      <strong className="text-emerald">{formatINR(taxCalculation.oldMonthlyTakeHome)} / mo</strong>
+                      <span className="row-item-label">Net Taxable Income</span>
+                      <strong className="row-item-val">{formatINR(taxCalculation.taxableOld)}</strong>
                     </div>
                   </div>
 
-                  <div className="regime-highlights-strip">
-                    <i className="fas fa-info-circle"></i>
-                    <span>Includes ₹50k standard deduction, 80C (up to 1.5L), 80D &amp; home loan interest</span>
+                  {/* Executive Result Scorecard (Integrated 2-Cell Dual Metric) */}
+                  <div className="regime-result-scorecard">
+                    <div className="scorecard-cell cell-tax">
+                      <span className="scorecard-cell-label">Total Tax Liability</span>
+                      <div className="scorecard-cell-val tax-amount">{formatINR(taxCalculation.finalOldTax)}</div>
+                      <span className="scorecard-cell-sub">Effective: {taxCalculation.oldEffectiveRate}%</span>
+                    </div>
+                    <div className="scorecard-cell cell-inhand">
+                      <span className="scorecard-cell-label">Monthly In-Hand</span>
+                      <div className="scorecard-cell-val inhand-amount">{formatINR(taxCalculation.oldMonthlyTakeHome)}</div>
+                      <span className="scorecard-cell-sub">Take-home / mo</span>
+                    </div>
+                  </div>
+
+                  {/* Hairline Statutory Footer */}
+                  <div className="regime-card-footer">
+                    <i className="fas fa-shield-halved"></i>
+                    <span>Includes ₹50k std. deduction, 80C, 80D &amp; home loan interest</span>
                   </div>
                 </div>
               </div>
@@ -1240,7 +1274,7 @@ const TaxTools = () => {
               {/* Symmetrical Action Bar */}
               <div className="tool-cta-actions">
                 <button type="button" className="btn-tool-consult" onClick={handleConsultDesk}>
-                  <i className="fas fa-user-shield btn-consult-icon"></i>
+                  <i className="fas fa-user-tie btn-consult-icon"></i>
                   <span className="btn-text">Book Senior CA Consultation</span>
                   <i className="fas fa-arrow-right btn-arrow"></i>
                 </button>
@@ -1493,8 +1527,8 @@ const TaxTools = () => {
               {/* Symmetrical Action Bar */}
               <div className="tool-cta-actions">
                 <button type="button" className="btn-tool-consult" onClick={handleConsultDesk}>
-                  <i className="fas fa-paper-plane btn-consult-icon"></i>
-                  <span className="btn-text">Engage GST Desk Before Notice</span>
+                  <i className="fas fa-shield-halved btn-consult-icon"></i>
+                  <span className="btn-text">Engage GST Advisory Desk</span>
                   <i className="fas fa-arrow-right btn-arrow"></i>
                 </button>
                 <button type="button" className="btn-tool-share" onClick={handleShareCalculation}>
