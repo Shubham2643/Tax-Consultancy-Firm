@@ -333,6 +333,12 @@ const TaxTools = () => {
             Instantly compute your statutory tax liability under revised Budget 2024 slabs vs. Old Regime deductions, backed by verified CBDT &amp; GSTN rules.
           </p>
 
+          <div className="tools-hero-trust-row">
+            <span className="hero-trust-chip"><i className="fas fa-check-circle"></i> Finance (No. 2) Act, 2024</span>
+            <span className="hero-trust-chip"><i className="fas fa-check-circle"></i> AY 2025-26 CBDT Calibrated</span>
+            <span className="hero-trust-chip"><i className="fas fa-shield-halved"></i> 100% Free &amp; Confidential</span>
+          </div>
+
           {/* Tab Selection Navigation */}
           <div className="tools-tab-bar" role="tablist">
             <button
@@ -615,7 +621,9 @@ const TaxTools = () => {
                     >
                       <span className="toggle-label-wrap">
                         <span className="toggle-icon-box"><i className={`fas fa-${showCustomDeductions ? 'chevron-up' : 'sliders'}`}></i></span>
-                        <span>{showCustomDeductions ? 'Hide Fine-Tune Deductions' : 'Fine-Tune Specific Deductions (80C, 80D, NPS, Home Loan, HRA)'}</span>
+                        <span className="toggle-text-main">
+                          {showCustomDeductions ? 'Hide Fine-Tune Deductions' : 'Fine-Tune Specific Deductions (80C, 80D, NPS, Home Loan, HRA)'}
+                        </span>
                       </span>
                       <span className="toggle-hint-pill">{showCustomDeductions ? 'Collapse' : 'Customize ▾'}</span>
                     </button>
@@ -1599,9 +1607,41 @@ const TaxTools = () => {
         )}
       </div>
 
-      {/* Trust & Methodology Disclaimer */}
+      {/* Trust & Methodology Institutional Section */}
       <section className="tools-methodology-section">
         <div className="container">
+          <div className="tools-trust-pillars-grid">
+            <div className="trust-pillar-card">
+              <div className="pillar-icon-box">
+                <i className="fas fa-file-contract"></i>
+              </div>
+              <h4>Budget 2024 (AY 2025-26) Calibrated</h4>
+              <p>
+                Updated for Finance (No. 2) Act, 2024 revised tax slabs, enhanced ₹75,000 standard deduction, and Section 87A rebate marginal relief computations.
+              </p>
+            </div>
+
+            <div className="trust-pillar-card">
+              <div className="pillar-icon-box">
+                <i className="fas fa-shield-halved"></i>
+              </div>
+              <h4>Direct CBDT &amp; GSTN Legal Basis</h4>
+              <p>
+                Calculations strictly follow CGST Act Section 47 late fee limits, Section 50(1) 18% cash interest rules, and Section 208 advance tax schedules.
+              </p>
+            </div>
+
+            <div className="trust-pillar-card">
+              <div className="pillar-icon-box">
+                <i className="fas fa-user-check"></i>
+              </div>
+              <h4>Chartered Accountant Verified</h4>
+              <p>
+                Engineered under the direct supervision of senior Chartered Accountants at <strong>Shree Chamunda Associates</strong> for corporate and individual compliance.
+              </p>
+            </div>
+          </div>
+
           <div className="methodology-card">
             <div className="meth-header">
               <i className="fas fa-book-open"></i>
