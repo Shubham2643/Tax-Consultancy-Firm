@@ -11,6 +11,21 @@
     <meta name="theme-color" content="#071324" />
     <meta name="google-site-verification" content="OZsiiHaZYWZIsuop0dN8W4CulDErPgkZ4FWCDnqUoqg" />
 
+    <!-- Zero-Flicker Pre-Hydration Theme Script -->
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('app-theme') || 'system';
+          var theme = saved;
+          if (saved === 'system') {
+            theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+          }
+          document.documentElement.setAttribute('data-theme', theme);
+          document.documentElement.style.colorScheme = theme;
+        } catch (e) {}
+      })();
+    </script>
+
     <!-- Canonical URL -->
     <link rel="canonical" href="https://shreechamundaassociates.onrender.com/" />
 

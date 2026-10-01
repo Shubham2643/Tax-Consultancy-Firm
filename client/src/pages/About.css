@@ -2938,3 +2938,448 @@
     gap: 12px;
   }
 }
+
+/* ============================================================
+   ABOUT PAGE — DOMINANT LIGHT THEME ARCHITECTURE
+   ============================================================ */
+[data-theme='light'] .about-page {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+[data-theme='light'] .about-hero {
+  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+  border-bottom: 1px solid #e2e8f0;
+}
+
+[data-theme='light'] .about-hero h1 {
+  color: #071324;
+}
+
+[data-theme='light'] .about-hero-lead {
+  color: #475569;
+}
+
+[data-theme='light'] .about-hero-trust-ribbon {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+}
+
+[data-theme='light'] .trust-ribbon-item {
+  color: #334155;
+}
+
+[data-theme='light'] .ribbon-sep {
+  color: #cbd5e1;
+}
+
+[data-theme='light'] .section-header-centered h2 {
+  color: #071324;
+}
+
+[data-theme='light'] .section-subtext {
+  color: #64748b;
+}
+
+[data-theme='light'] .about-stat-box {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 10px 30px rgba(7, 19, 36, 0.07);
+}
+
+[data-theme='light'] .stat-box-num {
+  color: #071324;
+}
+
+[data-theme='light'] .stat-box-label {
+  color: #071324;
+}
+
+[data-theme='light'] .stat-box-desc {
+  color: #64748b;
+}
+
+[data-theme='light'] .manifesto-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 10px 35px rgba(15, 23, 42, 0.05);
+}
+
+[data-theme='light'] .manifesto-heading {
+  color: #071324;
+}
+
+[data-theme='light'] .manifesto-lead-quote {
+  color: #1e293b;
+  border-left-color: #f8b400;
+}
+
+[data-theme='light'] .manifesto-paragraph {
+  color: #475569;
+}
+
+[data-theme='light'] .stack-title {
+  color: #071324;
+}
+
+[data-theme='light'] .stack-desc {
+  color: #64748b;
+}
+
+[data-theme='light'] .dossier-main-content {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+[data-theme='light'] .dossier-authority-sidebar {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+[data-theme='light'] .dossier-desk-title {
+  color: #071324;
+}
+
+[data-theme='light'] .dossier-desk-desc {
+  color: #475569;
+}
+
+[data-theme='light'] .dossier-capability-chip {
+  background: #f1f5f9;
+  border-color: #e2e8f0;
+  color: #334155;
+}
+
+[data-theme='light'] .technical-protocols-strip {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+[data-theme='light'] .comparison-table-wrapper {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+[data-theme='light'] .cell-criterion {
+  background: #f8fafc;
+  color: #071324;
+}
+
+[data-theme='light'] .cell-traditional {
+  color: #64748b;
+}
+
+[data-theme='light'] .cell-big4 {
+  color: #64748b;
+}
+
+[data-theme='light'] .cell-chamunda {
+  background: rgba(248, 180, 0, 0.04);
+  color: #071324;
+}
+
+[data-theme='light'] .compare-versus-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+[data-theme='light'] .versus-side.versus-competitor {
+  background: #f8fafc;
+}
+
+[data-theme='light'] .versus-side.versus-chamunda {
+  background: #fffdf5;
+  border-color: #fde68a;
+}
+
+[data-theme='light'] .milestone-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05);
+}
+
+[data-theme='light'] .milestone-title {
+  color: #071324;
+}
+
+[data-theme='light'] .milestone-desc {
+  color: #475569;
+}
+
+[data-theme='light'] .chambers-card-wrapper {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 10px 35px rgba(15, 23, 42, 0.06);
+}
+
+[data-theme='light'] .chambers-lead-text {
+  color: #071324;
+}
+
+[data-theme='light'] .chambers-specs-list {
+  color: #475569;
+}
+
+[data-theme='light'] .accred-card,
+[data-theme='light'] .seal-card-body {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05);
+}
+
+[data-theme='light'] .accred-title,
+[data-theme='light'] .seal-card-title {
+  color: #071324;
+}
+
+[data-theme='light'] .accred-desc,
+[data-theme='light'] .seal-card-desc {
+  color: #64748b;
+}
+
+/* ============================================================
+   ABOUT PAGE — DOMINANT DARK THEME ARCHITECTURE
+   ============================================================ */
+[data-theme='dark'] .about-page {
+  background-color: #08101d;
+  color: #f1f5f9;
+}
+
+[data-theme='dark'] .about-hero {
+  background: radial-gradient(circle at 50% 10%, #0d1e38 0%, #071324 70%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .about-hero h1 {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .section-header-centered h2 {
+  color: #f8fafc;
+}
+
+[data-theme='dark'] .section-subtext {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .about-stat-box {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme='dark'] .stat-box-num {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .stat-box-label {
+  color: #cbd5e1;
+}
+
+[data-theme='dark'] .stat-box-desc {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .manifesto-card {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .manifesto-heading {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .manifesto-lead-quote {
+  color: #e2e8f0;
+  border-left-color: #f8b400;
+}
+
+[data-theme='dark'] .manifesto-paragraph {
+  color: #cbd5e1;
+}
+
+[data-theme='dark'] .stack-title {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .stack-desc {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .dossier-main-content {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .dossier-authority-sidebar {
+  background: #08121f;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .desk-selector-tile {
+  background: #0f1c32 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme='dark'] .desk-selector-tile:hover {
+  background: #13243e !important;
+  border-color: rgba(248, 180, 0, 0.5) !important;
+}
+
+[data-theme='dark'] .desk-selector-tile .tile-icon {
+  background: #08121f !important;
+  color: #f8b400 !important;
+}
+
+[data-theme='dark'] .desk-selector-tile .tile-title {
+  color: #f8fafc !important;
+}
+
+[data-theme='dark'] .active-desk-dossier-stage {
+  background: #0f1c32 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme='dark'] .dossier-desk-title {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .dossier-scope-strip {
+  background: #08121f !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  color: #38bdf8 !important;
+}
+
+[data-theme='dark'] .dossier-desk-desc {
+  color: #cbd5e1;
+}
+
+[data-theme='dark'] .dossier-capabilities-label {
+  color: #f8fafc !important;
+}
+
+[data-theme='dark'] .dossier-capabilities-section {
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme='dark'] .stepper-nav-btn {
+  background: #08121f !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #cbd5e1 !important;
+}
+
+[data-theme='dark'] .stepper-nav-btn:hover {
+  background: #f8b400 !important;
+  color: #071324 !important;
+  border-color: #f8b400 !important;
+}
+
+[data-theme='dark'] .dossier-capability-chip {
+  background: #13243e;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+}
+
+[data-theme='dark'] .technical-protocols-strip {
+  background: #08121f;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .comparison-table-wrapper {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .cell-criterion {
+  background: #08121f;
+  color: #f8fafc;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .cell-traditional {
+  color: #94a3b8;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .cell-big4 {
+  color: #94a3b8;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .cell-chamunda {
+  background: rgba(248, 180, 0, 0.06);
+  color: #f8fafc;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .compare-versus-card {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .versus-side.versus-competitor {
+  background: #08121f;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .versus-side.versus-chamunda {
+  background: #13243e;
+  border-color: rgba(248, 180, 0, 0.35);
+}
+
+[data-theme='dark'] .milestone-card {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .milestone-title {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .milestone-desc {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .chambers-card-wrapper {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .chambers-lead-text {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .chambers-specs-list {
+  color: #cbd5e1;
+}
+
+[data-theme='dark'] .accred-card,
+[data-theme='dark'] .seal-card-body {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .accred-title,
+[data-theme='dark'] .seal-card-title {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .accred-desc,
+[data-theme='dark'] .seal-card-desc {
+  color: #94a3b8;
+}
+
+/* ============================================================
+   SECTION TOP ACCENT LINE POSITIONING FOR ABOUT PAGE
+   ============================================================ */
+.about-manifesto-section,
+.about-comparison-section,
+.about-practice-desks-section,
+.about-timeline-section,
+.about-accreditations-section,
+.about-chambers-section,
+.about-closing-cta {
+  position: relative;
+  padding-top: 50px;
+}

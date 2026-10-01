@@ -25,6 +25,9 @@ const Hero = () => {
 
   return (
     <section className="hero">
+      {/* Top Gold Glowing Accent Divider */}
+      <div className="hero-top-accent-line" aria-hidden="true"></div>
+
       {/* Ambient background glows */}
       <div className="hero-ambient-orb orb-primary"></div>
       <div className="hero-ambient-orb orb-secondary"></div>

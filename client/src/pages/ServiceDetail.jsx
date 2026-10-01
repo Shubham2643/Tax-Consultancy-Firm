@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { getServiceById, submitContact } from '../api';
 import '../components/ContactForm.css';
 import './ServiceDetail.css';
@@ -254,6 +254,7 @@ const ServiceDetail = () => {
     <div className="service-detail-page fade-in">
       {/* Executive Hero Banner */}
       <div className="detail-hero">
+        <div className="section-top-accent-line" aria-hidden="true"></div>
         <div className="container">
           <div className="detail-hero-content">
             <span className="service-type-badge">
@@ -279,6 +280,7 @@ const ServiceDetail = () => {
 
       {/* Symmetrical 50/50 Two-Column Layout */}
       <div className="container detail-equal-two-col-grid">
+        <div className="section-top-accent-line" aria-hidden="true"></div>
         {/* ========================================================
             COLUMN 1 (50%): Overview, Benefits, Process & Deliverables
             ======================================================== */}
@@ -656,6 +658,29 @@ const ServiceDetail = () => {
                     </span>
                   </div>
                 </div>
+
+                <Link
+                  to="/calculators?tool=tax"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    marginTop: '16px',
+                    padding: '10px 16px',
+                    borderRadius: '8px',
+                    background: 'rgba(248, 180, 0, 0.1)',
+                    border: '1px solid rgba(248, 180, 0, 0.3)',
+                    color: '#f8b400',
+                    fontWeight: '700',
+                    fontSize: '0.86rem',
+                    textDecoration: 'none',
+                    transition: 'all 0.2s ease',
+                  }}
+                >
+                  <i className="fas fa-calculator"></i>
+                  <span>Launch Full Direct Tax &amp; GST Calculators Hub &rarr;</span>
+                </Link>
               </div>
             </section>
           )}

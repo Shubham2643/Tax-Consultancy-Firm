@@ -134,6 +134,9 @@ const ServicesSection = ({
 
   return (
     <section className={`services ${hideHeader ? 'services-embedded' : ''}`} id="services-section" aria-labelledby="services-heading">
+      {/* Top Gold Glowing Accent Divider */}
+      <div className="services-top-accent-line" aria-hidden="true"></div>
+
       <div className="container">
         {!hideHeader && (
           <div className="section-header text-center">

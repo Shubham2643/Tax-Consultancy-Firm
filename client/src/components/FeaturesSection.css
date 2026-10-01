@@ -636,3 +636,127 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================================================
+   DOMINANT LIGHT THEME ADAPTIVE STYLES
+   ========================================================================== */
+[data-theme='light'] .features-section {
+  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+  color: #0f172a;
+}
+
+[data-theme='light'] .features-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(15, 23, 42, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.035) 1px, transparent 1px);
+}
+
+[data-theme='light'] .features-main-title {
+  color: #071324;
+}
+
+[data-theme='light'] .title-gradient-gold {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 60%, #071324 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+[data-theme='light'] .features-subtitle {
+  color: #475569;
+}
+
+[data-theme='light'] .features-badge-pill {
+  background: rgba(217, 119, 6, 0.08);
+  border-color: rgba(217, 119, 6, 0.28);
+  color: #b45309;
+}
+
+[data-theme='light'] .feature-bento-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  color: #0f172a;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+}
+
+[data-theme='light'] .feature-bento-card:hover {
+  border-color: rgba(248, 180, 0, 0.5);
+  box-shadow: 0 16px 36px -4px rgba(15, 23, 42, 0.09);
+}
+
+[data-theme='light'] .bento-card-title,
+[data-theme='light'] .feature-card-heading,
+[data-theme='light'] .feature-bento-card h3 {
+  color: #071324 !important;
+}
+
+[data-theme='light'] .bento-card-desc,
+[data-theme='light'] .feature-card-text,
+[data-theme='light'] .feature-bento-card p {
+  color: #475569 !important;
+}
+
+[data-theme='light'] .feature-highlights-list {
+  border-top-color: #e2e8f0 !important;
+}
+
+[data-theme='light'] .feature-highlights-list li {
+  color: #334155 !important;
+}
+
+[data-theme='light'] .feature-card-footer {
+  border-top-color: #e2e8f0 !important;
+}
+
+[data-theme='light'] .feature-card-action-link {
+  color: #071324 !important;
+}
+
+[data-theme='light'] .feature-card-action-link:hover {
+  color: #b45309 !important;
+}
+
+[data-theme='light'] .features-trust-ribbon {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05);
+}
+
+[data-theme='light'] .trust-stat-box {
+  border-right-color: #e2e8f0;
+}
+
+[data-theme='light'] .trust-stat-number {
+  color: #071324;
+}
+
+[data-theme='light'] .trust-stat-label {
+  color: #64748b;
+}
+
+[data-theme='light'] .stat-icon-wrapper {
+  background: rgba(248, 180, 0, 0.12);
+  color: #d97706;
+}
+
+[data-theme='light'] .trust-cta-row {
+  border-top-color: #f1f5f9;
+}
+
+[data-theme='light'] .trust-cta-title,
+[data-theme='light'] .trust-cta-text h4 {
+  color: #071324 !important;
+}
+
+[data-theme='light'] .trust-cta-desc,
+[data-theme='light'] .trust-cta-text p {
+  color: #475569 !important;
+}
+
+[data-theme='light'] .btn-features-whatsapp {
+  background: #ffffff;
+  border-color: rgba(37, 211, 102, 0.45);
+  color: #16a34a;
+  box-shadow: 0 2px 8px rgba(37, 211, 102, 0.1);
+}
+

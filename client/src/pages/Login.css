@@ -121,6 +121,7 @@
   align-items: center;
   justify-content: center;
   padding: 48px 20px;
+  position: relative;
   background: 
     radial-gradient(ellipse at 50% 0%, rgba(248, 180, 0, 0.04) 0%, transparent 60%),
     #f8fafc;
@@ -615,4 +616,129 @@
     height: 46px;
     font-size: 17px;
   }
+}
+
+/* ============================================================
+   AUTH / LOGIN PAGE — DOMINANT LIGHT THEME ARCHITECTURE
+   ============================================================ */
+[data-theme='light'] .enterprise-auth-page {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+[data-theme='light'] .auth-top-navbar {
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+[data-theme='light'] .brand-firm-name {
+  color: #071324;
+}
+
+[data-theme='light'] .auth-form-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 20px 40px -15px rgba(7, 19, 36, 0.07);
+}
+
+[data-theme='light'] .auth-card-title h2 {
+  color: #0f172a;
+}
+
+[data-theme='light'] .auth-card-title p {
+  color: #64748b;
+}
+
+[data-theme='light'] .social-grid-btn {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  color: #1e293b;
+}
+
+[data-theme='light'] .auth-input-container {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+[data-theme='light'] .auth-input-field {
+  color: #071324;
+}
+
+/* ============================================================
+   AUTH / LOGIN PAGE — DOMINANT DARK THEME ARCHITECTURE
+   ============================================================ */
+[data-theme='dark'] .enterprise-auth-page {
+  background-color: #08101d;
+  color: #f1f5f9;
+}
+
+[data-theme='dark'] .auth-top-navbar {
+  background: #0a1322;
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .brand-firm-name {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .auth-nav-link-btn {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .auth-center-container {
+  background: #08101d;
+}
+
+[data-theme='dark'] .auth-form-card {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme='dark'] .auth-security-pill {
+  background: #08121f;
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+}
+
+[data-theme='dark'] .auth-card-title h2 {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .auth-card-title p {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .social-grid-btn {
+  background: #08121f;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+[data-theme='dark'] .auth-form-separator span {
+  background: #0f1c32;
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .auth-input-label {
+  color: #cbd5e1;
+}
+
+[data-theme='dark'] .auth-input-container {
+  background: #08121f;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme='dark'] .auth-input-field {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .auth-checkbox-label {
+  color: #cbd5e1;
+}
+
+[data-theme='dark'] .otp-box-input {
+  background: #08121f;
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
 }

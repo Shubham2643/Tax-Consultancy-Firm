@@ -1,155 +1,114 @@
-import { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { useTheme } from '../context/ThemeContext';
+import './ThemeToggle.css';
 
-export default function ThemeToggle() {
-  const { theme, changeTheme } = useTheme();
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null);
+export default function ThemeToggle({ variant = 'segmented', className = '' }) {
+  const { theme, resolvedTheme, changeTheme } = useTheme();
 
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  const getIcon = () => {
-    if (theme === 'light') return 'fas fa-sun';
-    if (theme === 'dark') return 'fas fa-moon';
-    return 'fas fa-laptop';
+  const handleKeyDown = (e) => {
+    const options = ['light', 'dark', 'system'];
+    const currentIndex = options.indexOf(theme);
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      const nextIndex = (currentIndex + 1) % options.length;
+      changeTheme(options[nextIndex]);
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      const prevIndex = (currentIndex - 1 + options.length) % options.length;
+      changeTheme(options[prevIndex]);
+    }
   };
 
-  const getLabel = () => {
-    if (theme === 'light') return 'Light';
-    if (theme === 'dark') return 'Dark';
-    return 'System';
+  const getThumbClass = () => {
+    if (theme === 'light') return 'thumb-light';
+    if (theme === 'dark') return 'thumb-dark';
+    return 'thumb-system';
   };
 
-  return (
-    <div className="theme-toggle-container" ref={dropdownRef} style={{ position: 'relative', display: 'inline-block' }}>
+  const controls = (
+    <div
+      className="theme-segmented-capsule"
+      role="radiogroup"
+      aria-label="Color scheme preference"
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+    >
+      {/* Gliding active background indicator */}
+      <span className={`theme-segment-thumb ${getThumbClass()}`} aria-hidden="true" />
+
+      {/* 1. Light Mode */}
       <button
         type="button"
-        className="theme-toggle-btn"
-        onClick={() => setIsOpen(!isOpen)}
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-          padding: '8px 14px',
-          borderRadius: '20px',
-          border: '1px solid var(--border-color, #e2e8f0)',
-          background: 'var(--bg-card, #ffffff)',
-          color: 'var(--text-main, #333333)',
-          cursor: 'pointer',
-          fontWeight: '600',
-          fontSize: '0.9rem',
-          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
-          transition: 'all 0.2s ease',
-          outline: 'none'
-        }}
+        role="radio"
+        aria-checked={theme === 'light'}
+        aria-label="Switch to Light mode (Daylight theme)"
+        title="Light Mode (Daylight)"
+        className={`theme-segment-btn ${theme === 'light' ? 'active btn-light' : ''}`}
+        onClick={() => changeTheme('light')}
       >
-        <i className={`${getIcon()}`} style={{ color: 'var(--accent, #2a5a8a)' }}></i>
-        <span>{getLabel()}</span>
-        <i className="fas fa-chevron-down" style={{ fontSize: '0.75rem', opacity: 0.6, transform: isOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s ease' }}></i>
+        <i className="fas fa-sun" />
       </button>
 
-      {isOpen && (
-        <div
-          className="theme-dropdown-menu"
-          style={{
-            position: 'absolute',
-            top: 'calc(100% + 6px)',
-            right: 0,
-            width: '160px',
-            borderRadius: '12px',
-            border: '1px solid var(--border-color, #e2e8f0)',
-            background: 'var(--bg-card, #ffffff)',
-            boxShadow: '0 10px 25px rgba(0,0,0,0.08)',
-            padding: '6px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '4px',
-            zIndex: 9999,
-            animation: 'dropdownFade 0.15s ease-out'
-          }}
-        >
-          <button
-            type="button"
-            onClick={() => { changeTheme('light'); setIsOpen(false); }}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px',
-              padding: '10px 12px',
-              borderRadius: '8px',
-              border: 'none',
-              background: theme === 'light' ? 'rgba(37, 99, 235, 0.08)' : 'transparent',
-              color: theme === 'light' ? 'var(--accent, #2a5a8a)' : 'var(--text-main, #333333)',
-              textAlign: 'left',
-              fontWeight: theme === 'light' ? '700' : '500',
-              cursor: 'pointer',
-              fontSize: '0.85rem',
-              width: '100%',
-              transition: 'all 0.15s ease'
-            }}
-          >
-            <i className="fas fa-sun" style={{ width: '16px', color: '#eab308' }}></i>
-            <span>Light Mode</span>
-          </button>
+      {/* 2. Dark Mode */}
+      <button
+        type="button"
+        role="radio"
+        aria-checked={theme === 'dark'}
+        aria-label="Switch to Dark mode (Executive midnight)"
+        title="Dark Mode (Midnight Executive)"
+        className={`theme-segment-btn ${theme === 'dark' ? 'active btn-dark' : ''}`}
+        onClick={() => changeTheme('dark')}
+      >
+        <i className="fas fa-moon" />
+      </button>
 
-          <button
-            type="button"
-            onClick={() => { changeTheme('dark'); setIsOpen(false); }}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px',
-              padding: '10px 12px',
-              borderRadius: '8px',
-              border: 'none',
-              background: theme === 'dark' ? 'rgba(37, 99, 235, 0.08)' : 'transparent',
-              color: theme === 'dark' ? 'var(--accent, #2a5a8a)' : 'var(--text-main, #333333)',
-              textAlign: 'left',
-              fontWeight: theme === 'dark' ? '700' : '500',
-              cursor: 'pointer',
-              fontSize: '0.85rem',
-              width: '100%',
-              transition: 'all 0.15s ease'
-            }}
-          >
-            <i className="fas fa-moon" style={{ width: '16px', color: '#a855f7' }}></i>
-            <span>Dark Mode</span>
-          </button>
+      {/* 3. System / Auto Mode */}
+      <button
+        type="button"
+        role="radio"
+        aria-checked={theme === 'system'}
+        aria-label={`Sync with System preferences (Currently ${resolvedTheme === 'dark' ? 'Dark' : 'Light'})`}
+        title={`System Default (${resolvedTheme === 'dark' ? 'Dark' : 'Light'})`}
+        className={`theme-segment-btn ${theme === 'system' ? 'active btn-system' : ''}`}
+        onClick={() => changeTheme('system')}
+      >
+        <span className="system-icon-wrap">
+          <i className="fas fa-desktop" />
+          {theme === 'system' && (
+            <span
+              className={`system-resolved-pip ${resolvedTheme === 'dark' ? 'pip-dark' : 'pip-light'}`}
+              title={`System is in ${resolvedTheme} mode`}
+            />
+          )}
+        </span>
+      </button>
+    </div>
+  );
 
-          <button
-            type="button"
-            onClick={() => { changeTheme('system'); setIsOpen(false); }}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px',
-              padding: '10px 12px',
-              borderRadius: '8px',
-              border: 'none',
-              background: theme === 'system' ? 'rgba(37, 99, 235, 0.08)' : 'transparent',
-              color: theme === 'system' ? 'var(--accent, #2a5a8a)' : 'var(--text-main, #333333)',
-              textAlign: 'left',
-              fontWeight: theme === 'system' ? '700' : '500',
-              cursor: 'pointer',
-              fontSize: '0.85rem',
-              width: '100%',
-              transition: 'all 0.15s ease'
-            }}
-          >
-            <i className="fas fa-laptop" style={{ width: '16px', color: '#64748b' }}></i>
-            <span>System default</span>
-          </button>
+  if (variant === 'drawer-row') {
+    return (
+      <div className={`theme-drawer-row ${className}`}>
+        <div className="drawer-row-left">
+          <div className="drawer-row-icon">
+            <i className={resolvedTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun'} />
+          </div>
+          <div className="drawer-row-text">
+            <span className="drawer-row-title">Display Appearance</span>
+            <span className="drawer-row-sub">
+              {theme === 'system' ? `Auto (${resolvedTheme === 'dark' ? 'Dark' : 'Light'})` : theme === 'dark' ? 'Midnight Dark' : 'Daylight Light'}
+            </span>
+          </div>
         </div>
-      )}
+        <div className="drawer-row-right">
+          {controls}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={`theme-toggle-wrap ${className}`}>
+      {controls}
     </div>
   );
 }

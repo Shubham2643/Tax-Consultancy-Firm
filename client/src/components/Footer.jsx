@@ -51,6 +51,10 @@ const Footer = () => {
 
   const quickLinks = [
     { label: 'Firm Overview', url: '/about' },
+    { label: 'Tax Calculators & Tools', url: '/calculators' },
+    { label: 'Compliance & Due Dates', url: '/compliance-calendar' },
+    { label: 'Retainer Plans & Pricing', url: '/pricing' },
+    { label: 'CA Articleship & Careers', url: '/careers' },
     { label: 'Tax Knowledge Hub', url: '/blog' },
     { label: 'Frequently Asked Questions', url: '/faqs' },
     { label: 'Client Portal & Vault', url: '/login' },

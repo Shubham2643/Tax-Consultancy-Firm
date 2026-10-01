@@ -1,12 +1,17 @@
-:root {
+:root,
+[data-theme='light'] {
   --primary: #1a3e72;
   --secondary: #f8b400;
   --accent: #2a5a8a;
   --light: #f8f9fa;
   --dark: #212529;
-  --text: #333333;
-  --text-light: #6c757d;
-  --success: #4CAF50;
+  --text: #1e293b;
+  --text-light: #64748b;
+  --text-main: #0f172a;
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --border-color: #e2e8f0;
+  --success: #10b981;
   --gradient-primary: radial-gradient(circle at 12% 18%, rgba(37, 99, 235, 0.15) 0%, transparent 45%), radial-gradient(circle at 88% 82%, rgba(248, 180, 0, 0.08) 0%, transparent 45%), linear-gradient(135deg, #071324 0%, #13243e 100%);
   --gradient-card: linear-gradient(90deg, #3498db, #2ecc71);
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
@@ -176,6 +181,16 @@ img {
 .card-animate:nth-child(9) { animation-delay: 0.55s; }
 
 /* ============================================
+   SMOOTH THEME TRANSITION
+   ============================================ */
+html.theme-transitioning,
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease, box-shadow 0.25s ease !important;
+}
+
+/* ============================================
    EXECUTIVE DARK MODE STYLES
    ============================================ */
 [data-theme='dark'] {
@@ -186,7 +201,37 @@ img {
   --dark: #f8fafc;
   --text: #f1f5f9;
   --text-light: #94a3b8;
+  --text-main: #f1f5f9;
+  --bg-main: #08101d;
+  --bg-card: #0f1c32;
+  --border-color: rgba(255, 255, 255, 0.08);
   --success: #10b981;
+
+  /* Portal & Admin Tokens */
+  --portal-bg-base: #08101d;
+  --portal-bg-surface: #0f1c32;
+  --portal-bg-sidebar: #060d19;
+  --portal-bg-sidebar-hover: rgba(255, 255, 255, 0.06);
+  --portal-border-subtle: rgba(255, 255, 255, 0.08);
+  --portal-text-main: #f8fafc;
+  --portal-text-muted: #94a3b8;
+  --portal-text-light: #64748b;
+  --portal-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --portal-shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --portal-shadow-lg: 0 12px 36px rgba(0, 0, 0, 0.5);
+
+  --admin-bg-base: #08101d;
+  --admin-bg-surface: #0f1c32;
+  --admin-bg-sidebar: #060d19;
+  --admin-bg-sidebar-hover: rgba(255, 255, 255, 0.06);
+  --admin-bg-sidebar-active: #13243e;
+  --admin-border-subtle: rgba(255, 255, 255, 0.08);
+  --admin-text-main: #f8fafc;
+  --admin-text-muted: #94a3b8;
+  --admin-text-light: #64748b;
+  --admin-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --admin-shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --admin-shadow-lg: 0 12px 36px rgba(0, 0, 0, 0.5);
 }
 
 [data-theme='dark'] body {
@@ -194,6 +239,7 @@ img {
   color: #f1f5f9;
 }
 
+/* Page Surface Containers in Dark Mode */
 [data-theme='dark'] .features-section,
 [data-theme='dark'] .faq-section,
 [data-theme='dark'] .pricing-dynamic-section,
@@ -203,11 +249,22 @@ img {
 [data-theme='dark'] .service-detail-page,
 [data-theme='dark'] .blog-page,
 [data-theme='dark'] .blog-detail-page,
-[data-theme='dark'] .legal-page-container {
+[data-theme='dark'] .legal-page,
+[data-theme='dark'] .legal-page-container,
+[data-theme='dark'] .services,
+[data-theme='dark'] .trust,
+[data-theme='dark'] .calculators-page,
+[data-theme='dark'] .compliance-calendar-page,
+[data-theme='dark'] .pricing-page,
+[data-theme='dark'] .pricing-page-container,
+[data-theme='dark'] .careers-page,
+[data-theme='dark'] .careers-page-container,
+[data-theme='dark'] .enterprise-auth-page {
   background-color: #08101d !important;
   color: #f1f5f9 !important;
 }
 
+/* Cards & Elevated Containers in Dark Mode */
 [data-theme='dark'] .feature-bento-card,
 [data-theme='dark'] .faq-item-card,
 [data-theme='dark'] .executive-service-card,
@@ -217,12 +274,29 @@ img {
 [data-theme='dark'] .about-content-card,
 [data-theme='dark'] .dynamic-pricing-card,
 [data-theme='dark'] .toast-alert,
-[data-theme='dark'] .legal-page-card {
+[data-theme='dark'] .legal-page-card,
+[data-theme='dark'] .tst-pillar-card,
+[data-theme='dark'] .tst-stat-counter-card,
+[data-theme='dark'] .calc-card,
+[data-theme='dark'] .calendar-event-card,
+[data-theme='dark'] .pricing-plan-card,
+[data-theme='dark'] .career-vacancy-card,
+[data-theme='dark'] .career-pillar-card,
+[data-theme='dark'] .career-contact-card,
+[data-theme='dark'] .penalty-matrix-card,
+[data-theme='dark'] .calendar-cta-card,
+[data-theme='dark'] .pricing-cta-card,
+[data-theme='dark'] .portal-card,
+[data-theme='dark'] .admin-card,
+[data-theme='dark'] .auth-form-card,
+[data-theme='dark'] .portal-panel-card,
+[data-theme='dark'] .admin-panel-card {
   background: #0f1c32 !important;
   border-color: rgba(255, 255, 255, 0.08) !important;
   color: #f1f5f9 !important;
 }
 
+/* Headings in Dark Mode */
 [data-theme='dark'] .features-section h2,
 [data-theme='dark'] .faq-section h2,
 [data-theme='dark'] .pricing-dynamic-section h2,
@@ -238,10 +312,17 @@ img {
 [data-theme='dark'] .blog-page h2,
 [data-theme='dark'] .faq-question-btn,
 [data-theme='dark'] .service-card-title,
-[data-theme='dark'] .pricing-card-title {
-  color: #f8fafc;
+[data-theme='dark'] .pricing-card-title,
+[data-theme='dark'] #services-heading,
+[data-theme='dark'] .trust h2,
+[data-theme='dark'] .tst-card-title,
+[data-theme='dark'] .auth-card-title,
+[data-theme='dark'] .portal-heading,
+[data-theme='dark'] .admin-heading {
+  color: #f8fafc !important;
 }
 
+/* Secondary Typography in Dark Mode */
 [data-theme='dark'] .features-section p,
 [data-theme='dark'] .faq-section p,
 [data-theme='dark'] .pricing-dynamic-section p,
@@ -252,13 +333,21 @@ img {
 [data-theme='dark'] .blog-page p,
 [data-theme='dark'] .faq-answer-inner,
 [data-theme='dark'] .service-card-desc,
-[data-theme='dark'] .features-subtitle {
-  color: #94a3b8;
+[data-theme='dark'] .features-subtitle,
+[data-theme='dark'] .section-subtitle,
+[data-theme='dark'] .trust p,
+[data-theme='dark'] .tst-card-desc,
+[data-theme='dark'] .auth-card-sub {
+  color: #94a3b8 !important;
 }
 
+/* Form Controls in Dark Mode */
 [data-theme='dark'] input,
 [data-theme='dark'] textarea,
-[data-theme='dark'] select {
+[data-theme='dark'] select,
+[data-theme='dark'] .auth-input-field,
+[data-theme='dark'] .portal-form-control,
+[data-theme='dark'] .admin-form-control {
   background-color: #0a1322 !important;
   color: #f1f5f9 !important;
   border-color: rgba(255, 255, 255, 0.15) !important;
@@ -269,4 +358,546 @@ img {
   color: #64748b !important;
 }
 
+/* Floating Widgets in Dark Mode */
+[data-theme='dark'] .wa-chat-bubble {
+  background: #0f1c32 !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #f1f5f9 !important;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6) !important;
+}
 
+[data-theme='dark'] .wa-chat-bubble::after {
+  background: #0f1c32 !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+[data-theme='dark'] .wa-bubble-title {
+  color: #f8fafc !important;
+}
+
+[data-theme='dark'] .wa-bubble-msg {
+  color: #cbd5e1 !important;
+}
+
+/* ==========================================================================
+   DOMINANT EXECUTIVE LIGHT THEME — Daylight Bank-Grade Architecture
+   ========================================================================== */
+
+/* 1. TOP BAR in Light Mode */
+[data-theme='light'] .top-bar {
+  background: linear-gradient(90deg, #f8fafc 0%, #f1f5f9 50%, #f8fafc 100%) !important;
+  border-bottom-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+[data-theme='light'] .top-status-pill {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+[data-theme='light'] .top-status-hours {
+  color: #64748b !important;
+}
+
+[data-theme='light'] .top-contact-chip {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+[data-theme='light'] .social-circle-btn {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #334155 !important;
+}
+
+[data-theme='light'] .social-circle-btn:hover {
+  background: #f8fafc !important;
+  border-color: #d97706 !important;
+  color: #d97706 !important;
+}
+
+[data-theme='light'] .top-bar-portal-btn {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05) !important;
+}
+
+[data-theme='light'] .top-bar-portal-btn .portal-btn-text {
+  color: #0f172a !important;
+}
+
+[data-theme='light'] .top-bar-auth-capsule {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05) !important;
+}
+
+[data-theme='light'] .capsule-label {
+  color: #0f172a !important;
+}
+
+[data-theme='light'] .top-bar-divider,
+[data-theme='light'] .top-bar-sep {
+  background-color: #cbd5e1 !important;
+}
+
+/* 2. COMPLIANCE TICKER in Light Mode */
+[data-theme='light'] .compliance-ticker-strip {
+  background: linear-gradient(90deg, #ffffff 0%, #f8fafc 50%, #ffffff 100%) !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  color: #0f172a !important;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.04) !important;
+}
+
+[data-theme='light'] .compliance-ticker-header {
+  background: rgba(217, 119, 6, 0.08) !important;
+  border-color: rgba(217, 119, 6, 0.3) !important;
+  color: #b45309 !important;
+}
+
+[data-theme='light'] .ticker-item a {
+  color: #334155 !important;
+}
+
+[data-theme='light'] .ticker-badge {
+  background: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+[data-theme='light'] .ticker-due-tag {
+  color: #b45309 !important;
+}
+
+/* 3. HERO SECTIONS across All Pages in Light Mode */
+[data-theme='light'] .hero,
+[data-theme='light'] .services-hero,
+[data-theme='light'] .detail-hero,
+[data-theme='light'] .about-hero,
+[data-theme='light'] .calc-hero,
+[data-theme='light'] .pricing-hero,
+[data-theme='light'] .careers-hero,
+[data-theme='light'] .calendar-hero,
+[data-theme='light'] .blog-hero,
+[data-theme='light'] .faq-hero,
+[data-theme='light'] .contact-hero,
+[data-theme='light'] .legal-hero {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
+  color: #0f172a !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+
+[data-theme='light'] .hero h1,
+[data-theme='light'] .services-hero h1,
+[data-theme='light'] .detail-hero h1,
+[data-theme='light'] .about-hero h1,
+[data-theme='light'] .calc-hero h1,
+[data-theme='light'] .pricing-hero h1,
+[data-theme='light'] .careers-hero h1,
+[data-theme='light'] .calendar-hero h1,
+[data-theme='light'] .blog-hero h1,
+[data-theme='light'] .faq-hero h1,
+[data-theme='light'] .contact-hero h1,
+[data-theme='light'] .legal-hero h1,
+[data-theme='light'] .hero-main-heading {
+  color: #071324 !important;
+}
+
+[data-theme='light'] .hero p,
+[data-theme='light'] .services-hero p,
+[data-theme='light'] .detail-hero p,
+[data-theme='light'] .about-hero p,
+[data-theme='light'] .calc-hero p,
+[data-theme='light'] .pricing-hero p,
+[data-theme='light'] .careers-hero p,
+[data-theme='light'] .calendar-hero p,
+[data-theme='light'] .blog-hero p,
+[data-theme='light'] .faq-hero p,
+[data-theme='light'] .contact-hero p,
+[data-theme='light'] .legal-hero p,
+[data-theme='light'] .hero-narrative-lead,
+[data-theme='light'] .calc-hero-lead,
+[data-theme='light'] .pricing-hero-lead,
+[data-theme='light'] .about-hero-lead {
+  color: #475569 !important;
+}
+
+[data-theme='light'] .hero-pill-badge,
+[data-theme='light'] .calc-hero-badge,
+[data-theme='light'] .pricing-hero-badge,
+[data-theme='light'] .about-hero-badge {
+  background: rgba(217, 119, 6, 0.08) !important;
+  border-color: rgba(217, 119, 6, 0.3) !important;
+  color: #b45309 !important;
+}
+
+[data-theme='light'] .hero-mockup-card {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.08), 0 0 1px rgba(15, 23, 42, 0.1) !important;
+}
+
+[data-theme='light'] .mockup-header {
+  border-bottom-color: #f1f5f9 !important;
+}
+
+[data-theme='light'] .mockup-title strong {
+  color: #071324 !important;
+}
+
+[data-theme='light'] .mockup-title span {
+  color: #64748b !important;
+}
+
+[data-theme='light'] .mockup-tile-item {
+  background: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+
+[data-theme='light'] .mockup-tile-item:hover {
+  background: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+}
+
+[data-theme='light'] .mockup-tile-item strong {
+  color: #0f172a !important;
+}
+
+[data-theme='light'] .mockup-tile-item span {
+  color: #64748b !important;
+}
+
+[data-theme='light'] .mockup-footer-note {
+  border-top-color: #f1f5f9 !important;
+  color: #64748b !important;
+}
+
+[data-theme='light'] .micro-trust-item {
+  color: #334155 !important;
+}
+
+[data-theme='light'] .btn-hero-whatsapp {
+  background: #ffffff !important;
+  border-color: rgba(37, 211, 102, 0.5) !important;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.12) !important;
+}
+
+/* 4. FEATURES & WHY CHOOSE US in Light Mode */
+[data-theme='light'] .features-section {
+  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%) !important;
+  color: #0f172a !important;
+}
+
+[data-theme='light'] .features-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(15, 23, 42, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.035) 1px, transparent 1px) !important;
+}
+
+[data-theme='light'] .features-section h2,
+[data-theme='light'] .features-section h3,
+[data-theme='light'] .features-section h4 {
+  color: #071324 !important;
+}
+
+[data-theme='light'] .feature-bento-card {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05) !important;
+}
+
+[data-theme='light'] .feature-bento-card:hover {
+  border-color: rgba(248, 180, 0, 0.5) !important;
+  box-shadow: 0 16px 36px -4px rgba(15, 23, 42, 0.09) !important;
+}
+
+[data-theme='light'] .feature-bento-card p {
+  color: #475569 !important;
+}
+
+/* 5. PRICING SECTIONS & TIER CARDS in Light Mode */
+[data-theme='light'] .pricing-dynamic-section,
+[data-theme='light'] .pricing-page,
+[data-theme='light'] .pricing-page-container {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+[data-theme='light'] .dynamic-pricing-card,
+[data-theme='light'] .pricing-plan-card {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06) !important;
+}
+
+[data-theme='light'] .pricing-plan-card.popular-card,
+[data-theme='light'] .dynamic-pricing-card.featured {
+  border-color: #f8b400 !important;
+  box-shadow: 0 8px 30px rgba(248, 180, 0, 0.15) !important;
+}
+
+[data-theme='light'] .billing-switch-pill {
+  background: #e2e8f0 !important;
+  border-color: #cbd5e1 !important;
+}
+
+[data-theme='light'] .switch-btn {
+  color: #64748b !important;
+}
+
+[data-theme='light'] .switch-btn.active {
+  background: #f8b400 !important;
+  color: #071324 !important;
+}
+
+/* 6. CALCULATORS HUB in Light Mode */
+[data-theme='light'] .calculators-page {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+[data-theme='light'] .calc-nav-wrapper {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-bottom-color: #e2e8f0 !important;
+}
+
+[data-theme='light'] .calc-tab-btn {
+  background: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+  color: #475569 !important;
+}
+
+[data-theme='light'] .calc-tab-btn:hover {
+  background: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+[data-theme='light'] .calc-tab-btn.active {
+  background: #f8b400 !important;
+  border-color: #f8b400 !important;
+  color: #071324 !important;
+}
+
+[data-theme='light'] .calc-card {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05) !important;
+}
+
+[data-theme='light'] .calc-form-control,
+[data-theme='light'] .regime-picker,
+[data-theme='light'] .matrix-input-box {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+[data-theme='light'] .calc-result-box,
+[data-theme='light'] .regime-card,
+[data-theme='light'] .calc-breakdown-card {
+  background: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+/* 7. COMPLIANCE CALENDAR & CAREERS in Light Mode */
+[data-theme='light'] .compliance-calendar-page,
+[data-theme='light'] .careers-page,
+[data-theme='light'] .careers-page-container {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+[data-theme='light'] .calendar-event-card,
+[data-theme='light'] .career-vacancy-card,
+[data-theme='light'] .career-pillar-card,
+[data-theme='light'] .career-contact-card,
+[data-theme='light'] .penalty-matrix-card,
+[data-theme='light'] .calendar-cta-card,
+[data-theme='light'] .pricing-cta-card {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05) !important;
+}
+
+/* 8. EXECUTIVE FOOTER in Light Mode */
+[data-theme='light'] .executive-footer {
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%) !important;
+  color: #0f172a !important;
+  border-top: 1px solid #e2e8f0 !important;
+}
+
+[data-theme='light'] .footer-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.03) 1px, transparent 1px) !important;
+}
+
+[data-theme='light'] .footer-pre-banner {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06) !important;
+}
+
+[data-theme='light'] .pre-banner-text h3 {
+  color: #071324 !important;
+}
+
+[data-theme='light'] .pre-banner-text p {
+  color: #475569 !important;
+}
+
+[data-theme='light'] .footer-brand-text strong {
+  color: #071324 !important;
+}
+
+[data-theme='light'] .footer-brand-text span {
+  color: #64748b !important;
+}
+
+[data-theme='light'] .footer-brand-bio {
+  color: #475569 !important;
+}
+
+[data-theme='light'] .footer-trust-badge {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+[data-theme='light'] .footer-social-pill {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #475569 !important;
+}
+
+[data-theme='light'] .footer-social-pill:hover {
+  border-color: #f8b400 !important;
+  color: #d97706 !important;
+}
+
+[data-theme='light'] .footer-col-title {
+  color: #071324 !important;
+}
+
+[data-theme='light'] .footer-nav-link {
+  color: #475569 !important;
+}
+
+[data-theme='light'] .footer-nav-link:hover {
+  color: #d97706 !important;
+}
+
+[data-theme='light'] .contact-entry-card {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+[data-theme='light'] .contact-entry-card .contact-label {
+  color: #64748b !important;
+}
+
+[data-theme='light'] .contact-entry-card strong {
+  color: #071324 !important;
+}
+
+[data-theme='light'] .footer-office-card {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05) !important;
+}
+
+[data-theme='light'] .office-title {
+  color: #071324 !important;
+}
+
+[data-theme='light'] .office-address-text {
+  color: #475569 !important;
+}
+
+[data-theme='light'] .footer-bottom-bar {
+  background: #e2e8f0 !important;
+  border-top-color: #cbd5e1 !important;
+  color: #64748b !important;
+}
+
+[data-theme='light'] .footer-bottom-bar a {
+  color: #475569 !important;
+}
+
+/* 9. PUSH NOTIFICATION CONSENT in Light Mode */
+[data-theme='light'] .push-consent-bar {
+  background: rgba(255, 255, 255, 0.98) !important;
+  border: 1px solid #e2e8f0 !important;
+  color: #0f172a !important;
+  box-shadow: 0 15px 45px rgba(15, 23, 42, 0.12) !important;
+}
+
+[data-theme='light'] .push-consent-text h4 {
+  color: #071324 !important;
+}
+
+[data-theme='light'] .push-consent-text p {
+  color: #475569 !important;
+}
+
+[data-theme='light'] .push-close-btn {
+  color: #64748b !important;
+}
+
+[data-theme='light'] .btn-push-dismiss {
+  background: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  color: #475569 !important;
+}
+
+/* ==========================================================================
+   UNIVERSAL RADIANT GOLD ACCENT SECTION & PAGE DIVIDER
+   Matches the 3.5px gold radiant gradient with ambient glow
+   ========================================================================== */
+.gold-section-divider,
+.section-top-accent-line,
+.services-top-accent-line,
+.hero-top-accent-line,
+.trust-top-accent-line,
+.features-top-accent-line,
+.pricing-top-accent-line,
+.footer-top-accent-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 3.5px;
+  background: linear-gradient(90deg, #f8b400 0%, #ffdf70 50%, #f8b400 100%) !important;
+  box-shadow: 0 0 16px rgba(248, 180, 0, 0.45) !important;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.gold-section-divider.standalone,
+.gold-divider-standalone,
+.gold-divider-strip {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 3.5px;
+  background: linear-gradient(90deg, #f8b400 0%, #ffdf70 50%, #f8b400 100%) !important;
+  box-shadow: 0 0 16px rgba(248, 180, 0, 0.45) !important;
+  z-index: 10;
+  border: none;
+  margin: 40px 0;
+  pointer-events: none;
+}
+
+.has-top-accent {
+  position: relative !important;
+}

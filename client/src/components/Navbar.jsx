@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useSiteContext } from '../context/SiteContext';
 import { useAuth } from '../context/AuthContext';
 import ServiceSearchModal from './ServiceSearchModal';
+import ThemeToggle from './ThemeToggle';
 import './Navbar.css';
 
 const formatDropdownLabel = (label) => {
@@ -50,7 +51,10 @@ const getDropdownMeta = (label) => {
   if (normalized.includes('roc') || normalized.includes('annual filing')) return { icon: 'fas fa-file-contract', desc: 'AOC-4 & MGT-7 annual statutory reporting' };
   if (normalized.includes('cfo')) return { icon: 'fas fa-crown', desc: 'Executive financial leadership' };
 
-  if (normalized.includes('calculator') || normalized.includes('due date')) return { icon: 'fas fa-calendar-check', desc: 'Statutory compliance & due dates' };
+  if (normalized.includes('calculator') || normalized.includes('tax-tools')) return { icon: 'fas fa-calculator', desc: 'Old vs New Tax Regime & GST Tools' };
+  if (normalized.includes('due date') || normalized.includes('calendar') || normalized.includes('compliance')) return { icon: 'fas fa-calendar-check', desc: 'Statutory compliance & due dates' };
+  if (normalized.includes('pricing') || normalized.includes('retainer')) return { icon: 'fas fa-handshake', desc: 'Scope-locked corporate retainers' };
+  if (normalized.includes('career') || normalized.includes('articleship') || normalized.includes('job')) return { icon: 'fas fa-user-graduate', desc: 'ICAI articleship & senior hiring' };
   if (normalized.includes('blog')) return { icon: 'fas fa-newspaper', desc: 'Tax circulars, case studies & updates' };
   if (normalized.includes('faq')) return { icon: 'fas fa-circle-question', desc: 'Common compliance queries answered' };
   if (normalized.includes('contact')) return { icon: 'fas fa-headset', desc: 'Direct access to senior advisory chambers' };
@@ -90,8 +94,24 @@ const Navbar = () => {
       let children = (item.children || []).filter((child) => {
         const childLabel = (child?.label || '').toLowerCase().trim();
         const childHref = (child?.href || '').trim();
-        return !childLabel.includes('contact') && childHref !== '/contact' && !childHref.includes('tax-tools') && !childLabel.includes('tax tool');
+        return !childLabel.includes('contact') && childHref !== '/contact';
       });
+
+      // Ensure "Others" (Knowledge & Firm Hub) contains the key institutional pages
+      if (item.label?.toLowerCase().includes('other')) {
+        const requiredOthers = [
+          { label: 'Tax Calculators', href: '/calculators' },
+          { label: 'Compliance Calendar', href: '/compliance-calendar' },
+          { label: 'Retainer Pricing', href: '/pricing' },
+          { label: 'Careers & Articleship', href: '/careers' },
+        ];
+
+        requiredOthers.forEach((req) => {
+          if (!children.some((c) => c.href === req.href)) {
+            children.push(req);
+          }
+        });
+      }
 
       return {
         ...item,
@@ -397,6 +417,10 @@ const Navbar = () => {
               )}
             </div>
 
+            <div className="top-bar-theme-toggle">
+              <ThemeToggle />
+            </div>
+
             <div className="top-bar-divider"></div>
 
             {/* Client Portal Vault Capsule */}
@@ -698,6 +722,9 @@ const Navbar = () => {
 
         {/* Mobile Nav Links with Sleek List Rows */}
         <div className="mobile-drawer-body">
+          {/* Mobile Theme Selector Row */}
+          <ThemeToggle variant="drawer-row" />
+
           <ul className="mobile-nav-list">
             {navMenu.map((item, index) => {
               const active = isItemActive(item);

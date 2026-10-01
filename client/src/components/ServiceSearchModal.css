@@ -536,3 +536,134 @@
     text-align: center;
   }
 }
+
+/* ============================================================
+   SERVICE SEARCH MODAL — DOMINANT LIGHT THEME
+   ============================================================ */
+[data-theme='light'] .search-modal-container {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+[data-theme='light'] .search-modal-header {
+  background: #ffffff;
+  border-bottom-color: #f1f5f9;
+}
+
+[data-theme='light'] .search-modal-input {
+  color: #071324;
+}
+
+[data-theme='light'] .search-category-pills {
+  background: #f8fafc;
+  border-bottom-color: #f1f5f9;
+}
+
+[data-theme='light'] .category-pill {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  color: #475569;
+}
+
+[data-theme='light'] .category-pill.active {
+  background: #071324;
+  color: #ffffff;
+}
+
+[data-theme='light'] .result-title {
+  color: #071324;
+}
+
+[data-theme='light'] .result-desc {
+  color: #64748b;
+}
+
+[data-theme='light'] .search-modal-footer {
+  background: #f8fafc;
+  border-top-color: #f1f5f9;
+}
+
+/* ============================================================
+   SERVICE SEARCH MODAL — DOMINANT DARK THEME
+   ============================================================ */
+[data-theme='dark'] .search-modal-container {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme='dark'] .search-modal-header {
+  background: #0f1c32;
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .search-modal-input {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .search-modal-input::placeholder {
+  color: #64748b;
+}
+
+[data-theme='dark'] .search-close-key kbd {
+  background: #08121f;
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .search-category-pills {
+  background: #08121f;
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .category-pill {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .category-pill.active {
+  background: #f8b400;
+  color: #071324;
+}
+
+[data-theme='dark'] .search-result-item:hover,
+[data-theme='dark'] .search-result-item.selected {
+  background: #13243e;
+}
+
+[data-theme='dark'] .result-title {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .result-desc {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .result-category-badge {
+  background: rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+}
+
+[data-theme='dark'] .search-modal-footer {
+  background: #08121f;
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .search-footer-shortcuts {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .search-footer-shortcuts kbd {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #cbd5e1;
+}
+
+[data-theme='dark'] .search-empty-state h4 {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .search-empty-state p {
+  color: #94a3b8;
+}

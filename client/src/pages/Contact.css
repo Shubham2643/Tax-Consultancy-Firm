@@ -1389,3 +1389,157 @@
   }
 }
 
+/* ============================================================
+   CONTACT PAGE — DOMINANT LIGHT THEME ARCHITECTURE
+   ============================================================ */
+[data-theme='light'] .contact-page {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+[data-theme='light'] .contact-hero {
+  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+  border-bottom: 1px solid #e2e8f0;
+}
+
+[data-theme='light'] .contact-hero h1 {
+  color: #071324;
+}
+
+[data-theme='light'] .contact-hero p {
+  color: #475569;
+}
+
+[data-theme='light'] .contact-hero-badge {
+  background: rgba(217, 119, 6, 0.08);
+  border-color: rgba(217, 119, 6, 0.25);
+  color: #b45309;
+}
+
+[data-theme='light'] .hero-reassurance-strip {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  color: #334155;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
+}
+
+[data-theme='light'] .contact-channel-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+}
+
+[data-theme='light'] .channel-title {
+  color: #071324;
+}
+
+[data-theme='light'] .channel-detail {
+  color: #334155;
+}
+
+[data-theme='light'] .chambers-bento-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+}
+
+[data-theme='light'] .vcard-bento-widget {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+[data-theme='light'] .vcard-title {
+  color: #071324;
+}
+
+/* ============================================================
+   CONTACT PAGE — DOMINANT DARK THEME ARCHITECTURE
+   ============================================================ */
+[data-theme='dark'] .contact-page {
+  background-color: #08101d;
+  color: #f1f5f9;
+}
+
+[data-theme='dark'] .contact-hero {
+  background: radial-gradient(circle at 50% 10%, #0d1e38 0%, #071324 70%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .contact-hero h1 {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .contact-hero p {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .hero-reassurance-strip {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+}
+
+[data-theme='dark'] .contact-channel-card {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .channel-title {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .channel-detail {
+  color: #cbd5e1;
+}
+
+[data-theme='dark'] .chambers-bento-card {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .vcard-bento-widget {
+  background: #0f1c32 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme='dark'] .vcard-title,
+[data-theme='dark'] .vcard-text-box strong {
+  color: #ffffff !important;
+}
+
+[data-theme='dark'] .vcard-text-box span {
+  color: #94a3b8 !important;
+}
+
+[data-theme='dark'] .vcard-icon-box {
+  background: #08121f !important;
+  color: #f8b400 !important;
+}
+
+[data-theme='dark'] .btn-vcard-action {
+  background: #08121f !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+}
+
+[data-theme='dark'] .btn-vcard-action:hover {
+  background: #f8b400 !important;
+  color: #071324 !important;
+  border-color: #f8b400 !important;
+}
+
+[data-theme='dark'] .wa-channel-card {
+  background: #0f1c32 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ============================================================
+   SECTION TOP ACCENT LINE POSITIONING FOR CONTACT PAGE
+   ============================================================ */
+.contact-equal-two-col-grid,
+.contact-chambers-section,
+.contact-faqs-section {
+  position: relative;
+  padding-top: 50px;
+}
+

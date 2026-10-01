@@ -4,13 +4,15 @@ const TermsConditions = () => {
   return (
     <div className="legal-page fade-in">
       <div className="legal-hero">
+        <div className="section-top-accent-line" aria-hidden="true"></div>
         <div className="container">
           <h1>Terms & Conditions</h1>
           <p>Please read these terms and conditions carefully before using our tax advisory services.</p>
         </div>
       </div>
 
-      <div className="container">
+      <div className="container legal-content-wrapper">
+        <div className="section-top-accent-line" aria-hidden="true"></div>
         <div className="legal-grid">
           {/* Sidebar table of contents */}
           <div className="legal-sidebar">

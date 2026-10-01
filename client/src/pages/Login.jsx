@@ -228,6 +228,7 @@ const Login = () => {
 
       {/* Center Auth Card */}
       <main className="auth-center-container">
+        <div className="section-top-accent-line" aria-hidden="true"></div>
         <div className="auth-card-box">
           
           {/* Back button for Forgot password steps */}

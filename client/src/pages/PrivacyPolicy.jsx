@@ -4,13 +4,15 @@ const PrivacyPolicy = () => {
   return (
     <div className="legal-page fade-in">
       <div className="legal-hero">
+        <div className="section-top-accent-line" aria-hidden="true"></div>
         <div className="container">
           <h1>Privacy Policy</h1>
           <p>Learn how we protect and manage your sensitive business documents and financial statements.</p>
         </div>
       </div>
 
-      <div className="container">
+      <div className="container legal-content-wrapper">
+        <div className="section-top-accent-line" aria-hidden="true"></div>
         <div className="legal-grid">
           <div className="legal-sidebar">
             <h3>Sections</h3>

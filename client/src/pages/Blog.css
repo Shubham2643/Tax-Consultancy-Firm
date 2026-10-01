@@ -2060,3 +2060,334 @@
     width: 100%;
   }
 }
+
+/* ============================================================
+   BLOG / KNOWLEDGE HUB — DOMINANT LIGHT THEME ARCHITECTURE
+   ============================================================ */
+[data-theme='light'] .blog-page {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+[data-theme='light'] .blog-hero {
+  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+  border-bottom: 1px solid #e2e8f0;
+}
+
+[data-theme='light'] .blog-hero h1 {
+  color: #071324;
+}
+
+[data-theme='light'] .blog-hero p {
+  color: #475569;
+}
+
+[data-theme='light'] .blog-hero-badge {
+  background: rgba(217, 119, 6, 0.08);
+  border-color: rgba(217, 119, 6, 0.25);
+  color: #b45309;
+}
+
+[data-theme='light'] .hero-metric-item {
+  color: #334155;
+}
+
+[data-theme='light'] .editorial-control-deck {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+}
+
+[data-theme='light'] .deck-nav-bar {
+  background: #ffffff;
+  border-bottom-color: #f1f5f9;
+}
+
+[data-theme='light'] .deck-filter-bar {
+  background: #fafbfc;
+}
+
+[data-theme='light'] .deck-category-btn {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+  color: #475569;
+}
+
+[data-theme='light'] .deck-category-btn.active {
+  background: #071324;
+  border-color: #071324;
+  color: #ffffff;
+}
+
+[data-theme='light'] .deck-meta-pill {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+[data-theme='light'] .deck-search-container {
+  background: #ffffff;
+  border-color: #cbd5e1;
+}
+
+[data-theme='light'] .deck-search-field {
+  color: #071324;
+}
+
+[data-theme='light'] .custom-sort-trigger {
+  background: #ffffff;
+  border-color: #cbd5e1;
+}
+
+[data-theme='light'] .trigger-current-label {
+  color: #071324;
+}
+
+[data-theme='light'] .custom-sort-menu {
+  background: #ffffff;
+  border-color: #cbd5e1;
+}
+
+[data-theme='light'] .sort-item-title {
+  color: #071324;
+}
+
+[data-theme='light'] .deck-active-ribbon {
+  background: #f8fafc;
+  border-top-color: #f1f5f9;
+}
+
+[data-theme='light'] .editorial-spotlight-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 8px 32px -6px rgba(7, 19, 36, 0.07);
+}
+
+[data-theme='light'] .spotlight-title {
+  color: #071324;
+}
+
+[data-theme='light'] .spotlight-summary {
+  color: #475569;
+}
+
+[data-theme='light'] .spotlight-footer-bar {
+  border-top-color: #f1f5f9;
+}
+
+[data-theme='light'] .spotlight-author-meta strong {
+  color: #071324;
+}
+
+[data-theme='light'] .highlight-pill {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+  color: #334155;
+}
+
+[data-theme='light'] .spotlight-tag-chip {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #1e293b;
+}
+
+[data-theme='light'] .editorial-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+}
+
+[data-theme='light'] .editorial-card-body {
+  background: #ffffff;
+}
+
+[data-theme='light'] .editorial-card-title {
+  color: #071324;
+}
+
+[data-theme='light'] .editorial-card-excerpt {
+  color: #475569;
+}
+
+[data-theme='light'] .author-details strong {
+  color: #071324;
+}
+
+/* ============================================================
+   BLOG / KNOWLEDGE HUB — DOMINANT DARK THEME ARCHITECTURE
+   ============================================================ */
+[data-theme='dark'] .blog-page {
+  background-color: #08101d;
+  color: #f1f5f9;
+}
+
+[data-theme='dark'] .blog-hero {
+  background: radial-gradient(circle at 50% 10%, #0d1e38 0%, #071324 70%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .blog-hero h1 {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .blog-hero p {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .hero-metric-item {
+  color: #cbd5e1;
+}
+
+[data-theme='dark'] .editorial-control-deck {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme='dark'] .deck-nav-bar {
+  background: #0f1c32;
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .deck-filter-bar {
+  background: #0b1424;
+}
+
+[data-theme='dark'] .deck-category-btn {
+  background: #08121f;
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+}
+
+[data-theme='dark'] .deck-category-btn.active {
+  background: #f8b400;
+  border-color: #f8b400;
+  color: #071324;
+}
+
+[data-theme='dark'] .deck-meta-pill {
+  background: #08121f;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .deck-search-container {
+  background: #08121f;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme='dark'] .deck-search-field {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .deck-search-field::placeholder {
+  color: #64748b;
+}
+
+[data-theme='dark'] .custom-sort-trigger {
+  background: #08121f;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme='dark'] .trigger-current-label {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .custom-sort-menu {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme='dark'] .sort-menu-item {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme='dark'] .sort-menu-item:hover {
+  background: #13243e;
+}
+
+[data-theme='dark'] .sort-item-title {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .sort-item-desc {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .deck-active-ribbon {
+  background: #08121f;
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .editorial-spotlight-card {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .spotlight-title {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .spotlight-summary {
+  color: #cbd5e1;
+}
+
+[data-theme='dark'] .spotlight-footer-bar {
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .spotlight-author-meta strong {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .highlight-pill {
+  background: #08121f;
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+}
+
+[data-theme='dark'] .spotlight-tag-chip {
+  background: #13243e;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+}
+
+[data-theme='dark'] .editorial-card {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .editorial-card-body {
+  background: #0f1c32;
+}
+
+[data-theme='dark'] .editorial-card-title {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .editorial-card-excerpt {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .author-details strong {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .blog-newsletter-bento {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .newsletter-console-card {
+  background: #08121f;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ============================================================
+   SECTION TOP ACCENT LINE POSITIONING FOR BLOG PAGE
+   ============================================================ */
+.blog-container-wrapper,
+.blog-newsletter-bento {
+  position: relative;
+  padding-top: 50px;
+}
+

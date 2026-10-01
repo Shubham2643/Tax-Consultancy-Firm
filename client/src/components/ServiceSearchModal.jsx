@@ -177,6 +177,26 @@ const SERVICE_META = {
     icon: 'fas fa-scale-balanced',
     desc: 'Vendor contracts, NDAs, employment agreements & lease deeds',
     keywords: ['contract', 'agreement', 'nda', 'legal deed', 'terms of service']
+  },
+  'tax calculators': {
+    icon: 'fas fa-calculator',
+    desc: 'Old vs New Tax Regime, GST, HRA, Advance Tax & TDS computational tools',
+    keywords: ['calculator', 'tax calculator', 'income tax calculator', 'gst calculator', 'hra calculator', 'advance tax', 'tds calculator', 'sip', 'tax tools', 'tax regime', 'old vs new']
+  },
+  'compliance calendar': {
+    icon: 'fas fa-calendar-check',
+    desc: 'Statutory due dates, advance tax, GST & MCA filing deadlines with penalty radar',
+    keywords: ['compliance calendar', 'due dates', 'tax calendar', 'deadlines', 'roc dates', 'gst due dates', 'income tax dates', 'tax calendar']
+  },
+  'pricing': {
+    icon: 'fas fa-tags',
+    desc: 'Transparent CA retainer packages for Startups, SMEs & Virtual CFO retainers',
+    keywords: ['pricing', 'retainer', 'cost', 'plans', 'fees', 'virtual cfo pricing', 'packages']
+  },
+  'careers': {
+    icon: 'fas fa-user-graduate',
+    desc: 'CA Articleship (ICAI Reg 43/45), Paid Semi-Qualified Assistants & Tax Associate vacancies',
+    keywords: ['career', 'careers', 'articleship', 'ca articleship', 'job', 'hiring', 'vacancy', 'internship', 'trainee', 'nikol']
   }
 };
 
@@ -241,6 +261,10 @@ const ServiceSearchModal = ({ isOpen, onClose, navMenu = [] }) => {
     list.push(
       { title: 'About Shree Chamunda Associates', href: '/about', category: 'Firm', icon: 'fas fa-building-user', desc: 'Firm leadership, credentials, mission & client track record', keywords: ['about', 'ca firm', 'firm profile', 'experience'] },
       { title: 'Comprehensive Services Overview', href: '/services', category: 'Overview', icon: 'fas fa-briefcase', desc: 'All 30+ chartered accounting, tax, MCA & advisory solutions', keywords: ['all services', 'directory', 'catalog'] },
+      { title: 'Tax & Financial Calculators', href: '/calculators', category: 'Knowledge', icon: 'fas fa-calculator', desc: 'Old vs New Tax Regime, GST, HRA, Advance Tax & TDS tools', keywords: ['calculator', 'tax calculator', 'income tax calculator', 'gst calculator', 'hra', 'advance tax', 'tds', 'sip', 'tax tools', 'tax regime'] },
+      { title: 'Statutory Compliance & Due Date Calendar', href: '/compliance-calendar', category: 'Knowledge', icon: 'fas fa-calendar-check', desc: 'Live statutory calendar for Income Tax, GST, MCA ROC & Labour filings with 1-click sync', keywords: ['calendar', 'compliance', 'due dates', 'tax calendar', 'deadlines', 'roc dates', 'gst due dates', 'penalty radar'] },
+      { title: 'Retainer Packages & Transparent Pricing', href: '/pricing', category: 'Advisory', icon: 'fas fa-tags', desc: 'Flat-fee monthly & annual accounting retainers for Startups, SMEs & Corporate CFO advisory', keywords: ['pricing', 'retainer', 'plans', 'cost', 'fees', 'packages', 'virtual cfo cost'] },
+      { title: 'CA Articleship & Careers Portal', href: '/careers', category: 'Firm', icon: 'fas fa-user-graduate', desc: 'ICAI 2-year articleship training, Semi-Qualified CA & Tax Associate vacancies in Ahmedabad', keywords: ['careers', 'articleship', 'jobs', 'hiring', 'ca articleship', 'trainee', 'vacancy', 'apply'] },
       { title: 'Tax Insights & Knowledge Articles', href: '/blog', category: 'Knowledge', icon: 'fas fa-newspaper', desc: 'Latest updates on GST amendments, budget analysis & compliance', keywords: ['blog', 'articles', 'gst news', 'updates'] },
       { title: 'Book Free CA Consultation', href: '/contact', category: 'Advisory', icon: 'fas fa-comments', desc: 'Schedule a 1-on-1 strategic advisory session with our senior CA', keywords: ['consultation', 'contact', 'appointment', 'phone', 'email'] }
     );

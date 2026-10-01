@@ -767,3 +767,143 @@
     padding: 0 18px 18px 18px;
   }
 }
+
+/* ============================================================
+   FAQ PAGE — DOMINANT LIGHT THEME ARCHITECTURE
+   ============================================================ */
+[data-theme='light'] .faq-page {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+[data-theme='light'] .faq-hero {
+  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+  border-bottom: 1px solid #e2e8f0;
+}
+
+[data-theme='light'] .faq-hero h1 {
+  color: #071324;
+}
+
+[data-theme='light'] .faq-hero p {
+  color: #475569;
+}
+
+[data-theme='light'] .faq-hero-badge {
+  background: rgba(217, 119, 6, 0.08);
+  border-color: rgba(217, 119, 6, 0.25);
+  color: #b45309;
+}
+
+[data-theme='light'] .faq-toolbar-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 4px 20px rgba(7, 19, 36, 0.04);
+}
+
+[data-theme='light'] .faq-tab {
+  color: #64748b;
+}
+
+[data-theme='light'] .faq-tab.active {
+  background: #071324;
+  color: #ffffff;
+}
+
+[data-theme='light'] .faq-search-box {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+[data-theme='light'] .faq-search-input {
+  color: #071324;
+}
+
+[data-theme='light'] .faq-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
+}
+
+[data-theme='light'] .faq-question-btn {
+  color: #071324;
+}
+
+[data-theme='light'] .faq-body-inner p {
+  color: #475569;
+}
+
+/* ============================================================
+   FAQ PAGE — DOMINANT DARK THEME ARCHITECTURE
+   ============================================================ */
+[data-theme='dark'] .faq-page {
+  background-color: #08101d;
+  color: #f1f5f9;
+}
+
+[data-theme='dark'] .faq-hero {
+  background: radial-gradient(circle at 50% 10%, #0d1e38 0%, #071324 70%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .faq-hero h1 {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .faq-hero p {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .faq-toolbar-card {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .faq-tab {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .faq-tab.active {
+  background: #f8b400;
+  color: #071324;
+}
+
+[data-theme='dark'] .faq-search-box {
+  background: #08121f;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme='dark'] .faq-search-input {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .faq-card {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .faq-card.open {
+  border-color: rgba(248, 180, 0, 0.4);
+}
+
+[data-theme='dark'] .faq-question-btn {
+  color: #f8fafc;
+}
+
+[data-theme='dark'] .faq-body-inner p {
+  color: #cbd5e1;
+}
+
+[data-theme='dark'] .faq-consultation-banner {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ============================================================
+   SECTION TOP ACCENT LINE POSITIONING FOR FAQ PAGE
+   ============================================================ */
+.faq-content-wrapper,
+.faq-consultation-banner {
+  position: relative;
+  padding-top: 50px;
+}

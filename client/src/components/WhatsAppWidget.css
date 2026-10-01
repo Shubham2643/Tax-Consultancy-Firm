@@ -288,3 +288,52 @@
     right: -4px;
   }
 }
+
+/* ============================================================
+   WHATSAPP WIDGET — DOMINANT LIGHT THEME
+   ============================================================ */
+[data-theme='light'] .wa-chat-bubble {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+[data-theme='light'] .wa-chat-bubble::after {
+  background: #ffffff;
+  border-right-color: #e2e8f0;
+  border-bottom-color: #e2e8f0;
+}
+
+[data-theme='light'] .wa-bubble-meta strong {
+  color: #0f172a;
+}
+
+[data-theme='light'] .wa-bubble-text {
+  color: #334155;
+}
+
+/* ============================================================
+   WHATSAPP WIDGET — DOMINANT DARK THEME
+   ============================================================ */
+[data-theme='dark'] .wa-chat-bubble {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme='dark'] .wa-chat-bubble::after {
+  background: #0f1c32;
+  border-right-color: rgba(255, 255, 255, 0.12);
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme='dark'] .wa-bubble-meta strong {
+  color: #f8fafc;
+}
+
+[data-theme='dark'] .wa-bubble-text {
+  color: #cbd5e1;
+}
+
+[data-theme='dark'] .wa-bubble-close-btn:hover {
+  color: #ffffff;
+}

@@ -17,10 +17,13 @@
 .trust-top-accent-line {
   position: absolute;
   top: 0;
-  left: 8%;
-  right: 8%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent 0%, rgba(248, 180, 0, 0.75) 50%, transparent 100%);
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 3.5px;
+  background: linear-gradient(90deg, #f8b400 0%, #ffdf70 50%, #f8b400 100%);
+  box-shadow: 0 0 16px rgba(248, 180, 0, 0.45);
+  z-index: 10;
   pointer-events: none;
 }
 
@@ -882,3 +885,199 @@
     justify-content: center;
   }
 }
+
+/* ==========================================================================
+   DOMINANT DARK THEME ADAPTIVE STYLES
+   ========================================================================== */
+[data-theme='dark'] .trust {
+  background: linear-gradient(180deg, #071221 0%, #050d18 100%) !important;
+  color: #f1f5f9 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+[data-theme='dark'] .trust-ambient-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px) !important;
+}
+
+[data-theme='dark'] .trust-master-title,
+[data-theme='dark'] .tst-section-title,
+[data-theme='dark'] .trust h2,
+[data-theme='dark'] .tst-card-title,
+[data-theme='dark'] .wing-card-title,
+[data-theme='dark'] .fiduciary-title,
+[data-theme='dark'] .pipeline-wing-header h3,
+[data-theme='dark'] .pipeline-display-title,
+[data-theme='dark'] .fiduciary-card-meta h4 {
+  color: #f8fafc !important;
+}
+
+[data-theme='dark'] .title-gradient-gold {
+  background: linear-gradient(135deg, #f8b400 0%, #fbbf24 60%, #fffbeb 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+[data-theme='dark'] .trust-master-subtext,
+[data-theme='dark'] .tst-section-subtitle,
+[data-theme='dark'] .trust p,
+[data-theme='dark'] .tst-card-desc,
+[data-theme='dark'] .wing-card-desc,
+[data-theme='dark'] .fiduciary-desc,
+[data-theme='dark'] .pipeline-wing-header p,
+[data-theme='dark'] .pipeline-display-summary,
+[data-theme='dark'] .metric-muted-caption,
+[data-theme='dark'] .fiduciary-kicker {
+  color: #94a3b8 !important;
+}
+
+[data-theme='dark'] .tst-pillar-card,
+[data-theme='dark'] .pipeline-wing-card,
+[data-theme='dark'] .fiduciary-feature-card,
+[data-theme='dark'] .trust-metrics-ribbon,
+[data-theme='dark'] .trust-metric-ribbon,
+[data-theme='dark'] .trust-bottom-bar {
+  background: #0f1c32 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  color: #f1f5f9 !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme='dark'] .metric-ribbon-col {
+  border-right-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme='dark'] .metric-large-num {
+  color: #ffffff !important;
+}
+
+[data-theme='dark'] .metric-bold-label {
+  color: #f1f5f9 !important;
+}
+
+[data-theme='dark'] .metric-value {
+  color: #f8b400 !important;
+}
+
+[data-theme='dark'] .metric-label {
+  color: #cbd5e1 !important;
+}
+
+[data-theme='dark'] .pipeline-step-nav {
+  background: #0a1424 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme='dark'] .pipeline-nav-btn {
+  color: #94a3b8 !important;
+}
+
+[data-theme='dark'] .pipeline-nav-btn:hover {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+[data-theme='dark'] .pipeline-nav-btn.active {
+  background: #1e293b !important;
+  color: #ffffff !important;
+}
+
+[data-theme='dark'] .pipeline-step-num {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #cbd5e1 !important;
+}
+
+[data-theme='dark'] .pipeline-nav-btn.active .pipeline-step-num {
+  background: #f8b400 !important;
+  color: #071324 !important;
+}
+
+[data-theme='dark'] .pipeline-stage-display {
+  background: #08121f !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme='dark'] .pipeline-display-badge {
+  background: rgba(248, 180, 0, 0.12) !important;
+  color: #f8b400 !important;
+}
+
+[data-theme='dark'] .pipeline-checkpoint-item {
+  color: #e2e8f0 !important;
+}
+
+[data-theme='dark'] .checkpoint-check-icon {
+  background: rgba(16, 185, 129, 0.15) !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+  color: #34d399 !important;
+}
+
+[data-theme='dark'] .checkpoint-check-icon i {
+  color: #34d399 !important;
+}
+
+[data-theme='dark'] .pipeline-guarantee-tag {
+  background: rgba(248, 180, 0, 0.1) !important;
+  border-color: rgba(248, 180, 0, 0.25) !important;
+  color: #fbbf24 !important;
+}
+
+[data-theme='dark'] .fiduciary-benefit-row {
+  color: #cbd5e1 !important;
+}
+
+[data-theme='dark'] .fiduciary-footer-badge.badge-secure {
+  background: rgba(16, 185, 129, 0.1) !important;
+  border-color: rgba(16, 185, 129, 0.25) !important;
+  color: #34d399 !important;
+}
+
+[data-theme='dark'] .fiduciary-footer-badge.badge-sla {
+  background: rgba(248, 180, 0, 0.1) !important;
+  border-color: rgba(248, 180, 0, 0.25) !important;
+  color: #fbbf24 !important;
+}
+
+[data-theme='dark'] .cred-item {
+  color: #94a3b8 !important;
+}
+
+[data-theme='dark'] .cred-item strong {
+  color: #f1f5f9 !important;
+}
+
+[data-theme='dark'] .btn-trust-secondary {
+  background: #0a1424 !important;
+  color: #f1f5f9 !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+[data-theme='dark'] .btn-trust-secondary:hover {
+  background: #16243a !important;
+  border-color: #f8b400 !important;
+  color: #ffffff !important;
+}
+
+[data-theme='dark'] .trust-practice-jump-ribbon {
+  background: #08121f !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+[data-theme='dark'] .jump-label {
+  color: #94a3b8 !important;
+}
+
+[data-theme='dark'] .jump-chip,
+[data-theme='dark'] .jump-chip-btn {
+  background: #0a1424 !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: #cbd5e1 !important;
+}
+
+[data-theme='dark'] .jump-chip:hover,
+[data-theme='dark'] .jump-chip-btn:hover {
+  background: rgba(248, 180, 0, 0.15) !important;
+  border-color: #f8b400 !important;
+  color: #f8b400 !important;
+}
+

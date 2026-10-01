@@ -14,11 +14,16 @@ import FAQ from './pages/FAQ';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import WhatsAppWidget from './components/WhatsAppWidget';
+import ComplianceTicker from './components/ComplianceTicker';
 import './App.css';
 
 // Dynamically split heavy pages to optimize initial bundle load
 const ServiceDetail = lazy(() => import('./pages/ServiceDetail'));
 const BlogDetail = lazy(() => import('./pages/BlogDetail'));
+const Calculators = lazy(() => import('./pages/Calculators'));
+const ComplianceCalendar = lazy(() => import('./pages/ComplianceCalendar'));
+const Pricing = lazy(() => import('./pages/Pricing'));
+const Careers = lazy(() => import('./pages/Careers'));
 const TermsConditions = lazy(() => import('./pages/TermsConditions'));
 const RefundPolicy = lazy(() => import('./pages/RefundPolicy'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
@@ -124,6 +129,7 @@ function App() {
     <div className="app">
       <ScrollToTop />
       {!isFullPageLayout && <Navbar />}
+      {!isFullPageLayout && <ComplianceTicker />}
       
       {/* Real-time Toast Alerts */}
       <div className="toast-container">
@@ -148,6 +154,14 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
             <Route path="/services/:id" element={<ServiceDetail />} />
+            <Route path="/calculators" element={<Calculators />} />
+            <Route path="/tax-tools" element={<Calculators />} />
+            <Route path="/compliance-calendar" element={<ComplianceCalendar />} />
+            <Route path="/due-dates" element={<ComplianceCalendar />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/retainers" element={<Pricing />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/join-our-team" element={<Careers />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:id" element={<BlogDetail />} />

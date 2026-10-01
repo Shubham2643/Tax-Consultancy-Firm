@@ -12,8 +12,8 @@ const COMPLIANCE_DEADLINES = [
     mobileTitle: 'Advance Tax Q2 Due',
     description: 'Mandatory second installment (45% cumulative) for all eligible corporate & individual taxpayers.',
     statute: 'Sec 208/211 Income Tax Act',
-    actionText: 'Book Tax Advisory',
-    link: '/services',
+    actionText: 'Calculate Advance Tax',
+    link: '/calculators?tool=advance-tax',
   },
   {
     id: 2,
@@ -24,8 +24,8 @@ const COMPLIANCE_DEADLINES = [
     mobileTitle: 'GSTR-3B Return Due',
     description: 'Monthly summary return & net cash liability payment with GSTR-2B inward ITC reconciliation.',
     statute: 'CGST Act Sec 39',
-    actionText: 'Book GST Filing',
-    link: '/services',
+    actionText: 'Compute GST',
+    link: '/calculators?tool=gst',
   },
   {
     id: 3,
@@ -36,8 +36,8 @@ const COMPLIANCE_DEADLINES = [
     mobileTitle: 'TDS Challan 281 Due',
     description: 'Statutory deposit of tax deducted at source (TDS) under Salaries, Contractors & Professional fees.',
     statute: 'Sec 200(1) Income Tax Act',
-    actionText: 'Book TDS Filing',
-    link: '/services/tds-return-filing',
+    actionText: 'TDS Rate Calc',
+    link: '/calculators?tool=tds',
   },
   {
     id: 4,

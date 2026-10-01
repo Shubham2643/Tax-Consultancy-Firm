@@ -122,6 +122,7 @@ const Services = () => {
     <div className="services-page fade-in">
       {/* Prestige Hero */}
       <div className="services-hero">
+        <div className="section-top-accent-line" aria-hidden="true"></div>
         <div className="container">
           <div className="services-hero-badge">
             <span className="live-dot"></span>
@@ -156,6 +157,7 @@ const Services = () => {
 
       {/* The 4-Stage Chartered Delivery Protocol */}
       <section className="practice-protocol-section">
+        <div className="section-top-accent-line" aria-hidden="true"></div>
         <div className="container">
           <div className="section-header text-center">
             <div className="services-badge">
@@ -204,6 +206,7 @@ const Services = () => {
 
       {/* Institutional Comparison Matrix */}
       <section className="practice-comparison-section">
+        <div className="section-top-accent-line" aria-hidden="true"></div>
         <div className="container">
           <div className="section-header text-center">
             <div className="services-badge">
@@ -265,6 +268,7 @@ const Services = () => {
 
       {/* Statutory Advisory FAQ Accordion */}
       <section className="practice-faq-section">
+        <div className="section-top-accent-line" aria-hidden="true"></div>
         <div className="container">
           <div className="section-header text-center">
             <div className="services-badge">
@@ -305,6 +309,7 @@ const Services = () => {
 
       {/* Pre-Footer Senior Counsel Retainer CTA */}
       <section className="practice-cta-section">
+        <div className="section-top-accent-line" aria-hidden="true"></div>
         <div className="container">
           <div className="practice-cta-card">
             <div className="practice-cta-glow"></div>

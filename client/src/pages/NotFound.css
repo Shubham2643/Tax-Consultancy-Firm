@@ -5,6 +5,7 @@
   min-height: 80vh;
   padding: 2rem;
   text-align: center;
+  position: relative;
 }
 
 .not-found-content {
@@ -47,4 +48,40 @@
 
 .not-found-home-btn:hover {
   opacity: 0.9;
+}
+
+[data-theme='light'] .not-found-container {
+  background-color: #ffffff;
+  color: #0f172a;
+}
+
+[data-theme='light'] .not-found-title {
+  color: #071324;
+}
+
+[data-theme='light'] .not-found-description {
+  color: #475569;
+}
+
+[data-theme='light'] .not-found-home-btn {
+  background: #071324;
+  color: #ffffff;
+}
+
+[data-theme='dark'] .not-found-container {
+  background-color: #08101d;
+  color: #f1f5f9;
+}
+
+[data-theme='dark'] .not-found-title {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .not-found-description {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .not-found-home-btn {
+  background: #f8b400;
+  color: #071324;
 }

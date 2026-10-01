@@ -7,6 +7,7 @@ const NotFound = () => {
 
   return (
     <div className="not-found-container">
+      <div className="section-top-accent-line" aria-hidden="true"></div>
       <div className="not-found-content">
         <h1 className="not-found-code">404</h1>
         <h2 className="not-found-title">Page Not Found</h2>

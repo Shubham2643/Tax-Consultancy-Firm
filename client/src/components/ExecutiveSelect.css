@@ -443,3 +443,85 @@
     max-height: 340px;
   }
 }
+
+/* ============================================================
+   DOMINANT DARK THEME ADAPTIVE STYLES
+   ============================================================ */
+[data-theme='dark'] .executive-select-trigger {
+  background: #091322 !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: #f1f5f9 !important;
+}
+
+[data-theme='dark'] .executive-select-wrap.is-open .executive-select-trigger {
+  border-color: #f8b400 !important;
+  box-shadow: 0 0 0 3px rgba(248, 180, 0, 0.15) !important;
+  background: #091322 !important;
+}
+
+[data-theme='dark'] .trigger-icon-box {
+  background: #0f1c32 !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: #f8b400 !important;
+}
+
+[data-theme='dark'] .trigger-value-text {
+  color: #f8fafc !important;
+}
+
+[data-theme='dark'] .trigger-cat-crumb {
+  color: #94a3b8 !important;
+}
+
+[data-theme='dark'] .executive-select-popover {
+  background: #0c182b !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7) !important;
+}
+
+[data-theme='dark'] .popover-search-strip {
+  background: #07101e !important;
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme='dark'] .select-search-input {
+  background: #091322 !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #f1f5f9 !important;
+}
+
+[data-theme='dark'] .option-item-card {
+  color: #f1f5f9 !important;
+}
+
+[data-theme='dark'] .option-item-card:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+[data-theme='dark'] .option-item-card.is-selected {
+  background: rgba(248, 180, 0, 0.1) !important;
+}
+
+[data-theme='dark'] .option-title {
+  color: #f8fafc !important;
+}
+
+[data-theme='dark'] .option-desc {
+  color: #94a3b8 !important;
+}
+
+[data-theme='dark'] .popover-footer-strip {
+  background: #07101e !important;
+  border-top-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme='dark'] .footer-privilege-note {
+  color: #94a3b8 !important;
+}
+
+[data-theme='dark'] .footer-close-btn {
+  background: #0f1c32 !important;
+  color: #cbd5e1 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+

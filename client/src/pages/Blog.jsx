@@ -170,6 +170,7 @@ const Blog = () => {
     <div className="blog-page fade-in">
       {/* Executive Clean Midnight Hero Banner */}
       <div className="blog-hero">
+        <div className="section-top-accent-line" aria-hidden="true"></div>
         <div className="container">
           <div className="blog-hero-badge">
             <span className="live-dot"></span>
@@ -221,6 +222,7 @@ const Blog = () => {
 
       {/* Main Content Area */}
       <div className="container blog-container-wrapper">
+        <div className="section-top-accent-line" aria-hidden="true"></div>
         {/* Executive Editorial Navigation & Search Deck */}
         <div className="editorial-control-deck">
           {/* Tier 1: Practice Area Categories & Global Archive Counter */}
@@ -592,6 +594,7 @@ const Blog = () => {
 
             {/* Weekly Tax & Compliance Digest Executive Dispatch */}
             <section className="blog-newsletter-bento" aria-labelledby="newsletter-headline">
+              <div className="section-top-accent-line" aria-hidden="true"></div>
               {/* Background Architectural Grid & Ambient Aura */}
               <div className="newsletter-ambient-grid" aria-hidden="true"></div>
               <div className="newsletter-ambient-glow" aria-hidden="true"></div>

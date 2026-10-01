@@ -2,7 +2,8 @@
    SYSTEM ADMIN CONTROL CENTER — INDUSTRY-GRADE RESPONSIVE FINTECH THEME
    ========================================================================== */
 
-:root {
+:root,
+[data-theme='light'] {
   --admin-bg-base: #f8fafc;
   --admin-bg-surface: #ffffff;
   --admin-bg-sidebar: #06101e;
@@ -35,6 +36,28 @@
   
   --admin-transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+[data-theme='dark'] {
+  --admin-bg-base: #08101d;
+  --admin-bg-surface: #0f1c32;
+  --admin-bg-sidebar: #060d19;
+  --admin-bg-sidebar-hover: rgba(255, 255, 255, 0.06);
+  --admin-bg-sidebar-active: #13243e;
+  
+  --admin-border-subtle: rgba(255, 255, 255, 0.08);
+  --admin-border-focus: #f8b400;
+  --admin-border-gold: rgba(248, 180, 0, 0.4);
+  
+  --admin-text-main: #f8fafc;
+  --admin-text-muted: #94a3b8;
+  --admin-text-light: #64748b;
+  --admin-text-gold: #f8b400;
+  
+  --admin-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --admin-shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --admin-shadow-lg: 0 12px 36px rgba(0, 0, 0, 0.5);
+}
+
 
 /* Base Dashboard Container */
 .admin-dashboard-container {

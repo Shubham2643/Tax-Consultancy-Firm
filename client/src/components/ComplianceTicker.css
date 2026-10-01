@@ -450,3 +450,78 @@
     font-size: 10.5px;
   }
 }
+
+/* ==========================================================================
+   COMPLIANCE TICKER — DOMINANT LIGHT THEME
+   ========================================================================== */
+[data-theme='light'] .compliance-ticker-strip {
+  background: linear-gradient(90deg, #ffffff 0%, #f8fafc 50%, #ffffff 100%);
+  border-bottom: 1px solid #e2e8f0;
+  color: #0f172a;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.04);
+}
+
+[data-theme='light'] .compliance-ticker-header {
+  background: rgba(217, 119, 6, 0.08);
+  border-color: rgba(217, 119, 6, 0.3);
+}
+
+[data-theme='light'] .ticker-title {
+  color: #b45309;
+}
+
+[data-theme='light'] .ticker-sub {
+  color: #64748b;
+}
+
+[data-theme='light'] .ticker-item a {
+  color: #334155;
+}
+
+[data-theme='light'] .ticker-badge {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+[data-theme='light'] .ticker-due-tag {
+  color: #b45309;
+}
+
+[data-theme='light'] .ticker-cta-link {
+  color: #b45309;
+  background: rgba(217, 119, 6, 0.08);
+  border-color: rgba(217, 119, 6, 0.25);
+}
+
+/* ==========================================================================
+   COMPLIANCE TICKER — DOMINANT DARK THEME
+   ========================================================================== */
+[data-theme='dark'] .compliance-ticker-strip {
+  background: linear-gradient(90deg, #020710 0%, #071326 50%, #020710 100%);
+  border-bottom: 1px solid rgba(248, 180, 0, 0.28);
+  color: #f1f5f9;
+}
+
+[data-theme='dark'] .compliance-ticker-header {
+  background: rgba(248, 180, 0, 0.1);
+  border-color: rgba(248, 180, 0, 0.35);
+}
+
+[data-theme='dark'] .ticker-title {
+  color: #f8b400;
+}
+
+[data-theme='dark'] .ticker-sub {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .ticker-item a {
+  color: #e2e8f0;
+}
+
+[data-theme='dark'] .ticker-badge {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #f1f5f9;
+}

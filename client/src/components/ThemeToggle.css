@@ -1,0 +1,237 @@
+/* ==========================================================================
+   EXECUTIVE THEME TOGGLE — Segmented Luxury Control
+   Shree Chamunda Associates • Bank-Grade UI/UX
+   ========================================================================== */
+
+.theme-toggle-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  user-select: none;
+  vertical-align: middle;
+}
+
+/* 1. SEGMENTED LUXURY PILL (Desktop Top-Bar Height: 26px) */
+.theme-segmented-capsule {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  padding: 2px;
+  gap: 1px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.theme-segmented-capsule:hover {
+  border-color: rgba(248, 180, 0, 0.45);
+  box-shadow: 0 0 12px rgba(248, 180, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+/* 2. GLIDING ACTIVE INDICATOR THUMB */
+.theme-segment-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 27px;
+  height: 20px;
+  border-radius: 999px;
+  pointer-events: none;
+  z-index: 1;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.25s ease,
+              border-color 0.25s ease,
+              box-shadow 0.25s ease;
+}
+
+/* Position 1: Light (Left) */
+.theme-segment-thumb.thumb-light {
+  transform: translateX(0);
+  background: linear-gradient(135deg, rgba(248, 180, 0, 0.35) 0%, rgba(248, 180, 0, 0.18) 100%);
+  border: 1px solid rgba(248, 180, 0, 0.7);
+  box-shadow: 0 0 10px rgba(248, 180, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Position 2: Dark (Center) */
+.theme-segment-thumb.thumb-dark {
+  transform: translateX(28px);
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.35) 0%, rgba(129, 140, 248, 0.18) 100%);
+  border: 1px solid rgba(167, 139, 250, 0.7);
+  box-shadow: 0 0 10px rgba(167, 139, 250, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Position 3: System (Right) */
+.theme-segment-thumb.thumb-system {
+  transform: translateX(56px);
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.35) 0%, rgba(14, 165, 233, 0.18) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.7);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* 3. SEGMENT INTERACTION BUTTONS */
+.theme-segment-btn {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 27px;
+  height: 20px;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 10.5px;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  transition: color 0.2s ease, transform 0.18s ease;
+}
+
+.theme-segment-btn:hover {
+  color: rgba(255, 255, 255, 0.95);
+  transform: scale(1.1);
+}
+
+.theme-segment-btn:active {
+  transform: scale(0.92);
+}
+
+.theme-segment-btn:focus-visible {
+  outline: 2px solid rgba(248, 180, 0, 0.8);
+  outline-offset: 1px;
+}
+
+/* Active Segment Highlights */
+.theme-segment-btn.active.btn-light {
+  color: #f8b400;
+  text-shadow: 0 0 8px rgba(248, 180, 0, 0.75);
+}
+
+.theme-segment-btn.active.btn-dark {
+  color: #c4b5fd;
+  text-shadow: 0 0 8px rgba(196, 181, 253, 0.75);
+}
+
+.theme-segment-btn.active.btn-system {
+  color: #7dd3fc;
+  text-shadow: 0 0 8px rgba(125, 211, 252, 0.75);
+}
+
+/* Micro Status Pip on System Icon to show resolved state */
+.system-icon-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.system-resolved-pip {
+  position: absolute;
+  bottom: -2px;
+  right: -3px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  border: 1px solid #071324;
+}
+
+.system-resolved-pip.pip-dark {
+  background-color: #a78bfa;
+  box-shadow: 0 0 4px #a78bfa;
+}
+
+.system-resolved-pip.pip-light {
+  background-color: #f8b400;
+  box-shadow: 0 0 4px #f8b400;
+}
+
+/* ==========================================================================
+   4. DRAWER ROW VARIANT (For Mobile Navigation Drawer)
+   ========================================================================== */
+.theme-drawer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  transition: all 0.2s ease;
+}
+
+.theme-drawer-row:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(248, 180, 0, 0.3);
+}
+
+.drawer-row-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.drawer-row-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(248, 180, 0, 0.12);
+  color: #f8b400;
+  font-size: 12px;
+}
+
+.drawer-row-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.drawer-row-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #f8fafc;
+  line-height: 1.2;
+}
+
+.drawer-row-sub {
+  font-size: 10px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* Light theme adaptive styling for when inside a light container */
+[data-theme='light'] .theme-drawer-row {
+  background: rgba(7, 19, 36, 0.03);
+  border-color: rgba(7, 19, 36, 0.08);
+}
+
+[data-theme='light'] .drawer-row-title {
+  color: #0f172a;
+}
+
+[data-theme='light'] .drawer-row-sub {
+  color: #64748b;
+}
+
+[data-theme='light'] .theme-segmented-capsule {
+  background: rgba(7, 19, 36, 0.05);
+  border-color: rgba(7, 19, 36, 0.12);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme='light'] .theme-segment-btn {
+  color: #64748b;
+}
+
+[data-theme='light'] .theme-segment-btn:hover {
+  color: #0f172a;
+}

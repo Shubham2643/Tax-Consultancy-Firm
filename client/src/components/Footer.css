@@ -972,3 +972,142 @@
     padding: 0 14px;
   }
 }
+
+/* ==========================================================================
+   DOMINANT LIGHT THEME ADAPTIVE STYLES
+   ========================================================================== */
+[data-theme='light'] .executive-footer {
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+  color: #0f172a;
+  border-top: 1px solid #e2e8f0;
+}
+
+[data-theme='light'] .footer-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
+}
+
+[data-theme='light'] .footer-pre-banner {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+[data-theme='light'] .pre-banner-text h3 {
+  color: #071324;
+}
+
+[data-theme='light'] .pre-banner-text p {
+  color: #475569;
+}
+
+[data-theme='light'] .btn-pre-call {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+[data-theme='light'] .btn-pre-call:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+[data-theme='light'] .footer-brand-text strong {
+  color: #071324;
+}
+
+[data-theme='light'] .footer-brand-text span {
+  color: #64748b;
+}
+
+[data-theme='light'] .footer-brand-bio {
+  color: #475569;
+}
+
+[data-theme='light'] .footer-trust-badge {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  color: #0f172a;
+}
+
+[data-theme='light'] .footer-social-pill {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  color: #475569;
+}
+
+[data-theme='light'] .footer-social-pill:hover {
+  border-color: #f8b400;
+  color: #d97706;
+}
+
+[data-theme='light'] .footer-col-title {
+  color: #071324;
+}
+
+[data-theme='light'] .footer-nav-link {
+  color: #475569;
+}
+
+[data-theme='light'] .footer-nav-link:hover {
+  color: #d97706;
+}
+
+[data-theme='light'] .contact-entry-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+[data-theme='light'] .contact-entry-card:hover {
+  border-color: rgba(248, 180, 0, 0.45);
+}
+
+[data-theme='light'] .contact-entry-card .contact-label {
+  color: #64748b;
+}
+
+[data-theme='light'] .contact-entry-card strong {
+  color: #071324;
+}
+
+[data-theme='light'] .footer-office-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05);
+}
+
+[data-theme='light'] .office-title {
+  color: #071324;
+}
+
+[data-theme='light'] .office-address-text {
+  color: #475569;
+}
+
+[data-theme='light'] .btn-map-directions {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+[data-theme='light'] .btn-copy-address {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+[data-theme='light'] .footer-bottom-bar {
+  background: #e2e8f0;
+  border-top-color: #cbd5e1;
+  color: #64748b;
+}
+
+[data-theme='light'] .footer-bottom-bar a {
+  color: #475569;
+}
+
+[data-theme='light'] .footer-bottom-bar a:hover {
+  color: #0f172a;
+}
+

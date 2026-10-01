@@ -126,6 +126,7 @@ const Contact = () => {
           1. EXECUTIVE HERO BANNER & 3-PILLAR REASSURANCE STRIP
           ============================================================ */}
       <div className="contact-hero">
+        <div className="section-top-accent-line" aria-hidden="true"></div>
         <div className="contact-hero-glow glow-gold" aria-hidden="true"></div>
         <div className="contact-hero-glow glow-blue" aria-hidden="true"></div>
 
@@ -167,6 +168,7 @@ const Contact = () => {
           2. SYMMETRICAL 50/50 TWO-COLUMN BENTO STAGE
           ============================================================ */}
       <div className="container contact-equal-two-col-grid">
+        <div className="section-top-accent-line" aria-hidden="true"></div>
         {/* ========================================================
             COLUMN 1 (50%): Direct Advisory Hub & Communication Channels
             ======================================================== */}
@@ -385,6 +387,7 @@ const Contact = () => {
           3. DEDICATED ARCHITECTURAL CHAMBERS & TRANSIT SECTION
           ============================================================ */}
       <section className="contact-chambers-section container">
+        <div className="section-top-accent-line" aria-hidden="true"></div>
         <div className="chambers-card-wrapper">
           <div className="chambers-narrative-col">
             <div className="about-eyebrow-tag">
@@ -528,6 +531,7 @@ const Contact = () => {
           ============================================================ */}
       {faqs.length > 0 && (
         <section className="contact-faqs-section container">
+          <div className="section-top-accent-line" aria-hidden="true"></div>
           <div className="faqs-section-header">
             <span className="about-eyebrow-tag">
               <i className="fas fa-circle-question"></i>

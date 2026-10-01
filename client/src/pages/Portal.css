@@ -2,7 +2,8 @@
    SECURE CLIENT PORTAL — EXECUTIVE FINTECH RESPONSIVE THEME
    ============================================================ */
 
-:root {
+:root,
+[data-theme='light'] {
   --portal-bg-base: #f8fafc;
   --portal-bg-surface: #ffffff;
   --portal-bg-sidebar: #06101e;
@@ -32,6 +33,25 @@
   
   --portal-transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+[data-theme='dark'] {
+  --portal-bg-base: #08101d;
+  --portal-bg-surface: #0f1c32;
+  --portal-bg-sidebar: #060d19;
+  --portal-bg-sidebar-hover: rgba(255, 255, 255, 0.06);
+  
+  --portal-border-subtle: rgba(255, 255, 255, 0.08);
+  --portal-border-gold: rgba(248, 180, 0, 0.4);
+  
+  --portal-text-main: #f8fafc;
+  --portal-text-muted: #94a3b8;
+  --portal-text-light: #64748b;
+  
+  --portal-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --portal-shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --portal-shadow-lg: 0 12px 36px rgba(0, 0, 0, 0.5);
+}
+
 
 .portal-app-container {
   display: flex;

@@ -111,3 +111,53 @@
   background-color: #1a3e72;
   box-shadow: 0 4px 12px rgba(11, 28, 52, 0.15);
 }
+
+/* ============================================================
+   OAUTH CALLBACK — DOMINANT LIGHT THEME
+   ============================================================ */
+[data-theme='light'] .oauth-callback-page {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+[data-theme='light'] .oauth-callback-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+}
+
+[data-theme='light'] .oauth-status h2 {
+  color: #071324;
+}
+
+[data-theme='light'] .oauth-status p {
+  color: #475569;
+}
+
+[data-theme='light'] .auth-btn {
+  background-color: #071324;
+  color: #ffffff;
+}
+
+/* ============================================================
+   OAUTH CALLBACK — DOMINANT DARK THEME
+   ============================================================ */
+[data-theme='dark'] .oauth-callback-page {
+  background: #08101d;
+}
+
+[data-theme='dark'] .oauth-callback-card {
+  background: #0f1c32;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .oauth-status h2 {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .oauth-status p {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .auth-btn {
+  background-color: #f8b400;
+  color: #071324;
+}

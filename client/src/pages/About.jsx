@@ -446,6 +446,7 @@ const About = () => {
           1. EXECUTIVE MIDNIGHT HERO BANNER
           ============================================================ */}
       <section className="about-hero" aria-labelledby="about-hero-title">
+        <div className="section-top-accent-line" aria-hidden="true"></div>
         <div className="about-hero-glow glow-gold" aria-hidden="true"></div>
         <div className="about-hero-glow glow-blue" aria-hidden="true"></div>
         <div className="about-hero-grid" aria-hidden="true"></div>
@@ -509,6 +510,7 @@ const About = () => {
             3. EXECUTIVE FOUNDING MANIFESTO & FIDUCIARY COMMITMENTS
             ============================================================ */}
         <section className="about-manifesto-section" aria-labelledby="manifesto-title">
+          <div className="section-top-accent-line" aria-hidden="true"></div>
           <div className="manifesto-card">
             <div className="about-eyebrow-tag">
               <Icons.Feather />
@@ -581,6 +583,7 @@ const About = () => {
             4. THE 3-WAY COMPARATIVE DECISION MATRIX (Why Switch To Us)
             ============================================================ */}
         <section className="about-comparison-section" aria-labelledby="comparison-title">
+          <div className="section-top-accent-line" aria-hidden="true"></div>
           <div className="section-header-centered">
             <div className="about-eyebrow-tag">
               <Icons.Compass />
@@ -707,6 +710,7 @@ const About = () => {
             5. SPECIALIZED INSTITUTIONAL PRACTICE DESKS
             ============================================================ */}
         <section className="about-practice-desks-section" aria-labelledby="practice-desks-title">
+          <div className="section-top-accent-line" aria-hidden="true"></div>
           <div className="section-header-centered">
             <div className="about-eyebrow-tag">
               <Icons.Briefcase />
@@ -913,6 +917,7 @@ const About = () => {
             7. UNIFIED CHRONOLOGICAL GROWTH TRACK (Zero Dead Space)
             ============================================================ */}
         <section className="about-timeline-section" aria-labelledby="timeline-title">
+          <div className="section-top-accent-line" aria-hidden="true"></div>
           <div className="section-header-centered">
             <div className="about-eyebrow-tag">
               <Icons.History />
@@ -955,6 +960,7 @@ const About = () => {
             8. INSTITUTIONAL ACCREDITATIONS & REGULATORY AUTHORITY SEALS
             ============================================================ */}
         <section className="about-accreditations-section" aria-label="Institutional Accreditations & Regulatory Seals">
+          <div className="section-top-accent-line" aria-hidden="true"></div>
           <div className="accreditations-header">
             <span className="accred-eyebrow">INSTITUTIONAL ASSURANCE &bull; REGULATORY BENCHMARK</span>
             <h3>Practice Credentials &amp; Regulatory Authority Seals</h3>
@@ -1019,6 +1025,7 @@ const About = () => {
             9. PHYSICAL PRACTICE CHAMBERS & TRANSIT GUIDE
             ============================================================ */}
         <section className="about-chambers-section" aria-labelledby="chambers-title">
+          <div className="section-top-accent-line" aria-hidden="true"></div>
           <div className="chambers-card-wrapper">
             <div className="chambers-narrative-col">
               <div className="about-eyebrow-tag">
@@ -1129,6 +1136,7 @@ const About = () => {
             10. EXECUTIVE CLOSING CTA BANNER
             ============================================================ */}
         <section className="about-closing-cta">
+          <div className="section-top-accent-line" aria-hidden="true"></div>
           <div className="cta-ambient-glow" aria-hidden="true"></div>
           <div className="cta-grid-bg" aria-hidden="true"></div>
 

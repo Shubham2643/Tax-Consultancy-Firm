@@ -173,6 +173,8 @@
   padding: 85px 0 95px 0;
   background: #ffffff;
   border-bottom: 1px solid #e2e8f0;
+  position: relative;
+  overflow: hidden;
 }
 
 .practice-protocol-section .container {
@@ -338,6 +340,8 @@
   padding: 85px 0 95px 0;
   background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
   border-bottom: 1px solid #e2e8f0;
+  position: relative;
+  overflow: hidden;
 }
 
 .practice-comparison-section .container {
@@ -509,6 +513,8 @@
   padding: 85px 0 95px 0;
   background: #ffffff;
   border-bottom: 1px solid #e2e8f0;
+  position: relative;
+  overflow: hidden;
 }
 
 .practice-faq-section .container {
@@ -588,6 +594,8 @@
 .practice-cta-section {
   padding: 70px 0 85px 0;
   background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  position: relative;
+  overflow: hidden;
 }
 
 .practice-cta-section .container {
@@ -1070,4 +1078,263 @@
   .practice-cta-card h2 {
     font-size: 1.42rem;
   }
+}
+
+/* ============================================================
+   SERVICES PAGE — DOMINANT LIGHT THEME ARCHITECTURE
+   ============================================================ */
+[data-theme='light'] .services-page {
+  background-color: #ffffff;
+  color: #0f172a;
+}
+
+[data-theme='light'] .services-hero {
+  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+  border-bottom: 1px solid #e2e8f0;
+}
+
+[data-theme='light'] .services-hero h1 {
+  color: #071324;
+}
+
+[data-theme='light'] .services-hero p {
+  color: #475569;
+}
+
+[data-theme='light'] .services-hero-badge {
+  background: rgba(217, 119, 6, 0.08);
+  border-color: rgba(217, 119, 6, 0.25);
+  color: #b45309;
+}
+
+[data-theme='light'] .sla-ribbon-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
+}
+
+[data-theme='light'] .sla-card-title {
+  color: #071324;
+}
+
+[data-theme='light'] .sla-card-desc {
+  color: #64748b;
+}
+
+[data-theme='light'] .practice-protocol-section {
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+[data-theme='light'] .protocol-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05);
+}
+
+[data-theme='light'] .protocol-title {
+  color: #071324;
+}
+
+[data-theme='light'] .protocol-desc {
+  color: #475569;
+}
+
+[data-theme='light'] .protocol-flow-arrow {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  color: #0284c7;
+}
+
+[data-theme='light'] .practice-comparison-section {
+  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+  border-bottom: 1px solid #e2e8f0;
+}
+
+[data-theme='light'] .comparison-table-wrapper {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+[data-theme='light'] .comparison-table-header {
+  background: #f1f5f9;
+  border-bottom-color: #e2e8f0;
+}
+
+[data-theme='light'] .comparison-table-header .col-metric,
+[data-theme='light'] .comparison-table-header .col-generic {
+  border-right-color: #e2e8f0;
+  color: #475569;
+}
+
+[data-theme='light'] .comparison-table-row {
+  border-bottom-color: #edf2f7;
+}
+
+[data-theme='light'] .comparison-table-row .col-metric {
+  background: #f8fafc;
+  color: #071324;
+  border-right-color: #edf2f7;
+}
+
+[data-theme='light'] .comparison-table-row .col-generic {
+  color: #64748b;
+  border-right-color: #edf2f7;
+}
+
+[data-theme='light'] .comparison-table-row .col-firm {
+  background: rgba(248, 180, 0, 0.03);
+  color: #071324;
+}
+
+[data-theme='light'] .practice-faq-section {
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+[data-theme='light'] .faq-accordion-item {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+[data-theme='light'] .faq-accordion-btn {
+  color: #071324;
+}
+
+[data-theme='light'] .faq-accordion-content p {
+  color: #475569;
+}
+
+[data-theme='light'] .practice-cta-section {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+
+/* ============================================================
+   SERVICES PAGE — DOMINANT DARK THEME ARCHITECTURE
+   ============================================================ */
+[data-theme='dark'] .services-page {
+  background-color: #08101d;
+  color: #f1f5f9;
+}
+
+[data-theme='dark'] .services-hero {
+  background: radial-gradient(circle at 50% 10%, #0d1e38 0%, #071324 70%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .services-hero h1 {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .services-hero p {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .sla-ribbon-card {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .sla-card-title {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .sla-card-desc {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .practice-protocol-section {
+  background: #08101d;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .protocol-card {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .protocol-title {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .protocol-desc {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .protocol-flow-arrow {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #f8b400;
+}
+
+[data-theme='dark'] .practice-comparison-section {
+  background: #08101d;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .comparison-table-wrapper {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .comparison-table-header {
+  background: #0a1322;
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .comparison-table-header .col-metric,
+[data-theme='dark'] .comparison-table-header .col-generic {
+  border-right-color: rgba(255, 255, 255, 0.08);
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .comparison-table-row {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .comparison-table-row .col-metric {
+  background: #08101d;
+  color: #ffffff;
+  border-right-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .comparison-table-row .col-generic {
+  color: #94a3b8;
+  border-right-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .comparison-table-row .col-firm {
+  background: rgba(248, 180, 0, 0.06);
+  color: #f8fafc;
+}
+
+[data-theme='dark'] .practice-faq-section {
+  background: #08101d;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .faq-accordion-item {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .faq-accordion-item.open {
+  border-color: rgba(248, 180, 0, 0.4);
+}
+
+[data-theme='dark'] .faq-accordion-btn {
+  color: #f8fafc;
+}
+
+[data-theme='dark'] .faq-accordion-content p {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .practice-cta-section {
+  background: #08101d;
+}
+
+[data-theme='dark'] .practice-cta-card {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.08);
 }

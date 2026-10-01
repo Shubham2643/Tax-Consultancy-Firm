@@ -281,3 +281,79 @@
     gap: 1.1rem;
   }
 }
+
+/* ============================================================
+   REGISTER PAGE — DOMINANT LIGHT THEME ARCHITECTURE
+   ============================================================ */
+[data-theme='light'] .register-page {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+}
+
+[data-theme='light'] .register-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+}
+
+[data-theme='light'] .register-title {
+  color: #071324;
+}
+
+[data-theme='light'] .register-subtitle {
+  color: #64748b;
+}
+
+[data-theme='light'] .register-group label {
+  color: #334155;
+}
+
+[data-theme='light'] .register-input-wrap input {
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  color: #071324;
+}
+
+[data-theme='light'] .register-input-wrap input:focus {
+  background: #ffffff;
+  border-color: #071324;
+}
+
+/* ============================================================
+   REGISTER PAGE — DOMINANT DARK THEME ARCHITECTURE
+   ============================================================ */
+[data-theme='dark'] .register-page {
+  background: #08101d;
+}
+
+[data-theme='dark'] .register-card {
+  background: #0f1c32;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme='dark'] .register-title {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .register-subtitle {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .register-group label {
+  color: #cbd5e1;
+}
+
+[data-theme='dark'] .register-input-wrap input {
+  background: #08121f;
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+[data-theme='dark'] .register-input-wrap input:focus {
+  background: #08121f;
+  border-color: #f8b400;
+}
+
+[data-theme='dark'] .register-footer {
+  color: #94a3b8;
+}

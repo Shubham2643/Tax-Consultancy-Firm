@@ -1710,6 +1710,8 @@
   background: #f8fafc;
   border-top: 1px solid #e2e8f0;
   padding: 64px 0 84px 0;
+  position: relative;
+  overflow: hidden;
 }
 
 .related-dispatches-section .container {
@@ -2197,4 +2199,145 @@
     padding: 0 !important;
     display: block !important;
   }
+}
+
+/* ============================================================
+   ARTICLE DETAIL — DOMINANT LIGHT THEME ARCHITECTURE
+   ============================================================ */
+[data-theme='light'] .blog-detail-page {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+[data-theme='light'] .article-masthead {
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+[data-theme='light'] .masthead-title {
+  color: #071324;
+}
+
+[data-theme='light'] .masthead-deck-lead {
+  color: #475569;
+}
+
+[data-theme='light'] .editorial-main-column {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+}
+
+[data-theme='light'] .editorial-body-content {
+  color: #334155;
+}
+
+[data-theme='light'] .article-key-takeaways {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+[data-theme='light'] .statute-callout-box {
+  background: #fffdf5;
+  border-color: #fde68a;
+}
+
+[data-theme='light'] .reading-toc-box {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+[data-theme='light'] .sidebar-author-card,
+[data-theme='light'] .sidebar-consult-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+}
+
+/* ============================================================
+   ARTICLE DETAIL — DOMINANT DARK THEME ARCHITECTURE
+   ============================================================ */
+[data-theme='dark'] .blog-detail-page {
+  background-color: #08101d;
+  color: #f1f5f9;
+}
+
+[data-theme='dark'] .article-masthead {
+  background: #0a1322;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .masthead-title {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .masthead-deck-lead {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .masthead-back-btn {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #f1f5f9;
+}
+
+[data-theme='dark'] .editorial-main-column {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .editorial-body-content {
+  color: #cbd5e1;
+}
+
+[data-theme='dark'] .editorial-body-content h2,
+[data-theme='dark'] .editorial-body-content h3 {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .editorial-body-content p {
+  color: #cbd5e1;
+}
+
+[data-theme='dark'] .article-key-takeaways {
+  background: #08121f;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .statute-callout-box {
+  background: #13243e;
+  border-color: rgba(248, 180, 0, 0.3);
+}
+
+[data-theme='dark'] .reading-toc-box {
+  background: #08121f;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .toc-link {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .toc-link:hover {
+  color: #f8b400;
+}
+
+[data-theme='dark'] .sidebar-author-card,
+[data-theme='dark'] .sidebar-consult-card {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .author-bio {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .editorial-consult-banner {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .reading-hud-bar {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.08);
 }

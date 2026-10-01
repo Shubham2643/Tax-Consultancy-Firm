@@ -90,6 +90,7 @@ const FAQ = () => {
     <div className="faq-page fade-in">
       {/* Executive Midnight Hero with Floating Glow Orbs */}
       <div className="faq-hero">
+        <div className="section-top-accent-line" aria-hidden="true"></div>
         <div className="container">
           <div className="faq-hero-badge">
             <span className="live-dot"></span>
@@ -103,6 +104,7 @@ const FAQ = () => {
 
       {/* Main Content Area */}
       <div className="container faq-content-wrapper">
+        <div className="section-top-accent-line" aria-hidden="true"></div>
         {/* Single-Line Integrated Filter & Search Toolbar */}
         <div className="faq-toolbar-card">
           <div className="faq-toolbar-left">
@@ -292,6 +294,7 @@ const FAQ = () => {
 
         {/* Still Have Questions Consultation Banner */}
         <div className="faq-consultation-banner">
+          <div className="section-top-accent-line" aria-hidden="true"></div>
           <div className="consultation-banner-left">
             <div className="consult-icon-circle">
               <i className="fas fa-headset"></i>

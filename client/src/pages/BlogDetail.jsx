@@ -385,6 +385,7 @@ const BlogDetail = () => {
           INSTITUTIONAL EDITORIAL MASTHEAD (Light, Crisp, Executive)
           ============================================================ */}
       <header className="article-masthead">
+        <div className="section-top-accent-line" aria-hidden="true"></div>
         <div className="container masthead-container">
           {/* Top Breadcrumb Strip */}
           <div className="masthead-nav-bar">
@@ -868,6 +869,7 @@ const BlogDetail = () => {
           ============================================================ */}
       {relatedBlogs.length > 0 && (
         <section className="related-dispatches-section">
+          <div className="section-top-accent-line" aria-hidden="true"></div>
           <div className="container">
             <div className="related-section-header">
               <div className="related-header-kicker">
