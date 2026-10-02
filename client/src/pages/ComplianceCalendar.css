@@ -672,25 +672,91 @@
   color: #071324;
 }
 
+[data-theme='light'] .cal-search-input,
 [data-theme='light'] .calendar-search-input {
-  background: #ffffff;
-  border-color: #cbd5e1;
-  color: #0f172a;
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
 }
 
+[data-theme='light'] .cal-month-select {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+[data-theme='light'] .cal-tab-btn {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #475569 !important;
+}
+
+[data-theme='light'] .cal-tab-btn:hover {
+  background: #f8fafc !important;
+  color: #071324 !important;
+  border-color: #cbd5e1 !important;
+}
+
+[data-theme='light'] .cal-tab-btn.active {
+  background: #071324 !important;
+  color: #ffffff !important;
+  border-color: #071324 !important;
+}
+
+[data-theme='light'] .stat-desc {
+  color: #64748b !important;
+}
+
+[data-theme='light'] .calendar-results-meta {
+  color: #64748b !important;
+}
+
+[data-theme='light'] .calendar-results-meta strong {
+  color: #071324 !important;
+}
+
+[data-theme='light'] .deadline-card,
 [data-theme='light'] .calendar-event-card {
-  background: #ffffff;
-  border-color: #e2e8f0;
-  color: #0f172a;
-  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05);
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05) !important;
 }
 
+[data-theme='light'] .card-deadline-title,
 [data-theme='light'] .event-card-header h3 {
-  color: #071324;
+  color: #071324 !important;
 }
 
+[data-theme='light'] .detail-label {
+  color: #64748b !important;
+}
+
+[data-theme='light'] .detail-text,
 [data-theme='light'] .event-desc {
-  color: #475569;
+  color: #334155 !important;
+}
+
+[data-theme='light'] .detail-text.text-warning-muted {
+  color: #b45309 !important;
+}
+
+[data-theme='light'] .statute-code-label {
+  color: #64748b !important;
+}
+
+[data-theme='light'] .cal-google,
+[data-theme='light'] .cal-copy {
+  background: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: #334155 !important;
+}
+
+[data-theme='light'] .cal-google:hover,
+[data-theme='light'] .cal-copy:hover {
+  background: #f1f5f9 !important;
+  color: #071324 !important;
+  border-color: #94a3b8 !important;
 }
 
 [data-theme='light'] .penalty-matrix-card {

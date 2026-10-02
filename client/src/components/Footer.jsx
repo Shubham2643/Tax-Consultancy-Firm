@@ -193,88 +193,114 @@ const Footer = () => {
 
           {/* Column 4: Ahmedabad Desk & Contacts + Google Maps Office Card */}
           <div className="footer-col-contact">
-            <h4 className="footer-col-title">Ahmedabad Desk</h4>
-            <div className="footer-contact-stack">
-              <a href={`tel:${rawPhone}`} className="contact-entry-card">
-                <div className="contact-entry-icon">
-                  <i className="fas fa-phone-alt"></i>
-                </div>
-                <div className="contact-entry-text">
-                  <span className="contact-label">Direct Helpline</span>
-                  <strong>{phone}</strong>
-                </div>
-              </a>
+            <div className="desk-column-header">
+              <h4 className="footer-col-title">Ahmedabad Desk</h4>
+              <span className="desk-live-badge">
+                <span className="desk-live-dot"></span>
+                <span>Active Desk</span>
+              </span>
+            </div>
 
-              <a href={`mailto:${email}`} className="contact-entry-card">
-                <div className="contact-entry-icon">
-                  <i className="fas fa-envelope"></i>
-                </div>
-                <div className="contact-entry-text">
-                  <span className="contact-label">Official Advisory Inbox</span>
-                  <strong>{email}</strong>
-                </div>
-              </a>
+            <div className="desk-master-deck">
+              {/* Unified Quick Communications Deck */}
+              <div className="desk-comm-card">
+                <a href={`tel:${rawPhone}`} className="desk-comm-row">
+                  <div className="comm-icon-box">
+                    <i className="fas fa-phone-alt"></i>
+                  </div>
+                  <div className="comm-info-box">
+                    <span className="comm-label">Direct Helpline</span>
+                    <strong className="comm-value">{phone}</strong>
+                  </div>
+                  <span className="comm-action-tag" title="Call directly">
+                    <i className="fas fa-arrow-up-right-from-square"></i>
+                  </span>
+                </a>
 
-              <div className="contact-entry-card no-hover">
-                <div className="contact-entry-icon">
-                  <i className="fas fa-clock"></i>
-                </div>
-                <div className="contact-entry-text">
-                  <span className="contact-label">Consultation Hours</span>
-                  <strong>{workingHours}</strong>
+                <div className="desk-comm-divider"></div>
+
+                <a href={`mailto:${email}`} className="desk-comm-row">
+                  <div className="comm-icon-box">
+                    <i className="fas fa-envelope"></i>
+                  </div>
+                  <div className="comm-info-box">
+                    <span className="comm-label">Advisory Inbox</span>
+                    <strong className="comm-value comm-email-value">{email}</strong>
+                  </div>
+                  <span className="comm-action-tag" title="Send email">
+                    <i className="fas fa-arrow-up-right-from-square"></i>
+                  </span>
+                </a>
+
+                <div className="desk-comm-divider"></div>
+
+                <div className="desk-comm-row desk-comm-row-static">
+                  <div className="comm-icon-box">
+                    <i className="fas fa-clock"></i>
+                  </div>
+                  <div className="comm-info-box">
+                    <span className="comm-label">Office Consultation Hours</span>
+                    <strong className="comm-value">{workingHours}</strong>
+                  </div>
+                  <span className="comm-timing-chip">Mon &ndash; Sat</span>
                 </div>
               </div>
 
-              {/* Interactive Office Location Card with Google Maps Thumbnail */}
+              {/* Architectural Physical Office & Interactive Navigation Card */}
               <div className="footer-office-card">
                 <div className="office-card-header">
                   <div className="office-pin-badge">
-                    <i className="fas fa-building-columns"></i>
+                    <i className="fas fa-landmark"></i>
                   </div>
                   <div className="office-header-info">
-                    <span className="office-tag">PHYSICAL OFFICE &bull; NIKOL, AHMEDABAD</span>
+                    <span className="office-tag">Physical Headquarters &bull; Nikol</span>
                     <strong className="office-title">612, Hill Town Square</strong>
                   </div>
                 </div>
 
-                <p className="office-address-text">
-                  <i className="fas fa-map-pin address-pin-icon"></i>
-                  <span>{address}</span>
-                </p>
+                <div className="office-address-wrapper">
+                  <i className="fas fa-location-dot address-pin-icon"></i>
+                  <span className="office-address-text">{address}</span>
+                </div>
 
-                {/* Stylized Google Maps Visual Thumbnail Preview */}
+                {/* Stylized Theme-Adaptive Architectural Map Thumbnail */}
                 <a
                   href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="footer-map-thumbnail"
-                  title="Click to open turn-by-turn navigation in Google Maps"
+                  title="Open live Google Maps navigation"
                 >
                   <div className="map-thumbnail-backdrop">
-                    <svg className="map-vector-grid" viewBox="0 0 300 100" preserveAspectRatio="none" aria-hidden="true">
-                      {/* Grid Roads and Coordinates */}
-                      <path d="M 0 30 Q 80 50 150 20 T 300 40" stroke="rgba(248, 180, 0, 0.3)" strokeWidth="3" fill="none" />
-                      <path d="M 40 0 Q 70 60 90 100" stroke="rgba(59, 130, 246, 0.25)" strokeWidth="2.5" fill="none" />
-                      <path d="M 180 0 Q 170 50 210 100" stroke="rgba(255, 255, 255, 0.15)" strokeWidth="2" fill="none" />
-                      <path d="M 0 75 Q 120 60 200 85 T 300 70" stroke="rgba(255, 255, 255, 0.12)" strokeWidth="2" fill="none" />
-                      <circle cx="150" cy="45" r="4" fill="#f8b400" />
+                    <svg className="map-vector-grid" viewBox="0 0 320 90" preserveAspectRatio="none" aria-hidden="true">
+                      {/* Architectural road grid */}
+                      <line x1="0" y1="45" x2="320" y2="45" className="grid-road-major" />
+                      <line x1="160" y1="0" x2="160" y2="90" className="grid-road-major" />
+                      <path d="M 0 20 Q 120 70 320 25" className="grid-road-curve" />
+                      <path d="M 30 0 Q 140 50 180 90" className="grid-road-secondary" />
+                      <path d="M 220 0 Q 200 45 300 90" className="grid-road-secondary" />
+                      <circle cx="160" cy="45" r="28" className="grid-district-zone" />
                     </svg>
-                    <span className="map-coord-stamp">23.0535° N &bull; 72.6712° E</span>
+                    <span className="map-coord-stamp">
+                      <i className="fas fa-crosshairs"></i> 23.0535&deg; N, 72.6712&deg; E
+                    </span>
                   </div>
 
                   <div className="map-thumbnail-center">
                     <div className="map-radar-pin">
                       <span className="pin-pulse-ring"></span>
-                      <i className="fas fa-map-marker-alt"></i>
+                      <span className="pin-pulse-ring inner"></span>
+                      <i className="fas fa-location-dot"></i>
                     </div>
-                    <span className="map-hover-pill">
-                      <i className="fas fa-diamond-turn-right"></i>
-                      <span>Get Directions</span>
-                    </span>
+                  </div>
+
+                  <div className="map-hover-banner">
+                    <i className="fas fa-diamond-turn-right"></i>
+                    <span>Open Maps</span>
                   </div>
                 </a>
 
-                {/* Direct Action Buttons */}
+                {/* Direct Action Hub */}
                 <div className="office-map-actions">
                   <a
                     href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`}
@@ -283,16 +309,16 @@ const Footer = () => {
                     className="btn-map-directions"
                   >
                     <i className="fas fa-diamond-turn-right"></i>
-                    <span>Directions</span>
+                    <span>Get Directions</span>
                   </a>
                   <button
                     type="button"
                     className={`btn-copy-address ${copiedAddress ? 'copied' : ''}`}
                     onClick={handleCopyAddress}
-                    title="Copy full office address"
+                    title="Copy full office address to clipboard"
                   >
                     <i className={copiedAddress ? 'fas fa-check' : 'fas fa-copy'}></i>
-                    <span>{copiedAddress ? 'Copied!' : 'Copy'}</span>
+                    <span>{copiedAddress ? 'Copied!' : 'Copy Address'}</span>
                   </button>
                 </div>
               </div>

@@ -369,79 +369,187 @@
   color: #f8b400;
 }
 
-/* ---- Column 4: Contacts ---- */
-.footer-contact-stack {
+/* ---- Column 4: Ahmedabad Desk & Corporate Office ---- */
+.desk-column-header {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
   gap: 10px;
 }
 
-.contact-entry-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 12px;
-  padding: 11px 14px;
+.desk-column-header .footer-col-title {
+  margin-bottom: 0;
+  padding-bottom: 6px;
+}
+
+.desk-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10.5px;
+  font-weight: 750;
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.09);
+  border: 1px solid rgba(34, 197, 94, 0.28);
+  padding: 3px 9px;
+  border-radius: 20px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.desk-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
+  animation: deskDotPulse 2s infinite ease-in-out;
+}
+
+@keyframes deskDotPulse {
+  0% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.35); opacity: 0.4; }
+  100% { transform: scale(1); opacity: 0.9; }
+}
+
+.desk-master-deck {
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
   gap: 12px;
+}
+
+/* Unified Quick Communications Deck */
+.desk-comm-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.desk-comm-row {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 10px 14px;
   text-decoration: none;
   color: inherit;
-  transition: all 0.25s ease;
+  transition: background 0.2s ease, transform 0.2s ease;
+  position: relative;
 }
 
-.contact-entry-card:not(.no-hover):hover {
+.desk-comm-row:not(.desk-comm-row-static):hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.desk-comm-divider {
+  height: 1px;
   background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(248, 180, 0, 0.35);
-  transform: translateX(3px);
+  width: 100%;
 }
 
-.contact-entry-icon {
-  width: 30px;
-  height: 30px;
+.comm-icon-box {
+  width: 32px;
+  height: 32px;
   border-radius: 8px;
-  background: rgba(248, 180, 0, 0.1);
-  border: 1px solid rgba(248, 180, 0, 0.25);
+  background: rgba(248, 180, 0, 0.12);
+  border: 1px solid rgba(248, 180, 0, 0.28);
   color: #f8b400;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 12px;
   flex-shrink: 0;
-  margin-top: 2px;
+  transition: all 0.25s ease;
 }
 
-.contact-entry-text {
+.desk-comm-row:hover .comm-icon-box {
+  background: #f8b400;
+  color: #071324;
+  transform: scale(1.05);
+}
+
+.desk-comm-row-static:hover .comm-icon-box {
+  background: rgba(248, 180, 0, 0.12);
+  color: #f8b400;
+  transform: none;
+}
+
+.comm-info-box {
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  flex: 1;
 }
 
-.contact-label {
-  font-size: 10.5px;
+.comm-label {
+  font-size: 10px;
+  font-weight: 700;
   color: #64748b;
   text-transform: uppercase;
   letter-spacing: 0.4px;
-  font-weight: 600;
+  margin-bottom: 1px;
 }
 
-.contact-entry-text strong {
+.comm-value {
   font-size: 12.5px;
-  color: #e2e8f0;
-  line-height: 1.4;
   font-weight: 650;
+  color: #f1f5f9;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* ---- Interactive Office Location Card ---- */
+.comm-email-value {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+}
+
+.comm-action-tag {
+  font-size: 11px;
+  color: #64748b;
+  opacity: 0.5;
+  transition: all 0.2s ease;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.desk-comm-row:hover .comm-action-tag {
+  opacity: 1;
+  color: #f8b400;
+  transform: translate(1px, -1px);
+}
+
+.comm-timing-chip {
+  font-size: 10px;
+  font-weight: 750;
+  color: #f8b400;
+  background: rgba(248, 180, 0, 0.1);
+  border: 1px solid rgba(248, 180, 0, 0.22);
+  padding: 2px 7px;
+  border-radius: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+/* ---- Architectural Physical Office Card ---- */
 .footer-office-card {
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(248, 180, 0, 0.22);
+  border: 1px solid rgba(248, 180, 0, 0.25);
   border-radius: 14px;
-  padding: 14px;
+  padding: 13px 14px;
   display: flex;
   flex-direction: column;
   gap: 10px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(10px);
   transition: all 0.3s ease;
-  margin-top: 4px;
 }
 
 .footer-office-card:hover {
@@ -473,7 +581,7 @@
 .office-header-info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
 }
 
 .office-tag {
@@ -489,6 +597,20 @@
   font-weight: 800;
   color: #ffffff;
   margin: 0;
+  line-height: 1.25;
+}
+
+.office-address-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+}
+
+.address-pin-icon {
+  color: #f8b400;
+  font-size: 12px;
+  margin-top: 2px;
+  flex-shrink: 0;
 }
 
 .office-address-text {
@@ -496,21 +618,11 @@
   color: #94a3b8;
   line-height: 1.5;
   margin: 0;
-  display: flex;
-  align-items: flex-start;
-  gap: 6px;
-}
-
-.address-pin-icon {
-  color: #f8b400;
-  font-size: 11px;
-  margin-top: 2.5px;
-  flex-shrink: 0;
 }
 
 /* Map Visual Thumbnail Preview */
 .footer-map-thumbnail {
-  height: 85px;
+  height: 82px;
   border-radius: 10px;
   background: #071324;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -534,29 +646,59 @@
   right: 0;
   bottom: 0;
   overflow: hidden;
-  background: radial-gradient(circle at center, rgba(14, 30, 58, 0.8) 0%, rgba(7, 19, 36, 0.95) 100%);
+  background: radial-gradient(circle at center, #0e1e3a 0%, #061120 100%);
 }
 
 .map-vector-grid {
   width: 100%;
   height: 100%;
-  opacity: 0.65;
+  opacity: 0.7;
   transition: transform 0.4s ease;
 }
 
 .footer-map-thumbnail:hover .map-vector-grid {
-  transform: scale(1.08);
+  transform: scale(1.06);
+}
+
+.grid-road-major {
+  stroke: rgba(248, 180, 0, 0.4);
+  stroke-width: 2.5;
+}
+
+.grid-road-curve {
+  stroke: rgba(59, 130, 246, 0.35);
+  stroke-width: 2;
+  fill: none;
+}
+
+.grid-road-secondary {
+  stroke: rgba(255, 255, 255, 0.15);
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.grid-district-zone {
+  fill: rgba(248, 180, 0, 0.06);
+  stroke: rgba(248, 180, 0, 0.25);
+  stroke-dasharray: 3 3;
 }
 
 .map-coord-stamp {
   position: absolute;
-  bottom: 5px;
+  bottom: 6px;
   left: 8px;
   font-size: 8.5px;
-  font-family: monospace;
-  color: #64748b;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  color: #94a3b8;
   letter-spacing: 0.3px;
   pointer-events: none;
+  background: rgba(7, 19, 36, 0.75);
+  padding: 2px 5px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .map-thumbnail-center {
@@ -569,20 +711,21 @@
   align-items: center;
   justify-content: center;
   z-index: 2;
+  pointer-events: none;
 }
 
 .map-radar-pin {
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background: #f8b400;
   color: #071324;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
+  font-size: 12px;
   position: relative;
-  box-shadow: 0 0 16px rgba(248, 180, 0, 0.6);
+  box-shadow: 0 0 14px rgba(248, 180, 0, 0.65);
   transition: transform 0.3s ease;
 }
 
@@ -600,12 +743,16 @@
   pointer-events: none;
 }
 
-@keyframes mapPulseRing {
-  0% { transform: scale(1); opacity: 0.8; }
-  100% { transform: scale(2.2); opacity: 0; }
+.pin-pulse-ring.inner {
+  animation-delay: 0.6s;
 }
 
-.map-hover-pill {
+@keyframes mapPulseRing {
+  0% { transform: scale(1); opacity: 0.85; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+.map-hover-banner {
   position: absolute;
   bottom: 6px;
   right: 8px;
@@ -618,16 +765,18 @@
   color: #f8b400;
   padding: 3px 8px;
   border-radius: 6px;
-  font-size: 10px;
+  font-size: 9.5px;
   font-weight: 750;
   letter-spacing: 0.3px;
   transition: all 0.25s ease;
+  z-index: 3;
 }
 
-.footer-map-thumbnail:hover .map-hover-pill {
+.footer-map-thumbnail:hover .map-hover-banner {
   background: #f8b400;
   color: #071324;
   transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(248, 180, 0, 0.3);
 }
 
 /* Office Map Actions */
@@ -642,22 +791,24 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 7px;
   background: linear-gradient(135deg, #f8b400 0%, #e6a100 100%);
-  color: #071324;
+  color: #071324 !important;
   padding: 8px 12px;
   border-radius: 8px;
   font-size: 12px;
   font-weight: 750;
   text-decoration: none;
   transition: all 0.25s ease;
+  border: 1px solid rgba(248, 180, 0, 0.5);
+  box-shadow: 0 2px 8px rgba(248, 180, 0, 0.2);
 }
 
 .btn-map-directions:hover {
   background: linear-gradient(135deg, #ffc425 0%, #f8b400 100%);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(248, 180, 0, 0.35);
-  color: #071324;
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 14px rgba(248, 180, 0, 0.4);
+  color: #071324 !important;
 }
 
 .btn-copy-address {
@@ -668,9 +819,9 @@
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.12);
   color: #cbd5e1;
-  padding: 8px 14px;
+  padding: 8px 12px;
   border-radius: 8px;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.25s ease;
@@ -684,9 +835,9 @@
 }
 
 .btn-copy-address.copied {
-  background: rgba(34, 197, 94, 0.15);
-  border-color: #22c55e;
-  color: #22c55e;
+  background: rgba(34, 197, 94, 0.15) !important;
+  border-color: #22c55e !important;
+  color: #22c55e !important;
 }
 
 /* ============================================
@@ -894,29 +1045,46 @@
     padding: 2px 0;
   }
 
-  .footer-contact-stack {
-    gap: 8px;
+  .desk-column-header {
+    margin-bottom: 12px;
   }
 
-  .contact-entry-card {
-    padding: 10px 12px;
-    border-radius: 10px;
+  .desk-comm-card {
+    border-radius: 12px;
+  }
+
+  .desk-comm-row {
+    padding: 9px 12px;
     gap: 10px;
   }
 
-  .contact-entry-icon {
+  .comm-icon-box {
     width: 28px;
     height: 28px;
     font-size: 11px;
+    border-radius: 7px;
   }
 
-  .contact-label {
-    font-size: 10px;
+  .comm-label {
+    font-size: 9.5px;
   }
 
-  .contact-entry-text strong {
+  .comm-value {
     font-size: 12px;
-    word-break: break-all;
+  }
+
+  .comm-email-value {
+    font-size: 11px;
+  }
+
+  .comm-timing-chip {
+    font-size: 9px;
+    padding: 2px 6px;
+  }
+
+  .footer-office-card {
+    padding: 12px;
+    border-radius: 12px;
   }
 
   .footer-bottom-bar {
@@ -1054,27 +1222,67 @@
   color: #d97706;
 }
 
-[data-theme='light'] .contact-entry-card {
+/* LIGHT THEME OVERRIDES FOR AHMEDABAD DESK */
+[data-theme='light'] .desk-live-badge {
+  background: rgba(34, 197, 94, 0.12);
+  border-color: rgba(34, 197, 94, 0.35);
+  color: #15803d;
+}
+
+[data-theme='light'] .desk-comm-card {
   background: #ffffff;
   border-color: #e2e8f0;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
 }
 
-[data-theme='light'] .contact-entry-card:hover {
-  border-color: rgba(248, 180, 0, 0.45);
+[data-theme='light'] .desk-comm-row:not(.desk-comm-row-static):hover {
+  background: #f8fafc;
 }
 
-[data-theme='light'] .contact-entry-card .contact-label {
+[data-theme='light'] .desk-comm-divider {
+  background: #f1f5f9;
+}
+
+[data-theme='light'] .comm-label {
   color: #64748b;
 }
 
-[data-theme='light'] .contact-entry-card strong {
+[data-theme='light'] .comm-value {
   color: #071324;
+}
+
+[data-theme='light'] .comm-icon-box {
+  background: rgba(217, 119, 6, 0.1);
+  border-color: rgba(217, 119, 6, 0.25);
+  color: #d97706;
+}
+
+[data-theme='light'] .desk-comm-row:hover .comm-icon-box {
+  background: #d97706;
+  color: #ffffff;
+}
+
+[data-theme='light'] .comm-timing-chip {
+  background: rgba(217, 119, 6, 0.09);
+  border-color: rgba(217, 119, 6, 0.25);
+  color: #b45309;
 }
 
 [data-theme='light'] .footer-office-card {
   background: #ffffff;
   border-color: #e2e8f0;
   box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05);
+}
+
+[data-theme='light'] .footer-office-card:hover {
+  border-color: rgba(217, 119, 6, 0.4);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08), 0 0 16px rgba(248, 180, 0, 0.12);
+}
+
+[data-theme='light'] .office-pin-badge {
+  background: rgba(217, 119, 6, 0.1);
+  border-color: rgba(217, 119, 6, 0.25);
+  color: #d97706;
 }
 
 [data-theme='light'] .office-title {
@@ -1085,15 +1293,88 @@
   color: #475569;
 }
 
-[data-theme='light'] .btn-map-directions {
-  background: #f8fafc;
+/* Light Mode Architectural Map Thumbnail */
+[data-theme='light'] .footer-map-thumbnail {
+  background: #f1f5f9;
   border-color: #cbd5e1;
-  color: #0f172a;
+}
+
+[data-theme='light'] .footer-map-thumbnail:hover {
+  border-color: #d97706;
+  box-shadow: 0 4px 16px rgba(217, 119, 6, 0.18);
+}
+
+[data-theme='light'] .map-thumbnail-backdrop {
+  background: radial-gradient(circle at center, #f8fafc 0%, #e2e8f0 100%);
+}
+
+[data-theme='light'] .grid-road-major {
+  stroke: rgba(217, 119, 6, 0.45);
+}
+
+[data-theme='light'] .grid-road-curve {
+  stroke: rgba(14, 116, 144, 0.35);
+}
+
+[data-theme='light'] .grid-road-secondary {
+  stroke: rgba(100, 116, 139, 0.3);
+}
+
+[data-theme='light'] .grid-district-zone {
+  fill: rgba(217, 119, 6, 0.06);
+  stroke: rgba(217, 119, 6, 0.3);
+}
+
+[data-theme='light'] .map-coord-stamp {
+  background: rgba(255, 255, 255, 0.9);
+  color: #475569;
+  border-color: #cbd5e1;
+}
+
+[data-theme='light'] .map-radar-pin {
+  background: #d97706;
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(217, 119, 6, 0.5);
+}
+
+[data-theme='light'] .pin-pulse-ring {
+  border-color: #d97706;
+}
+
+[data-theme='light'] .map-hover-banner {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(217, 119, 6, 0.35);
+  color: #b45309;
+}
+
+[data-theme='light'] .footer-map-thumbnail:hover .map-hover-banner {
+  background: #d97706;
+  color: #ffffff;
+}
+
+/* Light Theme Action Buttons */
+[data-theme='light'] .btn-map-directions {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #ffffff !important;
+  border-color: #d97706;
+  box-shadow: 0 3px 12px rgba(217, 119, 6, 0.25);
+}
+
+[data-theme='light'] .btn-map-directions:hover {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+  box-shadow: 0 5px 16px rgba(217, 119, 6, 0.35);
+  color: #ffffff !important;
 }
 
 [data-theme='light'] .btn-copy-address {
-  background: #f8fafc;
+  background: #ffffff;
   border-color: #cbd5e1;
+  color: #334155;
+}
+
+[data-theme='light'] .btn-copy-address:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
   color: #0f172a;
 }
 

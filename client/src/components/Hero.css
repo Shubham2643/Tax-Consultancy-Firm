@@ -5,7 +5,7 @@
   background-color: #06101e;
   color: #ffffff;
   width: 100%;
-  padding: 65px 0 75px 0;
+  padding: clamp(82px, 7vw, 105px) 0 80px 0;
   position: relative;
   overflow: hidden;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
@@ -629,7 +629,7 @@
    ============================================ */
 @media (max-width: 1024px) {
   .hero {
-    padding: 50px 0 60px 0;
+    padding: 65px 0 65px 0;
   }
   .hero-layout-container {
     grid-template-columns: 1fr;
@@ -671,7 +671,7 @@
 
 @media (max-width: 680px) {
   .hero {
-    padding: 22px 0 60px 0;
+    padding: 48px 0 60px 0;
   }
   .hero-layout-container {
     padding: 0 14px;
@@ -826,7 +826,11 @@
 }
 
 [data-theme='light'] .trust-bullet-item {
-  color: #334155;
+  color: #1e293b;
+}
+
+[data-theme='light'] .trust-bullet-item span {
+  color: #1e293b;
 }
 
 [data-theme='light'] .bullet-icon-box {
@@ -846,14 +850,52 @@
   color: #ffffff;
 }
 
+[data-theme='light'] .hero-social-proof {
+  color: #475569;
+}
+
 [data-theme='light'] .rating-caption {
-  color: #64748b;
+  color: #475569;
+}
+
+[data-theme='light'] .rating-caption strong {
+  color: #0f172a !important;
+  font-weight: 750;
 }
 
 [data-theme='light'] .proof-verified-badge {
-  background: #ffffff;
-  border-color: #cbd5e1;
-  color: #334155;
+  background: rgba(248, 180, 0, 0.1) !important;
+  border-color: rgba(217, 119, 6, 0.32) !important;
+  color: #92400e !important;
+  font-weight: 750;
+}
+
+[data-theme='light'] .proof-verified-badge i {
+  color: #d97706 !important;
+}
+
+[data-theme='light'] .tile-badge-in-progress {
+  background: rgba(217, 119, 6, 0.12) !important;
+  color: #b45309 !important;
+  border: 1px solid rgba(217, 119, 6, 0.28) !important;
+}
+
+[data-theme='light'] .tile-badge-saving {
+  background: rgba(2, 132, 199, 0.12) !important;
+  color: #0284c7 !important;
+  border: 1px solid rgba(2, 132, 199, 0.28) !important;
+}
+
+[data-theme='light'] .tile-badge-success {
+  background: rgba(22, 163, 74, 0.12) !important;
+  color: #16a34a !important;
+  border: 1px solid rgba(22, 163, 74, 0.25) !important;
+}
+
+[data-theme='light'] .mockup-status-tag {
+  background: rgba(22, 163, 74, 0.12) !important;
+  color: #16a34a !important;
+  border-color: rgba(22, 163, 74, 0.28) !important;
 }
 
 [data-theme='light'] .hero-mockup-card {

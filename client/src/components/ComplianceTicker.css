@@ -474,6 +474,44 @@
   color: #64748b;
 }
 
+[data-theme='light'] .compliance-item-name {
+  color: #0f172a !important;
+}
+
+[data-theme='light'] .compliance-ticker-strip .mobile-item-title {
+  color: #0f172a !important;
+}
+
+[data-theme='light'] .mobile-item-chip-link,
+[data-theme='light'] .mobile-item-chip-link:visited,
+[data-theme='light'] .mobile-item-chip-link:hover,
+[data-theme='light'] .mobile-item-chip-link:active {
+  color: #0f172a !important;
+}
+
+[data-theme='light'] .compliance-date-chip {
+  color: #b45309 !important;
+}
+
+[data-theme='light'] .compliance-ticker-item {
+  color: #334155 !important;
+}
+
+[data-theme='light'] .compliance-statute-tag {
+  color: #64748b !important;
+}
+
+[data-theme='light'] .compliance-inline-action {
+  color: #0284c7 !important;
+  background: rgba(2, 132, 199, 0.08) !important;
+  border-color: rgba(2, 132, 199, 0.25) !important;
+}
+
+[data-theme='light'] .compliance-inline-action:hover {
+  background: rgba(2, 132, 199, 0.16) !important;
+  color: #0369a1 !important;
+}
+
 [data-theme='light'] .ticker-item a {
   color: #334155;
 }

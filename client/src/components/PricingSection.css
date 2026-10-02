@@ -1058,11 +1058,19 @@
   box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05);
 }
 
-[data-theme='light'] .enterprise-bar-title {
-  color: #071324;
+[data-theme='light'] .enterprise-bar-title,
+[data-theme='light'] .enterprise-bar-copy h3 {
+  color: #071324 !important;
 }
 
-[data-theme='light'] .enterprise-bar-desc {
-  color: #475569;
+[data-theme='light'] .enterprise-bar-desc,
+[data-theme='light'] .enterprise-bar-copy p {
+  color: #475569 !important;
+}
+
+[data-theme='light'] .enterprise-live-tag {
+  background: rgba(22, 163, 74, 0.12) !important;
+  color: #16a34a !important;
+  border-color: rgba(22, 163, 74, 0.28) !important;
 }
 

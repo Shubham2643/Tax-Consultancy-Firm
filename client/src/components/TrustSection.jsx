@@ -315,74 +315,164 @@ const TrustSection = ({ onSelectCategory }) => {
         </div>
 
         {/* ============================================================
-            BOTTOM CHARTERED ASSURANCE & JUMP BAR
+            EXECUTIVE ASSURANCE & FAST-TRACK PRACTICE ACTION HUB
             ============================================================ */}
-        <div className="trust-bottom-bar">
-          {/* Left: Credibility Badges */}
-          <div className="trust-credentials-cluster">
-            <div className="cred-item">
-              <div className="cred-stars">
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
+        <div className="trust-action-hub-card">
+          {/* Top Banner: Dual-Column Executive Architecture */}
+          <div className="hub-top-row">
+            {/* Left: Authority Narrative & Credibility Badges */}
+            <div className="hub-authority-pane">
+              <div className="hub-status-pill">
+                <span className="hub-status-dot"></span>
+                <i className="fas fa-shield-halved"></i>
+                <span>Direct Chartered Chambers &bull; Senior Partner Oversight</span>
               </div>
-              <span><strong>4.9/5</strong> Rating (250+ Gujarat Businesses)</span>
+
+              <h3 className="hub-headline">
+                Institutional Tax Advisory with Zero-Penalty SLA &amp; Direct Notice Defense
+              </h3>
+
+              <div className="hub-credentials-strip">
+                <div className="hub-cred-item">
+                  <div className="cred-stars">
+                    <i className="fas fa-star"></i>
+                    <i className="fas fa-star"></i>
+                    <i className="fas fa-star"></i>
+                    <i className="fas fa-star"></i>
+                    <i className="fas fa-star"></i>
+                  </div>
+                  <span><strong>4.9/5</strong> (200+ Gujarat Businesses)</span>
+                </div>
+                <span className="hub-cred-sep">&bull;</span>
+                <div className="hub-cred-item">
+                  <i className="fas fa-certificate text-emerald"></i>
+                  <span><strong>ICAI Regulated</strong> Practice Standard</span>
+                </div>
+                <span className="hub-cred-sep">&bull;</span>
+                <div className="hub-cred-item">
+                  <i className="fas fa-award text-gold"></i>
+                  <span><strong>4+ Years</strong> Continuous Practice</span>
+                </div>
+              </div>
             </div>
-            <span className="cred-dot">&bull;</span>
-            <div className="cred-item">
-              <i className="fas fa-certificate text-emerald"></i>
-              <span><strong>ICAI Regulated</strong> Chartered Standard</span>
-            </div>
-            <span className="cred-dot">&bull;</span>
-            <div className="cred-item">
-              <i className="fas fa-award text-gold"></i>
-              <span><strong>4+ Years</strong> Continuous Practice</span>
+
+            {/* Right: High-Impact Dual Action Suite */}
+            <div className="hub-actions-pane">
+              <button
+                type="button"
+                className="btn-hub-primary"
+                onClick={() => navigate('/contact')}
+              >
+                <span className="btn-shine"></span>
+                <i className="fas fa-calendar-check"></i>
+                <div className="btn-hub-text">
+                  <span className="btn-hub-main">Schedule Partner Consultation</span>
+                  <span className="btn-hub-sub">Free 30-Min Direct Scrutiny &amp; Tax Review</span>
+                </div>
+                <i className="fas fa-arrow-right btn-arrow"></i>
+              </button>
+
+              <div className="hub-secondary-actions">
+                <button
+                  type="button"
+                  className="btn-hub-secondary"
+                  onClick={() => navigate('/about')}
+                >
+                  <i className="fas fa-file-contract"></i>
+                  <span>Our Firm Charter</span>
+                </button>
+
+                <a
+                  href={`https://wa.me/${settings?.phone ? settings.phone.replace(/[^0-9]/g, '') : '919510984735'}?text=${encodeURIComponent(
+                    'Hello Shree Chamunda Associates! I would like to consult with a Senior Chartered Accountant regarding Tax & Compliance services.'
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-hub-whatsapp"
+                  title="Direct WhatsApp Advisory with Senior CA"
+                  aria-label="Direct WhatsApp Consultation"
+                >
+                  <i className="fab fa-whatsapp"></i>
+                  <span>WhatsApp Desk</span>
+                </a>
+              </div>
             </div>
           </div>
 
-          {/* Right: Primary Action Trigger */}
-          <div className="trust-cta-cluster">
-            <button
-              type="button"
-              className="btn-trust-primary"
-              onClick={() => navigate('/contact')}
-            >
-              <span className="btn-shine"></span>
-              <i className="fas fa-calendar-check"></i>
-              <span>Schedule Partner Consultation</span>
-              <i className="fas fa-arrow-right btn-arrow"></i>
-            </button>
-            <button
-              type="button"
-              className="btn-trust-secondary"
-              onClick={() => navigate('/about')}
-            >
-              <i className="fas fa-info-circle"></i>
-              <span>Our Firm Charter</span>
-            </button>
-          </div>
-        </div>
+          {/* Elegant Architectural Divider Line */}
+          <div className="hub-divider-line" aria-hidden="true"></div>
 
-        {/* Practice Quick Jump Ribbon (Seamless Compatibility with Services) */}
-        <div className="trust-practice-jump-ribbon">
-          <span className="jump-label">
-            <i className="fas fa-arrow-turn-down"></i> Quick Practice Access:
-          </span>
-          <div className="jump-chips-row">
-            <button type="button" className="jump-chip" onClick={() => handlePracticeClick('tax')}>
-              <i className="fas fa-file-invoice-dollar"></i> Direct &amp; Income Tax
-            </button>
-            <button type="button" className="jump-chip" onClick={() => handlePracticeClick('tax')}>
-              <i className="fas fa-receipt"></i> GST Filing &amp; Scrutiny
-            </button>
-            <button type="button" className="jump-chip" onClick={() => handlePracticeClick('startup')}>
-              <i className="fas fa-building"></i> Pvt Ltd &amp; LLP Incorporation
-            </button>
-            <button type="button" className="jump-chip" onClick={() => handlePracticeClick('accounting')}>
-              <i className="fas fa-shield-halved"></i> Statutory Audits &amp; ROC
-            </button>
+          {/* Bottom Banner: Fast-Track Practice Domain Navigator */}
+          <div className="hub-bottom-row">
+            <div className="hub-nav-header">
+              <span className="hub-nav-badge">
+                <i className="fas fa-bolt text-gold"></i>
+                <span>FAST-TRACK ACCESS</span>
+              </span>
+              <span className="hub-nav-lead">Jump Directly to Specialized Practice Chambers:</span>
+            </div>
+
+            <div className="hub-chips-grid">
+              <button
+                type="button"
+                className="hub-practice-chip chip-tax"
+                onClick={() => handlePracticeClick('tax')}
+              >
+                <span className="chip-icon-box box-tax">
+                  <i className="fas fa-file-invoice-dollar"></i>
+                </span>
+                <div className="chip-meta">
+                  <strong className="chip-title">Direct &amp; Income Tax</strong>
+                  <span className="chip-sub">ITR-1 to 7 &bull; Sec 44AD/ADA</span>
+                </div>
+                <i className="fas fa-chevron-right chip-cue"></i>
+              </button>
+
+              <button
+                type="button"
+                className="hub-practice-chip chip-gst"
+                onClick={() => handlePracticeClick('tax')}
+              >
+                <span className="chip-icon-box box-gst">
+                  <i className="fas fa-receipt"></i>
+                </span>
+                <div className="chip-meta">
+                  <strong className="chip-title">GST Filing &amp; Scrutiny</strong>
+                  <span className="chip-sub">GSTR-1, 3B &bull; ITC Recon</span>
+                </div>
+                <i className="fas fa-chevron-right chip-cue"></i>
+              </button>
+
+              <button
+                type="button"
+                className="hub-practice-chip chip-startup"
+                onClick={() => handlePracticeClick('startup')}
+              >
+                <span className="chip-icon-box box-startup">
+                  <i className="fas fa-building"></i>
+                </span>
+                <div className="chip-meta">
+                  <strong className="chip-title">Pvt Ltd &amp; LLP Setup</strong>
+                  <span className="chip-sub">MCA SPICe+ &bull; DIN Allotment</span>
+                </div>
+                <i className="fas fa-chevron-right chip-cue"></i>
+              </button>
+
+              <button
+                type="button"
+                className="hub-practice-chip chip-audit"
+                onClick={() => handlePracticeClick('accounting')}
+              >
+                <span className="chip-icon-box box-audit">
+                  <i className="fas fa-shield-halved"></i>
+                </span>
+                <div className="chip-meta">
+                  <strong className="chip-title">Statutory Audits &amp; ROC</strong>
+                  <span className="chip-sub">Sec 44AB &bull; AOC-4 &bull; MGT-7</span>
+                </div>
+                <i className="fas fa-chevron-right chip-cue"></i>
+              </button>
+            </div>
           </div>
         </div>
       </div>

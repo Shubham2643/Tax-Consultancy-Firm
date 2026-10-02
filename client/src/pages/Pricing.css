@@ -689,24 +689,150 @@
   box-shadow: 0 8px 30px rgba(248, 180, 0, 0.15);
 }
 
-[data-theme='light'] .plan-title {
-  color: #071324;
+[data-theme='light'] .plan-title,
+[data-theme='light'] .plan-name {
+  color: #071324 !important;
 }
 
-[data-theme='light'] .plan-desc {
-  color: #475569;
+[data-theme='light'] .plan-kicker {
+  color: #64748b !important;
+}
+
+[data-theme='light'] .plan-desc,
+[data-theme='light'] .plan-summary-text {
+  color: #475569 !important;
 }
 
 [data-theme='light'] .price-amount {
-  color: #071324;
+  color: #071324 !important;
 }
 
-[data-theme='light'] .price-cycle {
-  color: #64748b;
+[data-theme='light'] .price-cycle,
+[data-theme='light'] .price-period {
+  color: #64748b !important;
+}
+
+[data-theme='light'] .currency-symbol {
+  color: #b45309 !important;
+}
+
+[data-theme='light'] .billed-annually-tag {
+  background: rgba(248, 180, 0, 0.1) !important;
+  color: #b45309 !important;
+  border-color: rgba(248, 180, 0, 0.3) !important;
+}
+
+[data-theme='light'] .plan-roi-chip {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+[data-theme='light'] .highlights-title {
+  color: #0f172a !important;
+  font-weight: 750 !important;
+}
+
+[data-theme='light'] .plan-highlight-item {
+  color: #334155 !important;
+}
+
+[data-theme='light'] .plan-highlight-item span {
+  color: #334155 !important;
 }
 
 [data-theme='light'] .plan-features-list li {
-  color: #334155;
+  color: #334155 !important;
+}
+
+[data-theme='light'] .section-header-centered h2 {
+  color: #071324 !important;
+}
+
+[data-theme='light'] .section-subtext {
+  color: #475569 !important;
+}
+
+[data-theme='light'] .scope-comparison-table {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+[data-theme='light'] .scope-comparison-table th {
+  background: #f8fafc !important;
+  color: #071324 !important;
+  border-color: #e2e8f0 !important;
+}
+
+[data-theme='light'] .scope-comparison-table td {
+  border-color: #e2e8f0 !important;
+  color: #334155 !important;
+}
+
+[data-theme='light'] .scope-comparison-table td strong {
+  color: #071324 !important;
+}
+
+[data-theme='light'] .scope-comparison-table tbody tr:hover {
+  background: #f8fafc !important;
+}
+
+[data-theme='light'] .quote-narrative-col h2 {
+  color: #071324 !important;
+}
+
+[data-theme='light'] .quote-narrative-col p {
+  color: #475569 !important;
+}
+
+[data-theme='light'] .trust-check-item {
+  color: #334155 !important;
+}
+
+[data-theme='light'] .trust-check-item span {
+  color: #334155 !important;
+}
+
+[data-theme='light'] .quote-contact-direct span {
+  color: #64748b !important;
+}
+
+[data-theme='light'] .quote-contact-direct strong a {
+  color: #071324 !important;
+}
+
+[data-theme='light'] .quote-form-card {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05) !important;
+}
+
+[data-theme='light'] .quote-form-card h3 {
+  color: #071324 !important;
+}
+
+[data-theme='light'] .quote-form-card .form-subtext {
+  color: #64748b !important;
+}
+
+[data-theme='light'] .quote-input-group label {
+  color: #334155 !important;
+}
+
+[data-theme='light'] .quote-input,
+[data-theme='light'] .quote-select,
+[data-theme='light'] .quote-textarea,
+[data-theme='light'] .quote-input-field {
+  background: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: #071324 !important;
+}
+
+[data-theme='light'] .quote-input:focus,
+[data-theme='light'] .quote-select:focus,
+[data-theme='light'] .quote-textarea:focus {
+  background: #ffffff !important;
+  border-color: #071324 !important;
 }
 
 [data-theme='light'] .custom-quote-card {
@@ -714,14 +840,6 @@
   border-color: #e2e8f0;
   color: #0f172a;
   box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
-}
-
-[data-theme='light'] .quote-input-field,
-[data-theme='light'] .quote-textarea,
-[data-theme='light'] .quote-select {
-  background: #ffffff;
-  border-color: #cbd5e1;
-  color: #0f172a;
 }
 
 [data-theme='light'] .faq-card-item {
