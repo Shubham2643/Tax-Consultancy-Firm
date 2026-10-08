@@ -90,15 +90,18 @@ const ComplianceTicker = () => {
     >
       {/* DESKTOP VIEW (> 768px): Seamless Infinite Scrolling Marquee */}
       <div className="compliance-ticker-container desktop-ticker-view">
-        {/* Left Status Beacon & Kicker */}
-        <div className="compliance-ticker-header">
+        {/* Left Status Beacon & Radar Dock */}
+        <div className="compliance-radar-dock">
           <span className="ticker-live-beacon" aria-hidden="true">
             <span className="beacon-ping"></span>
             <span className="beacon-core"></span>
           </span>
-          <div className="ticker-label-group">
-            <span className="ticker-title">LIVE COMPLIANCE RADAR</span>
-            <span className="ticker-sub">Statutory Deadlines</span>
+          <div className="radar-dock-text">
+            <span className="radar-dock-title">
+              <i className="fas fa-shield-halved radar-dock-icon" aria-hidden="true"></i>
+              LIVE COMPLIANCE RADAR
+            </span>
+            <span className="radar-dock-sub">Statutory Deadlines</span>
           </div>
         </div>
 
@@ -107,28 +110,50 @@ const ComplianceTicker = () => {
           <div className={`compliance-marquee-track ${isPaused ? 'marquee-paused' : ''}`}>
             {/* Duplicated list for seamless infinite loop */}
             {[...COMPLIANCE_DEADLINES, ...COMPLIANCE_DEADLINES].map((item, idx) => (
-              <div key={`${item.id}-${idx}`} className="compliance-ticker-item">
-                <span className={`compliance-pill-badge badge-${item.badgeType}`}>
+              <Link 
+                to={item.link} 
+                key={`${item.id}-${idx}`} 
+                className="compliance-radar-card"
+                title={`${item.title} (${item.date}) — ${item.statute} • Click to open calculator`}
+              >
+                {/* Category & Urgency Pill */}
+                <span className={`radar-card-badge badge-${item.badgeType}`}>
                   {item.badge}
                 </span>
-                <span className="compliance-date-chip">
-                  <i className="far fa-calendar-alt"></i>
-                  <strong>{item.date}</strong>
+
+                {/* Due Date Chip */}
+                <span className="radar-card-date">
+                  <i className="far fa-calendar-alt" aria-hidden="true"></i>
+                  <span>{item.date}</span>
                 </span>
-                <span className="compliance-item-name">{item.title}</span>
-                <span className="compliance-statute-tag">{item.statute}</span>
-                <Link to={item.link} className="compliance-inline-action">
+
+                <span className="radar-card-divider" aria-hidden="true"></span>
+
+                {/* Title & Section Tag */}
+                <span className="radar-card-title">{item.title}</span>
+                <span className="radar-card-statute">{item.statute}</span>
+
+                {/* Action CTA Tag */}
+                <span className="radar-card-action">
                   <span>{item.actionText}</span>
-                  <i className="fas fa-chevron-right"></i>
-                </Link>
-                <span className="compliance-item-sep">•</span>
-              </div>
+                  <i className="fas fa-arrow-right" aria-hidden="true"></i>
+                </span>
+              </Link>
             ))}
           </div>
         </div>
 
-        {/* Right Dismiss Button */}
+        {/* Right Tools Hub & Quick Links */}
         <div className="compliance-ticker-tools">
+          <Link 
+            to="/compliance-calendar" 
+            className="ticker-calendar-link"
+            title="Open Full Statutory Compliance Calendar"
+          >
+            <i className="far fa-calendar-check" aria-hidden="true"></i>
+            <span className="calendar-link-text">Calendar</span>
+          </Link>
+
           <button 
             type="button" 
             className="ticker-dismiss-btn" 
@@ -136,7 +161,7 @@ const ComplianceTicker = () => {
             aria-label="Dismiss compliance ticker"
             title="Dismiss ticker for this session"
           >
-            <i className="fas fa-times"></i>
+            <i className="fas fa-times" aria-hidden="true"></i>
           </button>
         </div>
       </div>
@@ -178,7 +203,7 @@ const ComplianceTicker = () => {
             aria-label="Dismiss compliance ticker"
             title="Dismiss ticker"
           >
-            <i className="fas fa-times"></i>
+            <i className="fas fa-times" aria-hidden="true"></i>
           </button>
         </div>
       </div>

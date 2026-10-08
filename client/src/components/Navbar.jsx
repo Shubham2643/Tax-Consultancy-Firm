@@ -80,9 +80,40 @@ const getTopCategoryIcon = (label) => {
   return 'fas fa-layer-group';
 };
 
+const parseWorkingHours = (raw) => {
+  const defaultSchedule = { days: "Mon – Sat", time: "10:00 AM – 7:00 PM" };
+  if (!raw || typeof raw !== 'string') return defaultSchedule;
+
+  const colonIdx = raw.indexOf(':');
+  if (colonIdx !== -1) {
+    let daysPart = raw.substring(0, colonIdx).trim();
+    // Validate if the segment before colon contains day names/abbreviations
+    if (/[a-zA-Z]{3}/.test(daysPart)) {
+      let days = daysPart.replace(/([a-zA-Z]{3})\s*[-–]\s*([a-zA-Z]{3})/gi, '$1 – $2');
+      let time = raw.substring(colonIdx + 1).trim();
+      time = time.replace(/(\d{1,2})\.(\d{2})/g, '$1:$2');
+      time = time.replace(/([AP]M)\s*[-–]\s*(\d{1,2})/gi, '$1 – $2');
+      time = time.replace(/\s*[-–]\s*/g, ' – ');
+
+      return {
+        days: days || defaultSchedule.days,
+        time: time || defaultSchedule.time
+      };
+    }
+  }
+
+  // Fallback cleanup if raw string only had times without a day prefix
+  let cleanedTime = raw.replace(/(\d{1,2})\.(\d{2})/g, '$1:$2').replace(/\s*[-–]\s*/g, ' – ').trim();
+  return {
+    days: defaultSchedule.days,
+    time: cleanedTime || defaultSchedule.time
+  };
+};
+
 const Navbar = () => {
   const { settings, navMenu: rawNavMenu } = useSiteContext();
   const { user, logout } = useAuth();
+  const schedule = parseWorkingHours(settings?.workingHours);
 
   const navMenu = (rawNavMenu || [])
     .filter((item) => {
@@ -124,7 +155,7 @@ const Navbar = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [mobileExpandedIndex, setMobileExpandedIndex] = useState(null);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1180);
   const location = useLocation();
 
   useEffect(() => {
@@ -132,7 +163,7 @@ const Navbar = () => {
       setIsScrolled(window.scrollY > 40);
     };
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 1024);
+      setIsMobile(window.innerWidth <= 1180);
     };
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
@@ -341,43 +372,53 @@ const Navbar = () => {
       <div className="top-bar">
         <div className="top-bar-inner">
           <div className="top-bar-left">
-            {/* Live Office Status Badge */}
-            <div className="top-status-pill" title="Operational Office Hours">
-              <span className="top-status-dot">
-                <span className="status-ping"></span>
-                <span className="status-core"></span>
-              </span>
-              <span className="top-status-label">Office Open :</span>
-              <span className="top-status-hours">
-                {settings?.workingHours || "Mon - Sat: 10:00 AM - 7:00 PM"}
-              </span>
+            {/* Executive Office Hours Capsule */}
+            <div 
+              className="top-bar-status-capsule" 
+              title={`Senior CA Advisory Desk • ${schedule.days}: ${schedule.time} IST`}
+            >
+              {/* Horology Clock Icon */}
+              <i className="far fa-clock top-clock-icon" aria-hidden="true"></i>
+
+              {/* Office Hours Label */}
+              <span className="top-status-label-text">Office Hours:</span>
+
+              {/* Schedule Days & Times */}
+              <div className="top-status-schedule">
+                <span className="top-schedule-days">{schedule.days}</span>
+                <span className="top-schedule-sep" aria-hidden="true">•</span>
+                <span className="top-schedule-time">{schedule.time}</span>
+                <span className="top-schedule-tz">IST</span>
+              </div>
             </div>
 
-            <div className="top-bar-sep top-bar-hide-sm"></div>
+            <span className="top-bar-sep top-bar-hide-sm" aria-hidden="true"></span>
 
-            {/* Direct Contact Chips with Micro-Pill Polish & Tactical Feedback */}
+            {/* Direct Helpline Link */}
             <a 
               href={`tel:${phone.replace(/[^0-9+]/g, '')}`} 
-              className="top-contact-chip"
-              title="Click to call CA advisory desk (+91 95109 84735)"
+              className="top-bar-link top-bar-hide-sm"
+              title="Call CA advisory desk"
             >
-              <span className="top-chip-icon"><i className="fas fa-phone-alt"></i></span>
-              <span className="top-chip-text">{phone}</span>
-              <span className="top-chip-cue"><i className="fas fa-arrow-right"></i></span>
+              <i className="fas fa-phone-alt top-bar-icon"></i>
+              <span className="top-link-text">{phone}</span>
             </a>
 
+            <span className="top-bar-sep top-bar-hide-md" aria-hidden="true"></span>
+
+            {/* Advisory Inbox Link */}
             <a 
               href={`mailto:${email}`} 
-              className="top-contact-chip top-bar-hide-md"
-              title="Click to email Shree Chamunda Associates"
+              className="top-bar-link top-bar-hide-md"
+              title="Email Shree Chamunda Associates"
             >
-              <span className="top-chip-icon"><i className="fas fa-envelope"></i></span>
-              <span className="top-chip-text">{email}</span>
-              <span className="top-chip-cue"><i className="fas fa-arrow-right"></i></span>
+              <i className="fas fa-envelope top-bar-icon"></i>
+              <span className="top-link-text">{email}</span>
             </a>
           </div>
 
           <div className="top-bar-right">
+            {/* Social Channels */}
             <div className="top-bar-social">
               {getSocialLink('whatsapp') && (
                 <a
@@ -386,7 +427,7 @@ const Navbar = () => {
                   rel="noopener noreferrer"
                   aria-label="Direct WhatsApp Advisory Desk"
                   className="social-circle-btn wa-circle-btn"
-                  title="Direct WhatsApp Advisory Desk"
+                  title="WhatsApp Advisory"
                 >
                   <i className="fab fa-whatsapp"></i>
                 </a>
@@ -421,30 +462,22 @@ const Navbar = () => {
               <ThemeToggle />
             </div>
 
-            <div className="top-bar-divider"></div>
+            <span className="top-bar-sep" aria-hidden="true"></span>
 
-            {/* Client Portal Vault Capsule */}
+            {/* Client Portal Vault Button */}
             {user ? (
-              <div className="top-bar-auth-capsule">
+              <div className="top-bar-user-pill">
                 <Link
                   to={user.role === 'admin' ? '/admin' : '/portal'}
-                  className="capsule-profile-btn"
+                  className="top-user-link"
                   title={user.role === 'admin' ? 'Open CA Admin Dashboard' : 'Open Client Portal'}
                 >
-                  <span className="capsule-role-icon">
-                    <i className={user.role === 'admin' ? 'fas fa-user-shield' : 'fas fa-user'}></i>
-                  </span>
-                  <span className="capsule-label">
-                    {user.role === 'admin' ? 'Admin Panel' : 'My Portal'}
-                  </span>
-                  <span className="capsule-cue-arrow">
-                    <i className="fas fa-chevron-right"></i>
-                  </span>
+                  <i className={user.role === 'admin' ? 'fas fa-shield-halved' : 'fas fa-user-check'}></i>
+                  <span>{user.role === 'admin' ? 'Admin Panel' : 'My Vault'}</span>
                 </Link>
-                <div className="capsule-inner-divider"></div>
                 <button
                   onClick={logout}
-                  className="capsule-logout-btn"
+                  className="top-user-logout"
                   title="Logout Session"
                   aria-label="Logout Session"
                 >
@@ -452,15 +485,10 @@ const Navbar = () => {
                 </button>
               </div>
             ) : (
-              <Link to="/login" className="top-bar-portal-btn">
-                <span className="portal-shield-icon">
-                  <i className="fas fa-shield-alt"></i>
-                </span>
-                <span className="portal-btn-text">Client Vault</span>
-                <span className="portal-btn-badge">
-                  <span>Login</span>
-                  <i className="fas fa-chevron-right"></i>
-                </span>
+              <Link to="/login" className="top-bar-vault-btn" title="Access Secure Client Portal & Vault">
+                <i className="fas fa-shield-halved vault-icon"></i>
+                <span className="vault-text">Client Vault</span>
+                <i className="fas fa-chevron-right vault-arrow"></i>
               </Link>
             )}
           </div>

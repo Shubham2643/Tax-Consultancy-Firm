@@ -586,13 +586,46 @@
 /* ============================================
    RESPONSIVE DESIGN
    ============================================ */
+/* Small Laptop Optimization (1025px to 1280px) */
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .features-section {
+    padding: 80px 0 90px 0;
+  }
+  .features-bento-grid {
+    gap: 20px;
+  }
+  .feature-bento-card {
+    padding: 28px 22px;
+  }
+  .features-trust-ribbon {
+    padding: 30px 32px;
+  }
+}
+
 @media (max-width: 1024px) {
   .features-bento-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
   }
   .trust-stats-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
+  }
+  .features-trust-ribbon {
+    padding: 28px 24px;
+  }
+  .trust-cta-row {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+  }
+  .trust-cta-text h4 {
+    text-align: center;
+  }
+  .trust-cta-buttons {
+    justify-content: center;
+    width: 100%;
   }
 }
 

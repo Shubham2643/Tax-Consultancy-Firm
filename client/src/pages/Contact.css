@@ -1329,6 +1329,7 @@
    5. RESPONSIVE DESIGN
    ============================================================ */
 @media (max-width: 1024px) {
+  .contact-bento-grid,
   .contact-equal-two-col-grid {
     grid-template-columns: 1fr;
     gap: 30px;

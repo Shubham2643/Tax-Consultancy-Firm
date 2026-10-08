@@ -1099,6 +1099,20 @@
 /* ============================================
    RESPONSIVE DESIGN — Mobile Experience
    ============================================ */
+/* Small Laptop Optimization (1025px to 1280px) */
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .services {
+    padding: 75px 0 85px 0;
+  }
+  .service-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .service-card {
+    padding: 24px 20px;
+  }
+}
+
 @media (max-width: 1024px) {
   .services {
     padding: 65px 0 75px 0;
@@ -1109,6 +1123,11 @@
   .service-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
+  }
+  .services-filter-pills {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 6px;
   }
 }
 

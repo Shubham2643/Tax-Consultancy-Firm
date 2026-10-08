@@ -1013,13 +1013,28 @@
 /* ============================================================
    RESPONSIVE DESIGN — Multi-Screen Adaptability
    ============================================================ */
+/* Small Laptop Optimization (1025px to 1280px) */
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .trust-metrics-ribbon {
+    gap: 14px;
+    padding: 18px 20px;
+  }
+  .trust-architecture-split {
+    gap: 24px;
+  }
+  .hub-top-row {
+    gap: 24px;
+  }
+}
+
+/* Tablet Experience (max-width: 1024px) */
 @media (max-width: 1024px) {
   .trust {
-    padding: 75px 0 85px 0;
+    padding: 70px 0 80px 0;
   }
   .trust-metrics-ribbon {
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    gap: 16px;
     padding: 20px;
   }
   .metric-ribbon-col {
@@ -1035,6 +1050,13 @@
   .trust-architecture-split {
     grid-template-columns: 1fr;
     gap: 28px;
+  }
+  .hub-top-row {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .hub-authority-pane {
+    align-items: flex-start;
   }
 }
 

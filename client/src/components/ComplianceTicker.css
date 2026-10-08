@@ -1,20 +1,25 @@
 /* ==========================================================================
-   STATUTORY COMPLIANCE & DUE DATE TICKER
-   Tailored for Shree Chamunda Associates
+   STATUTORY COMPLIANCE & DUE DATE RADAR
+   Tailored for Shree Chamunda Associates — Executive Intelligence Ticker
    ========================================================================== */
 
+/* 1. Ticker Base Strip */
 .compliance-ticker-strip {
-  background: linear-gradient(90deg, #020710 0%, #071326 50%, #020710 100%);
-  border-bottom: 1px solid rgba(248, 180, 0, 0.28);
-  color: #f1f5f9;
-  font-size: 12px;
   position: relative;
-  z-index: 999;
-  height: 38px;
+  z-index: 998;
+  height: 42px;
   display: flex;
   align-items: center;
   overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  box-sizing: border-box;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+
+  /* Default / Light Mode Base */
+  background: #f1f5f9;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #cbd5e1;
+  color: #0f172a;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
 }
 
 .compliance-ticker-container {
@@ -23,111 +28,138 @@
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0 clamp(14px, 2vw, 28px);
+  padding: 0 clamp(12px, 2vw, 28px);
   box-sizing: border-box;
-  gap: 14px;
+  gap: 12px;
 }
 
-/* Left Status Beacon & Kicker */
+/* ==========================================================================
+   2. RADAR COMMAND DOCK (Left Static Anchor)
+   ========================================================================== */
+.compliance-radar-dock,
 .compliance-ticker-header {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
-  background: rgba(248, 180, 0, 0.1);
-  border: 1px solid rgba(248, 180, 0, 0.35);
-  border-radius: 6px;
-  padding: 3px 10px;
+  gap: 8px;
   flex-shrink: 0;
+  z-index: 3;
+  height: 28px;
+  padding: 0 11px 0 9px;
+  border-radius: 999px;
   box-sizing: border-box;
-  z-index: 2;
+  cursor: default;
+  user-select: none;
+  white-space: nowrap;
+  transition: all 0.25s ease;
+
+  /* Light Mode Dock */
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08), inset 0 1px 0 #ffffff;
 }
 
+/* Emerald Radar Pulse Beacon */
 .ticker-live-beacon {
   position: relative;
   display: inline-flex;
-  width: 8px;
-  height: 8px;
+  align-items: center;
+  justify-content: center;
+  width: 7.5px;
+  height: 7.5px;
+  flex-shrink: 0;
 }
 
 .ticker-live-beacon .beacon-ping {
   position: absolute;
-  inset: 0;
+  inset: -2px;
   border-radius: 50%;
-  background-color: #22c55e;
-  opacity: 0.85;
-  animation: tickerPing 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  background-color: #16a34a;
+  opacity: 0.65;
+  animation: radarBeaconPing 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
 .ticker-live-beacon .beacon-core {
   position: relative;
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background-color: #22c55e;
-  box-shadow: 0 0 6px #22c55e;
+  background: radial-gradient(circle at 35% 35%, #4ade80 0%, #16a34a 60%, #15803d 100%);
+  box-shadow: 0 0 5px rgba(22, 163, 74, 0.6);
 }
 
-@keyframes tickerPing {
+@keyframes radarBeaconPing {
   0% {
     transform: scale(0.9);
-    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+    opacity: 0.85;
   }
-  70% {
-    transform: scale(1.15);
-    box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
-  }
-  100% {
-    transform: scale(0.9);
-    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  70%, 100% {
+    transform: scale(2.4);
+    opacity: 0;
   }
 }
 
+.radar-dock-text,
 .ticker-label-group {
-  display: flex;
+  display: inline-flex;
   align-items: baseline;
   gap: 6px;
   line-height: 1;
 }
 
+.radar-dock-title,
 .ticker-title {
-  color: #f8b400;
-  font-weight: 750;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #0f172a;
+  font-weight: 800;
   font-size: 10.5px;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.5px;
   text-transform: uppercase;
+  line-height: 1;
 }
 
+.radar-dock-icon {
+  font-size: 10px;
+  color: #d97706;
+}
+
+.radar-dock-sub,
 .ticker-sub {
-  color: #94a3b8;
+  color: #64748b;
   font-size: 9.5px;
-  font-weight: 500;
-  display: none;
+  font-weight: 600;
+  letter-spacing: 0.1px;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 900px) {
+  .radar-dock-sub,
   .ticker-sub {
-    display: inline;
+    display: none !important;
   }
 }
 
-/* Scrolling Marquee Container */
+/* ==========================================================================
+   3. SCROLLING RADAR MARQUEE
+   ========================================================================== */
 .compliance-marquee-wrapper {
   flex: 1;
   overflow: hidden;
   white-space: nowrap;
   position: relative;
-  mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 24px, #000 calc(100% - 24px), transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 24px, #000 calc(100% - 24px), transparent 100%);
 }
 
 .compliance-marquee-track {
   display: inline-flex;
   align-items: center;
-  gap: 28px;
-  animation: complianceScroll 48s linear infinite;
+  gap: 12px;
+  animation: complianceScroll 50s linear infinite;
   will-change: transform;
 }
 
+.compliance-marquee-track:hover,
 .marquee-paused {
   animation-play-state: paused !important;
 }
@@ -141,161 +173,228 @@
   }
 }
 
-/* Individual Ticker Items */
+/* ==========================================================================
+   4. EXECUTIVE COMPLIANCE CARDS (Marquee Items)
+   ========================================================================== */
+.compliance-radar-card,
 .compliance-ticker-item {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
+  gap: 7.5px;
   flex-shrink: 0;
-  font-size: 11.5px;
-  color: #e2e8f0;
+  height: 28px;
+  padding: 0 10px 0 8px;
+  border-radius: 999px;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+
+  /* Light Mode Card Base */
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
 }
 
+.compliance-radar-card:hover,
+.compliance-ticker-item:hover {
+  background: #ffffff;
+  border-color: #94a3b8;
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.1), 0 0 0 1px rgba(217, 119, 6, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Category & Urgency Badges */
+.radar-card-badge,
 .compliance-pill-badge {
-  font-size: 9px;
-  font-weight: 700;
-  padding: 2px 7px;
+  font-size: 8.5px;
+  font-weight: 800;
+  padding: 2px 6.5px;
   border-radius: 4px;
   letter-spacing: 0.4px;
   text-transform: uppercase;
   line-height: 1.1;
+  flex-shrink: 0;
 }
 
 .badge-urgent {
-  background: rgba(239, 68, 68, 0.2);
-  color: #fca5a5;
-  border: 1px solid rgba(239, 68, 68, 0.4);
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
 }
 
 .badge-warning {
-  background: rgba(245, 158, 11, 0.2);
-  color: #fcd34d;
-  border: 1px solid rgba(245, 158, 11, 0.4);
+  background: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fde68a;
 }
 
 .badge-info {
-  background: rgba(56, 189, 248, 0.2);
-  color: #7dd3fc;
-  border: 1px solid rgba(56, 189, 248, 0.4);
+  background: #f0f9ff;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
 }
 
+/* Due Date Chip */
+.radar-card-date,
 .compliance-date-chip {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  color: #fbbf24;
+  gap: 3.5px;
+  color: #0f172a;
   font-size: 11px;
+  font-weight: 750;
+  letter-spacing: -0.1px;
+  flex-shrink: 0;
 }
 
+.radar-card-date i,
 .compliance-date-chip i {
-  font-size: 10px;
-  opacity: 0.85;
+  font-size: 9.5px;
+  color: #d97706;
 }
 
+/* Hairline Divider */
+.radar-card-divider {
+  width: 1px;
+  height: 11px;
+  background-color: #cbd5e1;
+  flex-shrink: 0;
+}
+
+/* Title & Section Tag */
+.radar-card-title,
 .compliance-item-name {
-  font-weight: 600;
-  color: #ffffff;
+  color: #0f172a;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: -0.1px;
+  white-space: nowrap;
 }
 
+.radar-card-statute,
 .compliance-statute-tag {
-  color: #64748b;
-  font-size: 10.5px;
+  color: #475569;
+  font-size: 9.5px;
+  font-weight: 550;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 1px 5px;
+  border-radius: 3px;
+  letter-spacing: 0.1px;
+  white-space: nowrap;
 }
 
+/* Action CTA Tag */
+.radar-card-action,
 .compliance-inline-action {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  color: #38bdf8;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 11px;
-  padding: 2px 8px;
-  background: rgba(56, 189, 248, 0.1);
-  border: 1px solid rgba(56, 189, 248, 0.25);
-  border-radius: 4px;
-  transition: all 0.2s ease;
-}
-
-.compliance-inline-action:hover {
-  background: rgba(56, 189, 248, 0.22);
-  border-color: #38bdf8;
   color: #ffffff;
-  transform: translateY(-1px);
+  background: #0f172a;
+  border: 1px solid #0f172a;
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 2.5px 7.5px;
+  border-radius: 4px;
+  line-height: 1;
+  letter-spacing: 0.1px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
 }
 
+.compliance-radar-card:hover .radar-card-action,
+.compliance-radar-card:hover .compliance-inline-action {
+  background: #d97706;
+  border-color: #d97706;
+  color: #ffffff;
+}
+
+.radar-card-action i,
 .compliance-inline-action i {
   font-size: 8px;
   transition: transform 0.2s ease;
 }
 
-.compliance-inline-action:hover i {
+.compliance-radar-card:hover .radar-card-action i,
+.compliance-radar-card:hover .compliance-inline-action i {
   transform: translateX(2px);
 }
 
 .compliance-item-sep {
-  color: rgba(248, 180, 0, 0.4);
-  margin-left: 10px;
-  font-weight: 700;
+  display: none !important;
 }
 
-/* Right Tools Hub CTA & Dismiss */
+/* ==========================================================================
+   5. RIGHT TOOLS HUB (Calendar CTA & Dismiss)
+   ========================================================================== */
 .compliance-ticker-tools {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   flex-shrink: 0;
-  z-index: 2;
+  z-index: 3;
 }
 
-.ticker-tools-btn {
+.ticker-calendar-link {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  background: linear-gradient(135deg, rgba(248, 180, 0, 0.18) 0%, rgba(248, 180, 0, 0.08) 100%);
-  border: 1px solid rgba(248, 180, 0, 0.4);
-  color: #fbbf24;
-  padding: 3px 10px;
+  gap: 4.5px;
+  height: 26px;
+  padding: 0 9px;
   border-radius: 6px;
-  font-size: 11px;
-  font-weight: 650;
+  font-size: 10px;
+  font-weight: 700;
   text-decoration: none;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
   transition: all 0.2s ease;
   white-space: nowrap;
 }
 
-.ticker-tools-btn:hover {
-  background: #f8b400;
-  color: #030a14;
-  border-color: #f8b400;
-  box-shadow: 0 0 10px rgba(248, 180, 0, 0.4);
+.ticker-calendar-link:hover {
+  background: #ffffff;
+  border-color: #d97706;
+  color: #d97706;
+  box-shadow: 0 2px 6px rgba(217, 119, 6, 0.15);
 }
 
-.ticker-tools-btn i {
-  font-size: 10px;
+.ticker-calendar-link i {
+  font-size: 9.5px;
+  color: #d97706;
 }
 
 .ticker-dismiss-btn {
-  background: transparent;
-  border: none;
-  color: #64748b;
-  cursor: pointer;
-  padding: 4px;
-  font-size: 11px;
-  line-height: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  background: rgba(15, 23, 42, 0.05);
+  color: #64748b;
+  cursor: pointer;
+  padding: 0;
+  font-size: 10.5px;
+  line-height: 1;
   transition: all 0.2s ease;
+  flex-shrink: 0;
 }
 
 .ticker-dismiss-btn:hover {
-  color: #f87171;
-  background: rgba(239, 68, 68, 0.12);
+  color: #dc2626;
+  background: #fee2e2;
+  border-color: #fecaca;
 }
 
-/* View Toggle Modes */
+/* ==========================================================================
+   6. VIEW TOGGLE MODES & RESPONSIVE BREAKPOINTS
+   ========================================================================== */
 .desktop-ticker-view {
   display: flex;
 }
@@ -304,13 +403,27 @@
   display: none;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1080px) {
+  .radar-card-statute,
   .compliance-statute-tag {
     display: none;
   }
 }
 
+@media (max-width: 900px) {
+  .radar-card-action {
+    display: none;
+  }
+  .ticker-calendar-link .calendar-link-text {
+    display: none;
+  }
+}
+
 @media (max-width: 768px) {
+  .compliance-ticker-strip {
+    height: 36px;
+  }
+
   .desktop-ticker-view {
     display: none !important;
   }
@@ -321,34 +434,8 @@
     justify-content: space-between;
     width: 100%;
     padding: 0 8px;
-    gap: 7px;
+    gap: 8px;
     box-sizing: border-box;
-  }
-
-  /* Mobile Integrated Radar & Date Badge */
-  .mobile-radar-date-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 10px;
-    font-weight: 750;
-    padding: 2.5px 7px;
-    border-radius: 5px;
-    flex-shrink: 0;
-    line-height: 1.1;
-    white-space: nowrap;
-    letter-spacing: 0.3px;
-  }
-
-  .mobile-radar-date-badge .ticker-live-beacon {
-    width: 6px;
-    height: 6px;
-  }
-
-  .mobile-radar-date-badge .beacon-core,
-  .mobile-radar-date-badge .beacon-ping {
-    width: 6px;
-    height: 6px;
   }
 
   /* Mobile Rotating Carousel */
@@ -363,24 +450,17 @@
   .mobile-item-chip-link {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 7px;
     width: 100%;
     min-width: 0;
     text-decoration: none;
-    color: #ffffff !important;
-    animation: mobItemSlide 0.22s ease-out;
-  }
-
-  .mobile-item-chip-link:visited,
-  .mobile-item-chip-link:hover,
-  .mobile-item-chip-link:active {
-    color: #ffffff !important;
-    text-decoration: none;
+    color: #0f172a !important;
+    animation: mobItemSlide 0.25s ease-out;
   }
 
   @keyframes mobItemSlide {
     0% {
-      opacity: 0.88;
+      opacity: 0.7;
       transform: translateY(3px);
     }
     100% {
@@ -389,22 +469,48 @@
     }
   }
 
+  /* Mobile Integrated Radar & Date Badge */
+  .mobile-radar-date-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4.5px;
+    font-size: 9.5px;
+    font-weight: 800;
+    padding: 2px 6.5px;
+    border-radius: 5px;
+    flex-shrink: 0;
+    line-height: 1.1;
+    white-space: nowrap;
+    letter-spacing: 0.3px;
+  }
+
+  .mobile-radar-date-badge .ticker-live-beacon {
+    width: 6px;
+    height: 6px;
+  }
+
+  .mobile-radar-date-badge .beacon-core,
+  .mobile-radar-date-badge .beacon-ping {
+    width: 5px;
+    height: 5px;
+  }
+
   .compliance-ticker-strip .mobile-item-title {
     font-size: 11px;
-    font-weight: 650;
-    color: #ffffff !important;
+    font-weight: 700;
+    color: #0f172a !important;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     min-width: 0;
-    letter-spacing: 0.1px;
+    letter-spacing: -0.1px;
   }
 
   .mobile-arrow-icon {
     font-size: 9px;
-    color: #38bdf8 !important;
+    color: #0f172a !important;
     flex-shrink: 0;
-    opacity: 0.9;
+    opacity: 0.6;
   }
 
   /* Mobile Actions */
@@ -414,152 +520,174 @@
     gap: 4px;
     flex-shrink: 0;
   }
-
-  .mobile-tools-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 22px;
-    height: 22px;
-    border-radius: 4px;
-    background: rgba(248, 180, 0, 0.15);
-    border: 1px solid rgba(248, 180, 0, 0.35);
-    color: #fbbf24;
-    font-size: 10.5px;
-    text-decoration: none;
-    transition: all 0.2s ease;
-  }
-
-  .mobile-tools-btn:hover {
-    background: #f8b400;
-    color: #020710;
-  }
 }
 
 @media (max-width: 360px) {
   .mobile-ticker-view {
     padding: 0 4px;
-    gap: 4px;
+    gap: 5px;
   }
   .mobile-radar-date-badge {
-    padding: 2px 5px;
-    font-size: 9.5px;
-    gap: 4px;
+    padding: 1.5px 5px;
+    font-size: 9px;
+    gap: 3.5px;
   }
   .compliance-ticker-strip .mobile-item-title {
-    font-size: 10.5px;
+    font-size: 10px;
   }
 }
 
 /* ==========================================================================
-   COMPLIANCE TICKER — DOMINANT LIGHT THEME
-   ========================================================================== */
-[data-theme='light'] .compliance-ticker-strip {
-  background: linear-gradient(90deg, #ffffff 0%, #f8fafc 50%, #ffffff 100%);
-  border-bottom: 1px solid #e2e8f0;
-  color: #0f172a;
-  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.04);
-}
-
-[data-theme='light'] .compliance-ticker-header {
-  background: rgba(217, 119, 6, 0.08);
-  border-color: rgba(217, 119, 6, 0.3);
-}
-
-[data-theme='light'] .ticker-title {
-  color: #b45309;
-}
-
-[data-theme='light'] .ticker-sub {
-  color: #64748b;
-}
-
-[data-theme='light'] .compliance-item-name {
-  color: #0f172a !important;
-}
-
-[data-theme='light'] .compliance-ticker-strip .mobile-item-title {
-  color: #0f172a !important;
-}
-
-[data-theme='light'] .mobile-item-chip-link,
-[data-theme='light'] .mobile-item-chip-link:visited,
-[data-theme='light'] .mobile-item-chip-link:hover,
-[data-theme='light'] .mobile-item-chip-link:active {
-  color: #0f172a !important;
-}
-
-[data-theme='light'] .compliance-date-chip {
-  color: #b45309 !important;
-}
-
-[data-theme='light'] .compliance-ticker-item {
-  color: #334155 !important;
-}
-
-[data-theme='light'] .compliance-statute-tag {
-  color: #64748b !important;
-}
-
-[data-theme='light'] .compliance-inline-action {
-  color: #0284c7 !important;
-  background: rgba(2, 132, 199, 0.08) !important;
-  border-color: rgba(2, 132, 199, 0.25) !important;
-}
-
-[data-theme='light'] .compliance-inline-action:hover {
-  background: rgba(2, 132, 199, 0.16) !important;
-  color: #0369a1 !important;
-}
-
-[data-theme='light'] .ticker-item a {
-  color: #334155;
-}
-
-[data-theme='light'] .ticker-badge {
-  background: #f1f5f9;
-  border-color: #cbd5e1;
-  color: #0f172a;
-}
-
-[data-theme='light'] .ticker-due-tag {
-  color: #b45309;
-}
-
-[data-theme='light'] .ticker-cta-link {
-  color: #b45309;
-  background: rgba(217, 119, 6, 0.08);
-  border-color: rgba(217, 119, 6, 0.25);
-}
-
-/* ==========================================================================
-   COMPLIANCE TICKER — DOMINANT DARK THEME
+   7. DOMINANT DARK THEME OVERRIDES
    ========================================================================== */
 [data-theme='dark'] .compliance-ticker-strip {
-  background: linear-gradient(90deg, #020710 0%, #071326 50%, #020710 100%);
+  background: linear-gradient(90deg, #020710 0%, #061326 50%, #020710 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
   border-bottom: 1px solid rgba(248, 180, 0, 0.28);
   color: #f1f5f9;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
 }
 
+[data-theme='dark'] .compliance-radar-dock,
 [data-theme='dark'] .compliance-ticker-header {
-  background: rgba(248, 180, 0, 0.1);
-  border-color: rgba(248, 180, 0, 0.35);
+  background: linear-gradient(135deg, rgba(248, 180, 0, 0.12) 0%, rgba(248, 180, 0, 0.05) 100%);
+  border-color: rgba(248, 180, 0, 0.4);
+  box-shadow: 0 0 12px rgba(248, 180, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
+[data-theme='dark'] .ticker-live-beacon .beacon-ping {
+  background-color: #22c55e;
+  opacity: 0.75;
+}
+
+[data-theme='dark'] .ticker-live-beacon .beacon-core {
+  background: radial-gradient(circle at 35% 35%, #86efac 0%, #22c55e 55%, #15803d 100%);
+  box-shadow: 0 0 6px #22c55e, 0 0 10px rgba(34, 197, 94, 0.55);
+}
+
+[data-theme='dark'] .radar-dock-title,
 [data-theme='dark'] .ticker-title {
   color: #f8b400;
 }
 
+[data-theme='dark'] .radar-dock-icon {
+  color: #f8b400;
+}
+
+[data-theme='dark'] .radar-dock-sub,
 [data-theme='dark'] .ticker-sub {
   color: #94a3b8;
 }
 
-[data-theme='dark'] .ticker-item a {
-  color: #e2e8f0;
+[data-theme='dark'] .compliance-radar-card,
+[data-theme='dark'] .compliance-ticker-item {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
-[data-theme='dark'] .ticker-badge {
+[data-theme='dark'] .compliance-radar-card:hover,
+[data-theme='dark'] .compliance-ticker-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(248, 180, 0, 0.45);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), 0 0 12px rgba(248, 180, 0, 0.2);
+}
+
+[data-theme='dark'] .badge-urgent {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+[data-theme='dark'] .badge-warning {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fcd34d;
+  border-color: rgba(245, 158, 11, 0.4);
+}
+
+[data-theme='dark'] .badge-info {
+  background: rgba(56, 189, 248, 0.2);
+  color: #7dd3fc;
+  border-color: rgba(56, 189, 248, 0.4);
+}
+
+[data-theme='dark'] .radar-card-date,
+[data-theme='dark'] .compliance-date-chip {
+  color: #fbbf24;
+}
+
+[data-theme='dark'] .radar-card-date i,
+[data-theme='dark'] .compliance-date-chip i {
+  color: #f8b400;
+}
+
+[data-theme='dark'] .radar-card-divider {
+  background-color: rgba(255, 255, 255, 0.16);
+}
+
+[data-theme='dark'] .radar-card-title,
+[data-theme='dark'] .compliance-item-name {
+  color: #f8fafc;
+}
+
+[data-theme='dark'] .radar-card-statute,
+[data-theme='dark'] .compliance-statute-tag {
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .radar-card-action,
+[data-theme='dark'] .compliance-inline-action {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  border-color: rgba(56, 189, 248, 0.3);
+}
+
+[data-theme='dark'] .compliance-radar-card:hover .radar-card-action,
+[data-theme='dark'] .compliance-radar-card:hover .compliance-inline-action {
+  background: #38bdf8;
+  border-color: #38bdf8;
+  color: #020710;
+}
+
+[data-theme='dark'] .ticker-calendar-link {
+  background: rgba(248, 180, 0, 0.12);
+  border-color: rgba(248, 180, 0, 0.35);
+  color: #fbbf24;
+  box-shadow: none;
+}
+
+[data-theme='dark'] .ticker-calendar-link:hover {
+  background: #f8b400;
+  border-color: #f8b400;
+  color: #020710;
+  box-shadow: 0 0 10px rgba(248, 180, 0, 0.4);
+}
+
+[data-theme='dark'] .ticker-calendar-link i {
+  color: inherit;
+}
+
+[data-theme='dark'] .ticker-dismiss-btn {
   background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.12);
-  color: #f1f5f9;
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .ticker-dismiss-btn:hover {
+  color: #f87171;
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+[data-theme='dark'] .mobile-item-chip-link {
+  color: #f1f5f9 !important;
+}
+
+[data-theme='dark'] .compliance-ticker-strip .mobile-item-title {
+  color: #f1f5f9 !important;
+}
+
+[data-theme='dark'] .mobile-arrow-icon {
+  color: #38bdf8 !important;
 }

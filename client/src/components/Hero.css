@@ -624,9 +624,28 @@
   }
 }
 
-/* ============================================
-   RESPONSIVE DESIGN — Executive Mobile Experience
-   ============================================ */
+/* Small Laptop Optimization (1025px to 1280px) */
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .hero {
+    padding: 75px 0 70px 0;
+  }
+  .hero-layout-container {
+    gap: 32px;
+    grid-template-columns: 1.12fr 0.88fr;
+    padding: 0 24px;
+  }
+  .hero-main-title {
+    font-size: clamp(2.3rem, 3.2vw, 2.8rem);
+    letter-spacing: -0.6px;
+    line-height: 1.2;
+  }
+  .hero-subtext {
+    font-size: 0.98rem;
+    max-width: 500px;
+  }
+}
+
+/* Tablet Experience (max-width: 1024px) */
 @media (max-width: 1024px) {
   .hero {
     padding: 65px 0 65px 0;
@@ -634,7 +653,13 @@
   .hero-layout-container {
     grid-template-columns: 1fr;
     gap: 36px;
-    padding: 0 20px;
+    padding: 0 24px;
+    max-width: 760px;
+  }
+  .hero-mockup-card {
+    max-width: 580px;
+    width: 100%;
+    margin: 0 auto;
   }
   .hero-narrative-col {
     text-align: center;

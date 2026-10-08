@@ -40,15 +40,18 @@
 /* ==========================================================================
    1. TOP BAR — Executive Status & Intelligence Line
    ========================================================================== */
+/* ==========================================================================
+   1. TOP BAR — Executive Status & Intelligence Line
+   ========================================================================== */
 .top-bar {
-  background: linear-gradient(90deg, #030a14 0%, #08162b 50%, #030a14 100%);
-  color: #ffffff;
+  background: #050d1a;
+  color: #94a3b8;
   padding: 0;
-  font-size: 12px;
-  border-bottom: 1px solid rgba(248, 180, 0, 0.22);
+  font-size: 11.5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   position: relative;
   z-index: 1002;
-  height: 40px;
+  height: 38px;
   display: flex;
   align-items: center;
 }
@@ -64,43 +67,174 @@
   box-sizing: border-box;
 }
 
-/* Left Status Pill & Contacts */
+/* Left Status & Contacts */
 .top-bar-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
-/* Live Operational Status Pill */
-.top-status-pill {
+/* ==========================================================================
+   LIVE OPERATIONAL ADVISORY DESK CAPSULE (Office Hours Tagline)
+   ========================================================================== */
+.top-bar-status-capsule {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 6.5px;
   height: 26px;
-  padding: 0 11px;
+  padding: 0 10px;
   border-radius: 999px;
-  font-size: 11.5px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 
+    0 1px 3px rgba(15, 23, 42, 0.05),
+    inset 0 1px 0 #ffffff;
   cursor: default;
-  box-sizing: border-box;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.top-bar-status-capsule:hover {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  box-shadow: 
+    0 2px 8px rgba(15, 23, 42, 0.08),
+    0 0 0 1px rgba(217, 119, 6, 0.15);
+  transform: translateY(-0.5px);
+}
+
+/* 1. Emerald Precision Radar Beacon */
+.top-status-beacon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 7px;
+  height: 7px;
+  flex-shrink: 0;
+}
+
+.top-status-beacon .beacon-ping {
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background-color: #16a34a;
+  opacity: 0.65;
+  animation: beaconRadarPulse 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.top-status-beacon .beacon-core {
+  position: relative;
+  width: 5.5px;
+  height: 5.5px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #4ade80 0%, #16a34a 60%, #15803d 100%);
+  box-shadow: 0 0 4px rgba(22, 163, 74, 0.6);
+}
+
+@keyframes beaconRadarPulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.85;
+  }
+  70%, 100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+/* 2. Micro Horology Clock Icon */
+.top-clock-icon {
+  font-size: 11px;
+  color: #d97706;
+  flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.top-bar-status-capsule:hover .top-clock-icon {
+  transform: rotate(20deg) scale(1.1);
+  color: #b45309;
+}
+
+/* 3. Office Hours Label */
+.top-status-label-text {
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748b;
+  letter-spacing: -0.1px;
+}
+
+/* 4. Schedule Days & Time Lockup */
+.top-status-schedule {
+  display: inline-flex;
+  align-items: center;
+  gap: 4.5px;
+  font-size: 11px;
   line-height: 1;
+}
+
+.top-schedule-days {
+  color: #0f172a;
+  font-weight: 700;
+  letter-spacing: -0.1px;
+}
+
+.top-schedule-sep {
+  color: #94a3b8;
+  font-size: 8px;
+  opacity: 0.8;
+}
+
+.top-schedule-time {
+  color: #334155;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.1px;
+}
+
+.top-schedule-tz {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8.5px;
+  font-weight: 750;
+  letter-spacing: 0.4px;
+  color: #475569;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  padding: 1.5px 4.5px;
+  border-radius: 4px;
+  line-height: 1;
+  text-transform: uppercase;
   transition: all 0.2s ease;
 }
 
-.top-status-pill:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(248, 180, 0, 0.35);
+.top-bar-status-capsule:hover .top-schedule-tz {
+  color: #0f172a;
+  border-color: #94a3b8;
+  background: #e2e8f0;
 }
 
-.top-status-dot {
+/* Backwards-compatibility fallbacks */
+.top-bar-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11.5px;
+  cursor: default;
+  white-space: nowrap;
+}
+
+.top-status-indicator {
   position: relative;
   display: inline-flex;
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
 
-.top-status-dot .status-ping {
+.top-status-indicator .status-ping {
   position: absolute;
   inset: 0;
   border-radius: 50%;
@@ -109,106 +243,64 @@
   animation: statusPulse 2s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
-.top-status-dot .status-core {
+.top-status-indicator .status-core {
   position: relative;
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background-color: #22c55e;
 }
 
-.top-status-label {
+.top-status-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #94a3b8;
+}
+
+.status-highlight {
   color: #f8b400;
-  font-weight: 750;
-  letter-spacing: 0.2px;
+  font-weight: 700;
 }
 
-.top-status-hours {
+.top-hours-text {
   color: #cbd5e1;
-  font-weight: 500;
 }
 
+/* Separator Line */
 .top-bar-sep {
   width: 1px;
   height: 14px;
-  background-color: rgba(255, 255, 255, 0.15);
-  margin: 0 4px;
+  background-color: rgba(255, 255, 255, 0.12);
   flex-shrink: 0;
 }
 
-/* Direct Contact Chips with Micro-Pill Polish & Tactical Feedback */
-.top-contact-chip {
-  position: relative;
+/* Direct Contact Links */
+.top-bar-link {
   display: inline-flex;
   align-items: center;
-  gap: 6.5px;
-  color: #e2e8f0;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  height: 26px;
-  padding: 0 12px;
-  border-radius: 999px;
-  font-size: 11.5px;
-  font-weight: 500;
+  gap: 6px;
+  color: #cbd5e1;
   text-decoration: none;
-  box-sizing: border-box;
-  line-height: 1;
-  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-  overflow: hidden;
-  -webkit-user-select: none;
-  user-select: none;
+  font-size: 11.5px;
+  font-weight: 550;
+  transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
-.top-chip-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.top-bar-icon {
   color: #f8b400;
-  font-size: 10.5px;
-  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+  font-size: 11px;
+  transition: transform 0.2s ease, color 0.2s ease;
 }
 
-.top-chip-text {
-  transition: color 0.2s ease;
-}
-
-.top-chip-cue {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 0;
-  opacity: 0;
-  overflow: hidden;
-  font-size: 9px;
-  color: #f8b400;
-  transform: translateX(-4px);
-  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.top-contact-chip:hover {
-  background: rgba(255, 255, 255, 0.1);
+.top-bar-link:hover {
   color: #ffffff;
-  border-color: rgba(248, 180, 0, 0.5);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), 0 0 10px rgba(248, 180, 0, 0.15);
 }
 
-.top-contact-chip:hover .top-chip-icon {
-  transform: scale(1.18);
-  color: #fbbf24;
-}
-
-.top-contact-chip:hover .top-chip-cue {
-  width: 12px;
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.top-contact-chip:active {
-  transform: translateY(0) scale(0.96);
-  background: rgba(248, 180, 0, 0.18);
-  border-color: #f8b400;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+.top-bar-link:hover .top-bar-icon {
+  transform: scale(1.15);
+  color: #ffc425;
 }
 
 @media (max-width: 1160px) {
@@ -227,15 +319,13 @@
 .top-bar-right {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
-
-/* Frosted Social & Channel Circle Buttons */
 .top-bar-social {
-  display: flex;
-  gap: 6px;
+  display: inline-flex;
   align-items: center;
+  gap: 6.5px;
 }
 
 .social-circle-btn {
@@ -244,227 +334,209 @@
   justify-content: center;
   width: 26px;
   height: 26px;
+  padding: 0;
+  margin: 0;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #cbd5e1;
   box-sizing: border-box;
-  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-  font-size: 11px;
+  transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+  font-size: 11.5px;
+  line-height: 0;
   text-decoration: none;
   cursor: pointer;
-  line-height: 1;
-}
-
-.social-circle-btn:active {
-  transform: scale(0.92);
-}
-
-/* WhatsApp Circle Hover */
-.social-circle-btn.wa-circle-btn:hover {
-  background-color: #22c55e;
-  border-color: #22c55e;
-  color: #ffffff;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 10px rgba(34, 197, 94, 0.4);
-}
-
-/* Instagram Circle Hover */
-.social-circle-btn.ig-circle-btn:hover {
-  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%);
-  border-color: transparent;
-  color: #ffffff;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 10px rgba(214, 36, 159, 0.35);
-}
-
-/* Facebook Circle Hover */
-.social-circle-btn.fb-circle-btn:hover {
-  background-color: #1877f2;
-  border-color: #1877f2;
-  color: #ffffff;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 10px rgba(24, 119, 242, 0.35);
-}
-
-.top-bar-divider {
-  width: 1px;
-  height: 14px;
-  background-color: rgba(255, 255, 255, 0.15);
-  margin: 0 4px;
-  flex-shrink: 0;
-}
-
-/* Client Portal Vault Capsule */
-.top-bar-portal-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  height: 26px;
-  padding: 0 3.5px 0 9px;
-  font-size: 11.5px;
-  font-weight: 650;
-  letter-spacing: 0.15px;
-  text-decoration: none;
-  border-radius: 999px;
-  color: #f1f5f9;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
-  border: 1px solid rgba(248, 180, 0, 0.42);
-  box-sizing: border-box;
-  line-height: 1;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.top-bar-portal-btn .portal-shield-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 16px;
-  height: 16px;
-  background: rgba(248, 180, 0, 0.2);
-  border-radius: 50%;
-  font-size: 8.5px;
-  color: #f8b400;
-}
-
-.top-bar-portal-btn .portal-btn-text {
-  color: #f8fafc;
-  font-weight: 650;
-  font-size: 11px;
-}
-
-.top-bar-portal-btn .portal-btn-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 3.5px;
-  padding: 2px 7px;
-  border-radius: 999px;
-  font-size: 10px;
-  font-weight: 750;
-  color: #040d18;
-  background: #f8b400;
-  transition: all 0.2s ease;
-}
-
-.top-bar-portal-btn .portal-btn-badge i {
-  font-size: 8px;
-}
-
-.top-bar-portal-btn:hover {
-  background: rgba(248, 180, 0, 0.14);
-  border-color: #f8b400;
-  box-shadow: 0 0 10px rgba(248, 180, 0, 0.25);
-}
-
-/* Unified Executive Split Capsule (Logged In State) */
-.top-bar-auth-capsule {
-  display: inline-flex;
-  align-items: center;
-  height: 26px;
-  border-radius: 999px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
-  border: 1px solid rgba(248, 180, 0, 0.45);
-  box-sizing: border-box;
-  line-height: 1;
+  position: relative;
   overflow: hidden;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
-  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Default / Light Mode Base */
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #475569;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
 }
 
-.top-bar-auth-capsule:hover {
-  border-color: rgba(248, 180, 0, 0.75);
-  box-shadow: 0 0 10px rgba(248, 180, 0, 0.25);
-}
-
-.capsule-profile-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  height: 100%;
-  padding: 0 8px 0 6px;
-  text-decoration: none;
-  color: #f8fafc;
-  font-size: 11px;
-  font-weight: 650;
-  letter-spacing: 0.15px;
-  transition: all 0.2s ease;
-  box-sizing: border-box;
-}
-
-.capsule-profile-btn:hover {
-  background: rgba(248, 180, 0, 0.12);
-  color: #fbbf24;
-}
-
-.capsule-role-icon {
+.social-circle-btn i {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 17px;
-  height: 17px;
-  border-radius: 50%;
-  background: rgba(248, 180, 0, 0.2);
-  color: #f8b400;
-  font-size: 9px;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.social-circle-btn i::before {
+  display: block;
+  line-height: 1;
+}
+
+/* WhatsApp Circle & Optical Centering */
+.social-circle-btn.wa-circle-btn {
+  border-color: rgba(34, 197, 94, 0.35);
+  color: #16a34a;
+}
+
+.social-circle-btn.wa-circle-btn i {
+  /* Counterbalance speech bubble tail pointing to bottom-left */
+  transform: translate(0.35px, -0.45px);
+}
+
+.social-circle-btn.wa-circle-btn:hover {
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%) !important;
+  border-color: #22c55e !important;
+  color: #ffffff !important;
+  transform: translateY(-1.5px) scale(1.08);
+  box-shadow: 0 4px 14px rgba(34, 197, 94, 0.45) !important;
+}
+
+.social-circle-btn.wa-circle-btn:hover i {
+  transform: translate(0.35px, -0.45px) scale(1.15);
+}
+
+/* Instagram Circle & Optical Centering */
+.social-circle-btn.ig-circle-btn {
+  border-color: rgba(225, 29, 72, 0.35);
+  color: #e11d48;
+}
+
+.social-circle-btn.ig-circle-btn i {
+  transform: translateY(-0.2px);
+}
+
+.social-circle-btn.ig-circle-btn:hover {
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 65%, #285aeb 90%) !important;
+  border-color: transparent !important;
+  color: #ffffff !important;
+  transform: translateY(-1.5px) scale(1.08);
+  box-shadow: 0 4px 14px rgba(214, 36, 159, 0.45) !important;
+}
+
+.social-circle-btn.ig-circle-btn:hover i {
+  transform: translateY(-0.2px) scale(1.15);
+}
+
+/* Facebook Circle & Optical Centering (f stem is left-heavy in FontAwesome) */
+.social-circle-btn.fb-circle-btn {
+  border-color: rgba(24, 119, 242, 0.35);
+  color: #1877f2;
+}
+
+.social-circle-btn.fb-circle-btn i {
+  /* Shift stem rightwards to achieve perfect geometric center */
+  transform: translateX(1px);
+}
+
+.social-circle-btn.fb-circle-btn:hover {
+  background: linear-gradient(135deg, #1877f2 0%, #0d65d9 100%) !important;
+  border-color: #1877f2 !important;
+  color: #ffffff !important;
+  transform: translateY(-1.5px) scale(1.08);
+  box-shadow: 0 4px 14px rgba(24, 119, 242, 0.45) !important;
+}
+
+.social-circle-btn.fb-circle-btn:hover i {
+  transform: translateX(1px) scale(1.15);
+}
+
+/* Top Bar Theme Toggle Capsule Container */
+.top-bar-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
 }
 
-.capsule-label {
-  color: #f8fafc;
-  font-weight: 650;
+/* Client Vault CTA Button */
+.top-bar-vault-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 26px;
+  padding: 0 12px;
   font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  text-decoration: none;
+  border-radius: 999px;
+  color: #f8b400;
+  background: rgba(248, 180, 0, 0.1);
+  border: 1px solid rgba(248, 180, 0, 0.35);
+  box-sizing: border-box;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   white-space: nowrap;
 }
 
-.capsule-profile-btn:hover .capsule-label {
-  color: #fbbf24;
+.top-bar-vault-btn .vault-icon {
+  font-size: 10px;
 }
 
-.capsule-cue-arrow {
+.top-bar-vault-btn .vault-arrow {
+  font-size: 8px;
+  opacity: 0.7;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.top-bar-vault-btn:hover {
+  background: #f8b400;
+  color: #071324;
+  border-color: #f8b400;
+  box-shadow: 0 2px 10px rgba(248, 180, 0, 0.35);
+  transform: translateY(-1px);
+}
+
+.top-bar-vault-btn:hover .vault-arrow {
+  opacity: 1;
+  transform: translateX(2px);
+}
+
+/* Logged in User Pill */
+.top-bar-user-pill {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  font-size: 8px;
-  color: rgba(248, 180, 0, 0.85);
-  transition: transform 0.2s ease, color 0.2s ease;
+  height: 26px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(248, 180, 0, 0.35);
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
-.capsule-profile-btn:hover .capsule-cue-arrow {
-  transform: translateX(1.5px);
+.top-user-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 10px;
+  text-decoration: none;
+  color: #f1f5f9;
+  font-size: 11px;
+  font-weight: 650;
+  height: 100%;
+  transition: all 0.2s ease;
+}
+
+.top-user-link:hover {
   color: #f8b400;
 }
 
-.capsule-inner-divider {
-  width: 1px;
-  height: 14px;
-  background: rgba(248, 180, 0, 0.3);
-  flex-shrink: 0;
-}
-
-.capsule-logout-btn {
+.top-user-logout {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 24px;
   height: 100%;
-  width: 25px;
-  border: none;
   background: transparent;
+  border: none;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
   color: #94a3b8;
   font-size: 10px;
   cursor: pointer;
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.2s ease;
 }
 
-.capsule-logout-btn:hover {
+.top-user-logout:hover {
   background: #ef4444;
   color: #ffffff;
-}
-
-.capsule-logout-btn:active {
-  transform: scale(0.92);
 }
 
 /* ==========================================================================
@@ -1524,13 +1596,60 @@
   display: none;
 }
 
-@media (max-width: 1024px) {
+/* Small Laptop Optimization (1181px to 1360px): Ensures all 9 nav links fit with zero wrapping */
+@media (min-width: 1181px) and (max-width: 1360px) {
+  .navbar-inner {
+    padding: 0 16px;
+  }
+  .navbar-logo {
+    margin-right: 8px;
+    gap: 8px;
+  }
+  .navbar-logo-badge,
+  .navbar-logo-img {
+    width: 42px;
+    height: 42px;
+  }
+  .wordmark-title {
+    font-size: 13px !important;
+    letter-spacing: 0.2px !important;
+  }
+  .wordmark-tagline {
+    display: none !important;
+  }
+  .navbar-nav {
+    gap: 2px;
+  }
+  .nav-link {
+    padding: 5px 6.5px;
+    font-size: 11.5px;
+    gap: 3px;
+  }
+  .nav-search-bar {
+    width: 36px !important;
+    padding: 0 !important;
+    justify-content: center;
+  }
+  .nav-search-placeholder,
+  .nav-search-hover-cue {
+    display: none !important;
+  }
+  .nav-consultation-btn {
+    height: 36px;
+    padding: 0 13px;
+    font-size: 11.5px;
+    gap: 5px;
+  }
+}
+
+/* Tablet & Compact Laptop Breakpoint (<= 1180px): Clean native slide-over drawer */
+@media (max-width: 1180px) {
   .navbar-center-nav {
-    display: none;
+    display: none !important;
   }
 
   .navbar-toggler {
-    display: flex;
+    display: flex !important;
   }
 
   .nav-consultation-btn {
@@ -1539,6 +1658,14 @@
     padding: 0 16px;
     font-size: 12.5px;
     gap: 6.5px;
+  }
+
+  .top-bar-social {
+    display: none !important;
+  }
+
+  .top-bar-inner {
+    padding: 0 16px;
   }
 }
 
@@ -1553,79 +1680,120 @@
   }
 
   .top-bar-inner {
-    padding: 0 14px;
+    padding: 0 12px;
   }
 
   .top-bar-left {
-    gap: 8px;
-  }
-
-  .top-status-pill {
-    height: 22px;
-    padding: 0 9px;
-    font-size: 11px;
+    display: flex;
+    align-items: center;
     gap: 6px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
   }
 
-  .top-status-hours {
-    display: none;
+  .top-bar-status-capsule {
+    height: 23px;
+    padding: 0 8px 0 7px;
+    gap: 5.5px;
+    font-size: 10.5px;
   }
 
-  .top-status-label {
-    color: #f1f5f9;
-    font-weight: 650;
-    font-size: 11px;
-  }
-
-  .top-contact-chip,
-  .top-bar-social,
-  .top-bar-sep,
-  .top-bar-divider {
+  .top-status-schedule .top-schedule-days,
+  .top-status-schedule .top-schedule-sep,
+  .top-status-divider,
+  .top-schedule-tz,
+  .top-status-label-text {
     display: none !important;
   }
 
-  .top-bar-portal-btn {
-    height: 22px;
-    padding: 0 10px;
+  .top-schedule-time {
+    font-size: 10px;
+  }
+
+  .top-bar-status {
+    display: inline-flex;
+    align-items: center;
     font-size: 11px;
-    font-weight: 650;
-    border-radius: 999px;
-    gap: 5px;
-    background: rgba(248, 180, 0, 0.14);
-    border: 1px solid rgba(248, 180, 0, 0.45);
+    gap: 6px;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .top-status-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: #cbd5e1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .status-highlight {
+    font-size: 11px;
     color: #f8b400;
   }
 
-  .top-bar-portal-btn .portal-btn-text {
-    color: #f8fafc;
-    font-weight: 650;
-    font-size: 11px;
+  .top-bar-link,
+  .top-bar-social,
+  .top-bar-sep {
+    display: none !important;
   }
 
-  .top-bar-portal-btn .portal-shield-icon {
+  .top-bar-right {
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .top-bar-vault-btn {
+    height: 23px;
+    padding: 0 9px;
+    font-size: 10.5px;
+    font-weight: 700;
+    border-radius: 999px;
+    gap: 4px;
+    background: rgba(248, 180, 0, 0.14);
+    border: 1px solid rgba(248, 180, 0, 0.45);
+    color: #f8b400;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .top-bar-vault-btn .vault-icon {
     font-size: 9px;
     color: #f8b400;
   }
 
-  .top-bar-portal-btn .portal-btn-badge {
-    display: none;
-  }
-
-  .top-bar-auth-capsule {
-    height: 22px;
-  }
-
-  .capsule-profile-btn {
+  .top-bar-vault-btn .vault-text {
+    color: #f8fafc;
+    font-weight: 650;
     font-size: 10.5px;
-    padding: 0 6px;
   }
 
-  .capsule-role-icon {
-    width: 15px;
-    height: 15px;
-    font-size: 8px;
+  .top-bar-vault-btn .vault-arrow {
+    font-size: 7.5px;
+    opacity: 0.8;
+  }
+
+  .top-bar-user-pill {
+    height: 23px;
+    font-size: 10px;
+  }
+
+  .top-user-link {
+    font-size: 10px;
+    padding: 0 8px;
+    gap: 4px;
+  }
+
+  .top-user-logout {
+    width: 22px;
+    font-size: 9px;
   }
 
   /* Executive Crisp White Luxury Mobile Navbar — Consistent with Desktop Perfection */
@@ -1646,12 +1814,12 @@
   }
 
   .navbar-inner {
-    padding: 0 14px;
+    padding: 0 12px;
   }
 
   .navbar-logo {
     margin-right: 0;
-    gap: 9px;
+    gap: 8px;
   }
 
   .navbar-logo-badge {
@@ -1667,9 +1835,27 @@
     box-shadow: 0 2px 8px rgba(7, 19, 36, 0.08);
   }
 
+  .wordmark-title {
+    font-size: 12.5px;
+  }
+
+  .wordmark-tagline {
+    gap: 3px;
+    margin-top: 1px;
+  }
+
+  .wordmark-tag-item {
+    font-size: 6.8px;
+    letter-spacing: 0.7px;
+  }
+
+  .wordmark-dot {
+    font-size: 5px;
+  }
+
   .nav-right-actions,
   .navbar-right-actions {
-    gap: 7px;
+    gap: 6px;
   }
 
   /* Direct Quick-Call Button on Mobile */
@@ -1756,18 +1942,22 @@
   }
 
   .nav-consultation-btn {
-    display: none;
+    display: none !important;
   }
+}
 
-  /* Mobile Slide-Over Drawer — Native App Precision */
+/* ==========================================================================
+   6. RESPONSIVE SLIDE-OVER DRAWER & BACKDROP (Active <= 1180px)
+   ========================================================================== */
+@media (max-width: 1180px) {
   .navbar-mobile-drawer {
     display: none;
     flex-direction: column;
     position: fixed;
     top: 0;
     right: 0;
-    width: 320px;
-    max-width: 86vw;
+    width: 360px;
+    max-width: 85vw;
     height: 100vh;
     height: 100dvh;
     background: #ffffff;
@@ -1777,6 +1967,13 @@
     z-index: 10005;
     overflow: hidden;
     touch-action: pan-y;
+  }
+
+  @media (max-width: 768px) {
+    .navbar-mobile-drawer {
+      width: 320px;
+      max-width: 86vw;
+    }
   }
 
   @media (max-width: 480px) {
@@ -1789,10 +1986,10 @@
     }
   }
 
-  @media (max-width: 330px) {
+  @media (max-width: 340px) {
     .navbar-mobile-drawer {
       width: 270px;
-      max-width: 88vw;
+      max-width: 90vw;
     }
   }
 
@@ -2337,57 +2534,237 @@
   }
 }
 
-@media (max-width: 340px) {
+/* ==========================================================================
+   6.1 MID-MOBILE REFINEMENTS (<= 600px)
+   ========================================================================== */
+@media (max-width: 600px) {
+  .top-bar-theme-toggle,
+  .top-bar-right .top-bar-sep {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   6.2 COMPACT SMARTPHONE BREAKPOINT (<= 480px)
+   ========================================================================== */
+@media (max-width: 480px) {
   .top-bar-inner {
+    padding: 0 10px;
+  }
+
+  .top-bar-status-capsule {
+    height: 22px;
+    padding: 0 7px 0 6px;
+    gap: 4.5px;
+  }
+
+  .top-status-label-text {
+    display: none !important;
+  }
+
+  .top-schedule-time {
+    font-size: 10px;
+  }
+
+  .status-highlight {
+    display: none !important;
+  }
+
+  .top-hours-text {
+    font-size: 10px;
+  }
+
+  .top-bar-vault-btn {
+    height: 22px;
     padding: 0 8px;
+    font-size: 9.5px;
+    gap: 3.5px;
   }
 
-  .top-status-pill {
-    padding: 0 6px;
-    font-size: 10px;
+  .top-bar-vault-btn .vault-text {
+    font-size: 9.5px;
   }
 
-  .top-bar-portal-btn {
-    padding: 0 7px;
-    font-size: 10px;
+  .navbar {
+    height: 58px;
+  }
+
+  .navbar-scrolled {
+    height: 54px;
   }
 
   .navbar-inner {
-    padding: 0 8px;
+    padding: 0 10px;
   }
 
   .navbar-logo {
-    gap: 6px;
+    gap: 7px;
   }
 
-  .navbar-logo-badge {
-    width: 34px;
-    height: 34px;
-  }
-
+  .navbar-logo-badge,
   .navbar-logo-img {
-    width: 34px;
-    height: 34px;
+    width: 35px;
+    height: 35px;
   }
 
   .wordmark-title {
-    font-size: 11.5px;
+    font-size: 12px !important;
   }
 
   .wordmark-tag-item {
-    font-size: 6px;
+    font-size: 6.2px;
     letter-spacing: 0.5px;
   }
 
   .navbar-right-actions {
-    gap: 4px;
+    gap: 5px;
   }
 
   .nav-mobile-call-btn,
   .nav-search-bar,
   .navbar-toggler {
-    width: 32px;
-    height: 32px;
+    width: 33px;
+    height: 33px;
+    border-radius: 8px;
+  }
+}
+
+/* ==========================================================================
+   6.3 ULTRA-COMPACT BREAKPOINT (<= 360px — 320px DevTools Precision)
+   ========================================================================== */
+@media (max-width: 360px) {
+  .top-bar {
+    height: 30px;
+  }
+
+  .top-bar-inner {
+    padding: 0 7px;
+  }
+
+  .top-bar-left {
+    gap: 4px;
+  }
+
+  .top-bar-status-capsule {
+    height: 21px;
+    padding: 0 6px 0 5px;
+    gap: 3.5px;
+  }
+
+  .top-status-beacon {
+    width: 6.5px;
+    height: 6.5px;
+  }
+
+  .top-status-beacon .beacon-core,
+  .top-status-beacon .beacon-ping {
+    width: 5px;
+    height: 5px;
+  }
+
+  .top-clock-icon {
+    display: none !important;
+  }
+
+  .top-schedule-time {
+    font-size: 9.5px;
+    letter-spacing: -0.2px;
+  }
+
+  .top-status-indicator {
+    width: 5.5px;
+    height: 5.5px;
+  }
+
+  .top-status-indicator .status-core,
+  .top-status-indicator .status-ping {
+    width: 5.5px;
+    height: 5.5px;
+  }
+
+  .top-hours-text {
+    font-size: 9px;
+    letter-spacing: -0.15px;
+  }
+
+  .top-bar-vault-btn {
+    height: 21px;
+    padding: 0 6px;
+    font-size: 9px;
+    gap: 3px;
+  }
+
+  .top-bar-vault-btn .vault-arrow {
+    display: none !important;
+  }
+
+  .top-bar-vault-btn .vault-text {
+    font-size: 9px;
+  }
+
+  .navbar {
+    height: 54px;
+  }
+
+  .navbar-scrolled {
+    height: 50px;
+  }
+
+  .navbar-inner {
+    padding: 0 7px;
+  }
+
+  .navbar-logo {
+    gap: 5px;
+    margin-right: 0;
+  }
+
+  .navbar-logo-badge,
+  .navbar-logo-img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .logo-ring-accent {
+    inset: -2px;
+  }
+
+  .wordmark-title {
+    font-size: 10.5px !important;
+    letter-spacing: 0 !important;
+  }
+
+  .wordmark-tagline {
+    display: none !important;
+  }
+
+  .navbar-right-actions {
+    gap: 3.5px;
+  }
+
+  .nav-mobile-call-btn,
+  .nav-search-bar,
+  .navbar-toggler {
+    width: 29px;
+    height: 29px;
+    border-radius: 7px;
+  }
+
+  .nav-mobile-call-btn {
+    font-size: 11px;
+  }
+
+  .nav-search-icon {
+    font-size: 10.5px !important;
+  }
+
+  .hamburger {
+    width: 13px;
+    gap: 3px;
+  }
+
+  .hamburger span {
+    height: 1.5px;
   }
 }
 
@@ -2397,6 +2774,90 @@
 [data-theme='dark'] .top-bar {
   background: linear-gradient(90deg, #020710 0%, #06101f 50%, #020710 100%);
   border-bottom-color: rgba(248, 180, 0, 0.18);
+}
+
+[data-theme='dark'] .top-bar-status-capsule {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 2px 6px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+[data-theme='dark'] .top-bar-status-capsule:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+  border-color: rgba(248, 180, 0, 0.5);
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.5),
+    0 0 16px rgba(248, 180, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+[data-theme='dark'] .top-status-beacon .beacon-ping {
+  background-color: #22c55e;
+  opacity: 0.75;
+}
+
+[data-theme='dark'] .top-status-beacon .beacon-core {
+  background: radial-gradient(circle at 35% 35%, #86efac 0%, #22c55e 55%, #15803d 100%);
+  box-shadow: 0 0 6px #22c55e, 0 0 10px rgba(34, 197, 94, 0.55);
+}
+
+[data-theme='dark'] .top-clock-icon {
+  color: #f8b400;
+}
+
+[data-theme='dark'] .top-bar-status-capsule:hover .top-clock-icon {
+  color: #ffc837;
+}
+
+[data-theme='dark'] .top-status-label-text {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .top-schedule-days {
+  color: #f1f5f9;
+}
+
+[data-theme='dark'] .top-schedule-sep {
+  color: #f8b400;
+}
+
+[data-theme='dark'] .top-schedule-time {
+  color: #cbd5e1;
+}
+
+[data-theme='dark'] .top-schedule-tz {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.09);
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .top-bar-status-capsule:hover .top-schedule-tz {
+  background: rgba(248, 180, 0, 0.15);
+  border-color: rgba(248, 180, 0, 0.4);
+  color: #f8b400;
+}
+
+/* Dark Mode Social Circle Buttons */
+[data-theme='dark'] .social-circle-btn {
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme='dark'] .social-circle-btn.wa-circle-btn {
+  border-color: rgba(34, 197, 94, 0.35);
+  color: #4ade80;
+}
+
+[data-theme='dark'] .social-circle-btn.ig-circle-btn {
+  border-color: rgba(244, 114, 182, 0.35);
+  color: #f472b6;
+}
+
+[data-theme='dark'] .social-circle-btn.fb-circle-btn {
+  border-color: rgba(96, 165, 250, 0.35);
+  color: #60a5fa;
 }
 
 [data-theme='dark'] .navbar,
@@ -2681,4 +3142,17 @@
 [data-theme='dark'] .mobile-footer-icon-btn.wa {
   background: rgba(255, 255, 255, 0.06);
   border-color: rgba(255, 255, 255, 0.14);
+}
+
+[data-theme='dark'] .nav-mobile-call-btn {
+  background: rgba(34, 197, 94, 0.14);
+  border-color: rgba(34, 197, 94, 0.35);
+  color: #4ade80;
+}
+
+[data-theme='dark'] .nav-mobile-call-btn:hover,
+[data-theme='dark'] .nav-mobile-call-btn:active {
+  background: rgba(34, 197, 94, 0.25);
+  border-color: rgba(34, 197, 94, 0.6);
+  color: #86efac;
 }

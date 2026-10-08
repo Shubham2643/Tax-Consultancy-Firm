@@ -1,6 +1,6 @@
 /* ==========================================================================
-   EXECUTIVE THEME TOGGLE — Segmented Luxury Control
-   Shree Chamunda Associates • Bank-Grade UI/UX
+   EXECUTIVE THEME TOGGLE — Ultra-Luxury Segmented Switch
+   Shree Chamunda Associates • Swiss Precision & Apple-Tier Craftsmanship
    ========================================================================== */
 
 .theme-toggle-wrap {
@@ -9,68 +9,79 @@
   align-items: center;
   user-select: none;
   vertical-align: middle;
+  line-height: 1;
 }
 
-/* 1. SEGMENTED LUXURY PILL (Desktop Top-Bar Height: 26px) */
-.theme-segmented-capsule {
+/* 1. PRECISION TRACK (Desktop Default: Exact 26px height) */
+.theme-segmented-track {
+  --seg-size: 22px;
+  --seg-pad: 2px;
+  --seg-gap: 2.5px;
+  --seg-h: 26px;
+
   position: relative;
   display: inline-flex;
   align-items: center;
-  height: 26px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  height: var(--seg-h);
+  padding: var(--seg-pad);
+  gap: var(--seg-gap);
   border-radius: 999px;
-  padding: 2px;
-  gap: 1px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  box-sizing: border-box;
+
+  /* Default Light Mode Base */
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  transition: border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-.theme-segmented-capsule:hover {
-  border-color: rgba(248, 180, 0, 0.45);
-  box-shadow: 0 0 12px rgba(248, 180, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+.theme-segmented-track:hover {
+  border-color: #94a3b8;
 }
 
-/* 2. GLIDING ACTIVE INDICATOR THUMB */
+/* 2. GLIDING FLOATING CIRCULAR THUMB */
 .theme-segment-thumb {
   position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 27px;
-  height: 20px;
-  border-radius: 999px;
+  top: var(--seg-pad);
+  left: var(--seg-pad);
+  width: var(--seg-size);
+  height: var(--seg-size);
+  border-radius: 50%;
   pointer-events: none;
   z-index: 1;
+  box-sizing: border-box;
+  will-change: transform, background, box-shadow;
+
+  /* Smooth Apple-grade spring glide */
   transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
-              background 0.25s ease,
-              border-color 0.25s ease,
-              box-shadow 0.25s ease;
+              background 0.2s ease,
+              border-color 0.2s ease,
+              box-shadow 0.2s ease;
 }
 
-/* Position 1: Light (Left) */
+/* Position Translations */
 .theme-segment-thumb.thumb-light {
   transform: translateX(0);
-  background: linear-gradient(135deg, rgba(248, 180, 0, 0.35) 0%, rgba(248, 180, 0, 0.18) 100%);
-  border: 1px solid rgba(248, 180, 0, 0.7);
-  box-shadow: 0 0 10px rgba(248, 180, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 5px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.04);
 }
 
-/* Position 2: Dark (Center) */
 .theme-segment-thumb.thumb-dark {
-  transform: translateX(28px);
-  background: linear-gradient(135deg, rgba(167, 139, 250, 0.35) 0%, rgba(129, 140, 248, 0.18) 100%);
-  border: 1px solid rgba(167, 139, 250, 0.7);
-  box-shadow: 0 0 10px rgba(167, 139, 250, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: translateX(calc(var(--seg-size) + var(--seg-gap)));
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.25);
 }
 
-/* Position 3: System (Right) */
 .theme-segment-thumb.thumb-system {
-  transform: translateX(56px);
-  background: linear-gradient(135deg, rgba(56, 189, 248, 0.35) 0%, rgba(14, 165, 233, 0.18) 100%);
-  border: 1px solid rgba(56, 189, 248, 0.7);
-  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: translateX(calc((var(--seg-size) + var(--seg-gap)) * 2));
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 5px rgba(15, 23, 42, 0.08);
 }
 
 /* 3. SEGMENT INTERACTION BUTTONS */
@@ -80,22 +91,34 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 27px;
-  height: 20px;
-  border-radius: 999px;
+  width: var(--seg-size);
+  height: var(--seg-size);
+  border-radius: 50%;
   border: none;
   background: transparent;
-  color: rgba(255, 255, 255, 0.55);
-  font-size: 10.5px;
+  color: #64748b;
   cursor: pointer;
   padding: 0;
+  margin: 0;
   outline: none;
-  transition: color 0.2s ease, transform 0.18s ease;
+  line-height: 0;
+  transition: color 0.2s ease, transform 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.theme-segment-btn:hover {
-  color: rgba(255, 255, 255, 0.95);
-  transform: scale(1.1);
+.theme-svg-icon {
+  width: 13.5px;
+  height: 13.5px;
+  display: block;
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+              stroke 0.2s ease,
+              fill 0.2s ease,
+              filter 0.2s ease;
+}
+
+.theme-segment-btn:hover:not(.active) {
+  color: #0f172a;
+  transform: scale(1.08);
 }
 
 .theme-segment-btn:active {
@@ -103,27 +126,61 @@
 }
 
 .theme-segment-btn:focus-visible {
-  outline: 2px solid rgba(248, 180, 0, 0.8);
-  outline-offset: 1px;
+  box-shadow: 0 0 0 2px #d97706;
 }
 
-/* Active Segment Highlights */
+/* 4. ACTIVE ICON HIGHLIGHTS & DUAL-TONE GLOW */
+/* 4.1 Sun Icon (Daylight) */
 .theme-segment-btn.active.btn-light {
-  color: #f8b400;
-  text-shadow: 0 0 8px rgba(248, 180, 0, 0.75);
+  color: #d97706;
 }
 
+.theme-segment-btn.active.btn-light .sun-core {
+  fill: #f59e0b;
+  stroke: #d97706;
+}
+
+.theme-segment-btn.active.btn-light .sun-ray {
+  stroke: #d97706;
+  stroke-width: 2px;
+}
+
+.theme-segment-btn.active.btn-light .theme-svg-icon {
+  transform: rotate(20deg) scale(1.08);
+  filter: drop-shadow(0 0 3px rgba(245, 158, 11, 0.4));
+}
+
+/* 4.2 Moon Icon (Midnight) */
 .theme-segment-btn.active.btn-dark {
-  color: #c4b5fd;
-  text-shadow: 0 0 8px rgba(196, 181, 253, 0.75);
+  color: #60a5fa;
 }
 
+.theme-segment-btn.active.btn-dark .moon-path {
+  fill: #60a5fa;
+  stroke: #3b82f6;
+}
+
+.theme-segment-btn.active.btn-dark .theme-svg-icon {
+  transform: rotate(-12deg) scale(1.08);
+  filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.45));
+}
+
+/* 4.3 System Icon (Auto) */
 .theme-segment-btn.active.btn-system {
-  color: #7dd3fc;
-  text-shadow: 0 0 8px rgba(125, 211, 252, 0.75);
+  color: #0f172a;
 }
 
-/* Micro Status Pip on System Icon to show resolved state */
+.theme-segment-btn.active.btn-system .system-screen {
+  fill: currentColor;
+  fill-opacity: 0.12;
+  stroke-width: 2px;
+}
+
+.theme-segment-btn.active.btn-system .theme-svg-icon {
+  transform: scale(1.06);
+}
+
+/* 5. SYSTEM STATUS MICRO-DOT */
 .system-icon-wrap {
   position: relative;
   display: inline-flex;
@@ -131,28 +188,106 @@
   justify-content: center;
 }
 
-.system-resolved-pip {
+.system-resolved-dot {
   position: absolute;
-  bottom: -2px;
-  right: -3px;
-  width: 5px;
-  height: 5px;
+  bottom: -2.5px;
+  right: -2.5px;
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
-  border: 1px solid #071324;
+  border: 1px solid #ffffff;
+  box-sizing: border-box;
 }
 
-.system-resolved-pip.pip-dark {
-  background-color: #a78bfa;
-  box-shadow: 0 0 4px #a78bfa;
+.system-resolved-dot.dark {
+  background-color: #3b82f6;
+  box-shadow: 0 0 4px #3b82f6;
 }
 
-.system-resolved-pip.pip-light {
-  background-color: #f8b400;
-  box-shadow: 0 0 4px #f8b400;
+.system-resolved-dot.light {
+  background-color: #f59e0b;
+  box-shadow: 0 0 4px #f59e0b;
 }
 
 /* ==========================================================================
-   4. DRAWER ROW VARIANT (For Mobile Navigation Drawer)
+   6. DOMINANT DARK THEME OVERRIDES
+   ========================================================================== */
+[data-theme='dark'] .theme-segmented-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme='dark'] .theme-segmented-track:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+[data-theme='dark'] .theme-segment-btn {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .theme-segment-btn:hover:not(.active) {
+  color: #f8fafc;
+}
+
+[data-theme='dark'] .theme-segment-thumb.thumb-light {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme='dark'] .theme-segment-btn.active.btn-light {
+  color: #fbbf24;
+}
+
+[data-theme='dark'] .theme-segment-btn.active.btn-light .sun-core {
+  fill: #fbbf24;
+  stroke: #f59e0b;
+}
+
+[data-theme='dark'] .theme-segment-btn.active.btn-light .sun-ray {
+  stroke: #fbbf24;
+}
+
+[data-theme='dark'] .theme-segment-thumb.thumb-dark {
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+  border-color: rgba(96, 165, 250, 0.45);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5), 0 0 10px rgba(96, 165, 250, 0.25);
+}
+
+[data-theme='dark'] .theme-segment-btn.active.btn-dark {
+  color: #93c5fd;
+}
+
+[data-theme='dark'] .theme-segment-btn.active.btn-dark .moon-path {
+  fill: #93c5fd;
+  stroke: #60a5fa;
+}
+
+[data-theme='dark'] .theme-segment-thumb.thumb-system {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme='dark'] .theme-segment-btn.active.btn-system {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .system-resolved-dot {
+  border-color: #071324;
+}
+
+/* Shield glide from global theme transition !important */
+html.theme-transitioning .theme-segment-thumb {
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.2s ease,
+              border-color 0.2s ease,
+              box-shadow 0.2s ease !important;
+}
+
+/* ==========================================================================
+   7. DRAWER ROW VARIANT (Mobile Navigation Drawer)
    ========================================================================== */
 .theme-drawer-row {
   display: flex;
@@ -164,54 +299,104 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   margin-bottom: 12px;
+  box-sizing: border-box;
   transition: all 0.2s ease;
 }
 
 .theme-drawer-row:hover {
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(248, 180, 0, 0.3);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 .drawer-row-left {
   display: flex;
   align-items: center;
   gap: 10px;
+  min-width: 0;
 }
 
 .drawer-row-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border-radius: 8px;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.drawer-row-icon.icon-light {
   background: rgba(248, 180, 0, 0.12);
+  border: 1px solid rgba(248, 180, 0, 0.25);
   color: #f8b400;
-  font-size: 12px;
+}
+
+.drawer-row-icon.icon-dark {
+  background: rgba(30, 58, 138, 0.3);
+  border: 1px solid rgba(96, 165, 250, 0.25);
+  color: #93c5fd;
 }
 
 .drawer-row-text {
   display: flex;
   flex-direction: column;
+  gap: 1px;
+  min-width: 0;
 }
 
 .drawer-row-title {
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 650;
   color: #f8fafc;
   line-height: 1.2;
 }
 
 .drawer-row-sub {
-  font-size: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10.5px;
   color: #94a3b8;
   font-weight: 500;
 }
 
-/* Light theme adaptive styling for when inside a light container */
+.drawer-status-pip {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.drawer-status-pip.pip-light {
+  background-color: #f8b400;
+}
+
+.drawer-status-pip.pip-dark {
+  background-color: #60a5fa;
+}
+
+.drawer-status-pip.pip-system {
+  background-color: #38bdf8;
+}
+
+/* Drawer Scale: comfortable 28px buttons */
+.theme-segmented-track.track-drawer {
+  --seg-size: 28px;
+  --seg-pad: 3px;
+  --seg-gap: 3px;
+  --seg-h: 34px;
+}
+
+.theme-segmented-track.track-drawer .theme-svg-icon {
+  width: 14.5px;
+  height: 14.5px;
+}
+
+/* Light Theme in Drawer */
 [data-theme='light'] .theme-drawer-row {
-  background: rgba(7, 19, 36, 0.03);
-  border-color: rgba(7, 19, 36, 0.08);
+  background: #f8fafc;
+  border-color: #e2e8f0;
 }
 
 [data-theme='light'] .drawer-row-title {
@@ -222,16 +407,14 @@
   color: #64748b;
 }
 
-[data-theme='light'] .theme-segmented-capsule {
-  background: rgba(7, 19, 36, 0.05);
-  border-color: rgba(7, 19, 36, 0.12);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+[data-theme='light'] .drawer-row-icon.icon-light {
+  background: #fef3c7;
+  border-color: #fde68a;
+  color: #b45309;
 }
 
-[data-theme='light'] .theme-segment-btn {
-  color: #64748b;
-}
-
-[data-theme='light'] .theme-segment-btn:hover {
-  color: #0f172a;
+[data-theme='light'] .drawer-row-icon.icon-dark {
+  background: #0f172a;
+  border-color: #1e293b;
+  color: #93c5fd;
 }
