@@ -472,7 +472,9 @@ const Navbar = () => {
                   className="top-user-link"
                   title={user.role === 'admin' ? 'Open CA Admin Dashboard' : 'Open Client Portal'}
                 >
-                  <i className={user.role === 'admin' ? 'fas fa-shield-halved' : 'fas fa-user-check'}></i>
+                  <span className="user-pill-badge">
+                    <i className={user.role === 'admin' ? 'fas fa-shield-halved' : 'fas fa-user-check'}></i>
+                  </span>
                   <span>{user.role === 'admin' ? 'Admin Panel' : 'My Vault'}</span>
                 </Link>
                 <button
@@ -485,10 +487,14 @@ const Navbar = () => {
                 </button>
               </div>
             ) : (
-              <Link to="/login" className="top-bar-vault-btn" title="Access Secure Client Portal & Vault">
-                <i className="fas fa-shield-halved vault-icon"></i>
+              <Link to="/login" className="top-bar-vault-btn" title="Access Secure 256-Bit Client Vault">
+                <span className="vault-badge">
+                  <i className="fas fa-shield-halved vault-icon"></i>
+                </span>
                 <span className="vault-text">Client Vault</span>
-                <i className="fas fa-chevron-right vault-arrow"></i>
+                <span className="vault-arrow-wrap">
+                  <i className="fas fa-arrow-right vault-arrow"></i>
+                </span>
               </Link>
             )}
           </div>
@@ -509,7 +515,7 @@ const Navbar = () => {
               <span className="logo-ring-accent"></span>
             </div>
             <div className="navbar-logo-wordmark">
-              <span className="wordmark-title">SHREE CHAMUNDA</span>
+              <span className="wordmark-title">SHREE CHAMUNDA ASSOCIATES</span>
               <div className="wordmark-tagline">
                 <span className="wordmark-tag-item">TAX</span>
                 <span className="wordmark-dot">•</span>
@@ -655,10 +661,17 @@ const Navbar = () => {
               </span>
             </button>
 
-            {/* 11/10 Executive Free Consultation CTA */}
-            <Link to="/contact" className="nav-consultation-btn">
-              <span className="consultation-btn-text">Book Consultation</span>
-              <span className="consultation-arrow-badge">
+            {/* Executive FinTech Consultation Appointment CTA Module */}
+            <Link
+              to="/contact"
+              className="nav-consultation-btn"
+              title="Schedule Consultation with Chartered Accountant"
+            >
+              <span className="consult-badge-leading">
+                <i className="fas fa-calendar-check consult-calendar-icon"></i>
+              </span>
+              <span className="consult-main-text">Book Consultation</span>
+              <span className="consult-arrow-badge">
                 <i className="fas fa-arrow-right"></i>
               </span>
             </Link>
@@ -695,7 +708,7 @@ const Navbar = () => {
               <img src="/assets/logo_circle_full.png?v=7" alt="Shree Chamunda Associates" className="mobile-drawer-logo" />
             </div>
             <div className="mobile-drawer-title">
-              <strong>SHREE CHAMUNDA</strong>
+              <strong>SHREE CHAMUNDA ASSOCIATES</strong>
               <span>TAX &bull; AUDIT &bull; ADVISORY</span>
             </div>
           </Link>

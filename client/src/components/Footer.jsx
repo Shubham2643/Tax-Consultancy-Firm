@@ -128,8 +128,8 @@ const Footer = () => {
             <Link to="/" className="footer-brand-logo-card">
               <img src="/assets/logo_new.jpg?v=4" alt="Shree Chamunda Associates" className="footer-logo-img" />
               <div className="footer-brand-text">
-                <strong>SHREE CHAMUNDA</strong>
-                <span>ASSOCIATES &bull; TAX FIRM</span>
+                <strong>SHREE CHAMUNDA ASSOCIATES</strong>
+                <span>TAX &bull; AUDIT &bull; ADVISORY</span>
               </div>
             </Link>
             <p className="footer-brand-bio">

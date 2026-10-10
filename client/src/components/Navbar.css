@@ -447,76 +447,183 @@
   flex-shrink: 0;
 }
 
-/* Client Vault CTA Button */
+/* ==========================================================================
+   Executive FinTech Client Vault CTA Button (Height: 26px)
+   ========================================================================== */
 .top-bar-vault-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   height: 26px;
-  padding: 0 12px;
+  padding: 0 9px 0 5px;
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.2px;
+  letter-spacing: 0.25px;
   text-decoration: none;
   border-radius: 999px;
-  color: #f8b400;
-  background: rgba(248, 180, 0, 0.1);
-  border: 1px solid rgba(248, 180, 0, 0.35);
+  color: #ffffff;
+  background: linear-gradient(135deg, #071324 0%, #0d223c 50%, #071324 100%);
+  border: 1px solid rgba(248, 180, 0, 0.45);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 2px 8px rgba(0, 0, 0, 0.3);
   box-sizing: border-box;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Subtle Shimmer Sweep on Hover */
+.top-bar-vault-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+
+.top-bar-vault-btn:hover::before {
+  left: 140%;
+}
+
+/* Shield Token Badge */
+.top-bar-vault-btn .vault-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(248, 180, 0, 0.25) 0%, rgba(248, 180, 0, 0.08) 100%);
+  border: 1px solid rgba(248, 180, 0, 0.55);
+  color: #f8b400;
+  box-shadow: 0 0 8px rgba(248, 180, 0, 0.25);
+  flex-shrink: 0;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .top-bar-vault-btn .vault-icon {
-  font-size: 10px;
+  font-size: 8.5px;
+  line-height: 1;
+}
+
+/* Typography */
+.top-bar-vault-btn .vault-text {
+  font-size: 10.5px;
+  font-weight: 750;
+  letter-spacing: 0.3px;
+  color: #ffffff;
+  line-height: 1;
+}
+
+/* Directional Arrow Wrap */
+.top-bar-vault-btn .vault-arrow-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: #f8b400;
+  margin-left: 1px;
+  flex-shrink: 0;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .top-bar-vault-btn .vault-arrow {
-  font-size: 8px;
-  opacity: 0.7;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  font-size: 7.5px;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Hover States */
 .top-bar-vault-btn:hover {
-  background: #f8b400;
-  color: #071324;
-  border-color: #f8b400;
-  box-shadow: 0 2px 10px rgba(248, 180, 0, 0.35);
+  background: linear-gradient(135deg, #0a1c33 0%, #132e50 50%, #0a1c33 100%);
+  border-color: rgba(248, 180, 0, 0.85);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 4px 16px rgba(248, 180, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.4);
   transform: translateY(-1px);
 }
 
+.top-bar-vault-btn:hover .vault-badge {
+  background: linear-gradient(135deg, #f8b400 0%, #e5a000 100%);
+  color: #071324;
+  border-color: #f8b400;
+  box-shadow: 0 0 12px rgba(248, 180, 0, 0.6);
+  transform: scale(1.05);
+}
+
+.top-bar-vault-btn:hover .vault-arrow-wrap {
+  background: rgba(248, 180, 0, 0.25);
+  color: #ffffff;
+}
+
 .top-bar-vault-btn:hover .vault-arrow {
-  opacity: 1;
   transform: translateX(2px);
 }
 
-/* Logged in User Pill */
+.top-bar-vault-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Logged in User Pill - Executive FinTech Glass */
 .top-bar-user-pill {
   display: inline-flex;
   align-items: center;
   height: 26px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(248, 180, 0, 0.35);
+  background: linear-gradient(135deg, #071324 0%, #0d223c 50%, #071324 100%);
+  border: 1px solid rgba(248, 180, 0, 0.4);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 2px 8px rgba(0, 0, 0, 0.25);
   box-sizing: border-box;
   overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+}
+
+.top-bar-user-pill:hover {
+  border-color: rgba(248, 180, 0, 0.7);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 4px 14px rgba(248, 180, 0, 0.2);
 }
 
 .top-user-link {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 0 10px;
+  gap: 6px;
+  padding: 0 9px 0 5px;
   text-decoration: none;
-  color: #f1f5f9;
-  font-size: 11px;
-  font-weight: 650;
+  color: #f8fafc;
+  font-size: 10.5px;
+  font-weight: 700;
   height: 100%;
   transition: all 0.2s ease;
 }
 
+.top-user-link .user-pill-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(248, 180, 0, 0.2);
+  border: 1px solid rgba(248, 180, 0, 0.5);
+  color: #f8b400;
+  font-size: 8.5px;
+  box-shadow: 0 0 6px rgba(248, 180, 0, 0.2);
+}
+
 .top-user-link:hover {
   color: #f8b400;
+}
+
+.top-user-link:hover .user-pill-badge {
+  background: #f8b400;
+  color: #071324;
 }
 
 .top-user-logout {
@@ -527,16 +634,16 @@
   height: 100%;
   background: transparent;
   border: none;
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
   color: #94a3b8;
-  font-size: 10px;
+  font-size: 9.5px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .top-user-logout:hover {
-  background: #ef4444;
-  color: #ffffff;
+  background: rgba(239, 68, 68, 0.25);
+  color: #ef4444;
 }
 
 /* ==========================================================================
@@ -570,9 +677,9 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  max-width: 1420px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 0 clamp(20px, 2.5vw, 36px);
+  padding: 0 clamp(16px, 1.8vw, 28px);
   height: 100%;
   box-sizing: border-box;
 }
@@ -583,8 +690,8 @@
   align-items: center;
   text-decoration: none;
   flex-shrink: 0;
-  gap: 11px;
-  margin-right: 18px;
+  gap: 10px;
+  margin-right: clamp(10px, 1vw, 16px);
   height: 100%;
   outline: none;
 }
@@ -594,19 +701,19 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 50px;
-  height: 50px;
+  width: 44px;
+  height: 44px;
   flex-shrink: 0;
 }
 
 .navbar-logo-img {
-  height: 50px;
-  width: 50px;
+  height: 44px;
+  width: 44px;
   border-radius: 50%;
   object-fit: cover;
   background-color: #ffffff;
   border: 1.5px solid rgba(248, 180, 0, 0.48);
-  box-shadow: 0 2px 10px rgba(7, 19, 36, 0.08);
+  box-shadow: 0 2px 8px rgba(7, 19, 36, 0.08);
   image-rendering: -webkit-optimize-contrast;
   transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s ease, border-color 0.2s ease;
 }
@@ -650,9 +757,9 @@
 }
 
 .wordmark-title {
-  font-size: clamp(12.5px, 3.8vw, 15.5px);
+  font-size: clamp(11.5px, 0.95vw, 13.5px);
   font-weight: 850;
-  letter-spacing: clamp(0.3px, 0.2vw, 0.9px);
+  letter-spacing: clamp(0.15px, 0.08vw, 0.4px);
   color: #071324;
   line-height: 1.15;
   margin: 0;
@@ -710,7 +817,7 @@
   display: flex;
   align-items: center;
   height: 100%;
-  gap: 3px;
+  gap: 2px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -726,10 +833,10 @@
 .nav-link {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   color: #334155;
-  padding: 6.5px 9.5px;
-  font-size: 13px;
+  padding: 6px clamp(6.5px, 0.55vw, 8.5px);
+  font-size: clamp(12px, 0.86vw, 12.8px);
   font-weight: 600;
   letter-spacing: -0.15px;
   text-decoration: none;
@@ -1208,21 +1315,21 @@
 .navbar-right-actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: clamp(6px, 0.6vw, 10px);
   flex-shrink: 0;
-  margin-left: 18px;
+  margin-left: clamp(8px, 1vw, 14px);
   height: 100%;
 }
 
 /* Ultra-Modern Fintech Search Bar Pill */
 .nav-search-bar {
   position: relative;
-  height: 40px;
-  width: 204px;
+  height: 38px;
+  width: clamp(135px, 9.5vw, 175px);
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 0 12px 0 6px;
+  gap: 7px;
+  padding: 0 10px 0 5px;
   border-radius: 999px;
   background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
   border: 1px solid rgba(226, 232, 240, 0.95);
@@ -1386,16 +1493,16 @@
   transform: translateX(0);
 }
 
-@media (max-width: 1320px) {
+@media (max-width: 1380px) {
   .nav-search-bar {
-    width: 165px;
+    width: 140px;
   }
   .nav-search-hover-cue {
     display: none;
   }
 }
 
-@media (max-width: 1220px) {
+@media (max-width: 1260px) {
   .nav-search-placeholder {
     display: none;
   }
@@ -1403,12 +1510,12 @@
     display: none;
   }
   .nav-search-bar {
-    width: 40px;
+    width: 38px;
     padding: 0;
     justify-content: center;
   }
   .nav-search-bar:hover {
-    width: 40px;
+    width: 38px;
   }
   .nav-search-icon-badge {
     width: 100%;
@@ -1423,24 +1530,27 @@
   display: none;
 }
 
-/* 11/10 Executive Obsidian-Gold CTA Button — Perfectly Vertically Centered & Living Specular Glow */
+/* ==========================================================================
+   Executive FinTech Book Consultation CTA Module (Height: 42px)
+   Shree Chamunda Associates • Swiss Precision & Apple-Tier Craftsmanship
+   ========================================================================== */
 .nav-consultation-btn {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8.5px;
-  height: 40px;
-  background: linear-gradient(180deg, #0e2038 0%, #061120 100%);
+  gap: 7px;
+  height: 38px;
+  padding: 0 8px 0 6px;
+  background: linear-gradient(135deg, #071324 0%, #0d223c 50%, #071324 100%);
   color: #ffffff;
-  padding: 0 20px;
   border-radius: 999px;
-  font-size: 13px;
-  font-weight: 650;
-  letter-spacing: -0.15px;
   text-decoration: none;
-  border: 1px solid rgba(248, 180, 0, 0.48);
-  box-shadow: 0 2px 8px rgba(7, 19, 36, 0.16), 0 0 1px rgba(7, 19, 36, 0.25);
+  border: 1px solid rgba(248, 180, 0, 0.45);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 3px 14px rgba(7, 19, 36, 0.22),
+    0 0 12px rgba(248, 180, 0, 0.12);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   white-space: nowrap;
   flex-shrink: 0;
@@ -1449,96 +1559,119 @@
   align-self: center;
   line-height: 1;
   overflow: hidden;
-  animation: ctaAmbientPulse 5s ease-in-out infinite;
 }
 
-/* Specular Light Reflection Shimmer Sweep (Every 7s) */
+/* Elegant Shimmer Sweep on Hover */
 .nav-consultation-btn::before {
   content: '';
   position: absolute;
   top: 0;
-  left: 0;
+  left: -120%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    115deg,
-    transparent 0%,
-    transparent 40%,
-    rgba(255, 255, 255, 0.22) 48%,
-    rgba(248, 180, 0, 0.35) 52%,
-    transparent 60%,
-    transparent 100%
-  );
-  transform: translateX(-150%);
-  animation: ctaShimmerSweep 7s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.65s ease;
   pointer-events: none;
 }
 
-@keyframes ctaShimmerSweep {
-  0% {
-    transform: translateX(-150%);
-  }
-  18% {
-    transform: translateX(160%);
-  }
-  100% {
-    transform: translateX(160%);
-  }
+.nav-consultation-btn:hover::before {
+  left: 140%;
 }
 
-@keyframes ctaAmbientPulse {
-  0%, 100% {
-    box-shadow: 0 2px 8px rgba(7, 19, 36, 0.16), 0 0 0 1px rgba(248, 180, 0, 0.25);
-    border-color: rgba(248, 180, 0, 0.48);
-  }
-  50% {
-    box-shadow: 0 3px 14px rgba(248, 180, 0, 0.24), 0 0 10px rgba(248, 180, 0, 0.2);
-    border-color: rgba(248, 180, 0, 0.72);
-  }
-}
-
-.consultation-btn-text {
+/* 1. Leading Luxury Calendar Badge */
+.consult-badge-leading {
   position: relative;
   z-index: 1;
-  color: #ffffff;
-  font-weight: 650;
-  letter-spacing: -0.1px;
-  line-height: 1;
-}
-
-.consultation-arrow-badge {
-  position: relative;
-  z-index: 1;
-  background: transparent;
-  border: none;
-  width: auto;
-  height: auto;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(248, 180, 0, 0.2) 0%, rgba(217, 119, 6, 0.08) 100%);
+  border: 1px solid rgba(248, 180, 0, 0.55);
   color: #f8b400;
-  font-size: 11.5px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s ease;
+  box-shadow: 0 0 8px rgba(248, 180, 0, 0.25);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   flex-shrink: 0;
   line-height: 1;
 }
 
-.nav-consultation-btn:hover {
-  background: linear-gradient(180deg, #142e52 0%, #08172c 100%);
-  border-color: #f8b400;
-  box-shadow: 0 4px 22px rgba(7, 19, 36, 0.25), 0 0 18px rgba(248, 180, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-  transform: translateY(-1.5px);
-  animation-play-state: paused;
+.consult-calendar-icon {
+  font-size: 10px;
+  line-height: 1;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.nav-consultation-btn:hover .consultation-arrow-badge {
-  transform: translateX(4px);
-  color: #ffc837;
+/* 2. Main Action Label */
+.consult-main-text {
+  position: relative;
+  z-index: 1;
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.15px;
+  line-height: 1;
+  transition: color 0.2s ease;
+}
+
+/* 3. Trailing Interactive Action Disc */
+.consult-arrow-badge {
+  position: relative;
+  z-index: 1;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #f8b400;
+  font-size: 8.5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.consult-arrow-badge i {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Hover Physics */
+.nav-consultation-btn:hover {
+  background: linear-gradient(135deg, #0a1c33 0%, #153258 50%, #0a1c33 100%);
+  border-color: rgba(248, 180, 0, 0.85);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 6px 24px rgba(7, 19, 36, 0.32),
+    0 0 20px rgba(248, 180, 0, 0.28);
+  transform: translateY(-1.5px);
+}
+
+.nav-consultation-btn:hover .consult-badge-leading {
+  background: linear-gradient(135deg, #ffd700 0%, #f8b400 100%);
+  border-color: #ffd700;
+  color: #071324;
+  transform: scale(1.05) rotate(-3deg);
+  box-shadow: 0 0 14px rgba(248, 180, 0, 0.6);
+}
+
+.nav-consultation-btn:hover .consult-arrow-badge {
+  background: linear-gradient(135deg, #ffd700 0%, #f8b400 100%);
+  border-color: #ffd700;
+  color: #071324;
+  transform: translateX(2px) scale(1.08);
+  box-shadow: 0 0 12px rgba(248, 180, 0, 0.55);
+}
+
+.nav-consultation-btn:hover .consult-arrow-badge i {
+  transform: translateX(1px);
 }
 
 .nav-consultation-btn:active {
-  transform: translateY(0) scale(0.985);
-  box-shadow: 0 1px 6px rgba(7, 19, 36, 0.2);
+  transform: translateY(0) scale(0.98);
 }
 
 /* ==========================================================================
@@ -1596,8 +1729,8 @@
   display: none;
 }
 
-/* Small Laptop Optimization (1181px to 1360px): Ensures all 9 nav links fit with zero wrapping */
-@media (min-width: 1181px) and (max-width: 1360px) {
+/* Small Laptop & Compact Desktop (1181px to 1440px): Guarantees zero edge-overflow across all laptop screens */
+@media (min-width: 1181px) and (max-width: 1440px) {
   .navbar-inner {
     padding: 0 16px;
   }
@@ -1607,12 +1740,12 @@
   }
   .navbar-logo-badge,
   .navbar-logo-img {
-    width: 42px;
-    height: 42px;
+    width: 40px;
+    height: 40px;
   }
   .wordmark-title {
-    font-size: 13px !important;
-    letter-spacing: 0.2px !important;
+    font-size: 11px !important;
+    letter-spacing: 0.1px !important;
   }
   .wordmark-tagline {
     display: none !important;
@@ -1626,7 +1759,7 @@
     gap: 3px;
   }
   .nav-search-bar {
-    width: 36px !important;
+    width: 38px !important;
     padding: 0 !important;
     justify-content: center;
   }
@@ -1636,9 +1769,23 @@
   }
   .nav-consultation-btn {
     height: 36px;
-    padding: 0 13px;
+    padding: 0 6px 0 5px;
+    gap: 6px;
+  }
+  .consult-badge-leading {
+    width: 22px;
+    height: 22px;
+  }
+  .consult-calendar-icon {
+    font-size: 9.5px;
+  }
+  .consult-main-text {
     font-size: 11.5px;
-    gap: 5px;
+  }
+  .consult-arrow-badge {
+    width: 19px;
+    height: 19px;
+    font-size: 8px;
   }
 }
 
@@ -1655,9 +1802,23 @@
   .nav-consultation-btn {
     display: inline-flex;
     height: 38px;
-    padding: 0 16px;
-    font-size: 12.5px;
-    gap: 6.5px;
+    padding: 0 7px 0 6px;
+    gap: 7px;
+  }
+  .consult-badge-leading {
+    width: 25px;
+    height: 25px;
+  }
+  .consult-calendar-icon {
+    font-size: 10.5px;
+  }
+  .consult-main-text {
+    font-size: 12px;
+  }
+  .consult-arrow-badge {
+    width: 21px;
+    height: 21px;
+    font-size: 9px;
   }
 
   .top-bar-social {
@@ -1752,48 +1913,53 @@
 
   .top-bar-vault-btn {
     height: 23px;
-    padding: 0 9px;
-    font-size: 10.5px;
-    font-weight: 700;
-    border-radius: 999px;
-    gap: 4px;
-    background: rgba(248, 180, 0, 0.14);
-    border: 1px solid rgba(248, 180, 0, 0.45);
-    color: #f8b400;
-    white-space: nowrap;
+    padding: 0 8px 0 4px;
+    font-size: 10px;
+    gap: 4.5px;
     flex-shrink: 0;
   }
 
+  .top-bar-vault-btn .vault-badge {
+    width: 16px;
+    height: 16px;
+  }
+
   .top-bar-vault-btn .vault-icon {
-    font-size: 9px;
-    color: #f8b400;
+    font-size: 7.5px;
   }
 
   .top-bar-vault-btn .vault-text {
-    color: #f8fafc;
-    font-weight: 650;
-    font-size: 10.5px;
+    font-size: 10px;
+  }
+
+  .top-bar-vault-btn .vault-arrow-wrap {
+    width: 12px;
+    height: 12px;
   }
 
   .top-bar-vault-btn .vault-arrow {
-    font-size: 7.5px;
-    opacity: 0.8;
+    font-size: 6.5px;
   }
 
   .top-bar-user-pill {
     height: 23px;
-    font-size: 10px;
   }
 
   .top-user-link {
     font-size: 10px;
-    padding: 0 8px;
+    padding: 0 8px 0 4px;
     gap: 4px;
+  }
+
+  .top-user-link .user-pill-badge {
+    width: 16px;
+    height: 16px;
+    font-size: 7.5px;
   }
 
   .top-user-logout {
     width: 22px;
-    font-size: 9px;
+    font-size: 8.5px;
   }
 
   /* Executive Crisp White Luxury Mobile Navbar — Consistent with Desktop Perfection */
@@ -1836,7 +2002,8 @@
   }
 
   .wordmark-title {
-    font-size: 12.5px;
+    font-size: 11.5px;
+    letter-spacing: 0.1px;
   }
 
   .wordmark-tagline {
@@ -2038,11 +2205,12 @@
 
   .mobile-drawer-title strong {
     display: block;
-    font-size: 12px;
+    font-size: 11.5px;
     font-weight: 850;
     color: #071324;
-    letter-spacing: 0.2px;
+    letter-spacing: 0.15px;
     line-height: 1.15;
+    white-space: nowrap;
   }
 
   .mobile-drawer-title span {
@@ -2576,13 +2744,31 @@
 
   .top-bar-vault-btn {
     height: 22px;
-    padding: 0 8px;
+    padding: 0 6px 0 3px;
     font-size: 9.5px;
-    gap: 3.5px;
+    gap: 4px;
+  }
+
+  .top-bar-vault-btn .vault-badge {
+    width: 15px;
+    height: 15px;
+  }
+
+  .top-bar-vault-btn .vault-icon {
+    font-size: 7px;
   }
 
   .top-bar-vault-btn .vault-text {
     font-size: 9.5px;
+  }
+
+  .top-bar-vault-btn .vault-arrow-wrap {
+    width: 11px;
+    height: 11px;
+  }
+
+  .top-bar-vault-btn .vault-arrow {
+    font-size: 6px;
   }
 
   .navbar {
@@ -2608,7 +2794,8 @@
   }
 
   .wordmark-title {
-    font-size: 12px !important;
+    font-size: 10.5px !important;
+    letter-spacing: 0 !important;
   }
 
   .wordmark-tag-item {
@@ -2689,12 +2876,21 @@
 
   .top-bar-vault-btn {
     height: 21px;
-    padding: 0 6px;
+    padding: 0 5px 0 3px;
     font-size: 9px;
     gap: 3px;
   }
 
-  .top-bar-vault-btn .vault-arrow {
+  .top-bar-vault-btn .vault-badge {
+    width: 14px;
+    height: 14px;
+  }
+
+  .top-bar-vault-btn .vault-icon {
+    font-size: 6.5px;
+  }
+
+  .top-bar-vault-btn .vault-arrow-wrap {
     display: none !important;
   }
 
@@ -2730,8 +2926,8 @@
   }
 
   .wordmark-title {
-    font-size: 10.5px !important;
-    letter-spacing: 0 !important;
+    font-size: 9.5px !important;
+    letter-spacing: -0.2px !important;
   }
 
   .wordmark-tagline {
@@ -3021,16 +3217,27 @@
 
 [data-theme='dark'] .nav-consultation-btn,
 .navbar.navbar-theme-dark .nav-consultation-btn {
-  background: linear-gradient(180deg, #132742 0%, #081424 100%);
+  background: linear-gradient(135deg, #071324 0%, #0d223c 50%, #071324 100%);
   border-color: rgba(248, 180, 0, 0.55);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), 0 0 16px rgba(248, 180, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 4px 16px rgba(0, 0, 0, 0.4), 0 0 14px rgba(248, 180, 0, 0.16);
 }
 
 [data-theme='dark'] .nav-consultation-btn:hover,
 .navbar.navbar-theme-dark .nav-consultation-btn:hover {
-  background: linear-gradient(180deg, #1a365d 0%, #0d1e34 100%);
-  border-color: #f8b400;
-  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.45), 0 0 22px rgba(248, 180, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  background: linear-gradient(135deg, #0a1c33 0%, #132e50 50%, #0a1c33 100%);
+  border-color: rgba(248, 180, 0, 0.9);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 6px 24px rgba(0, 0, 0, 0.55), 0 0 22px rgba(248, 180, 0, 0.35);
+}
+
+[data-theme='dark'] .consult-badge-leading {
+  background: linear-gradient(135deg, rgba(248, 180, 0, 0.22) 0%, rgba(217, 119, 6, 0.08) 100%);
+  border-color: rgba(248, 180, 0, 0.55);
+  box-shadow: 0 0 10px rgba(248, 180, 0, 0.25);
+}
+
+[data-theme='dark'] .consult-arrow-badge {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
 [data-theme='dark'] .navbar-toggler {

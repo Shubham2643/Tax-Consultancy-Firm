@@ -66,21 +66,21 @@
 .theme-segment-thumb.thumb-light {
   transform: translateX(0);
   background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0 2px 5px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.04);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  box-shadow: 0 2px 6px rgba(245, 158, 11, 0.18), 0 1px 2px rgba(15, 23, 42, 0.05);
 }
 
 .theme-segment-thumb.thumb-dark {
   transform: translateX(calc(var(--seg-size) + var(--seg-gap)));
   background: #0f172a;
   border: 1px solid #1e293b;
-  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.25);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.3);
 }
 
 .theme-segment-thumb.thumb-system {
   transform: translateX(calc((var(--seg-size) + var(--seg-gap)) * 2));
   background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(15, 23, 42, 0.1);
   box-shadow: 0 2px 5px rgba(15, 23, 42, 0.08);
 }
 
@@ -107,13 +107,12 @@
 }
 
 .theme-svg-icon {
-  width: 13.5px;
-  height: 13.5px;
+  width: 14px;
+  height: 14px;
   display: block;
-  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
-              stroke 0.2s ease,
-              fill 0.2s ease,
-              filter 0.2s ease;
+  overflow: visible;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              filter 0.25s ease;
 }
 
 .theme-segment-btn:hover:not(.active) {
@@ -129,55 +128,121 @@
   box-shadow: 0 0 0 2px #d97706;
 }
 
-/* 4. ACTIVE ICON HIGHLIGHTS & DUAL-TONE GLOW */
-/* 4.1 Sun Icon (Daylight) */
+/* 4. BESPOKE THEME ICONS — BASE & HOVER GEOMETRY */
+
+/* 4.1 Sun Icon (Daylight) — Modern Solid Solar Disc & Floating Capsule Rays */
+.theme-svg-icon.icon-sun {
+  color: #64748b;
+}
+
+.theme-svg-icon.icon-sun .sun-core {
+  fill: currentColor;
+  transition: all 0.25s ease;
+}
+
+.theme-svg-icon.icon-sun .sun-capsules {
+  fill: currentColor;
+  transition: all 0.25s ease;
+}
+
+.theme-svg-icon.icon-sun .sun-capsules rect {
+  transition: opacity 0.25s ease;
+}
+
+/* Hover on Inactive Sun */
+.theme-segment-btn:hover:not(.active) .icon-sun {
+  color: #d97706;
+  transform: rotate(20deg) scale(1.08);
+}
+
+.theme-segment-btn:hover:not(.active) .icon-sun .sun-core {
+  fill: #f59e0b;
+}
+
+/* Active Sun in Light Mode */
 .theme-segment-btn.active.btn-light {
   color: #d97706;
 }
 
 .theme-segment-btn.active.btn-light .sun-core {
   fill: #f59e0b;
-  stroke: #d97706;
 }
 
-.theme-segment-btn.active.btn-light .sun-ray {
-  stroke: #d97706;
-  stroke-width: 2px;
+.theme-segment-btn.active.btn-light .sun-capsules {
+  fill: #d97706;
 }
 
 .theme-segment-btn.active.btn-light .theme-svg-icon {
-  transform: rotate(20deg) scale(1.08);
-  filter: drop-shadow(0 0 3px rgba(245, 158, 11, 0.4));
+  transform: rotate(22.5deg) scale(1.08);
+  filter: drop-shadow(0 0 4px rgba(245, 158, 11, 0.45));
 }
 
-/* 4.2 Moon Icon (Midnight) */
+/* 4.2 Moon Icon (Midnight) — Modern Solid Sculpted Crescent */
+.theme-svg-icon.icon-moon {
+  color: #64748b;
+}
+
+.theme-svg-icon.icon-moon .moon-body {
+  fill: currentColor;
+  transition: all 0.25s ease;
+}
+
+.theme-segment-btn:hover:not(.active) .icon-moon {
+  color: #2563eb;
+  transform: rotate(-12deg) scale(1.08);
+}
+
+/* Active Moon in Light Mode */
 .theme-segment-btn.active.btn-dark {
-  color: #60a5fa;
+  color: #3b82f6;
 }
 
-.theme-segment-btn.active.btn-dark .moon-path {
-  fill: #60a5fa;
-  stroke: #3b82f6;
+.theme-segment-btn.active.btn-dark .moon-body {
+  fill: #3b82f6;
 }
 
 .theme-segment-btn.active.btn-dark .theme-svg-icon {
   transform: rotate(-12deg) scale(1.08);
-  filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.45));
+  filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.45));
 }
 
-/* 4.3 System Icon (Auto) */
+/* 4.3 System Icon (Auto) — Precision Split Contrast Dial */
+.theme-svg-icon.icon-system {
+  color: #64748b;
+}
+
+.theme-svg-icon.icon-system .system-ring {
+  stroke: currentColor;
+  transition: all 0.25s ease;
+}
+
+.theme-svg-icon.icon-system .system-half-dark {
+  fill: currentColor;
+  transition: all 0.25s ease;
+}
+
+/* Hover on Inactive System */
+.theme-segment-btn:hover:not(.active) .icon-system {
+  color: #0f172a;
+  transform: scale(1.08);
+}
+
+/* Active System in Light Mode */
 .theme-segment-btn.active.btn-system {
   color: #0f172a;
 }
 
-.theme-segment-btn.active.btn-system .system-screen {
-  fill: currentColor;
-  fill-opacity: 0.12;
-  stroke-width: 2px;
+.theme-segment-btn.active.btn-system .system-ring {
+  stroke: #0f172a;
+}
+
+.theme-segment-btn.active.btn-system .system-half-dark {
+  fill: #0f172a;
 }
 
 .theme-segment-btn.active.btn-system .theme-svg-icon {
-  transform: scale(1.06);
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 3px rgba(15, 23, 42, 0.2));
 }
 
 /* 5. SYSTEM STATUS MICRO-DOT */
@@ -190,23 +255,35 @@
 
 .system-resolved-dot {
   position: absolute;
-  bottom: -2.5px;
-  right: -2.5px;
-  width: 4px;
-  height: 4px;
+  bottom: -2px;
+  right: -2px;
+  width: 4.5px;
+  height: 4.5px;
   border-radius: 50%;
   border: 1px solid #ffffff;
   box-sizing: border-box;
+  animation: dotBreathe 3s ease-in-out infinite;
+}
+
+@keyframes dotBreathe {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.85;
+  }
 }
 
 .system-resolved-dot.dark {
-  background-color: #3b82f6;
-  box-shadow: 0 0 4px #3b82f6;
+  background-color: #38bdf8;
+  box-shadow: 0 0 5px #38bdf8;
 }
 
 .system-resolved-dot.light {
   background-color: #f59e0b;
-  box-shadow: 0 0 4px #f59e0b;
+  box-shadow: 0 0 5px #f59e0b;
 }
 
 /* ==========================================================================
@@ -230,48 +307,73 @@
   color: #f8fafc;
 }
 
+/* Dark Theme Thumbs */
 [data-theme='dark'] .theme-segment-thumb.thumb-light {
-  background: rgba(255, 255, 255, 0.18);
-  border-color: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(217, 119, 6, 0.12) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.45);
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.25);
 }
 
+[data-theme='dark'] .theme-segment-thumb.thumb-dark {
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.7) 0%, rgba(15, 23, 42, 0.9) 100%);
+  border: 1px solid rgba(96, 165, 250, 0.5);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5), 0 0 10px rgba(96, 165, 250, 0.3);
+}
+
+[data-theme='dark'] .theme-segment-thumb.thumb-system {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.06) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Active Sun in Dark Theme */
 [data-theme='dark'] .theme-segment-btn.active.btn-light {
   color: #fbbf24;
 }
 
 [data-theme='dark'] .theme-segment-btn.active.btn-light .sun-core {
   fill: #fbbf24;
-  stroke: #f59e0b;
 }
 
-[data-theme='dark'] .theme-segment-btn.active.btn-light .sun-ray {
-  stroke: #fbbf24;
+[data-theme='dark'] .theme-segment-btn.active.btn-light .sun-capsules {
+  fill: #fbbf24;
 }
 
-[data-theme='dark'] .theme-segment-thumb.thumb-dark {
-  background: linear-gradient(135deg, rgba(30, 58, 138, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
-  border-color: rgba(96, 165, 250, 0.45);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5), 0 0 10px rgba(96, 165, 250, 0.25);
+[data-theme='dark'] .theme-segment-btn.active.btn-light .theme-svg-icon {
+  transform: rotate(22.5deg) scale(1.08);
+  filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.65));
 }
 
+/* Active Moon in Dark Theme */
 [data-theme='dark'] .theme-segment-btn.active.btn-dark {
   color: #93c5fd;
 }
 
-[data-theme='dark'] .theme-segment-btn.active.btn-dark .moon-path {
+[data-theme='dark'] .theme-segment-btn.active.btn-dark .moon-body {
   fill: #93c5fd;
-  stroke: #60a5fa;
 }
 
-[data-theme='dark'] .theme-segment-thumb.thumb-system {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.22);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+[data-theme='dark'] .theme-segment-btn.active.btn-dark .theme-svg-icon {
+  transform: rotate(-12deg) scale(1.08);
+  filter: drop-shadow(0 0 6px rgba(147, 197, 253, 0.65));
 }
 
+/* Active System in Dark Theme */
 [data-theme='dark'] .theme-segment-btn.active.btn-system {
   color: #ffffff;
+}
+
+[data-theme='dark'] .theme-segment-btn.active.btn-system .system-ring {
+  stroke: #ffffff;
+}
+
+[data-theme='dark'] .theme-segment-btn.active.btn-system .system-half-dark {
+  fill: #60a5fa;
+}
+
+[data-theme='dark'] .theme-segment-btn.active.btn-system .theme-svg-icon {
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.35));
 }
 
 [data-theme='dark'] .system-resolved-dot {
@@ -389,8 +491,8 @@ html.theme-transitioning .theme-segment-thumb {
 }
 
 .theme-segmented-track.track-drawer .theme-svg-icon {
-  width: 14.5px;
-  height: 14.5px;
+  width: 16px;
+  height: 16px;
 }
 
 /* Light Theme in Drawer */

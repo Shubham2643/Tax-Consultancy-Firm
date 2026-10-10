@@ -58,21 +58,24 @@ export default function ThemeToggle({ variant = 'segmented', className = '' }) {
           className="theme-svg-icon icon-sun"
           viewBox="0 0 24 24"
           fill="none"
-          stroke="currentColor"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+          xmlns="http://www.w3.org/2000/svg"
           aria-hidden="true"
         >
-          <circle cx="12" cy="12" r="4.5" className="sun-core" />
-          <line x1="12" y1="2" x2="12" y2="4.5" className="sun-ray" />
-          <line x1="12" y1="19.5" x2="12" y2="22" className="sun-ray" />
-          <line x1="4.22" y1="4.22" x2="5.99" y2="5.99" className="sun-ray" />
-          <line x1="18.01" y1="18.01" x2="19.78" y2="19.78" className="sun-ray" />
-          <line x1="2" y1="12" x2="4.5" y2="12" className="sun-ray" />
-          <line x1="19.5" y1="12" x2="22" y2="12" className="sun-ray" />
-          <line x1="4.22" y1="19.78" x2="5.99" y2="18.01" className="sun-ray" />
-          <line x1="18.01" y1="5.99" x2="19.78" y2="4.22" className="sun-ray" />
+          {/* Solid Radiant Solar Disc */}
+          <circle cx="12" cy="12" r="5" className="sun-core" fill="currentColor" />
+          {/* Floating Rounded Capsule Rays (Cardinal & Diagonal with Uniform Optical Radius) */}
+          <g className="sun-capsules" fill="currentColor">
+            <rect x="10.8" y="1.2" width="2.4" height="3.6" rx="1.2" />
+            <rect x="10.8" y="19.2" width="2.4" height="3.6" rx="1.2" />
+            <rect x="1.2" y="10.8" width="3.6" height="2.4" rx="1.2" />
+            <rect x="19.2" y="10.8" width="3.6" height="2.4" rx="1.2" />
+            <g transform="rotate(45 12 12)">
+              <rect x="10.8" y="1.2" width="2.4" height="3.6" rx="1.2" />
+              <rect x="10.8" y="19.2" width="2.4" height="3.6" rx="1.2" />
+              <rect x="1.2" y="10.8" width="3.6" height="2.4" rx="1.2" />
+              <rect x="19.2" y="10.8" width="3.6" height="2.4" rx="1.2" />
+            </g>
+          </g>
         </svg>
       </button>
 
@@ -91,13 +94,15 @@ export default function ThemeToggle({ variant = 'segmented', className = '' }) {
           className="theme-svg-icon icon-moon"
           viewBox="0 0 24 24"
           fill="none"
-          stroke="currentColor"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+          xmlns="http://www.w3.org/2000/svg"
           aria-hidden="true"
         >
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" className="moon-path" />
+          {/* Solid Sculpted Crescent Moon */}
+          <path
+            className="moon-body"
+            d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"
+            fill="currentColor"
+          />
         </svg>
       </button>
 
@@ -117,15 +122,13 @@ export default function ThemeToggle({ variant = 'segmented', className = '' }) {
             className="theme-svg-icon icon-system"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="currentColor"
-            strokeWidth="1.8"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+            xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
           >
-            <rect x="2" y="3" width="20" height="14" rx="2" ry="2" className="system-screen" />
-            <line x1="8" y1="21" x2="16" y2="21" className="system-stand" />
-            <line x1="12" y1="17" x2="12" y2="21" className="system-stand" />
+            {/* Outer Precision Contrast Ring */}
+            <circle cx="12" cy="12" r="8.5" className="system-ring" stroke="currentColor" strokeWidth="2" fill="none" />
+            {/* Solid Right Hemisphere (Midnight Phase) */}
+            <path d="M12 3.5 A8.5 8.5 0 0 1 12 20.5 Z" className="system-half-dark" fill="currentColor" />
           </svg>
           {theme === 'system' && (
             <span
@@ -145,20 +148,26 @@ export default function ThemeToggle({ variant = 'segmented', className = '' }) {
         <div className="drawer-row-left">
           <div className={`drawer-row-icon ${resolvedTheme === 'dark' ? 'icon-dark' : 'icon-light'}`}>
             {resolvedTheme === 'dark' ? (
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  className="moon-body"
+                  d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"
+                  fill="currentColor"
+                />
               </svg>
             ) : (
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="4.5" />
-                <line x1="12" y1="2" x2="12" y2="4.5" />
-                <line x1="12" y1="19.5" x2="12" y2="22" />
-                <line x1="4.22" y1="4.22" x2="5.99" y2="5.99" />
-                <line x1="18.01" y1="18.01" x2="19.78" y2="19.78" />
-                <line x1="2" y1="12" x2="4.5" y2="12" />
-                <line x1="19.5" y1="12" x2="22" y2="12" />
-                <line x1="4.22" y1="19.78" x2="5.99" y2="18.01" />
-                <line x1="18.01" y1="5.99" x2="19.78" y2="4.22" />
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="5" fill="currentColor" />
+                <rect x="10.8" y="1.2" width="2.4" height="3.6" rx="1.2" fill="currentColor" />
+                <rect x="10.8" y="19.2" width="2.4" height="3.6" rx="1.2" fill="currentColor" />
+                <rect x="1.2" y="10.8" width="3.6" height="2.4" rx="1.2" fill="currentColor" />
+                <rect x="19.2" y="10.8" width="3.6" height="2.4" rx="1.2" fill="currentColor" />
+                <g transform="rotate(45 12 12)" fill="currentColor">
+                  <rect x="10.8" y="1.2" width="2.4" height="3.6" rx="1.2" />
+                  <rect x="10.8" y="19.2" width="2.4" height="3.6" rx="1.2" />
+                  <rect x="1.2" y="10.8" width="3.6" height="2.4" rx="1.2" />
+                  <rect x="19.2" y="10.8" width="3.6" height="2.4" rx="1.2" />
+                </g>
               </svg>
             )}
           </div>

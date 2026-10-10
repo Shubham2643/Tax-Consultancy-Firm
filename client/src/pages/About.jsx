@@ -690,7 +690,7 @@ const About = () => {
                     <div className="versus-side versus-chamunda">
                       <div className="versus-side-header">
                         <span className="side-badge badge-chamunda">
-                          SHREE CHAMUNDA
+                          SHREE CHAMUNDA ASSOCIATES
                         </span>
                         <span className="versus-chip-gold">Chartered Standard</span>
                       </div>
