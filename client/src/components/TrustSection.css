@@ -142,102 +142,271 @@
 }
 
 /* ============================================================
-   2. FOUR-COLUMN QUANTITATIVE METRICS RIBBON
+   2. AUTHENTIC CA PORTAL COMPLIANCE PERFORMANCE PANEL (10/10)
    ============================================================ */
+.ca-portal-stats-panel {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-top: 3.5px solid #b47500;
+  border-radius: 18px;
+  box-shadow: 0 10px 32px rgba(7, 19, 36, 0.05);
+  margin-bottom: 48px;
+  overflow: hidden;
+  position: relative;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ca-portal-stats-panel:hover {
+  border-color: #94a3b8;
+  border-top-color: #b47500;
+  box-shadow: 0 14px 40px rgba(7, 19, 36, 0.08);
+}
+
+/* Official CA Portal Header Bar */
+.ca-portal-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 12px 24px;
+  flex-wrap: wrap;
+}
+
+.ca-portal-header-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ca-portal-icon-emblem {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(248, 180, 0, 0.15);
+  border: 1px solid rgba(248, 180, 0, 0.35);
+  color: #b47500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.ca-portal-header-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ca-portal-header-tag {
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  color: #071324;
+}
+
+.ca-portal-header-sub {
+  font-size: 11px;
+  font-weight: 500;
+  color: #64748b;
+}
+
+.ca-portal-header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.28);
+  color: #047857;
+  font-size: 10.5px;
+  font-weight: 750;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* 4-Column Quantitative Metrics Ribbon inside Panel */
 .trust-metrics-ribbon {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
-  background: #ffffff;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 20px;
-  padding: 24px 28px;
-  box-shadow: 0 8px 30px rgba(7, 19, 36, 0.04);
-  margin-bottom: 48px;
+  gap: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+  margin-bottom: 0;
   position: relative;
-  overflow: hidden;
-}
-
-.trust-metrics-ribbon::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3.5px;
-  background: linear-gradient(90deg, #f8b400 0%, #10b981 50%, #3b82f6 100%);
 }
 
 .metric-ribbon-col {
   display: flex;
   flex-direction: column;
-  padding: 4px 12px;
+  padding: 24px 24px 20px 24px;
   border-right: 1px solid #f1f5f9;
+  background: #ffffff;
+  transition: background 0.2s ease;
+}
+
+.metric-ribbon-col:hover {
+  background: #fbfcfe;
 }
 
 .metric-ribbon-col:last-child {
   border-right: none;
 }
 
-.metric-header-row {
+/* Kicker Row with Category Icon */
+.metric-tile-kicker-row {
   display: flex;
   align-items: center;
+  gap: 7px;
+  margin-bottom: 12px;
+}
+
+.metric-tile-icon-box {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: rgba(180, 117, 0, 0.08);
+  color: #b47500;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.metric-tile-kicker {
+  font-size: 9.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.65px;
+  color: #64748b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Metric Header Row */
+.metric-header-row {
+  display: flex;
+  align-items: baseline;
   justify-content: space-between;
-  margin-bottom: 6px;
+  gap: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
 }
 
 .metric-large-num {
-  font-size: 2.15rem;
+  font-size: 2.2rem;
   font-weight: 900;
   color: #071324;
   letter-spacing: -0.04em;
   line-height: 1;
+  font-variant-numeric: tabular-nums;
 }
 
+/* Unified Prestigious Statutory Badge */
 .metric-pill-tag {
-  font-size: 10px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  padding: 3px 8px;
-  border-radius: 6px;
+  font-size: 9.5px;
+  font-weight: 750;
+  letter-spacing: 0.35px;
+  padding: 3.5px 8px;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
 }
 
-.metric-pill-tag.badge-gold {
-  background: rgba(248, 180, 0, 0.12);
-  color: #b47500;
-  border: 1px solid rgba(248, 180, 0, 0.28);
+.metric-pill-tag.badge-statutory {
+  background: rgba(16, 185, 129, 0.08);
+  color: #047857;
+  border: 1px solid rgba(16, 185, 129, 0.24);
 }
 
-.metric-pill-tag.badge-green {
-  background: rgba(16, 185, 129, 0.1);
-  color: #059669;
-  border: 1px solid rgba(16, 185, 129, 0.25);
-}
-
-.metric-pill-tag.badge-blue {
-  background: rgba(59, 130, 246, 0.1);
-  color: #2563eb;
-  border: 1px solid rgba(59, 130, 246, 0.2);
-}
-
-.metric-pill-tag.badge-purple {
-  background: rgba(139, 92, 246, 0.1);
-  color: #7c3aed;
-  border: 1px solid rgba(139, 92, 246, 0.2);
+.tag-check-icon {
+  font-size: 8.5px;
+  color: #10b981;
 }
 
 .metric-bold-label {
   font-size: 14.5px;
-  font-weight: 750;
-  color: #0f172a;
-  margin-bottom: 4px;
+  font-weight: 800;
+  color: #071324;
+  margin-bottom: 5px;
+  line-height: 1.25;
 }
 
 .metric-muted-caption {
   font-size: 12px;
-  color: #64748b;
-  line-height: 1.5;
+  color: #475569;
+  line-height: 1.55;
+  margin-bottom: 14px;
+  flex-grow: 1;
+}
+
+/* Micro Verification Row - Aligned cleanly across all 4 columns */
+.metric-audit-verify {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #047857;
+  padding-top: 10px;
+  border-top: 1px dashed #e2e8f0;
+  margin-top: auto;
+}
+
+.metric-audit-verify i {
+  font-size: 11px;
+  color: #10b981;
+}
+
+/* Portal Ledger Footer Strip */
+.ca-portal-footer-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 16px;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  padding: 10px 24px;
+  flex-wrap: wrap;
+}
+
+.ca-portal-footer-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 650;
+  color: #475569;
+}
+
+.ca-portal-footer-item i {
+  font-size: 11.5px;
+}
+
+.ca-portal-footer-item .text-gold {
+  color: #b47500;
+}
+
+.ca-portal-footer-item .text-emerald {
+  color: #059669;
+}
+
+.ca-portal-footer-divider {
+  width: 1px;
+  height: 16px;
+  background: #cbd5e1;
 }
 
 /* ============================================================
@@ -1034,18 +1203,23 @@
   }
   .trust-metrics-ribbon {
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    padding: 20px;
+    gap: 0;
+    padding: 0;
   }
   .metric-ribbon-col {
-    border-right: none;
+    border-right: 1px solid #f1f5f9;
     border-bottom: 1px solid #f1f5f9;
-    padding-bottom: 14px;
+    padding: 20px;
   }
-  .metric-ribbon-col:nth-child(3),
-  .metric-ribbon-col:nth-child(4) {
+  .metric-ribbon-col:nth-child(2) {
+    border-right: none;
+  }
+  .metric-ribbon-col:nth-child(3) {
     border-bottom: none;
-    padding-bottom: 0;
+  }
+  .metric-ribbon-col:nth-child(4) {
+    border-right: none;
+    border-bottom: none;
   }
   .trust-architecture-split {
     grid-template-columns: 1fr;
@@ -1075,15 +1249,27 @@
   }
   .trust-metrics-ribbon {
     grid-template-columns: 1fr;
-    padding: 16px;
-    gap: 16px;
+    padding: 0;
   }
   .metric-ribbon-col {
+    border-right: none !important;
     border-bottom: 1px solid #f1f5f9;
-    padding-bottom: 12px;
+    padding: 16px 18px;
   }
   .metric-ribbon-col:last-child {
     border-bottom: none;
+  }
+  .ca-portal-header-bar {
+    padding: 12px 16px;
+  }
+  .ca-portal-footer-strip {
+    padding: 12px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .ca-portal-footer-divider {
+    display: none;
   }
   .pipeline-wing-card {
     padding: 24px 20px;
@@ -1178,7 +1364,6 @@
 [data-theme='dark'] .tst-pillar-card,
 [data-theme='dark'] .pipeline-wing-card,
 [data-theme='dark'] .fiduciary-feature-card,
-[data-theme='dark'] .trust-metrics-ribbon,
 [data-theme='dark'] .trust-metric-ribbon,
 [data-theme='dark'] .trust-bottom-bar {
   background: #0f1c32 !important;
@@ -1187,12 +1372,99 @@
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4) !important;
 }
 
+[data-theme='dark'] .ca-portal-stats-panel {
+  background: #091526 !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  border-top: 3.5px solid #f8b400 !important;
+  box-shadow: 0 14px 45px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme='dark'] .ca-portal-stats-panel:hover {
+  border-color: rgba(248, 180, 0, 0.4) !important;
+  border-top-color: #f8b400 !important;
+}
+
+[data-theme='dark'] .ca-portal-header-bar {
+  background: #060e1a !important;
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme='dark'] .ca-portal-header-tag {
+  color: #f8fafc !important;
+}
+
+[data-theme='dark'] .ca-portal-header-sub {
+  color: #94a3b8 !important;
+}
+
+[data-theme='dark'] .ca-portal-icon-emblem {
+  background: rgba(248, 180, 0, 0.12) !important;
+  border-color: rgba(248, 180, 0, 0.28) !important;
+  color: #fbbf24 !important;
+}
+
+[data-theme='dark'] .ca-portal-header-badge {
+  background: rgba(16, 185, 129, 0.14) !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+  color: #34d399 !important;
+}
+
 [data-theme='dark'] .metric-ribbon-col {
-  border-right-color: rgba(255, 255, 255, 0.08) !important;
+  background: #091526 !important;
+  border-right-color: rgba(255, 255, 255, 0.07) !important;
+}
+
+[data-theme='dark'] .metric-ribbon-col:hover {
+  background: #0d1e36 !important;
+}
+
+[data-theme='dark'] .metric-tile-icon-box {
+  background: rgba(248, 180, 0, 0.12) !important;
+  color: #fbbf24 !important;
+}
+
+[data-theme='dark'] .metric-tile-kicker {
+  color: #94a3b8 !important;
 }
 
 [data-theme='dark'] .metric-large-num {
   color: #ffffff !important;
+}
+
+[data-theme='dark'] .metric-pill-tag.badge-statutory {
+  background: rgba(16, 185, 129, 0.12) !important;
+  color: #34d399 !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+}
+
+[data-theme='dark'] .metric-audit-verify {
+  border-top-color: rgba(255, 255, 255, 0.08) !important;
+  color: #34d399 !important;
+}
+
+[data-theme='dark'] .metric-audit-verify i {
+  color: #34d399 !important;
+}
+
+[data-theme='dark'] .ca-portal-footer-strip {
+  background: #060e1a !important;
+  border-top-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme='dark'] .ca-portal-footer-item {
+  color: #cbd5e1 !important;
+}
+
+[data-theme='dark'] .ca-portal-footer-item .text-gold {
+  color: #fbbf24 !important;
+}
+
+[data-theme='dark'] .ca-portal-footer-item .text-emerald {
+  color: #34d399 !important;
+}
+
+[data-theme='dark'] .ca-portal-footer-divider {
+  background: rgba(255, 255, 255, 0.1) !important;
 }
 
 [data-theme='dark'] .metric-bold-label {

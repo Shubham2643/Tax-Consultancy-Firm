@@ -66,12 +66,12 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Primary Action Buttons */}
+          {/* Primary Action Buttons - Institutional Chambers Style */}
           <div className="hero-cta-group">
-            <Link to="/contact" className="btn-hero-primary">
-              <i className="fas fa-calendar-check"></i>
-              <span>Book Free Consultation</span>
-              <i className="fas fa-arrow-right btn-icon-arrow"></i>
+            <Link to="/contact" className="btn-hero-primary" aria-label="Schedule Partner Advisory Session">
+              <i className="fas fa-calendar-check hero-btn-lead-icon"></i>
+              <span className="hero-btn-text">Schedule Partner Advisory</span>
+              <i className="fas fa-arrow-right hero-btn-trail-icon"></i>
             </Link>
 
             <a
@@ -79,11 +79,11 @@ const Hero = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="btn-hero-whatsapp"
-              aria-label="Direct WhatsApp Consultation"
+              aria-label="Direct WhatsApp Desk with Senior Chartered Accountant"
             >
-              <span className="wa-live-dot"></span>
-              <i className="fab fa-whatsapp"></i>
-              <span>WhatsApp Advisory</span>
+              <i className="fab fa-whatsapp hero-wa-lead-icon"></i>
+              <span className="hero-wa-text">Direct WhatsApp Desk</span>
+              <i className="fas fa-arrow-up-right-from-square hero-wa-trail-icon"></i>
             </a>
           </div>
 
@@ -171,6 +171,22 @@ const Hero = () => {
                   <span className="tile-meta">Claimed Sec 80JJAA &amp; Depreciations legally</span>
                 </div>
               </div>
+
+              {/* Tile 4: Advance Tax & Statutory Deadlines */}
+              <div className="mockup-tile-item">
+                <div className="tile-icon-wrapper icon-purple">
+                  <i className="fas fa-shield-alt"></i>
+                </div>
+                <div className="tile-details">
+                  <div className="tile-title-row">
+                    <strong>Advance Tax (Q3) &amp; TDS 26Q</strong>
+                    <span className="tile-badge-scheduled">
+                      <i className="fas fa-clock"></i> Scheduled (On-Time)
+                    </span>
+                  </div>
+                  <span className="tile-meta">Pre-Computation Done &bull; Zero Default Penalty</span>
+                </div>
+              </div>
             </div>
 
             {/* Bottom 3-Metric Floating Mini Bar */}
@@ -189,6 +205,12 @@ const Hero = () => {
                 <strong className="text-emerald">100%</strong>
                 <span>Audit Legal</span>
               </div>
+            </div>
+
+            {/* ICAI Confidentiality & Governance Footnote */}
+            <div className="mockup-footer-sync">
+              <i className="fa-solid fa-shield-halved sync-shield-icon"></i>
+              <span>Strict Client Confidentiality &bull; Governed by ICAI Ethics</span>
             </div>
           </div>
         </div>

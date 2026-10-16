@@ -208,7 +208,15 @@ app.get('/', (req, res) => {
 
 // Health check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', timestamp: new Date().toISOString() });
+  const mongoose = require('mongoose');
+  const dbState = mongoose.connection.readyState;
+  const states = { 0: 'disconnected', 1: 'connected', 2: 'connecting', 3: 'disconnecting' };
+  res.json({
+    status: dbState === 1 ? 'OK' : 'DEGRADED',
+    database: states[dbState] || 'unknown',
+    port: PORT,
+    timestamp: new Date().toISOString()
+  });
 });
 
 // Error handler
@@ -216,10 +224,10 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
-// Connect to DB and start HTTP/Socket server
-connectDB().then(() => {
-  server.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-    console.log(`API available at http://localhost:${PORT}/api`);
-  });
+// Start HTTP/Socket server immediately, then initiate DB connection
+server.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`🌐 API available at http://localhost:${PORT}/api`);
+  connectDB();
 });
+

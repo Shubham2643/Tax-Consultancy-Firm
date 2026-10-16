@@ -28,6 +28,7 @@ const TermsConditions = lazy(() => import('./pages/TermsConditions'));
 const RefundPolicy = lazy(() => import('./pages/RefundPolicy'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('./pages/TermsOfService'));
+const Methodology = lazy(() => import('./pages/Methodology'));
 const Login = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
 const Portal = lazy(() => import('./pages/Portal'));
@@ -154,6 +155,8 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
             <Route path="/services/:id" element={<ServiceDetail />} />
+            <Route path="/methodology" element={<Methodology />} />
+            <Route path="/delivery-protocol" element={<Methodology />} />
             <Route path="/calculators" element={<Calculators />} />
             <Route path="/tax-tools" element={<Calculators />} />
             <Route path="/compliance-calendar" element={<ComplianceCalendar />} />

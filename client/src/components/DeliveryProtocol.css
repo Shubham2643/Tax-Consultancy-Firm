@@ -1,0 +1,1133 @@
+/* ============================================================
+   CHARTERED DELIVERY PROTOCOL — INSTITUTIONAL CHAMBERS AESTHETIC
+   ============================================================ */
+
+.chartered-protocol-section {
+  padding: 105px 0 120px 0;
+  background-color: #fbfcfd;
+  color: #0f172a;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid #e2e8f0;
+  scroll-margin-top: 90px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Subtle architectural pinstripe background */
+.chartered-protocol-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background-image: linear-gradient(rgba(226, 232, 240, 0.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(226, 232, 240, 0.4) 1px, transparent 1px);
+  background-size: 64px 64px;
+  background-position: -1px -1px;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.chartered-accent-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #b8860b, #071324, #b8860b, transparent);
+  z-index: 2;
+}
+
+.chartered-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 28px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================
+   HEADER BLOCK (CHAMBERS EDITORIAL)
+   ============================================ */
+.chartered-header {
+  max-width: 860px;
+  margin: 0 auto 52px auto;
+}
+
+.chartered-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  padding: 6px 18px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+}
+
+.chartered-eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #b8860b;
+}
+
+.chartered-main-title {
+  font-family: 'Roboto Serif', Georgia, serif;
+  font-size: 2.85rem;
+  font-weight: 700;
+  color: #071324;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  margin: 0 0 16px 0;
+}
+
+.chartered-lead-text {
+  font-size: 1.14rem;
+  color: #475569;
+  line-height: 1.7;
+  max-width: 720px;
+  margin: 0 auto 24px auto;
+  font-weight: 400;
+}
+
+.chartered-header-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  max-width: 340px;
+  margin: 0 auto;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #cbd5e1);
+}
+
+.divider-line:last-child {
+  background: linear-gradient(90deg, #cbd5e1, transparent);
+}
+
+.divider-crest {
+  color: #b8860b;
+  font-size: 14px;
+}
+
+/* ============================================
+   4 PRACTICE SAFEGUARDS STRIP
+   ============================================ */
+.chartered-safeguards-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  margin-bottom: 56px;
+  box-shadow: 0 4px 18px -4px rgba(15, 23, 42, 0.05);
+}
+
+.safeguard-pillar {
+  padding: 22px 24px;
+  border-right: 1px solid #e2e8f0;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  transition: background-color 0.2s ease;
+}
+
+.safeguard-pillar:last-child {
+  border-right: none;
+}
+
+.safeguard-pillar:hover {
+  background: #f8fafc;
+}
+
+.safeguard-marker {
+  font-family: 'Roboto Serif', Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #b8860b;
+  line-height: 1;
+  opacity: 0.9;
+}
+
+.safeguard-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.safeguard-title {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #071324;
+  letter-spacing: -0.2px;
+  margin-bottom: 4px;
+}
+
+.safeguard-detail {
+  font-size: 11.5px;
+  color: #64748b;
+  line-height: 1.45;
+}
+
+/* ============================================
+   INTERACTIVE STEPPER & EXECUTIVE DOSSIER LAYOUT
+   ============================================ */
+.chartered-interactive-layout {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 32px;
+  align-items: start;
+  margin-bottom: 72px;
+}
+
+/* Left Nav: Gate Stepper Stack */
+.chartered-stepper-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stepper-nav-header {
+  padding: 0 4px 10px 4px;
+  border-bottom: 1.5px solid #071324;
+  margin-bottom: 4px;
+}
+
+.stepper-title {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #071324;
+  text-transform: uppercase;
+}
+
+.stepper-subtitle {
+  display: block;
+  font-size: 11px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.stepper-buttons-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.gate-nav-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 18px 20px;
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: inherit;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+}
+
+.gate-nav-card:hover {
+  border-color: #cbd5e1;
+  transform: translateX(3px);
+  background: #fafbfc;
+}
+
+.gate-nav-card.selected {
+  background: #ffffff;
+  border-color: #071324;
+  box-shadow: 0 6px 20px -4px rgba(7, 19, 36, 0.12);
+  transform: translateX(5px);
+}
+
+.gate-nav-indicator {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 4px;
+  background: transparent;
+  border-radius: 6px 0 0 6px;
+  transition: background-color 0.2s ease;
+}
+
+.gate-nav-card.selected .gate-nav-indicator {
+  background: #b8860b;
+}
+
+.gate-nav-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.gate-roman-badge {
+  font-family: 'Roboto Serif', Georgia, serif;
+  font-size: 12px;
+  font-weight: 800;
+  color: #b8860b;
+  background: rgba(184, 134, 11, 0.08);
+  padding: 2px 7px;
+  border-radius: 3px;
+  letter-spacing: 0.5px;
+}
+
+.gate-turnaround-tag {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.2px;
+}
+
+.gate-nav-phase {
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #071324;
+  line-height: 1.3;
+  margin: 0 0 4px 0;
+}
+
+.gate-nav-tagline {
+  font-size: 11.5px;
+  color: #64748b;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* ============================================
+   RIGHT COLUMN: EXECUTIVE DOSSIER CARD
+   ============================================ */
+.chartered-dossier-card {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 38px 40px;
+  box-shadow: 0 10px 30px -6px rgba(15, 23, 42, 0.08);
+  position: relative;
+}
+
+.dossier-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 24px;
+  border-bottom: 1.5px solid #071324;
+  margin-bottom: 24px;
+}
+
+.dossier-title-group {
+  flex: 1;
+}
+
+.dossier-gate-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #b8860b;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.dossier-phase-title {
+  font-family: 'Roboto Serif', Georgia, serif;
+  font-size: 2.15rem;
+  font-weight: 700;
+  color: #071324;
+  line-height: 1.2;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.4px;
+}
+
+.dossier-subtitle {
+  font-size: 13.5px;
+  color: #64748b;
+  font-weight: 500;
+  margin: 0;
+}
+
+.dossier-emblem-badge {
+  width: 72px;
+  height: 72px;
+  border: 1.5px solid #071324;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #f8fafc;
+  flex-shrink: 0;
+}
+
+.emblem-roman {
+  font-family: 'Roboto Serif', Georgia, serif;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #071324;
+  line-height: 1;
+}
+
+.emblem-label {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #b8860b;
+  margin-top: 2px;
+}
+
+/* Dossier Objective Box */
+.dossier-objective-box {
+  background: #f8fafc;
+  border-left: 3.5px solid #b8860b;
+  padding: 18px 22px;
+  margin-bottom: 30px;
+  border-radius: 0 4px 4px 0;
+}
+
+.objective-label {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #071324;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.objective-text {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #334155;
+  margin: 0;
+}
+
+/* Procedures Section */
+.dossier-procedures-section {
+  margin-bottom: 32px;
+}
+
+.procedures-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #071324;
+  margin: 0 0 16px 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.procedures-title i {
+  color: #b8860b;
+  font-size: 14px;
+}
+
+.procedures-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.procedure-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 14px 18px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.procedure-row:hover {
+  background: #fbfcfd;
+  border-color: #cbd5e1;
+}
+
+.procedure-number {
+  font-family: 'Roboto Serif', Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #b8860b;
+  width: 24px;
+  flex-shrink: 0;
+  line-height: 1.3;
+}
+
+.procedure-content {
+  flex: 1;
+}
+
+.procedure-item-title {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #071324;
+  margin-bottom: 3px;
+}
+
+.procedure-item-desc {
+  font-size: 12.5px;
+  color: #64748b;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.procedure-verification-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(22, 101, 52, 0.08);
+  border: 1px solid rgba(22, 101, 52, 0.2);
+  color: #166534;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+/* Dossier Footer Grid */
+.dossier-footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.block-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #475569;
+  margin-bottom: 10px;
+}
+
+.block-label i {
+  color: #b8860b;
+}
+
+.deliverables-tags-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.dossier-deliverable-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  padding: 5px 11px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 650;
+  color: #071324;
+}
+
+.dossier-deliverable-chip i {
+  color: #166534;
+  font-size: 11px;
+}
+
+.governance-seal-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(184, 134, 11, 0.06);
+  border: 1px solid rgba(184, 134, 11, 0.3);
+  padding: 8px 14px;
+  border-radius: 4px;
+  color: #071324;
+  font-size: 11.5px;
+  font-weight: 750;
+  letter-spacing: 0.2px;
+}
+
+.governance-seal-badge i {
+  color: #b8860b;
+  font-size: 13px;
+}
+
+/* ============================================
+   PANORAMIC 4-STAGE TIMELINE TRACK
+   ============================================ */
+.chartered-panoramic-section {
+  margin-top: 20px;
+  padding-top: 56px;
+  border-top: 1px solid #e2e8f0;
+  margin-bottom: 64px;
+}
+
+.panoramic-header {
+  max-width: 680px;
+  margin: 0 auto 36px auto;
+}
+
+.panoramic-title {
+  font-family: 'Roboto Serif', Georgia, serif;
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: #071324;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.3px;
+}
+
+.panoramic-subtitle {
+  font-size: 13.5px;
+  color: #64748b;
+  margin: 0;
+}
+
+.panoramic-timeline-track {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  position: relative;
+}
+
+.panoramic-gate-step {
+  display: flex;
+  flex-direction: column;
+}
+
+.step-marker-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.step-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #071324;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Roboto Serif', Georgia, serif;
+  font-size: 14px;
+  font-weight: 800;
+  border: 2px solid #b8860b;
+  flex-shrink: 0;
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(7, 19, 36, 0.15);
+}
+
+.step-connecting-bar {
+  flex: 1;
+  height: 2px;
+  background: #cbd5e1;
+  margin-left: 8px;
+  margin-right: -10px;
+  z-index: 1;
+}
+
+.step-body-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 20px 18px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  transition: all 0.25s ease;
+}
+
+.step-body-card:hover {
+  border-color: #071324;
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px -4px rgba(7, 19, 36, 0.08);
+}
+
+.step-turnaround-badge {
+  font-size: 10.5px;
+  font-weight: 750;
+  color: #b8860b;
+  margin-bottom: 8px;
+  letter-spacing: 0.3px;
+}
+
+.step-card-title {
+  font-family: 'Roboto Serif', Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #071324;
+  margin: 0 0 6px 0;
+  line-height: 1.35;
+  min-height: 48px;
+}
+
+.step-card-text {
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.5;
+  margin: 0 0 16px 0;
+  flex: 1;
+}
+
+.step-standard-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10.5px;
+  font-weight: 750;
+  color: #166534;
+  padding-top: 10px;
+  border-top: 1px solid #f1f5f9;
+}
+
+/* ============================================
+   PRESIDENTIAL RETAINER CALLOUT
+   ============================================ */
+.chartered-engagement-card {
+  background: #071324;
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  padding: 42px 48px;
+  box-shadow: 0 20px 50px -10px rgba(7, 19, 36, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.chartered-engagement-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 400px;
+  height: 100%;
+  background: radial-gradient(circle at 100% 50%, rgba(184, 134, 11, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.engagement-card-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 36px;
+  position: relative;
+  z-index: 1;
+}
+
+.engagement-text-group {
+  flex: 1;
+}
+
+.engagement-prestige-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: #b8860b;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.prestige-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #b8860b;
+}
+
+.engagement-headline {
+  font-family: 'Roboto Serif', Georgia, serif;
+  font-size: 1.95rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 10px 0;
+  letter-spacing: -0.4px;
+}
+
+.engagement-description {
+  font-size: 14px;
+  color: #94a3b8;
+  line-height: 1.65;
+  margin: 0;
+  max-width: 680px;
+}
+
+.engagement-action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.chartered-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #b8860b;
+  color: #ffffff;
+  border: 1px solid #d4af37;
+  padding: 13px 24px;
+  border-radius: 4px;
+  font-size: 13.5px;
+  font-weight: 750;
+  letter-spacing: 0.3px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(184, 134, 11, 0.35);
+}
+
+.chartered-btn-primary:hover {
+  background: #a1750a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(184, 134, 11, 0.45);
+}
+
+.chartered-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 13px 22px;
+  border-radius: 4px;
+  font-size: 13.5px;
+  font-weight: 650;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.chartered-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: #ffffff;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   DARK THEME ARCHITECTURE
+   ============================================================ */
+[data-theme='dark'] .chartered-protocol-section {
+  background-color: #060e1a;
+  color: #f1f5f9;
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .chartered-protocol-section::before {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+[data-theme='dark'] .chartered-eyebrow {
+  background: #0b172a;
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #cbd5e1;
+}
+
+[data-theme='dark'] .chartered-main-title {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .chartered-lead-text {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .divider-line {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15));
+}
+
+[data-theme='dark'] .divider-line:last-child {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.15), transparent);
+}
+
+[data-theme='dark'] .chartered-safeguards-bar {
+  background: #0a1424;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .safeguard-pillar {
+  border-right-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .safeguard-pillar:hover {
+  background: #0d1b30;
+}
+
+[data-theme='dark'] .safeguard-title {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .safeguard-detail {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .stepper-nav-header {
+  border-bottom-color: #b8860b;
+}
+
+[data-theme='dark'] .stepper-title {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .stepper-subtitle {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .gate-nav-card {
+  background: #0a1424;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .gate-nav-card:hover {
+  background: #0d1b30;
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+[data-theme='dark'] .gate-nav-card.selected {
+  background: #0f1f38;
+  border-color: #b8860b;
+}
+
+[data-theme='dark'] .gate-nav-phase {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .gate-nav-tagline {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .chartered-dossier-card {
+  background: #0a1424;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px -6px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme='dark'] .dossier-card-header {
+  border-bottom-color: #b8860b;
+}
+
+[data-theme='dark'] .dossier-phase-title {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .dossier-subtitle {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .dossier-emblem-badge {
+  background: #060e1a;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+[data-theme='dark'] .emblem-roman {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .dossier-objective-box {
+  background: #060e1a;
+  border-left-color: #b8860b;
+}
+
+[data-theme='dark'] .objective-label {
+  color: #cbd5e1;
+}
+
+[data-theme='dark'] .objective-text {
+  color: #cbd5e1;
+}
+
+[data-theme='dark'] .procedures-title {
+  color: #ffffff;
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .procedure-row {
+  background: #060e1a;
+  border-color: rgba(255, 255, 255, 0.07);
+}
+
+[data-theme='dark'] .procedure-row:hover {
+  background: #081322;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+[data-theme='dark'] .procedure-item-title {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .procedure-item-desc {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .procedure-verification-tag {
+  background: rgba(34, 197, 94, 0.1);
+  border-color: rgba(34, 197, 94, 0.3);
+  color: #4ade80;
+}
+
+[data-theme='dark'] .dossier-footer-grid {
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .block-label {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .dossier-deliverable-chip {
+  background: #060e1a;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+}
+
+[data-theme='dark'] .dossier-deliverable-chip i {
+  color: #4ade80;
+}
+
+[data-theme='dark'] .governance-seal-badge {
+  background: rgba(184, 134, 11, 0.08);
+  border-color: rgba(184, 134, 11, 0.3);
+  color: #f1f5f9;
+}
+
+[data-theme='dark'] .panoramic-section {
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .panoramic-title {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .panoramic-subtitle {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .step-connecting-bar {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme='dark'] .step-body-card {
+  background: #0a1424;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .step-body-card:hover {
+  background: #0d1b30;
+  border-color: #b8860b;
+}
+
+[data-theme='dark'] .step-card-title {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .step-card-text {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .step-standard-tag {
+  color: #4ade80;
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ============================================================
+   RESPONSIVE DESIGN (TABLET & MOBILE)
+   ============================================================ */
+@media (max-width: 1024px) {
+  .chartered-safeguards-bar {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .safeguard-pillar:nth-child(2) {
+    border-right: none;
+  }
+  .safeguard-pillar:nth-child(1),
+  .safeguard-pillar:nth-child(2) {
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .chartered-interactive-layout {
+    grid-template-columns: 1fr;
+  }
+  .panoramic-timeline-track {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .step-connecting-bar {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .chartered-protocol-section {
+    padding: 65px 0 80px 0;
+  }
+  .chartered-main-title {
+    font-size: 2rem;
+  }
+  .chartered-lead-text {
+    font-size: 14px;
+  }
+  .chartered-safeguards-bar {
+    grid-template-columns: 1fr;
+  }
+  .safeguard-pillar {
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .chartered-dossier-card {
+    padding: 24px 20px;
+  }
+  .dossier-card-header {
+    flex-direction: column-reverse;
+    gap: 14px;
+  }
+  .dossier-phase-title {
+    font-size: 1.6rem;
+  }
+  .dossier-footer-grid {
+    grid-template-columns: 1fr;
+  }
+  .panoramic-timeline-track {
+    grid-template-columns: 1fr;
+  }
+  .engagement-card-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+  .engagement-headline {
+    font-size: 1.55rem;
+  }
+  .engagement-action-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+  .chartered-btn-primary,
+  .chartered-btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+}

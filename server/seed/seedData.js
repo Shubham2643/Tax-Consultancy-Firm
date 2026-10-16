@@ -23,7 +23,7 @@ const seedData = async () => {
       console.error('❌ Refusing to run seed script in production: will wipe live database!');
       process.exit(1);
     }
-    await connectDB();
+    await connectDB(false);
     console.log('Connected to MongoDB. Seeding data...');
 
     // Clear existing data

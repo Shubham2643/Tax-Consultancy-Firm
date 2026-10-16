@@ -56,7 +56,7 @@
   display: grid;
   grid-template-columns: 1.15fr 0.95fr;
   gap: 48px;
-  align-items: center;
+  align-items: stretch;
   max-width: 1240px;
   margin: 0 auto;
   padding: 0 24px;
@@ -160,98 +160,157 @@
   flex-shrink: 0;
 }
 
-/* Action Button Group */
+/* ==========================================================================
+   INSTITUTIONAL CHAMBERS CTA SUITE (Big-4 & Legal Advisory Standard)
+   Shree Chamunda Associates • Fiduciary Authority & Swiss Precision
+   ========================================================================== */
 .hero-cta-group {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
   flex-wrap: wrap;
   margin-bottom: 24px;
 }
 
+/* 1. PRIMARY CTA: Schedule Partner Advisory (Dark Theme Master: Luminous Royal Amber) */
 .btn-hero-primary {
+  position: relative;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
-  background: linear-gradient(135deg, #f8b400 0%, #e6a100 100%);
+  height: 48px;
+  padding: 0 24px;
+  background: linear-gradient(135deg, #f8b400 0%, #e6a100 50%, #d97706 100%);
   color: #071324;
-  padding: 13px 26px;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 700;
+  border-radius: 8px;
   text-decoration: none;
-  border: 1px solid rgba(248, 180, 0, 0.4);
-  box-shadow: 0 4px 16px rgba(248, 180, 0, 0.3);
-  transition: all 0.25s ease;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 4px 20px rgba(248, 180, 0, 0.42),
+    0 1px 3px rgba(0, 0, 0, 0.35);
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
-  position: relative;
   overflow: hidden;
+  white-space: nowrap;
+  box-sizing: border-box;
 }
 
-.btn-hero-primary::after {
+/* Subtle Shimmer Sweep */
+.btn-hero-primary::before {
   content: '';
   position: absolute;
-  top: -50%;
-  left: -75%;
-  width: 50%;
-  height: 200%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
-  transform: rotate(25deg);
+  top: 0;
+  left: -120%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transform: skewX(-20deg);
   transition: left 0.65s ease;
+  pointer-events: none;
 }
 
-.btn-hero-primary:hover::after {
-  left: 130%;
+.btn-hero-primary:hover::before {
+  left: 140%;
 }
 
-.btn-hero-primary .btn-icon-arrow {
-  font-size: 11px;
-  transition: transform 0.2s ease;
+.hero-btn-lead-icon {
+  color: #071324;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.hero-btn-text {
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #071324;
+  letter-spacing: 0.1px;
+  line-height: 1;
+}
+
+.hero-btn-trail-icon {
+  color: #071324;
+  font-size: 12px;
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
 }
 
 .btn-hero-primary:hover {
-  background: linear-gradient(135deg, #ffc425 0%, #f8b400 100%);
-  box-shadow: 0 6px 22px rgba(248, 180, 0, 0.45);
+  background: linear-gradient(135deg, #ffc72c 0%, #f8b400 50%, #e6a100 100%);
+  border-color: rgba(255, 255, 255, 0.65);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    0 8px 28px rgba(248, 180, 0, 0.58),
+    0 2px 8px rgba(0, 0, 0, 0.4);
   transform: translateY(-2px);
   color: #071324;
 }
 
-.btn-hero-primary:hover .btn-icon-arrow {
+.btn-hero-primary:hover .hero-btn-trail-icon {
   transform: translateX(4px);
 }
 
+/* 2. SECONDARY CTA: Direct WhatsApp Desk (Dark Theme Master: Elevated Glass) */
 .btn-hero-whatsapp {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  background: rgba(37, 211, 102, 0.08);
-  border: 1.5px solid rgba(37, 211, 102, 0.35);
-  color: #25D366;
-  padding: 12px 22px;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 700;
+  justify-content: center;
+  gap: 10px;
+  height: 48px;
+  padding: 0 20px;
+  background: rgba(14, 28, 48, 0.85);
+  border: 1.5px solid rgba(34, 197, 94, 0.35);
+  color: #ffffff;
+  border-radius: 8px;
   text-decoration: none;
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  transition: all 0.25s ease;
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  white-space: nowrap;
+  box-sizing: border-box;
 }
 
-.wa-live-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background-color: #25D366;
-  box-shadow: 0 0 6px #25D366;
-  animation: beaconPing 2s infinite ease-in-out;
+.hero-wa-lead-icon {
+  color: #22c55e;
+  font-size: 16px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 6px rgba(34, 197, 94, 0.4));
+}
+
+.hero-wa-text {
+  font-size: 14.5px;
+  font-weight: 750;
+  color: #f8fafc;
+  letter-spacing: 0.15px;
+  line-height: 1;
+}
+
+.hero-wa-trail-icon {
+  color: #94a3b8;
+  font-size: 11px;
+  transition: all 0.25s ease;
+  flex-shrink: 0;
 }
 
 .btn-hero-whatsapp:hover {
-  background: #25D366;
-  border-color: #25D366;
+  background: rgba(20, 38, 66, 0.95);
+  border-color: #22c55e;
   color: #ffffff;
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+  box-shadow: 
+    0 8px 26px rgba(34, 197, 94, 0.28),
+    0 0 14px rgba(34, 197, 94, 0.2);
+}
+
+.btn-hero-whatsapp:hover .hero-wa-trail-icon {
+  color: #22c55e;
+  transform: translate(2px, -2px);
 }
 
 /* Rating Proof Strip */
@@ -300,11 +359,17 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: stretch;
+  height: 100%;
 }
 
 .hero-mockup-card {
   width: 100%;
   max-width: 480px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 100%);
   border: 1px solid rgba(255, 255, 255, 0.13);
   border-radius: 20px;
@@ -315,6 +380,7 @@
   position: relative;
   overflow: hidden;
   transition: all 0.35s ease;
+  box-sizing: border-box;
 }
 
 .hero-mockup-card::before {
@@ -404,8 +470,10 @@
 .mockup-tiles-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-bottom: 18px;
+  gap: 10px;
+  margin-bottom: 14px;
+  flex: 1;
+  justify-content: space-between;
 }
 
 .mockup-tile-item {
@@ -414,7 +482,7 @@
   gap: 14px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 12px 14px;
+  padding: 11px 14px;
   border-radius: 12px;
   transition: all 0.25s ease;
   text-align: left;
@@ -453,6 +521,12 @@
   background: rgba(14, 165, 233, 0.12);
   border: 1px solid rgba(14, 165, 233, 0.3);
   color: #38bdf8;
+}
+
+.tile-icon-wrapper.icon-purple {
+  background: rgba(168, 85, 247, 0.12);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  color: #c084fc;
 }
 
 .tile-details {
@@ -504,6 +578,18 @@
   border-radius: 12px;
   border: 1px solid rgba(56, 189, 248, 0.25);
   animation: savingPillGlow 3s infinite ease-in-out;
+}
+
+.tile-badge-scheduled {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #c084fc;
+  background: rgba(168, 85, 247, 0.12);
+  padding: 2px 7px;
+  border-radius: 12px;
 }
 
 .tile-meta {
@@ -570,6 +656,28 @@
   width: 1px;
   height: 22px;
   background: rgba(255, 255, 255, 0.1);
+}
+
+/* ICAI Confidentiality & Governance Footnote */
+.mockup-footer-sync {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  font-size: 11px;
+  font-weight: 500;
+  color: #94a3b8;
+  letter-spacing: 0.15px;
+  text-align: center;
+}
+
+.sync-shield-icon {
+  color: #f8b400;
+  font-size: 12px;
+  flex-shrink: 0;
 }
 
 /* Skeleton loader */
@@ -655,8 +763,13 @@
     gap: 36px;
     padding: 0 24px;
     max-width: 760px;
+    align-items: center;
+  }
+  .hero-visual-col {
+    height: auto;
   }
   .hero-mockup-card {
+    height: auto;
     max-width: 580px;
     width: 100%;
     margin: 0 auto;
@@ -743,27 +856,31 @@
   .hero-cta-group {
     flex-direction: column;
     width: 100%;
-    max-width: 295px;
-    margin: 0 auto 14px auto;
-    gap: 8px;
+    max-width: 310px;
+    margin: 0 auto 16px auto;
+    gap: 10px;
   }
-  .btn-hero-primary {
-    width: 100%;
-    height: 42px;
-    padding: 0 16px;
-    font-size: 13px;
-    font-weight: 750;
-    border-radius: 10px;
-    justify-content: center;
-  }
+  .btn-hero-primary,
   .btn-hero-whatsapp {
     width: 100%;
-    height: 38px;
-    padding: 0 16px;
-    font-size: 12px;
-    font-weight: 700;
-    border-radius: 10px;
-    justify-content: center;
+    height: 46px;
+    padding: 0 18px;
+    border-radius: 8px;
+    justify-content: space-between;
+  }
+  .hero-btn-text,
+  .hero-wa-text {
+    font-size: 13.5px;
+  }
+  .hero-btn-lead-icon {
+    font-size: 13.5px;
+  }
+  .hero-wa-lead-icon {
+    font-size: 15px;
+  }
+  .hero-btn-trail-icon,
+  .hero-wa-trail-icon {
+    font-size: 10.5px;
   }
   .hero-social-proof {
     font-size: 11px;
@@ -794,15 +911,16 @@
     line-height: 1.45;
   }
   .hero-cta-group {
-    max-width: 280px;
+    max-width: 290px;
   }
-  .btn-hero-primary {
-    height: 40px;
-    font-size: 12.5px;
-  }
+  .btn-hero-primary,
   .btn-hero-whatsapp {
-    height: 36px;
-    font-size: 11.5px;
+    height: 44px;
+    padding: 0 14px;
+  }
+  .hero-btn-text,
+  .hero-wa-text {
+    font-size: 12.5px;
   }
 }
 
@@ -864,15 +982,66 @@
   color: #047857;
 }
 
+[data-theme='light'] .btn-hero-primary {
+  background: linear-gradient(135deg, #071324 0%, #0d223c 55%, #071324 100%);
+  color: #ffffff;
+  border-color: rgba(248, 180, 0, 0.6);
+  box-shadow: 
+    0 4px 18px rgba(7, 19, 36, 0.18),
+    0 0 14px rgba(248, 180, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+[data-theme='light'] .btn-hero-primary .hero-btn-lead-icon,
+[data-theme='light'] .btn-hero-primary .hero-btn-trail-icon {
+  color: #f8b400;
+}
+
+[data-theme='light'] .btn-hero-primary .hero-btn-text {
+  color: #ffffff;
+}
+
+[data-theme='light'] .btn-hero-primary:hover {
+  background: linear-gradient(135deg, #0b1a30 0%, #153254 55%, #0b1a30 100%);
+  border-color: #f8b400;
+  box-shadow: 
+    0 8px 24px rgba(7, 19, 36, 0.28),
+    0 0 20px rgba(248, 180, 0, 0.25);
+  color: #ffffff;
+}
+
 [data-theme='light'] .btn-hero-whatsapp {
   background: #ffffff;
-  border-color: rgba(37, 211, 102, 0.45);
-  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.12);
+  border-color: #cbd5e1;
+  color: #071324;
+  box-shadow: 
+    0 3px 12px rgba(7, 19, 36, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+[data-theme='light'] .btn-hero-whatsapp .hero-wa-lead-icon {
+  color: #15803d;
+}
+
+[data-theme='light'] .btn-hero-whatsapp .hero-wa-text {
+  color: #071324;
+}
+
+[data-theme='light'] .btn-hero-whatsapp .hero-wa-trail-icon {
+  color: #64748b;
 }
 
 [data-theme='light'] .btn-hero-whatsapp:hover {
-  background: #25D366;
-  color: #ffffff;
+  background: #ffffff;
+  border-color: #15803d;
+  color: #071324;
+  box-shadow: 
+    0 6px 20px rgba(21, 128, 61, 0.14),
+    0 2px 6px rgba(7, 19, 36, 0.06);
+}
+
+[data-theme='light'] .btn-hero-whatsapp:hover .hero-wa-trail-icon {
+  color: #15803d;
 }
 
 [data-theme='light'] .hero-social-proof {
@@ -915,6 +1084,17 @@
   background: rgba(22, 163, 74, 0.12) !important;
   color: #16a34a !important;
   border: 1px solid rgba(22, 163, 74, 0.25) !important;
+}
+
+[data-theme='light'] .tile-icon-wrapper.icon-purple {
+  background: rgba(147, 51, 234, 0.08) !important;
+  border-color: rgba(147, 51, 234, 0.25) !important;
+  color: #7e22ce !important;
+}
+
+[data-theme='light'] .tile-badge-scheduled {
+  background: rgba(147, 51, 234, 0.1) !important;
+  color: #7e22ce !important;
 }
 
 [data-theme='light'] .mockup-status-tag {
@@ -1003,4 +1183,15 @@
   border-top: 1px solid #f1f5f9;
   color: #64748b;
 }
+
+[data-theme='light'] .mockup-footer-sync {
+  border-top-color: #e2e8f0 !important;
+  color: #475569 !important;
+}
+
+[data-theme='light'] .sync-shield-icon {
+  color: #d97706 !important;
+}
+
+
 

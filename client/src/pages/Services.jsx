@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ServicesSection from '../components/ServicesSection';
+import DeliveryProtocol from '../components/DeliveryProtocol';
 import './Services.css';
 
 const Services = () => {
@@ -33,40 +34,7 @@ const Services = () => {
     },
   ];
 
-  const deliverySteps = [
-    {
-      num: '01',
-      title: 'Forensic Intake & Reconciliation',
-      tag: 'Stage 1 • Discovery',
-      icon: 'fas fa-magnifying-glass-chart',
-      desc: 'Granular document intake, 26AS/AIS credit verification, and ledger cross-matching to detect variance before filings.',
-      badges: ['Bank-to-portal cross-match', 'Statutory defect isolation'],
-    },
-    {
-      num: '02',
-      title: 'Dual CA Scrutiny & Tax Optimization',
-      tag: 'Stage 2 • Examination',
-      icon: 'fas fa-scale-balanced',
-      desc: 'Two-tier examination by qualified Chartered Accountants applying the latest Finance Act notifications, deductions, and exemptions.',
-      badges: ['Double-peer review', 'Lawful tax minimization'],
-    },
-    {
-      num: '03',
-      title: 'Direct Government Portal Dispatch',
-      tag: 'Stage 3 • Filing',
-      icon: 'fas fa-paper-plane',
-      desc: 'Digital Signature Certificate (DSC) affixing and live encrypted submission directly to MCA-21, GSTN, or Income Tax Directorate.',
-      badges: ['Class-3 DSC encryption', 'Instant ARN generation'],
-    },
-    {
-      num: '04',
-      title: 'Digital Vault Archival & Defense Shield',
-      tag: 'Stage 4 • Protection',
-      icon: 'fas fa-shield-halved',
-      desc: 'Filed acknowledgements archived in client vault with 7-year statutory defense coverage against department inquiries.',
-      badges: ['Perpetual digital record', 'Priority scrutiny defense'],
-    },
-  ];
+
 
   const comparisonRows = [
     {
@@ -155,54 +123,8 @@ const Services = () => {
       {/* Main Practice Directory (Embedded without duplicate header) */}
       <ServicesSection hideHeader={true} />
 
-      {/* The 4-Stage Chartered Delivery Protocol */}
-      <section className="practice-protocol-section">
-        <div className="section-top-accent-line" aria-hidden="true"></div>
-        <div className="container">
-          <div className="section-header text-center">
-            <div className="services-badge">
-              <i className="fas fa-route"></i>
-              <span>DELIVERY RIGOR &bull; METHODOLOGY</span>
-            </div>
-            <h2>The 4-Stage Chartered Delivery Protocol</h2>
-            <p className="section-subtitle">
-              Every client mandate follows an uncompromising forensic pathway ensuring zero statutory friction and complete regulatory peace of mind.
-            </p>
-          </div>
-
-          <div className="protocol-timeline-wrapper">
-            <div className="protocol-timeline-rail" aria-hidden="true"></div>
-            <div className="protocol-grid">
-              {deliverySteps.map((step, idx) => (
-                <div key={idx} className="protocol-card">
-                  <div className="protocol-header">
-                    <span className="protocol-step-num">{step.num}</span>
-                    <div className="protocol-icon-circle">
-                      <i className={step.icon}></i>
-                    </div>
-                  </div>
-                  <span className="protocol-tag">{step.tag}</span>
-                  <h3 className="protocol-title">{step.title}</h3>
-                  <p className="protocol-desc">{step.desc}</p>
-                  <div className="protocol-checkpoints">
-                    {step.badges.map((b, i) => (
-                      <span key={i} className="protocol-badge">
-                        <i className="fas fa-check"></i> {b}
-                      </span>
-                    ))}
-                  </div>
-                  {idx < deliverySteps.length - 1 && (
-                    <div className="protocol-flow-arrow" aria-hidden="true">
-                      <i className="fas fa-arrow-right desktop-arrow"></i>
-                      <i className="fas fa-arrow-down mobile-arrow"></i>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* The 4-Stage Chartered Delivery Protocol & Forensic Methodology */}
+      <DeliveryProtocol />
 
       {/* Institutional Comparison Matrix */}
       <section className="practice-comparison-section">
