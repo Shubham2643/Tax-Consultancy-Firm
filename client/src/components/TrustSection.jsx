@@ -40,9 +40,9 @@ const TrustSection = ({ onSelectCategory }) => {
     );
   }
 
-  const trustHeading = settings?.trustHeading || 'INSTITUTIONAL GOVERNANCE & CHARTERED ASSURANCE';
+  const trustHeading = settings?.trustHeading || 'INSTITUTIONAL GOVERNANCE & STATUTORY ASSURANCE';
 
-  // 4 Quantitative Metrics - Authentic CA Portal Compliance Track Record (10/10 Polish)
+  // 4 Quantitative Metrics - Authentic Practice Performance Track Record
   const trustMetrics = [
     {
       kicker: 'FILING DISPATCH INTEGRITY',
@@ -52,7 +52,7 @@ const TrustSection = ({ onSelectCategory }) => {
       badge: 'Sec 139(9) Defect-Free',
       badgeClass: 'badge-statutory',
       caption: 'Pre-dispatch partner review eliminating defective notices & ASMT-10 mismatches.',
-      verifiedText: 'ICAI Checklist Verified',
+      verifiedText: 'Statutory Checklist Verified',
     },
     {
       kicker: 'SCRUTINY LITIGATION DEFENSE',
@@ -103,11 +103,11 @@ const TrustSection = ({ onSelectCategory }) => {
     },
     {
       step: '02',
-      phase: 'SENIOR CA RISK & OPTIMIZATION AUDIT',
+      phase: 'SENIOR PARTNER RISK & OPTIMIZATION AUDIT',
       phaseShort: 'AUDIT',
-      title: 'Manual Chartered Risk & Allowance Screening',
+      title: 'Manual Partner Risk & Allowance Screening',
       icon: 'fas fa-user-check',
-      summary: 'A designated senior Chartered Accountant conducts an exhaustive review of statutory depreciation, allowable Section 37 business expenses, 80JJAA wage benefits, and risk red flags.',
+      summary: 'A designated senior tax consultant conducts an exhaustive review of statutory depreciation, allowable Section 37 business expenses, 80JJAA wage benefits, and risk red flags.',
       checkpoints: [
         'Legitimate tax deduction optimization applied',
         'Multi-state GST cross-charge compliance verified',
@@ -123,7 +123,7 @@ const TrustSection = ({ onSelectCategory }) => {
       icon: 'fas fa-file-signature',
       summary: 'Following final partner sign-off, the return is digitally transmitted to government servers with cryptographic verification, and official acknowledgment receipts are archived in your private client vault.',
       checkpoints: [
-        'Signed CA partner verification certificate',
+        'Signed advisory partner verification review',
         'Instant government filing acknowledgment generated',
         'Immediate archival to 256-bit encrypted client cloud vault',
       ],

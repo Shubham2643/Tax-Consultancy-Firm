@@ -503,6 +503,52 @@
   margin: 0;
 }
 
+.verdict-action-row {
+  margin: 14px 0 16px 0;
+}
+
+.btn-verdict-whatsapp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 18px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);
+  transition: all 0.25s ease;
+  box-sizing: border-box;
+}
+
+.btn-verdict-whatsapp i.fa-whatsapp {
+  font-size: 1.15rem;
+}
+
+.btn-verdict-whatsapp i.fa-arrow-right {
+  font-size: 0.75rem;
+  transition: transform 0.2s ease;
+}
+
+.btn-verdict-whatsapp:hover {
+  background: linear-gradient(135deg, #25d366 0%, #10b981 100%);
+  box-shadow: 0 6px 22px rgba(37, 211, 102, 0.45);
+  transform: translateY(-2px);
+}
+
+.btn-verdict-whatsapp:hover i.fa-arrow-right {
+  transform: translateX(3px);
+}
+
+.btn-verdict-whatsapp:active {
+  transform: scale(0.98);
+}
+
 /* Side-by-Side Comparison Box */
 .calc-comparison-deck {
   display: grid;

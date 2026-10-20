@@ -16,8 +16,8 @@ const DEFAULT_FEATURES = [
     icon: 'fas fa-gem',
   },
   {
-    title: 'Direct Senior CA Advisory',
-    description: 'No junior trainee handoffs. Every account, audit, and tax notice is directly handled and vetted by seasoned Chartered Accountants with strict turnaround SLAs.',
+    title: 'Direct Senior Partner Advisory',
+    description: 'No junior trainee handoffs. Every account, audit, and tax notice is directly handled and vetted by seasoned tax & corporate consultants with strict turnaround SLAs.',
     icon: 'fas fa-headset',
   },
 ];
@@ -28,7 +28,7 @@ const FeaturesSection = () => {
   const features = rawFeatures.length > 0 ? rawFeatures : DEFAULT_FEATURES;
 
   const handleWhatsAppChat = () => {
-    const text = 'Hello CA Team, I would like to consult with a senior partner regarding strategic tax planning and corporate compliance.';
+    const text = 'Hello SCA Team, I would like to consult with a senior partner regarding strategic tax planning and corporate compliance.';
     window.open(`https://wa.me/919510984735?text=${encodeURIComponent(text)}`, '_blank');
   };
 
@@ -47,7 +47,7 @@ const FeaturesSection = () => {
           <div className="features-badge-pill">
             <span className="live-dot"></span>
             <i className="fas fa-shield-alt"></i>
-            <span>Why Choose Us &bull; The Chartered Advantage</span>
+            <span>Why Choose Us &bull; The Advisory Advantage</span>
           </div>
           <h2 className="features-main-title">
             Strategic Tax Precision <span className="title-gradient-gold">Engineered for Your Growth</span>

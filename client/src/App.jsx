@@ -6,18 +6,18 @@ import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import NotificationConsent from './components/NotificationConsent';
 import Home from './pages/Home';
-import About from './pages/About';
-import Services from './pages/Services';
-import Contact from './pages/Contact';
-import Blog from './pages/Blog';
-import FAQ from './pages/FAQ';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import WhatsAppWidget from './components/WhatsAppWidget';
 import ComplianceTicker from './components/ComplianceTicker';
 import './App.css';
 
-// Dynamically split heavy pages to optimize initial bundle load
+// Dynamically split pages to optimize initial bundle load
+const About = lazy(() => import('./pages/About'));
+const Services = lazy(() => import('./pages/Services'));
+const Contact = lazy(() => import('./pages/Contact'));
+const Blog = lazy(() => import('./pages/Blog'));
+const FAQ = lazy(() => import('./pages/FAQ'));
 const ServiceDetail = lazy(() => import('./pages/ServiceDetail'));
 const BlogDetail = lazy(() => import('./pages/BlogDetail'));
 const Calculators = lazy(() => import('./pages/Calculators'));

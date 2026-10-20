@@ -4,7 +4,7 @@
 .push-consent-bar {
   position: fixed;
   bottom: 30px;
-  right: 30px;
+  left: 30px;
   max-width: 480px;
   background: rgba(11, 28, 52, 0.96);
   -webkit-backdrop-filter: blur(16px);

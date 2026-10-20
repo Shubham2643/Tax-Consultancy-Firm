@@ -1,7 +1,9 @@
-/* ============================================
-   FLOATING WHATSAPP INDUSTRIAL WIDGET
-   ============================================ */
-.wa-float-container {
+/* ==========================================================================
+   EXECUTIVE DIRECT ADVISORY DESK (WHATSAPP CONCIERGE)
+   Shree Chamunda Associates • Swiss Precision & Elite Client Experience
+   ========================================================================== */
+
+.wa-concierge-dock {
   position: fixed;
   bottom: 28px;
   right: 28px;
@@ -9,136 +11,140 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-/* Floating Action Button (FAB) */
-.wa-float-btn {
+/* ==========================================================================
+   1. FLOATING ADVISORY PILL TRIGGER
+   ========================================================================== */
+
+.wa-trigger-pill {
   position: relative;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
-  color: #ffffff;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4), 0 2px 6px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  gap: 12px;
+  height: 48px;
+  padding: 0 16px 0 8px;
+  background: rgba(7, 19, 36, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  color: #ffffff;
   cursor: pointer;
+  box-shadow: 0 10px 28px -4px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  box-sizing: border-box;
 }
 
-.wa-btn-inner {
+.wa-trigger-pill:hover {
+  transform: translateY(-2px);
+  border-color: rgba(37, 211, 102, 0.4);
+  box-shadow: 0 14px 34px -4px rgba(0, 0, 0, 0.5), 0 0 18px rgba(37, 211, 102, 0.2);
+}
+
+.wa-trigger-pill.active {
+  border-color: rgba(212, 175, 55, 0.4);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+/* Icon Squircle Wrap */
+.wa-pill-icon-wrap {
   position: relative;
-  z-index: 2;
-  font-size: 32px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(37, 211, 102, 0.2) 0%, rgba(18, 140, 126, 0.25) 100%);
+  border: 1px solid rgba(37, 211, 102, 0.45);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
-  transition: transform 0.3s ease;
+  color: #25d366;
+  font-size: 1.15rem;
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
 }
 
-.wa-float-btn:hover {
-  transform: scale(1.08) translateY(-2px);
-  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.55), 0 4px 10px rgba(0, 0, 0, 0.2);
-  color: #ffffff;
+.wa-trigger-pill:hover .wa-pill-icon-wrap {
+  transform: scale(1.05);
 }
 
-.wa-float-btn:hover .wa-btn-inner {
-  transform: rotate(5deg) scale(1.05);
-}
-
-.wa-float-btn:active {
-  transform: scale(0.95);
-}
-
-/* Pulsing Radar Waves */
-.wa-pulse-wave,
-.wa-pulse-wave-delayed {
+/* Live Pulse Beacon on Pill */
+.wa-pill-pulse-dot {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  bottom: 0;
+  right: 0;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
-  background: #25D366;
-  opacity: 0.6;
-  z-index: 1;
-  pointer-events: none;
-  animation: wa-ripple 2.5s infinite ease-out;
+  background: #10b981;
+  border: 2px solid #071324;
+  box-shadow: 0 0 6px #10b981;
 }
 
-.wa-pulse-wave-delayed {
-  animation-delay: 1.25s;
+/* Text Cluster */
+.wa-pill-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.25;
+  text-align: left;
 }
 
-@keyframes wa-ripple {
-  0% {
-    transform: scale(1);
-    opacity: 0.6;
-  }
-  70% {
-    transform: scale(1.6);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1.6);
-    opacity: 0;
-  }
+.wa-pill-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #f8fafc;
 }
 
-/* Unread Badge */
-.wa-status-badge {
-  position: absolute;
-  top: -2px;
-  right: -2px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: #ef4444;
-  color: #ffffff;
-  font-size: 11px;
-  font-weight: 800;
+.wa-pill-sub {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #10b981;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Chevron / Close Icon */
+.wa-pill-chevron {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid #ffffff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-  z-index: 3;
-  animation: wa-badge-bounce 3s infinite ease-in-out;
+  font-size: 0.72rem;
+  color: #94a3b8;
+  margin-left: 2px;
+  transition: transform 0.2s ease, color 0.2s ease;
 }
 
-@keyframes wa-badge-bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-3px);
-  }
+.wa-trigger-pill:hover .wa-pill-chevron {
+  color: #ffffff;
 }
 
-/* ============================================
-   PROMPT CHAT BUBBLE
-   ============================================ */
-.wa-chat-bubble {
-  width: 310px;
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 16px 18px;
-  margin-bottom: 14px;
-  box-shadow: 0 12px 35px -5px rgba(7, 19, 36, 0.18), 0 0 1px 1px rgba(7, 19, 36, 0.05);
-  border: 1px solid #e2e8f0;
-  position: relative;
+/* ==========================================================================
+   2. LUXURY ADVISORY CARD MODAL
+   ========================================================================== */
+
+.wa-concierge-card {
+  position: absolute;
+  bottom: calc(100% + 14px);
+  right: 0;
+  width: 340px;
+  background: #071324;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  box-shadow: 0 24px 60px -10px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  overflow: hidden;
+  z-index: 10000;
   transform-origin: bottom right;
-  animation: wa-bubble-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: waCardPop 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes wa-bubble-pop {
+@keyframes waCardPop {
   0% {
     opacity: 0;
-    transform: scale(0.8) translateY(10px);
+    transform: scale(0.92) translateY(12px);
   }
   100% {
     opacity: 1;
@@ -146,194 +152,359 @@
   }
 }
 
-/* Arrow Tip */
-.wa-chat-bubble::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  right: 24px;
-  width: 14px;
-  height: 14px;
-  background: #ffffff;
-  border-right: 1px solid #e2e8f0;
-  border-bottom: 1px solid #e2e8f0;
-  transform: rotate(45deg);
-}
-
-.wa-bubble-close-btn {
-  position: absolute;
-  top: 8px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 20px;
-  line-height: 1;
-  color: #94a3b8;
-  cursor: pointer;
-  padding: 4px;
-  border-radius: 4px;
-  transition: color 0.2s ease;
-}
-
-.wa-bubble-close-btn:hover {
-  color: #334155;
-}
-
-.wa-bubble-header {
+/* Card Header */
+.wa-card-header {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
+  justify-content: space-between;
+  padding: 16px 18px;
+  background: linear-gradient(135deg, rgba(15, 28, 48, 0.95) 0%, rgba(10, 20, 36, 0.95) 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.wa-agent-avatar {
-  position: relative;
+.wa-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wa-header-crest {
   width: 36px;
   height: 36px;
+  border-radius: 10px;
+  background: rgba(37, 211, 102, 0.15);
+  border: 1px solid rgba(37, 211, 102, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #25d366;
+  font-size: 1.25rem;
+  flex-shrink: 0;
 }
 
-.wa-agent-avatar img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1.5px solid #e2e8f0;
-}
-
-.wa-online-beacon {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: #22c55e;
-  border: 2px solid #ffffff;
-  box-shadow: 0 0 6px #22c55e;
-}
-
-.wa-bubble-meta {
+.wa-header-info {
   display: flex;
   flex-direction: column;
 }
 
-.wa-bubble-meta strong {
-  font-size: 13px;
-  color: #0f172a;
+.wa-header-title {
+  margin: 0;
+  font-size: 0.9rem;
   font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.01em;
 }
 
-.wa-bubble-meta span {
-  font-size: 11px;
-  color: #16a34a;
-  font-weight: 600;
+.wa-header-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.68rem;
+  color: #94a3b8;
+  font-weight: 500;
 }
 
-.wa-bubble-text {
-  font-size: 12.5px;
-  line-height: 1.5;
-  color: #334155;
-  margin: 0 0 12px 0;
+.wa-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px #10b981;
+  flex-shrink: 0;
 }
 
-.wa-bubble-cta-btn {
+.wa-card-close {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  background: #25D366;
-  color: #ffffff;
-  padding: 10px 14px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-size: 13px;
-  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.85rem;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(37, 211, 102, 0.3);
 }
 
-.wa-bubble-cta-btn:hover {
-  background: #20ba5a;
-  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.45);
+.wa-card-close:hover {
+  background: rgba(255, 255, 255, 0.08);
   color: #ffffff;
 }
 
-/* Mobile Responsiveness */
-@media (max-width: 640px) {
-  .wa-float-container {
-    bottom: 14px;
-    right: 14px;
-  }
-
-  .wa-float-btn {
-    width: 44px;
-    height: 44px;
-    box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
-  }
-
-  .wa-btn-inner {
-    font-size: 22px;
-  }
-
-  .wa-status-badge {
-    width: 16px;
-    height: 16px;
-    font-size: 9px;
-    top: -1px;
-    right: -1px;
-  }
-
-  .wa-chat-bubble {
-    width: 260px;
-    right: -4px;
-  }
+/* Card Body */
+.wa-card-body {
+  padding: 16px 18px;
+  background: #040913;
 }
 
-/* ============================================================
-   WHATSAPP WIDGET — DOMINANT LIGHT THEME
-   ============================================================ */
-[data-theme='light'] .wa-chat-bubble {
-  background: #ffffff;
-  border-color: #e2e8f0;
+.wa-card-intro {
+  margin: 0 0 14px 0;
+  font-size: 0.76rem;
+  color: #94a3b8;
+  line-height: 1.5;
 }
 
-[data-theme='light'] .wa-chat-bubble::after {
-  background: #ffffff;
-  border-right-color: #e2e8f0;
-  border-bottom-color: #e2e8f0;
+/* Quick Options Grid */
+.wa-quick-options {
+  margin-bottom: 16px;
 }
 
-[data-theme='light'] .wa-bubble-meta strong {
-  color: #0f172a;
+.wa-options-label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #64748b;
+  margin-bottom: 8px;
 }
 
-[data-theme='light'] .wa-bubble-text {
-  color: #334155;
+.wa-options-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
 }
 
-/* ============================================================
-   WHATSAPP WIDGET — DOMINANT DARK THEME
-   ============================================================ */
-[data-theme='dark'] .wa-chat-bubble {
-  background: #0f1c32;
-  border-color: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+.wa-option-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  text-decoration: none;
+  transition: all 0.2s ease;
 }
 
-[data-theme='dark'] .wa-chat-bubble::after {
-  background: #0f1c32;
-  border-right-color: rgba(255, 255, 255, 0.12);
-  border-bottom-color: rgba(255, 255, 255, 0.12);
-}
-
-[data-theme='dark'] .wa-bubble-meta strong {
-  color: #f8fafc;
-}
-
-[data-theme='dark'] .wa-bubble-text {
+.wa-option-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.76rem;
+  font-weight: 500;
   color: #cbd5e1;
 }
 
-[data-theme='dark'] .wa-bubble-close-btn:hover {
+.wa-option-left i {
+  font-size: 0.8rem;
+  color: #d4af37;
+  width: 16px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.wa-option-arrow {
+  font-size: 0.65rem;
+  color: #475569;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.wa-option-item:hover {
+  background: rgba(37, 211, 102, 0.08);
+  border-color: rgba(37, 211, 102, 0.3);
+}
+
+.wa-option-item:hover .wa-option-left {
   color: #ffffff;
+}
+
+.wa-option-item:hover .wa-option-arrow {
+  color: #25d366;
+  transform: translateX(2px);
+}
+
+/* Card Footer */
+.wa-card-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-wa-direct-start {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  height: 42px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #ffffff;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+  transition: all 0.25s ease;
+}
+
+.btn-wa-direct-start i {
+  font-size: 1.05rem;
+}
+
+.btn-wa-direct-start:hover {
+  background: linear-gradient(135deg, #25d366 0%, #10b981 100%);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.wa-privacy-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.68rem;
+  color: #64748b;
+  text-align: center;
+}
+
+.wa-privacy-note i {
+  color: #d4af37;
+  font-size: 0.68rem;
+}
+
+/* ==========================================================================
+   3. LIGHT THEME OVERRIDES ([data-theme='light'])
+   ========================================================================== */
+
+[data-theme='light'] .wa-trigger-pill {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: #cbd5e1;
+  box-shadow: 0 8px 24px -4px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(15, 23, 42, 0.04);
+}
+
+[data-theme='light'] .wa-trigger-pill:hover {
+  border-color: rgba(37, 211, 102, 0.6);
+  box-shadow: 0 12px 28px -4px rgba(15, 23, 42, 0.18), 0 0 14px rgba(37, 211, 102, 0.15);
+}
+
+[data-theme='light'] .wa-pill-pulse-dot {
+  border-color: #ffffff;
+}
+
+[data-theme='light'] .wa-pill-title {
+  color: #071324;
+}
+
+[data-theme='light'] .wa-pill-chevron {
+  color: #64748b;
+}
+
+[data-theme='light'] .wa-trigger-pill:hover .wa-pill-chevron {
+  color: #071324;
+}
+
+/* Light Card */
+[data-theme='light'] .wa-concierge-card {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  box-shadow: 0 20px 50px -10px rgba(15, 23, 42, 0.18), 0 0 0 1px rgba(15, 23, 42, 0.05);
+}
+
+[data-theme='light'] .wa-card-header {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-bottom-color: #e2e8f0;
+}
+
+[data-theme='light'] .wa-header-title {
+  color: #071324;
+}
+
+[data-theme='light'] .wa-header-status {
+  color: #64748b;
+}
+
+[data-theme='light'] .wa-card-close {
+  color: #94a3b8;
+}
+
+[data-theme='light'] .wa-card-close:hover {
+  background: #e2e8f0;
+  color: #071324;
+}
+
+[data-theme='light'] .wa-card-body {
+  background: #ffffff;
+}
+
+[data-theme='light'] .wa-card-intro {
+  color: #475569;
+}
+
+[data-theme='light'] .wa-options-label {
+  color: #64748b;
+}
+
+[data-theme='light'] .wa-option-item {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+[data-theme='light'] .wa-option-left {
+  color: #334155;
+}
+
+[data-theme='light'] .wa-option-left i {
+  color: #996515;
+}
+
+[data-theme='light'] .wa-option-arrow {
+  color: #94a3b8;
+}
+
+[data-theme='light'] .wa-option-item:hover {
+  background: #f0fdf4;
+  border-color: rgba(37, 211, 102, 0.4);
+}
+
+[data-theme='light'] .wa-option-item:hover .wa-option-left {
+  color: #071324;
+}
+
+[data-theme='light'] .wa-privacy-note {
+  color: #64748b;
+}
+
+[data-theme='light'] .wa-privacy-note i {
+  color: #996515;
+}
+
+/* ==========================================================================
+   4. RESPONSIVE BREAKPOINTS
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  .wa-concierge-dock {
+    bottom: 18px;
+    right: 18px;
+  }
+
+  .wa-concierge-card {
+    width: calc(100vw - 36px);
+    max-width: 330px;
+    bottom: calc(100% + 10px);
+    right: 0;
+  }
+
+  .wa-trigger-pill {
+    height: 44px;
+    padding: 0 14px 0 6px;
+    gap: 10px;
+  }
+
+  .wa-pill-icon-wrap {
+    width: 32px;
+    height: 32px;
+    font-size: 1.05rem;
+  }
+
+  .wa-pill-title {
+    font-size: 0.78rem;
+  }
+
+  .wa-pill-sub {
+    font-size: 0.64rem;
+  }
 }

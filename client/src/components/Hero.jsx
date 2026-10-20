@@ -20,7 +20,7 @@ const Hero = () => {
 
   const phone = settings?.phone ? settings.phone.replace(/[^0-9]/g, '') : '919510984735';
   const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(
-    'Hello Shree Chamunda Associates! I would like to consult with a Chartered Accountant regarding Tax & Compliance services.'
+    'Hello Shree Chamunda Associates! I would like to consult regarding strategic Tax & Compliance advisory.'
   )}`;
 
   return (
@@ -39,7 +39,7 @@ const Hero = () => {
           <div className="hero-pill-badge">
             <span className="pill-dot-live"></span>
             <i className="fas fa-shield-alt"></i>
-            <span>Premier Chartered Tax Advisory &bull; Gujarat</span>
+            <span>Premier Tax &amp; Corporate Advisory &bull; Gujarat</span>
           </div>
 
           <h1 className="hero-main-title">
@@ -47,7 +47,7 @@ const Hero = () => {
           </h1>
 
           <p className="hero-subtext">
-            Partner with dedicated Chartered Accountants for corporate tax planning, GST audits, ROC filings, and dispute resolutions—ensuring zero penalties and maximum legal tax savings.
+            Partner with dedicated senior tax advisors for corporate tax planning, GST audits, ROC filings, and dispute resolutions—ensuring zero penalties and maximum legal tax savings.
           </p>
 
           {/* 3 Trust Checkmarks */}
@@ -62,7 +62,7 @@ const Hero = () => {
             </div>
             <div className="trust-bullet-item">
               <span className="bullet-icon-box"><i className="fas fa-check"></i></span>
-              <span>Dedicated Senior CA Advisor Assigned</span>
+              <span>Dedicated Senior Tax Advisor Assigned</span>
             </div>
           </div>
 
@@ -79,7 +79,7 @@ const Hero = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="btn-hero-whatsapp"
-              aria-label="Direct WhatsApp Desk with Senior Chartered Accountant"
+              aria-label="Direct WhatsApp Desk with Senior Advisory Consultant"
             >
               <i className="fab fa-whatsapp hero-wa-lead-icon"></i>
               <span className="hero-wa-text">Direct WhatsApp Desk</span>

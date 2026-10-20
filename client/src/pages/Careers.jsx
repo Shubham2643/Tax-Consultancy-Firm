@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import useSEO from '../hooks/useSEO';
 import { submitContact } from '../api';
 import './Careers.css';

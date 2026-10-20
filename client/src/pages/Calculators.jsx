@@ -1,18 +1,28 @@
 import { useState, useMemo, useEffect } from 'react';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import useSEO from '../hooks/useSEO';
 import { useSiteContext } from '../context/SiteContext';
 import './Calculators.css';
+
+const TDS_SECTIONS = [
+  { code: '194C_IND', name: '194C - Contractor (Individual/HUF)', rate: 1, threshold: 30000, desc: 'Single contract > ₹30,000 or aggregate > ₹1,00,000/yr' },
+  { code: '194C_CORP', name: '194C - Contractor (Company/Firm)', rate: 2, threshold: 30000, desc: 'Subcontracting, advertising, freight & fabrication contracts' },
+  { code: '194J_PROF', name: '194J - Professional Advisory / Legal', rate: 10, threshold: 30000, desc: 'Professional, financial, legal, architectural counsel' },
+  { code: '194J_TECH', name: '194J - Technical Services / Call Centers / BPO', rate: 2, threshold: 30000, desc: 'Software engineering & operational technical services' },
+  { code: '194I_PROP', name: '194I - Rent on Land, Building & Furniture', rate: 10, threshold: 240000, desc: 'Annual commercial or residential office lease payments' },
+  { code: '194I_PLANT', name: '194I - Rent on Plant, Machinery & Equipment', rate: 2, threshold: 240000, desc: 'Industrial equipment hire & factory lease' },
+  { code: '194Q', name: '194Q - Purchase of Goods > ₹50 Lakhs', rate: 0.1, threshold: 5000000, desc: 'Buyer turnover > ₹10 Cr purchasing goods from Indian seller' },
+  { code: '194H', name: '194H - Commission or Brokerage', rate: 2, threshold: 15000, desc: 'Real estate, channel partner & sales commissions' },
+  { code: '194A', name: '194A - Interest Other Than Securities', rate: 10, threshold: 5000, desc: 'Unsecured business loans & private lending interest' },
+];
 
 const Calculators = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const initialTab = searchParams.get('tool') || 'tax';
   const [activeTab, setActiveTab] = useState(initialTab);
   const { settings } = useSiteContext();
-  const navigate = useNavigate();
 
-  const phone = settings?.phone || '+91 95109 84735';
-  const cleanPhone = '919510984735';
+  const cleanPhone = settings?.phone ? settings.phone.replace(/[^0-9]/g, '') : '919510984735';
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -297,18 +307,6 @@ const Calculators = () => {
   // =========================================================================
   // 5. TDS RATE & DEDUCTION CALCULATOR STATE & LOGIC
   // =========================================================================
-  const TDS_SECTIONS = [
-    { code: '194C_IND', name: '194C - Contractor (Individual/HUF)', rate: 1, threshold: 30000, desc: 'Single contract > ₹30,000 or aggregate > ₹1,00,000/yr' },
-    { code: '194C_CORP', name: '194C - Contractor (Company/Firm)', rate: 2, threshold: 30000, desc: 'Subcontracting, advertising, freight & fabrication contracts' },
-    { code: '194J_PROF', name: '194J - Professional Advisory / CA / Legal', rate: 10, threshold: 30000, desc: 'Chartered accountants, legal, medical, architectural counsel' },
-    { code: '194J_TECH', name: '194J - Technical Services / Call Centers / BPO', rate: 2, threshold: 30000, desc: 'Software engineering & operational technical services' },
-    { code: '194I_PROP', name: '194I - Rent on Land, Building & Furniture', rate: 10, threshold: 240000, desc: 'Annual commercial or residential office lease payments' },
-    { code: '194I_PLANT', name: '194I - Rent on Plant, Machinery & Equipment', rate: 2, threshold: 240000, desc: 'Industrial equipment hire & factory lease' },
-    { code: '194Q', name: '194Q - Purchase of Goods > ₹50 Lakhs', rate: 0.1, threshold: 5000000, desc: 'Buyer turnover > ₹10 Cr purchasing goods from Indian seller' },
-    { code: '194H', name: '194H - Commission or Brokerage', rate: 2, threshold: 15000, desc: 'Real estate, channel partner & sales commissions' },
-    { code: '194A', name: '194A - Interest Other Than Securities', rate: 10, threshold: 5000, desc: 'Unsecured business loans & private lending interest' },
-  ];
-
   const [tdsData, setTdsData] = useState({
     invoiceAmount: 100000,
     selectedSection: '194J_PROF',
@@ -375,15 +373,17 @@ const Calculators = () => {
       msg += `Old Regime Tax: ₹${taxCalculation.totalTaxOld.toLocaleString('en-IN')}\n`;
       msg += `New Regime Tax: ₹${taxCalculation.totalTaxNew.toLocaleString('en-IN')}\n`;
       msg += `Optimal Choice: ${taxCalculation.recommended === 'new' ? 'New Tax Regime' : 'Old Tax Regime'}\n`;
-      msg += `Estimated Savings: ₹${taxCalculation.savings.toLocaleString('en-IN')}\n`;
+      msg += `Estimated Tax Savings: ₹${taxCalculation.savings.toLocaleString('en-IN')}\n`;
+      msg += `\nHello SCA Team, I calculated a ₹${taxCalculation.savings.toLocaleString('en-IN')} potential tax saving on your website and would like to consult on optimal return filing.`;
     } else if (activeTab === 'gst') {
       msg += `Base Amount: ₹${gstCalculation.baseAmount.toLocaleString('en-IN')}\n`;
       msg += `GST (${gstData.rate}%): ₹${gstCalculation.gstAmount.toLocaleString('en-IN')}\n`;
       msg += `Total Invoice: ₹${gstCalculation.totalAmount.toLocaleString('en-IN')}\n`;
+      msg += `\nHello SCA Team, I would like to consult regarding GST reconciliation & return filing.`;
     } else {
-      msg += `I computed my statutory taxes using your online calculator and would like to consult a Chartered Accountant.`;
+      msg += `Hello SCA Team, I computed my statutory taxes using your online calculator and would like to consult an advisor.`;
     }
-    msg += `\nVerified by Shree Chamunda Associates (Chartered Tax Practice, Nikol, Ahmedabad)`;
+    msg += `\n\nComputation via Shree Chamunda Associates (Nikol, Ahmedabad)`;
     window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(msg)}`, '_blank');
   };
 
@@ -729,6 +729,19 @@ const Calculators = () => {
                   <strong className="saving-amount">₹{taxCalculation.savings.toLocaleString('en-IN')}</strong>
                 </div>
 
+                <div className="verdict-action-row">
+                  <button
+                    type="button"
+                    className="btn-verdict-whatsapp"
+                    onClick={handleShareWhatsApp}
+                    title="Send this computation to our advisory desk on WhatsApp"
+                  >
+                    <i className="fab fa-whatsapp"></i>
+                    <span>Consult on My ₹{taxCalculation.savings.toLocaleString('en-IN')} Savings</span>
+                    <i className="fas fa-arrow-right"></i>
+                  </button>
+                </div>
+
                 <p className="verdict-note">
                   {taxCalculation.recommended === 'new'
                     ? `Under Section 115BAC (Finance Act 2024), lower slab rates and the ₹75,000 standard deduction offer maximum post-tax cashflow.`
@@ -837,11 +850,11 @@ const Calculators = () => {
                 </button>
                 <button type="button" className="btn-calc-action share" onClick={handleShareWhatsApp}>
                   <i className="fab fa-whatsapp"></i>
-                  <span>Send to WhatsApp</span>
+                  <span>Share via WhatsApp</span>
                 </button>
                 <Link to="/contact" className="btn-calc-action consult">
-                  <i className="fas fa-user-tie"></i>
-                  <span>File ITR with CA</span>
+                  <i className="fas fa-file-signature"></i>
+                  <span>File ITR with Advisor</span>
                 </Link>
               </div>
             </div>

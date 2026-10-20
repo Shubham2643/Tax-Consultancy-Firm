@@ -1,96 +1,148 @@
-import { useState, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useSiteContext } from '../context/SiteContext';
 import './WhatsAppWidget.css';
 
 const WhatsAppWidget = () => {
   const { settings } = useSiteContext();
-  const [showTooltip, setShowTooltip] = useState(false);
-  const [isDismissed, setIsDismissed] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const widgetRef = useRef(null);
 
   const phone = settings?.phone ? settings.phone.replace(/[^0-9]/g, '') : '919510984735';
-  const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(
-    'Hello Shree Chamunda Associates! I would like to consult with a Chartered Accountant regarding Tax, GST & Business Compliance services.'
-  )}`;
 
-  useEffect(() => {
-    const isMobile = window.innerWidth < 768;
-    // On mobile devices, do not auto-popup the floating card to prevent obscuring mobile content
-    if (isMobile) {
-      return;
+  const getWhatsAppUrl = (topic = '') => {
+    let text = 'Hello Shree Chamunda Associates! I would like to consult regarding professional Tax & Compliance advisory.';
+    if (topic) {
+      text = `Hello Shree Chamunda Associates! I would like to consult regarding ${topic}.`;
     }
+    return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+  };
 
-    // Show prompt badge after delay on desktop only
-    const timer = setTimeout(() => {
-      if (!isDismissed) {
-        setShowTooltip(true);
+  // Close on Escape or click outside
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (widgetRef.current && !widgetRef.current.contains(e.target)) {
+        setIsOpen(false);
       }
-    }, 3500);
-
-    return () => {
-      clearTimeout(timer);
     };
-  }, [isDismissed]);
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') setIsOpen(false);
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleOutsideClick);
+      document.addEventListener('keydown', handleEscape);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [isOpen]);
+
+  const quickTopics = [
+    { label: 'Urgent Tax Scrutiny / Notice Defense', icon: 'fa-triangle-exclamation', topic: 'Urgent Tax Notice or Scrutiny Defense' },
+    { label: 'GST Returns & Audit Reconciliation', icon: 'fa-file-invoice-dollar', topic: 'GST Audit & Return Filing' },
+    { label: 'Company / LLP SPICe+ Registration', icon: 'fa-building', topic: 'Company or LLP Incorporation' },
+    { label: 'Corporate Advisory & Retainer Mandates', icon: 'fa-handshake', topic: 'Corporate Tax & Financial Retainer' }
+  ];
 
   return (
-    <div className="wa-float-container">
-      {/* Floating Prompt Bubble */}
-      {showTooltip && !isDismissed && (
-        <div className="wa-chat-bubble animated fadeIn">
-          <button
-            type="button"
-            className="wa-bubble-close-btn"
-            onClick={(e) => {
-              e.stopPropagation();
-              setShowTooltip(false);
-              setIsDismissed(true);
-            }}
-            aria-label="Close message"
-          >
-            &times;
-          </button>
-          <div className="wa-bubble-header">
-            <div className="wa-agent-avatar">
-              <img src="/assets/logo_new.jpg?v=3" alt="Advisor" />
-              <span className="wa-online-beacon"></span>
+    <div className={`wa-concierge-dock ${isOpen ? 'is-open' : ''}`} ref={widgetRef}>
+      {/* Luxury Advisory Card Modal */}
+      {isOpen && (
+        <div className="wa-concierge-card animated fadeIn" role="dialog" aria-label="Direct WhatsApp Advisory Channel">
+          {/* Card Header */}
+          <div className="wa-card-header">
+            <div className="wa-header-left">
+              <div className="wa-header-crest">
+                <i className="fa-brands fa-whatsapp" aria-hidden="true"></i>
+              </div>
+              <div className="wa-header-info">
+                <h3 className="wa-header-title">Direct Advisory Desk</h3>
+                <div className="wa-header-status">
+                  <span className="wa-live-dot" aria-hidden="true"></span>
+                  <span>Senior Partners Online &bull; Direct Desk</span>
+                </div>
+              </div>
             </div>
-            <div className="wa-bubble-meta">
-              <strong>Shree Chamunda Advisory</strong>
-              <span>Online &bull; Instant Expert Support</span>
+            <button
+              type="button"
+              className="wa-card-close"
+              onClick={() => setIsOpen(false)}
+              aria-label="Close Advisory Channel"
+            >
+              <i className="fa-solid fa-xmark" aria-hidden="true"></i>
+            </button>
+          </div>
+
+          {/* Card Body */}
+          <div className="wa-card-body">
+            <p className="wa-card-intro">
+              Connect directly with our senior consultants for confidential tax representation, notice defense, and corporate structuring.
+            </p>
+
+            <div className="wa-quick-options">
+              <span className="wa-options-label">Select Consultation Area:</span>
+              <div className="wa-options-grid">
+                {quickTopics.map((item, index) => (
+                  <a
+                    key={index}
+                    href={getWhatsAppUrl(item.topic)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="wa-option-item"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <div className="wa-option-left">
+                      <i className={`fa-solid ${item.icon}`} aria-hidden="true"></i>
+                      <span>{item.label}</span>
+                    </div>
+                    <i className="fa-solid fa-chevron-right wa-option-arrow" aria-hidden="true"></i>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <div className="wa-card-footer">
+              <a
+                href={getWhatsAppUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-wa-direct-start"
+                onClick={() => setIsOpen(false)}
+              >
+                <i className="fa-brands fa-whatsapp" aria-hidden="true"></i>
+                <span>Open Direct Chat on WhatsApp</span>
+              </a>
+              <div className="wa-privacy-note">
+                <i className="fa-solid fa-shield-halved" aria-hidden="true"></i>
+                <span>Fiduciary Privilege &bull; Privileged Communications</span>
+              </div>
             </div>
           </div>
-          <p className="wa-bubble-text">
-            👋 Need instant help with GST, ITR, or company filings? Chat with our senior consultant on WhatsApp!
-          </p>
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="wa-bubble-cta-btn"
-            onClick={() => setShowTooltip(false)}
-          >
-            <i className="fab fa-whatsapp"></i> Start Live Chat
-          </a>
         </div>
       )}
 
-      {/* Floating Action Button */}
-      <a
-        href={whatsappUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="wa-float-btn"
-        aria-label="Chat on WhatsApp with Shree Chamunda Associates"
-        onMouseEnter={() => {
-          if (!isDismissed) setShowTooltip(true);
-        }}
+      {/* Floating Pill / Capsule Trigger */}
+      <button
+        type="button"
+        className={`wa-trigger-pill ${isOpen ? 'active' : ''}`}
+        onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
+        aria-label="Toggle Direct WhatsApp Advisory Desk"
+        title="Direct WhatsApp Advisory Desk"
       >
-        <span className="wa-pulse-wave"></span>
-        <span className="wa-pulse-wave-delayed"></span>
-        <div className="wa-btn-inner">
-          <i className="fab fa-whatsapp"></i>
-        </div>
-        <span className="wa-status-badge">1</span>
-      </a>
+        <span className="wa-pill-icon-wrap">
+          <i className="fa-brands fa-whatsapp" aria-hidden="true"></i>
+          <span className="wa-pill-pulse-dot" aria-hidden="true"></span>
+        </span>
+        <span className="wa-pill-text">
+          <span className="wa-pill-title">Advisory Desk</span>
+          <span className="wa-pill-sub">Online</span>
+        </span>
+        <span className="wa-pill-chevron" aria-hidden="true">
+          <i className={`fa-solid ${isOpen ? 'fa-xmark' : 'fa-chevron-up'}`}></i>
+        </span>
+      </button>
     </div>
   );
 };

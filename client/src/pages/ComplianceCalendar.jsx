@@ -298,8 +298,7 @@ const ComplianceCalendar = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
-  const phone = settings?.phone || '+91 95109 84735';
-  const cleanPhone = '919510984735';
+  const cleanPhone = settings?.phone ? settings.phone.replace(/[^0-9]/g, '') : '919510984735';
 
   useSEO({
     title: 'Statutory Compliance & Due Date Calendar 2024-25 | Shree Chamunda Associates',

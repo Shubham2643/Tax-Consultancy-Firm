@@ -183,43 +183,70 @@ const seedData = async () => {
     await Service.insertMany([...services, ...registrationServices, ...returnServices, ...startupServices]);
     console.log('✅ Services seeded (including registration, return, and startup services)');
 
-    // --- PRICING PLANS (3 plans) ---
+    // --- PRICING PLANS (4 statutory retainers) ---
     const pricingPlans = [
       {
-        name: 'Basic Plan',
+        name: 'Foundational Practice Retainer',
         price: 2999,
         period: 'month',
-        features: ['Monthly Bookkeeping', 'GST Return Filings', 'Standard Email Support'],
+        features: [
+          'Monthly bookkeeping up to 50 vouchers',
+          'Monthly GSTR-1 & GSTR-3B filings',
+          'Quarterly Advance Tax calculation (Sec 208/211)',
+          'Year-End Balance Sheet & Profit/Loss drafting',
+          '256-Bit Encrypted Client Vault & 24h SLA',
+        ],
         isPopular: false,
         order: 1,
       },
       {
-        name: 'Standard Plan',
+        name: 'Corporate & MSME Statutory Retainer',
         price: 5999,
         period: 'month',
-        features: ['Accounting & GST Filings', 'TDS Return & Reconciliation', 'Priority Phone Support'],
+        features: [
+          'Full bookkeeping curation up to 150 vouchers/mo',
+          'Forensic GSTR-2B Input Tax Credit reconciliation',
+          'Quarterly TDS Returns (Form 24Q & 26Q) + Form 16',
+          'Annual ROC Governance: Form AOC-4, MGT-7 & DIR-3 KYC',
+          'Routine departmental notice defense (ASMT-10, DRC-01)',
+          'Priority WhatsApp CA desk with Senior Partner (< 4h)',
+        ],
         isPopular: true,
         order: 2,
       },
       {
-        name: 'Premium Plan',
+        name: 'Enterprise & Multi-State Retainer',
         price: 24999,
         period: 'month',
-        features: ['Full Business Outsourcing', 'Income Tax Return (ITR-6) Filing', 'Dedicated CA Support'],
+        features: [
+          'Virtual CFO executive leadership & Monthly Board MIS',
+          'Section 44AB Statutory Tax Audit (Form 3CD defense)',
+          'Multi-State GST consolidation & GSTR-9/9C audit',
+          'Corporate ITR-6 filing with MAT & transfer pricing review',
+          'Appellate notice representation before ITAT benches',
+          'Exclusive Senior FCA Partner assigned to account',
+        ],
         isPopular: false,
         order: 3,
       },
       {
-        name: 'Incorporate Plan',
+        name: 'Turnkey Corporate Incorporation Retainer',
         price: 49999,
         period: 'one-time',
-        features: ['Pvt Ltd Registration', '2 Digital Signatures (DSC)', 'Name Approval & DIN Allotment', 'PAN, TAN & MoA/AoA Drafting'],
+        features: [
+          'MCA SPICe+ entity formation & RUN name approval',
+          '2 Class-3 USB cryptographic DSC tokens & 2 DINs',
+          'Corporate PAN, TAN, GSTIN & Gujarat PT registrations',
+          'DPIIT Startup India certificate for Sec 80-IAC tax holiday',
+          'Zero-balance current account opening facilitation',
+          '60-Day complimentary post-formation advisory desk',
+        ],
         isPopular: false,
         order: 4,
       },
     ];
     await PricingPlan.insertMany(pricingPlans);
-    console.log('✅ Pricing plans seeded');
+    console.log('✅ Statutory Retainer pricing plans seeded');
 
     // --- FEATURES (3 cards) ---
     const features = [

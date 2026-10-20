@@ -1,165 +1,314 @@
 import { useState, useMemo, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useSEO from '../hooks/useSEO';
-import { submitContact } from '../api';
+import { getPricing, submitContact } from '../api';
+import useFetch from '../hooks/useFetch';
 import './Pricing.css';
 
-const RETAINER_PLANS = [
+const STATUTORY_RETAINER_TIERS = [
   {
     id: 'starter',
-    name: 'Starter Compliance',
-    target: 'Sole Proprietors & Freelancers',
+    code: 'TIER 01',
+    roman: 'I',
+    name: 'Foundational Practice Retainer',
+    target: 'Sole Proprietors, Freelancers & Emerging MSMEs',
     priceMonthly: 2999,
     priceAnnual: 2499,
-    badge: 'STARTER TIER',
-    roiBadge: '⏱️ Saves 12+ Hours Monthly',
-    icon: 'fas fa-seedling',
-    summary: 'Essential cloud bookkeeping, monthly GST filings, and advance tax forecasting for micro-enterprises.',
-    highlights: [
-      'Up to 50 transactions/mo with automated bank rec',
-      'GSTR-1 & GSTR-3B filed before statutory deadlines',
-      'Quarterly Advance Tax calculation (Sec 208/211)',
-      'Year-End Financials drafting (P&L and Balance Sheet)',
-      'Direct Client Vault terminal with 256-bit encryption',
-      'Guaranteed 24-Hour query response SLA',
+    tierClass: 'tier-card-emerald',
+    volumeTag: 'Up to 50 Transactions / Month',
+    volumeIcon: 'fas fa-receipt',
+    badge: 'FOUNDATIONAL STATUTORY',
+    roiBadge: '⏱️ Eliminates 15+ Hours Monthly',
+    icon: 'fas fa-scale-unbalanced',
+    summary:
+      'Essential statutory accounting, monthly GST filings, advance tax forecasting, and year-end financial statement preparation engineered for proprietorships and independent practitioners.',
+    disciplines: [
+      {
+        title: 'Bookkeeping & Banking',
+        detail: 'Monthly bookkeeping up to 50 vouchers with automated bank ledger reconciliation.',
+      },
+      {
+        title: 'GST & Indirect Taxes',
+        detail: 'Timely filing of GSTR-1 and GSTR-3B before 11th & 20th statutory deadlines.',
+      },
+      {
+        title: 'Direct Tax Forecasting',
+        detail: 'Quarterly Advance Tax calculation (Sec 208/211) & 26AS/AIS credit cross-check.',
+      },
+      {
+        title: 'Year-End Compilation',
+        detail: 'Drafting of Balance Sheet, Profit & Loss statement, and Form ITR-3/ITR-4 filing.',
+      },
+      {
+        title: 'Vault & Written SLA',
+        detail: '256-Bit encrypted Client Vault access with guaranteed 24-hour query turnaround.',
+      },
     ],
-    deliverables: {
-      invoices: 'Up to 50 / Month',
+    matrix: {
+      entity: 'Sole Proprietorship / Independent',
+      vouchers: 'Up to 50 / Month',
       gstFilings: 'Monthly (GSTR-1 & 3B)',
       itcMatching: 'Basic GSTR-2B Overview',
-      tdsReturns: 'Optional Add-on',
-      noticeDefense: 'Standard Notice Advisory',
-      partnerAccess: 'Email & Scheduled Calls',
+      advanceTaxTds: 'Quarterly Advance Tax Model',
+      rocFilings: 'Not Applicable',
+      noticeDefense: 'Section 143(1) Advisory Review',
+      partnerSla: '< 24 Hours Written Response',
     },
-    ctaText: 'Choose Starter Retainer',
-    serviceInterest: 'Starter Compliance Retainer (₹2,499/mo)',
+    ctaText: 'Retain Foundational Desk',
+    serviceInterest: 'Foundational Practice Retainer (₹2,499/mo)',
   },
   {
     id: 'growth',
-    name: 'Growth & GST Retainer',
-    target: 'Growing MSMEs & Active Traders',
+    code: 'TIER 02',
+    roman: 'II',
+    name: 'Corporate & MSME Statutory Retainer',
+    target: 'Private Limited Companies, Active LLPs & Trading MSMEs',
     priceMonthly: 5999,
     priceAnnual: 4999,
+    tierClass: 'tier-card-gold',
     isPopular: true,
-    badge: 'MOST POPULAR • BEST ROI',
+    volumeTag: 'Up to 150 Transactions / Month',
+    volumeIcon: 'fas fa-layer-group',
+    badge: 'THE FIRM BENCHMARK • MOST RETAINED',
     roiBadge: '💰 Recovers ~₹1.2L+ Blocked ITC',
-    icon: 'fas fa-rocket',
-    summary: 'Complete accounting outsourcing, algorithmic GSTR-2B input tax matching, quarterly TDS returns, and direct partner access.',
-    highlights: [
-      'Up to 150 transactions/mo with real-time ledger curation',
-      'Automated GSTR-2B vendor reconciliation to eliminate credit leaks',
-      'Quarterly TDS Returns (Form 24Q & 26Q) + Form 16 issuance',
-      '26AS & AIS tax credit cross-verification before portal filing',
-      'Priority WhatsApp desk with designated Senior Chartered Accountant',
-      'Full ASMT-10 & Section 143(1) scrutiny notice rejoinder drafting',
+    icon: 'fas fa-building-columns',
+    summary:
+      'Complete accounting outsourcing, deep algorithmic GSTR-2B input tax matching, quarterly TDS returns, annual ROC secretarial compliance, and direct Senior CA partner oversight.',
+    disciplines: [
+      {
+        title: 'Full Ledger Outsourcing',
+        detail: 'Ledger curation up to 150 vouchers/mo across multi-bank & gateway transactions.',
+      },
+      {
+        title: 'Forensic GSTR-2B Matching',
+        detail: 'Algorithmic vendor invoice reconciliation to eliminate input tax credit leakage.',
+      },
+      {
+        title: 'Quarterly TDS & Form 16',
+        detail: 'Form 24Q (Salary) & 26Q (Vendor) return filings with automated certificate issuance.',
+      },
+      {
+        title: 'Annual ROC Compliance',
+        detail: 'Mandatory MCA filing: Form AOC-4, MGT-7 drafting and Director DIR-3 KYC.',
+      },
+      {
+        title: 'Statutory Notice Defense',
+        detail: 'ASMT-10, DRC-01, and routine departmental scrutiny rejoinder drafting included.',
+      },
+      {
+        title: 'Priority Partner Desk',
+        detail: 'Designated Senior Chartered Accountant with priority WhatsApp desk (< 4h SLA).',
+      },
     ],
-    deliverables: {
-      invoices: 'Up to 150 / Month',
+    matrix: {
+      entity: 'Pvt Ltd, LLP, Active MSME Trader',
+      vouchers: 'Up to 150 / Month',
       gstFilings: 'Monthly (GSTR-1 & 3B) + IFF',
-      itcMatching: 'Deep Algorithmic Matching',
-      tdsReturns: 'Quarterly (24Q & 26Q Included)',
-      noticeDefense: 'ASMT-10 & DRC-01 Covered',
-      partnerAccess: 'Priority WhatsApp & Direct Phone',
+      itcMatching: 'Forensic Algorithmic Matching',
+      advanceTaxTds: 'Quarterly 24Q/26Q TDS + Form 16',
+      rocFilings: 'Form AOC-4, MGT-7 & DIR-3 KYC',
+      noticeDefense: 'ASMT-10, DRC-01 & 143(1) Defense',
+      partnerSla: 'Priority WhatsApp Desk (< 4 Hours)',
     },
-    ctaText: 'Choose Growth Retainer',
-    serviceInterest: 'Growth & GST Retainer (₹4,999/mo)',
+    ctaText: 'Retain Corporate Mandate',
+    serviceInterest: 'Corporate & MSME Statutory Retainer (₹4,999/mo)',
   },
   {
     id: 'cfo',
-    name: 'Virtual CFO Advisory',
-    target: 'Pvt Ltd Companies & High-Turnover LLPs',
+    code: 'TIER 03',
+    roman: 'III',
+    name: 'Enterprise & Multi-State Retainer',
+    target: 'Multi-Branch Corporates, Factories & Turnover > ₹5 Cr',
     priceMonthly: 24999,
     priceAnnual: 20999,
-    badge: 'ENTERPRISE RETAINER',
-    roiBadge: '📊 100% Tax Audit Defense Coverage',
-    icon: 'fas fa-crown',
-    summary: 'Turnkey executive financial leadership, corporate tax return (ITR-6), complete Section 44AB tax audit defense, and ROC secretarial governance.',
-    highlights: [
-      'Uncapped transaction accounting with multi-branch consolidations',
-      'Monthly Executive MIS dashboard, cashflow forecasting & unit economics',
-      'Corporate ITR-6 / 5 direct tax filing with 44AB Tax Audit report',
-      'Statutory notice representation before ITAT & GST Revisional officers',
-      'Annual MCA Governance: AOC-4, MGT-7 & Director DIR-3 KYC',
-      'Senior Partner co-signature and dedicated private consultation suite',
+    tierClass: 'tier-card-sapphire',
+    volumeTag: 'Uncapped Multi-Branch Transactions',
+    volumeIcon: 'fas fa-network-wired',
+    badge: 'ENTERPRISE AUDIT & CFO',
+    roiBadge: '🛡️ 100% Tax Audit Defense Coverage',
+    icon: 'fas fa-shield-halved',
+    summary:
+      'Turnkey executive financial leadership, corporate ITR-6 direct tax filing, Section 44AB statutory tax audit defense, multi-GSTIN cross-state consolidations, and ITAT appellate representation.',
+    disciplines: [
+      {
+        title: 'Virtual CFO Leadership',
+        detail: 'Monthly Executive Board MIS, cashflow forecasting, and working capital modeling.',
+      },
+      {
+        title: 'Multi-State GST Consolidation',
+        detail: 'Cross-state GSTIN reconciliation, cross-charge review, and GSTR-9/9C annual audit.',
+      },
+      {
+        title: 'Section 44AB Tax Audit',
+        detail: 'Statutory direct tax audit execution, Form 3CD compilation, and corporate ITR-6.',
+      },
+      {
+        title: 'Appellate Notice Defense',
+        detail: 'CIT(Appeals), ITAT, and Revisional Bench legal rejoinders and representation.',
+      },
+      {
+        title: 'Secretarial & Board Governance',
+        detail: 'Drafting Board meeting minutes, share transfers, and statutory register custody.',
+      },
+      {
+        title: 'Dedicated Senior Partner',
+        detail: 'Exclusive FCA Partner assigned with direct boardroom consultation access.',
+      },
     ],
-    deliverables: {
-      invoices: 'Unlimited Enterprise Invoices',
-      gstFilings: 'Multi-State GST Consolidation',
-      itcMatching: 'Forensic Vendor Recovery',
-      tdsReturns: 'All Forms + Upper Threshold Audits',
-      noticeDefense: 'Appellate Litigation & ITAT Benches',
-      partnerAccess: 'Dedicated Senior Partner Assigned',
+    matrix: {
+      entity: 'Multi-State Corp, Factory, Group Holding',
+      vouchers: 'Uncapped Enterprise Volume',
+      gstFilings: 'Multi-State Consolidated GSTINs',
+      itcMatching: 'Forensic Vendor Recovery & Audit',
+      advanceTaxTds: 'Full Corporate TDS & Section 194R/Q',
+      rocFilings: 'Complete Secretarial & Board Registers',
+      noticeDefense: 'CIT(A), ITAT & Appellate Benches',
+      partnerSla: 'Dedicated Senior Partner Assigned',
     },
-    ctaText: 'Hire Virtual CFO Desk',
-    serviceInterest: 'Virtual CFO Enterprise Retainer (₹20,999/mo)',
+    ctaText: 'Engage Enterprise Retainer',
+    serviceInterest: 'Enterprise & Multi-State Retainer (₹20,999/mo)',
   },
   {
     id: 'incorporation',
-    name: 'Turnkey Incorporation',
-    target: 'New Startups & Expanding Ventures',
+    code: 'TIER 04',
+    roman: 'IV',
+    name: 'Turnkey Corporate Incorporation Retainer',
+    target: 'New Startups, Foreign Subsidiaries & Expanding Ventures',
     priceMonthly: 49999,
     priceAnnual: 49999,
+    tierClass: 'tier-card-amethyst',
     isOneTime: true,
-    badge: 'ONE-TIME SETUP',
-    roiBadge: '⚡ Turnkey Setup in 5–7 Business Days',
-    icon: 'fas fa-landmark',
-    summary: 'Complete legal company incorporation, DIN/DSC allotments, MoA/AoA drafting, DPIIT 80-IAC tax exemption filing, and 1st month complimentary advisory.',
-    highlights: [
-      'MCA SPICe+ filing covering name approval, stamp duty & certificate of incorporation',
-      '2 Director Identification Numbers (DINs) & Class-3 DSC USB cryptotokens',
-      'PAN, TAN, corporate current bank account opening facilitation',
-      'DPIIT Startup India certificate for Section 80-IAC 3-year tax holiday',
-      'GSTIN registration & Gujarat Professional Tax employer setup included',
-      'Complimentary 30-day post-incorporation compliance audit by senior CA',
+    volumeTag: 'Complete Turnkey Entity Formation',
+    volumeIcon: 'fas fa-bolt',
+    badge: 'ONE-TIME STATUTORY FORMATION',
+    roiBadge: '⚡ 5–7 Day Guaranteed Entity Incorporation',
+    icon: 'fas fa-stamp',
+    summary:
+      'Complete legal entity formation under MCA SPICe+, 2 Class-3 USB cryptographic DSCs, DINs, PAN/TAN, DPIIT 80-IAC startup tax holiday filing, and complimentary 60-day post-incorporation advisory desk.',
+    disciplines: [
+      {
+        title: 'SPICe+ Incorporation',
+        detail: 'MCA RUN name approval, MoA/AoA drafting, stamp duty & certificate of incorporation.',
+      },
+      {
+        title: 'Cryptographic Credentials',
+        detail: '2 Class-3 USB cryptographic DSC tokens & 2 Director Identification Numbers (DINs).',
+      },
+      {
+        title: 'Tax Registrations',
+        detail: 'Corporate PAN, TAN, GSTIN, and Gujarat Professional Tax employer registrations.',
+      },
+      {
+        title: 'Startup 80-IAC Holiday',
+        detail: 'DPIIT Startup India certification facilitating 3-year Section 80-IAC tax exemption.',
+      },
+      {
+        title: 'Banking & Board Protocol',
+        detail: 'Zero-balance corporate current account opening + First Board Meeting minutes.',
+      },
+      {
+        title: 'Complimentary Advisory Desk',
+        detail: '60 Days of complimentary post-formation compliance review by senior CA.',
+      },
     ],
-    deliverables: {
-      invoices: 'Setup Phase Included',
+    matrix: {
+      entity: 'New Pvt Ltd / LLP / OPC Venture',
+      vouchers: 'Setup Phase Governance Included',
       gstFilings: 'GSTIN Registration Included',
-      itcMatching: 'N/A (New Entity)',
-      tdsReturns: 'TAN Allotment Included',
-      noticeDefense: 'Zero Defect Guarantee',
-      partnerAccess: 'Founder Structuring Strategy Call',
+      itcMatching: 'Pre-Incorporation Asset Credit',
+      advanceTaxTds: 'TAN Allotment & Deductor Setup',
+      rocFilings: 'SPICe+, MoA, AoA & Statutory Registers',
+      noticeDefense: 'Zero-Defect Filing Guarantee',
+      partnerSla: 'Founder Structuring Strategy Call',
     },
-    ctaText: 'Incorporate Your Company',
-    serviceInterest: 'Turnkey Company Incorporation (₹49,999)',
+    ctaText: 'Incorporate Your Entity',
+    serviceInterest: 'Turnkey Corporate Incorporation (₹49,999)',
   },
 ];
 
 const PRICING_FAQS = [
   {
-    q: 'Are government statutory fees included in your retainer packages?',
-    a: 'We practice 100% billing transparency. In our retainer packages, government portal fees (such as MCA filing fees or actual GST cash taxes) are billed at actual statutory challan value, while our professional advisory fees are scope-locked without arbitrary markups.',
+    q: 'How do you delineate government statutory challans from professional retainer fees?',
+    a: 'We practice absolute fiduciary transparency under ICAI ethics. Government portal fees (such as actual GST cash liability, MCA portal filing fees, or income tax challans) are paid directly through government payment gateways or billed at actual treasury challan receipts. Our professional retainer fee is strictly fixed and scope-locked, eliminating arbitrary surcharges.',
   },
   {
-    q: 'Can we switch or upgrade retainers as our transaction volume grows?',
-    a: 'Yes, seamlessly. Many Ahmedabad startups begin on our Starter tier and upgrade to Growth or Virtual CFO as monthly transaction volume and vendor count increase. Retainer adjustments are pro-rated without onboarding friction.',
+    q: 'Can our firm upgrade or scale retainers as our transaction volume grows?',
+    a: 'Yes, seamlessly. Many Ahmedabad and Gujarat ventures begin on our Foundational tier and transition to Corporate Retainer or Virtual CFO as monthly sales volumes, branch locations, and vendor registers expand. Mid-year transitions are pro-rated without any onboarding friction or disruption to ongoing statutory filing continuity.',
   },
   {
     q: 'What is included in the Statutory Notice Defense coverage?',
-    a: 'Clients on our Growth and Virtual CFO retainers receive routine department notice defense included. When an automated scrutiny inquiry or ASMT-10 mismatch notice is issued, our senior CAs draft the legal rejoinder and cross-reconcile purchase ledgers at no additional emergency surcharge.',
+    a: 'Clients on our Corporate and Enterprise retainers receive routine department notice defense covered under their scope. When an automated scrutiny inquiry, Section 143(1) intimation, ASMT-10 mismatch notice, or DRC-01 show-cause notice is issued, our senior CAs draft the legal rejoinder, reconcile purchase registers, and represent your firm at no extra emergency surcharge.',
   },
   {
-    q: 'How does the Virtual CFO retainer compare to hiring a full-time CFO?',
-    a: 'A full-time seasoned CFO commands ₹25L–₹40L+ annually plus equity and benefits. Our Virtual CFO desk delivers institutional partner-level financial leadership, cashflow modeling, and tax audits for a predictable fraction of the cost.',
+    q: 'How does your Virtual CFO retainer compare to an in-house full-time CFO?',
+    a: 'A seasoned full-time CFO commands ₹25L–₹40L+ annually plus equity, bonuses, and severance overhead. Our Virtual CFO desk provides institutional partner-level financial leadership, cashflow modeling, Section 44AB audit representation, and board-level MIS reporting for a predictable fraction of the cost, backed by a multidisciplinary team of CAs, CSs, and tax advocates.',
   },
   {
-    q: 'Is there a long-term lock-in contract?',
-    a: 'No. Monthly retainers can be paused or cancelled with a 30-day notice. Annual retainer agreements are locked for the financial year to ensure unbroken statutory filing continuity and include up to a 20% discount.',
+    q: 'Do you execute a mutual Non-Disclosure Agreement (NDA) before inspecting our books?',
+    a: 'Yes, unconditionally. Prior to onboarding, client data ingestion, or portal credential exchange, we execute a legally binding Mutual Non-Disclosure Agreement (NDA). All accounting data, bank statements, and tax records are stored in ISO 27001-compliant, 256-bit AES encrypted repositories in accordance with Section 128 of the Companies Act.',
+  },
+  {
+    q: 'Can we claim 18% GST Input Tax Credit (ITC) on your retainer invoices?',
+    a: 'Yes. Shree Chamunda Associates issues fully compliant GST tax invoices for all retainer mandates. Corporates, LLPs, and registered GST entities can claim 100% of the 18% GST charged on our professional fees as Input Tax Credit against their business output liability.',
   },
 ];
 
 const Pricing = () => {
-  const [isAnnual, setIsAnnual] = useState(true);
+  const navigate = useNavigate();
+  const { data: response } = useFetch(getPricing);
+
+  // Commitment toggle: Monthly vs Annual Mandate
+  const [billingCycle, setBillingCycle] = useState('annual');
   const [openFaq, setOpenFaq] = useState(0);
 
-  // Custom Quote Request Modal / Form State
+  // Active highlighted tier in the interactive selector
+  const [activeTierId, setActiveTierId] = useState('growth');
+
+  // Interactive Scope Estimator State
+  const [estimatorEntity, setEstimatorEntity] = useState('pvt_ltd'); // 'prop' | 'pvt_ltd' | 'enterprise'
+  const [estimatorVolume, setEstimatorVolume] = useState('medium'); // 'low' | 'medium' | 'high' | 'enterprise'
+
+  // Dynamic Tiers mapping with database fallback
+  const dynamicTiers = useMemo(() => {
+    if (!response?.data || !Array.isArray(response.data) || response.data.length === 0) {
+      return STATUTORY_RETAINER_TIERS;
+    }
+    return STATUTORY_RETAINER_TIERS.map((tier) => {
+      const dbMatch = response.data.find((p) => {
+        const lower = (p.name || '').toLowerCase();
+        if (tier.id === 'incorporation' && (lower.includes('incorporat') || lower.includes('turnkey'))) return true;
+        if (tier.id === 'cfo' && (lower.includes('enterprise') || lower.includes('cfo') || lower.includes('premium'))) return true;
+        if (tier.id === 'growth' && (lower.includes('corporate') || lower.includes('msme') || lower.includes('growth') || lower.includes('standard'))) return true;
+        if (tier.id === 'starter' && (lower.includes('foundational') || lower.includes('basic') || lower.includes('starter'))) return true;
+        return false;
+      });
+
+      if (dbMatch && typeof dbMatch.price === 'number') {
+        const annual =
+          tier.id === 'starter' ? 2499 :
+          tier.id === 'growth' ? 4999 :
+          tier.id === 'cfo' ? 20999 :
+          dbMatch.price;
+
+        return {
+          ...tier,
+          priceMonthly: dbMatch.price,
+          priceAnnual: annual,
+        };
+      }
+      return tier;
+    });
+  }, [response]);
+
+  // Custom Proposal Form State
   const [quoteForm, setQuoteForm] = useState({
     name: '',
+    company: '',
     email: '',
     phone: '',
-    company: '',
-    planInterest: 'Growth & GST Retainer',
+    planInterest: 'Corporate & MSME Statutory Retainer',
     monthlyInvoices: '50-150',
+    accountingSoftware: 'Tally Prime',
     notes: '',
   });
   const [quoteStatus, setQuoteStatus] = useState({ loading: false, success: false, error: null });
@@ -169,9 +318,44 @@ const Pricing = () => {
   }, []);
 
   useSEO({
-    title: 'Corporate Retainers & Pricing Plans | Shree Chamunda Associates',
-    description: 'Predictable, scope-locked Chartered Accountancy retainer packages: Starter Bookkeeping, Growth GST Retainer, Virtual CFO, and Startup Incorporation.',
+    title: 'Statutory Retainers & Corporate Governance Mandates | Shree Chamunda Associates',
+    description:
+      'Predictable, scope-locked Chartered Accountancy retainers for Indian Proprietorships, LLPs, Private Limited Companies, and High-Turnover Multi-Branch Conglomerates.',
   });
+
+  // Calculate recommendation based on estimator controls
+  const recommendedTier = useMemo(() => {
+    if (estimatorEntity === 'prop' && estimatorVolume === 'low') {
+      return dynamicTiers.find((t) => t.id === 'starter');
+    }
+    if (estimatorEntity === 'enterprise' || estimatorVolume === 'enterprise' || estimatorVolume === 'high') {
+      return dynamicTiers.find((t) => t.id === 'cfo');
+    }
+    return dynamicTiers.find((t) => t.id === 'growth');
+  }, [estimatorEntity, estimatorVolume, dynamicTiers]);
+
+  const handleSelectTier = (tier) => {
+    const cycleSuffix =
+      billingCycle === 'annual' && !tier.isOneTime
+        ? ' (Annual Retainer Mandate)'
+        : tier.isOneTime
+        ? ' (One-Time Formation Mandate)'
+        : ' (Monthly Retainer Mandate)';
+    navigate('/contact', {
+      state: {
+        planName: `${tier.name}${cycleSuffix}`,
+        serviceInterest: tier.serviceInterest,
+      },
+    });
+  };
+
+  const handleWhatsAppDesk = (tier) => {
+    const isAnnual = billingCycle === 'annual' && !tier.isOneTime;
+    const price = isAnnual ? tier.priceAnnual : tier.priceMonthly;
+    const periodLabel = isAnnual ? 'mo (billed annually)' : tier.isOneTime ? 'one-time' : 'mo';
+    const text = `Hello Shree Chamunda Associates, I would like to consult regarding the ${tier.name} (₹${price.toLocaleString('en-IN')}/${periodLabel}) for our statutory compliance mandate.`;
+    window.open(`https://wa.me/919510984735?text=${encodeURIComponent(text)}`, '_blank');
+  };
 
   const handleQuoteSubmit = async (e) => {
     e.preventDefault();
@@ -181,133 +365,211 @@ const Pricing = () => {
         name: quoteForm.name,
         email: quoteForm.email,
         phone: quoteForm.phone,
-        subject: `Corporate Retainer Quote Request: ${quoteForm.planInterest} (${quoteForm.company})`,
-        message: `Company: ${quoteForm.company}\nPlan: ${quoteForm.planInterest}\nEstimated Monthly Invoices: ${quoteForm.monthlyInvoices}\nSpecific Requirements: ${quoteForm.notes}`,
+        subject: `Corporate Retainer Mandate Request: ${quoteForm.planInterest} (${quoteForm.company})`,
+        message: `Entity Name: ${quoteForm.company}\nPlan Mandate: ${quoteForm.planInterest}\nMonthly Invoice Volume: ${quoteForm.monthlyInvoices}\nAccounting Software: ${quoteForm.accountingSoftware}\nSpecific Requirements: ${quoteForm.notes}`,
         serviceInterest: quoteForm.planInterest,
       });
       setQuoteStatus({ loading: false, success: true, error: null });
-      setQuoteForm({ name: '', email: '', phone: '', company: '', planInterest: 'Growth & GST Retainer', monthlyInvoices: '50-150', notes: '' });
+      setQuoteForm({
+        name: '',
+        company: '',
+        email: '',
+        phone: '',
+        planInterest: 'Corporate & MSME Statutory Retainer',
+        monthlyInvoices: '50-150',
+        accountingSoftware: 'Tally Prime',
+        notes: '',
+      });
     } catch (err) {
-      setQuoteStatus({ loading: false, success: false, error: err.message || 'Failed to submit quote request. Please call our CA desk directly.' });
+      setQuoteStatus({
+        loading: false,
+        success: false,
+        error: err.message || 'Failed to submit mandate request. Please contact our CA desk directly.',
+      });
     }
   };
 
   return (
     <div className="pricing-page fade-in">
-      {/* 1. HERO BANNER */}
+      {/* 1. HERO BANNER — Chambers Architectural Dignity */}
       <section className="pricing-hero" aria-labelledby="pricing-hero-title">
-        <div className="section-top-accent-line" aria-hidden="true"></div>
-        <div className="pricing-hero-glow glow-gold" aria-hidden="true"></div>
-        <div className="pricing-hero-glow glow-blue" aria-hidden="true"></div>
+        <div className="retainers-top-accent-line" aria-hidden="true"></div>
+        <div className="pricing-pinstripe-overlay" aria-hidden="true"></div>
 
-        <div className="container">
+        <div className="container pricing-hero-content">
           <div className="pricing-hero-badge">
-            <span className="live-dot pulse"></span>
-            <i className="fas fa-handshake"></i>
-            <span>SCOPE-LOCKED RETAINERS &bull; ZERO SURPRISE BILLING</span>
+            <span className="retainers-live-dot" aria-hidden="true"></span>
+            <i className="fas fa-landmark"></i>
+            <span>ICAI ADVISORY STANDARDS // SCOPE-LOCKED STATUTORY RETAINERS</span>
           </div>
 
           <h1 id="pricing-hero-title">
-            Predictable Retainers for <span className="hero-gradient-text">Institutional Peace of Mind</span>
+            Predictable Retainers, <span className="title-burnished-gold">Absolute Precision.</span>
           </h1>
 
           <p className="pricing-hero-lead">
-            Partner with dedicated Chartered Accountants under transparent, scope-locked retainer agreements.
-            Full direct tax, GST audit, ROC secretarial, and Virtual CFO coverage designed for ambitious Indian enterprises.
+            Scope-locked Chartered Accountancy retainers governing direct tax, GST audit, ROC secretarial compliance,
+            and scrutiny representation under ICAI regulatory ethics. Designed for ambitious Indian enterprises with zero billing surprises.
           </p>
 
-          {/* Billing Frequency Switcher */}
+          {/* Institutional Fiscal Commitment Switcher */}
           <div className="billing-switch-wrapper">
-            <div className="billing-switch-pill" role="radiogroup" aria-label="Billing Frequency">
+            <div className="billing-switch-pill" role="radiogroup" aria-label="Retainer Commitment Frequency">
               <button
                 type="button"
-                className={`switch-btn ${!isAnnual ? 'active' : ''}`}
-                onClick={() => setIsAnnual(false)}
+                className={`switch-btn ${billingCycle === 'monthly' ? 'active' : ''}`}
+                onClick={() => setBillingCycle('monthly')}
+                aria-checked={billingCycle === 'monthly'}
               >
-                Monthly Retainer
+                <span>Monthly Retainer</span>
               </button>
 
               <button
                 type="button"
-                className={`switch-btn ${isAnnual ? 'active' : ''}`}
-                onClick={() => setIsAnnual(true)}
+                className={`switch-btn ${billingCycle === 'annual' ? 'active' : ''}`}
+                onClick={() => setBillingCycle('annual')}
+                aria-checked={billingCycle === 'annual'}
               >
-                Annual Commitment
-                <span className="save-badge">Save up to 20%</span>
+                <span>Annual Statutory Mandate</span>
+                <span className="save-badge">Save 18% &bull; 2 Mo Complimentary</span>
               </button>
+            </div>
+
+            <span className="billing-tax-footnote">
+              <i className="fas fa-receipt text-emerald"></i> 100% Tax Invoiced &bull; Corporate clients claim 18% GST Input Tax Credit back
+            </span>
+          </div>
+
+          {/* Trust Safeguards Bar */}
+          <div className="hero-trust-safeguards-bar">
+            <div className="trust-bar-item">
+              <i className="fas fa-shield-halved"></i>
+              <span>Zero-Penalty Filing Guarantee</span>
+            </div>
+            <div className="trust-bar-item">
+              <i className="fas fa-user-check"></i>
+              <span>Two-Tier Senior CA Review</span>
+            </div>
+            <div className="trust-bar-item">
+              <i className="fas fa-vault"></i>
+              <span>256-Bit Encrypted Client Vault</span>
+            </div>
+            <div className="trust-bar-item">
+              <i className="fas fa-file-invoice-dollar"></i>
+              <span>18% GST Input Tax Credit Claimable</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 2. PRICING CARDS GRID */}
-      <main className="container pricing-cards-container">
-        <div className="section-top-accent-line" aria-hidden="true"></div>
+      {/* 2. STATUTORY RETAINER TIERS CARDS */}
+      <main className="container pricing-cards-section">
+        <div className="section-header-centered">
+          <span className="about-eyebrow-tag">
+            <i className="fas fa-layer-group"></i>
+            <span>FOUR STATUTORY MANDATES</span>
+          </span>
+          <h2>Institutional Retainer Tiers</h2>
+          <p className="section-subtext">
+            Every mandate is scope-locked with explicit deliverables, statutory due-date coverage, and designated CA partner oversight.
+          </p>
+        </div>
+
         <div className="pricing-cards-grid">
-          {RETAINER_PLANS.map((plan) => {
-            const currentPrice = plan.isOneTime
-              ? plan.priceAnnual
-              : isAnnual
-              ? plan.priceAnnual
-              : plan.priceMonthly;
+          {dynamicTiers.map((tier) => {
+            const isMonthlyTier = !tier.isOneTime;
+            const isAnnualMode = billingCycle === 'annual' && isMonthlyTier;
+            const currentPrice = isAnnualMode ? tier.priceAnnual : tier.priceMonthly;
+            const originalPrice = tier.priceMonthly;
+            const annualSavings = isMonthlyTier ? (originalPrice - currentPrice) * 12 : 0;
 
             return (
               <div
-                key={plan.id}
-                className={`pricing-plan-card ${plan.isPopular ? 'popular-card' : ''}`}
+                key={tier.id}
+                className={`statutory-plan-card ${tier.tierClass || ''} ${tier.isPopular ? 'benchmark-card' : ''} ${activeTierId === tier.id ? 'tier-selected' : ''}`}
+                onClick={() => setActiveTierId(tier.id)}
               >
-                {plan.isPopular && (
-                  <div className="popular-ribbon-tag">
-                    <i className="fas fa-crown"></i> {plan.badge}
+                {tier.isPopular && (
+                  <div className="benchmark-ribbon-tag">
+                    <i className="fas fa-star"></i> {tier.badge}
                   </div>
                 )}
 
                 <div className="plan-card-header">
-                  <div className="plan-icon-box">
-                    <i className={plan.icon}></i>
+                  <div className="plan-top-code-row">
+                    <div className="plan-roman-box">{tier.roman}</div>
+                    <span className="plan-code-label">{tier.code}</span>
+                    <span className="plan-volume-tag">{tier.volumeTag}</span>
                   </div>
-                  <div>
-                    <span className="plan-kicker">{plan.target}</span>
-                    <h3 className="plan-name">{plan.name}</h3>
-                  </div>
+
+                  <h3 className="plan-name">{tier.name}</h3>
+                  <span className="plan-target-entity">{tier.target}</span>
                 </div>
 
                 <div className="plan-price-block">
+                  {isAnnualMode && (
+                    <div className="plan-strikethrough-row">
+                      <span className="struck-price">₹{originalPrice.toLocaleString('en-IN')}/mo</span>
+                      <span className="savings-chip">Save 18%</span>
+                    </div>
+                  )}
+
                   <div className="price-num-row">
                     <span className="currency-symbol">₹</span>
                     <span className="price-amount">{currentPrice.toLocaleString('en-IN')}</span>
-                    <span className="price-period">{plan.isOneTime ? '/ one-time' : '/ month'}</span>
+                    <span className="price-period">
+                      /{tier.isOneTime ? 'one-time setup' : isAnnualMode ? 'mo (billed annually)' : 'month'}
+                    </span>
                   </div>
-                  {isAnnual && !plan.isOneTime && (
-                    <span className="billed-annually-tag">Billed annually (₹{(currentPrice * 12).toLocaleString('en-IN')}/yr)</span>
+
+                  {isAnnualMode && annualSavings > 0 && (
+                    <div className="annual-savings-callout">
+                      <i className="fas fa-check"></i> Preserves ₹{annualSavings.toLocaleString('en-IN')}/yr working capital
+                    </div>
                   )}
-                  <span className="plan-roi-chip">{plan.roiBadge}</span>
+
+                  <div className="roi-badge-wrap">
+                    <span className="roi-chip">{tier.roiBadge}</span>
+                  </div>
                 </div>
 
-                <p className="plan-summary-text">{plan.summary}</p>
+                <p className="plan-summary-text">{tier.summary}</p>
 
-                <div className="plan-highlights-stack">
-                  <span className="highlights-title">What is Included:</span>
-                  {plan.highlights.map((item, idx) => (
-                    <div key={idx} className="plan-highlight-item">
-                      <i className="fas fa-check-circle text-emerald"></i>
-                      <span>{item}</span>
+                <div className="plan-disciplines-stack">
+                  <span className="disciplines-header">Statutory Mandate Scope:</span>
+                  {tier.disciplines.map((item, idx) => (
+                    <div key={idx} className="plan-discipline-item">
+                      <i className="fas fa-circle-check text-emerald"></i>
+                      <div className="discipline-item-text">
+                        <strong>{item.title}:</strong> {item.detail}
+                      </div>
                     </div>
                   ))}
                 </div>
 
-                <div className="plan-card-action">
+                <div className="plan-card-actions">
                   <button
                     type="button"
-                    className={`btn-plan-cta ${plan.isPopular ? 'btn-popular' : ''}`}
-                    onClick={() => {
-                      setQuoteForm((prev) => ({ ...prev, planInterest: plan.name }));
-                      const elem = document.getElementById('custom-quote-section');
-                      if (elem) elem.scrollIntoView({ behavior: 'smooth' });
+                    className={`btn-plan-retain ${tier.isPopular ? 'btn-benchmark-action' : ''}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSelectTier(tier);
                     }}
                   >
-                    <span>{plan.ctaText}</span>
+                    <span>{tier.ctaText}</span>
                     <i className="fas fa-arrow-right"></i>
+                  </button>
+
+                  <button
+                    type="button"
+                    className="btn-plan-whatsapp"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleWhatsAppDesk(tier);
+                    }}
+                  >
+                    <i className="fab fa-whatsapp"></i>
+                    <span>WhatsApp Partner Desk</span>
                   </button>
                 </div>
               </div>
@@ -316,123 +578,304 @@ const Pricing = () => {
         </div>
       </main>
 
-      {/* 3. COMPREHENSIVE DELIVERABLES MATRIX */}
+      {/* 3. INTERACTIVE RETAINER SCOPE & VOLUME ESTIMATOR */}
+      <section className="container estimator-section-container">
+        <div className="retainers-scope-estimator-box">
+          <div className="estimator-header">
+            <div className="estimator-title-group">
+              <span className="estimator-tag">INTERACTIVE SCOPE ESTIMATOR</span>
+              <h3 className="estimator-heading">Calculate Your Ideal Compliance Mandate</h3>
+              <p className="estimator-sub">
+                Select your legal entity structure and monthly voucher scale to discover the optimal statutory tier.
+              </p>
+            </div>
+
+            {recommendedTier && (
+              <div className="estimator-recommendation-pill">
+                <span className="rec-label">Recommended Mandate:</span>
+                <span className="rec-plan-name">{recommendedTier.name}</span>
+                <button
+                  type="button"
+                  className="btn-rec-select"
+                  onClick={() => handleSelectTier(recommendedTier)}
+                >
+                  Retain This Mandate &rarr;
+                </button>
+              </div>
+            )}
+          </div>
+
+          <div className="estimator-controls-grid">
+            <div className="estimator-control-group">
+              <label className="control-label">Legal Entity Structure:</label>
+              <div className="control-button-group">
+                <button
+                  type="button"
+                  className={`control-pill-btn ${estimatorEntity === 'prop' ? 'active' : ''}`}
+                  onClick={() => setEstimatorEntity('prop')}
+                >
+                  Proprietorship / Freelancer
+                </button>
+                <button
+                  type="button"
+                  className={`control-pill-btn ${estimatorEntity === 'pvt_ltd' ? 'active' : ''}`}
+                  onClick={() => setEstimatorEntity('pvt_ltd')}
+                >
+                  Pvt Ltd / LLP / Active MSME
+                </button>
+                <button
+                  type="button"
+                  className={`control-pill-btn ${estimatorEntity === 'enterprise' ? 'active' : ''}`}
+                  onClick={() => setEstimatorEntity('enterprise')}
+                >
+                  Turnover &gt; ₹5 Cr / Multi-State
+                </button>
+              </div>
+            </div>
+
+            <div className="estimator-control-group">
+              <label className="control-label">Monthly Transaction Volume:</label>
+              <div className="control-button-group">
+                <button
+                  type="button"
+                  className={`control-pill-btn ${estimatorVolume === 'low' ? 'active' : ''}`}
+                  onClick={() => setEstimatorVolume('low')}
+                >
+                  Under 50 Vouchers
+                </button>
+                <button
+                  type="button"
+                  className={`control-pill-btn ${estimatorVolume === 'medium' ? 'active' : ''}`}
+                  onClick={() => setEstimatorVolume('medium')}
+                >
+                  50 – 150 Vouchers
+                </button>
+                <button
+                  type="button"
+                  className={`control-pill-btn ${estimatorVolume === 'high' ? 'active' : ''}`}
+                  onClick={() => setEstimatorVolume('high')}
+                >
+                  150 – 500 Vouchers
+                </button>
+                <button
+                  type="button"
+                  className={`control-pill-btn ${estimatorVolume === 'enterprise' ? 'active' : ''}`}
+                  onClick={() => setEstimatorVolume('enterprise')}
+                >
+                  500+ / Multi-Branch
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. COMPREHENSIVE SIDE-BY-SIDE STATUTORY DELIVERABLES MATRIX */}
       <section className="container pricing-matrix-section">
-        <div className="section-top-accent-line" aria-hidden="true"></div>
         <div className="section-header-centered">
           <span className="about-eyebrow-tag">
             <i className="fas fa-table-list"></i>
-            <span>GRANULAR SCOPE COMPARISON</span>
+            <span>EXHAUSTIVE SCOPE SPECIFICATION</span>
           </span>
-          <h2>Side-by-Side Scope Matrix</h2>
-          <p className="section-subtext">Compare exact operational deliverables across all four retainer tiers.</p>
+          <h2>Granular Statutory Scope Matrix</h2>
+          <p className="section-subtext">
+            Direct comparison of all 8 statutory dimensions across Foundational, Corporate, Enterprise, and Turnkey Incorporation retainers.
+          </p>
         </div>
 
         <div className="matrix-table-wrapper">
           <table className="scope-comparison-table">
             <thead>
               <tr>
-                <th className="col-deliverable">Statutory Deliverable</th>
-                <th>Starter Tier</th>
-                <th className="th-popular">Growth Retainer</th>
-                <th>Virtual CFO</th>
+                <th className="col-deliverable">Statutory Compliance Dimension</th>
+                <th>
+                  <div className="th-tier-box">
+                    <span className="th-tier-tag">TIER 01</span>
+                    <strong>Foundational Retainer</strong>
+                    <span className="th-tier-price">₹2,499/mo</span>
+                  </div>
+                </th>
+                <th className="th-popular">
+                  <div className="th-tier-box">
+                    <span className="th-benchmark-badge">THE BENCHMARK</span>
+                    <span className="th-tier-tag">TIER 02</span>
+                    <strong>Corporate &amp; MSME Retainer</strong>
+                    <span className="th-tier-price">₹4,999/mo</span>
+                  </div>
+                </th>
+                <th>
+                  <div className="th-tier-box">
+                    <span className="th-tier-tag">TIER 03</span>
+                    <strong>Enterprise Virtual CFO</strong>
+                    <span className="th-tier-price">₹20,999/mo</span>
+                  </div>
+                </th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><strong>Bookkeeping &amp; Vouchers</strong></td>
-                <td>Up to 50 / Month</td>
-                <td className="td-popular"><strong>Up to 150 / Month</strong></td>
-                <td><strong>Unlimited Enterprise</strong></td>
+                <td>
+                  <strong>Target Business Structure</strong>
+                  <span className="deliverable-desc">ICAI engagement charter classification</span>
+                </td>
+                <td>Sole Proprietorship / Independent</td>
+                <td className="td-popular"><strong>Pvt Ltd, LLP, Trading / Mfg MSME</strong></td>
+                <td>Multi-State Corp, Factory, Group Holding</td>
               </tr>
+
               <tr>
-                <td><strong>GST Filings (GSTR-1 &amp; 3B)</strong></td>
-                <td>Standard Monthly</td>
-                <td className="td-popular"><strong>Monthly + IFF Included</strong></td>
-                <td><strong>Multi-State Consolidated</strong></td>
+                <td>
+                  <strong>Monthly Bookkeeping &amp; Vouchers</strong>
+                  <span className="deliverable-desc">Ledger curation &amp; bank ledger reconciliation</span>
+                </td>
+                <td>Up to 50 Vouchers / Month</td>
+                <td className="td-popular"><strong>Up to 150 Vouchers / Month</strong></td>
+                <td><strong>Uncapped Enterprise Volume</strong></td>
               </tr>
+
               <tr>
-                <td><strong>GSTR-2B ITC Matching</strong></td>
-                <td>Basic Overview</td>
-                <td className="td-popular"><strong>Deep Algorithmic ITC Matching</strong></td>
-                <td><strong>Forensic Vendor Recovery</strong></td>
+                <td>
+                  <strong>GST Return Filings</strong>
+                  <span className="deliverable-desc">GSTR-1 outward, GSTR-3B summary &amp; IFF</span>
+                </td>
+                <td>Monthly (GSTR-1 &amp; 3B)</td>
+                <td className="td-popular"><strong>Monthly (GSTR-1 &amp; 3B) + Quarterly IFF</strong></td>
+                <td><strong>Multi-State Consolidated GSTINs</strong></td>
               </tr>
+
               <tr>
-                <td><strong>Quarterly TDS Returns (24Q/26Q)</strong></td>
-                <td>Optional Add-on</td>
-                <td className="td-popular"><strong>Quarterly Included (Form 16)</strong></td>
-                <td><strong>All Forms &amp; Upper Limits</strong></td>
+                <td>
+                  <strong>Input Tax Credit (ITC) Recovery</strong>
+                  <span className="deliverable-desc">Algorithmic GSTR-2B matching against purchases</span>
+                </td>
+                <td>Basic GSTR-2B Overview</td>
+                <td className="td-popular"><strong>Deep Algorithmic ITC 2B Matching</strong></td>
+                <td><strong>Forensic Vendor Recovery &amp; Audit</strong></td>
               </tr>
+
               <tr>
-                <td><strong>Notice Resolution &amp; Scrutiny</strong></td>
-                <td>Advisory Guidance</td>
-                <td className="td-popular"><strong>ASMT-10 &amp; DRC-01 Replies</strong></td>
-                <td><strong>CIT(A) &amp; ITAT Representation</strong></td>
+                <td>
+                  <strong>Direct Taxes &amp; Quarterly TDS</strong>
+                  <span className="deliverable-desc">Sec 208 advance tax, 24Q/26Q returns &amp; Form 16</span>
+                </td>
+                <td>Quarterly Advance Tax Model</td>
+                <td className="td-popular"><strong>Quarterly 24Q/26Q TDS + Form 16</strong></td>
+                <td><strong>Full Corporate TDS &amp; Sec 194R/194Q</strong></td>
               </tr>
+
               <tr>
-                <td><strong>Senior CA Partner SLA</strong></td>
-                <td>&lt; 24h Response</td>
-                <td className="td-popular"><strong>Priority WhatsApp Desk (&lt; 4h)</strong></td>
-                <td><strong>Dedicated Partner Assigned</strong></td>
+                <td>
+                  <strong>Corporate Secretarial &amp; MCA</strong>
+                  <span className="deliverable-desc">Form AOC-4, MGT-7 &amp; Director DIR-3 KYC</span>
+                </td>
+                <td>Not Applicable</td>
+                <td className="td-popular"><strong>Form AOC-4, MGT-7 &amp; DIR-3 KYC</strong></td>
+                <td><strong>Complete Secretarial &amp; Board Registers</strong></td>
               </tr>
+
               <tr>
-                <td><strong>256-Bit Digital Vault Terminals</strong></td>
-                <td>Standard Access</td>
-                <td className="td-popular"><strong>Multi-User Enterprise</strong></td>
-                <td><strong>24/7 Dedicated Archival</strong></td>
+                <td>
+                  <strong>Notice Resolution &amp; Scrutiny Defense</strong>
+                  <span className="deliverable-desc">ASMT-10, DRC-01, Sec 143(1) and ITAT benches</span>
+                </td>
+                <td>Section 143(1) Advisory Review</td>
+                <td className="td-popular"><strong>ASMT-10, DRC-01 &amp; 143(1) Defense</strong></td>
+                <td><strong>CIT(A), ITAT &amp; Appellate Benches</strong></td>
+              </tr>
+
+              <tr>
+                <td>
+                  <strong>Designated Senior CA Partner SLA</strong>
+                  <span className="deliverable-desc">Turnaround SLA and direct access protocol</span>
+                </td>
+                <td>&lt; 24h Written Response SLA</td>
+                <td className="td-popular"><strong>Priority WhatsApp Desk (&lt; 4 Hours)</strong></td>
+                <td><strong>Dedicated Senior FCA Partner Assigned</strong></td>
+              </tr>
+
+              <tr>
+                <td>
+                  <strong>18% GST Input Credit Recovery</strong>
+                  <span className="deliverable-desc">Valid GST tax invoice issued for retainer fees</span>
+                </td>
+                <td><i className="fas fa-circle-check text-emerald"></i> Eligible for 18% ITC</td>
+                <td className="td-popular"><i className="fas fa-circle-check text-emerald"></i> <strong>Eligible for 18% ITC</strong></td>
+                <td><i className="fas fa-circle-check text-emerald"></i> Eligible for 18% ITC</td>
+              </tr>
+
+              <tr>
+                <td>
+                  <strong>256-Bit Digital Vault Custody</strong>
+                  <span className="deliverable-desc">Companies Act Sec 128 mandatory 8-year archival</span>
+                </td>
+                <td>Standard Encrypted Vault</td>
+                <td className="td-popular"><strong>Multi-User Corporate Vault</strong></td>
+                <td><strong>Dedicated 24/7 Enterprise Archive</strong></td>
               </tr>
             </tbody>
           </table>
         </div>
       </section>
 
-      {/* 4. CUSTOM ENTERPRISE QUOTE REQUEST SECTION */}
+      {/* 5. CUSTOM ENTERPRISE QUOTE REQUEST SECTION */}
       <section className="container quote-request-section" id="custom-quote-section">
-        <div className="section-top-accent-line" aria-hidden="true"></div>
         <div className="quote-box-grid">
           <div className="quote-narrative-col">
             <span className="about-eyebrow-tag">
               <i className="fas fa-file-signature"></i>
-              <span>CUSTOM ENTERPRISE QUOTE</span>
+              <span>BESPOKE RETAINER MANDATE</span>
             </span>
-            <h2>Need a Tailored Manufacturing or Corporate Retainer?</h2>
+            <h2>Require a Custom Manufacturing or Multi-State Retainer?</h2>
             <p>
-              For factories, chemical manufacturing units, export houses, and high-volume e-commerce sellers across Gujarat, our senior partners prepare a scoped engagement letter aligned with your ERP and volume.
+              For factories, chemical manufacturing units, export houses, and high-volume e-commerce conglomerates across
+              Gujarat and Maharashtra, our senior partners prepare a scoped engagement letter aligned with your ERP and volume.
             </p>
 
             <div className="quote-trust-checks">
               <div className="trust-check-item">
-                <i className="fas fa-check text-emerald"></i>
-                <span>Direct consultation with designated Senior Partner</span>
+                <i className="fas fa-circle-check text-emerald"></i>
+                <span>Direct consultation with designated Senior Partner (FCA)</span>
               </div>
               <div className="trust-check-item">
-                <i className="fas fa-check text-emerald"></i>
-                <span>Mutual Non-Disclosure Agreement (NDA) signed prior to books inspection</span>
+                <i className="fas fa-circle-check text-emerald"></i>
+                <span>Mutual Non-Disclosure Agreement (NDA) executed prior to books inspection</span>
               </div>
               <div className="trust-check-item">
-                <i className="fas fa-check text-emerald"></i>
+                <i className="fas fa-circle-check text-emerald"></i>
                 <span>Upfront fixed retainer with zero hidden portal surcharge fees</span>
+              </div>
+              <div className="trust-check-item">
+                <i className="fas fa-circle-check text-emerald"></i>
+                <span>Seamless integration with Tally Prime, SAP, Zoho Books, or Oracle</span>
               </div>
             </div>
 
             <div className="quote-contact-direct">
-              <i className="fas fa-phone-volume text-gold"></i>
+              <div className="direct-phone-icon">
+                <i className="fas fa-phone-volume"></i>
+              </div>
               <div>
-                <span>Prefer speaking over phone right now?</span>
-                <strong><a href="tel:+919510984735">+91 95109 84735</a></strong>
+                <span className="direct-phone-kicker">Prefer speaking over the phone right now?</span>
+                <strong className="direct-phone-num">
+                  <a href="tel:+919510984735">+91 95109 84735</a>
+                </strong>
+                <span className="direct-phone-sub">Direct Partner Helpline &bull; Mon–Sat 10:00 AM – 7:00 PM</span>
               </div>
             </div>
           </div>
 
           <div className="quote-form-col">
             <div className="quote-form-card">
-              <h3>Request Scope-Locked Retainer Quote</h3>
-              <p className="form-subtext">Our senior CA will review your volume and respond within 4 business hours.</p>
+              <h3>Request Scope-Locked Retainer Proposal</h3>
+              <p className="form-subtext">Our Senior CA Partner will review your volume and respond within 4 business hours.</p>
 
               {quoteStatus.success && (
                 <div className="success-quote-banner">
                   <i className="fas fa-check-circle"></i>
-                  <p>Quote request received! Our Senior Partner will connect with your firm shortly.</p>
+                  <div>
+                    <strong>Mandate Request Successfully Received!</strong>
+                    <p>Our Senior Partner has received your submission and will contact your office shortly.</p>
+                  </div>
                 </div>
               )}
 
@@ -453,19 +896,19 @@ const Pricing = () => {
                       required
                       value={quoteForm.name}
                       onChange={(e) => setQuoteForm({ ...quoteForm, name: e.target.value })}
-                      placeholder="e.g. Aniket Patel"
+                      placeholder="e.g. Rajesh Patel"
                       className="quote-input"
                     />
                   </div>
                   <div className="quote-input-group">
-                    <label htmlFor="qCompany">Company / LLP Name *</label>
+                    <label htmlFor="qCompany">Company / LLP / Firm Name *</label>
                     <input
                       type="text"
                       id="qCompany"
                       required
                       value={quoteForm.company}
                       onChange={(e) => setQuoteForm({ ...quoteForm, company: e.target.value })}
-                      placeholder="e.g. Apex Industrial Solutions"
+                      placeholder="e.g. Apex Industrial Solutions LLP"
                       className="quote-input"
                     />
                   </div>
@@ -473,14 +916,14 @@ const Pricing = () => {
 
                 <div className="form-row-split">
                   <div className="quote-input-group">
-                    <label htmlFor="qEmail">Email Address *</label>
+                    <label htmlFor="qEmail">Work Email Address *</label>
                     <input
                       type="email"
                       id="qEmail"
                       required
                       value={quoteForm.email}
                       onChange={(e) => setQuoteForm({ ...quoteForm, email: e.target.value })}
-                      placeholder="aniket@company.com"
+                      placeholder="rajesh@apexind.com"
                       className="quote-input"
                     />
                   </div>
@@ -500,23 +943,25 @@ const Pricing = () => {
 
                 <div className="form-row-split">
                   <div className="quote-input-group">
-                    <label htmlFor="qPlan">Preferred Practice Tier</label>
+                    <label htmlFor="qPlan">Preferred Statutory Mandate</label>
                     <select
                       id="qPlan"
                       value={quoteForm.planInterest}
                       onChange={(e) => setQuoteForm({ ...quoteForm, planInterest: e.target.value })}
                       className="quote-select"
                     >
-                      <option value="Starter Compliance">Starter Compliance (₹2,499/mo)</option>
-                      <option value="Growth & GST Retainer">Growth &amp; GST Retainer (₹4,999/mo)</option>
-                      <option value="Virtual CFO Advisory">Virtual CFO Advisory (₹20,999/mo)</option>
-                      <option value="Turnkey Incorporation">Turnkey Incorporation (₹49,999)</option>
-                      <option value="Custom Multi-Branch Retainer">Custom Multi-Branch Corporate Retainer</option>
+                      <option value="Foundational Practice Retainer">Foundational Practice Retainer (₹2,499/mo)</option>
+                      <option value="Corporate & MSME Statutory Retainer">
+                        Corporate &amp; MSME Statutory Retainer (₹4,999/mo)
+                      </option>
+                      <option value="Enterprise & Multi-State Retainer">Enterprise &amp; Multi-State Retainer (₹20,999/mo)</option>
+                      <option value="Turnkey Corporate Incorporation">Turnkey Corporate Incorporation (₹49,999)</option>
+                      <option value="Custom Multi-Branch Corporate Retainer">Custom Multi-Branch / Factory Retainer</option>
                     </select>
                   </div>
 
                   <div className="quote-input-group">
-                    <label htmlFor="qVol">Est. Monthly Invoices</label>
+                    <label htmlFor="qVol">Est. Monthly Voucher Volume</label>
                     <select
                       id="qVol"
                       value={quoteForm.monthlyInvoices}
@@ -526,28 +971,50 @@ const Pricing = () => {
                       <option value="< 50">Under 50 Invoices / Month</option>
                       <option value="50-150">50 to 150 Invoices / Month</option>
                       <option value="150-500">150 to 500 Invoices / Month</option>
-                      <option value="500+">500+ High Volume Transactions</option>
+                      <option value="500+">500+ High Volume / Multi-State</option>
                     </select>
                   </div>
                 </div>
 
                 <div className="quote-input-group">
-                  <label htmlFor="qNotes">Specific Compliance Requirements / Accounting Software</label>
+                  <label htmlFor="qSoftware">Current Accounting Software</label>
+                  <select
+                    id="qSoftware"
+                    value={quoteForm.accountingSoftware}
+                    onChange={(e) => setQuoteForm({ ...quoteForm, accountingSoftware: e.target.value })}
+                    className="quote-select"
+                  >
+                    <option value="Tally Prime">Tally Prime / ERP 9</option>
+                    <option value="Zoho Books">Zoho Books</option>
+                    <option value="Busy Accounting">Busy Accounting Software</option>
+                    <option value="SAP / Oracle">SAP / Oracle ERP</option>
+                    <option value="QuickBooks / Marg">QuickBooks / Marg ERP</option>
+                    <option value="Spreadsheets / Manual">Spreadsheets / In-House Manual</option>
+                    <option value="Need CA Recommendation">Need CA Partner to Recommend System</option>
+                  </select>
+                </div>
+
+                <div className="quote-input-group">
+                  <label htmlFor="qNotes">Specific Compliance Requirements / Notices</label>
                   <textarea
                     id="qNotes"
                     rows="3"
                     value={quoteForm.notes}
                     onChange={(e) => setQuoteForm({ ...quoteForm, notes: e.target.value })}
-                    placeholder="e.g. Using Tally Prime, have 2 GSTINs in Gujarat and Maharashtra, need ASMT-10 notice assistance..."
+                    placeholder="e.g. Have 2 GSTINs in Gujarat and Maharashtra, need ASMT-10 mismatch resolution, pending 44AB tax audit..."
                     className="quote-textarea"
                   ></textarea>
                 </div>
 
                 <button type="submit" className="btn-submit-quote" disabled={quoteStatus.loading}>
                   {quoteStatus.loading ? (
-                    <span><i className="fas fa-spinner fa-spin"></i> Dispatching Request...</span>
+                    <span>
+                      <i className="fas fa-spinner fa-spin"></i> Submitting Mandate Request...
+                    </span>
                   ) : (
-                    <span>Request Retainer Proposal <i className="fas fa-arrow-right"></i></span>
+                    <span>
+                      Request Retainer Proposal <i className="fas fa-arrow-right"></i>
+                    </span>
                   )}
                 </button>
               </form>
@@ -556,16 +1023,17 @@ const Pricing = () => {
         </div>
       </section>
 
-      {/* 5. PRICING FAQS */}
+      {/* 6. STATUTORY BILLING & ICAI ETHICS FAQS */}
       <section className="container pricing-faqs-section">
-        <div className="section-top-accent-line" aria-hidden="true"></div>
         <div className="section-header-centered">
           <span className="about-eyebrow-tag">
             <i className="fas fa-circle-question"></i>
-            <span>BILLING TRANSPARENCY &bull; FAQS</span>
+            <span>REGULATORY ETHICS &bull; FAQS</span>
           </span>
           <h2>Frequently Asked Questions on Retainers</h2>
-          <p className="section-subtext">Clear, definitive policies regarding fee structures, government challans, and scope assurance.</p>
+          <p className="section-subtext">
+            Clear, binding policies regarding professional fee structures, treasury challans, and scope assurance under ICAI standards.
+          </p>
         </div>
 
         <div className="pricing-faqs-list">
