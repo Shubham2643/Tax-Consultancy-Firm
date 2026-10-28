@@ -487,7 +487,7 @@ const Navbar = () => {
                 </button>
               </div>
             ) : (
-              <Link to="/login" className="top-bar-vault-btn" title="Access Secure 256-Bit Client Vault">
+              <Link to="/login" className="top-bar-vault-btn" title="Access Secure Client Vault">
                 <span className="vault-badge">
                   <i className="fas fa-shield-halved vault-icon"></i>
                 </span>

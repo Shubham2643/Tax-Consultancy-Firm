@@ -22,9 +22,9 @@
    ============================================================ */
 .contact-mode-tabs {
   display: flex;
-  background: #071324;
+  background: #f1f5f9;
   padding: 6px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid #e2e8f0;
   gap: 6px;
   min-height: 52px;
   box-sizing: border-box;
@@ -37,8 +37,8 @@
   justify-content: center;
   gap: 8px;
   padding: 10px 14px;
-  background: rgba(255, 255, 255, 0.03);
-  color: #94a3b8;
+  background: transparent;
+  color: #64748b;
   border: 1px solid transparent;
   border-radius: 12px;
   font-size: 13px;
@@ -49,15 +49,15 @@
 }
 
 .mode-tab-btn:hover {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.08);
+  color: #071324;
+  background: rgba(0, 0, 0, 0.04);
 }
 
 .mode-tab-btn.active {
   background: #ffffff;
   color: #071324;
-  border-color: #ffffff;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  border-color: #e2e8f0;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
 }
 
 .mode-tab-btn .tab-icon-wrap {
@@ -742,8 +742,8 @@
 .contact-custom-input:focus,
 .contact-custom-textarea:focus {
   background: #ffffff;
-  border-color: #071324;
-  box-shadow: 0 0 0 3px rgba(7, 19, 36, 0.08);
+  border-color: #b45309;
+  box-shadow: 0 0 0 3.5px rgba(245, 158, 11, 0.14), 0 2px 8px rgba(7, 19, 36, 0.04);
 }
 
 .textarea-label-row {
@@ -1093,7 +1093,7 @@
 }
 
 .ticket-value.ref-code {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: inherit;
   color: #071324;
   letter-spacing: 0.5px;
 }

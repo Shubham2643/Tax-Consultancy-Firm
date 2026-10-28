@@ -213,7 +213,7 @@ const About = () => {
     {
       icon: <Icons.Vault />,
       title: 'Bank-Grade Confidentiality & NDA Enforcement',
-      desc: 'Rigorous compliance with ICAI non-disclosure bylaws and formal enterprise NDAs. Financial records and vouchers are safeguarded in 256-bit encrypted cloud repositories.',
+      desc: 'Rigorous compliance with ICAI non-disclosure bylaws and formal enterprise NDAs. Financial records and vouchers are safeguarded in secure encrypted cloud repositories.',
       tag: 'Fiduciary Duty',
       colorClass: 'pillar-vault',
     },
@@ -285,7 +285,7 @@ const About = () => {
       shortTitle: 'Compliance & Digital Vault',
       scope: 'Fintech Automation • Document Cloud Archival • Real-Time Filing Tracker',
       desc: 'State-of-the-art paperless compliance infrastructure providing encrypted 24/7 document repositories, deadline tracking, and instantaneous audit retrievals.',
-      badges: ['256-Bit Encrypted Vault', 'Automated ITC Screening', 'Paperless Accounting'],
+      badges: ['Encrypted Cloud Vault', 'Automated ITC Screening', 'Paperless Accounting'],
       leadCounsel: 'Digital Systems Desk',
       statute: 'ISO 27001 Data Security • Cloud Archival',
       icon: <Icons.CodeTerminal />,
@@ -360,8 +360,8 @@ const About = () => {
       year: '2025',
       phase: 'DIGITAL INFRASTRUCTURE',
       title: 'Paperless Digital Client Vault & ROC Secretarial Unit',
-      desc: 'Pioneered 100% cloud-based bookkeeping with 256-bit encrypted client document repositories, alongside launching a turnkey MCA SPICe+ company formation and annual corporate governance desk.',
-      badge: '256-Bit Cloud Vault',
+      desc: 'Pioneered 100% cloud-based bookkeeping with secure encrypted client document repositories, alongside launching a turnkey MCA SPICe+ company formation and annual corporate governance desk.',
+      badge: 'Secure Cloud Vault',
       metric: '100% Lost-Voucher Elimination',
     },
     {
@@ -419,7 +419,7 @@ const About = () => {
       authority: 'Gujarat Commercial Registry • Nikol Central',
       title: 'Nikol Central Practice Chambers Accreditation',
       subtitle: 'Physical Chambers at 612 Hill Town Square, Nikol',
-      desc: 'Physical corporate practice chambers established at 612 Hill Town Square, Nikol, Ahmedabad. Fully equipped with private partner consultation suites and 256-bit encrypted archival terminals.',
+      desc: 'Physical corporate practice chambers established at 612 Hill Town Square, Nikol, Ahmedabad. Fully equipped with private partner consultation suites and secure encrypted archival terminals.',
       highlights: ['In-Person Advisory Chambers', 'Confidential Consultation Rooms', 'Bank-Grade Vault Terminals'],
       icon: <Icons.Building />,
       sealClass: 'seal-chambers',
@@ -431,7 +431,7 @@ const About = () => {
     { code: 'ICAI-ETHICS', title: 'ICAI Code of Ethics Aligned', desc: 'Strict observance of professional independence, fiduciary duty, and non-disclosure standards' },
     { code: 'MCA-SPICE', title: 'MCA 21 SPICe+ Intermediary', desc: 'Turnkey corporate incorporations, LLP agreements, and statutory board resolutions' },
     { code: 'GSTN-API', title: 'GSTN Authorized Protocol', desc: 'Real-time reconciliation of GSTR-1, 3B, 2B and automated ITC mismatch detection' },
-    { code: 'SSL-256', title: 'Bank-Grade Document Security', desc: 'Secure cloud repositories safeguarding books of accounts and confidential tax filings' },
+    { code: 'SSL-SECURE', title: 'Bank-Grade Document Security', desc: 'Secure cloud repositories safeguarding books of accounts and confidential tax filings' },
     { code: 'MSME-DESK', title: 'Enterprise Retainer Architecture', desc: 'Specialized corporate compliance packages designed for Gujarat’s manufacturing and trading sector' }
   ];
 

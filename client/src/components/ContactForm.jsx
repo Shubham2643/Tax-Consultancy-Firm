@@ -573,7 +573,7 @@ const ContactForm = () => {
                 </div>
                 <div className="security-text-group">
                   <strong className="security-title">Bank-Grade SSL</strong>
-                  <span className="security-subtitle">256-Bit Encryption</span>
+                  <span className="security-subtitle">End-to-End Encryption</span>
                 </div>
               </div>
 

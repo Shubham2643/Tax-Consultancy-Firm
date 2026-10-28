@@ -145,10 +145,14 @@ const ServicesSection = ({
               <span>PRACTICE AREAS &amp; EXPERTISE</span>
             </div>
             <h2 id="services-heading">
-              {featured ? 'Featured Advisory Services' : 'Our Professional Services'}
+              {featured ? (
+                <>Featured Advisory <span className="title-gradient-gold">Services &amp; Retainers</span></>
+              ) : (
+                'Our Professional Services'
+              )}
             </h2>
             <p className="section-subtitle">
-              End-to-end tax filing, corporate auditing, business registrations, and statutory compliance managed by certified Chartered Accountants.
+              End-to-end corporate tax planning, statutory audits, entity incorporation, and regulatory filings managed by seasoned corporate tax advisors.
             </p>
           </div>
         )}
@@ -254,9 +258,9 @@ const ServicesSection = ({
             )}
           </div>
         ) : (
-          /* Home Page Featured Mode: Clean Category Filter Tabs */
-          <div className="services-filter-nav-wrapper">
-            <div className="services-filter-nav" role="tablist">
+          /* Home Page Featured Mode: Clean Segmented Filter Dock */
+          <div className="services-filter-dock-wrapper">
+            <div className="services-filter-dock" role="tablist" aria-label="Featured service categories">
               {categoryTabs.map((tab) => {
                 const isActive = activeFilter === tab.id;
                 return (
@@ -264,12 +268,12 @@ const ServicesSection = ({
                     key={tab.id}
                     role="tab"
                     aria-selected={isActive}
-                    className={`filter-btn ${isActive ? 'active' : ''} filter-btn-${tab.id}`}
+                    className={`filter-dock-btn ${isActive ? 'active' : ''} dock-btn-${tab.id}`}
                     onClick={() => setActiveFilter(tab.id)}
                   >
-                    <i className={tab.icon}></i>
-                    <span>{tab.label}</span>
-                    <span className="filter-count-badge">
+                    <i className={tab.icon} aria-hidden="true"></i>
+                    <span className="dock-btn-label">{tab.label}</span>
+                    <span className="dock-count-badge">
                       {loading ? '·' : tab.count}
                     </span>
                   </button>
@@ -323,7 +327,7 @@ const ServicesSection = ({
             {!featured && filteredServices.length > 9 && visibleCount >= filteredServices.length && (
               <div className="services-all-loaded-indicator">
                 <i className="fas fa-check-circle"></i>
-                <span>All {filteredServices.length} chartered practice areas in this view displayed</span>
+                <span>All {filteredServices.length} specialized practice areas in this view displayed</span>
               </div>
             )}
           </>

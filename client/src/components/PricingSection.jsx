@@ -53,7 +53,7 @@ const STATUTORY_RETAINERS = {
       {
         discipline: 'Statutory Safeguards',
         items: [
-          'Client vault document repository (256-bit AES)',
+          'Client vault document repository (Secure Cloud Storage)',
           '24-Hour query response SLA via client portal',
           'Statutory late-fee protection guarantee',
         ],
@@ -330,12 +330,13 @@ const PricingSection = () => {
         <div className="retainers-header text-center">
           <div className="retainers-eyebrow-badge">
             <span className="retainers-live-dot" aria-hidden="true"></span>
-            <i className="fas fa-landmark"></i>
-            <span>PRACTICE GOVERNANCE // STATUTORY RETAINERS</span>
+            <i className="fas fa-landmark" aria-hidden="true"></i>
+            <span>PRACTICE GOVERNANCE &bull; STATUTORY RETAINERS</span>
           </div>
 
           <h2 className="retainers-main-title">
-            Predictable Retainers, <span className="title-burnished-gold">Absolute Precision.</span>
+            Predictable Retainers, <br />
+            <span className="title-burnished-gold">Absolute Precision.</span>
           </h2>
 
           <p className="retainers-lead-text">
@@ -595,7 +596,7 @@ const PricingSection = () => {
                   <div className="assurance-icon-box">
                     <i className="fas fa-vault"></i>
                   </div>
-                  <span>ISO 27001-compliant 256-bit encrypted document repository</span>
+                  <span>ISO 27001-compliant encrypted document repository</span>
                 </div>
                 <div className="assurance-bullet">
                   <div className="assurance-icon-box">
@@ -837,7 +838,7 @@ const PricingSection = () => {
             <div className="safeguard-card-body">
               <h4 className="safeguard-heading">Bank-Grade Vault Custody</h4>
               <p className="safeguard-description">
-                Section 128 mandatory 8-year statutory archive with 256-bit cryptographic retention.
+                Section 128 mandatory 8-year statutory archive with secure cryptographic retention.
               </p>
             </div>
             <div className="safeguard-card-footer">

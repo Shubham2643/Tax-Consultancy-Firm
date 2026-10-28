@@ -205,7 +205,7 @@ const Careers = () => {
           <div className="pillar-card">
             <div className="pillar-icon"><i className="fas fa-network-wired"></i></div>
             <h4>Digital-First Vault Practice</h4>
-            <p>Work on cloud accounting infrastructure, automated GSTR-2B reconciliation engines, and 256-bit encrypted client repositories.</p>
+            <p>Work on cloud accounting infrastructure, automated GSTR-2B reconciliation engines, and secure encrypted client repositories.</p>
           </div>
 
           <div className="pillar-card">

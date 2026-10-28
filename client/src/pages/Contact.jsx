@@ -87,7 +87,7 @@ const Contact = () => {
       'TITLE:Senior Chartered Tax Consultants',
       'TEL;TYPE=WORK,VOICE:+919510984735',
       'EMAIL;TYPE=WORK:shreechamundaassociates0905@gmail.com',
-      'ADR;TYPE=WORK:;;612,Hill Town Square, MG Road, near Ganesh Opera;Nikol;Ahmedabad;Gujarat;380049;India',  
+      'ADR;TYPE=WORK:;;612,Hill Town Square, MG Road, near Ganesh Opera;Nikol;Ahmedabad;Gujarat;380049;India',
       'URL:https://shreechamundaassociates.com',
       'NOTE:Direct Tax, GST Scrutiny Defense, Statutory Audits & Turnkey Incorporation',
       'END:VCARD',
@@ -123,274 +123,361 @@ const Contact = () => {
   return (
     <div className="contact-page fade-in">
       {/* ============================================================
-          1. EXECUTIVE HERO BANNER & 3-PILLAR REASSURANCE STRIP
+          1. EDITORIAL SWISS FINTECH HERO SECTION (With Pinstripe Grid)
           ============================================================ */}
-      <div className="contact-hero">
-        <div className="section-top-accent-line" aria-hidden="true"></div>
-        <div className="contact-hero-glow glow-gold" aria-hidden="true"></div>
-        <div className="contact-hero-glow glow-blue" aria-hidden="true"></div>
+      <section className="contact-hero-section">
+        <div className="contact-grid-overlay" aria-hidden="true"></div>
 
-        <div className="container">
-          <div className="contact-hero-badge">
-            <span className="live-dot pulse"></span>
+        <div className="contact-hero-container">
+          <div className="contact-eyebrow-badge">
+            <span className="contact-live-dot pulse"></span>
             <i className="fas fa-landmark"></i>
-            <span>Executive Consultation Chambers &bull; Nikol, Ahmedabad</span>
+            <span>EXECUTIVE CONSULTATION CHAMBERS &bull; NIKOL, AHMEDABAD</span>
           </div>
 
-          <h1>
-            Direct Access to <span className="hero-gradient-text">Chartered Tax Advisors</span>
+          <h1 className="contact-main-title">
+            Direct Access to <span className="title-burnished-gold">Chartered Tax Advisors.</span>
           </h1>
-          <p>
-            Schedule a 1-on-1 consultation for complex Income Tax notices, GST audits, corporate setup, or accounting retainers.
+
+          <p className="contact-subtitle">
+            Schedule an executive 1-on-1 consultation for complex Income Tax notices, GST audits, corporate structuring, or accounting retainers under strict ICAI fiduciary privilege.
           </p>
 
           {/* 3-Pillar Institutional Reassurance Strip */}
           <div className="hero-reassurance-strip">
             <div className="reassurance-pill">
               <i className="fas fa-bolt"></i>
-              <span>Rapid Callback (&lt; 30 Mins)</span>
+              <span>Rapid Triage (&lt; 30 Mins)</span>
             </div>
             <div className="reassurance-divider"></div>
             <div className="reassurance-pill">
-              <i className="fas fa-shield-alt"></i>
+              <i className="fas fa-shield-halved"></i>
               <span>100% Client Privilege &amp; NDA Bound</span>
             </div>
             <div className="reassurance-divider"></div>
             <div className="reassurance-pill">
-              <i className="fas fa-balance-scale"></i>
+              <i className="fas fa-scale-balanced"></i>
               <span>ICAI Regulated Practice</span>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* ============================================================
-          2. SYMMETRICAL 50/50 TWO-COLUMN BENTO STAGE
+          2. 4-CHANNEL QUICK ACCESS STRIP (1-Click Actions & Copy)
           ============================================================ */}
-      <div className="container contact-equal-two-col-grid">
-        <div className="section-top-accent-line" aria-hidden="true"></div>
-        {/* ========================================================
-            COLUMN 1 (50%): Direct Advisory Hub & Communication Channels
-            ======================================================== */}
-        <div className="contact-col-half">
-          <div className="contact-bento-card">
-            {/* Top Bar matching Right Form Tabs */}
-            <div className="channels-top-bar">
-              <div className={`channels-status-pill ${officeStatus.isOpen ? 'open' : 'after-hours'}`}>
-                <span className="channels-pulse-dot"></span>
-                <span>{officeStatus.badgeText}</span>
-              </div>
-              <div className="channels-top-tag">
-                <i className="fas fa-location-dot"></i>
-                <span>Nikol &bull; Ahmedabad</span>
-              </div>
-            </div>
-
-            <div className="contact-card-header executive-header-style">
-              <div className="card-header-icon">
+      <section className="contact-channels-strip-section container">
+        <div className="channels-grid-4">
+          {/* Card 1: Direct Helpline */}
+          <div className="channel-quick-card">
+            <div className="channel-quick-header">
+              <div className="channel-icon-circle icon-amber">
                 <i className="fas fa-phone-volume"></i>
               </div>
-              <div className="card-header-text">
-                <span className="card-kicker">INSTITUTIONAL ADVISORY DESK</span>
-                <h2>Speak Directly With Our Advisors</h2>
+              <div className="channel-meta-text">
+                <span className="channel-micro-label">DIRECT CA HELPLINE</span>
+                <strong className="channel-main-val">{phone}</strong>
               </div>
             </div>
+            <p className="channel-quick-desc">{workingHours} IST &bull; Live triage</p>
+            <div className="channel-quick-actions">
+              <a href={`tel:${cleanPhone}`} className="btn-quick-primary btn-call">
+                <i className="fas fa-phone"></i> Call Now
+              </a>
+              <button
+                type="button"
+                onClick={(e) => handleCopy(phone, 'phone-strip', e)}
+                className={`btn-quick-secondary ${copiedField === 'phone-strip' ? 'copied' : ''}`}
+                title="Copy Phone Number"
+              >
+                <i className={copiedField === 'phone-strip' ? 'fas fa-check' : 'far fa-copy'}></i>
+                <span>{copiedField === 'phone-strip' ? 'Copied' : 'Copy'}</span>
+              </button>
+            </div>
+          </div>
 
-            <div className="contact-card-body">
-              <p className="contact-intro-text">
-                Connect directly with our senior chartered accountants. Whether you represent an emerging enterprise or require personal tax representation, we maintain prompt, transparent counsel.
-              </p>
+          {/* Card 2: Official Advisory Inbox */}
+          <div className="channel-quick-card">
+            <div className="channel-quick-header">
+              <div className="channel-icon-circle icon-sapphire">
+                <i className="fas fa-envelope-open-text"></i>
+              </div>
+              <div className="channel-meta-text">
+                <span className="channel-micro-label">OFFICIAL STATUTORY INBOX</span>
+                <strong className="channel-main-val email-truncate" title={email}>{email}</strong>
+              </div>
+            </div>
+            <p className="channel-quick-desc">Inquiries triaged within 2–4 business hours</p>
+            <div className="channel-quick-actions">
+              <a href={`mailto:${email}`} className="btn-quick-primary btn-mail">
+                <i className="fas fa-paper-plane"></i> Send Email
+              </a>
+              <button
+                type="button"
+                onClick={(e) => handleCopy(email, 'email-strip', e)}
+                className={`btn-quick-secondary ${copiedField === 'email-strip' ? 'copied' : ''}`}
+                title="Copy Email Address"
+              >
+                <i className={copiedField === 'email-strip' ? 'fas fa-check' : 'far fa-copy'}></i>
+                <span>{copiedField === 'email-strip' ? 'Copied' : 'Copy'}</span>
+              </button>
+            </div>
+          </div>
 
-              <div className="info-cards-stack">
-                {/* Direct Helpline Card */}
-                <div className="contact-interactive-card">
-                  <div className="interactive-card-left">
-                    <div className="channel-icon-box">
-                      <i className="fas fa-phone-alt"></i>
-                    </div>
-                    <div className="channel-text-box">
-                      <span className="channel-label">Direct CA Helpline</span>
-                      <strong className="channel-primary-val">{phone}</strong>
-                      <span className="channel-sub">{workingHours} IST</span>
-                    </div>
+          {/* Card 3: Nikol Practice Chambers */}
+          <div className="channel-quick-card">
+            <div className="channel-quick-header">
+              <div className="channel-icon-circle icon-emerald">
+                <i className="fas fa-building-columns"></i>
+              </div>
+              <div className="channel-meta-text">
+                <span className="channel-micro-label">PHYSICAL CHAMBERS</span>
+                <strong className="channel-main-val">612, Hill Town Square</strong>
+              </div>
+            </div>
+            <p className="channel-quick-desc">Nikol, Ahmedabad &bull; Client parking available</p>
+            <div className="channel-quick-actions">
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-quick-primary btn-map"
+              >
+                <i className="fas fa-location-arrow"></i> Google Maps
+              </a>
+              <button
+                type="button"
+                onClick={(e) => handleCopy(address, 'address-strip', e)}
+                className={`btn-quick-secondary ${copiedField === 'address-strip' ? 'copied' : ''}`}
+                title="Copy Office Address"
+              >
+                <i className={copiedField === 'address-strip' ? 'fas fa-check' : 'far fa-copy'}></i>
+                <span>{copiedField === 'address-strip' ? 'Copied' : 'Copy'}</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Card 4: Live WhatsApp Advisory */}
+          <div className="channel-quick-card wa-accent-card">
+            <div className="channel-quick-header">
+              <div className="channel-icon-circle icon-wa">
+                <i className="fab fa-whatsapp"></i>
+              </div>
+              <div className="channel-meta-text">
+                <div className="wa-title-row">
+                  <span className="channel-micro-label">DIRECT WHATSAPP</span>
+                  <span className="live-wa-badge">
+                    <span className="wa-pulse-dot"></span> Online
+                  </span>
+                </div>
+                <strong className="channel-main-val">Chat with Senior CA</strong>
+              </div>
+            </div>
+            <p className="channel-quick-desc">Notice triage &amp; estimates &bull; &lt; 10 min response</p>
+            <div className="channel-quick-actions">
+              <a
+                href={defaultWhatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-quick-primary btn-wa"
+              >
+                <i className="fab fa-whatsapp"></i> Open WhatsApp &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+          3. SYMMETRICAL 50/50 TWO-COLUMN COMMAND CENTER
+          ============================================================ */}
+      <section className="contact-main-console-section container">
+        <div className="contact-equal-two-col-grid">
+          {/* ========================================================
+              COLUMN 1 (50%): Executive Partner Desk & Chambers Dossier
+              ======================================================== */}
+          <div className="contact-col-half">
+            <div className="desk-dossier-card">
+              {/* Top Bar matching Right Form Tabs */}
+              <div className="dossier-top-bar">
+                <div className={`dossier-status-pill ${officeStatus.isOpen ? 'open' : 'after-hours'}`}>
+                  <span className="dossier-pulse-dot"></span>
+                  <span>{officeStatus.badgeText}</span>
+                </div>
+                <div className="dossier-location-tag">
+                  <i className="fas fa-location-dot"></i>
+                  <span>Nikol Chambers &bull; Ahmedabad</span>
+                </div>
+              </div>
+
+              <div className="dossier-card-body">
+                {/* Header Block */}
+                <div className="dossier-header-block">
+                  <div className="dossier-header-icon-wrap">
+                    <i className="fas fa-scale-balanced"></i>
                   </div>
-                  <div className="channel-action-group">
-                    <a href={`tel:${cleanPhone}`} className="btn-channel-action call" title="Call Now">
-                      <i className="fas fa-phone-flip"></i> Call
-                    </a>
-                    <button
-                      type="button"
-                      onClick={(e) => handleCopy(phone, 'phone', e)}
-                      className={`btn-channel-copy ${copiedField === 'phone' ? 'copied' : ''}`}
-                      title="Copy Phone Number"
-                    >
-                      <i className={copiedField === 'phone' ? 'fas fa-check' : 'far fa-copy'}></i>
-                      <span>{copiedField === 'phone' ? 'Copied' : 'Copy'}</span>
-                    </button>
+                  <div className="dossier-header-text">
+                    <span className="dossier-kicker">INSTITUTIONAL ADVISORY DESK</span>
+                    <h2>Speak Directly With Designated Partners</h2>
                   </div>
                 </div>
 
-                {/* Official Advisory Inbox */}
-                <div className="contact-interactive-card">
-                  <div className="interactive-card-left">
-                    <div className="channel-icon-box">
-                      <i className="fas fa-envelope"></i>
+                <p className="dossier-intro-paragraph">
+                  We practice absolute fiduciary transparency under ICAI ethics. Connect directly with senior chartered accountants—no intermediary call centers, no junior delegation.
+                </p>
+
+                {/* 4 Fiduciary Checklist Items (Matching Proposal Standard) */}
+                <div className="fiduciary-checklist-stack">
+                  <div className="fiduciary-check-item">
+                    <div className="check-icon-disc">
+                      <i className="fas fa-check"></i>
                     </div>
-                    <div className="channel-text-box">
-                      <span className="channel-label">Official Advisory Inbox</span>
-                      <strong className="channel-primary-val text-break-email">{email}</strong>
-                      <span className="channel-sub">Inquiries acknowledged within 2-4 hours</span>
+                    <div className="check-text-group">
+                      <strong>Senior Partner Direct Representation</strong>
+                      <span>Direct consultation and oversight by designated Fellow Chartered Accountant (FCA).</span>
                     </div>
                   </div>
-                  <div className="channel-action-group">
-                    <a href={`mailto:${email}`} className="btn-channel-action mail" title="Send Email">
-                      <i className="fas fa-paper-plane"></i> Write
-                    </a>
-                    <button
-                      type="button"
-                      onClick={(e) => handleCopy(email, 'email', e)}
-                      className={`btn-channel-copy ${copiedField === 'email' ? 'copied' : ''}`}
-                      title="Copy Email Address"
-                    >
-                      <i className={copiedField === 'email' ? 'fas fa-check' : 'far fa-copy'}></i>
-                      <span>{copiedField === 'email' ? 'Copied' : 'Copy'}</span>
-                    </button>
+
+                  <div className="fiduciary-check-item">
+                    <div className="check-icon-disc">
+                      <i className="fas fa-check"></i>
+                    </div>
+                    <div className="check-text-group">
+                      <strong>Mutual Non-Disclosure Guarantee</strong>
+                      <span>Statutory client secrecy and non-disclosure agreement prior to inspecting books or notice dossiers.</span>
+                    </div>
+                  </div>
+
+                  <div className="fiduciary-check-item">
+                    <div className="check-icon-disc">
+                      <i className="fas fa-check"></i>
+                    </div>
+                    <div className="check-text-group">
+                      <strong>Fixed Retainers, Zero Surcharges</strong>
+                      <span>Upfront fee certainty with zero hidden hourly billable charges or surprise compliance surcharges.</span>
+                    </div>
+                  </div>
+
+                  <div className="fiduciary-check-item">
+                    <div className="check-icon-disc">
+                      <i className="fas fa-check"></i>
+                    </div>
+                    <div className="check-text-group">
+                      <strong>Virtual &amp; In-Chambers Flexibility</strong>
+                      <span>Encrypted HD screen-sharing via Google Meet or private conference room sessions in Nikol.</span>
+                    </div>
                   </div>
                 </div>
 
-                {/* Executive Headquarters Card */}
-                <div className="contact-interactive-card">
-                  <div className="interactive-card-left">
-                    <div className="channel-icon-box">
-                      <i className="fas fa-building"></i>
-                    </div>
-                    <div className="channel-text-box">
-                      <span className="channel-label">Executive Headquarters</span>
-                      <strong className="channel-primary-val">{address}</strong>
-                      <span className="channel-sub">Open for scheduled in-person client sessions</span>
-                    </div>
-                  </div>
-                  <div className="channel-action-group">
-                    <a
-                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-channel-action map"
-                      title="Open Google Maps"
-                    >
-                      <i className="fas fa-location-arrow"></i> Map
-                    </a>
-                    <button
-                      type="button"
-                      onClick={(e) => handleCopy(address, 'address', e)}
-                      className={`btn-channel-copy ${copiedField === 'address' ? 'copied' : ''}`}
-                      title="Copy Office Address"
-                    >
-                      <i className={copiedField === 'address' ? 'fas fa-check' : 'far fa-copy'}></i>
-                      <span>{copiedField === 'address' ? 'Copied' : 'Copy'}</span>
-                    </button>
-                  </div>
-                </div>
-
-                {/* Save Contact Digital vCard Widget */}
-                <div className="vcard-bento-widget">
-                  <div className="vcard-widget-left">
-                    <div className="vcard-icon-box">
-                      <i className="fas fa-id-card-clip"></i>
-                    </div>
-                    <div className="vcard-text-box">
-                      <strong>Save Firm Contact to Phone</strong>
-                      <span>Direct CA numbers, email, and Nikol GPS coordinates (.vcf)</span>
-                    </div>
-                  </div>
-                  <button type="button" onClick={handleDownloadVCard} className="btn-vcard-action">
-                    <i className="fas fa-download"></i> Save Contact
-                  </button>
-                </div>
-
-                {/* Clean, Executive WhatsApp Channel Card */}
-                <div className="contact-interactive-card wa-channel-card">
-                  <div className="interactive-card-left">
-                    <div className="channel-icon-box wa-icon-box">
-                      <i className="fab fa-whatsapp"></i>
-                    </div>
-                    <div className="channel-text-box">
-                      <div className="wa-card-header-row">
-                        <span className="channel-label">Direct WhatsApp Advisory</span>
-                        <span className="wa-live-pill">
-                          <span className="wa-pulse-dot"></span> Online
-                        </span>
-                      </div>
-                      <strong className="channel-primary-val">Chat with Senior CA Partner</strong>
-                      <span className="channel-sub">Direct notice triage &amp; estimates &bull; Typically &lt; 10 min response</span>
-                    </div>
-                  </div>
-                  <div className="channel-action-group">
-                    <a
-                      href={defaultWhatsappUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-channel-action wa-action-btn"
-                      title="Chat on WhatsApp"
-                    >
-                      <i className="fab fa-whatsapp"></i> Chat &rarr;
-                    </a>
-                  </div>
-                </div>
-
-                {/* Quick Prompts Bar */}
-                <div className="wa-quick-prompts-bar">
-                  <span className="prompts-title">Quick Topics:</span>
-                  <div className="prompts-links-group">
+                {/* Quick Practice Topics Strip */}
+                <div className="dossier-prompts-block">
+                  <span className="prompts-kicker">DIRECT WHATSAPP TOPICS:</span>
+                  <div className="prompts-pill-row">
                     <a
                       href={`https://wa.me/919510984735?text=${encodeURIComponent('Hello Shree Chamunda Associates, I received an Income Tax / GST Notice and need urgent CA assistance.')}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="prompt-link"
+                      className="prompt-chip"
                     >
-                      <i className="fas fa-shield-halved"></i> Notice Defense
+                      <i className="fas fa-shield-halved"></i> Notice Defense (&lt; 48h)
                     </a>
-                    <span className="prompt-separator">&bull;</span>
                     <a
                       href={`https://wa.me/919510984735?text=${encodeURIComponent('Hello, I want to incorporate a new Company / LLP and need guidance.')}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="prompt-link"
+                      className="prompt-chip"
                     >
                       <i className="fas fa-building"></i> Company Setup
                     </a>
-                    <span className="prompt-separator">&bull;</span>
                     <a
                       href={`https://wa.me/919510984735?text=${encodeURIComponent('Hello, I would like to file my annual Income Tax Return & plan my taxes.')}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="prompt-link"
+                      className="prompt-chip"
                     >
                       <i className="fas fa-file-invoice-dollar"></i> ITR &amp; Tax Audit
                     </a>
+                    <a
+                      href={`https://wa.me/919510984735?text=${encodeURIComponent('Hello, I am interested in Corporate GST & Accounting Retainers for our business.')}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="prompt-chip"
+                    >
+                      <i className="fas fa-handshake"></i> Corporate Retainer
+                    </a>
                   </div>
+                </div>
+
+                {/* Fiduciary Response SLA Box */}
+                <div className="dossier-sla-box">
+                  <div className="sla-top-line">
+                    <span className="sla-badge-tag">
+                      <i className="fas fa-certificate"></i> ICAI Fiduciary Charter
+                    </span>
+                    <span className="sla-guarantee-tag">
+                      <span className="pulse-dot-green"></span> Guaranteed SLA
+                    </span>
+                  </div>
+                  <div className="sla-columns-grid">
+                    <div className="sla-col-item">
+                      <div className="sla-mini-icon"><i className="fas fa-bolt"></i></div>
+                      <div className="sla-info">
+                        <strong>&lt; 30 Mins Callback</strong>
+                        <span>Business hours triage</span>
+                      </div>
+                    </div>
+                    <div className="sla-col-item">
+                      <div className="sla-mini-icon"><i className="fas fa-user-lock"></i></div>
+                      <div className="sla-info">
+                        <strong>Mutual NDA Bound</strong>
+                        <span>Statutory secrecy</span>
+                      </div>
+                    </div>
+                    <div className="sla-col-item">
+                      <div className="sla-mini-icon"><i className="fas fa-user-tie"></i></div>
+                      <div className="sla-info">
+                        <strong>FCA Oversight</strong>
+                        <span>Zero junior delegation</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Save Contact Digital vCard Widget */}
+                <div className="dossier-vcard-widget">
+                  <div className="vcard-widget-info">
+                    <div className="vcard-icon-frame">
+                      <i className="fas fa-id-card-clip"></i>
+                    </div>
+                    <div className="vcard-text-group">
+                      <strong>Save Firm Contact to Phone</strong>
+                      <span>Direct CA numbers, email, and Nikol GPS coordinates (.vcf)</span>
+                    </div>
+                  </div>
+                  <button type="button" onClick={handleDownloadVCard} className="btn-vcard-download">
+                    <i className="fas fa-download"></i> Save Contact (.vcf)
+                  </button>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* ========================================================
-            COLUMN 2 (50%): Executive Consultation & Intake Form
-            ======================================================== */}
-        <div className="contact-col-half">
-          <ContactForm />
+          {/* ========================================================
+              COLUMN 2 (50%): Executive Consultation & Intake Form
+              ======================================================== */}
+          <div className="contact-col-half">
+            <ContactForm />
+          </div>
         </div>
-      </div>
+      </section>
 
       {/* ============================================================
-          3. DEDICATED ARCHITECTURAL CHAMBERS & TRANSIT SECTION
+          4. ARCHITECTURAL CHAMBERS & TRANSIT SECTION
           ============================================================ */}
       <section className="contact-chambers-section container">
-        <div className="section-top-accent-line" aria-hidden="true"></div>
-        <div className="chambers-card-wrapper">
+        <div className="chambers-editorial-card">
           <div className="chambers-narrative-col">
-            <div className="about-eyebrow-tag">
+            <div className="chambers-eyebrow-tag">
               <i className="fas fa-location-dot"></i>
               <span>PHYSICAL PRESENCE &bull; CENTRAL CHAMBERS</span>
             </div>
@@ -471,11 +558,11 @@ const Contact = () => {
               </a>
               <button
                 type="button"
-                onClick={(e) => handleCopy(address, 'address', e)}
-                className={`btn-directions-secondary ${copiedField === 'address' ? 'copied' : ''}`}
+                onClick={(e) => handleCopy(address, 'address-chambers', e)}
+                className={`btn-directions-secondary ${copiedField === 'address-chambers' ? 'copied' : ''}`}
               >
-                <i className={copiedField === 'address' ? 'fas fa-check' : 'far fa-copy'}></i>
-                <span>{copiedField === 'address' ? 'Address Copied!' : 'Copy Chamber Address'}</span>
+                <i className={copiedField === 'address-chambers' ? 'fas fa-check' : 'far fa-copy'}></i>
+                <span>{copiedField === 'address-chambers' ? 'Address Copied!' : 'Copy Chamber Address'}</span>
               </button>
             </div>
           </div>
@@ -527,18 +614,17 @@ const Contact = () => {
       </section>
 
       {/* ============================================================
-          4. INSTITUTIONAL CONSULTATION PROTOCOLS & FAQS
+          5. INSTITUTIONAL CONSULTATION PROTOCOLS & FAQS (Image 3 Style)
           ============================================================ */}
       {faqs.length > 0 && (
         <section className="contact-faqs-section container">
-          <div className="section-top-accent-line" aria-hidden="true"></div>
           <div className="faqs-section-header">
-            <span className="about-eyebrow-tag">
+            <div className="faqs-eyebrow-badge">
               <i className="fas fa-circle-question"></i>
-              <span>FREQUENTLY ASKED QUESTIONS</span>
-            </span>
-            <h2>Consultation &amp; Practice Protocols</h2>
-            <p>Everything you need to know about scheduling, document confidentiality, and advisory timelines.</p>
+              <span>REGULATORY ETHICS &bull; FAQS</span>
+            </div>
+            <h2>Frequently Asked Questions on Consultations</h2>
+            <p>Clear, binding policies regarding advisory sessions, confidentiality, and statutory representation under ICAI standards.</p>
           </div>
 
           <div className="faqs-accordion-wrapper">
@@ -574,7 +660,7 @@ const Contact = () => {
             <div className="emergency-icon"><i className="fas fa-shield-halved"></i></div>
             <div className="emergency-text">
               <strong>Facing an Urgent Statutory Assessment or IT / GST Notice Deadline?</strong>
-              <p>Our senior direct tax attorneys and CAs prioritize urgent notice triage.</p>
+              <p>Our senior direct tax attorneys and CAs prioritize urgent notice triage within 30 minutes.</p>
             </div>
             <a href={`tel:${cleanPhone}`} className="btn-emergency-hotline">
               <i className="fas fa-phone-volume"></i>

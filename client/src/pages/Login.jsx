@@ -472,7 +472,7 @@ const Login = () => {
           <div className="auth-security-footer">
             <div className="auth-security-note">
               <i className="fas fa-lock"></i>
-              <span>256-Bit SSL Encrypted Connection &bull; Bank-Grade Compliance</span>
+              <span>SSL Encrypted Connection &bull; Bank-Grade Compliance</span>
             </div>
             <div className="auth-footer-legal-links">
               <Link to="/privacy-policy">Privacy Policy</Link>

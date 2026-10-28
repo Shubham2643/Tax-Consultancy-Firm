@@ -695,7 +695,7 @@ const Blog = () => {
 
                       <div className="newsletter-security-note">
                         <i className="fas fa-lock"></i>
-                        <span>256-Bit SSL Encrypted &bull; Strictly Confidential &bull; 1-Click Unsubscribe</span>
+                        <span>SSL Encrypted &bull; Strictly Confidential &bull; 1-Click Unsubscribe</span>
                       </div>
                     </form>
                   )}

@@ -65,7 +65,7 @@
   min-height: 100vh;
   background-color: var(--admin-bg-base);
   color: var(--admin-text-main);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   overflow-x: hidden;
   position: relative;
   width: 100%;

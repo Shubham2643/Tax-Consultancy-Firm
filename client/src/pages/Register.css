@@ -158,7 +158,7 @@
   border: 1.5px solid #e2e8f0;
   border-radius: var(--radius-sm);
   font-size: 0.95rem;
-  font-family: 'Inter', sans-serif;
+  font-family: inherit;
   color: var(--dark);
   background: var(--light);
   transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
@@ -201,7 +201,7 @@
   color: #fff;
   font-size: 1rem;
   font-weight: 600;
-  font-family: 'Inter', sans-serif;
+  font-family: inherit;
   cursor: pointer;
   transition: background 0.25s, transform 0.15s, box-shadow 0.25s;
   box-shadow: 0 4px 14px rgba(26, 62, 114, 0.3);

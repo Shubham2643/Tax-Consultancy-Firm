@@ -20,7 +20,7 @@ class ErrorBoundary extends Component {
         <div style={{
           display: 'flex', flexDirection: 'column', alignItems: 'center',
           justifyContent: 'center', minHeight: '100vh', padding: '2rem',
-          fontFamily: 'Arial, sans-serif', textAlign: 'center',
+          fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif", textAlign: 'center',
           background: '#f8fafc', color: '#0f172a'
         }}>
           <h1 style={{ fontSize: '2rem', marginBottom: '1rem', color: '#ef4444' }}>Something went wrong</h1>

@@ -516,7 +516,7 @@ const Portal = () => {
     return (
       <div className="portal-loading-screen">
         <div className="portal-spinner"></div>
-        <p>Verifying 256-bit encrypted session...</p>
+        <p>Verifying encrypted session...</p>
       </div>
     );
   }
@@ -1123,7 +1123,7 @@ const Portal = () => {
                 <div className="hero-text-content">
                   <div className="hero-kicker-badge">
                     <i className="fas fa-shield-halved"></i>
-                    <span>256-BIT ENCRYPTED VAULT</span>
+                    <span>ENCRYPTED CLIENT VAULT</span>
                   </div>
                   <h1>Fast &amp; Secure Document Vault</h1>
                   <p>Batch upload financial statements, ITR computations, Form-16, and GST ledgers with instant virus scan and direct CA partner triage.</p>
@@ -1190,7 +1190,7 @@ const Portal = () => {
                         <i className="fas fa-plus-circle"></i> Browse Files to Upload
                       </span>
                       <div className="dropzone-security-trust">
-                        <span><i className="fas fa-lock"></i> 256-Bit SSL Encrypted</span>
+                        <span><i className="fas fa-lock"></i> SSL Encrypted</span>
                         <span className="trust-dot">&bull;</span>
                         <span><i className="fas fa-shield-virus"></i> Automated Anti-Virus Scan</span>
                         <span className="trust-dot">&bull;</span>

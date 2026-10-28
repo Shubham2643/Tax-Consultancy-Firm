@@ -125,7 +125,7 @@ const TrustSection = ({ onSelectCategory }) => {
       checkpoints: [
         'Signed advisory partner verification review',
         'Instant government filing acknowledgment generated',
-        'Immediate archival to 256-bit encrypted client cloud vault',
+        'Immediate archival to encrypted client cloud vault',
       ],
       tag: 'Complete Legal Proof Ready for Banking & Tenders',
     },
@@ -316,13 +316,13 @@ const TrustSection = ({ onSelectCategory }) => {
               </div>
 
               <p className="fiduciary-desc">
-                Protected by strict ICAI confidentiality bylaws and formal enterprise NDAs. Your financial ledgers, tax filings, and corporate documents are housed in a secure 256-bit encrypted cloud vault accessible 24/7.
+                Protected by strict ICAI confidentiality bylaws and formal enterprise NDAs. Your financial ledgers, tax filings, and corporate documents are housed in a secure encrypted cloud vault accessible 24/7.
               </p>
 
               <div className="fiduciary-benefits-list">
                 <div className="fiduciary-benefit-row">
                   <i className="fas fa-check-circle text-emerald"></i>
-                  <span>256-Bit SSL encrypted cloud repository for paperless audits</span>
+                  <span>SSL-encrypted cloud repository for paperless audits</span>
                 </div>
                 <div className="fiduciary-benefit-row">
                   <i className="fas fa-check-circle text-emerald"></i>

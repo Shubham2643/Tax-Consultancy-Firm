@@ -139,8 +139,8 @@ const Footer = () => {
             <div className="bento-card bento-card-brand">
               <div className="bento-card-header">
                 <span className="bento-pill-tag">
-                  <i className="fas fa-certificate" aria-hidden="true"></i>
-                  <span>Chartered Accountancy Practice</span>
+                  <i className="fas fa-shield-alt" aria-hidden="true"></i>
+                  <span>Corporate Tax &amp; Advisory Practice</span>
                 </span>
                 <span className="bento-accent-dot"></span>
               </div>
@@ -167,17 +167,17 @@ const Footer = () => {
               </Link>
 
               <p className="bento-brand-manifesto">
-                Premier Chartered Accountancy and Corporate Advisory practice delivering precision direct taxation, GST scrutiny defense, statutory ROC compliance, and audit assurance under ICAI regulatory ethics.
+                Premier Corporate Tax &amp; Regulatory Advisory practice delivering precision direct taxation, GST scrutiny defense, statutory ROC filings, and audit assurance under senior compliance ethics.
               </p>
 
               <div className="bento-credentials-cluster">
                 <div className="bento-credential-item item-icai">
                   <i className="fas fa-shield-check" aria-hidden="true"></i>
-                  <span>ICAI Regulated Practice</span>
+                  <span>Statutory Compliance Practice</span>
                 </div>
                 <div className="bento-credential-item item-security">
                   <i className="fas fa-lock" aria-hidden="true"></i>
-                  <span>256-Bit Vault Custody</span>
+                  <span>Encrypted Vault Custody</span>
                 </div>
               </div>
 
@@ -216,12 +216,12 @@ const Footer = () => {
 
               <div className="bento-advisory-items">
                 {/* Phone Hotline */}
-                <a href={`tel:${rawPhone}`} className="bento-advisory-row" title="Call Direct CA Helpline">
+                <a href={`tel:${rawPhone}`} className="bento-advisory-row" title="Call Direct Advisory Helpline">
                   <div className="bento-row-icon icon-phone">
                     <i className="fas fa-phone-volume" aria-hidden="true"></i>
                   </div>
                   <div className="bento-row-details">
-                    <span className="bento-row-kicker">DIRECT CA HELPLINE</span>
+                    <span className="bento-row-kicker">DIRECT ADVISORY HELPLINE</span>
                     <span className="bento-row-val">{phone}</span>
                     <span className="bento-row-sub">Tap to Call &bull; Instant Partner Escalation</span>
                   </div>

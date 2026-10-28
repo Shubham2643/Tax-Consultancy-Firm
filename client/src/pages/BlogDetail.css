@@ -6,7 +6,7 @@
 .blog-detail-page {
   background-color: #f8fafc;
   min-height: 100vh;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   color: #0f172a;
   overflow-x: hidden;
 }
@@ -1464,7 +1464,7 @@
   justify-content: center;
   flex-shrink: 0;
   transition: all 0.2s ease;
-  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-family: inherit;
 }
 
 .toc-item-text {

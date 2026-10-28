@@ -194,7 +194,7 @@ const seedData = async () => {
           'Monthly GSTR-1 & GSTR-3B filings',
           'Quarterly Advance Tax calculation (Sec 208/211)',
           'Year-End Balance Sheet & Profit/Loss drafting',
-          '256-Bit Encrypted Client Vault & 24h SLA',
+          'Encrypted Client Vault & 24h SLA',
         ],
         isPopular: false,
         order: 1,

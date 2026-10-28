@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useSEO from '../hooks/useSEO';
 import { getPricing, submitContact } from '../api';
@@ -9,17 +9,17 @@ const STATUTORY_RETAINER_TIERS = [
   {
     id: 'starter',
     code: 'TIER 01',
-    roman: 'I',
     name: 'Foundational Practice Retainer',
+    shortName: 'Foundational Retainer',
     target: 'Sole Proprietors, Freelancers & Emerging MSMEs',
     priceMonthly: 2999,
     priceAnnual: 2499,
-    tierClass: 'tier-card-emerald',
-    volumeTag: 'Up to 50 Transactions / Month',
-    volumeIcon: 'fas fa-receipt',
+    tierClass: 'tier-card-starter',
+    volumeTag: 'Up to 50 Vouchers / Mo',
+    volumeIcon: 'fa-solid fa-receipt',
     badge: 'FOUNDATIONAL STATUTORY',
-    roiBadge: '⏱️ Eliminates 15+ Hours Monthly',
-    icon: 'fas fa-scale-unbalanced',
+    roiBadge: 'Eliminates 15+ Hours Monthly',
+    icon: 'fa-solid fa-scale-unbalanced',
     summary:
       'Essential statutory accounting, monthly GST filings, advance tax forecasting, and year-end financial statement preparation engineered for proprietorships and independent practitioners.',
     disciplines: [
@@ -41,7 +41,7 @@ const STATUTORY_RETAINER_TIERS = [
       },
       {
         title: 'Vault & Written SLA',
-        detail: '256-Bit encrypted Client Vault access with guaranteed 24-hour query turnaround.',
+        detail: 'Encrypted Client Vault access with guaranteed 24-hour query turnaround.',
       },
     ],
     matrix: {
@@ -60,18 +60,18 @@ const STATUTORY_RETAINER_TIERS = [
   {
     id: 'growth',
     code: 'TIER 02',
-    roman: 'II',
     name: 'Corporate & MSME Statutory Retainer',
+    shortName: 'Corporate & MSME Retainer',
     target: 'Private Limited Companies, Active LLPs & Trading MSMEs',
     priceMonthly: 5999,
     priceAnnual: 4999,
-    tierClass: 'tier-card-gold',
+    tierClass: 'tier-card-growth',
     isPopular: true,
-    volumeTag: 'Up to 150 Transactions / Month',
-    volumeIcon: 'fas fa-layer-group',
-    badge: 'THE FIRM BENCHMARK • MOST RETAINED',
-    roiBadge: '💰 Recovers ~₹1.2L+ Blocked ITC',
-    icon: 'fas fa-building-columns',
+    volumeTag: 'Up to 150 Vouchers / Mo',
+    volumeIcon: 'fa-solid fa-layer-group',
+    badge: 'MOST RETAINED • FIRM BENCHMARK',
+    roiBadge: 'Recovers ~₹1.2L+ Blocked ITC',
+    icon: 'fa-solid fa-building-columns',
     summary:
       'Complete accounting outsourcing, deep algorithmic GSTR-2B input tax matching, quarterly TDS returns, annual ROC secretarial compliance, and direct Senior CA partner oversight.',
     disciplines: [
@@ -116,17 +116,17 @@ const STATUTORY_RETAINER_TIERS = [
   {
     id: 'cfo',
     code: 'TIER 03',
-    roman: 'III',
     name: 'Enterprise & Multi-State Retainer',
+    shortName: 'Enterprise Virtual CFO',
     target: 'Multi-Branch Corporates, Factories & Turnover > ₹5 Cr',
     priceMonthly: 24999,
     priceAnnual: 20999,
-    tierClass: 'tier-card-sapphire',
-    volumeTag: 'Uncapped Multi-Branch Transactions',
-    volumeIcon: 'fas fa-network-wired',
+    tierClass: 'tier-card-enterprise',
+    volumeTag: 'Uncapped Enterprise Volume',
+    volumeIcon: 'fa-solid fa-network-wired',
     badge: 'ENTERPRISE AUDIT & CFO',
-    roiBadge: '🛡️ 100% Tax Audit Defense Coverage',
-    icon: 'fas fa-shield-halved',
+    roiBadge: '100% Tax Audit Defense Coverage',
+    icon: 'fa-solid fa-shield-halved',
     summary:
       'Turnkey executive financial leadership, corporate ITR-6 direct tax filing, Section 44AB statutory tax audit defense, multi-GSTIN cross-state consolidations, and ITAT appellate representation.',
     disciplines: [
@@ -171,18 +171,18 @@ const STATUTORY_RETAINER_TIERS = [
   {
     id: 'incorporation',
     code: 'TIER 04',
-    roman: 'IV',
     name: 'Turnkey Corporate Incorporation Retainer',
+    shortName: 'Turnkey Incorporation',
     target: 'New Startups, Foreign Subsidiaries & Expanding Ventures',
     priceMonthly: 49999,
     priceAnnual: 49999,
-    tierClass: 'tier-card-amethyst',
+    tierClass: 'tier-card-incorporation',
     isOneTime: true,
-    volumeTag: 'Complete Turnkey Entity Formation',
-    volumeIcon: 'fas fa-bolt',
-    badge: 'ONE-TIME STATUTORY FORMATION',
-    roiBadge: '⚡ 5–7 Day Guaranteed Entity Incorporation',
-    icon: 'fas fa-stamp',
+    volumeTag: 'Complete Entity Formation',
+    volumeIcon: 'fa-solid fa-bolt',
+    badge: 'ONE-TIME FORMATION MANDATE',
+    roiBadge: '5–7 Day Guaranteed Incorporation',
+    icon: 'fa-solid fa-stamp',
     summary:
       'Complete legal entity formation under MCA SPICe+, 2 Class-3 USB cryptographic DSCs, DINs, PAN/TAN, DPIIT 80-IAC startup tax holiday filing, and complimentary 60-day post-incorporation advisory desk.',
     disciplines: [
@@ -226,31 +226,402 @@ const STATUTORY_RETAINER_TIERS = [
   },
 ];
 
+const FAQ_CATEGORIES = [
+  { id: 'all', label: 'All Questions', count: 6 },
+  { id: 'fees', label: 'Fees & Challans', count: 2 },
+  { id: 'defense', label: 'Notice Defense', count: 1 },
+  { id: 'cfo', label: 'Virtual CFO', count: 1 },
+  { id: 'nda', label: 'Legal & NDA', count: 1 },
+  { id: 'tax', label: 'GST ITC', count: 1 },
+];
+
 const PRICING_FAQS = [
   {
+    id: 'challans',
+    category: 'fees',
+    categoryLabel: 'Fee Transparency',
+    icon: 'fa-solid fa-file-invoice-dollar',
     q: 'How do you delineate government statutory challans from professional retainer fees?',
     a: 'We practice absolute fiduciary transparency under ICAI ethics. Government portal fees (such as actual GST cash liability, MCA portal filing fees, or income tax challans) are paid directly through government payment gateways or billed at actual treasury challan receipts. Our professional retainer fee is strictly fixed and scope-locked, eliminating arbitrary surcharges.',
+    takeaway: 'Zero markups on treasury challans — all government taxes are remitted directly to statutory gateways or billed at actual treasury receipts.',
   },
   {
+    id: 'scaling',
+    category: 'fees',
+    categoryLabel: 'Retainer Scalability',
+    icon: 'fa-solid fa-arrow-trend-up',
     q: 'Can our firm upgrade or scale retainers as our transaction volume grows?',
     a: 'Yes, seamlessly. Many Ahmedabad and Gujarat ventures begin on our Foundational tier and transition to Corporate Retainer or Virtual CFO as monthly sales volumes, branch locations, and vendor registers expand. Mid-year transitions are pro-rated without any onboarding friction or disruption to ongoing statutory filing continuity.',
+    takeaway: 'Pro-rata tier upgrades anytime with zero onboarding friction and zero disruption to ongoing statutory filing schedules.',
   },
   {
+    id: 'defense',
+    category: 'defense',
+    categoryLabel: 'Notice Defense',
+    icon: 'fa-solid fa-shield-halved',
     q: 'What is included in the Statutory Notice Defense coverage?',
     a: 'Clients on our Corporate and Enterprise retainers receive routine department notice defense covered under their scope. When an automated scrutiny inquiry, Section 143(1) intimation, ASMT-10 mismatch notice, or DRC-01 show-cause notice is issued, our senior CAs draft the legal rejoinder, reconcile purchase registers, and represent your firm at no extra emergency surcharge.',
+    takeaway: 'Section 143(1), ASMT-10, and DRC-01 legal rejoinders drafted and filed by Senior CAs at zero extra emergency surcharge.',
   },
   {
+    id: 'cfo',
+    category: 'cfo',
+    categoryLabel: 'Virtual CFO ROI',
+    icon: 'fa-solid fa-user-tie',
     q: 'How does your Virtual CFO retainer compare to an in-house full-time CFO?',
     a: 'A seasoned full-time CFO commands ₹25L–₹40L+ annually plus equity, bonuses, and severance overhead. Our Virtual CFO desk provides institutional partner-level financial leadership, cashflow modeling, Section 44AB audit representation, and board-level MIS reporting for a predictable fraction of the cost, backed by a multidisciplinary team of CAs, CSs, and tax advocates.',
+    takeaway: 'Partner-level financial leadership and Section 44AB audit defense at ~80% lower cost than full-time executive hires.',
   },
   {
+    id: 'nda',
+    category: 'nda',
+    categoryLabel: 'Client Privacy & NDA',
+    icon: 'fa-solid fa-file-contract',
     q: 'Do you execute a mutual Non-Disclosure Agreement (NDA) before inspecting our books?',
-    a: 'Yes, unconditionally. Prior to onboarding, client data ingestion, or portal credential exchange, we execute a legally binding Mutual Non-Disclosure Agreement (NDA). All accounting data, bank statements, and tax records are stored in ISO 27001-compliant, 256-bit AES encrypted repositories in accordance with Section 128 of the Companies Act.',
+    a: 'Yes, unconditionally. Prior to onboarding, client data ingestion, or portal credential exchange, we execute a legally binding Mutual Non-Disclosure Agreement (NDA). All accounting data, bank statements, and tax records are stored in ISO 27001-compliant, encrypted repositories in accordance with Section 128 of the Companies Act.',
+    takeaway: 'Enforceable Mutual NDA executed prior to onboarding, with ISO 27001 and Companies Act Sec 128 encrypted data custody.',
   },
   {
+    id: 'itc',
+    category: 'tax',
+    categoryLabel: '18% GST Input Credit',
+    icon: 'fa-solid fa-receipt',
     q: 'Can we claim 18% GST Input Tax Credit (ITC) on your retainer invoices?',
     a: 'Yes. Shree Chamunda Associates issues fully compliant GST tax invoices for all retainer mandates. Corporates, LLPs, and registered GST entities can claim 100% of the 18% GST charged on our professional fees as Input Tax Credit against their business output liability.',
+    takeaway: '100% of the 18% GST charged on professional retainer fees is legally deductible as business expense and recoverable as ITC.',
   },
+];
+
+const MATRIX_CATEGORIES = [
+  {
+    id: 'accounting',
+    categoryTitle: '01. Accounting, Ledger Governance & Archival',
+    categoryIcon: 'fa-solid fa-book-bookmark',
+    rows: [
+      {
+        title: 'Target Business Profile',
+        desc: 'ICAI engagement classification & legal entity scope',
+        tierValues: [
+          {
+            main: 'Sole Proprietorship / Independent',
+            sub: 'Proprietorships, freelancers & consultants',
+            tag: { text: 'Proprietorship', type: 'neutral' },
+          },
+          {
+            main: 'Pvt Ltd, LLP, Trading & Mfg MSME',
+            sub: 'Active businesses requiring full compliance',
+            tag: { text: 'Core MSME Segment', type: 'benchmark', icon: 'fa-solid fa-star' },
+            isBenchmark: true,
+          },
+          {
+            main: 'Multi-State Corp, Factory, Holding',
+            sub: 'Turnover exceeding ₹5 Crore threshold',
+            tag: { text: 'Enterprise Scale', type: 'enterprise' },
+          },
+          {
+            main: 'New Startup, OPC, LLP or Foreign Sub',
+            sub: 'Founding teams & parent entity setup',
+            tag: { text: 'Formation Mandate', type: 'formation' },
+          },
+        ],
+      },
+      {
+        title: 'Monthly Bookkeeping & Ledger Curation',
+        desc: 'Bank statement ingestion, dual-entry posting & ledger reconciliations',
+        tierValues: [
+          {
+            main: 'Up to 50 Vouchers / Month',
+            sub: 'Single bank account ledger curation',
+            tag: { text: 'Essential Volume', type: 'neutral' },
+          },
+          {
+            main: 'Up to 150 Vouchers / Month',
+            sub: 'Multi-bank accounts & gateway reconciliations',
+            tag: { text: 'Active MSME Volume', type: 'benchmark' },
+            isBenchmark: true,
+          },
+          {
+            main: 'Uncapped Enterprise Volume',
+            sub: 'Multi-branch & high-frequency ledgers',
+            tag: { text: 'Uncapped Scale', type: 'enterprise', icon: 'fa-solid fa-infinity' },
+          },
+          {
+            main: 'Chart of Accounts Architecture',
+            sub: 'Opening Balance Sheet & statutory setup',
+            tag: { text: 'One-Time Setup', type: 'formation' },
+          },
+        ],
+      },
+      {
+        title: 'Digital Custody & Cloud Vault',
+        desc: 'Companies Act Sec 128 mandatory 8-year statutory archival',
+        tierValues: [
+          {
+            main: 'Secure Encrypted Vault',
+            sub: 'Single-user client portal access',
+            icon: 'fa-solid fa-cloud-arrow-up text-emerald',
+          },
+          {
+            main: 'Multi-User Corporate Vault',
+            sub: 'Role-based Director & Finance Team access',
+            icon: 'fa-solid fa-cloud-arrow-up text-amber',
+            tag: { text: 'Multi-Seat Role Access', type: 'benchmark' },
+            isBenchmark: true,
+          },
+          {
+            main: '24/7 Dedicated Archival Vault',
+            sub: 'Immutable audit trail logs & legal custody',
+            icon: 'fa-solid fa-vault text-blue',
+            tag: { text: 'Full Audit Trail', type: 'enterprise' },
+          },
+          {
+            main: 'Lifetime Incorporation Dossier',
+            sub: 'Digital custody of MoA, AoA, PAN, TAN & COI',
+            icon: 'fa-solid fa-file-shield text-purple',
+            tag: { text: 'Lifetime Custody', type: 'formation' },
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'gst',
+    categoryTitle: '02. Indirect Taxation (GST) & Input Tax Credit',
+    categoryIcon: 'fa-solid fa-receipt',
+    rows: [
+      {
+        title: 'Periodic GST Return Filings',
+        desc: 'GSTR-1 outward sales, GSTR-3B monthly summary & quarterly IFF',
+        tierValues: [
+          {
+            main: 'Monthly GSTR-1 & GSTR-3B',
+            sub: 'Single state jurisdiction filing',
+            tag: { text: 'On-Time Filing', type: 'neutral' },
+          },
+          {
+            main: 'Monthly GSTR-1 & 3B + Quarterly IFF',
+            sub: 'Comprehensive monthly / QRMP filing cycle',
+            tag: { text: 'Zero Late Fees', type: 'benchmark', icon: 'fa-solid fa-check' },
+            isBenchmark: true,
+          },
+          {
+            main: 'Multi-State Consolidated GSTINs',
+            sub: 'Cross-state reconciliation + GSTR-9/9C audit',
+            tag: { text: 'Multi-GSTIN Audit', type: 'enterprise' },
+          },
+          {
+            main: 'GSTIN Registration & LUT Bond',
+            sub: 'Zero export tax clearance documentation',
+            tag: { text: 'Fresh Registration', type: 'formation' },
+          },
+        ],
+      },
+      {
+        title: 'Input Tax Credit (ITC) Recovery',
+        desc: 'Algorithmic GSTR-2B matching against purchases to stop cash leakages',
+        tierValues: [
+          {
+            main: 'Quarterly GSTR-2B Review',
+            sub: 'Periodic variance checks',
+            tag: { text: 'Basic Match', type: 'neutral' },
+          },
+          {
+            main: 'Algorithmic GSTR-2B Matching',
+            sub: 'Eliminates blocked & uncredited vendor tax',
+            tag: { text: 'Recovers ~₹1.2L+ Blocked ITC', type: 'benchmark', icon: 'fa-solid fa-arrow-trend-up' },
+            isBenchmark: true,
+          },
+          {
+            main: 'Forensic Vendor Audit & Recovery',
+            sub: 'Automated vendor deficiency follow-ups',
+            tag: { text: 'Forensic Verification', type: 'enterprise' },
+          },
+          {
+            main: 'Pre-Incorporation Asset Credit',
+            sub: 'Sec 18(1) ITC capture on capital goods held',
+            tag: { text: 'Sec 18(1) Credit', type: 'formation' },
+          },
+        ],
+      },
+      {
+        title: '18% GST Input Credit on Fees',
+        desc: 'Valid GST tax invoice issued with firm GSTIN for 100% tax offset',
+        tierValues: [
+          {
+            main: 'Eligible for 18% ITC Offset',
+            sub: 'Standard GST tax invoice provided',
+            isCheck: true,
+          },
+          {
+            main: 'Eligible for 18% ITC Offset',
+            sub: 'Full business expense deduction',
+            isCheck: true,
+            isBenchmark: true,
+          },
+          {
+            main: 'Eligible for 18% ITC Offset',
+            sub: 'Consolidated multi-unit tax invoices',
+            isCheck: true,
+          },
+          {
+            main: 'Eligible for 18% ITC Offset',
+            sub: 'Invoiced to new company post-incorporation',
+            isCheck: true,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'direct-tax',
+    categoryTitle: '03. Direct Taxes, TDS & Corporate Secretarial',
+    categoryIcon: 'fa-solid fa-landmark',
+    rows: [
+      {
+        title: 'Direct Taxes & Quarterly TDS Returns',
+        desc: 'Sec 208 advance tax estimation, Form 24Q/26Q & Form 16 generation',
+        tierValues: [
+          {
+            main: 'Quarterly Advance Tax Estimation',
+            sub: 'Sec 208/211 computational forecast',
+            tag: { text: 'Sec 208 Model', type: 'neutral' },
+          },
+          {
+            main: 'Quarterly 24Q & 26Q TDS + Form 16',
+            sub: 'Salary & vendor tax withholding returns',
+            tag: { text: 'Form 16/16A Gen', type: 'benchmark', icon: 'fa-solid fa-bolt' },
+            isBenchmark: true,
+          },
+          {
+            main: 'Full Corporate TDS & Sec 194Q / 194R',
+            sub: 'Statutory Form 3CD schedules & corporate tax return',
+            tag: { text: 'High-Value Governance', type: 'enterprise' },
+          },
+          {
+            main: 'Corporate PAN & TAN Allotment',
+            sub: 'Immediate TRACES deductor registration',
+            tag: { text: 'TAN Deductor Setup', type: 'formation' },
+          },
+        ],
+      },
+      {
+        title: 'MCA Secretarial & ROC Filings',
+        desc: 'Companies Act 2013 compliance: Form AOC-4, MGT-7 & Director KYC',
+        tierValues: [
+          {
+            main: 'Not Applicable',
+            sub: 'Proprietorship entities exempt from MCA',
+            isNA: true,
+          },
+          {
+            main: 'Form AOC-4, MGT-7 & DIR-3 KYC',
+            sub: 'Annual MCA balance sheet & return submissions',
+            tag: { text: 'Mandatory For Pvt Ltd', type: 'benchmark' },
+            isBenchmark: true,
+          },
+          {
+            main: 'Complete Secretarial & Board Registers',
+            sub: 'Board minutes, AGM registers & statutory book custody',
+            tag: { text: 'Full Board Secretarial', type: 'enterprise' },
+          },
+          {
+            main: 'SPICe+, MoA, AoA & COI Issuance',
+            sub: '2x Class-3 USB DSC tokens + 2x DINs included',
+            tag: { text: '5–7 Day Guaranteed', type: 'formation', icon: 'fa-solid fa-shield' },
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'defense-sla',
+    categoryTitle: '04. Departmental Defense, Scrutiny & Senior Partner SLA',
+    categoryIcon: 'fa-solid fa-shield-halved',
+    rows: [
+      {
+        title: 'Notice Resolution & Scrutiny Defense',
+        desc: 'ASMT-10, DRC-01, Sec 143(1) intimations & appellate benches',
+        tierValues: [
+          {
+            main: 'Section 143(1) Advisory Review',
+            sub: 'Automated intimation & mismatch advisory',
+            tag: { text: 'Sec 143(1) Cover', type: 'neutral' },
+          },
+          {
+            main: 'ASMT-10, DRC-01 & 143(1) Scrutiny Defense',
+            sub: 'Formal legal rejoinders submitted to tax authorities',
+            tag: { text: 'Full Scrutiny Shield', type: 'benchmark', icon: 'fa-solid fa-shield' },
+            isBenchmark: true,
+          },
+          {
+            main: 'CIT(Appeals), ITAT & Appellate Benches',
+            sub: 'Senior partner representation before tribunal benches',
+            tag: { text: 'Tribunal Representation', type: 'enterprise' },
+          },
+          {
+            main: 'Zero-Defect Filing Guarantee',
+            sub: 'Pre-scrutiny by CA to prevent MCA resubmission queries',
+            tag: { text: 'Resubmission Shield', type: 'formation' },
+          },
+        ],
+      },
+      {
+        title: 'Designated Senior CA Partner SLA',
+        desc: 'Direct partner turnaround commitment & dedicated communication channel',
+        tierValues: [
+          {
+            main: '< 24h Written Response SLA',
+            sub: 'Direct ticket & email client desk',
+            slaType: 'standard',
+            slaIcon: 'fa-regular fa-clock',
+          },
+          {
+            main: 'Priority WhatsApp Desk (< 4 Hours)',
+            sub: 'Direct WhatsApp communication with designated CA',
+            slaType: 'priority',
+            slaIcon: 'fa-brands fa-whatsapp',
+            isBenchmark: true,
+            tag: { text: 'Direct Partner Line', type: 'benchmark' },
+          },
+          {
+            main: 'Dedicated Senior FCA Partner Assigned',
+            sub: 'Boardroom consultations & direct executive phone line',
+            slaType: 'executive',
+            slaIcon: 'fa-solid fa-user-tie',
+          },
+          {
+            main: '1-on-1 Founder Structuring Call',
+            sub: 'Direct equity capital & tax advisory session',
+            slaType: 'formation',
+            slaIcon: 'fa-solid fa-phone-volume',
+          },
+        ],
+      },
+    ],
+  },
+];
+
+const MANDATE_OPTIONS = [
+  { id: 'Corporate & MSME Statutory Retainer', label: 'Corporate & MSME', tag: '₹4,999/mo', popular: true },
+  { id: 'Enterprise & Multi-State Retainer', label: 'Enterprise CFO', tag: '₹20,999/mo' },
+  { id: 'Foundational Practice Retainer', label: 'Foundational Practice', tag: '₹2,499/mo' },
+  { id: 'Turnkey Corporate Incorporation', label: 'Turnkey Incorporation', tag: '₹49,999' },
+  { id: 'Custom Multi-Branch Corporate Retainer', label: 'Factory / Multi-Branch', tag: 'Bespoke Retainer' },
+];
+
+const VOLUME_OPTIONS = [
+  { id: '< 50', label: '< 50 Vouchers', sub: 'Foundational' },
+  { id: '50-150', label: '50–150 Vouchers', sub: 'Standard MSME' },
+  { id: '150-500', label: '150–500 Vouchers', sub: 'High Volume' },
+  { id: '500+', label: '500+ Multi-Branch', sub: 'Enterprise Scale' },
+];
+
+const SOFTWARE_OPTIONS = [
+  { id: 'Tally Prime', label: 'Tally Prime / ERP 9', icon: 'fa-solid fa-calculator' },
+  { id: 'SAP / Oracle', label: 'SAP / Oracle ERP', icon: 'fa-solid fa-server' },
+  { id: 'Zoho Books', label: 'Zoho Books', icon: 'fa-solid fa-book' },
+  { id: 'Busy Accounting', label: 'Busy Accounting', icon: 'fa-solid fa-chart-line' },
+  { id: 'Spreadsheets / Manual', label: 'Other / In-House', icon: 'fa-solid fa-table-cells' },
 ];
 
 const Pricing = () => {
@@ -260,6 +631,13 @@ const Pricing = () => {
   // Commitment toggle: Monthly vs Annual Mandate
   const [billingCycle, setBillingCycle] = useState('annual');
   const [openFaq, setOpenFaq] = useState(0);
+  const [faqCategory, setFaqCategory] = useState('all');
+
+  // Filtered FAQ items based on selected category
+  const filteredFaqs = useMemo(() => {
+    if (faqCategory === 'all') return PRICING_FAQS;
+    return PRICING_FAQS.filter((f) => f.category === faqCategory);
+  }, [faqCategory]);
 
   // Active highlighted tier in the interactive selector
   const [activeTierId, setActiveTierId] = useState('growth');
@@ -334,6 +712,26 @@ const Pricing = () => {
     return dynamicTiers.find((t) => t.id === 'growth');
   }, [estimatorEntity, estimatorVolume, dynamicTiers]);
 
+  // Dynamic pricing info for matrix columns based on billing cycle
+  const tierPrices = useMemo(() => {
+    return dynamicTiers.map((tier) => {
+      if (tier.isOneTime) {
+        return {
+          amount: tier.priceMonthly,
+          period: 'one-time',
+          note: 'Turnkey Legal Formation',
+        };
+      }
+      const isAnnual = billingCycle === 'annual';
+      const amount = isAnnual ? tier.priceAnnual : tier.priceMonthly;
+      return {
+        amount,
+        period: '/mo',
+        note: isAnnual ? 'Billed annually (save ~20%)' : 'Billed monthly',
+      };
+    });
+  }, [dynamicTiers, billingCycle]);
+
   const handleSelectTier = (tier) => {
     const cycleSuffix =
       billingCycle === 'annual' && !tier.isOneTime
@@ -391,33 +789,33 @@ const Pricing = () => {
 
   return (
     <div className="pricing-page fade-in">
-      {/* 1. HERO BANNER — Chambers Architectural Dignity */}
+      {/* 1. HERO SECTION — Swiss-Fintech Architecture */}
       <section className="pricing-hero" aria-labelledby="pricing-hero-title">
-        <div className="retainers-top-accent-line" aria-hidden="true"></div>
-        <div className="pricing-pinstripe-overlay" aria-hidden="true"></div>
+        <div className="pricing-top-accent-line" aria-hidden="true"></div>
+        <div className="pricing-geometric-backdrop" aria-hidden="true"></div>
 
-        <div className="container pricing-hero-content">
+        <div className="pricing-hero-container">
           <div className="pricing-hero-badge">
-            <span className="retainers-live-dot" aria-hidden="true"></span>
-            <i className="fas fa-landmark"></i>
-            <span>ICAI ADVISORY STANDARDS // SCOPE-LOCKED STATUTORY RETAINERS</span>
+            <span className="live-dot" aria-hidden="true"></span>
+            <i className="fa-solid fa-shield-halved" aria-hidden="true"></i>
+            <span>ICAI ADVISORY STANDARDS &bull; SCOPE-LOCKED STATUTORY RETAINERS</span>
           </div>
 
-          <h1 id="pricing-hero-title">
-            Predictable Retainers, <span className="title-burnished-gold">Absolute Precision.</span>
+          <h1 id="pricing-hero-title" className="pricing-main-title">
+            Predictable Retainers, <span className="title-gradient-gold">Absolute Precision.</span>
           </h1>
 
           <p className="pricing-hero-lead">
             Scope-locked Chartered Accountancy retainers governing direct tax, GST audit, ROC secretarial compliance,
-            and scrutiny representation under ICAI regulatory ethics. Designed for ambitious Indian enterprises with zero billing surprises.
+            and scrutiny representation under ICAI regulatory ethics. Built for ambitious enterprises with zero billing surprises.
           </p>
 
-          {/* Institutional Fiscal Commitment Switcher */}
+          {/* Institutional Commitment Switcher */}
           <div className="billing-switch-wrapper">
-            <div className="billing-switch-pill" role="radiogroup" aria-label="Retainer Commitment Frequency">
+            <div className="billing-switch-control" role="radiogroup" aria-label="Retainer Commitment Frequency">
               <button
                 type="button"
-                className={`switch-btn ${billingCycle === 'monthly' ? 'active' : ''}`}
+                className={`switch-tab ${billingCycle === 'monthly' ? 'active' : ''}`}
                 onClick={() => setBillingCycle('monthly')}
                 aria-checked={billingCycle === 'monthly'}
               >
@@ -426,50 +824,63 @@ const Pricing = () => {
 
               <button
                 type="button"
-                className={`switch-btn ${billingCycle === 'annual' ? 'active' : ''}`}
+                className={`switch-tab ${billingCycle === 'annual' ? 'active' : ''}`}
                 onClick={() => setBillingCycle('annual')}
                 aria-checked={billingCycle === 'annual'}
               >
                 <span>Annual Statutory Mandate</span>
-                <span className="save-badge">Save 18% &bull; 2 Mo Complimentary</span>
+                <span className="save-pill">Save 18% &bull; 2 Mo Complimentary</span>
               </button>
             </div>
 
-            <span className="billing-tax-footnote">
-              <i className="fas fa-receipt text-emerald"></i> 100% Tax Invoiced &bull; Corporate clients claim 18% GST Input Tax Credit back
-            </span>
+            <div className="billing-tax-credit-chip">
+              <i className="fa-solid fa-receipt text-emerald"></i>
+              <span>100% Tax Invoiced &bull; Corporate clients claim 18% GST Input Tax Credit back</span>
+            </div>
           </div>
 
-          {/* Trust Safeguards Bar */}
-          <div className="hero-trust-safeguards-bar">
-            <div className="trust-bar-item">
-              <i className="fas fa-shield-halved"></i>
-              <span>Zero-Penalty Filing Guarantee</span>
+          {/* Hero Trust Matrix */}
+          <div className="pricing-trust-matrix">
+            <div className="trust-matrix-card">
+              <i className="fa-solid fa-shield-halved"></i>
+              <div className="trust-matrix-text">
+                <strong>Zero Notice Penalties</strong>
+                <span>100% Statutory Precision</span>
+              </div>
             </div>
-            <div className="trust-bar-item">
-              <i className="fas fa-user-check"></i>
-              <span>Two-Tier Senior CA Review</span>
+            <div className="trust-matrix-card">
+              <i className="fa-solid fa-user-check"></i>
+              <div className="trust-matrix-text">
+                <strong>Two-Tier Senior CA Review</strong>
+                <span>Dual Partner Sign-off</span>
+              </div>
             </div>
-            <div className="trust-bar-item">
-              <i className="fas fa-vault"></i>
-              <span>256-Bit Encrypted Client Vault</span>
+            <div className="trust-matrix-card">
+              <i className="fa-solid fa-vault"></i>
+              <div className="trust-matrix-text">
+                <strong>Encrypted Client Vault</strong>
+                <span>Sec 128 Compliant Archival</span>
+              </div>
             </div>
-            <div className="trust-bar-item">
-              <i className="fas fa-file-invoice-dollar"></i>
-              <span>18% GST Input Tax Credit Claimable</span>
+            <div className="trust-matrix-card">
+              <i className="fa-solid fa-file-invoice-dollar"></i>
+              <div className="trust-matrix-text">
+                <strong>18% Claimable GST ITC</strong>
+                <span>Fully Deductible Retainer</span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* 2. STATUTORY RETAINER TIERS CARDS */}
-      <main className="container pricing-cards-section">
+      <main className="pricing-content-wrap">
         <div className="section-header-centered">
-          <span className="about-eyebrow-tag">
-            <i className="fas fa-layer-group"></i>
+          <div className="pricing-section-pill">
+            <i className="fa-solid fa-layer-group"></i>
             <span>FOUR STATUTORY MANDATES</span>
-          </span>
-          <h2>Institutional Retainer Tiers</h2>
+          </div>
+          <h2 className="section-heading">Institutional Retainer Tiers</h2>
           <p className="section-subtext">
             Every mandate is scope-locked with explicit deliverables, statutory due-date coverage, and designated CA partner oversight.
           </p>
@@ -482,71 +893,101 @@ const Pricing = () => {
             const currentPrice = isAnnualMode ? tier.priceAnnual : tier.priceMonthly;
             const originalPrice = tier.priceMonthly;
             const annualSavings = isMonthlyTier ? (originalPrice - currentPrice) * 12 : 0;
+            const isSelected = activeTierId === tier.id;
 
             return (
               <div
                 key={tier.id}
-                className={`statutory-plan-card ${tier.tierClass || ''} ${tier.isPopular ? 'benchmark-card' : ''} ${activeTierId === tier.id ? 'tier-selected' : ''}`}
+                className={`statutory-plan-card ${tier.tierClass || ''} ${tier.isPopular ? 'benchmark-card' : ''} ${isSelected ? 'tier-selected' : ''}`}
                 onClick={() => setActiveTierId(tier.id)}
               >
                 {tier.isPopular && (
                   <div className="benchmark-ribbon-tag">
-                    <i className="fas fa-star"></i> {tier.badge}
+                    <i className="fa-solid fa-crown"></i>
+                    <span>{tier.badge}</span>
                   </div>
                 )}
 
+                {/* Card Header */}
                 <div className="plan-card-header">
-                  <div className="plan-top-code-row">
-                    <div className="plan-roman-box">{tier.roman}</div>
-                    <span className="plan-code-label">{tier.code}</span>
-                    <span className="plan-volume-tag">{tier.volumeTag}</span>
+                  <div className="plan-meta-row">
+                    <div className="plan-meta-left">
+                      <span className="plan-code-badge">{tier.code}</span>
+                      <span className="plan-volume-badge">
+                        <i className={tier.volumeIcon}></i>
+                        <span>{tier.volumeTag}</span>
+                      </span>
+                    </div>
+                    <div className="plan-meta-right">
+                      <span className="plan-icon-capsule">
+                        <i className={tier.icon}></i>
+                      </span>
+                    </div>
                   </div>
 
                   <h3 className="plan-name">{tier.name}</h3>
-                  <span className="plan-target-entity">{tier.target}</span>
+                  <p className="plan-target-entity">{tier.target}</p>
                 </div>
 
+                {/* Pricing Block — Horizontal Dual-Column Layout */}
                 <div className="plan-price-block">
-                  {isAnnualMode && (
-                    <div className="plan-strikethrough-row">
-                      <span className="struck-price">₹{originalPrice.toLocaleString('en-IN')}/mo</span>
-                      <span className="savings-chip">Save 18%</span>
-                    </div>
-                  )}
+                  <div className="price-primary-col">
+                    {isAnnualMode && (
+                      <div className="plan-strikethrough-row">
+                        <span className="struck-price">₹{originalPrice.toLocaleString('en-IN')}/mo</span>
+                        <span className="savings-chip">Save 18%</span>
+                      </div>
+                    )}
 
-                  <div className="price-num-row">
-                    <span className="currency-symbol">₹</span>
-                    <span className="price-amount">{currentPrice.toLocaleString('en-IN')}</span>
-                    <span className="price-period">
-                      /{tier.isOneTime ? 'one-time setup' : isAnnualMode ? 'mo (billed annually)' : 'month'}
-                    </span>
+                    <div className="price-num-row">
+                      <span className="currency-symbol">₹</span>
+                      <span className="price-amount">{currentPrice.toLocaleString('en-IN')}</span>
+                      <span className="price-period">
+                        /{tier.isOneTime ? 'one-time setup' : isAnnualMode ? 'mo (billed annually)' : 'month'}
+                      </span>
+                    </div>
                   </div>
 
-                  {isAnnualMode && annualSavings > 0 && (
-                    <div className="annual-savings-callout">
-                      <i className="fas fa-check"></i> Preserves ₹{annualSavings.toLocaleString('en-IN')}/yr working capital
-                    </div>
-                  )}
+                  <div className="price-benefits-col">
+                    {isAnnualMode && annualSavings > 0 && (
+                      <div className="annual-savings-callout">
+                        <i className="fa-solid fa-circle-check"></i>
+                        <span>Preserves ₹{annualSavings.toLocaleString('en-IN')}/yr</span>
+                      </div>
+                    )}
 
-                  <div className="roi-badge-wrap">
-                    <span className="roi-chip">{tier.roiBadge}</span>
+                    <div className="roi-badge-wrap">
+                      <span className="roi-chip">
+                        <i className="fa-solid fa-wand-magic-sparkles"></i>
+                        <span>{tier.roiBadge}</span>
+                      </span>
+                    </div>
                   </div>
                 </div>
 
+                {/* Summary */}
                 <p className="plan-summary-text">{tier.summary}</p>
 
+                {/* Mandate Disciplines */}
                 <div className="plan-disciplines-stack">
-                  <span className="disciplines-header">Statutory Mandate Scope:</span>
-                  {tier.disciplines.map((item, idx) => (
-                    <div key={idx} className="plan-discipline-item">
-                      <i className="fas fa-circle-check text-emerald"></i>
-                      <div className="discipline-item-text">
-                        <strong>{item.title}:</strong> {item.detail}
+                  <div className="disciplines-header-row">
+                    <span className="disciplines-header">Statutory Mandate Scope</span>
+                    <span className="disciplines-count">{tier.disciplines.length} Disciplines Included</span>
+                  </div>
+
+                  <div className="disciplines-list">
+                    {tier.disciplines.map((item, idx) => (
+                      <div key={idx} className="plan-discipline-item">
+                        <i className="fa-solid fa-circle-check"></i>
+                        <div className="discipline-item-text">
+                          <strong>{item.title}:</strong> <span>{item.detail}</span>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
 
+                {/* Action Buttons — Side-by-Side in 2-Column Card */}
                 <div className="plan-card-actions">
                   <button
                     type="button"
@@ -557,7 +998,7 @@ const Pricing = () => {
                     }}
                   >
                     <span>{tier.ctaText}</span>
-                    <i className="fas fa-arrow-right"></i>
+                    <i className="fa-solid fa-arrow-right"></i>
                   </button>
 
                   <button
@@ -568,8 +1009,8 @@ const Pricing = () => {
                       handleWhatsAppDesk(tier);
                     }}
                   >
-                    <i className="fab fa-whatsapp"></i>
-                    <span>WhatsApp Partner Desk</span>
+                    <i className="fa-brands fa-whatsapp"></i>
+                    <span>WhatsApp Desk</span>
                   </button>
                 </div>
               </div>
@@ -579,421 +1020,643 @@ const Pricing = () => {
       </main>
 
       {/* 3. INTERACTIVE RETAINER SCOPE & VOLUME ESTIMATOR */}
-      <section className="container estimator-section-container">
+      <section className="pricing-content-wrap estimator-section-container">
         <div className="retainers-scope-estimator-box">
-          <div className="estimator-header">
-            <div className="estimator-title-group">
-              <span className="estimator-tag">INTERACTIVE SCOPE ESTIMATOR</span>
-              <h3 className="estimator-heading">Calculate Your Ideal Compliance Mandate</h3>
-              <p className="estimator-sub">
-                Select your legal entity structure and monthly voucher scale to discover the optimal statutory tier.
-              </p>
+          <div className="estimator-intro">
+            <div className="pricing-section-pill">
+              <i className="fa-solid fa-sliders"></i>
+              <span>INTERACTIVE SCOPE ESTIMATOR</span>
             </div>
-
-            {recommendedTier && (
-              <div className="estimator-recommendation-pill">
-                <span className="rec-label">Recommended Mandate:</span>
-                <span className="rec-plan-name">{recommendedTier.name}</span>
-                <button
-                  type="button"
-                  className="btn-rec-select"
-                  onClick={() => handleSelectTier(recommendedTier)}
-                >
-                  Retain This Mandate &rarr;
-                </button>
-              </div>
-            )}
+            <h3 className="estimator-heading">Calculate Your Ideal Compliance Mandate</h3>
+            <p className="estimator-sub">
+              Select your legal entity structure and monthly voucher volume to discover the calibrated statutory scope, dedicated partner oversight, and fixed retainer.
+            </p>
           </div>
 
-          <div className="estimator-controls-grid">
-            <div className="estimator-control-group">
-              <label className="control-label">Legal Entity Structure:</label>
-              <div className="control-button-group">
-                <button
-                  type="button"
-                  className={`control-pill-btn ${estimatorEntity === 'prop' ? 'active' : ''}`}
-                  onClick={() => setEstimatorEntity('prop')}
-                >
-                  Proprietorship / Freelancer
-                </button>
-                <button
-                  type="button"
-                  className={`control-pill-btn ${estimatorEntity === 'pvt_ltd' ? 'active' : ''}`}
-                  onClick={() => setEstimatorEntity('pvt_ltd')}
-                >
-                  Pvt Ltd / LLP / Active MSME
-                </button>
-                <button
-                  type="button"
-                  className={`control-pill-btn ${estimatorEntity === 'enterprise' ? 'active' : ''}`}
-                  onClick={() => setEstimatorEntity('enterprise')}
-                >
-                  Turnover &gt; ₹5 Cr / Multi-State
-                </button>
+          <div className="estimator-console-grid">
+            {/* Left: Interactive Input Controls */}
+            <div className="estimator-inputs-panel">
+              {/* Step 1: Legal Entity Structure */}
+              <div className="estimator-step-block">
+                <div className="step-label-row">
+                  <span className="step-num">01</span>
+                  <label className="step-title">Legal Entity Structure</label>
+                </div>
+                <div className="entity-cards-grid">
+                  <button
+                    type="button"
+                    className={`entity-select-card ${estimatorEntity === 'prop' ? 'active' : ''}`}
+                    onClick={() => setEstimatorEntity('prop')}
+                  >
+                    <div className="entity-card-icon">
+                      <i className="fa-solid fa-user"></i>
+                    </div>
+                    <div className="entity-card-content">
+                      <strong>Proprietorship</strong>
+                      <span>Freelancers, Sole Practitioners &amp; Emerging MSMEs</span>
+                    </div>
+                    <div className="entity-check-dot">
+                      <i className="fa-solid fa-check"></i>
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    className={`entity-select-card ${estimatorEntity === 'pvt_ltd' ? 'active' : ''}`}
+                    onClick={() => setEstimatorEntity('pvt_ltd')}
+                  >
+                    <div className="entity-card-icon">
+                      <i className="fa-solid fa-building-user"></i>
+                    </div>
+                    <div className="entity-card-content">
+                      <strong>Pvt Ltd / LLP / MSME</strong>
+                      <span>Incorporated Companies, Active Trading &amp; Manufacturing</span>
+                    </div>
+                    <div className="entity-check-dot">
+                      <i className="fa-solid fa-check"></i>
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    className={`entity-select-card ${estimatorEntity === 'enterprise' ? 'active' : ''}`}
+                    onClick={() => setEstimatorEntity('enterprise')}
+                  >
+                    <div className="entity-card-icon">
+                      <i className="fa-solid fa-industry"></i>
+                    </div>
+                    <div className="entity-card-content">
+                      <strong>Enterprise / Multi-State</strong>
+                      <span>Turnover &gt; ₹5 Cr, Factories &amp; Multi-Branch Conglomerates</span>
+                    </div>
+                    <div className="entity-check-dot">
+                      <i className="fa-solid fa-check"></i>
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              {/* Step 2: Monthly Transaction Volume */}
+              <div className="estimator-step-block">
+                <div className="step-label-row">
+                  <span className="step-num">02</span>
+                  <label className="step-title">Monthly Transaction Scale</label>
+                </div>
+                <div className="volume-chips-grid">
+                  <button
+                    type="button"
+                    className={`volume-chip-btn ${estimatorVolume === 'low' ? 'active' : ''}`}
+                    onClick={() => setEstimatorVolume('low')}
+                  >
+                    <span className="chip-metric">&lt; 50</span>
+                    <span className="chip-label">Vouchers / Mo</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={`volume-chip-btn ${estimatorVolume === 'medium' ? 'active' : ''}`}
+                    onClick={() => setEstimatorVolume('medium')}
+                  >
+                    <span className="chip-metric">50 – 150</span>
+                    <span className="chip-label">Vouchers / Mo</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={`volume-chip-btn ${estimatorVolume === 'high' ? 'active' : ''}`}
+                    onClick={() => setEstimatorVolume('high')}
+                  >
+                    <span className="chip-metric">150 – 500</span>
+                    <span className="chip-label">Vouchers / Mo</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={`volume-chip-btn ${estimatorVolume === 'enterprise' ? 'active' : ''}`}
+                    onClick={() => setEstimatorVolume('enterprise')}
+                  >
+                    <span className="chip-metric">500+</span>
+                    <span className="chip-label">Multi-Branch</span>
+                  </button>
+                </div>
               </div>
             </div>
 
-            <div className="estimator-control-group">
-              <label className="control-label">Monthly Transaction Volume:</label>
-              <div className="control-button-group">
-                <button
-                  type="button"
-                  className={`control-pill-btn ${estimatorVolume === 'low' ? 'active' : ''}`}
-                  onClick={() => setEstimatorVolume('low')}
-                >
-                  Under 50 Vouchers
-                </button>
-                <button
-                  type="button"
-                  className={`control-pill-btn ${estimatorVolume === 'medium' ? 'active' : ''}`}
-                  onClick={() => setEstimatorVolume('medium')}
-                >
-                  50 – 150 Vouchers
-                </button>
-                <button
-                  type="button"
-                  className={`control-pill-btn ${estimatorVolume === 'high' ? 'active' : ''}`}
-                  onClick={() => setEstimatorVolume('high')}
-                >
-                  150 – 500 Vouchers
-                </button>
-                <button
-                  type="button"
-                  className={`control-pill-btn ${estimatorVolume === 'enterprise' ? 'active' : ''}`}
-                  onClick={() => setEstimatorVolume('enterprise')}
-                >
-                  500+ / Multi-Branch
-                </button>
-              </div>
+            {/* Right: Live Mandate Output Dossier */}
+            <div className="estimator-output-panel">
+              {recommendedTier && (
+                <div className="mandate-dossier-card">
+                  <div className="dossier-card-top">
+                    <div className="dossier-match-badge">
+                      <span className="live-dot" aria-hidden="true"></span>
+                      <span>CALIBRATED MANDATE &bull; 100% FIT</span>
+                    </div>
+                    <span className="dossier-tier-tag">{recommendedTier.code}</span>
+                  </div>
+
+                  <h4 className="dossier-plan-name">{recommendedTier.name}</h4>
+                  <p className="dossier-plan-target">{recommendedTier.target}</p>
+
+                  <div className="dossier-price-row">
+                    <div className="dossier-price-wrap">
+                      <span className="dossier-currency">₹</span>
+                      <span className="dossier-amount">
+                        {(billingCycle === 'annual' && !recommendedTier.isOneTime
+                          ? recommendedTier.priceAnnual
+                          : recommendedTier.priceMonthly
+                        ).toLocaleString('en-IN')}
+                      </span>
+                      <span className="dossier-period">
+                        /{recommendedTier.isOneTime ? 'one-time setup' : billingCycle === 'annual' ? 'mo (billed annually)' : 'month'}
+                      </span>
+                    </div>
+                    <span className="dossier-scope-lock">
+                      <i className="fa-solid fa-lock text-gold"></i>
+                      <span>Scope-Locked</span>
+                    </span>
+                  </div>
+
+                  {/* Included Core Safeguards */}
+                  <div className="dossier-safeguards-box">
+                    <span className="safeguards-label">Mandate Highlights Under This Scale:</span>
+                    <ul className="safeguards-list">
+                      {recommendedTier.disciplines.slice(0, 3).map((d, dIdx) => (
+                        <li key={dIdx}>
+                          <i className="fa-solid fa-circle-check"></i>
+                          <span><strong>{d.title}:</strong> {d.detail}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="dossier-actions">
+                    <button
+                      type="button"
+                      className="btn-dossier-retain"
+                      onClick={() => handleSelectTier(recommendedTier)}
+                    >
+                      <span>Retain This Mandate Scope</span>
+                      <i className="fa-solid fa-arrow-right"></i>
+                    </button>
+                    <button
+                      type="button"
+                      className="btn-dossier-whatsapp"
+                      onClick={() => handleWhatsAppDesk(recommendedTier)}
+                    >
+                      <i className="fa-brands fa-whatsapp"></i>
+                      <span>WhatsApp Partner Desk</span>
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </section>
 
       {/* 4. COMPREHENSIVE SIDE-BY-SIDE STATUTORY DELIVERABLES MATRIX */}
-      <section className="container pricing-matrix-section">
+      <section className="pricing-content-wrap pricing-matrix-section">
         <div className="section-header-centered">
-          <span className="about-eyebrow-tag">
-            <i className="fas fa-table-list"></i>
+          <div className="pricing-section-pill">
+            <i className="fa-solid fa-table-list"></i>
             <span>EXHAUSTIVE SCOPE SPECIFICATION</span>
-          </span>
-          <h2>Granular Statutory Scope Matrix</h2>
+          </div>
+          <h2 className="section-heading">Granular Statutory Scope Matrix</h2>
           <p className="section-subtext">
-            Direct comparison of all 8 statutory dimensions across Foundational, Corporate, Enterprise, and Turnkey Incorporation retainers.
+            Comprehensive comparison of all 10 statutory dimensions across Foundational, Corporate Benchmark, Virtual CFO, and Turnkey Incorporation retainers.
           </p>
+        </div>
+
+        {/* Value Trust Strip & Horizontal Scroll Indicator */}
+        <div className="matrix-trust-strip">
+          <div className="matrix-trust-item">
+            <i className="fa-solid fa-shield-halved text-amber"></i>
+            <span><strong>100% ICAI Fiduciary Mandate:</strong> Scope-locked professional fee charter</span>
+          </div>
+          <div className="matrix-trust-item">
+            <i className="fa-solid fa-file-invoice-dollar text-emerald"></i>
+            <span><strong>18% GST Input Credit (ITC):</strong> Fully deductible tax invoices issued</span>
+          </div>
+          <div className="matrix-trust-item">
+            <i className="fa-solid fa-lock text-blue"></i>
+            <span><strong>Zero Arbitrary Surcharges:</strong> Transparent treasury challan passthrough</span>
+          </div>
+          <div className="matrix-mobile-scroll-indicator">
+            <i className="fa-solid fa-arrow-left"></i>
+            <span>Swipe horizontally to compare all 4 tiers</span>
+            <i className="fa-solid fa-arrow-right"></i>
+          </div>
         </div>
 
         <div className="matrix-table-wrapper">
           <table className="scope-comparison-table">
             <thead>
-              <tr>
-                <th className="col-deliverable">Statutory Compliance Dimension</th>
-                <th>
-                  <div className="th-tier-box">
-                    <span className="th-tier-tag">TIER 01</span>
-                    <strong>Foundational Retainer</strong>
-                    <span className="th-tier-price">₹2,499/mo</span>
+              <tr className="matrix-header-row">
+                <th className="col-deliverable">
+                  <div className="th-deliverables-header">
+                    <span className="th-deliverables-badge">ICAI SCOPE DIRECTIVE</span>
+                    <strong className="th-deliverables-title">Statutory Dimension</strong>
+                    <span className="th-deliverables-sub">Engagement Charter Deliverables</span>
                   </div>
                 </th>
-                <th className="th-popular">
-                  <div className="th-tier-box">
-                    <span className="th-benchmark-badge">THE BENCHMARK</span>
-                    <span className="th-tier-tag">TIER 02</span>
-                    <strong>Corporate &amp; MSME Retainer</strong>
-                    <span className="th-tier-price">₹4,999/mo</span>
-                  </div>
-                </th>
-                <th>
-                  <div className="th-tier-box">
-                    <span className="th-tier-tag">TIER 03</span>
-                    <strong>Enterprise Virtual CFO</strong>
-                    <span className="th-tier-price">₹20,999/mo</span>
-                  </div>
-                </th>
+                {dynamicTiers.map((tier, idx) => {
+                  const priceInfo = tierPrices[idx];
+                  const isBenchmark = tier.id === 'growth';
+                  return (
+                    <th
+                      key={tier.id}
+                      className={`th-tier-col ${isBenchmark ? 'th-tier-benchmark' : ''}`}
+                    >
+                      <div className="th-tier-card">
+                        {isBenchmark && (
+                          <div className="th-benchmark-badge-pill">
+                            <i className="fa-solid fa-crown"></i>
+                            <span>THE FIRM BENCHMARK</span>
+                          </div>
+                        )}
+                        <div className="th-tier-meta">
+                          <span className="th-tier-code">{tier.code}</span>
+                          {tier.isOneTime && (
+                            <span className="th-formation-badge">ONE-TIME MANDATE</span>
+                          )}
+                        </div>
+                        <strong className="th-tier-heading">{tier.shortName || tier.name}</strong>
+                        <div className="th-tier-price-row">
+                          <span className="th-tier-curr">₹</span>
+                          <span className="th-tier-val">{priceInfo.amount.toLocaleString('en-IN')}</span>
+                          <span className="th-tier-per">{priceInfo.period}</span>
+                        </div>
+                        <span className="th-tier-cycle-note">{priceInfo.note}</span>
+                        <button
+                          type="button"
+                          className={`matrix-col-cta-btn ${isBenchmark ? 'btn-benchmark' : ''}`}
+                          onClick={() => handleSelectTier(tier)}
+                        >
+                          <span>{isBenchmark ? 'Choose Corporate' : tier.isOneTime ? 'Incorporate' : 'Select Retainer'}</span>
+                          <i className="fa-solid fa-arrow-right"></i>
+                        </button>
+                      </div>
+                    </th>
+                  );
+                })}
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>
-                  <strong>Target Business Structure</strong>
-                  <span className="deliverable-desc">ICAI engagement charter classification</span>
-                </td>
-                <td>Sole Proprietorship / Independent</td>
-                <td className="td-popular"><strong>Pvt Ltd, LLP, Trading / Mfg MSME</strong></td>
-                <td>Multi-State Corp, Factory, Group Holding</td>
-              </tr>
-
-              <tr>
-                <td>
-                  <strong>Monthly Bookkeeping &amp; Vouchers</strong>
-                  <span className="deliverable-desc">Ledger curation &amp; bank ledger reconciliation</span>
-                </td>
-                <td>Up to 50 Vouchers / Month</td>
-                <td className="td-popular"><strong>Up to 150 Vouchers / Month</strong></td>
-                <td><strong>Uncapped Enterprise Volume</strong></td>
-              </tr>
-
-              <tr>
-                <td>
-                  <strong>GST Return Filings</strong>
-                  <span className="deliverable-desc">GSTR-1 outward, GSTR-3B summary &amp; IFF</span>
-                </td>
-                <td>Monthly (GSTR-1 &amp; 3B)</td>
-                <td className="td-popular"><strong>Monthly (GSTR-1 &amp; 3B) + Quarterly IFF</strong></td>
-                <td><strong>Multi-State Consolidated GSTINs</strong></td>
-              </tr>
-
-              <tr>
-                <td>
-                  <strong>Input Tax Credit (ITC) Recovery</strong>
-                  <span className="deliverable-desc">Algorithmic GSTR-2B matching against purchases</span>
-                </td>
-                <td>Basic GSTR-2B Overview</td>
-                <td className="td-popular"><strong>Deep Algorithmic ITC 2B Matching</strong></td>
-                <td><strong>Forensic Vendor Recovery &amp; Audit</strong></td>
-              </tr>
-
-              <tr>
-                <td>
-                  <strong>Direct Taxes &amp; Quarterly TDS</strong>
-                  <span className="deliverable-desc">Sec 208 advance tax, 24Q/26Q returns &amp; Form 16</span>
-                </td>
-                <td>Quarterly Advance Tax Model</td>
-                <td className="td-popular"><strong>Quarterly 24Q/26Q TDS + Form 16</strong></td>
-                <td><strong>Full Corporate TDS &amp; Sec 194R/194Q</strong></td>
-              </tr>
-
-              <tr>
-                <td>
-                  <strong>Corporate Secretarial &amp; MCA</strong>
-                  <span className="deliverable-desc">Form AOC-4, MGT-7 &amp; Director DIR-3 KYC</span>
-                </td>
-                <td>Not Applicable</td>
-                <td className="td-popular"><strong>Form AOC-4, MGT-7 &amp; DIR-3 KYC</strong></td>
-                <td><strong>Complete Secretarial &amp; Board Registers</strong></td>
-              </tr>
-
-              <tr>
-                <td>
-                  <strong>Notice Resolution &amp; Scrutiny Defense</strong>
-                  <span className="deliverable-desc">ASMT-10, DRC-01, Sec 143(1) and ITAT benches</span>
-                </td>
-                <td>Section 143(1) Advisory Review</td>
-                <td className="td-popular"><strong>ASMT-10, DRC-01 &amp; 143(1) Defense</strong></td>
-                <td><strong>CIT(A), ITAT &amp; Appellate Benches</strong></td>
-              </tr>
-
-              <tr>
-                <td>
-                  <strong>Designated Senior CA Partner SLA</strong>
-                  <span className="deliverable-desc">Turnaround SLA and direct access protocol</span>
-                </td>
-                <td>&lt; 24h Written Response SLA</td>
-                <td className="td-popular"><strong>Priority WhatsApp Desk (&lt; 4 Hours)</strong></td>
-                <td><strong>Dedicated Senior FCA Partner Assigned</strong></td>
-              </tr>
-
-              <tr>
-                <td>
-                  <strong>18% GST Input Credit Recovery</strong>
-                  <span className="deliverable-desc">Valid GST tax invoice issued for retainer fees</span>
-                </td>
-                <td><i className="fas fa-circle-check text-emerald"></i> Eligible for 18% ITC</td>
-                <td className="td-popular"><i className="fas fa-circle-check text-emerald"></i> <strong>Eligible for 18% ITC</strong></td>
-                <td><i className="fas fa-circle-check text-emerald"></i> Eligible for 18% ITC</td>
-              </tr>
-
-              <tr>
-                <td>
-                  <strong>256-Bit Digital Vault Custody</strong>
-                  <span className="deliverable-desc">Companies Act Sec 128 mandatory 8-year archival</span>
-                </td>
-                <td>Standard Encrypted Vault</td>
-                <td className="td-popular"><strong>Multi-User Corporate Vault</strong></td>
-                <td><strong>Dedicated 24/7 Enterprise Archive</strong></td>
-              </tr>
+              {MATRIX_CATEGORIES.map((cat) => (
+                <Fragment key={cat.id}>
+                  <tr className="matrix-category-row">
+                    <td colSpan={5}>
+                      <div className="matrix-category-header">
+                        <i className={cat.categoryIcon}></i>
+                        <span>{cat.categoryTitle}</span>
+                      </div>
+                    </td>
+                  </tr>
+                  {cat.rows.map((row, rIdx) => (
+                    <tr key={`${cat.id}-${rIdx}`} className="matrix-data-row">
+                      <td className="matrix-deliverable-cell">
+                        <strong className="deliverable-name">{row.title}</strong>
+                        <span className="deliverable-desc">{row.desc}</span>
+                      </td>
+                      {row.tierValues.map((val, tIdx) => {
+                        const isBm = val.isBenchmark;
+                        return (
+                          <td
+                            key={`${cat.id}-${rIdx}-tier-${tIdx}`}
+                            className={`matrix-value-cell ${isBm ? 'td-tier-benchmark' : ''}`}
+                          >
+                            <div className="cell-content-wrap">
+                              {val.isCheck ? (
+                                <div className="cell-check-line">
+                                  <i className="fa-solid fa-circle-check text-emerald"></i>
+                                  <strong className="cell-primary-text">{val.main}</strong>
+                                </div>
+                              ) : val.isNA ? (
+                                <div className="cell-na-line">
+                                  <span className="cell-na-badge">
+                                    <i className="fa-solid fa-minus"></i> Not Applicable
+                                  </span>
+                                </div>
+                              ) : val.slaType ? (
+                                <div className={`cell-sla-badge sla-${val.slaType}`}>
+                                  <i className={val.slaIcon}></i>
+                                  <span>{val.main}</span>
+                                </div>
+                              ) : (
+                                <strong className={`cell-primary-text ${isBm ? 'benchmark-highlight' : ''}`}>
+                                  {val.icon && <i className={`${val.icon} me-1`}></i>}
+                                  {val.main}
+                                </strong>
+                              )}
+                              {val.sub && <span className="cell-sub-text">{val.sub}</span>}
+                              {val.tag && (
+                                <span className={`cell-tag tag-${val.tag.type}`}>
+                                  {val.tag.icon && <i className={val.tag.icon}></i>}
+                                  <span>{val.tag.text}</span>
+                                </span>
+                              )}
+                            </div>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))}
+                </Fragment>
+              ))}
             </tbody>
+            <tfoot>
+              <tr className="matrix-footer-row">
+                <td className="matrix-footer-deliverable">
+                  <div className="footer-deliverable-box">
+                    <strong>Statutory Retainer Selection</strong>
+                    <span>Fixed professional fees • 100% ICAI ethical compliance</span>
+                  </div>
+                </td>
+                {dynamicTiers.map((tier) => {
+                  const isBenchmark = tier.id === 'growth';
+                  return (
+                    <td
+                      key={`foot-${tier.id}`}
+                      className={`matrix-footer-cell ${isBenchmark ? 'tfoot-benchmark' : ''}`}
+                    >
+                      <button
+                        type="button"
+                        className={`matrix-bottom-btn ${isBenchmark ? 'btn-benchmark' : ''}`}
+                        onClick={() => handleSelectTier(tier)}
+                      >
+                        <span>{isBenchmark ? 'Choose Corporate' : tier.isOneTime ? 'Incorporate Entity' : 'Retain This Tier'}</span>
+                        <i className="fa-solid fa-arrow-right"></i>
+                      </button>
+                    </td>
+                  );
+                })}
+              </tr>
+            </tfoot>
           </table>
         </div>
       </section>
 
       {/* 5. CUSTOM ENTERPRISE QUOTE REQUEST SECTION */}
-      <section className="container quote-request-section" id="custom-quote-section">
+      <section className="pricing-content-wrap quote-request-section" id="custom-quote-section">
         <div className="quote-box-grid">
+          {/* Narrative & Fiduciary Partner Column */}
           <div className="quote-narrative-col">
-            <span className="about-eyebrow-tag">
-              <i className="fas fa-file-signature"></i>
+            <div className="pricing-section-pill">
+              <i className="fa-solid fa-file-signature"></i>
               <span>BESPOKE RETAINER MANDATE</span>
-            </span>
-            <h2>Require a Custom Manufacturing or Multi-State Retainer?</h2>
-            <p>
+            </div>
+            <h2 className="quote-heading">Require a Custom Manufacturing or Multi-State Retainer?</h2>
+            <p className="quote-lead">
               For factories, chemical manufacturing units, export houses, and high-volume e-commerce conglomerates across
-              Gujarat and Maharashtra, our senior partners prepare a scoped engagement letter aligned with your ERP and volume.
+              Gujarat and Maharashtra, our Senior Partners prepare a scoped engagement letter aligned with your ERP and volume.
             </p>
 
-            <div className="quote-trust-checks">
-              <div className="trust-check-item">
-                <i className="fas fa-circle-check text-emerald"></i>
-                <span>Direct consultation with designated Senior Partner (FCA)</span>
+            {/* Senior Partner Desk Direct Card */}
+            <div className="partner-desk-card">
+              <div className="partner-desk-top">
+                <div className="partner-desk-avatar">
+                  <i className="fa-solid fa-user-tie"></i>
+                </div>
+                <div className="partner-desk-info">
+                  <span className="partner-desk-role">Senior CA Practice Partner Desk</span>
+                  <strong className="partner-desk-title">Fellow Chartered Accountant (FCA)</strong>
+                </div>
+                <span className="partner-live-status">
+                  <span className="live-dot-pulse"></span>
+                  <span>Available (&lt; 4h SLA)</span>
+                </span>
               </div>
-              <div className="trust-check-item">
-                <i className="fas fa-circle-check text-emerald"></i>
-                <span>Mutual Non-Disclosure Agreement (NDA) executed prior to books inspection</span>
-              </div>
-              <div className="trust-check-item">
-                <i className="fas fa-circle-check text-emerald"></i>
-                <span>Upfront fixed retainer with zero hidden portal surcharge fees</span>
-              </div>
-              <div className="trust-check-item">
-                <i className="fas fa-circle-check text-emerald"></i>
-                <span>Seamless integration with Tally Prime, SAP, Zoho Books, or Oracle</span>
+              <p className="partner-desk-desc">
+                Direct engagement letter drafting with zero intermediary account managers. 100% compliant under ICAI fiduciary charter.
+              </p>
+              <div className="partner-desk-actions">
+                <a href="tel:+919510984735" className="partner-direct-link phone">
+                  <i className="fa-solid fa-phone-volume"></i>
+                  <span>+91 95109 84735</span>
+                </a>
+                <a
+                  href="https://wa.me/919510984735?text=Hello%20Shree%20Chamunda%20Associates%2C%20I%20would%20like%20to%20consult%20regarding%20a%20Bespoke%20Retainer%20Mandate."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="partner-direct-link whatsapp"
+                >
+                  <i className="fa-brands fa-whatsapp"></i>
+                  <span>WhatsApp Partner Desk</span>
+                </a>
               </div>
             </div>
 
-            <div className="quote-contact-direct">
-              <div className="direct-phone-icon">
-                <i className="fas fa-phone-volume"></i>
+            {/* 4 Architectural Fiduciary Guarantee Cards */}
+            <div className="quote-guarantee-grid">
+              <div className="guarantee-card">
+                <div className="guarantee-icon-wrap amber">
+                  <i className="fa-solid fa-file-shield"></i>
+                </div>
+                <div className="guarantee-body">
+                  <strong>Mutual NDA Guarantee</strong>
+                  <p>Mutual NDA executed prior to financial books or credential inspection.</p>
+                </div>
               </div>
-              <div>
-                <span className="direct-phone-kicker">Prefer speaking over the phone right now?</span>
-                <strong className="direct-phone-num">
-                  <a href="tel:+919510984735">+91 95109 84735</a>
-                </strong>
-                <span className="direct-phone-sub">Direct Partner Helpline &bull; Mon–Sat 10:00 AM – 7:00 PM</span>
+
+              <div className="guarantee-card">
+                <div className="guarantee-icon-wrap emerald">
+                  <i className="fa-solid fa-lock"></i>
+                </div>
+                <div className="guarantee-body">
+                  <strong>Fixed Retainers, Zero Surcharges</strong>
+                  <p>Upfront fixed monthly retainers under ICAI charter with zero hidden fees.</p>
+                </div>
               </div>
+
+              <div className="guarantee-card">
+                <div className="guarantee-icon-wrap blue">
+                  <i className="fa-solid fa-network-wired"></i>
+                </div>
+                <div className="guarantee-body">
+                  <strong>Seamless ERP Ingestion</strong>
+                  <p>Bidirectional sync with Tally Prime, SAP ERP, Zoho Books, Busy & Oracle.</p>
+                </div>
+              </div>
+
+              <div className="guarantee-card">
+                <div className="guarantee-icon-wrap purple">
+                  <i className="fa-solid fa-scale-balanced"></i>
+                </div>
+                <div className="guarantee-body">
+                  <strong>Appellate Representation</strong>
+                  <p>Direct defense before CIT(Appeals), ITAT & departmental tax benches.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Compliance trust chips */}
+            <div className="quote-trust-strip">
+              <span className="trust-pill"><i className="fa-solid fa-shield-halved text-amber"></i> Companies Act Sec 128 Archival</span>
+              <span className="trust-pill"><i className="fa-solid fa-certificate text-emerald"></i> ICAI UDIN Generated</span>
             </div>
           </div>
 
+          {/* Form Column */}
           <div className="quote-form-col">
             <div className="quote-form-card">
-              <h3>Request Scope-Locked Retainer Proposal</h3>
-              <p className="form-subtext">Our Senior CA Partner will review your volume and respond within 4 business hours.</p>
+              <div className="form-card-header">
+                <div>
+                  <span className="form-card-badge">DIRECT ENGAGEMENT INTAKE</span>
+                  <h3 className="form-card-title">Request Scope-Locked Retainer Proposal</h3>
+                </div>
+                <span className="form-sla-pill">
+                  <i className="fa-regular fa-clock"></i> &lt; 4h Partner Turnaround
+                </span>
+              </div>
+              <p className="form-subtext">Our Senior CA Partner will review your transaction volume and formulate a formal engagement proposal.</p>
 
               {quoteStatus.success && (
                 <div className="success-quote-banner">
-                  <i className="fas fa-check-circle"></i>
+                  <i className="fa-solid fa-circle-check"></i>
                   <div>
                     <strong>Mandate Request Successfully Received!</strong>
-                    <p>Our Senior Partner has received your submission and will contact your office shortly.</p>
+                    <p>Our Senior Partner has received your submission and will contact your office within 4 business hours.</p>
                   </div>
                 </div>
               )}
 
               {quoteStatus.error && (
                 <div className="error-quote-banner">
-                  <i className="fas fa-exclamation-circle"></i>
+                  <i className="fa-solid fa-circle-exclamation"></i>
                   <p>{quoteStatus.error}</p>
                 </div>
               )}
 
               <form onSubmit={handleQuoteSubmit} className="quote-form">
+                {/* Contact Coordinates */}
                 <div className="form-row-split">
                   <div className="quote-input-group">
                     <label htmlFor="qName">Full Name *</label>
-                    <input
-                      type="text"
-                      id="qName"
-                      required
-                      value={quoteForm.name}
-                      onChange={(e) => setQuoteForm({ ...quoteForm, name: e.target.value })}
-                      placeholder="e.g. Rajesh Patel"
-                      className="quote-input"
-                    />
+                    <div className="input-with-icon">
+                      <i className="fa-regular fa-user"></i>
+                      <input
+                        type="text"
+                        id="qName"
+                        required
+                        value={quoteForm.name}
+                        onChange={(e) => setQuoteForm({ ...quoteForm, name: e.target.value })}
+                        placeholder="e.g. Rajesh Patel"
+                        className="quote-input"
+                      />
+                    </div>
                   </div>
                   <div className="quote-input-group">
                     <label htmlFor="qCompany">Company / LLP / Firm Name *</label>
-                    <input
-                      type="text"
-                      id="qCompany"
-                      required
-                      value={quoteForm.company}
-                      onChange={(e) => setQuoteForm({ ...quoteForm, company: e.target.value })}
-                      placeholder="e.g. Apex Industrial Solutions LLP"
-                      className="quote-input"
-                    />
+                    <div className="input-with-icon">
+                      <i className="fa-regular fa-building"></i>
+                      <input
+                        type="text"
+                        id="qCompany"
+                        required
+                        value={quoteForm.company}
+                        onChange={(e) => setQuoteForm({ ...quoteForm, company: e.target.value })}
+                        placeholder="e.g. Apex Industrial Solutions LLP"
+                        className="quote-input"
+                      />
+                    </div>
                   </div>
                 </div>
 
                 <div className="form-row-split">
                   <div className="quote-input-group">
                     <label htmlFor="qEmail">Work Email Address *</label>
-                    <input
-                      type="email"
-                      id="qEmail"
-                      required
-                      value={quoteForm.email}
-                      onChange={(e) => setQuoteForm({ ...quoteForm, email: e.target.value })}
-                      placeholder="rajesh@apexind.com"
-                      className="quote-input"
-                    />
+                    <div className="input-with-icon">
+                      <i className="fa-regular fa-envelope"></i>
+                      <input
+                        type="email"
+                        id="qEmail"
+                        required
+                        value={quoteForm.email}
+                        onChange={(e) => setQuoteForm({ ...quoteForm, email: e.target.value })}
+                        placeholder="rajesh@apexind.com"
+                        className="quote-input"
+                      />
+                    </div>
                   </div>
                   <div className="quote-input-group">
                     <label htmlFor="qPhone">Phone Number *</label>
-                    <input
-                      type="tel"
-                      id="qPhone"
-                      required
-                      value={quoteForm.phone}
-                      onChange={(e) => setQuoteForm({ ...quoteForm, phone: e.target.value })}
-                      placeholder="+91 98765 43210"
-                      className="quote-input"
-                    />
+                    <div className="input-with-icon">
+                      <i className="fa-solid fa-phone"></i>
+                      <input
+                        type="tel"
+                        id="qPhone"
+                        required
+                        value={quoteForm.phone}
+                        onChange={(e) => setQuoteForm({ ...quoteForm, phone: e.target.value })}
+                        placeholder="+91 98765 43210"
+                        className="quote-input"
+                      />
+                    </div>
                   </div>
                 </div>
 
-                <div className="form-row-split">
-                  <div className="quote-input-group">
-                    <label htmlFor="qPlan">Preferred Statutory Mandate</label>
-                    <select
-                      id="qPlan"
-                      value={quoteForm.planInterest}
-                      onChange={(e) => setQuoteForm({ ...quoteForm, planInterest: e.target.value })}
-                      className="quote-select"
-                    >
-                      <option value="Foundational Practice Retainer">Foundational Practice Retainer (₹2,499/mo)</option>
-                      <option value="Corporate & MSME Statutory Retainer">
-                        Corporate &amp; MSME Statutory Retainer (₹4,999/mo)
-                      </option>
-                      <option value="Enterprise & Multi-State Retainer">Enterprise &amp; Multi-State Retainer (₹20,999/mo)</option>
-                      <option value="Turnkey Corporate Incorporation">Turnkey Corporate Incorporation (₹49,999)</option>
-                      <option value="Custom Multi-Branch Corporate Retainer">Custom Multi-Branch / Factory Retainer</option>
-                    </select>
-                  </div>
-
-                  <div className="quote-input-group">
-                    <label htmlFor="qVol">Est. Monthly Voucher Volume</label>
-                    <select
-                      id="qVol"
-                      value={quoteForm.monthlyInvoices}
-                      onChange={(e) => setQuoteForm({ ...quoteForm, monthlyInvoices: e.target.value })}
-                      className="quote-select"
-                    >
-                      <option value="< 50">Under 50 Invoices / Month</option>
-                      <option value="50-150">50 to 150 Invoices / Month</option>
-                      <option value="150-500">150 to 500 Invoices / Month</option>
-                      <option value="500+">500+ High Volume / Multi-State</option>
-                    </select>
-                  </div>
-                </div>
-
+                {/* Mandate Selector Chips */}
                 <div className="quote-input-group">
-                  <label htmlFor="qSoftware">Current Accounting Software</label>
-                  <select
-                    id="qSoftware"
-                    value={quoteForm.accountingSoftware}
-                    onChange={(e) => setQuoteForm({ ...quoteForm, accountingSoftware: e.target.value })}
-                    className="quote-select"
-                  >
-                    <option value="Tally Prime">Tally Prime / ERP 9</option>
-                    <option value="Zoho Books">Zoho Books</option>
-                    <option value="Busy Accounting">Busy Accounting Software</option>
-                    <option value="SAP / Oracle">SAP / Oracle ERP</option>
-                    <option value="QuickBooks / Marg">QuickBooks / Marg ERP</option>
-                    <option value="Spreadsheets / Manual">Spreadsheets / In-House Manual</option>
-                    <option value="Need CA Recommendation">Need CA Partner to Recommend System</option>
-                  </select>
+                  <label>Preferred Statutory Mandate</label>
+                  <div className="mandate-chips-grid">
+                    {MANDATE_OPTIONS.map((opt) => {
+                      const isSelected = quoteForm.planInterest === opt.id;
+                      return (
+                        <button
+                          key={opt.id}
+                          type="button"
+                          className={`mandate-chip-btn ${isSelected ? 'selected' : ''}`}
+                          onClick={() => setQuoteForm({ ...quoteForm, planInterest: opt.id })}
+                        >
+                          <span className="mandate-chip-name">{opt.label}</span>
+                          <span className="mandate-chip-price">{opt.tag}</span>
+                          {opt.popular && <span className="mandate-chip-star"><i className="fa-solid fa-crown"></i></span>}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
 
+                {/* Monthly Voucher Volume Chips */}
+                <div className="quote-input-group">
+                  <label>Estimated Monthly Voucher Volume</label>
+                  <div className="volume-segmented-control">
+                    {VOLUME_OPTIONS.map((v) => {
+                      const isSelected = quoteForm.monthlyInvoices === v.id;
+                      return (
+                        <button
+                          key={v.id}
+                          type="button"
+                          className={`volume-segment-btn ${isSelected ? 'selected' : ''}`}
+                          onClick={() => setQuoteForm({ ...quoteForm, monthlyInvoices: v.id })}
+                        >
+                          <span className="seg-label">{v.label}</span>
+                          <span className="seg-sub">{v.sub}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Software / ERP Tech Stack Chips */}
+                <div className="quote-input-group">
+                  <label>Current Accounting Software / ERP</label>
+                  <div className="software-pills-row">
+                    {SOFTWARE_OPTIONS.map((s) => {
+                      const isSelected = quoteForm.accountingSoftware === s.id;
+                      return (
+                        <button
+                          key={s.id}
+                          type="button"
+                          className={`software-pill-btn ${isSelected ? 'selected' : ''}`}
+                          onClick={() => setQuoteForm({ ...quoteForm, accountingSoftware: s.id })}
+                        >
+                          <i className={s.icon}></i>
+                          <span>{s.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Requirements Textarea */}
                 <div className="quote-input-group">
                   <label htmlFor="qNotes">Specific Compliance Requirements / Notices</label>
                   <textarea
@@ -1001,22 +1664,28 @@ const Pricing = () => {
                     rows="3"
                     value={quoteForm.notes}
                     onChange={(e) => setQuoteForm({ ...quoteForm, notes: e.target.value })}
-                    placeholder="e.g. Have 2 GSTINs in Gujarat and Maharashtra, need ASMT-10 mismatch resolution, pending 44AB tax audit..."
+                    placeholder="e.g. Have 2 GSTINs in Gujarat and Maharashtra, need ASMT-10 mismatch resolution, pending 44AB tax audit, Section 194Q compliance..."
                     className="quote-textarea"
                   ></textarea>
                 </div>
 
+                {/* Submit Action */}
                 <button type="submit" className="btn-submit-quote" disabled={quoteStatus.loading}>
                   {quoteStatus.loading ? (
                     <span>
-                      <i className="fas fa-spinner fa-spin"></i> Submitting Mandate Request...
+                      <i className="fa-solid fa-spinner fa-spin"></i> Formulating Mandate Request...
                     </span>
                   ) : (
                     <span>
-                      Request Retainer Proposal <i className="fas fa-arrow-right"></i>
+                      Request Scope-Locked Proposal <i className="fa-solid fa-arrow-right"></i>
                     </span>
                   )}
                 </button>
+
+                <div className="form-fiduciary-footer">
+                  <i className="fa-solid fa-shield-halved text-emerald"></i>
+                  <span>Strict ICAI Fiduciary Confidentiality • Zero Spam Policy • 4h Turnaround</span>
+                </div>
               </form>
             </div>
           </div>
@@ -1024,40 +1693,136 @@ const Pricing = () => {
       </section>
 
       {/* 6. STATUTORY BILLING & ICAI ETHICS FAQS */}
-      <section className="container pricing-faqs-section">
-        <div className="section-header-centered">
-          <span className="about-eyebrow-tag">
-            <i className="fas fa-circle-question"></i>
-            <span>REGULATORY ETHICS &bull; FAQS</span>
-          </span>
-          <h2>Frequently Asked Questions on Retainers</h2>
-          <p className="section-subtext">
-            Clear, binding policies regarding professional fee structures, treasury challans, and scope assurance under ICAI standards.
-          </p>
-        </div>
+      <section className="pricing-content-wrap pricing-faqs-section">
+        <div className="faq-dual-grid">
+          {/* Left Column: Authoritative Sidebar & Help Desk */}
+          <div className="faq-sidebar-col">
+            <div className="pricing-section-pill">
+              <i className="fa-solid fa-scale-balanced"></i>
+              <span>REGULATORY ETHICS &bull; FAQS</span>
+            </div>
+            <h2 className="faq-main-heading">Frequently Asked Questions on Retainers</h2>
+            <p className="faq-lead-text">
+              Clear, binding policies regarding professional fee structures, treasury challan passthrough, and statutory scope assurance under ICAI ethics.
+            </p>
 
-        <div className="pricing-faqs-list">
-          {PRICING_FAQS.map((faq, idx) => {
-            const isOpen = openFaq === idx;
-            return (
-              <div key={idx} className={`faq-card-item ${isOpen ? 'open' : ''}`}>
-                <button
-                  type="button"
-                  className="faq-question-btn"
-                  onClick={() => setOpenFaq(isOpen ? null : idx)}
-                  aria-expanded={isOpen}
-                >
-                  <span>{faq.q}</span>
-                  <i className={`fas fa-chevron-${isOpen ? 'up' : 'down'}`}></i>
-                </button>
-                {isOpen && (
-                  <div className="faq-answer-pane fade-in">
-                    <p>{faq.a}</p>
-                  </div>
-                )}
+            {/* Direct Partner Consultation Help Desk Card */}
+            <div className="faq-helpdesk-card">
+              <div className="helpdesk-header">
+                <div className="helpdesk-icon-bubble">
+                  <i className="fa-solid fa-comments"></i>
+                </div>
+                <div className="helpdesk-info">
+                  <span className="helpdesk-badge">DIRECT CA ADVISORY</span>
+                  <strong className="helpdesk-title">Have an Unlisted Question?</strong>
+                </div>
               </div>
-            );
-          })}
+              <p className="helpdesk-desc">
+                Speak directly with a Senior Chartered Accountant for immediate engagement clarity on custom multi-branch or manufacturing retainers.
+              </p>
+              <div className="helpdesk-btn-row">
+                <a
+                  href="https://wa.me/919510984735?text=Hello%20Shree%20Chamunda%20Associates%2C%20I%20have%20a%20statutory%20compliance%20question%20regarding%20retainers."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="faq-chat-btn"
+                >
+                  <i className="fa-brands fa-whatsapp"></i>
+                  <span>WhatsApp CA Desk</span>
+                </a>
+                <a href="tel:+919510984735" className="faq-phone-btn">
+                  <i className="fa-solid fa-phone"></i>
+                  <span>+91 95109 84735</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Fiduciary Credentials Pillars */}
+            <div className="faq-credentials-stack">
+              <div className="faq-cred-pill">
+                <i className="fa-solid fa-stamp text-amber"></i>
+                <span>ICAI Code of Ethics (Part 1 &amp; 2) Compliant</span>
+              </div>
+              <div className="faq-cred-pill">
+                <i className="fa-solid fa-lock text-emerald"></i>
+                <span>Fixed Scope-Locked Mandates &bull; Zero Surcharges</span>
+              </div>
+              <div className="faq-cred-pill">
+                <i className="fa-solid fa-file-shield text-blue"></i>
+                <span>Mutual Non-Disclosure Agreement (NDA) Protected</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Category Filters & Enhanced Accordion Cards */}
+          <div className="faq-content-col">
+            {/* Filter Pills */}
+            <div className="faq-filters-bar">
+              {FAQ_CATEGORIES.map((cat) => {
+                const isActive = faqCategory === cat.id;
+                return (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    className={`faq-filter-pill ${isActive ? 'active' : ''}`}
+                    onClick={() => {
+                      setFaqCategory(cat.id);
+                      setOpenFaq(0);
+                    }}
+                  >
+                    <span>{cat.label}</span>
+                    <span className="filter-count">{cat.count}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Accordion Cards List */}
+            <div className="pricing-faqs-list">
+              {filteredFaqs.map((faq, idx) => {
+                const isOpen = openFaq === idx;
+                const formattedNum = String(idx + 1).padStart(2, '0');
+                return (
+                  <div key={faq.id} className={`faq-card-item ${isOpen ? 'open' : ''}`}>
+                    <button
+                      type="button"
+                      className="faq-question-btn"
+                      onClick={() => setOpenFaq(isOpen ? null : idx)}
+                      aria-expanded={isOpen}
+                    >
+                      <div className="faq-btn-left">
+                        <span className="faq-num-badge">{formattedNum}</span>
+                        <div className="faq-btn-titles">
+                          <span className="faq-topic-tag">
+                            <i className={faq.icon}></i>
+                            <span>{faq.categoryLabel}</span>
+                          </span>
+                          <strong className="faq-question-text">{faq.q}</strong>
+                        </div>
+                      </div>
+                      <div className={`faq-chevron-circle ${isOpen ? 'rotate' : ''}`}>
+                        <i className="fa-solid fa-chevron-down"></i>
+                      </div>
+                    </button>
+                    {isOpen && (
+                      <div className="faq-answer-pane fade-in">
+                        <p className="faq-answer-text">{faq.a}</p>
+                        {faq.takeaway && (
+                          <div className="faq-takeaway-box">
+                            <div className="takeaway-header">
+                              <i className="fa-solid fa-circle-check"></i>
+                              <span>FIDUCIARY TAKEAWAY</span>
+                            </div>
+                            <p className="takeaway-text">{faq.takeaway}</p>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </section>
     </div>
