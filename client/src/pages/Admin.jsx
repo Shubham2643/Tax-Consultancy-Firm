@@ -325,7 +325,7 @@ const Admin = () => {
       if (res.success) {
         setNewCommentText(prev => ({ ...prev, [inquiryId]: '' }));
         setInquiries(prev => prev.map(inq => inq._id === inquiryId ? res.data : inq));
-        showToast('success', 'CA reply sent to client');
+        showToast('success', 'Advisor reply sent to client');
       }
     } catch {
       showToast('error', 'Failed to post reply');
@@ -1112,7 +1112,7 @@ const Admin = () => {
     return (
       <div className="admin-loading-screen">
         <div className="admin-spinner"></div>
-        <p>Verifying ICAI administrative clearance...</p>
+        <p>Verifying administrative clearance...</p>
       </div>
     );
   }
@@ -1123,7 +1123,7 @@ const Admin = () => {
       inquiries: 'Client Inquiries',
       documents: 'Verification Vault',
       users: 'Clients Database',
-      consultations: 'CA Consultations',
+      consultations: 'Consultations Desk',
       invoices: 'Invoices & Billing',
       services: 'Services Directory',
       faqs: 'Knowledge Base (FAQ)',
@@ -1218,7 +1218,7 @@ const Admin = () => {
             title="Consultation Bookings"
           >
             <div className="nav-icon-box"><i className="fas fa-calendar-check"></i></div>
-            <span className="nav-label">CA Consultations</span>
+            <span className="nav-label">Consultations</span>
             {pendingConsCount > 0 && <span className="nav-counter green">{pendingConsCount}</span>}
           </button>
 
@@ -1355,7 +1355,7 @@ const Admin = () => {
                 <i className="fas fa-chevron-right breadcrumb-separator"></i>
                 <span className="breadcrumb-current">{getSectionTitle()}</span>
               </div>
-              <span className="admin-sub-kicker">Shree Chamunda Associates &bull; ICAI Statutory Compliance Portal</span>
+              <span className="admin-sub-kicker">Shree Chamunda Associates &bull; Statutory Compliance Portal</span>
             </div>
           </div>
 
@@ -1475,7 +1475,7 @@ const Admin = () => {
                             <div className="tile-icon blue"><i className="fas fa-inbox"></i></div>
                             <div className="tile-info">
                               <strong>Resolve Client Inquiries</strong>
-                              <span>Review active filings and post CA milestone comments</span>
+                              <span>Review active filings and post milestone comments</span>
                             </div>
                             <i className="fas fa-chevron-right"></i>
                           </button>
@@ -1631,7 +1631,7 @@ const Admin = () => {
                             <p>{inq.message}</p>
                           </div>
 
-                          {/* Live CA-Client Discussion Thread */}
+                          {/* Live Advisor-Client Discussion Thread */}
                           <div className="admin-chat-thread-box">
                             <div className="chat-thread-title">
                               <i className="fas fa-comments"></i>
@@ -1663,7 +1663,7 @@ const Admin = () => {
                                   const val = e.target.value;
                                   setNewCommentText(prev => ({ ...prev, [inq._id]: val }));
                                 }}
-                                placeholder="Reply to client as Senior Chartered Accountant..."
+                                placeholder="Reply to client as Senior Tax Consultant..."
                                 onKeyDown={(e) => {
                                   if (e.key === 'Enter') handlePostAdminComment(inq._id);
                                 }}
@@ -1762,7 +1762,7 @@ const Admin = () => {
                                 <td>
                                   <input
                                     type="text"
-                                    placeholder="Add CA review note..."
+                                    placeholder="Add audit review note..."
                                     defaultValue={doc.adminNote || ''}
                                     onBlur={(e) => {
                                       if (e.target.value !== doc.adminNote) {
@@ -1914,7 +1914,7 @@ const Admin = () => {
                   {/* Executive Hero Banner */}
                   <div className="admin-hero-banner">
                     <div className="hero-text-content">
-                      <h1>CA Consultations &amp; Strategy Desk</h1>
+                      <h1>Advisory Consultations &amp; Strategy Desk</h1>
                       <p>Review 1-on-1 consultation requests for notice handling, balance sheet audits, and business startup incorporations.</p>
                     </div>
                   </div>
@@ -2181,7 +2181,7 @@ const Admin = () => {
                           <tr>
                             <th>Practice Area Title</th>
                             <th>Category &amp; Route</th>
-                            <th>CA Fee</th>
+                            <th>Professional Fee</th>
                             <th>Status</th>
                             <th style={{ textAlign: 'right' }}>Actions</th>
                           </tr>
@@ -2199,7 +2199,7 @@ const Admin = () => {
                                 </div>
                               </td>
                               <td><span className="vault-tag-pill">{s.serviceType || 'general'}</span> <span className="monospace-text">/{s.slug}</span></td>
-                              <td><span className="table-meta-item"><span className="meta-key">CA Fee:</span> <strong className="invoice-amount-text">₹{Number(s.professionalFee || 0).toLocaleString('en-IN')}</strong></span></td>
+                              <td><span className="table-meta-item"><span className="meta-key">Fee:</span> <strong className="invoice-amount-text">₹{Number(s.professionalFee || 0).toLocaleString('en-IN')}</strong></span></td>
                               <td><span className={`status-pill ${s.isActive ? 'approved' : 'rejected'}`}>{s.isActive ? 'Active' : 'Inactive'}</span></td>
                               <td style={{ textAlign: 'right' }}>
                                 <div className="table-actions-stack">
@@ -2335,7 +2335,7 @@ const Admin = () => {
                   <div className="admin-hero-banner">
                     <div className="hero-text-content">
                       <h1>Retainer Plans &amp; Pricing Tiers</h1>
-                      <p>Configure monthly and annual CA retainer packages, deliverables, and popular tier highlights.</p>
+                      <p>Configure monthly and annual statutory retainer packages, deliverables, and popular tier highlights.</p>
                     </div>
                     <div className="hero-action-buttons">
                       <button className="btn-admin-hero-primary" onClick={() => handleOpenPricingModal()}>
@@ -2497,7 +2497,7 @@ const Admin = () => {
                   <div className="admin-hero-banner">
                     <div className="hero-text-content">
                       <h1>Homepage "Why Choose Us" Feature Cards</h1>
-                      <p>Customize the 3 strategic value proposition cards displayed in the "Why Choose Us • The Chartered Advantage" section on the public homepage.</p>
+                      <p>Customize the 3 strategic value proposition cards displayed in the "Why Choose Us • The Advisory Advantage" section on the public homepage.</p>
                     </div>
                     <div className="hero-action-buttons">
                       <button className="btn-admin-hero-primary" onClick={() => handleOpenFeatureModal()}>
@@ -2716,7 +2716,7 @@ const Admin = () => {
                           rows="3"
                           value={settingsForm.companyDescription || ''}
                           onChange={(e) => setSettingsForm({ ...settingsForm, companyDescription: e.target.value })}
-                          placeholder="A premier Chartered Accountancy firm..."
+                          placeholder="A premier Tax Consultancy &amp; Corporate Advisory firm..."
                         ></textarea>
                       </div>
 

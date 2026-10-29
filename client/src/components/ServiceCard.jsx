@@ -12,7 +12,7 @@ const ServiceCard = ({ service }) => {
     if (t.includes('gst') || t.includes('lut') || t.includes('gstr')) return 'GSTN Sec 37–39';
     if (t.includes('itr') || t.includes('tax return') || t.includes('personal tax') || tp === 'tax') return 'IT Act Sec 139(1)';
     if (t.includes('audit') || t.includes('tax audit') || t.includes('44ab')) return 'IT Act Sec 44AB';
-    if (t.includes('accounting') || t.includes('bookkeeping') || tp === 'accounting') return 'ICAI SA-700 Std';
+    if (t.includes('accounting') || t.includes('bookkeeping') || tp === 'accounting') return 'SA-700 Standard';
     if (t.includes('trademark') || t.includes('ipr')) return 'IP India Class Registry';
     if (t.includes('fssai') || t.includes('food')) return 'FSSAI Act 2006';
     if (t.includes('msme') || t.includes('udyam')) return 'MSMED Act 2006';

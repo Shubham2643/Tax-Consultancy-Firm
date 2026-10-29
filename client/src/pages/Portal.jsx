@@ -358,7 +358,7 @@ const Portal = () => {
         notes: bookingForm.notes
       });
       if (res.success) {
-        setMessage({ type: 'success', text: 'Consultation slot requested! Our CA coordinator will confirm shortly.' });
+        setMessage({ type: 'success', text: 'Consultation slot requested! Our advisory coordinator will confirm shortly.' });
         setBookingForm({ date: '', timeSlot: '10:00 AM - 11:00 AM', serviceType: 'GST Filing', notes: '' });
         fetchConsultations();
       }
@@ -539,7 +539,7 @@ const Portal = () => {
           <div className="brand-meta-info">
             <h3>SCA Workspace</h3>
             <span className="vault-live-badge">
-              <span className="live-pulse-dot"></span> CA Audit Vault
+              <span className="live-pulse-dot"></span> Statutory Audit Vault
             </span>
           </div>
           <button 
@@ -595,7 +595,7 @@ const Portal = () => {
             onClick={() => { setTab('bookings'); setIsSidebarOpen(false); }}
           >
             <div className="tab-icon-wrap"><i className="fas fa-calendar-check"></i></div>
-            <span className="tab-label">Book CA Consultation</span>
+            <span className="tab-label">Book Consultation</span>
           </button>
 
           <button 
@@ -652,12 +652,12 @@ const Portal = () => {
                   {tab === 'overview' && 'Executive Overview'}
                   {tab === 'inquiries' && 'Tax Filings Tracker'}
                   {tab === 'documents' && 'Document Vault'}
-                  {tab === 'bookings' && 'CA Consultations'}
+                  {tab === 'bookings' && 'Advisory Consultations'}
                   {tab === 'billing' && 'Invoices & Billing'}
                   {tab === 'upload' && 'Document Upload'}
                 </span>
               </div>
-              <span className="topbar-sub-kicker">Shree Chamunda Associates &bull; ICAI Compliant Audit Session</span>
+              <span className="topbar-sub-kicker">Shree Chamunda Associates &bull; Statutory Compliant Audit Session</span>
             </div>
           </div>
 
@@ -718,14 +718,14 @@ const Portal = () => {
               <div className="portal-hero-card">
                 <div className="hero-text-content">
                   <h1>Welcome to your tax command center, {user.name}!</h1>
-                  <p>Track ongoing GST/ITR filings, collaborate directly with your assigned Chartered Accountant, and access confidential tax records anytime.</p>
+                  <p>Track ongoing GST/ITR filings, collaborate directly with your assigned Senior Tax Advisor, and access confidential tax records anytime.</p>
                 </div>
                 <div className="hero-action-buttons">
                   <button className="btn-hero-primary" onClick={() => setTab('upload')}>
                     <i className="fas fa-cloud-upload-alt"></i> Upload Document
                   </button>
                   <button className="btn-hero-secondary" onClick={() => setTab('bookings')}>
-                    <i className="fas fa-calendar-alt"></i> Book CA Slot
+                    <i className="fas fa-calendar-alt"></i> Book Advisory Slot
                   </button>
                 </div>
               </div>
@@ -819,14 +819,14 @@ const Portal = () => {
                   </div>
                 </div>
 
-                {/* Assigned CA Desk & Quick Actions */}
+                {/* Assigned Advisory Desk & Quick Actions */}
                 <div className="portal-bento-card ca-desk-card">
                   <div className="bento-card-header">
                     <div className="bento-header-left">
                       <div className="bento-header-icon"><i className="fas fa-user-tie"></i></div>
                       <div className="bento-header-title">
                         <span className="bento-kicker">ADVISORY TEAM</span>
-                        <h3>Assigned CA Support Desk</h3>
+                        <h3>Assigned Advisory Support Desk</h3>
                       </div>
                     </div>
                   </div>
@@ -838,7 +838,7 @@ const Portal = () => {
                       </div>
                       <div className="ca-info-text">
                         <h4>Senior Compliance Team</h4>
-                        <span>ICAI Registered Tax &amp; Corporate Auditors</span>
+                        <span>Premier Tax &amp; Corporate Practice</span>
                         <p>Direct assistance available for notice handling, balance sheets, and ROC filings.</p>
                       </div>
                     </div>
@@ -856,8 +856,8 @@ const Portal = () => {
                       <button className="shortcut-tile-btn" onClick={() => setTab('bookings')}>
                         <div className="shortcut-icon"><i className="fas fa-calendar-check"></i></div>
                         <div className="shortcut-text">
-                          <strong>Schedule 1-on-1 CA Session</strong>
-                          <span>Book direct audit video call or meeting</span>
+                          <strong>Schedule 1-on-1 Advisory Session</strong>
+                          <span>Book direct audit call or meeting</span>
                         </div>
                         <i className="fas fa-chevron-right"></i>
                       </button>
@@ -884,7 +884,7 @@ const Portal = () => {
               <div className="portal-hero-card">
                 <div className="hero-text-content">
                   <h1>Tax Filings &amp; Service Milestones</h1>
-                  <p>Monitor progress stages for statutory filings, GST registrations, direct tax inquiries, and collaborate directly with your assigned CA auditor.</p>
+                  <p>Monitor progress stages for statutory filings, GST registrations, direct tax inquiries, and collaborate directly with your assigned practice advisor.</p>
                 </div>
                 <div className="hero-action-buttons">
                   <button className="btn-hero-primary" onClick={() => navigate('/services')}>
@@ -945,7 +945,7 @@ const Portal = () => {
 
                           <div className={`milestone-node-wrap ${step2 ? 'completed' : ''}`}>
                             <div className="milestone-circle"><i className="fas fa-search"></i></div>
-                            <span className="milestone-name">CA Verification</span>
+                            <span className="milestone-name">Partner Verification</span>
                           </div>
                           <div className={`milestone-line ${step3 ? 'completed' : ''}`}></div>
 
@@ -961,11 +961,11 @@ const Portal = () => {
                           </div>
                         </div>
 
-                        {/* Live CA-Client Discussion Thread */}
+                        {/* Live Advisor-Client Discussion Thread */}
                         <div className="filing-chat-thread">
                           <div className="chat-thread-header">
                             <i className="fas fa-comments"></i>
-                            <h4>CA-Client Advisory Discussion</h4>
+                            <h4>Advisor-Client Discussion</h4>
                           </div>
 
                           <div className="chat-messages-container">
@@ -993,7 +993,7 @@ const Portal = () => {
                                 const val = e.target.value;
                                 setNewCommentText(prev => ({ ...prev, [inq._id]: val }));
                               }} 
-                              placeholder="Write a message to your Chartered Accountant..." 
+                              placeholder="Write a message to your tax advisor..." 
                               onKeyDown={(e) => {
                                 if (e.key === 'Enter') handlePostComment(inq._id);
                               }}
@@ -1025,7 +1025,7 @@ const Portal = () => {
                     <i className="fas fa-cloud-upload-alt"></i> Upload New File
                   </button>
                   <button className="btn-hero-secondary" onClick={() => setTab('bookings')}>
-                    <i className="fas fa-calendar-alt"></i> Book CA Slot
+                    <i className="fas fa-calendar-alt"></i> Book Advisory Slot
                   </button>
                 </div>
               </div>
@@ -1047,7 +1047,7 @@ const Portal = () => {
                         <tr>
                           <th>Document Title</th>
                           <th>Category &amp; Date</th>
-                          <th>CA Review Note</th>
+                          <th>Advisor Review Note</th>
                           <th style={{ textAlign: 'right' }}>Actions</th>
                         </tr>
                       </thead>
@@ -1126,7 +1126,7 @@ const Portal = () => {
                     <span>ENCRYPTED CLIENT VAULT</span>
                   </div>
                   <h1>Fast &amp; Secure Document Vault</h1>
-                  <p>Batch upload financial statements, ITR computations, Form-16, and GST ledgers with instant virus scan and direct CA partner triage.</p>
+                  <p>Batch upload financial statements, ITR computations, Form-16, and GST ledgers with instant virus scan and direct partner triage.</p>
                 </div>
                 <div className="hero-action-buttons">
                   <button className="btn-hero-primary" onClick={() => setTab('documents')}>
@@ -1367,11 +1367,11 @@ const Portal = () => {
               <div className="portal-hero-card">
                 <div className="hero-text-content">
                   <h1>Consultations &amp; Advisory Scheduler</h1>
-                  <p>Book live strategy sessions with our senior Chartered Accountants for tax minimization, notice defense, and corporate structuring.</p>
+                  <p>Book live strategy sessions with our senior tax advisors for tax minimization, notice defense, and corporate structuring.</p>
                 </div>
                 <div className="hero-action-buttons">
                   <a 
-                    href="https://wa.me/919510984735?text=Hello%20CA%20Team!%20I%20would%20like%20to%20schedule%20an%20urgent%20consultation." 
+                    href="https://wa.me/919510984735?text=Hello%20Advisory%20Team!%20I%20would%20like%20to%20schedule%20an%20urgent%20consultation." 
                     target="_blank" 
                     rel="noopener noreferrer" 
                     className="btn-hero-primary"
@@ -1389,7 +1389,7 @@ const Portal = () => {
                       <div className="bento-header-icon"><i className="fas fa-calendar-plus"></i></div>
                       <div className="bento-header-title">
                         <span className="bento-kicker">APPOINTMENT REQUEST</span>
-                        <h3>Schedule CA Strategy Session</h3>
+                        <h3>Schedule Advisory Strategy Session</h3>
                       </div>
                     </div>
                   </div>

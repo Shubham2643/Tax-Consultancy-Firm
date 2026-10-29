@@ -202,7 +202,7 @@ const STATUTORY_DEADLINES = [
     applicability: 'All registered Private Limited, OPC, and Public Limited companies within 30 days of Annual General Meeting (AGM).',
     consequence: 'Late fee of ₹100 per day per form with no upper ceiling. Company and defaulting directors liable for fine under Section 137(3).',
     actionUrl: '/contact',
-    actionText: 'File AOC-4 with CA',
+    actionText: 'File AOC-4 with Advisor',
   },
   {
     id: 'mgt7-mca',
@@ -215,7 +215,7 @@ const STATUTORY_DEADLINES = [
     applicability: 'Every incorporated company within 60 days of holding the Annual General Meeting.',
     consequence: '₹100 per day continuing penalty without upper limit. Defaulters risk strike-off notices under Section 248.',
     actionUrl: '/contact',
-    actionText: 'File MGT-7 with CA',
+    actionText: 'File MGT-7 with Advisor',
   },
   {
     id: 'adv-tax-q3',
@@ -323,7 +323,7 @@ const ComplianceCalendar = () => {
   const handleAddToGoogleCalendar = (item) => {
     const title = encodeURIComponent(`Statutory Due Date: ${item.title}`);
     const details = encodeURIComponent(
-      `Statute: ${item.statute}\nApplicability: ${item.applicability}\nConsequences: ${item.consequence}\nAssisted by Shree Chamunda Associates (Chartered Accountants): +91 95109 84735`
+      `Statute: ${item.statute}\nApplicability: ${item.applicability}\nConsequences: ${item.consequence}\nAssisted by Shree Chamunda Associates (Tax & Corporate Advisory): +91 95109 84735`
     );
     const location = encodeURIComponent('Government Portals (GSTN / MCA / Income Tax)');
     const googleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&location=${location}`;
@@ -587,7 +587,7 @@ const ComplianceCalendar = () => {
               <span>Book Retainer Consultation</span>
             </Link>
             <a
-              href={`https://wa.me/${cleanPhone}?text=${encodeURIComponent('Hello CA Team, I would like to subscribe to free monthly Gujarat CA compliance due date alerts on WhatsApp.')}`}
+              href={`https://wa.me/${cleanPhone}?text=${encodeURIComponent('Hello Advisory Team, I would like to subscribe to free monthly Gujarat statutory compliance due date alerts on WhatsApp.')}`}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-cta-wa"

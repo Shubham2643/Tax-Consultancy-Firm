@@ -1,5 +1,5 @@
 /* ==========================================================================
-   EXECUTIVE DIRECT ADVISORY DESK (WHATSAPP CONCIERGE)
+   EXECUTIVE DIRECT ADVISORY DESK (WHATSAPP CONCIERGE & FLOATING TRIGGER)
    Shree Chamunda Associates • Swiss Precision & Elite Client Experience
    ========================================================================== */
 
@@ -15,7 +15,7 @@
 }
 
 /* ==========================================================================
-   1. FLOATING ADVISORY PILL TRIGGER
+   1. SIGNATURE LUXURY OBSIDIAN FLOATING TRIGGER PILL
    ========================================================================== */
 
 .wa-trigger-pill {
@@ -23,14 +23,14 @@
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  height: 48px;
+  height: 52px;
   padding: 0 16px 0 8px;
-  background: rgba(7, 19, 36, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(135deg, rgba(7, 19, 36, 0.96) 0%, rgba(13, 27, 49, 0.98) 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.16);
   border-radius: 999px;
   color: #ffffff;
   cursor: pointer;
-  box-shadow: 0 10px 28px -4px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  box-shadow: 0 12px 32px -4px rgba(7, 19, 36, 0.45), 0 0 20px rgba(37, 211, 102, 0.18);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
@@ -39,48 +39,66 @@
 }
 
 .wa-trigger-pill:hover {
-  transform: translateY(-2px);
-  border-color: rgba(37, 211, 102, 0.4);
-  box-shadow: 0 14px 34px -4px rgba(0, 0, 0, 0.5), 0 0 18px rgba(37, 211, 102, 0.2);
+  transform: translateY(-3px) scale(1.02);
+  border-color: rgba(37, 211, 102, 0.7);
+  box-shadow: 0 16px 40px -4px rgba(7, 19, 36, 0.55), 0 0 28px rgba(37, 211, 102, 0.35);
 }
 
 .wa-trigger-pill.active {
-  border-color: rgba(212, 175, 55, 0.4);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  border-color: rgba(37, 211, 102, 0.9);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(135deg, #071324 0%, #061d15 100%);
 }
 
 /* Icon Squircle Wrap */
 .wa-pill-icon-wrap {
   position: relative;
-  width: 34px;
-  height: 34px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(37, 211, 102, 0.2) 0%, rgba(18, 140, 126, 0.25) 100%);
-  border: 1px solid rgba(37, 211, 102, 0.45);
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #25d366;
-  font-size: 1.15rem;
+  color: #ffffff;
+  font-size: 1.25rem;
   flex-shrink: 0;
+  box-shadow: 0 2px 10px rgba(37, 211, 102, 0.45);
   transition: transform 0.25s ease;
 }
 
 .wa-trigger-pill:hover .wa-pill-icon-wrap {
-  transform: scale(1.05);
+  transform: scale(1.06);
 }
 
-/* Live Pulse Beacon on Pill */
+/* Live Pulse Radar Beacon */
 .wa-pill-pulse-dot {
   position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 9px;
-  height: 9px;
+  top: -2px;
+  right: -2px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  background: #10b981;
+  background: #22c55e;
   border: 2px solid #071324;
-  box-shadow: 0 0 6px #10b981;
+  box-shadow: 0 0 8px #22c55e;
+  animation: waPulseRadar 2s infinite ease-in-out;
+}
+
+@keyframes waPulseRadar {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  }
+  70% {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
 }
 
 /* Text Cluster */
@@ -93,52 +111,76 @@
 }
 
 .wa-pill-title {
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  color: #f8fafc;
+  font-size: 0.86rem;
+  font-weight: 750;
+  letter-spacing: -0.015em;
+  color: #ffffff;
 }
 
 .wa-pill-sub {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   font-size: 0.68rem;
-  font-weight: 600;
-  color: #10b981;
-  letter-spacing: 0.04em;
+  font-weight: 750;
+  color: #4ade80;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
+  margin-top: 1px;
 }
 
-/* Chevron / Close Icon */
+.wa-status-beacon {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #22c55e;
+  box-shadow: 0 0 6px #22c55e;
+}
+
+/* Chevron / Close Icon Disc */
 .wa-pill-chevron {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.72rem;
-  color: #94a3b8;
-  margin-left: 2px;
-  transition: transform 0.2s ease, color 0.2s ease;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 0.68rem;
+  color: #cbd5e1;
+  margin-left: 4px;
+  transition: all 0.2s ease;
 }
 
 .wa-trigger-pill:hover .wa-pill-chevron {
-  color: #ffffff;
+  background: rgba(37, 211, 102, 0.25);
+  color: #25d366;
+  transform: translateY(-1px);
 }
 
 /* ==========================================================================
-   2. LUXURY ADVISORY CARD MODAL
+   2. LUXURY ADVISORY CARD MODAL (SWISS FINTECH CONCIERGE)
    ========================================================================== */
 
 .wa-concierge-card {
   position: absolute;
   bottom: calc(100% + 14px);
   right: 0;
-  width: 340px;
-  background: #071324;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 18px;
-  box-shadow: 0 24px 60px -10px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  width: 380px;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 22px;
+  box-shadow: 0 24px 60px -10px rgba(7, 19, 36, 0.25), 0 0 0 1px rgba(7, 19, 36, 0.04);
   overflow: hidden;
   z-index: 10000;
   transform-origin: bottom right;
   animation: waCardPop 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme='dark'] .wa-concierge-card {
+  background: #07111e;
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 60px -10px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.04);
 }
 
 @keyframes waCardPop {
@@ -152,13 +194,16 @@
   }
 }
 
-/* Card Header */
+/* ==========================================================================
+   CARD HEADER: Signature Executive Obsidian Bar with Verified Badge
+   ========================================================================== */
+
 .wa-card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 18px;
-  background: linear-gradient(135deg, rgba(15, 28, 48, 0.95) 0%, rgba(10, 20, 36, 0.95) 100%);
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #071324 0%, #0d1e38 100%);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -169,17 +214,31 @@
 }
 
 .wa-header-crest {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: rgba(37, 211, 102, 0.15);
-  border: 1px solid rgba(37, 211, 102, 0.35);
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #25d366;
-  font-size: 1.25rem;
+  color: #ffffff;
+  font-size: 1.35rem;
   flex-shrink: 0;
+  box-shadow: 0 2px 10px rgba(37, 211, 102, 0.35);
+}
+
+.wa-crest-live-dot {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #22c55e;
+  border: 2px solid #071324;
+  box-shadow: 0 0 6px #22c55e;
 }
 
 .wa-header-info {
@@ -187,21 +246,41 @@
   flex-direction: column;
 }
 
+.wa-header-title-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
 .wa-header-title {
   margin: 0;
-  font-size: 0.9rem;
-  font-weight: 700;
+  font-size: 0.95rem;
+  font-weight: 800;
   color: #ffffff;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
+}
+
+.wa-verified-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #22c55e;
+  color: #071324;
+  font-size: 8px;
+  font-weight: 900;
 }
 
 .wa-header-status {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.68rem;
+  font-size: 0.70rem;
   color: #94a3b8;
-  font-weight: 500;
+  font-weight: 600;
+  margin-top: 2px;
 }
 
 .wa-live-dot {
@@ -214,11 +293,11 @@
 }
 
 .wa-card-close {
-  background: transparent;
-  border: none;
-  color: #64748b;
-  width: 28px;
-  height: 28px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #cbd5e1;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -229,36 +308,139 @@
 }
 
 .wa-card-close:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #ef4444;
+  transform: rotate(90deg);
 }
 
-/* Card Body */
+/* ==========================================================================
+   CARD BODY: Conversational Bubble & Scoped Domain Cards
+   ========================================================================== */
+
 .wa-card-body {
-  padding: 16px 18px;
-  background: #040913;
+  padding: 18px 20px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.wa-card-intro {
-  margin: 0 0 14px 0;
-  font-size: 0.76rem;
+/* 1. Conversational Advisor Chat Bubble */
+.wa-chat-bubble-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.wa-advisor-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: #071324;
+  color: #f8b400;
+  border: 1px solid rgba(248, 180, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.wa-speech-bubble {
+  flex: 1;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  border-top-left-radius: 3px;
+  padding: 10px 14px;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+}
+
+[data-theme='dark'] .wa-speech-bubble {
+  background: #0a172a;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.wa-bubble-sender {
+  font-size: 10.5px;
+  font-weight: 800;
+  color: #b45309;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+[data-theme='dark'] .wa-bubble-sender {
+  color: #f8b400;
+}
+
+.wa-bubble-text {
+  font-size: 12.5px;
+  color: #334155;
+  line-height: 1.45;
+  margin: 0 0 6px 0;
+}
+
+[data-theme='dark'] .wa-bubble-text {
+  color: #cbd5e1;
+}
+
+.wa-bubble-meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+  font-size: 10px;
   color: #94a3b8;
-  line-height: 1.5;
 }
 
-/* Quick Options Grid */
+.wa-bubble-ticks {
+  color: #38bdf8;
+  font-size: 10px;
+}
+
+/* 2. Quick Practice Domains */
 .wa-quick-options {
-  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wa-options-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2px;
 }
 
 .wa-options-label {
-  display: block;
-  font-size: 0.68rem;
-  font-weight: 700;
+  font-size: 10.5px;
+  font-weight: 850;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #64748b;
-  margin-bottom: 8px;
+}
+
+[data-theme='dark'] .wa-options-label {
+  color: #94a3b8;
+}
+
+.wa-options-subtag {
+  font-size: 9.5px;
+  font-weight: 750;
+  color: #059669;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+[data-theme='dark'] .wa-options-subtag {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.3);
+  color: #34d399;
 }
 
 .wa-options-grid {
@@ -267,60 +449,147 @@
   gap: 7px;
 }
 
-.wa-option-item {
+.wa-option-card {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 8px 12px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 10px;
+  gap: 12px;
+  padding: 9px 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
 }
 
-.wa-option-left {
+[data-theme='dark'] .wa-option-card {
+  background: #0a172a;
+  border-color: rgba(255, 255, 255, 0.07);
+}
+
+.wa-option-card:hover {
+  transform: translateX(3px);
+  background: #ffffff;
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+}
+
+[data-theme='dark'] .wa-option-card:hover {
+  background: #0f1c32;
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+/* Category Color Icons */
+.wa-option-icon-box {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 0.76rem;
-  font-weight: 500;
-  color: #cbd5e1;
-}
-
-.wa-option-left i {
-  font-size: 0.8rem;
-  color: #d4af37;
-  width: 16px;
-  text-align: center;
+  justify-content: center;
+  font-size: 13px;
   flex-shrink: 0;
+  transition: transform 0.2s ease;
 }
 
-.wa-option-arrow {
-  font-size: 0.65rem;
-  color: #475569;
-  transition: transform 0.2s ease, color 0.2s ease;
+.wa-option-card:hover .wa-option-icon-box {
+  transform: scale(1.08);
 }
 
-.wa-option-item:hover {
-  background: rgba(37, 211, 102, 0.08);
-  border-color: rgba(37, 211, 102, 0.3);
+.wa-option-card.topic-amber .wa-option-icon-box {
+  background: #fffbeb;
+  color: #d97706;
+}
+[data-theme='dark'] .wa-option-card.topic-amber .wa-option-icon-box {
+  background: rgba(248, 180, 0, 0.12);
+  color: #f8b400;
 }
 
-.wa-option-item:hover .wa-option-left {
+.wa-option-card.topic-sapphire .wa-option-icon-box {
+  background: #eff6ff;
+  color: #2563eb;
+}
+[data-theme='dark'] .wa-option-card.topic-sapphire .wa-option-icon-box {
+  background: rgba(59, 130, 246, 0.12);
+  color: #60a5fa;
+}
+
+.wa-option-card.topic-purple .wa-option-icon-box {
+  background: #faf5ff;
+  color: #7c3aed;
+}
+[data-theme='dark'] .wa-option-card.topic-purple .wa-option-icon-box {
+  background: rgba(124, 58, 237, 0.12);
+  color: #c084fc;
+}
+
+.wa-option-card.topic-emerald .wa-option-icon-box {
+  background: #ecfdf5;
+  color: #059669;
+}
+[data-theme='dark'] .wa-option-card.topic-emerald .wa-option-icon-box {
+  background: rgba(16, 185, 129, 0.12);
+  color: #34d399;
+}
+
+.wa-option-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.wa-option-title {
+  font-size: 12.5px;
+  font-weight: 750;
+  color: #071324;
+  line-height: 1.25;
+}
+
+[data-theme='dark'] .wa-option-title {
   color: #ffffff;
 }
 
-.wa-option-item:hover .wa-option-arrow {
-  color: #25d366;
+.wa-option-desc {
+  font-size: 10.5px;
+  color: #64748b;
+  line-height: 1.35;
+  margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+[data-theme='dark'] .wa-option-desc {
+  color: #94a3b8;
+}
+
+.wa-option-arrow-pill {
+  font-size: 10px;
+  font-weight: 750;
+  color: #94a3b8;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.wa-option-card:hover .wa-option-arrow-pill {
+  color: #16a34a;
   transform: translateX(2px);
 }
 
-/* Card Footer */
+/* ==========================================================================
+   CARD FOOTER: Primary Action CTA & Fiduciary Strip
+   ========================================================================== */
+
 .wa-card-footer {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin-top: 2px;
 }
 
 .btn-wa-direct-start {
@@ -328,151 +597,66 @@
   align-items: center;
   justify-content: center;
   gap: 9px;
-  height: 42px;
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  width: 100%;
+  padding: 12px 18px;
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 12px;
   color: #ffffff;
-  border-radius: 10px;
-  font-size: 0.82rem;
-  font-weight: 700;
+  font-size: 13px;
+  font-weight: 800;
   text-decoration: none;
-  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
-  transition: all 0.25s ease;
-}
-
-.btn-wa-direct-start i {
-  font-size: 1.05rem;
+  box-shadow: 0 6px 18px rgba(37, 211, 102, 0.35);
+  transition: all 0.22s ease;
+  cursor: pointer;
 }
 
 .btn-wa-direct-start:hover {
-  background: linear-gradient(135deg, #25d366 0%, #10b981 100%);
-  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
+  background: linear-gradient(135deg, #20bd5a 0%, #0e7065 100%);
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.5);
+  transform: translateY(-2px);
   color: #ffffff;
-  transform: translateY(-1px);
 }
 
-.wa-privacy-note {
+.wa-external-icon {
+  font-size: 10.5px;
+  opacity: 0.85;
+}
+
+.wa-fiduciary-trust-strip {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  font-size: 0.68rem;
+  gap: 8px;
+  font-size: 10px;
   color: #64748b;
-  text-align: center;
+  letter-spacing: 0.02em;
 }
 
-.wa-privacy-note i {
-  color: #d4af37;
-  font-size: 0.68rem;
-}
-
-/* ==========================================================================
-   3. LIGHT THEME OVERRIDES ([data-theme='light'])
-   ========================================================================== */
-
-[data-theme='light'] .wa-trigger-pill {
-  background: rgba(255, 255, 255, 0.95);
-  border-color: #cbd5e1;
-  box-shadow: 0 8px 24px -4px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(15, 23, 42, 0.04);
-}
-
-[data-theme='light'] .wa-trigger-pill:hover {
-  border-color: rgba(37, 211, 102, 0.6);
-  box-shadow: 0 12px 28px -4px rgba(15, 23, 42, 0.18), 0 0 14px rgba(37, 211, 102, 0.15);
-}
-
-[data-theme='light'] .wa-pill-pulse-dot {
-  border-color: #ffffff;
-}
-
-[data-theme='light'] .wa-pill-title {
-  color: #071324;
-}
-
-[data-theme='light'] .wa-pill-chevron {
-  color: #64748b;
-}
-
-[data-theme='light'] .wa-trigger-pill:hover .wa-pill-chevron {
-  color: #071324;
-}
-
-/* Light Card */
-[data-theme='light'] .wa-concierge-card {
-  background: #ffffff;
-  border-color: #cbd5e1;
-  box-shadow: 0 20px 50px -10px rgba(15, 23, 42, 0.18), 0 0 0 1px rgba(15, 23, 42, 0.05);
-}
-
-[data-theme='light'] .wa-card-header {
-  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-  border-bottom-color: #e2e8f0;
-}
-
-[data-theme='light'] .wa-header-title {
-  color: #071324;
-}
-
-[data-theme='light'] .wa-header-status {
-  color: #64748b;
-}
-
-[data-theme='light'] .wa-card-close {
+[data-theme='dark'] .wa-fiduciary-trust-strip {
   color: #94a3b8;
 }
 
-[data-theme='light'] .wa-card-close:hover {
-  background: #e2e8f0;
-  color: #071324;
+.trust-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
 }
 
-[data-theme='light'] .wa-card-body {
-  background: #ffffff;
+.trust-pill i {
+  color: #b45309;
 }
 
-[data-theme='light'] .wa-card-intro {
-  color: #475569;
+[data-theme='dark'] .trust-pill i {
+  color: #f8b400;
 }
 
-[data-theme='light'] .wa-options-label {
-  color: #64748b;
-}
-
-[data-theme='light'] .wa-option-item {
-  background: #f8fafc;
-  border-color: #e2e8f0;
-}
-
-[data-theme='light'] .wa-option-left {
-  color: #334155;
-}
-
-[data-theme='light'] .wa-option-left i {
-  color: #996515;
-}
-
-[data-theme='light'] .wa-option-arrow {
-  color: #94a3b8;
-}
-
-[data-theme='light'] .wa-option-item:hover {
-  background: #f0fdf4;
-  border-color: rgba(37, 211, 102, 0.4);
-}
-
-[data-theme='light'] .wa-option-item:hover .wa-option-left {
-  color: #071324;
-}
-
-[data-theme='light'] .wa-privacy-note {
-  color: #64748b;
-}
-
-[data-theme='light'] .wa-privacy-note i {
-  color: #996515;
+.trust-sep {
+  opacity: 0.5;
 }
 
 /* ==========================================================================
-   4. RESPONSIVE BREAKPOINTS
+   3. RESPONSIVE BREAKPOINTS
    ========================================================================== */
 
 @media (max-width: 640px) {
@@ -481,30 +665,34 @@
     right: 18px;
   }
 
-  .wa-concierge-card {
-    width: calc(100vw - 36px);
-    max-width: 330px;
-    bottom: calc(100% + 10px);
-    right: 0;
-  }
-
   .wa-trigger-pill {
-    height: 44px;
+    height: 48px;
     padding: 0 14px 0 6px;
     gap: 10px;
   }
 
   .wa-pill-icon-wrap {
-    width: 32px;
-    height: 32px;
-    font-size: 1.05rem;
+    width: 34px;
+    height: 34px;
+    font-size: 1.15rem;
   }
 
   .wa-pill-title {
-    font-size: 0.78rem;
+    font-size: 0.80rem;
   }
 
   .wa-pill-sub {
     font-size: 0.64rem;
+  }
+
+  .wa-concierge-card {
+    width: calc(100vw - 36px);
+    right: 0;
+    bottom: calc(100% + 10px);
+  }
+
+  .wa-card-body {
+    padding: 16px;
+    gap: 12px;
   }
 }

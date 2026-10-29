@@ -73,7 +73,7 @@ const STATUTORY_RETAINER_TIERS = [
     roiBadge: 'Recovers ~₹1.2L+ Blocked ITC',
     icon: 'fa-solid fa-building-columns',
     summary:
-      'Complete accounting outsourcing, deep algorithmic GSTR-2B input tax matching, quarterly TDS returns, annual ROC secretarial compliance, and direct Senior CA partner oversight.',
+      'Complete accounting outsourcing, deep algorithmic GSTR-2B input tax matching, quarterly TDS returns, annual ROC secretarial compliance, and direct Senior Partner oversight.',
     disciplines: [
       {
         title: 'Full Ledger Outsourcing',
@@ -97,7 +97,7 @@ const STATUTORY_RETAINER_TIERS = [
       },
       {
         title: 'Priority Partner Desk',
-        detail: 'Designated Senior Chartered Accountant with priority WhatsApp desk (< 4h SLA).',
+        detail: 'Designated Senior Tax Consultant with priority WhatsApp desk (< 4h SLA).',
       },
     ],
     matrix: {
@@ -152,7 +152,7 @@ const STATUTORY_RETAINER_TIERS = [
       },
       {
         title: 'Dedicated Senior Partner',
-        detail: 'Exclusive FCA Partner assigned with direct boardroom consultation access.',
+        detail: 'Exclusive Senior Partner assigned with direct boardroom consultation access.',
       },
     ],
     matrix: {
@@ -208,7 +208,7 @@ const STATUTORY_RETAINER_TIERS = [
       },
       {
         title: 'Complimentary Advisory Desk',
-        detail: '60 Days of complimentary post-formation compliance review by senior CA.',
+        detail: '60 Days of complimentary post-formation compliance review by senior advisors.',
       },
     ],
     matrix: {
@@ -242,7 +242,7 @@ const PRICING_FAQS = [
     categoryLabel: 'Fee Transparency',
     icon: 'fa-solid fa-file-invoice-dollar',
     q: 'How do you delineate government statutory challans from professional retainer fees?',
-    a: 'We practice absolute fiduciary transparency under ICAI ethics. Government portal fees (such as actual GST cash liability, MCA portal filing fees, or income tax challans) are paid directly through government payment gateways or billed at actual treasury challan receipts. Our professional retainer fee is strictly fixed and scope-locked, eliminating arbitrary surcharges.',
+    a: 'We practice absolute fiduciary transparency under statutory practice standards. Government portal fees (such as actual GST cash liability, MCA portal filing fees, or income tax challans) are paid directly through government payment gateways or billed at actual treasury challan receipts. Our professional retainer fee is strictly fixed and scope-locked, eliminating arbitrary surcharges.',
     takeaway: 'Zero markups on treasury challans — all government taxes are remitted directly to statutory gateways or billed at actual treasury receipts.',
   },
   {
@@ -260,8 +260,8 @@ const PRICING_FAQS = [
     categoryLabel: 'Notice Defense',
     icon: 'fa-solid fa-shield-halved',
     q: 'What is included in the Statutory Notice Defense coverage?',
-    a: 'Clients on our Corporate and Enterprise retainers receive routine department notice defense covered under their scope. When an automated scrutiny inquiry, Section 143(1) intimation, ASMT-10 mismatch notice, or DRC-01 show-cause notice is issued, our senior CAs draft the legal rejoinder, reconcile purchase registers, and represent your firm at no extra emergency surcharge.',
-    takeaway: 'Section 143(1), ASMT-10, and DRC-01 legal rejoinders drafted and filed by Senior CAs at zero extra emergency surcharge.',
+    a: 'Clients on our Corporate and Enterprise retainers receive routine department notice defense covered under their scope. When an automated scrutiny inquiry, Section 143(1) intimation, ASMT-10 mismatch notice, or DRC-01 show-cause notice is issued, our senior advisors draft the legal rejoinder, reconcile purchase registers, and represent your firm at no extra emergency surcharge.',
+    takeaway: 'Section 143(1), ASMT-10, and DRC-01 legal rejoinders drafted and filed by Senior Advisors at zero extra emergency surcharge.',
   },
   {
     id: 'cfo',
@@ -269,7 +269,7 @@ const PRICING_FAQS = [
     categoryLabel: 'Virtual CFO ROI',
     icon: 'fa-solid fa-user-tie',
     q: 'How does your Virtual CFO retainer compare to an in-house full-time CFO?',
-    a: 'A seasoned full-time CFO commands ₹25L–₹40L+ annually plus equity, bonuses, and severance overhead. Our Virtual CFO desk provides institutional partner-level financial leadership, cashflow modeling, Section 44AB audit representation, and board-level MIS reporting for a predictable fraction of the cost, backed by a multidisciplinary team of CAs, CSs, and tax advocates.',
+    a: 'A seasoned full-time CFO commands ₹25L–₹40L+ annually plus equity, bonuses, and severance overhead. Our Virtual CFO desk provides institutional partner-level financial leadership, cashflow modeling, Section 44AB audit representation, and board-level MIS reporting for a predictable fraction of the cost, backed by a multidisciplinary team of senior consultants, CSs, and tax advocates.',
     takeaway: 'Partner-level financial leadership and Section 44AB audit defense at ~80% lower cost than full-time executive hires.',
   },
   {
@@ -300,7 +300,7 @@ const MATRIX_CATEGORIES = [
     rows: [
       {
         title: 'Target Business Profile',
-        desc: 'ICAI engagement classification & legal entity scope',
+        desc: 'Statutory engagement classification & legal entity scope',
         tierValues: [
           {
             main: 'Sole Proprietorship / Independent',
@@ -560,13 +560,13 @@ const MATRIX_CATEGORIES = [
           },
           {
             main: 'Zero-Defect Filing Guarantee',
-            sub: 'Pre-scrutiny by CA to prevent MCA resubmission queries',
+            sub: 'Pre-scrutiny by advisors to prevent MCA resubmission queries',
             tag: { text: 'Resubmission Shield', type: 'formation' },
           },
         ],
       },
       {
-        title: 'Designated Senior CA Partner SLA',
+        title: 'Designated Senior Partner SLA',
         desc: 'Direct partner turnaround commitment & dedicated communication channel',
         tierValues: [
           {
@@ -577,14 +577,14 @@ const MATRIX_CATEGORIES = [
           },
           {
             main: 'Priority WhatsApp Desk (< 4 Hours)',
-            sub: 'Direct WhatsApp communication with designated CA',
+            sub: 'Direct WhatsApp communication with designated advisor',
             slaType: 'priority',
             slaIcon: 'fa-brands fa-whatsapp',
             isBenchmark: true,
             tag: { text: 'Direct Partner Line', type: 'benchmark' },
           },
           {
-            main: 'Dedicated Senior FCA Partner Assigned',
+            main: 'Dedicated Senior Practice Partner Assigned',
             sub: 'Boardroom consultations & direct executive phone line',
             slaType: 'executive',
             slaIcon: 'fa-solid fa-user-tie',
@@ -698,7 +698,7 @@ const Pricing = () => {
   useSEO({
     title: 'Statutory Retainers & Corporate Governance Mandates | Shree Chamunda Associates',
     description:
-      'Predictable, scope-locked Chartered Accountancy retainers for Indian Proprietorships, LLPs, Private Limited Companies, and High-Turnover Multi-Branch Conglomerates.',
+      'Predictable, scope-locked statutory tax retainers for Indian Proprietorships, LLPs, Private Limited Companies, and High-Turnover Multi-Branch Conglomerates.',
   });
 
   // Calculate recommendation based on estimator controls
@@ -782,7 +782,7 @@ const Pricing = () => {
       setQuoteStatus({
         loading: false,
         success: false,
-        error: err.message || 'Failed to submit mandate request. Please contact our CA desk directly.',
+        error: err.message || 'Failed to submit mandate request. Please contact our advisory desk directly.',
       });
     }
   };
@@ -798,7 +798,7 @@ const Pricing = () => {
           <div className="pricing-hero-badge">
             <span className="live-dot" aria-hidden="true"></span>
             <i className="fa-solid fa-shield-halved" aria-hidden="true"></i>
-            <span>ICAI ADVISORY STANDARDS &bull; SCOPE-LOCKED STATUTORY RETAINERS</span>
+            <span>STATUTORY ADVISORY STANDARDS &bull; SCOPE-LOCKED RETAINERS</span>
           </div>
 
           <h1 id="pricing-hero-title" className="pricing-main-title">
@@ -806,8 +806,8 @@ const Pricing = () => {
           </h1>
 
           <p className="pricing-hero-lead">
-            Scope-locked Chartered Accountancy retainers governing direct tax, GST audit, ROC secretarial compliance,
-            and scrutiny representation under ICAI regulatory ethics. Built for ambitious enterprises with zero billing surprises.
+            Scope-locked statutory tax retainers governing direct tax, GST audit, ROC secretarial compliance,
+            and scrutiny representation under strict regulatory practice ethics. Built for ambitious enterprises with zero billing surprises.
           </p>
 
           {/* Institutional Commitment Switcher */}
@@ -851,7 +851,7 @@ const Pricing = () => {
             <div className="trust-matrix-card">
               <i className="fa-solid fa-user-check"></i>
               <div className="trust-matrix-text">
-                <strong>Two-Tier Senior CA Review</strong>
+                <strong>Two-Tier Senior Partner Review</strong>
                 <span>Dual Partner Sign-off</span>
               </div>
             </div>
@@ -882,7 +882,7 @@ const Pricing = () => {
           </div>
           <h2 className="section-heading">Institutional Retainer Tiers</h2>
           <p className="section-subtext">
-            Every mandate is scope-locked with explicit deliverables, statutory due-date coverage, and designated CA partner oversight.
+            Every mandate is scope-locked with explicit deliverables, statutory due-date coverage, and designated partner oversight.
           </p>
         </div>
 
@@ -1228,7 +1228,7 @@ const Pricing = () => {
         <div className="matrix-trust-strip">
           <div className="matrix-trust-item">
             <i className="fa-solid fa-shield-halved text-amber"></i>
-            <span><strong>100% ICAI Fiduciary Mandate:</strong> Scope-locked professional fee charter</span>
+            <span><strong>100% Fiduciary Mandate:</strong> Scope-locked professional fee charter</span>
           </div>
           <div className="matrix-trust-item">
             <i className="fa-solid fa-file-invoice-dollar text-emerald"></i>
@@ -1251,7 +1251,7 @@ const Pricing = () => {
               <tr className="matrix-header-row">
                 <th className="col-deliverable">
                   <div className="th-deliverables-header">
-                    <span className="th-deliverables-badge">ICAI SCOPE DIRECTIVE</span>
+                    <span className="th-deliverables-badge">STATUTORY SCOPE DIRECTIVE</span>
                     <strong className="th-deliverables-title">Statutory Dimension</strong>
                     <span className="th-deliverables-sub">Engagement Charter Deliverables</span>
                   </div>
@@ -1366,7 +1366,7 @@ const Pricing = () => {
                 <td className="matrix-footer-deliverable">
                   <div className="footer-deliverable-box">
                     <strong>Statutory Retainer Selection</strong>
-                    <span>Fixed professional fees • 100% ICAI ethical compliance</span>
+                    <span>Fixed professional fees • 100% regulatory ethical compliance</span>
                   </div>
                 </td>
                 {dynamicTiers.map((tier) => {
@@ -1415,8 +1415,8 @@ const Pricing = () => {
                   <i className="fa-solid fa-user-tie"></i>
                 </div>
                 <div className="partner-desk-info">
-                  <span className="partner-desk-role">Senior CA Practice Partner Desk</span>
-                  <strong className="partner-desk-title">Fellow Chartered Accountant (FCA)</strong>
+                  <span className="partner-desk-role">Senior Practice Partner Desk</span>
+                  <strong className="partner-desk-title">Senior Tax Practice Principal</strong>
                 </div>
                 <span className="partner-live-status">
                   <span className="live-dot-pulse"></span>
@@ -1424,7 +1424,7 @@ const Pricing = () => {
                 </span>
               </div>
               <p className="partner-desk-desc">
-                Direct engagement letter drafting with zero intermediary account managers. 100% compliant under ICAI fiduciary charter.
+                Direct engagement letter drafting with zero intermediary account managers. 100% compliant under statutory fiduciary charter.
               </p>
               <div className="partner-desk-actions">
                 <a href="tel:+919510984735" className="partner-direct-link phone">
@@ -1461,7 +1461,7 @@ const Pricing = () => {
                 </div>
                 <div className="guarantee-body">
                   <strong>Fixed Retainers, Zero Surcharges</strong>
-                  <p>Upfront fixed monthly retainers under ICAI charter with zero hidden fees.</p>
+                  <p>Upfront fixed monthly retainers under statutory charter with zero hidden fees.</p>
                 </div>
               </div>
 
@@ -1489,7 +1489,7 @@ const Pricing = () => {
             {/* Compliance trust chips */}
             <div className="quote-trust-strip">
               <span className="trust-pill"><i className="fa-solid fa-shield-halved text-amber"></i> Companies Act Sec 128 Archival</span>
-              <span className="trust-pill"><i className="fa-solid fa-certificate text-emerald"></i> ICAI UDIN Generated</span>
+              <span className="trust-pill"><i className="fa-solid fa-certificate text-emerald"></i> Statutory Certified</span>
             </div>
           </div>
 
@@ -1505,7 +1505,7 @@ const Pricing = () => {
                   <i className="fa-regular fa-clock"></i> &lt; 4h Partner Turnaround
                 </span>
               </div>
-              <p className="form-subtext">Our Senior CA Partner will review your transaction volume and formulate a formal engagement proposal.</p>
+              <p className="form-subtext">Our Senior Practice Partner will review your transaction volume and formulate a formal engagement proposal.</p>
 
               {quoteStatus.success && (
                 <div className="success-quote-banner">
@@ -1684,7 +1684,7 @@ const Pricing = () => {
 
                 <div className="form-fiduciary-footer">
                   <i className="fa-solid fa-shield-halved text-emerald"></i>
-                  <span>Strict ICAI Fiduciary Confidentiality • Zero Spam Policy • 4h Turnaround</span>
+                  <span>Strict Fiduciary Confidentiality • Zero Spam Policy • 4h Turnaround</span>
                 </div>
               </form>
             </div>
@@ -1692,7 +1692,7 @@ const Pricing = () => {
         </div>
       </section>
 
-      {/* 6. STATUTORY BILLING & ICAI ETHICS FAQS */}
+      {/* 6. STATUTORY BILLING & FIDUCIARY ETHICS FAQS */}
       <section className="pricing-content-wrap pricing-faqs-section">
         <div className="faq-dual-grid">
           {/* Left Column: Authoritative Sidebar & Help Desk */}
@@ -1703,7 +1703,7 @@ const Pricing = () => {
             </div>
             <h2 className="faq-main-heading">Frequently Asked Questions on Retainers</h2>
             <p className="faq-lead-text">
-              Clear, binding policies regarding professional fee structures, treasury challan passthrough, and statutory scope assurance under ICAI ethics.
+              Clear, binding policies regarding professional fee structures, treasury challan passthrough, and statutory scope assurance under regulatory practice ethics.
             </p>
 
             {/* Direct Partner Consultation Help Desk Card */}
@@ -1713,12 +1713,12 @@ const Pricing = () => {
                   <i className="fa-solid fa-comments"></i>
                 </div>
                 <div className="helpdesk-info">
-                  <span className="helpdesk-badge">DIRECT CA ADVISORY</span>
+                  <span className="helpdesk-badge">DIRECT ADVISORY DESK</span>
                   <strong className="helpdesk-title">Have an Unlisted Question?</strong>
                 </div>
               </div>
               <p className="helpdesk-desc">
-                Speak directly with a Senior Chartered Accountant for immediate engagement clarity on custom multi-branch or manufacturing retainers.
+                Speak directly with a Senior Practice Partner for immediate engagement clarity on custom multi-branch or manufacturing retainers.
               </p>
               <div className="helpdesk-btn-row">
                 <a
@@ -1728,7 +1728,7 @@ const Pricing = () => {
                   className="faq-chat-btn"
                 >
                   <i className="fa-brands fa-whatsapp"></i>
-                  <span>WhatsApp CA Desk</span>
+                  <span>WhatsApp Advisory Desk</span>
                 </a>
                 <a href="tel:+919510984735" className="faq-phone-btn">
                   <i className="fa-solid fa-phone"></i>
@@ -1741,7 +1741,7 @@ const Pricing = () => {
             <div className="faq-credentials-stack">
               <div className="faq-cred-pill">
                 <i className="fa-solid fa-stamp text-amber"></i>
-                <span>ICAI Code of Ethics (Part 1 &amp; 2) Compliant</span>
+                <span>Statutory Code of Ethics Compliant</span>
               </div>
               <div className="faq-cred-pill">
                 <i className="fa-solid fa-lock text-emerald"></i>

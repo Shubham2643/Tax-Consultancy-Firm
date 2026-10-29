@@ -1,5 +1,5 @@
 /* ============================================================
-   ABOUT PAGE — Institutional Chartered Standard (10/10)
+   ABOUT PAGE — Institutional Practice Standard (10/10)
    Shree Chamunda Associates • Ahmedabad, Gujarat
    ============================================================ */
 
@@ -2081,22 +2081,22 @@
 }
 
 /* Color Theming for Master Seals */
-.seal-icai {
+.seal-fiduciary {
   border-left: 4px solid #f8b400;
 }
-.seal-icai .seal-icon-emblem {
+.seal-fiduciary .seal-icon-emblem {
   background: rgba(248, 180, 0, 0.12);
   border: 1.5px solid rgba(248, 180, 0, 0.35);
   color: #b47500;
 }
-.seal-icai .seal-authority-badge {
+.seal-fiduciary .seal-authority-badge {
   background: rgba(248, 180, 0, 0.15);
   color: #925c00;
 }
-.seal-icai .seal-card-subtitle {
+.seal-fiduciary .seal-card-subtitle {
   color: #b47500;
 }
-.seal-icai .seal-highlight-pill svg {
+.seal-fiduciary .seal-highlight-pill svg {
   color: #b47500;
 }
 

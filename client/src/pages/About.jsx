@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSiteContext } from '../context/SiteContext';
 import './About.css';
 
-// Precision inline SVGs designed for institutional chartered practice aesthetics
+// Precision inline SVGs designed for institutional practice aesthetics
 const Icons = {
   Landmark: () => (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -213,7 +213,7 @@ const About = () => {
     {
       icon: <Icons.Vault />,
       title: 'Bank-Grade Confidentiality & NDA Enforcement',
-      desc: 'Rigorous compliance with ICAI non-disclosure bylaws and formal enterprise NDAs. Financial records and vouchers are safeguarded in secure encrypted cloud repositories.',
+      desc: 'Rigorous compliance with statutory non-disclosure protocols and formal enterprise NDAs. Financial records and vouchers are safeguarded in secure encrypted cloud repositories.',
       tag: 'Fiduciary Duty',
       colorClass: 'pillar-vault',
     },
@@ -369,7 +369,7 @@ const About = () => {
       phase: 'INSTITUTIONAL SCALE',
       title: 'Enterprise Wealth & Comprehensive Retainer Systems',
       desc: 'Serving over 250+ enterprise retainers across Gujarat with zero-penalty assurances, proactive annual tax planning, and direct partner access for mid-market leaders.',
-      badge: 'Chartered Standard',
+      badge: 'Statutory Standard',
       metric: '₹15Cr+ Scrutiny Exposure Protected',
     },
   ];
@@ -377,16 +377,16 @@ const About = () => {
   // 7. Master Institutional Credential Seals & Regulatory Authority
   const credentialSeals = [
     {
-      id: 'icai-seal',
+      id: 'fiduciary-seal',
       badge: 'STATUTORY FIDUCIARY COMPLIANCE',
-      code: 'ICAI-ETHICS-STD',
-      authority: 'Chartered Accountants Act, 1949',
-      title: 'ICAI Code of Ethics & Quality Review Aligned',
+      code: 'FIDUCIARY-ETHICS-STD',
+      authority: 'Professional Practice Standards',
+      title: 'Code of Ethics & Quality Review Aligned',
       subtitle: 'Fiduciary Independence & Uncompromised Confidentiality',
-      desc: 'Strict adherence to ICAI standards of professional independence, mandatory NDA confidentiality, and fiduciary objectivity. Zero contingent fee conflicts and strict ethical segregation.',
-      highlights: ['Mandatory NDA Protection', 'Independence by Statute', 'Objectivity in Audit'],
+      desc: 'Strict adherence to professional standards of independence, mandatory NDA confidentiality, and fiduciary objectivity. Zero contingent fee conflicts and strict ethical segregation.',
+      highlights: ['Mandatory NDA Protection', 'Independence by Protocol', 'Objectivity in Audit'],
       icon: <Icons.Certificate />,
-      sealClass: 'seal-icai',
+      sealClass: 'seal-fiduciary',
     },
     {
       id: 'itat-seal',
@@ -428,7 +428,7 @@ const About = () => {
 
   // 8. Authentic Regulatory Framework & Technical Protocols
   const accreditations = [
-    { code: 'ICAI-ETHICS', title: 'ICAI Code of Ethics Aligned', desc: 'Strict observance of professional independence, fiduciary duty, and non-disclosure standards' },
+    { code: 'FIDUCIARY-ETHICS', title: 'Code of Professional Ethics Aligned', desc: 'Strict observance of professional independence, fiduciary duty, and non-disclosure standards' },
     { code: 'MCA-SPICE', title: 'MCA 21 SPICe+ Intermediary', desc: 'Turnkey corporate incorporations, LLP agreements, and statutory board resolutions' },
     { code: 'GSTN-API', title: 'GSTN Authorized Protocol', desc: 'Real-time reconciliation of GSTR-1, 3B, 2B and automated ITC mismatch detection' },
     { code: 'SSL-SECURE', title: 'Bank-Grade Document Security', desc: 'Secure cloud repositories safeguarding books of accounts and confidential tax filings' },
@@ -436,7 +436,7 @@ const About = () => {
   ];
 
   const handleWhatsAppConsult = () => {
-    const text = 'Hello CA Team, I would like to schedule an in-person advisory session at your Ahmedabad office.';
+    const text = 'Hello Advisory Team, I would like to schedule an in-person advisory session at your Ahmedabad office.';
     window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(text)}`, '_blank');
   };
 
@@ -470,7 +470,7 @@ const About = () => {
           <div className="about-hero-trust-ribbon">
             <div className="trust-ribbon-item">
               <span className="ribbon-icon text-gold"><Icons.Certificate /></span>
-              <span>ICAI Practice Standards Aligned</span>
+              <span>Statutory Practice Standards Aligned</span>
             </div>
             <span className="ribbon-sep">&bull;</span>
             <div className="trust-ribbon-item">
@@ -527,7 +527,7 @@ const About = () => {
               </p>
 
               <p className="manifesto-paragraph">
-                Shree Chamunda Associates was established in Ahmedabad to provide an institutional alternative: a high-touch, partner-led Chartered Tax Advisory where every return is pre-reconciled, every statutory deduction is optimized, and client confidentiality is protected under strict fiduciary law.
+                Shree Chamunda Associates was established in Ahmedabad to provide an institutional alternative: a high-touch, partner-led Tax &amp; Corporate Advisory where every return is pre-reconciled, every statutory deduction is optimized, and client confidentiality is protected under strict fiduciary law.
               </p>
 
               <p className="manifesto-paragraph">
@@ -606,7 +606,7 @@ const About = () => {
                   <th className="col-chamunda">
                     <div className="chamunda-header-badge">
                       <span>SHREE CHAMUNDA ASSOCIATES</span>
-                      <span className="recommended-chip">CHARTERED STANDARD</span>
+                      <span className="recommended-chip">PRACTICE BENCHMARK</span>
                     </div>
                   </th>
                 </tr>
@@ -651,7 +651,7 @@ const About = () => {
                 className={`compare-segment-btn ${activeCompareTab === 'traditional' ? 'active' : ''}`}
                 onClick={() => setActiveCompareTab('traditional')}
               >
-                <span>vs Traditional Local CA</span>
+                <span>vs Traditional Local Practitioner</span>
               </button>
               <button
                 type="button"
@@ -677,7 +677,7 @@ const About = () => {
                     <div className="versus-side versus-competitor">
                       <div className="versus-side-header">
                         <span className="side-badge badge-competitor">
-                          {activeCompareTab === 'traditional' ? 'Traditional Local CA' : 'Big 4 Practice'}
+                          {activeCompareTab === 'traditional' ? 'Traditional Local Practitioner' : 'Big 4 Practice'}
                         </span>
                       </div>
                       <div className="versus-side-body">
@@ -692,7 +692,7 @@ const About = () => {
                         <span className="side-badge badge-chamunda">
                           SHREE CHAMUNDA ASSOCIATES
                         </span>
-                        <span className="versus-chip-gold">Chartered Standard</span>
+                        <span className="versus-chip-gold">Practice Standard</span>
                       </div>
                       <div className="versus-side-body">
                         <span className="status-check"><Icons.Check /></span>
@@ -923,7 +923,7 @@ const About = () => {
               <Icons.History />
               <span>VERIFIABLE PROGRESS &bull; PRACTICE TRACK RECORD</span>
             </div>
-            <h2 id="timeline-title">Milestones of Chartered Growth</h2>
+            <h2 id="timeline-title">Milestones of Firm Growth</h2>
             <p className="section-subtext">
               A verifiable chronicle of institutional expansion, compliance milestones, and digital modernization from our Nikol chambers to managing enterprise networks across Gujarat.
             </p>
@@ -1096,7 +1096,7 @@ const About = () => {
                     <img src="/assets/logo-transparent-svg.svg" alt="Firm Seal" onError={(e) => { e.target.style.display = 'none'; }} />
                     <div>
                       <strong>Shree Chamunda Associates</strong>
-                      <span>Chartered Tax &amp; Corporate Advisory</span>
+                      <span>Statutory Tax &amp; Corporate Advisory</span>
                     </div>
                   </div>
                   <span className="chamber-status-badge">
@@ -1141,7 +1141,7 @@ const About = () => {
           <div className="cta-grid-bg" aria-hidden="true"></div>
 
           <div className="cta-inner-content">
-            <span className="cta-top-chip">RETAIN CHARTERED COUNSEL &bull; SCALE WITH CONFIDENCE</span>
+            <span className="cta-top-chip">RETAIN SENIOR COUNSEL &bull; SCALE WITH CONFIDENCE</span>
             <h2>Ready to Partner with Seasoned Tax Advisors?</h2>
             <p>
               Schedule a confidential initial consultation to review your current tax structure, eliminate notice vulnerabilities, and secure an institutional compliance architecture.
@@ -1170,7 +1170,7 @@ const About = () => {
               </span>
               <span className="cta-guarantee-pill">
                 <Icons.Check />
-                <span>Strict ICAI NDA Confidentiality</span>
+                <span>Strict NDA &amp; Client Confidentiality</span>
               </span>
               <span className="cta-guarantee-pill">
                 <Icons.Check />

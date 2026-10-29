@@ -30,7 +30,7 @@ const useSEO = ({
     // 1. Page Title
     const formattedTitle = title
       ? (title.includes('Shree Chamunda') ? title : `${title} | Shree Chamunda Associates`)
-      : 'Shree Chamunda Associates | Tax Consultancy Firm & Chartered Advisory';
+      : 'Shree Chamunda Associates | Tax Consultancy Firm & Corporate Advisory';
     document.title = formattedTitle;
 
     // 2. Standard Meta

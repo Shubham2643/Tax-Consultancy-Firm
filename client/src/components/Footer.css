@@ -473,7 +473,7 @@
   letter-spacing: 0.02em;
 }
 
-.bento-credential-item.item-icai {
+.bento-credential-item.item-statutory {
   color: #34d399;
   background: rgba(16, 185, 129, 0.12);
   border: 1px solid rgba(16, 185, 129, 0.28);
@@ -1651,7 +1651,7 @@
   color: #475569;
 }
 
-[data-theme='light'] .bento-credential-item.item-icai {
+[data-theme='light'] .bento-credential-item.item-statutory {
   color: #047857;
   background: rgba(16, 185, 129, 0.08);
   border-color: rgba(16, 185, 129, 0.25);

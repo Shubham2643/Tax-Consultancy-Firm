@@ -54,7 +54,7 @@ const getDropdownMeta = (label) => {
   if (normalized.includes('calculator') || normalized.includes('tax-tools')) return { icon: 'fas fa-calculator', desc: 'Old vs New Tax Regime & GST Tools' };
   if (normalized.includes('due date') || normalized.includes('calendar') || normalized.includes('compliance')) return { icon: 'fas fa-calendar-check', desc: 'Statutory compliance & due dates' };
   if (normalized.includes('pricing') || normalized.includes('retainer')) return { icon: 'fas fa-handshake', desc: 'Scope-locked corporate retainers' };
-  if (normalized.includes('career') || normalized.includes('articleship') || normalized.includes('job')) return { icon: 'fas fa-user-graduate', desc: 'ICAI articleship & senior hiring' };
+  if (normalized.includes('career') || normalized.includes('articleship') || normalized.includes('job')) return { icon: 'fas fa-user-graduate', desc: 'Tax careers & professional hiring' };
   if (normalized.includes('blog')) return { icon: 'fas fa-newspaper', desc: 'Tax circulars, case studies & updates' };
   if (normalized.includes('faq')) return { icon: 'fas fa-circle-question', desc: 'Common compliance queries answered' };
   if (normalized.includes('contact')) return { icon: 'fas fa-headset', desc: 'Direct access to senior advisory chambers' };
@@ -64,7 +64,7 @@ const getDropdownMeta = (label) => {
   if (normalized.includes('iso')) return { icon: 'fas fa-award', desc: 'ISO 9001/27001 standard compliance' };
   if (normalized.includes('legal') || normalized.includes('agreement')) return { icon: 'fas fa-scale-balanced', desc: 'Shareholders & vendor contract drafting' };
 
-  return { icon: 'fas fa-shield-halved', desc: 'Chartered corporate compliance' };
+  return { icon: 'fas fa-shield-halved', desc: 'Statutory corporate compliance' };
 };
 
 const getTopCategoryIcon = (label) => {
@@ -375,7 +375,7 @@ const Navbar = () => {
             {/* Executive Office Hours Capsule */}
             <div 
               className="top-bar-status-capsule" 
-              title={`Senior CA Advisory Desk • ${schedule.days}: ${schedule.time} IST`}
+              title={`Senior Advisory Desk • ${schedule.days}: ${schedule.time} IST`}
             >
               {/* Horology Clock Icon */}
               <i className="far fa-clock top-clock-icon" aria-hidden="true"></i>
@@ -398,7 +398,7 @@ const Navbar = () => {
             <a 
               href={`tel:${phone.replace(/[^0-9+]/g, '')}`} 
               className="top-bar-link top-bar-hide-sm"
-              title="Call CA advisory desk"
+              title="Call advisory desk"
             >
               <i className="fas fa-phone-alt top-bar-icon"></i>
               <span className="top-link-text">{phone}</span>
@@ -470,7 +470,7 @@ const Navbar = () => {
                 <Link
                   to={user.role === 'admin' ? '/admin' : '/portal'}
                   className="top-user-link"
-                  title={user.role === 'admin' ? 'Open CA Admin Dashboard' : 'Open Client Portal'}
+                  title={user.role === 'admin' ? 'Open Admin Dashboard' : 'Open Client Portal'}
                 >
                   <span className="user-pill-badge">
                     <i className={user.role === 'admin' ? 'fas fa-shield-halved' : 'fas fa-user-check'}></i>
@@ -615,7 +615,7 @@ const Navbar = () => {
                               <span className="strip-sparkle"><i className="fas fa-user-tie"></i></span>
                               <div className="strip-text-group">
                                 <span className="strip-bold">Need customized advisory?</span>
-                                <span className="strip-sub">Schedule a 1-on-1 strategy call with our CA team</span>
+                                <span className="strip-sub">Schedule a 1-on-1 strategy call with our advisory team</span>
                               </div>
                             </div>
                             <span className="strip-cta-pill">
@@ -638,8 +638,8 @@ const Navbar = () => {
             <a
               href={`tel:${phone.replace(/[^0-9+]/g, '')}`}
               className="nav-mobile-call-btn"
-              title={`Direct Call CA Office (${phone})`}
-              aria-label="Direct Call CA Office"
+              title={`Direct Call Advisory Office (${phone})`}
+              aria-label="Direct Call Advisory Office"
             >
               <i className="fas fa-phone-alt"></i>
             </a>
@@ -665,7 +665,7 @@ const Navbar = () => {
             <Link
               to="/contact"
               className="nav-consultation-btn"
-              title="Schedule Consultation with Chartered Accountant"
+              title="Schedule Consultation with Senior Advisor"
             >
               <span className="consult-badge-leading">
                 <i className="fas fa-calendar-check consult-calendar-icon"></i>
@@ -856,7 +856,7 @@ const Navbar = () => {
             <i className="fas fa-phone-alt"></i>
           </a>
           <a
-            href={`https://wa.me/919510984735?text=${encodeURIComponent('Hello CA Team, I would like to consult with a Chartered Accountant.')}`}
+            href={`https://wa.me/919510984735?text=${encodeURIComponent('Hello Advisory Team, I would like to consult regarding tax & compliance services.')}`}
             target="_blank"
             rel="noopener noreferrer"
             className="mobile-footer-icon-btn wa"

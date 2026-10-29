@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { useSiteContext } from '../context/SiteContext';
 import './WhatsAppWidget.css';
 
@@ -38,11 +38,41 @@ const WhatsAppWidget = () => {
     };
   }, [isOpen]);
 
+  // Current formatted time for the chat bubble
+  const chatTime = useMemo(() => {
+    const now = new Date();
+    return now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+  }, []);
+
   const quickTopics = [
-    { label: 'Urgent Tax Scrutiny / Notice Defense', icon: 'fa-triangle-exclamation', topic: 'Urgent Tax Notice or Scrutiny Defense' },
-    { label: 'GST Returns & Audit Reconciliation', icon: 'fa-file-invoice-dollar', topic: 'GST Audit & Return Filing' },
-    { label: 'Company / LLP SPICe+ Registration', icon: 'fa-building', topic: 'Company or LLP Incorporation' },
-    { label: 'Corporate Advisory & Retainer Mandates', icon: 'fa-handshake', topic: 'Corporate Tax & Financial Retainer' }
+    {
+      label: 'Urgent Tax Notice Defense',
+      desc: 'Section 148, 144, GST DRC-01 triage (< 48h)',
+      icon: 'fa-triangle-exclamation',
+      colorClass: 'topic-amber',
+      topic: 'Urgent Tax Notice or Scrutiny Defense'
+    },
+    {
+      label: 'GST Audit & ITC Recovery',
+      desc: 'GSTR-1, 3B, 2B matching & refund claims',
+      icon: 'fa-file-invoice-dollar',
+      colorClass: 'topic-sapphire',
+      topic: 'GST Audit & Return Filing'
+    },
+    {
+      label: 'Company & LLP Registration',
+      desc: 'Turnkey SPICe+, DINs, DSC & entity setup',
+      icon: 'fa-building',
+      colorClass: 'topic-purple',
+      topic: 'Company or LLP Incorporation'
+    },
+    {
+      label: 'Corporate Retainer Mandate',
+      desc: 'Monthly bookkeeping, CFO & tax governance',
+      icon: 'fa-handshake',
+      colorClass: 'topic-emerald',
+      topic: 'Corporate Tax & Financial Retainer'
+    }
   ];
 
   return (
@@ -50,14 +80,20 @@ const WhatsAppWidget = () => {
       {/* Luxury Advisory Card Modal */}
       {isOpen && (
         <div className="wa-concierge-card animated fadeIn" role="dialog" aria-label="Direct WhatsApp Advisory Channel">
-          {/* Card Header */}
+          {/* Card Header with Executive Crest & Live Beacon */}
           <div className="wa-card-header">
             <div className="wa-header-left">
               <div className="wa-header-crest">
                 <i className="fa-brands fa-whatsapp" aria-hidden="true"></i>
+                <span className="wa-crest-live-dot" aria-hidden="true"></span>
               </div>
               <div className="wa-header-info">
-                <h3 className="wa-header-title">Direct Advisory Desk</h3>
+                <div className="wa-header-title-row">
+                  <h3 className="wa-header-title">Direct Advisory Desk</h3>
+                  <span className="wa-verified-badge" title="Official Verified Desk">
+                    <i className="fa-solid fa-check"></i>
+                  </span>
+                </div>
                 <div className="wa-header-status">
                   <span className="wa-live-dot" aria-hidden="true"></span>
                   <span>Senior Partners Online &bull; Direct Desk</span>
@@ -69,6 +105,7 @@ const WhatsAppWidget = () => {
               className="wa-card-close"
               onClick={() => setIsOpen(false)}
               aria-label="Close Advisory Channel"
+              title="Close"
             >
               <i className="fa-solid fa-xmark" aria-hidden="true"></i>
             </button>
@@ -76,12 +113,31 @@ const WhatsAppWidget = () => {
 
           {/* Card Body */}
           <div className="wa-card-body">
-            <p className="wa-card-intro">
-              Connect directly with our senior consultants for confidential tax representation, notice defense, and corporate structuring.
-            </p>
+            {/* Conversational Advisor Chat Bubble */}
+            <div className="wa-chat-bubble-wrap">
+              <div className="wa-advisor-avatar">
+                <i className="fa-solid fa-user-shield"></i>
+              </div>
+              <div className="wa-speech-bubble">
+                <div className="wa-bubble-sender">Senior Advisory Team</div>
+                <p className="wa-bubble-text">
+                  Welcome to Shree Chamunda Associates. How can our senior tax &amp; compliance consultants assist your business today?
+                </p>
+                <div className="wa-bubble-meta">
+                  <span className="wa-bubble-time">{chatTime}</span>
+                  <span className="wa-bubble-ticks">
+                    <i className="fa-solid fa-check-double"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
 
+            {/* Quick Practice Domains */}
             <div className="wa-quick-options">
-              <span className="wa-options-label">Select Consultation Area:</span>
+              <div className="wa-options-header-row">
+                <span className="wa-options-label">Select Consultation Topic:</span>
+                <span className="wa-options-subtag">Direct Partner Triage</span>
+              </div>
               <div className="wa-options-grid">
                 {quickTopics.map((item, index) => (
                   <a
@@ -89,19 +145,25 @@ const WhatsAppWidget = () => {
                     href={getWhatsAppUrl(item.topic)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="wa-option-item"
+                    className={`wa-option-card ${item.colorClass}`}
                     onClick={() => setIsOpen(false)}
                   >
-                    <div className="wa-option-left">
+                    <div className="wa-option-icon-box">
                       <i className={`fa-solid ${item.icon}`} aria-hidden="true"></i>
-                      <span>{item.label}</span>
                     </div>
-                    <i className="fa-solid fa-chevron-right wa-option-arrow" aria-hidden="true"></i>
+                    <div className="wa-option-content">
+                      <strong className="wa-option-title">{item.label}</strong>
+                      <span className="wa-option-desc">{item.desc}</span>
+                    </div>
+                    <span className="wa-option-arrow-pill">
+                      Chat <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                    </span>
                   </a>
                 ))}
               </div>
             </div>
 
+            {/* Direct Open Button & Fiduciary Strip */}
             <div className="wa-card-footer">
               <a
                 href={getWhatsAppUrl()}
@@ -112,10 +174,17 @@ const WhatsAppWidget = () => {
               >
                 <i className="fa-brands fa-whatsapp" aria-hidden="true"></i>
                 <span>Open Direct Chat on WhatsApp</span>
+                <i className="fa-solid fa-arrow-up-right-from-square wa-external-icon"></i>
               </a>
-              <div className="wa-privacy-note">
-                <i className="fa-solid fa-shield-halved" aria-hidden="true"></i>
-                <span>Fiduciary Privilege &bull; Privileged Communications</span>
+
+              <div className="wa-fiduciary-trust-strip">
+                <span className="trust-pill">
+                  <i className="fa-solid fa-shield-halved"></i> 100% Client Privilege
+                </span>
+                <span className="trust-sep">&bull;</span>
+                <span className="trust-pill">
+                  <i className="fa-solid fa-bolt"></i> &lt; 5 Min SLA
+                </span>
               </div>
             </div>
           </div>
@@ -137,7 +206,10 @@ const WhatsAppWidget = () => {
         </span>
         <span className="wa-pill-text">
           <span className="wa-pill-title">Advisory Desk</span>
-          <span className="wa-pill-sub">Online</span>
+          <span className="wa-pill-sub">
+            <span className="wa-status-beacon"></span>
+            <span>Online</span>
+          </span>
         </span>
         <span className="wa-pill-chevron" aria-hidden="true">
           <i className={`fa-solid ${isOpen ? 'fa-xmark' : 'fa-chevron-up'}`}></i>

@@ -24,7 +24,7 @@ const Services = () => {
     },
     {
       icon: 'fas fa-user-tie',
-      title: 'Senior CA Oversight',
+      title: 'Senior Partner Oversight',
       desc: 'Direct partner representation with zero junior delegation handover.',
     },
     {
@@ -39,8 +39,8 @@ const Services = () => {
   const comparisonRows = [
     {
       metric: 'Professional Accountability',
-      generic: 'Automated software scripts managed by call-center operators without CA liability',
-      firm: 'Direct Chartered Accountant Partner representation governed by ICAI regulatory ethics',
+      generic: 'Automated software scripts managed by call-center operators without professional liability',
+      firm: 'Direct Senior Partner representation governed by statutory practice standards',
       isAdvantage: true,
     },
     {
@@ -66,7 +66,7 @@ const Services = () => {
   const faqs = [
     {
       q: 'What happens if the Income Tax or GST Department issues a notice after filing?',
-      a: 'Our clients receive full statutory notice defense. Because every return undergoes dual-tier Chartered Accountant examination prior to submission, notices are exceptionally rare. If an automated scrutiny inquiry is issued under Section 143(1), 148, or GST Section 61, our senior partners prepare and submit the forensic rejoinder on your behalf.',
+      a: 'Our clients receive full statutory notice defense. Because every return undergoes dual-tier senior advisor examination prior to submission, notices are exceptionally rare. If an automated scrutiny inquiry is issued under Section 143(1), 148, or GST Section 61, our senior partners prepare and submit the forensic rejoinder on your behalf.',
     },
     {
       q: 'How quickly can a new Private Limited Company or LLP be incorporated?',
@@ -82,7 +82,7 @@ const Services = () => {
     },
     {
       q: 'Is our corporate and personal financial data confidential?',
-      a: 'Strictly. All client records and financial ledgers are housed within an encrypted, ISO 27001-compliant digital vault accessible only by your designated Chartered Accountant under ICAI professional secrecy regulations.',
+      a: 'Strictly. All client records and financial ledgers are housed within an encrypted, ISO 27001-compliant digital vault accessible only by your designated advisor under strict statutory professional secrecy regulations.',
     },
   ];
 
@@ -95,11 +95,11 @@ const Services = () => {
           <div className="services-hero-badge">
             <span className="live-dot"></span>
             <i className="fas fa-landmark"></i>
-            <span>ICSI &amp; ICAI COMPLIANT PRACTICE &bull; EST. 2018</span>
+            <span>STATUTORY COMPLIANT PRACTICE &bull; EST. 2018</span>
           </div>
           <h1>Statutory Advisory &amp; Practice Areas</h1>
           <p>
-            Direct partner-led chartered accountancy, corporate structuring, forensic audits,
+            Direct partner-led corporate structuring, forensic audits,
             and appellate scrutiny defense for ambitious enterprises.
           </p>
 
@@ -123,7 +123,7 @@ const Services = () => {
       {/* Main Practice Directory (Embedded without duplicate header) */}
       <ServicesSection hideHeader={true} />
 
-      {/* The 4-Stage Chartered Delivery Protocol & Forensic Methodology */}
+      {/* The 4-Stage Practice Delivery Protocol & Forensic Methodology */}
       <DeliveryProtocol />
 
       {/* Institutional Comparison Matrix */}
@@ -137,7 +137,7 @@ const Services = () => {
             </div>
             <h2>Why Businesses Retain Shree Chamunda Associates</h2>
             <p className="section-subtitle">
-              Understand the critical difference between algorithm-only online filing platforms and certified Chartered Accountant counsel.
+              Understand the critical difference between algorithm-only online filing platforms and certified practice counsel.
             </p>
           </div>
 
@@ -149,7 +149,7 @@ const Services = () => {
                 <div className="firm-header-title">Shree Chamunda Associates</div>
                 <div className="firm-header-badge">
                   <i className="fas fa-award"></i>
-                  <span>ICAI CHARTERED BENCHMARK</span>
+                  <span>STATUTORY PRACTICE BENCHMARK</span>
                 </div>
               </div>
             </div>
@@ -173,7 +173,7 @@ const Services = () => {
                   <div className="col-firm">
                     <div className="comparison-mobile-label">
                       <span className="firm-mobile-tag">
-                        <i className="fas fa-award"></i> Chartered Standard
+                        <i className="fas fa-award"></i> Practice Standard
                       </span>
                     </div>
                     <div className="comparison-cell-content">
@@ -242,7 +242,7 @@ const Services = () => {
               </div>
               <h2>Need Tailored Tax Counsel or Entity Structuring?</h2>
               <p>
-                Connect directly with our senior chartered team for an upfront review of your corporate structure, pending notices, or filing requirements.
+                Connect directly with our senior advisory team for an upfront review of your corporate structure, pending notices, or filing requirements.
               </p>
 
               <div className="practice-cta-meta">
@@ -266,7 +266,7 @@ const Services = () => {
                   <i className="fas fa-arrow-right"></i>
                 </Link>
                 <a
-                  href="https://wa.me/919510984735?text=Hello%2C%20I%20would%20like%20to%20consult%20regarding%20Chartered%20Accountancy%20services."
+                  href="https://wa.me/919510984735?text=Hello%2C%20I%20would%20like%20to%20consult%20regarding%20Tax%20and%20Advisory%20services."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-cta-whatsapp"

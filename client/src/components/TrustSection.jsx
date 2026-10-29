@@ -155,15 +155,15 @@ const TrustSection = ({ onSelectCategory }) => {
           </h2>
 
           <p className="trust-master-subtext">
-            Every tax return, statutory audit, and corporate compliance filing is executed under strict ICAI chartered standards—insulating Indian enterprises against notices, penalties, and tax leakages through multi-tier verification.
+            Every tax return, statutory audit, and corporate compliance filing is executed under rigorous statutory standards—insulating Indian enterprises against notices, penalties, and tax leakages through multi-tier verification.
           </p>
         </div>
 
         {/* ============================================================
-            AUTHENTIC CA PORTAL COMPLIANCE PERFORMANCE PANEL
+            AUTHENTIC STATUTORY PORTAL COMPLIANCE PERFORMANCE PANEL
             ============================================================ */}
         <div className="ca-portal-stats-panel">
-          {/* Official CA Portal Header Bar */}
+          {/* Official Portal Header Bar */}
           <div className="ca-portal-header-bar">
             <div className="ca-portal-header-brand">
               <div className="ca-portal-icon-emblem">
@@ -172,13 +172,13 @@ const TrustSection = ({ onSelectCategory }) => {
               <div className="ca-portal-header-titles">
                 <span className="ca-portal-header-tag">STATUTORY PRACTICE PERFORMANCE &bull; AUDIT &amp; NOTICE DEFENSE LEDGER</span>
                 <span className="ca-portal-header-sub">
-                  Governed under ICAI Regulatory Framework &bull; Practice Standards &bull; Ahmedabad Chambers
+                  Governed under Statutory Compliance Framework &bull; Practice Standards &bull; Ahmedabad Chambers
                 </span>
               </div>
             </div>
             <div className="ca-portal-header-badge">
               <i className="fas fa-stamp"></i>
-              <span>Chartered Standard</span>
+              <span>Institutional Standard</span>
             </div>
           </div>
 
@@ -316,7 +316,7 @@ const TrustSection = ({ onSelectCategory }) => {
               </div>
 
               <p className="fiduciary-desc">
-                Protected by strict ICAI confidentiality bylaws and formal enterprise NDAs. Your financial ledgers, tax filings, and corporate documents are housed in a secure encrypted cloud vault accessible 24/7.
+                Protected by strict statutory confidentiality protocols and formal enterprise NDAs. Your financial ledgers, tax filings, and corporate documents are housed in a secure encrypted cloud vault accessible 24/7.
               </p>
 
               <div className="fiduciary-benefits-list">
@@ -330,7 +330,7 @@ const TrustSection = ({ onSelectCategory }) => {
                 </div>
                 <div className="fiduciary-benefit-row">
                   <i className="fas fa-check-circle text-emerald"></i>
-                  <span>Fiduciary confidentiality governed under Chartered Accountants Act</span>
+                  <span>Fiduciary confidentiality governed under formal non-disclosure covenants</span>
                 </div>
               </div>
 
@@ -353,13 +353,13 @@ const TrustSection = ({ onSelectCategory }) => {
               </div>
 
               <p className="fiduciary-desc">
-                No dealing with generic call centers or inexperienced interns. Every client is assigned a designated Senior CA Partner with 15+ years of cumulative expertise who directly reviews filings and manages notices.
+                No dealing with generic call centers or inexperienced interns. Every client is assigned a designated Senior Practice Partner with 15+ years of cumulative expertise who directly reviews filings and manages notices.
               </p>
 
               <div className="fiduciary-benefits-list">
                 <div className="fiduciary-benefit-row">
                   <i className="fas fa-check-circle text-gold"></i>
-                  <span>Direct priority WhatsApp &amp; phone line to your assigned CA</span>
+                  <span>Direct priority WhatsApp &amp; phone line to your assigned advisor</span>
                 </div>
                 <div className="fiduciary-benefit-row">
                   <i className="fas fa-check-circle text-gold"></i>
@@ -390,7 +390,7 @@ const TrustSection = ({ onSelectCategory }) => {
               <div className="hub-status-pill">
                 <span className="hub-status-dot"></span>
                 <i className="fas fa-shield-halved"></i>
-                <span>Direct Chartered Chambers &bull; Senior Partner Oversight</span>
+                <span>Direct Practice Chambers &bull; Senior Partner Oversight</span>
               </div>
 
               <h3 className="hub-headline">
@@ -411,7 +411,7 @@ const TrustSection = ({ onSelectCategory }) => {
                 <span className="hub-cred-sep">&bull;</span>
                 <div className="hub-cred-item">
                   <i className="fas fa-certificate text-emerald"></i>
-                  <span><strong>ICAI Regulated</strong> Practice Standard</span>
+                  <span><strong>Statutory Practice</strong> Standards</span>
                 </div>
                 <span className="hub-cred-sep">&bull;</span>
                 <div className="hub-cred-item">
@@ -449,12 +449,12 @@ const TrustSection = ({ onSelectCategory }) => {
 
                 <a
                   href={`https://wa.me/${settings?.phone ? settings.phone.replace(/[^0-9]/g, '') : '919510984735'}?text=${encodeURIComponent(
-                    'Hello Shree Chamunda Associates! I would like to consult with a Senior Chartered Accountant regarding Tax & Compliance services.'
+                    'Hello Shree Chamunda Associates! I would like to consult with a Senior Tax Advisor regarding Tax & Compliance services.'
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-hub-whatsapp"
-                  title="Direct WhatsApp Advisory with Senior CA"
+                  title="Direct WhatsApp Advisory with Senior Advisor"
                   aria-label="Direct WhatsApp Consultation"
                 >
                   <i className="fab fa-whatsapp"></i>

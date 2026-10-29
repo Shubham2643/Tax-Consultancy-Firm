@@ -486,7 +486,7 @@ router.put('/settings', async (req, res, next) => {
   }
 });
 
-// POST /api/admin/inquiries/:id/comment — Add CA comment to discussion thread
+// POST /api/admin/inquiries/:id/comment — Add advisor comment to discussion thread
 router.post('/inquiries/:id/comment', async (req, res, next) => {
   try {
     const { text } = req.body;

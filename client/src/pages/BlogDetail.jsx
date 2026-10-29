@@ -334,7 +334,7 @@ const BlogDetail = () => {
   };
 
   const handleConsultCA = () => {
-    const text = `Hello CA Team, I was reviewing your article on "${blog?.title}" and would like to schedule a consultation regarding my specific tax / compliance query.`;
+    const text = `Hello Advisory Team, I was reviewing your article on "${blog?.title}" and would like to schedule a consultation regarding my specific tax / compliance query.`;
     window.open(`https://wa.me/919510984735?text=${encodeURIComponent(text)}`, '_blank');
   };
 
@@ -412,7 +412,7 @@ const BlogDetail = () => {
               <i className="fas fa-stamp"></i> REF: SCA-2026/{blog.category ? blog.category.toUpperCase() : 'REV'}
             </span>
             <span className="kicker-verified-seal">
-              <i className="fas fa-certificate"></i> ICAI REVIEWED
+              <i className="fas fa-certificate"></i> STATUTORY REVIEWED
             </span>
           </div>
 
@@ -432,7 +432,7 @@ const BlogDetail = () => {
               </div>
               <div className="author-details">
                 <div className="author-name-line">
-                  <span className="author-name">{blog.author || 'CA Rajesh Sharma'}</span>
+                  <span className="author-name">{blog.author || 'Senior Practice Partner'}</span>
                   <span className="author-partner-tag">
                     <i className="fas fa-shield-alt"></i> Senior Partner
                   </span>
@@ -674,7 +674,7 @@ const BlogDetail = () => {
                   <i className="fas fa-user-shield"></i>
                 </div>
                 <div className="briefing-item-content">
-                  <strong>Chartered Advisory Entitlement</strong>
+                  <strong>Statutory Advisory Entitlement</strong>
                   <p>Direct consultation guarantees optimal utilization of presumptive limits and lawful deduction frameworks.</p>
                 </div>
               </div>
@@ -709,26 +709,26 @@ const BlogDetail = () => {
             <div className="disclaimer-body">
               <strong>Official Statutory Compliance Notice</strong>
               <p>
-                Tax legislation, slab thresholds, and procedural timelines are subject to dynamic amendments under the Finance Act and notifications issued by the Central Board of Direct Taxes (CBDT) and Central Board of Indirect Taxes &amp; Customs (CBIC). This advisory briefing provides structural analysis. For specific assessments, audits, or notice representations, consult our Chartered Accountants.
+                Tax legislation, slab thresholds, and procedural timelines are subject to dynamic amendments under the Finance Act and notifications issued by the Central Board of Direct Taxes (CBDT) and Central Board of Indirect Taxes &amp; Customs (CBIC). This advisory briefing provides structural analysis. For specific assessments, audits, or notice representations, consult our Senior Tax Advisors.
               </p>
             </div>
           </div>
 
-          {/* ICAI Verified Author Profile Card */}
+          {/* Senior Practice Partner Author Profile Card */}
           <div className="author-authority-card">
             <div className="author-card-avatar-side">
               <div className="authority-avatar-crest">
                 <i className="fas fa-user-tie"></i>
               </div>
               <div className="fellow-stamp">
-                <i className="fas fa-certificate"></i> ICAI Fellow
+                <i className="fas fa-certificate"></i> Practice Partner
               </div>
             </div>
 
             <div className="author-card-body">
               <div className="author-card-top">
                 <div>
-                  <h3 className="author-name-heading">{blog.author || 'CA Rajesh Sharma'}</h3>
+                  <h3 className="author-name-heading">{blog.author || 'Senior Practice Partner'}</h3>
                   <div className="author-title-subtitle">Senior Partner &bull; Direct Tax, GST Appellate &amp; Corporate Litigation</div>
                 </div>
                 <button className="btn-author-direct-wa" onClick={handleConsultCA}>
@@ -737,23 +737,23 @@ const BlogDetail = () => {
               </div>
 
               <p className="author-bio-paragraph">
-                Senior Chartered Accountant advising enterprises, SMEs, and startups on Direct Tax Litigation, Section 148 Reassessment defense, GST Tribunal appeals, and comprehensive statutory structuring. Certified by the Institute of Chartered Accountants of India (ICAI).
+                Senior Tax &amp; Corporate Advisor advising enterprises, SMEs, and startups on Direct Tax Litigation, Section 148 Reassessment defense, GST Tribunal appeals, and comprehensive statutory structuring with extensive multi-industry practice experience.
               </p>
 
               <div className="author-credentials-row">
-                <span className="cred-badge"><i className="fas fa-building-columns"></i> ICAI Registered Chambers</span>
+                <span className="cred-badge"><i className="fas fa-building-columns"></i> Statutory Practice Chambers</span>
                 <span className="cred-badge"><i className="fas fa-location-dot"></i> Nikol, Ahmedabad, Gujarat</span>
                 <span className="cred-badge"><i className="fas fa-shield-alt"></i> 15+ Years Empirical Practice</span>
               </div>
             </div>
           </div>
 
-          {/* Direct CA Consultation Bento Banner */}
+          {/* Direct Advisory Consultation Bento Banner */}
           <div className="editorial-consult-banner">
             <div className="banner-text-side">
               <span className="banner-kicker">🟢 CONFIDENTIAL TAX ADVISORY</span>
               <h3>Need tailored assistance with {blog.category || 'this Tax Matter'}?</h3>
-              <p>Schedule a 1-on-1 confidential review with our Senior Chartered Accountants for assessment defense, notice drafting, and tax optimization.</p>
+              <p>Schedule a 1-on-1 confidential review with our Senior Tax Consultants for assessment defense, notice drafting, and tax optimization.</p>
             </div>
             <button className="btn-banner-consult-wa" onClick={handleConsultCA}>
               <i className="fab fa-whatsapp"></i>
@@ -877,7 +877,7 @@ const BlogDetail = () => {
                 <span>COMPANION ADVISORIES</span>
               </div>
               <h2>More Authoritative Tax &amp; Statutory Insights</h2>
-              <p>Explore related statutory briefings and procedural guides curated by our Chartered Accountants.</p>
+              <p>Explore related statutory briefings and procedural guides curated by our Senior Tax Advisors.</p>
             </div>
 
             <div className={`related-dispatches-grid count-${relatedBlogs.length}`}>
@@ -910,7 +910,7 @@ const BlogDetail = () => {
                         <i className="fas fa-file-shield"></i> STATUTORY ADVISORY
                       </span>
                       <span className="dispatch-authority-badge">
-                        <i className="fas fa-certificate"></i> ICAI REVIEWED
+                        <i className="fas fa-certificate"></i> STATUTORY REVIEWED
                       </span>
                     </div>
 
@@ -927,7 +927,7 @@ const BlogDetail = () => {
                           <i className="fas fa-user-tie"></i>
                         </div>
                         <div className="dispatch-author-text">
-                          <span className="dispatch-author-name">{rel.author || 'CA Partner'}</span>
+                          <span className="dispatch-author-name">{rel.author || 'Tax Partner'}</span>
                           <span className="dispatch-meta-info">
                             {formatDate(rel.createdAt || rel.publishedAt)}
                           </span>

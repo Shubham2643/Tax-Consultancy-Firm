@@ -301,7 +301,7 @@ const registrationServices = [
     governmentFee: 500,
     professionalFee: 1499,
     detailedOverview:
-      'Professional Tax (PT) is a state-level tax levied on professions, trades, and employment. In Gujarat, every employer with salaried employees and every professional (CA, doctor, lawyer, consultant) must obtain Professional Tax Enrollment (PTEC) and Registration (PTRC) certificates. Non-compliance attracts penalties up to ₹5,000 per month. Shree Chamunda Associates handles enrollment on the Gujarat commercial tax portal, EC registration, and monthly PT return setup.',
+      'Professional Tax (PT) is a state-level tax levied on professions, trades, and employment. In Gujarat, every employer with salaried employees and every professional (tax practitioner, doctor, lawyer, consultant) must obtain Professional Tax Enrollment (PTEC) and Registration (PTRC) certificates. Non-compliance attracts penalties up to ₹5,000 per month. Shree Chamunda Associates handles enrollment on the Gujarat commercial tax portal, EC registration, and monthly PT return setup.',
     eligibility: [
       'Employers with one or more salaried employees in Gujarat',
       'Self-employed professionals earning above threshold',

@@ -1,16 +1,62 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { submitContact } from '../api';
 import ExecutiveSelect from './ExecutiveSelect';
 import './ContactForm.css';
 
-const ContactForm = () => {
+const ContactForm = ({ activeTab: externalTab, onTabChange }) => {
   const location = useLocation();
-  const [activeTab, setActiveTab] = useState('inquiry'); // 'inquiry' | 'consultation'
+  const [internalTab, setInternalTab] = useState('inquiry'); // 'inquiry' | 'consultation'
+  const activeTab = externalTab !== undefined ? externalTab : internalTab;
+
+  const handleTabSwitch = (tab) => {
+    if (onTabChange) {
+      onTabChange(tab);
+    }
+    setInternalTab(tab);
+  };
+
   const [consultationMode, setConsultationMode] = useState('office'); // 'office' | 'virtual' | 'phone'
   const [preferredSlot, setPreferredSlot] = useState('morning'); // 'morning' | 'afternoon' | 'evening'
   const [urgency, setUrgency] = useState('standard'); // 'standard' | 'priority' | 'urgent'
   const [refId, setRefId] = useState('');
+
+  // Dynamically compute the next 5 upcoming business days (Mon–Sat, skipping Sundays)
+  const businessDays = useMemo(() => {
+    const days = [];
+    const now = new Date();
+    let count = 0;
+    // If it's already after 6:30 PM, start offering slots from tomorrow
+    let offset = (now.getHours() >= 18 && now.getMinutes() >= 30) ? 1 : 0;
+
+    while (count < 5) {
+      const d = new Date(now);
+      d.setDate(now.getDate() + offset);
+      const dayOfWeek = d.getDay(); // 0 is Sunday
+      if (dayOfWeek !== 0) {
+        const isToday = offset === 0;
+        const isTomorrow = offset === 1;
+        const label = isToday ? 'Today' : isTomorrow ? 'Tomorrow' : d.toLocaleDateString('en-US', { weekday: 'short' });
+        const dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        const dayName = d.toLocaleDateString('en-US', { weekday: 'short' });
+        const fullDate = d.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' });
+
+        days.push({
+          id: d.toISOString().split('T')[0],
+          label,
+          dateStr,
+          dayName,
+          fullDate,
+          isFastest: count === 0,
+        });
+        count++;
+      }
+      offset++;
+    }
+    return days;
+  }, []);
+
+  const [selectedDateId, setSelectedDateId] = useState(() => (businessDays[0]?.id || ''));
 
   const [formData, setFormData] = useState({
     name: '',
@@ -63,10 +109,10 @@ const ContactForm = () => {
     setStatus({ submitting: true, success: false, error: null });
 
     const modeLabel = consultationMode === 'office'
-      ? 'In-Person (Nikol Office)'
+      ? 'In-Person (Nikol Chambers)'
       : consultationMode === 'virtual'
-      ? 'Virtual Google Meet'
-      : 'Direct Phone Advisory';
+      ? 'Virtual Google Meet HD'
+      : 'Direct Partner Phone Advisory';
 
     const slotLabel = preferredSlot === 'morning'
       ? 'Morning (10:30 AM - 1:00 PM)'
@@ -80,22 +126,26 @@ const ContactForm = () => {
       ? 'Priority (< 7 Days)'
       : 'Standard';
 
+    const selectedDayObj = businessDays.find((b) => b.id === selectedDateId) || businessDays[0];
+    const dateFormatted = selectedDayObj ? `${selectedDayObj.fullDate} (${selectedDayObj.label})` : 'Next Available Slot';
+
     // Format rich service title & message while preserving backend schema compatibility
-    let formattedService = formData.service || (activeTab === 'consultation' ? '1-on-1 CA Consultation' : 'General Tax Advisory');
+    let formattedService = formData.service || (activeTab === 'consultation' ? '1-on-1 Senior Advisory Consultation' : 'General Tax Advisory');
     if (activeTab === 'consultation') {
       formattedService = `[${consultationMode.toUpperCase()}] ${formattedService}`;
     }
 
     let formattedMessage = '';
     if (activeTab === 'consultation') {
-      formattedMessage = `[APPOINTMENT REQUEST]\n` +
+      formattedMessage = `[EXECUTIVE 1-ON-1 CONSULTATION RESERVATION]\n` +
         `• Consultation Mode: ${modeLabel}\n` +
-        `• Preferred Slot: ${slotLabel}\n` +
-        `• Urgency Level: ${urgencyLabel}\n\n` +
-        `[CLIENT BRIEF / DETAILS]\n` +
+        `• Preferred Date: ${dateFormatted}\n` +
+        `• Advisory Window: ${slotLabel}\n` +
+        `• Statutory Urgency: ${urgencyLabel}\n\n` +
+        `[CLIENT BRIEF / CASE DOSSIER]\n` +
         `${formData.message.trim()}`;
     } else {
-      formattedMessage = `[INQUIRY - ${urgencyLabel}]\n\n` +
+      formattedMessage = `[OFFICIAL INQUIRY - ${urgencyLabel}]\n\n` +
         `${formData.message.trim()}`;
     }
 
@@ -130,12 +180,12 @@ const ContactForm = () => {
 
   return (
     <div className="contact-bento-form-wrap">
-      {/* Interactive Desk Mode Switcher Tabs */}
+      {/* Symmetrical Mode Switcher Tabs */}
       <div className="contact-mode-tabs">
         <button
           type="button"
           className={`mode-tab-btn ${activeTab === 'inquiry' ? 'active' : ''}`}
-          onClick={() => setActiveTab('inquiry')}
+          onClick={() => handleTabSwitch('inquiry')}
         >
           <div className="tab-icon-wrap">
             <i className="fas fa-file-invoice"></i>
@@ -146,13 +196,13 @@ const ContactForm = () => {
         <button
           type="button"
           className={`mode-tab-btn ${activeTab === 'consultation' ? 'active' : ''}`}
-          onClick={() => setActiveTab('consultation')}
+          onClick={() => handleTabSwitch('consultation')}
         >
           <div className="tab-icon-wrap">
             <i className="fas fa-calendar-check"></i>
           </div>
           <span className="tab-text-title">Book 1-on-1 Session</span>
-          <span className="tab-pill-badge direct-ca">Direct CA</span>
+          <span className="tab-pill-badge direct-ca">Priority Advisory</span>
         </button>
       </div>
 
@@ -164,20 +214,20 @@ const ContactForm = () => {
           <div className="contact-bento-title-wrap">
             <div className="header-meta-row">
               <span className="contact-bento-kicker">
-                {activeTab === 'consultation' ? 'PARTNER ADVISORY CHAMBERS' : 'OFFICIAL INQUIRY DESK'}
+                {activeTab === 'consultation' ? 'SENIOR PARTNER ADVISORY CHAMBERS' : 'OFFICIAL INQUIRY DESK'}
               </span>
               <span className="header-confidential-pill">
                 <i className="fas fa-lock"></i> 100% Confidential
               </span>
               {activeTab === 'consultation' && (
-                <span className="header-icai-pill">
-                  <i className="fas fa-check-double"></i> ICAI Regulated
+                <span className="header-fiduciary-pill">
+                  <i className="fas fa-check-double"></i> Fiduciary Standard
                 </span>
               )}
             </div>
             <h3>
               {activeTab === 'consultation'
-                ? 'Reserve 1-on-1 Senior CA Consultation'
+                ? 'Reserve 1-on-1 Senior Advisory Consultation'
                 : 'Send An Official Inquiry'}
             </h3>
           </div>
@@ -217,7 +267,7 @@ const ContactForm = () => {
               <div className="ticket-field">
                 <span className="ticket-label">Desk Status</span>
                 <strong className="ticket-value status-active">
-                  <span className="pulse-dot"></span> In Queue for Review
+                  <span className="pulse-dot"></span> In Queue for Partner Review
                 </strong>
               </div>
             </div>
@@ -235,7 +285,7 @@ const ContactForm = () => {
                 <div className="step-num">2</div>
                 <div className="step-text">
                   <strong>Direct Callback</strong>
-                  <span>Senior advisor calls within 24 business hours</span>
+                  <span>Senior practice advisor calls within scheduled window</span>
                 </div>
               </div>
               <div className="step-item">
@@ -252,7 +302,7 @@ const ContactForm = () => {
                 <i className="fas fa-redo"></i> Submit Another Request
               </button>
               <a
-                href={`https://wa.me/919510984735?text=${encodeURIComponent(`Hello, I just submitted an inquiry on the website with Reference ID ${refId}. Could you please confirm?`)}`}
+                href={`https://wa.me/919510984735?text=${encodeURIComponent(`Hello Shree Chamunda Associates, I just booked an appointment / inquiry on the website with Reference ID ${refId}. Could you please confirm?`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-success-wa"
@@ -268,8 +318,8 @@ const ContactForm = () => {
           <>
             <p className="contact-form-subtitle">
               {activeTab === 'consultation'
-                ? 'Schedule a confidential session with our qualified Chartered Accountants for statutory audit defense, tax optimization, and corporate advisory.'
-                : 'Direct transmission to our Senior CA Partners. Every submission is analyzed for compliance deadlines and tax optimization.'}
+                ? 'Select your preferred channel, calendar date, and consultation window. A designated Senior Tax Practice Consultant will lead your session.'
+                : 'Direct transmission to our Senior Tax Partners. Every inquiry is analyzed for compliance deadlines, notice liabilities, and tax optimization.'}
             </p>
 
             {/* Consultation Deliverables & Session Scope Strip */}
@@ -278,16 +328,16 @@ const ContactForm = () => {
                 <div className="scope-item">
                   <i className="fas fa-file-invoice-dollar"></i>
                   <div className="scope-text">
-                    <strong>Statutory Assessment</strong>
-                    <span>Notice &amp; filings audit prior to call</span>
+                    <strong>Pre-Session Audit</strong>
+                    <span>Notice DIN &amp; filings review</span>
                   </div>
                 </div>
                 <div className="scope-divider"></div>
                 <div className="scope-item">
                   <i className="fas fa-user-shield"></i>
                   <div className="scope-text">
-                    <strong>Partner Led (30–45m)</strong>
-                    <span>Direct Chartered Accountant advisory</span>
+                    <strong>Partner-Led (30–45m)</strong>
+                    <span>Senior Partner Direct Oversight</span>
                   </div>
                 </div>
                 <div className="scope-divider"></div>
@@ -295,7 +345,7 @@ const ContactForm = () => {
                   <i className="fas fa-clipboard-check"></i>
                   <div className="scope-text">
                     <strong>Written Action Memo</strong>
-                    <span>Clear tax roadmap &amp; legal opinion</span>
+                    <span>Legal opinion &amp; roadmaps</span>
                   </div>
                 </div>
               </div>
@@ -309,13 +359,13 @@ const ContactForm = () => {
             )}
 
             <form onSubmit={handleSubmit} className="contact-form-elements">
-              {/* Consultation Specific Selectors */}
+              {/* Consultation Specific Selectors (Channel, Date, Slot) */}
               {activeTab === 'consultation' && (
                 <div className="consultation-compact-stack fade-in">
-                  {/* Channel Selector */}
+                  {/* Step 1: Channel Selector */}
                   <div className="compact-selector-block">
                     <div className="compact-header-row">
-                      <span className="compact-step-label">CONSULTATION CHANNEL</span>
+                      <span className="compact-step-label">1. CONSULTATION CHANNEL</span>
                       <span className="compact-tag-pill">
                         <i className="fas fa-shield-halved"></i> 100% Partner-Led
                       </span>
@@ -354,7 +404,7 @@ const ContactForm = () => {
                       >
                         <div className="compact-card-icon"><i className="fas fa-phone-volume"></i></div>
                         <div className="compact-card-info">
-                          <strong>Direct CA Line</strong>
+                          <strong>Direct Advisory Line</strong>
                           <span>Immediate Triage</span>
                         </div>
                         {consultationMode === 'phone' && <i className="fas fa-check-circle compact-check"></i>}
@@ -362,12 +412,41 @@ const ContactForm = () => {
                     </div>
                   </div>
 
-                  {/* Timing Slot Selector */}
+                  {/* Step 2: Preferred Consultation Date (Next 5 Business Days) */}
                   <div className="compact-selector-block">
                     <div className="compact-header-row">
-                      <span className="compact-step-label">PREFERRED ADVISORY WINDOW</span>
+                      <span className="compact-step-label">2. PREFERRED CONSULTATION DATE</span>
                       <span className="compact-tag-pill">
-                        <i className="far fa-clock"></i> Mon – Sat (IST)
+                        <i className="far fa-calendar-check"></i> Mon – Sat Available
+                      </span>
+                    </div>
+                    <div className="consultation-dates-grid-5">
+                      {businessDays.map((d) => {
+                        const isSelected = selectedDateId === d.id;
+                        return (
+                          <button
+                            key={d.id}
+                            type="button"
+                            className={`compact-date-card ${isSelected ? 'active' : ''}`}
+                            onClick={() => setSelectedDateId(d.id)}
+                          >
+                            <span className="date-card-label">{d.label}</span>
+                            <strong className="date-card-num">{d.dateStr}</strong>
+                            <span className="date-card-sub">{d.dayName}</span>
+                            {d.isFastest && <span className="date-card-fastest-pill">Fastest</span>}
+                            {isSelected && <i className="fas fa-check-circle date-check-icon"></i>}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Step 3: Timing Slot Selector */}
+                  <div className="compact-selector-block">
+                    <div className="compact-header-row">
+                      <span className="compact-step-label">3. PREFERRED ADVISORY WINDOW</span>
+                      <span className="compact-tag-pill">
+                        <i className="far fa-clock"></i> IST Timezone
                       </span>
                     </div>
                     <div className="consultation-slot-grid-3">
@@ -408,8 +487,8 @@ const ContactForm = () => {
               {/* Urgency Level Chips */}
               <div className="urgency-selector-block">
                 <div className="urgency-header-row">
-                  <label className="form-sub-label">Urgency &amp; Notice Deadline</label>
-                  <span className="urgency-tip">Helps us triage statutory court/filing deadlines</span>
+                  <label className="form-sub-label">Statutory Notice Urgency &amp; Deadline</label>
+                  <span className="urgency-tip">Enables immediate priority partner triage</span>
                 </div>
                 <div className="urgency-chips-row">
                   <button
@@ -478,7 +557,7 @@ const ContactForm = () => {
 
                 <div className="contact-form-group">
                   <label htmlFor="contact-phone" className="luxury-input-label">
-                    Phone Number <span className="label-sub-tag">WhatsApp Ready</span>
+                    Phone Number <span className="label-sub-tag">WhatsApp Enabled</span>
                   </label>
                   <div className="unified-phone-box">
                     <div className="phone-flag-segment">
@@ -531,8 +610,8 @@ const ContactForm = () => {
                   rows="4"
                   placeholder={
                     activeTab === 'consultation'
-                      ? 'Please briefly outline your business structure, filing status, or specific notices received...'
-                      : 'Describe your requirements, transaction scale, or questions for our senior partners...'
+                      ? 'Please briefly outline your business structure, notice DIN, assessment year, or specific questions for our senior advisors...'
+                      : 'Describe your requirements, annual turnover, filing status, or questions for our senior partners...'
                   }
                   className="contact-custom-textarea"
                 ></textarea>
@@ -548,7 +627,7 @@ const ContactForm = () => {
                     <span className="submit-btn-icon-seal">
                       <i className="fas fa-circle-notch fa-spin"></i>
                     </span>
-                    <span className="submit-btn-title">Dispatching Request to Partners...</span>
+                    <span className="submit-btn-title">Securing Transmission to Partners...</span>
                   </span>
                 ) : (
                   <span className="submit-btn-content">
@@ -556,7 +635,7 @@ const ContactForm = () => {
                       <i className={activeTab === 'consultation' ? 'fas fa-calendar-check' : 'fas fa-paper-plane'}></i>
                     </span>
                     <span className="submit-btn-title">
-                      {activeTab === 'consultation' ? 'Reserve 1-on-1 CA Consultation' : 'Submit Official Inquiry'}
+                      {activeTab === 'consultation' ? 'Confirm & Reserve Advisory Consultation' : 'Submit Official Inquiry'}
                     </span>
                     <span className="submit-btn-arrow-disc">
                       <i className="fas fa-arrow-right"></i>
@@ -584,7 +663,7 @@ const ContactForm = () => {
                   <i className="fas fa-scale-balanced"></i>
                 </div>
                 <div className="security-text-group">
-                  <strong className="security-title">ICAI Regulated</strong>
+                  <strong className="security-title">Fiduciary Standards</strong>
                   <span className="security-subtitle">Statutory Privilege</span>
                 </div>
               </div>
@@ -596,8 +675,8 @@ const ContactForm = () => {
                   <i className="fas fa-bolt"></i>
                 </div>
                 <div className="security-text-group">
-                  <strong className="security-title">Priority Callback</strong>
-                  <span className="security-subtitle">Under 30-Min SLA</span>
+                  <strong className="security-title">Priority Triage</strong>
+                  <span className="security-subtitle">&lt; 30-Min SLA</span>
                 </div>
               </div>
             </div>

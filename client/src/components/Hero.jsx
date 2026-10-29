@@ -101,7 +101,7 @@ const Hero = () => {
             </span>
             <div className="proof-verified-badge">
               <i className="fas fa-certificate"></i>
-              <span>ICAI Aligned</span>
+              <span>Fiduciary Aligned</span>
             </div>
           </div>
         </div>
@@ -207,10 +207,10 @@ const Hero = () => {
               </div>
             </div>
 
-            {/* ICAI Confidentiality & Governance Footnote */}
+            {/* Fiduciary Confidentiality & Governance Footnote */}
             <div className="mockup-footer-sync">
               <i className="fa-solid fa-shield-halved sync-shield-icon"></i>
-              <span>Strict Client Confidentiality &bull; Governed by ICAI Ethics</span>
+              <span>Strict Client Confidentiality &bull; Governed by Fiduciary Ethics</span>
             </div>
           </div>
         </div>

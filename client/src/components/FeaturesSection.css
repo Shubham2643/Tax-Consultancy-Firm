@@ -119,15 +119,14 @@
 }
 
 .features-main-title {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-size: clamp(2rem, 3.4vw, 2.9rem);
   font-weight: 850;
   line-height: 1.18;
   color: #071324;
   letter-spacing: -0.8px;
-  margin: 0 0 16px 0;
+  margin: 0 auto 16px auto;
   max-width: 920px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .title-gradient-gold {

@@ -228,7 +228,7 @@ Shree Chamunda Associates Administrative Dispatch
                             SHREE CHAMUNDA ASSOCIATES
                           </h1>
                           <p style="color: #f8b400; margin: 3px 0 0; font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;">
-                            Chartered Tax Consultancy &amp; Financial Advisory
+                            Tax Consultancy &amp; Corporate Advisory
                           </p>
                         </td>
                       </tr>
@@ -459,7 +459,7 @@ SUMMARY OF YOUR INQUIRY:
 - Message: "${message}"
 
 OUR COMMITMENT:
-Our senior Chartered Accountants and tax advisors are reviewing your requirements. We will contact you via phone or email within 24 business hours to guide you forward.
+Our senior tax consultants and advisors are reviewing your requirements. We will contact you via phone or email within 24 business hours to guide you forward.
 
 If you have urgent inquiries, please contact our support desk directly:
 - Phone: +91 95109 84735
@@ -485,7 +485,7 @@ Tax & Financial Consultancy Firm
 
   <!-- Hidden Gmail Inbox Preheader -->
   <div style="display: none; font-size: 1px; color: #0b1329; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
-    Thank you for reaching out to Shree Chamunda Associates (SCA). We have received your inquiry [Ref #${refNumber}] and our senior CA team is reviewing it.&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;
+    Thank you for reaching out to Shree Chamunda Associates (SCA). We have received your inquiry [Ref #${refNumber}] and our senior advisory team is reviewing it.&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;
   </div>
 
   <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #0b1329; padding: 32px 12px;">
@@ -541,7 +541,7 @@ Tax & Financial Consultancy Firm
                   Dear ${safeName},
                 </p>
                 <p style="margin: 0; color: #334155; font-size: 14px; line-height: 1.65;">
-                  Thank you for reaching out and choosing <strong>Shree Chamunda Associates (SCA)</strong> for your tax advisory and financial planning needs. We have successfully logged your inquiry regarding <strong style="color: #071324;">${safeService}</strong>. Our senior Chartered Accountants and tax consultants are currently reviewing your specifications and will connect with you within 24 business hours.
+                  Thank you for reaching out and choosing <strong>Shree Chamunda Associates (SCA)</strong> for your tax advisory and financial planning needs. We have successfully logged your inquiry regarding <strong style="color: #071324;">${safeService}</strong>. Our senior tax consultants and advisors are currently reviewing your specifications and will connect with you within 24 business hours.
                 </p>
               </div>
 
@@ -575,8 +575,8 @@ Tax & Financial Consultancy Firm
                           <span style="display: inline-block; width: 22px; height: 22px; background-color: #f59e0b; color: #ffffff; border-radius: 50%; text-align: center; line-height: 22px; font-size: 12px; font-weight: 800;">⏳</span>
                         </td>
                         <td style="background-color: #fffbeb; padding: 12px 16px; border-bottom: 1px solid #e2e8f0;" valign="middle">
-                          <div style="font-size: 13.5px; font-weight: 700; color: #92400e;">2. CA Assessment &amp; Feasibility (Current)</div>
-                          <div style="font-size: 12px; color: #b45309; margin-top: 2px;">A designated auditor is analyzing your filing criteria.</div>
+                          <div style="font-size: 13.5px; font-weight: 700; color: #92400e;">2. Advisor Assessment &amp; Feasibility (Current)</div>
+                          <div style="font-size: 12px; color: #b45309; margin-top: 2px;">A designated advisor is analyzing your filing criteria.</div>
                         </td>
                       </tr>
 

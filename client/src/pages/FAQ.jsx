@@ -82,7 +82,7 @@ const FAQ = () => {
   };
 
   const handleWhatsAppConsult = () => {
-    const text = `Hello CA Team, I have a specific tax & compliance query and would like expert assistance.`;
+    const text = `Hello Advisory Team, I have a specific tax & compliance query and would like expert assistance.`;
     window.open(`https://wa.me/919510984735?text=${encodeURIComponent(text)}`, '_blank');
   };
 
@@ -95,10 +95,10 @@ const FAQ = () => {
           <div className="faq-hero-badge">
             <span className="live-dot"></span>
             <i className="fas fa-shield-alt"></i>
-            <span>Verified Knowledge Base &bull; Chartered Help Desk</span>
+            <span>Verified Knowledge Base &bull; Tax Advisory Help Desk</span>
           </div>
           <h1>Frequently Asked Questions</h1>
-          <p>Instant, verified answers from Chartered Accountants regarding GST filings, income tax notices, company registrations, and compliance audits.</p>
+          <p>Instant, verified answers from Senior Tax Consultants regarding GST filings, income tax notices, company registrations, and compliance audits.</p>
         </div>
       </div>
 
@@ -246,7 +246,7 @@ const FAQ = () => {
                           <span className="faq-category-tag">{faq.category}</span>
                         )}
                         <span className="faq-verified-pill">
-                          <i className="fas fa-check-circle"></i> Verified CA Answer
+                          <i className="fas fa-check-circle"></i> Verified Expert Answer
                         </span>
                       </div>
                       <h3 className="faq-card-question">{faq.question}</h3>
@@ -271,7 +271,7 @@ const FAQ = () => {
                       </div>
                       <div className="faq-answer-footer">
                         <span className="helpful-tag">
-                          <i className="fas fa-user-shield"></i> Chartered Advisory Desk
+                          <i className="fas fa-user-shield"></i> Practice Advisory Desk
                         </span>
                         <button
                           className="faq-chat-link"
@@ -280,7 +280,7 @@ const FAQ = () => {
                             handleWhatsAppConsult();
                           }}
                         >
-                          <span>Ask CA about this</span>
+                          <span>Ask Advisor about this</span>
                           <i className="fab fa-whatsapp"></i>
                         </button>
                       </div>
@@ -302,7 +302,7 @@ const FAQ = () => {
             <div className="consult-text-wrap">
               <span className="consult-live-pill">🟢 1-on-1 Confidential Advisory</span>
               <h3>Still have questions or facing a complex tax notice?</h3>
-              <p>Speak directly with our senior Chartered Accountants for notice drafting, tax filings, and personalized legal guidance.</p>
+              <p>Speak directly with our senior tax advisors for notice drafting, tax filings, and personalized legal guidance.</p>
             </div>
           </div>
 

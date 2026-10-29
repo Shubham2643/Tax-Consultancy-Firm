@@ -32,7 +32,7 @@ const TermsOfService = () => {
             <section id="service-delivery" className="legal-section-block">
               <h2>1. Professional Service Delivery</h2>
               <p>
-                Shree Chamunda Associates agrees to perform all taxation, bookkeeping, and company incorporation services in a professional and diligent manner, adhering to standard ICAI standards and statutory guidelines.
+                Shree Chamunda Associates agrees to perform all taxation, bookkeeping, and company incorporation services in a professional and diligent manner, adhering to professional standards and statutory guidelines.
               </p>
               <p>
                 Service delivery timelines (e.g. 3-5 working days) are estimates. Actual completion times may vary depending on government portal uptimes, server speeds (e.g. MCA SPICe+ loading), and clarifying inquiries from department officers.

@@ -80,7 +80,7 @@ const STATUTORY_RETAINERS = {
     volumeChip: 'Up to 150 Vouchers / Mo',
     volumeIcon: 'fas fa-box-archive',
     summary:
-      'Complete accounting outsourcing, deep algorithmic GSTR-2B input tax reconciliation, quarterly TDS returns, annual ROC secretarial filings, and direct Senior CA partner oversight.',
+      'Complete accounting outsourcing, deep algorithmic GSTR-2B input tax reconciliation, quarterly TDS returns, annual ROC secretarial filings, and direct Senior Partner oversight.',
     scopeCategories: [
       {
         discipline: 'Full Ledger Outsourcing',
@@ -111,7 +111,7 @@ const STATUTORY_RETAINERS = {
         items: [
           'Annual MCA Compliance: Form AOC-4 & MGT-7 drafting',
           'Director DIR-3 KYC compliance execution',
-          'Priority WhatsApp CA Desk with designated Senior Partner',
+          'Priority WhatsApp Advisory Desk with designated Senior Partner',
         ],
       },
     ],
@@ -143,7 +143,7 @@ const STATUTORY_RETAINERS = {
         items: [
           'Uncapped transaction accounting & multi-branch curation',
           'Executive Board MIS, unit economics & working capital review',
-          'Monthly financial performance review with Senior FCA Partner',
+          'Monthly financial performance review with Senior Practice Partner',
         ],
       },
       {
@@ -215,7 +215,7 @@ const STATUTORY_RETAINERS = {
         items: [
           'Opening facilitation for zero-balance corporate current account',
           'First Board Meeting minutes & statutory registers setup',
-          '60-Day complimentary compliance review by senior CA',
+          '60-Day complimentary compliance review by senior advisors',
         ],
       },
     ],
@@ -340,8 +340,8 @@ const PricingSection = () => {
           </h2>
 
           <p className="retainers-lead-text">
-            Scope-locked Chartered Accountancy retainers governing direct tax, GST audit, ROC secretarial compliance,
-            and scrutiny representation under ICAI regulatory ethics. Zero billing surprises.
+            Scope-locked statutory tax retainers governing direct tax, GST audit, ROC secretarial compliance,
+            and scrutiny representation under strict regulatory practice ethics. Zero billing surprises.
           </p>
 
           {/* Institutional Fiscal Commitment Toggle */}
@@ -580,7 +580,7 @@ const PricingSection = () => {
                   onClick={handleWhatsAppQuote}
                 >
                   <i className="fab fa-whatsapp"></i>
-                  <span>Consult CA Partner on WhatsApp</span>
+                  <span>Consult Advisor on WhatsApp</span>
                 </button>
               </div>
 
@@ -590,7 +590,7 @@ const PricingSection = () => {
                   <div className="assurance-icon-box">
                     <i className="fas fa-user-tie"></i>
                   </div>
-                  <span>Direct oversight by qualified Chartered Accountant (FCA)</span>
+                  <span>Direct oversight by qualified Senior Tax Partner</span>
                 </div>
                 <div className="assurance-bullet">
                   <div className="assurance-icon-box">
@@ -616,11 +616,11 @@ const PricingSection = () => {
                   </div>
                   <div>
                     <h4 className="scope-heading">Statutory Scope &amp; Certified Mandate Deliverables</h4>
-                    <p className="scope-subtext">Four core disciplines governed under strict ICAI regulatory standards</p>
+                    <p className="scope-subtext">Four core disciplines governed under strict statutory regulatory standards</p>
                   </div>
                 </div>
-                <span className="icai-standards-badge">
-                  <i className="fas fa-award"></i> ICAI Review Standard
+                <span className="statutory-standards-badge">
+                  <i className="fas fa-award"></i> Statutory Review Standard
                 </span>
               </div>
 
@@ -811,18 +811,18 @@ const PricingSection = () => {
                 <i className="fas fa-user-check" aria-hidden="true"></i>
               </div>
               <span className="safeguard-badge">
-                <i className="fas fa-scale-balanced" aria-hidden="true"></i> FCA REVIEW
+                <i className="fas fa-scale-balanced" aria-hidden="true"></i> PARTNER REVIEW
               </span>
             </div>
             <div className="safeguard-card-body">
               <h4 className="safeguard-heading">Dual Partner Oversight</h4>
               <p className="safeguard-description">
-                Every calculation and return undergoes strict two-tier verification by a senior FCA Partner.
+                Every calculation and return undergoes strict two-tier verification by a senior Practice Partner.
               </p>
             </div>
             <div className="safeguard-card-footer">
               <i className="fas fa-circle-check" aria-hidden="true"></i>
-              <span>Four-Eye CA Protocol</span>
+              <span>Four-Eye Audit Protocol</span>
             </div>
           </div>
 

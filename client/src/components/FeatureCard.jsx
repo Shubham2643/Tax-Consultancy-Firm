@@ -86,7 +86,7 @@ const CARDS_CONFIG = [
   },
   {
     theme: 'card-theme-cyan',
-    eyebrow: 'SENIOR CA OVERSIGHT',
+    eyebrow: 'SENIOR PARTNER OVERSIGHT',
     iconDefault: 'fa-solid fa-headset',
     actionText: 'Connect With Partner',
     actionUrl: '/contact',

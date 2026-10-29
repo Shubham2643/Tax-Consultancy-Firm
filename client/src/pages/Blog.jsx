@@ -8,7 +8,7 @@ import './Blog.css';
 const Blog = () => {
   useSEO({
     title: 'Knowledge Hub & Tax Articles | Shree Chamunda Associates',
-    description: 'Expert insights, Union Budget breakdowns, GST guides, and Income Tax updates from certified Chartered Accountants.',
+    description: 'Expert insights, Union Budget breakdowns, GST guides, and Income Tax updates from experienced Senior Tax Consultants.',
   });
 
   const navigate = useNavigate();
@@ -178,13 +178,13 @@ const Blog = () => {
             <span>Knowledge Hub &bull; Statutory Circulars</span>
           </div>
           <h1>Tax &amp; Compliance Knowledge Hub</h1>
-          <p>Expert insights, Union Budget breakdowns, GST guides, and statutory circulars from certified Chartered Accountants.</p>
+          <p>Expert insights, Union Budget breakdowns, GST guides, and statutory circulars from experienced Senior Tax Consultants.</p>
 
           {/* Authority Trust Strip */}
           <div className="blog-hero-metrics-strip">
             <div className="hero-metric-item">
               <i className="fas fa-certificate text-gold"></i>
-              <span>ICAI Partner Authored</span>
+              <span>Senior Partner Authored</span>
             </div>
             <div className="hero-metric-dot">&bull;</div>
             <div className="hero-metric-item">
@@ -456,7 +456,7 @@ const Blog = () => {
                   {/* Highlights Strip */}
                   <div className="spotlight-highlights-strip">
                     <span className="highlight-pill">
-                      <i className="fas fa-certificate text-gold"></i> ICAI Reviewed
+                      <i className="fas fa-certificate text-gold"></i> Statutory Practice Standard
                     </span>
                     <span className="highlight-pill">
                       <i className="fas fa-shield-check text-green"></i> CBDT Aligned
@@ -491,8 +491,8 @@ const Blog = () => {
                         <i className="fas fa-user-tie"></i>
                       </div>
                       <div className="spotlight-author-meta">
-                        <strong>{featuredPost.author || 'CA Rajesh Sharma, Senior Partner'}</strong>
-                        <span>Chartered Advisory Desk &bull; Shree Chamunda</span>
+                        <strong>{featuredPost.author || 'Senior Practice Partner'}</strong>
+                        <span>Advisory Desk &bull; Shree Chamunda</span>
                       </div>
                     </div>
 
@@ -545,7 +545,7 @@ const Blog = () => {
                     <div className="card-eyebrow-strip">
                       <span className="card-kicker">{blog.category} ADVISORY</span>
                       <span className="card-authority-badge">
-                        <i className="fas fa-certificate text-gold"></i> ICAI Reviewed
+                        <i className="fas fa-certificate text-gold"></i> Statutory Practice Standard
                       </span>
                     </div>
 
@@ -577,7 +577,7 @@ const Blog = () => {
                           <i className="fas fa-user-tie"></i>
                         </div>
                         <div className="card-author-meta">
-                          <span className="card-author-name">{blog.author || 'Senior CA Partner'}</span>
+                          <span className="card-author-name">{blog.author || 'Senior Tax Partner'}</span>
                           <span className="card-author-date">{formatDate(blog.createdAt || blog.publishedAt)}</span>
                         </div>
                       </div>

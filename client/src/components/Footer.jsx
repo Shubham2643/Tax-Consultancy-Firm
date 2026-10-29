@@ -69,7 +69,7 @@ const Footer = () => {
     { label: 'Statutory Compliance Calendar', url: '/compliance-calendar', icon: 'fa-calendar-check' },
     { label: 'Statutory Retainer Mandates', url: '/pricing', icon: 'fa-handshake' },
     { label: 'Firm Profile & Practice Ethics', url: '/about', icon: 'fa-landmark' },
-    { label: 'Articleship & CA Careers', url: '/careers', icon: 'fa-user-graduate' },
+    { label: 'Tax Careers & Internships', url: '/careers', icon: 'fa-user-graduate' },
     { label: 'Income Tax Official Portal', url: 'https://www.incometax.gov.in', external: true, badge: 'Official' },
     { label: 'GST Official Portal', url: 'https://www.gst.gov.in', external: true, badge: 'Official' },
   ];
@@ -81,7 +81,7 @@ const Footer = () => {
   ];
 
   const handleWhatsAppConsult = () => {
-    const text = 'Hello CA Team, I would like to consult regarding statutory compliance, scrutiny defense & corporate advisory services.';
+    const text = 'Hello Advisory Team, I would like to consult regarding statutory compliance, scrutiny defense & corporate advisory services.';
     window.open(`https://wa.me/919510984735?text=${encodeURIComponent(text)}`, '_blank');
   };
 
@@ -106,7 +106,7 @@ const Footer = () => {
                   </div>
                   <h3 className="bento-pre-heading">Facing a Scrutiny Notice or Preparing for Year-End Filings?</h3>
                   <p className="bento-pre-lead">
-                    Direct, confidential consultation with Senior Chartered Accountants. Immediate protection against penalties, interest, and statutory deadlines.
+                    Direct, confidential consultation with Senior Tax Advisors. Immediate protection against penalties, interest, and statutory deadlines.
                   </p>
                 </div>
               </div>
@@ -171,7 +171,7 @@ const Footer = () => {
               </p>
 
               <div className="bento-credentials-cluster">
-                <div className="bento-credential-item item-icai">
+                <div className="bento-credential-item item-statutory">
                   <i className="fas fa-shield-check" aria-hidden="true"></i>
                   <span>Statutory Compliance Practice</span>
                 </div>

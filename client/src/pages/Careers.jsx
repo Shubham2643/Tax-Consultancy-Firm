@@ -6,27 +6,27 @@ import './Careers.css';
 const OPEN_POSITIONS = [
   {
     id: 'articleship',
-    title: 'CA Articleship Trainee (Direct & Indirect Tax)',
+    title: 'Tax & Audit Trainee (Direct & Indirect Tax)',
     department: 'Statutory Practice & Appellate Litigation',
-    type: 'Full-Time (ICAI Regulated 2-Year Program)',
-    stipend: 'Structured Monthly Stipend (Above ICAI Minimums)',
-    eligibility: 'CA Intermediate (Single or Both Groups Cleared)',
-    badge: 'ICAI TRAINEE INTAKE',
-    summary: 'Granular, high-exposure articleship training covering Section 143(3) scrutiny defense, GSTR-2B forensic matching, CIT(A) appellate rejoinder drafting, and MCA SPICe+ incorporations.',
+    type: 'Full-Time Professional Internship / Trainee Program',
+    stipend: 'Structured Monthly Stipend + Performance Incentives',
+    eligibility: 'B.Com / M.Com / Inter Students / Commerce Graduates',
+    badge: 'TRAINEE INTAKE',
+    summary: 'Granular, high-exposure practical training covering Section 143(3) scrutiny defense, GSTR-2B forensic matching, CIT(A) appellate rejoinder drafting, and MCA SPICe+ incorporations.',
     exposure: [
       'Direct representation drafting before Assessing Officers & CIT(A)',
       'Forensic purchase register vs. GSTR-2B input tax credit reconciliation',
       'Corporate Tax Audits under Section 44AB (Form 3CA/3CD)',
-      'Dedicated exam preparatory leave for CA Final attempts',
+      'Dedicated exam preparatory leave for professional exam attempts',
     ],
   },
   {
     id: 'semi-qualified',
-    title: 'Semi-Qualified CA / Audit Senior',
+    title: 'Audit Senior / Semi-Qualified Tax Associate',
     department: 'Corporate Audit & Compliance Desk',
     type: 'Full-Time Permanent',
     stipend: 'Competitive Corporate Package + Performance Bonuses',
-    eligibility: 'CA Inter Cleared with Completed Articleship / 1–3 Yrs Exp',
+    eligibility: 'Commerce Graduate / Inter with 1–3 Yrs Exp',
     badge: 'EXPERIENCED HIRE',
     summary: 'Lead client audit teams on statutory Section 44AB audits, multi-state GST reconciliations, and quarterly Form 24Q/26Q TDS returns for Gujarat manufacturing enterprises.',
     exposure: [
@@ -38,11 +38,11 @@ const OPEN_POSITIONS = [
   },
   {
     id: 'qualified-ca',
-    title: 'Chartered Accountant (Assistant Manager - Tax & Audit)',
+    title: 'Senior Tax Consultant (Assistant Manager - Tax & Audit)',
     department: 'Senior Advisory Chambers',
     type: 'Full-Time Senior Counsel',
     stipend: 'Industry Leading CTC + Retainer Profit-Sharing Track',
-    eligibility: 'Qualified Member of ICAI (Freshers or 1–3 Yrs Post-Qual)',
+    eligibility: 'Commerce Post-Graduate / Tax Professional (1–3 Yrs Experience)',
     badge: 'LEADERSHIP TRACK',
     summary: 'Work directly alongside Managing Partners in structuring M&A agreements, international tax transfer pricing, Section 148 reassessments, and startup Section 80-IAC tax exemptions.',
     exposure: [
@@ -71,16 +71,16 @@ const OPEN_POSITIONS = [
 ];
 
 const Careers = () => {
-  const [selectedRole, setSelectedRole] = useState('CA Articleship Trainee (Direct & Indirect Tax)');
+  const [selectedRole, setSelectedRole] = useState('Tax & Audit Trainee (Direct & Indirect Tax)');
   const [appForm, setAppForm] = useState({
     name: '',
     email: '',
     phone: '',
     city: 'Ahmedabad',
-    position: 'CA Articleship Trainee (Direct & Indirect Tax)',
-    icaiRegNo: '',
-    groupsStatus: 'Both Groups Cleared',
-    experienceYears: 'Fresher (Articleship)',
+    position: 'Tax & Audit Trainee (Direct & Indirect Tax)',
+    regNumber: '',
+    groupsStatus: 'Commerce Graduate',
+    experienceYears: 'Fresher (Internship)',
     portfolioLink: '',
     coverNote: '',
   });
@@ -92,8 +92,8 @@ const Careers = () => {
   }, []);
 
   useSEO({
-    title: 'CA Articleship & Careers Portal | Shree Chamunda Associates',
-    description: 'Join Shree Chamunda Associates in Ahmedabad: ICAI-regulated CA Articleship training, Semi-Qualified CA audit roles, and Senior Accountant career opportunities.',
+    title: 'Tax Careers & Internships Portal | Shree Chamunda Associates',
+    description: 'Join Shree Chamunda Associates in Ahmedabad: professional tax training, audit roles, and senior accountant career opportunities.',
   });
 
   const handleApplyClick = (jobTitle) => {
@@ -115,7 +115,7 @@ const Careers = () => {
         email: appForm.email,
         phone: appForm.phone,
         subject: `Career Application: ${appForm.position} (${appForm.name})`,
-        message: `Position: ${appForm.position}\nCity: ${appForm.city}\nICAI / Registration #: ${appForm.icaiRegNo || 'N/A'}\nGroups Status: ${appForm.groupsStatus}\nExperience: ${appForm.experienceYears}\nPortfolio / LinkedIn / Resume: ${appForm.portfolioLink || 'N/A'}\nCover Note: ${appForm.coverNote}`,
+        message: `Position: ${appForm.position}\nCity: ${appForm.city}\nRegistration / Roll #: ${appForm.regNumber || 'N/A'}\nQualification Status: ${appForm.groupsStatus}\nExperience: ${appForm.experienceYears}\nPortfolio / LinkedIn / Resume: ${appForm.portfolioLink || 'N/A'}\nCover Note: ${appForm.coverNote}`,
         serviceInterest: `Career Application - ${appForm.position}`,
       });
 
@@ -126,9 +126,9 @@ const Careers = () => {
         phone: '',
         city: 'Ahmedabad',
         position: selectedRole,
-        icaiRegNo: '',
-        groupsStatus: 'Both Groups Cleared',
-        experienceYears: 'Fresher (Articleship)',
+        regNumber: '',
+        groupsStatus: 'Commerce Graduate',
+        experienceYears: 'Fresher (Internship)',
         portfolioLink: '',
         coverNote: '',
       });
@@ -153,11 +153,11 @@ const Careers = () => {
           <div className="careers-hero-badge">
             <span className="live-dot pulse"></span>
             <i className="fas fa-graduation-cap"></i>
-            <span>ICAI-REGULATED PRACTICE &bull; CAREERS &amp; ARTICLESHIP</span>
+            <span>STATUTORY PRACTICE &bull; CAREERS &amp; INTERNSHIPS</span>
           </div>
 
           <h1 id="careers-hero-title">
-            Architect Your Future in <span className="hero-gradient-text">Chartered Tax Practice</span>
+            Architect Your Future in <span className="hero-gradient-text">Corporate Tax Practice</span>
           </h1>
 
           <p className="careers-hero-lead">
@@ -167,12 +167,12 @@ const Careers = () => {
           <div className="careers-trust-chips">
             <div className="trust-chip-item">
               <i className="fas fa-certificate text-gold"></i>
-              <span>Regulation 43 &amp; 45 Compliant</span>
+              <span>Structured Training Curriculum</span>
             </div>
             <span className="chip-sep">&bull;</span>
             <div className="trust-chip-item">
               <i className="fas fa-book-open-reader text-emerald"></i>
-              <span>Guaranteed CA Final Study Leave</span>
+              <span>Guaranteed Exam Study Leave</span>
             </div>
             <span className="chip-sep">&bull;</span>
             <div className="trust-chip-item">
@@ -192,7 +192,7 @@ const Careers = () => {
             <span>WHY TRAIN WITH US</span>
           </span>
           <h2>The Four Pillars of Our Professional Culture</h2>
-          <p className="section-subtext">We believe the best Chartered Accountants are forged through deep courtroom litigation exposure, not repetitive clerical bookkeeping.</p>
+          <p className="section-subtext">We believe the best tax professionals are forged through deep courtroom litigation exposure, not repetitive clerical bookkeeping.</p>
         </div>
 
         <div className="careers-pillars-grid">
@@ -211,7 +211,7 @@ const Careers = () => {
           <div className="pillar-card">
             <div className="pillar-icon"><i className="fas fa-user-graduate"></i></div>
             <h4>Dedicated Exam Support</h4>
-            <p>We honor ICAI study leave guidelines without compromise. Trainees receive structured leave allowances to prepare thoroughly for CA Final examinations.</p>
+            <p>We provide dedicated study leave support without compromise. Trainees receive structured leave allowances to prepare thoroughly for professional and university examinations.</p>
           </div>
 
           <div className="pillar-card">
@@ -390,13 +390,13 @@ const Careers = () => {
               </div>
 
               <div className="careers-input-group">
-                <label htmlFor="cICAI">ICAI Student / Membership Number (If applicable)</label>
+                <label htmlFor="cRegNo">Student / Professional Registration Number (If applicable)</label>
                 <input
                   type="text"
-                  id="cICAI"
-                  value={appForm.icaiRegNo}
-                  onChange={(e) => setAppForm({ ...appForm, icaiRegNo: e.target.value })}
-                  placeholder="e.g. WRO0654321"
+                  id="cRegNo"
+                  value={appForm.regNumber}
+                  onChange={(e) => setAppForm({ ...appForm, regNumber: e.target.value })}
+                  placeholder="e.g. REG-0654321"
                   className="careers-input"
                 />
               </div>
@@ -404,18 +404,17 @@ const Careers = () => {
 
             <div className="form-row-split">
               <div className="careers-input-group">
-                <label htmlFor="cGroups">CA Qualification / Attempt Status</label>
+                <label htmlFor="cGroups">Educational &amp; Professional Qualification</label>
                 <select
                   id="cGroups"
                   value={appForm.groupsStatus}
                   onChange={(e) => setAppForm({ ...appForm, groupsStatus: e.target.value })}
                   className="careers-select"
                 >
-                  <option value="CA Inter - Both Groups Cleared">CA Inter - Both Groups Cleared</option>
-                  <option value="CA Inter - Group 1 Cleared">CA Inter - Group 1 Cleared</option>
-                  <option value="CA Inter - Group 2 Cleared">CA Inter - Group 2 Cleared</option>
-                  <option value="Qualified CA Member (FCA / ACA)">Qualified CA Member (FCA / ACA)</option>
-                  <option value="B.Com / M.Com Graduate">B.Com / M.Com Graduate</option>
+                  <option value="Commerce Graduate (B.Com / BBA)">Commerce Graduate (B.Com / BBA)</option>
+                  <option value="Post-Graduate (M.Com / MBA Finance)">Post-Graduate (M.Com / MBA Finance)</option>
+                  <option value="Inter Student (Group 1 / Group 2 Cleared)">Inter Student (Group 1 / Group 2 Cleared)</option>
+                  <option value="Experienced Tax &amp; Accounts Senior">Experienced Tax &amp; Accounts Senior</option>
                 </select>
               </div>
 
@@ -427,7 +426,7 @@ const Careers = () => {
                   onChange={(e) => setAppForm({ ...appForm, experienceYears: e.target.value })}
                   className="careers-select"
                 >
-                  <option value="Fresher (Seeking Articleship)">Fresher (Seeking Articleship)</option>
+                  <option value="Fresher (Seeking Internship)">Fresher (Seeking Internship)</option>
                   <option value="1 - 2 Years Audit Experience">1 - 2 Years Audit Experience</option>
                   <option value="3 - 5 Years Accounting/Tax Practice">3 - 5 Years Accounting/Tax Practice</option>
                   <option value="5+ Years Senior Associate">5+ Years Senior Associate</option>

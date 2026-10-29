@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo, useDeferredValue } from 'r
 import { useNavigate } from 'react-router-dom';
 import './ServiceSearchModal.css';
 
-// Rich metadata index for all CA, Tax & Regulatory services
+// Rich metadata index for all Tax & Regulatory services
 const SERVICE_META = {
   // Start a Business
   'private limited company': {
@@ -133,8 +133,8 @@ const SERVICE_META = {
   // Accounting & Compliance
   'tax audit': {
     icon: 'fas fa-search-dollar',
-    desc: 'Section 44AB statutory audit, 3CA/3CB/3CD CA certification',
-    keywords: ['tax audit', '44ab', '3cd', 'ca audit', 'balance sheet audit']
+    desc: 'Section 44AB statutory audit, 3CA/3CB/3CD tax audit reporting',
+    keywords: ['tax audit', '44ab', '3cd', 'statutory audit', 'balance sheet audit']
   },
   'book keeping & accounting': {
     icon: 'fas fa-book',
@@ -190,13 +190,13 @@ const SERVICE_META = {
   },
   'pricing': {
     icon: 'fas fa-tags',
-    desc: 'Transparent CA retainer packages for Startups, SMEs & Virtual CFO retainers',
+    desc: 'Transparent statutory retainer packages for Startups, SMEs & Virtual CFO retainers',
     keywords: ['pricing', 'retainer', 'cost', 'plans', 'fees', 'virtual cfo pricing', 'packages']
   },
   'careers': {
     icon: 'fas fa-user-graduate',
-    desc: 'CA Articleship (ICAI Reg 43/45), Paid Semi-Qualified Assistants & Tax Associate vacancies',
-    keywords: ['career', 'careers', 'articleship', 'ca articleship', 'job', 'hiring', 'vacancy', 'internship', 'trainee', 'nikol']
+    desc: 'Tax training, paid semi-qualified assistants & tax associate vacancies',
+    keywords: ['career', 'careers', 'training', 'tax careers', 'job', 'hiring', 'vacancy', 'internship', 'trainee', 'nikol']
   }
 };
 
@@ -211,8 +211,8 @@ const getMetaForService = (title, category) => {
   if (category === 'Start a Business') return { icon: 'fas fa-building', desc: 'MCA statutory business incorporation', keywords: ['company', 'incorporation'] };
   if (category === 'Registration') return { icon: 'fas fa-stamp', desc: 'Statutory government license & certification', keywords: ['registration', 'license'] };
   if (category === 'Return') return { icon: 'fas fa-file-invoice-dollar', desc: 'Statutory tax return & electronic challan', keywords: ['return', 'tax', 'filing'] };
-  if (category === 'Accounting & Compliance') return { icon: 'fas fa-calculator', desc: 'CA certified audit, bookkeeping & filings', keywords: ['accounting', 'audit', 'compliance'] };
-  return { icon: 'fas fa-layer-group', desc: 'Professional chartered financial consultancy', keywords: ['consultancy', 'advisory'] };
+  if (category === 'Accounting & Compliance') return { icon: 'fas fa-calculator', desc: 'Statutory audit, professional bookkeeping & filings', keywords: ['accounting', 'audit', 'compliance'] };
+  return { icon: 'fas fa-layer-group', desc: 'Professional financial consultancy', keywords: ['consultancy', 'advisory'] };
 };
 
 const CATEGORIES = ['All', 'Start a Business', 'Registration', 'Return', 'Accounting & Compliance', 'Others'];
@@ -259,14 +259,14 @@ const ServiceSearchModal = ({ isOpen, onClose, navMenu = [] }) => {
 
     // Core firm pages
     list.push(
-      { title: 'About Shree Chamunda Associates', href: '/about', category: 'Firm', icon: 'fas fa-building-user', desc: 'Firm leadership, credentials, mission & client track record', keywords: ['about', 'ca firm', 'firm profile', 'experience'] },
-      { title: 'Comprehensive Services Overview', href: '/services', category: 'Overview', icon: 'fas fa-briefcase', desc: 'All 30+ chartered accounting, tax, MCA & advisory solutions', keywords: ['all services', 'directory', 'catalog'] },
+      { title: 'About Shree Chamunda Associates', href: '/about', category: 'Firm', icon: 'fas fa-building-user', desc: 'Firm leadership, credentials, mission & client track record', keywords: ['about', 'tax firm', 'firm profile', 'experience'] },
+      { title: 'Comprehensive Services Overview', href: '/services', category: 'Overview', icon: 'fas fa-briefcase', desc: 'All 30+ accounting, tax, MCA & advisory solutions', keywords: ['all services', 'directory', 'catalog'] },
       { title: 'Tax & Financial Calculators', href: '/calculators', category: 'Knowledge', icon: 'fas fa-calculator', desc: 'Old vs New Tax Regime, GST, HRA, Advance Tax & TDS tools', keywords: ['calculator', 'tax calculator', 'income tax calculator', 'gst calculator', 'hra', 'advance tax', 'tds', 'sip', 'tax tools', 'tax regime'] },
       { title: 'Statutory Compliance & Due Date Calendar', href: '/compliance-calendar', category: 'Knowledge', icon: 'fas fa-calendar-check', desc: 'Live statutory calendar for Income Tax, GST, MCA ROC & Labour filings with 1-click sync', keywords: ['calendar', 'compliance', 'due dates', 'tax calendar', 'deadlines', 'roc dates', 'gst due dates', 'penalty radar'] },
       { title: 'Retainer Packages & Transparent Pricing', href: '/pricing', category: 'Advisory', icon: 'fas fa-tags', desc: 'Flat-fee monthly & annual accounting retainers for Startups, SMEs & Corporate CFO advisory', keywords: ['pricing', 'retainer', 'plans', 'cost', 'fees', 'packages', 'virtual cfo cost'] },
-      { title: 'CA Articleship & Careers Portal', href: '/careers', category: 'Firm', icon: 'fas fa-user-graduate', desc: 'ICAI 2-year articleship training, Semi-Qualified CA & Tax Associate vacancies in Ahmedabad', keywords: ['careers', 'articleship', 'jobs', 'hiring', 'ca articleship', 'trainee', 'vacancy', 'apply'] },
+      { title: 'Careers & Hiring Portal', href: '/careers', category: 'Firm', icon: 'fas fa-user-graduate', desc: 'Accounting & tax training, Semi-Qualified Accounts & Tax Associate vacancies in Ahmedabad', keywords: ['careers', 'jobs', 'hiring', 'trainee', 'vacancy', 'apply'] },
       { title: 'Tax Insights & Knowledge Articles', href: '/blog', category: 'Knowledge', icon: 'fas fa-newspaper', desc: 'Latest updates on GST amendments, budget analysis & compliance', keywords: ['blog', 'articles', 'gst news', 'updates'] },
-      { title: 'Book Free CA Consultation', href: '/contact', category: 'Advisory', icon: 'fas fa-comments', desc: 'Schedule a 1-on-1 strategic advisory session with our senior CA', keywords: ['consultation', 'contact', 'appointment', 'phone', 'email'] }
+      { title: 'Book Free Consultation', href: '/contact', category: 'Advisory', icon: 'fas fa-comments', desc: 'Schedule a 1-on-1 strategic advisory session with our senior advisors', keywords: ['consultation', 'contact', 'appointment', 'phone', 'email'] }
     );
 
     return list;
@@ -531,7 +531,7 @@ const ServiceSearchModal = ({ isOpen, onClose, navMenu = [] }) => {
               <i className="fas fa-folder-open no-results-icon"></i>
               <p className="no-results-title">No matching services found</p>
               <p className="no-results-desc">
-                Looking for bespoke tax planning or custom litigation? Speak directly with our CA.
+                Looking for bespoke tax planning or custom litigation? Speak directly with our advisory team.
               </p>
               <button
                 type="button"

@@ -1,6 +1,6 @@
 /* ============================================================
    CHAMBERS INSTITUTIONAL STATUTORY RETAINERS ARCHITECTURE
-   Professional Chartered Accountancy & Practice Governance Design
+   Professional Corporate Advisory & Practice Governance Design
    ============================================================ */
 
 .statutory-retainers-section {
@@ -1742,7 +1742,7 @@
   color: #94a3b8;
 }
 
-.icai-standards-badge {
+.statutory-standards-badge {
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -1758,7 +1758,7 @@
   box-shadow: 0 1px 3px rgba(184, 134, 11, 0.08);
 }
 
-[data-theme='dark'] .icai-standards-badge {
+[data-theme='dark'] .statutory-standards-badge {
   background: rgba(212, 175, 55, 0.15);
   color: #fde047;
   border-color: rgba(212, 175, 55, 0.35);

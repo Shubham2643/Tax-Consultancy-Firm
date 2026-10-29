@@ -36,14 +36,14 @@ const GATES = [
       'Document Discrepancy Memo',
       'Statutory Eligibility Certificate',
     ],
-    governingStandard: 'ICAI Standard on Auditing (SA 500) • Audit Evidence',
+    governingStandard: 'Statutory Auditing Standard (SA 500) • Audit Evidence',
   },
   {
     id: 2,
     roman: 'II',
     num: '02',
     gate: 'GATE 02',
-    shortName: 'Dual CA Audit',
+    shortName: 'Dual Partner Audit',
     phase: 'Dual Senior Partner Scrutiny',
     tagline: 'Two-Tier Independent Examination & Legal Tax Strategy',
     turnaround: 'Hours 24–48',
@@ -51,7 +51,7 @@ const GATES = [
     accentColor: '#059669',
     themeClass: 'gate-theme-emerald',
     objective:
-      'No computation is filed on junior execution alone. Every client mandate undergoes independent two-tier peer review by senior qualified Chartered Accountants applying the latest Finance Act notifications, legal deductions, and precedent case laws.',
+      'No computation is filed on junior execution alone. Every client mandate undergoes independent two-tier peer review by senior qualified Tax & Accounting Consultants applying the latest Finance Act notifications, legal deductions, and precedent case laws.',
     scopeItems: [
       {
         title: 'Tier-1 Regulatory Compliance Review',
@@ -71,7 +71,7 @@ const GATES = [
       'Dual Partner Sign-off Docket',
       'Section 80 / Depreciation Schedule',
     ],
-    governingStandard: 'ICAI Peer Review Board Standard • SQC 1 Quality Control',
+    governingStandard: 'Quality Control Standard • Peer Review Benchmarks',
   },
   {
     id: 3,
@@ -161,30 +161,30 @@ const DeliveryProtocol = () => {
   };
 
   return (
-    <section className="chartered-protocol-section" id="delivery-protocol">
+    <section className="protocol-section" id="delivery-protocol">
       {/* Top Gold Gradient Glow Line */}
-      <div className="chartered-accent-line" aria-hidden="true"></div>
+      <div className="protocol-accent-line" aria-hidden="true"></div>
 
       {/* Subtle Precision Geometric Background */}
-      <div className="chartered-grid-backdrop" aria-hidden="true"></div>
+      <div className="protocol-grid-backdrop" aria-hidden="true"></div>
 
-      <div className="chartered-container">
+      <div className="protocol-container">
         {/* ============================================================
             1. MODERN EXECUTIVE HEADER
             ============================================================ */}
-        <header className="chartered-header text-center">
-          <div className="chartered-eyebrow-pill">
+        <header className="protocol-header text-center">
+          <div className="protocol-eyebrow-pill">
             <span className="live-dot" aria-hidden="true"></span>
             <i className="fa-solid fa-shield-halved" aria-hidden="true"></i>
             <span>THE DELIVERY STANDARD &bull; 4-STAGE STATUTORY PROTOCOL</span>
           </div>
 
-          <h2 className="chartered-main-title">
+          <h2 className="protocol-main-title">
             The Fiduciary Delivery Protocol. <br className="br-desktop" />
             <span className="title-gradient-gold">Four Sequential Gates. Zero Statutory Variance.</span>
           </h2>
 
-          <p className="chartered-lead-text">
+          <p className="protocol-lead-text">
             Every client filing passes through an uncompromising forensic verification pipeline before government upload, backed by direct senior partner accountability and 7-year scrutiny defense.
           </p>
         </header>
@@ -381,7 +381,7 @@ const DeliveryProtocol = () => {
         {/* ============================================================
             4. BOTTOM PRESTIGE ASSURANCE & INTAKE DESK
             ============================================================ */}
-        <div className="chartered-prestige-card">
+        <div className="protocol-prestige-card">
           <div className="prestige-card-inner">
             <div className="prestige-info-group">
               <div className="prestige-tag-pill">
@@ -400,7 +400,7 @@ const DeliveryProtocol = () => {
                 <span>Schedule Forensic Review</span>
               </Link>
               <a
-                href="https://wa.me/919510984735?text=Hello%20Shree%20Chamunda%20Associates%2C%20I%20would%20like%20to%20consult%20regarding%20your%20Chartered%20Delivery%20Protocol."
+                href="https://wa.me/919510984735?text=Hello%20Shree%20Chamunda%20Associates%2C%20I%20would%20like%20to%20consult%20regarding%20your%20Practice%20Delivery%20Protocol."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-prestige-whatsapp"

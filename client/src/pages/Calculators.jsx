@@ -35,7 +35,7 @@ const Calculators = () => {
 
   useSEO({
     title: 'Statutory Tax & Financial Calculators | Shree Chamunda Associates',
-    description: 'Free, ICAI-aligned Indian tax calculators: Old vs New Income Tax Regime comparison (FY 24-25 & 25-26), GST Inclusive/Exclusive, HRA Exemption, Advance Tax & TDS calculators.',
+    description: 'Free, statutory-calibrated Indian tax calculators: Old vs New Income Tax Regime comparison (FY 24-25 & 25-26), GST Inclusive/Exclusive, HRA Exemption, Advance Tax & TDS calculators.',
   });
 
   // =========================================================================
@@ -401,11 +401,11 @@ const Calculators = () => {
           <div className="calc-hero-badge">
             <span className="live-dot pulse"></span>
             <i className="fas fa-calculator"></i>
-            <span>ICAI-ALIGNED STATUTORY TOOLS &bull; FINANCE ACT 2024-25</span>
+            <span>STATUTORY TAX ENGINES &bull; FINANCE ACT 2024-25</span>
           </div>
 
           <h1 id="calc-hero-title">
-            Chartered Tax &amp; <span className="hero-gradient-text">Financial Calculators</span>
+            Statutory Tax &amp; <span className="hero-gradient-text">Financial Calculators</span>
           </h1>
 
           <p className="calc-hero-lead">
@@ -1356,7 +1356,7 @@ const Calculators = () => {
                     <i className="fas fa-print"></i> Print Audit
                   </button>
                   <Link to="/contact" className="btn-calc-action consult">
-                    <i className="fas fa-shield-alt"></i> Generate Challan 280 with CA
+                    <i className="fas fa-shield-alt"></i> Generate Challan 280 with Advisor
                   </Link>
                 </div>
               </div>
@@ -1643,7 +1643,7 @@ const Calculators = () => {
       </section>
 
       {/* ============================================================
-          5. DIRECT SENIOR CA CONSULTATION CTA
+          5. DIRECT SENIOR ADVISOR CONSULTATION CTA
           ============================================================ */}
       <section className="container calc-cta-section">
         <div className="section-top-accent-line" aria-hidden="true"></div>
@@ -1651,11 +1651,11 @@ const Calculators = () => {
           <div className="calc-cta-content">
             <span className="calc-cta-badge">
               <span className="live-dot pulse"></span>
-              <span>CHARTERED ADVISORY BENCH &bull; AHMEDABAD CHAMBERS</span>
+              <span>SENIOR ADVISORY BENCH &bull; AHMEDABAD CHAMBERS</span>
             </span>
-            <h2>Need an Authorized CA to Review Your Taxes?</h2>
+            <h2>Need a Senior Tax Advisor to Review Your Taxes?</h2>
             <p>
-              Calculators provide instant estimates, but complex business deductions, capital gains indexation, and scrutiny notices require certified CA review. Connect directly with our Ahmedabad chambers.
+              Calculators provide instant estimates, but complex business deductions, capital gains indexation, and scrutiny notices require rigorous expert review. Connect directly with our Ahmedabad chambers.
             </p>
             <div className="calc-cta-actions">
               <Link to="/contact" className="btn-cta-primary">
@@ -1663,7 +1663,7 @@ const Calculators = () => {
                 <span>Schedule 1-on-1 Review</span>
               </Link>
               <a
-                href={`https://wa.me/${cleanPhone}?text=${encodeURIComponent('Hello CA Team, I used your Tax Calculators and would like to consult with a Chartered Accountant.')}`}
+                href={`https://wa.me/${cleanPhone}?text=${encodeURIComponent('Hello Advisory Team, I used your Tax Calculators and would like to consult with a Senior Tax Advisor.')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-cta-wa"

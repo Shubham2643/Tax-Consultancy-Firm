@@ -479,7 +479,7 @@ const Login = () => {
               <span>&bull;</span>
               <Link to="/terms-of-service">Terms of Service</Link>
               <span>&bull;</span>
-              <Link to="/contact">Contact CA Support</Link>
+              <Link to="/contact">Contact Advisory Support</Link>
             </div>
             <p className="auth-copyright-text">&copy; {new Date().getFullYear()} Shree Chamunda Associates. All rights reserved.</p>
           </div>

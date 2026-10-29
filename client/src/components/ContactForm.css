@@ -175,7 +175,7 @@
 }
 
 .header-confidential-pill,
-.header-icai-pill {
+.header-fiduciary-pill {
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -197,13 +197,13 @@
   font-size: 9px;
 }
 
-.header-icai-pill {
+.header-fiduciary-pill {
   background: rgba(248, 180, 0, 0.1);
   border-color: rgba(248, 180, 0, 0.3);
   color: #92400e;
 }
 
-.header-icai-pill i {
+.header-fiduciary-pill i {
   color: #d97706;
   font-size: 9px;
 }
@@ -352,6 +352,99 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
+}
+
+/* Preferred Consultation Date Selector (Next 5 Business Days) */
+.consultation-dates-grid-5 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+.compact-date-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 9px 4px 7px 4px;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  cursor: pointer;
+  gap: 2px;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.compact-date-card:hover {
+  border-color: #cbd5e1;
+  background: #fdfdfd;
+}
+
+.compact-date-card.active {
+  background: #071324;
+  border-color: #071324;
+  border-top: 3px solid #f8b400;
+  box-shadow: 0 4px 14px rgba(7, 19, 36, 0.15);
+}
+
+.date-card-label {
+  font-size: 10px;
+  font-weight: 750;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  transition: color 0.2s ease;
+}
+
+.compact-date-card.active .date-card-label {
+  color: #f8b400;
+}
+
+.date-card-num {
+  font-size: 13px;
+  font-weight: 850;
+  color: #071324;
+  line-height: 1.2;
+  transition: color 0.2s ease;
+}
+
+.compact-date-card.active .date-card-num {
+  color: #ffffff;
+}
+
+.date-card-sub {
+  font-size: 9.5px;
+  color: #94a3b8;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.compact-date-card.active .date-card-sub {
+  color: #cbd5e1;
+}
+
+.date-card-fastest-pill {
+  position: absolute;
+  top: -7px;
+  background: #10b981;
+  color: #ffffff;
+  font-size: 8px;
+  font-weight: 800;
+  padding: 1px 5px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 5px rgba(16, 185, 129, 0.4);
+}
+
+.date-check-icon {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  font-size: 9px;
+  color: #f8b400;
 }
 
 .compact-mode-card {
@@ -1386,6 +1479,26 @@
 [data-theme='dark'] .slot-card-btn {
   background: #08121f;
   border-color: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+[data-theme='dark'] .compact-date-card {
+  background: #08121f;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .compact-date-card:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme='dark'] .compact-date-card.active {
+  background: #0f1c32;
+  border-color: #0f1c32;
+  border-top-color: #f8b400;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme='dark'] .compact-date-card .date-card-num {
   color: #ffffff;
 }
 
