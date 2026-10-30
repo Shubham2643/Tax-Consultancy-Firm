@@ -134,14 +134,20 @@ const ServicesSection = ({
 
   return (
     <section className={`services ${hideHeader ? 'services-embedded' : ''}`} id="services-section" aria-labelledby="services-heading">
-      {/* Top Gold Glowing Accent Divider */}
+      {/* Top Gold Glowing Accent Divider & Architectural Blueprint Matrix */}
       <div className="services-top-accent-line" aria-hidden="true"></div>
+      <div className="services-ambient-grid" aria-hidden="true"></div>
+      <div className="services-ambient-orb orb-gold" aria-hidden="true"></div>
 
       <div className="container">
         {!hideHeader && (
           <div className="section-header text-center">
+            <span className="header-watermark" aria-hidden="true">EXPERTISE</span>
+            <div className="luxury-header-halo" aria-hidden="true"></div>
             <div className="services-badge">
-              <i className="fas fa-layer-group"></i>
+              <span className="badge-index-chip">02</span>
+              <span className="badge-pulse-dot" aria-hidden="true"></span>
+              <i className="fas fa-layer-group" aria-hidden="true"></i>
               <span>PRACTICE AREAS &amp; EXPERTISE</span>
             </div>
             <h2 id="services-heading">
@@ -154,6 +160,18 @@ const ServicesSection = ({
             <p className="section-subtitle">
               End-to-end corporate tax planning, statutory audits, entity incorporation, and regulatory filings managed by seasoned corporate tax advisors.
             </p>
+
+            <div className="header-assurance-strip">
+              <span className="assurance-pill">
+                <i className="fa-solid fa-chart-line"></i> Direct Tax Structuring
+              </span>
+              <span className="assurance-pill">
+                <i className="fa-solid fa-shield-halved"></i> GST Audit Defense
+              </span>
+              <span className="assurance-pill">
+                <i className="fa-solid fa-building-columns"></i> Corporate Registrations
+              </span>
+            </div>
           </div>
         )}
 

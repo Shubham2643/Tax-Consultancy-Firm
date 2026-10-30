@@ -16,6 +16,7 @@ import {
   verifyPaymentSignature
 } from '../api';
 import useSEO from '../hooks/useSEO';
+import ThemeToggle from '../components/ThemeToggle';
 import './Portal.css';
 
 const Portal = () => {
@@ -533,15 +534,23 @@ const Portal = () => {
           ======================================================== */}
       <aside className={`portal-sidebar-panel ${isSidebarOpen ? 'sidebar-open' : ''}`}>
         <div className="sidebar-brand-box">
-          <div className="brand-crest-icon">
-            <i className="fas fa-shield-alt"></i>
-          </div>
-          <div className="brand-meta-info">
-            <h3>SCA Workspace</h3>
-            <span className="vault-live-badge">
-              <span className="live-pulse-dot"></span> Statutory Audit Vault
-            </span>
-          </div>
+          <Link to="/" className="portal-sidebar-logo-link" title="Return to Shree Chamunda Associates Home">
+            <div className="portal-brand-crest">
+              <img
+                src="/assets/logo_circle_full.png?v=6"
+                alt="Shree Chamunda Associates"
+                className="portal-brand-logo-img"
+              />
+              <span className="portal-brand-halo"></span>
+            </div>
+            <div className="brand-meta-info">
+              <span className="brand-eyebrow">SHREE CHAMUNDA ASSOCIATES</span>
+              <h3 className="brand-workspace-title">Client Vault</h3>
+              <span className="vault-live-badge">
+                <span className="live-pulse-dot"></span> 256-Bit Encrypted Session
+              </span>
+            </div>
+          </Link>
           <button 
             type="button" 
             className="portal-sidebar-mobile-close" 
@@ -670,14 +679,18 @@ const Portal = () => {
             )}
 
             <a 
-              href="https://wa.me/919510984735?text=Hello%20CA%20Team!%20I%20am%20logged%20into%20my%20SCA%20Client%20Portal%20and%20need%20assistance."
+              href="https://wa.me/919510984735?text=Hello%20Advisory%20Team!%20I%20am%20logged%20into%20my%20SCA%20Client%20Portal%20and%20need%20assistance."
               target="_blank" 
               rel="noopener noreferrer" 
               className="topbar-wa-btn"
             >
               <i className="fab fa-whatsapp"></i>
-              <span>WhatsApp Expert Desk</span>
+              <span>WhatsApp Advisory Desk</span>
             </a>
+
+            <div className="portal-topbar-theme-wrap">
+              <ThemeToggle />
+            </div>
 
             <div className="topbar-user-mini-chip">
               <div className="topbar-user-avatar">{user.name.charAt(0).toUpperCase()}</div>
@@ -716,9 +729,15 @@ const Portal = () => {
             <div className="overview-flow fade-in">
               {/* Executive Hero Banner */}
               <div className="portal-hero-card">
+                <div className="hero-atmosphere-orb"></div>
                 <div className="hero-text-content">
-                  <h1>Welcome to your tax command center, {user.name}!</h1>
-                  <p>Track ongoing GST/ITR filings, collaborate directly with your assigned Senior Tax Advisor, and access confidential tax records anytime.</p>
+                  <span className="hero-kicker-badge">
+                    <span className="hero-kicker-beacon"></span>
+                    <i className="fas fa-shield-halved"></i>
+                    <span>CLIENT COMPLIANCE VAULT &bull; DIRECT PARTNER OVERSIGHT</span>
+                  </span>
+                  <h1>Welcome to your tax command center, <span className="hero-user-name">{user.name}</span>!</h1>
+                  <p>Track active GST &amp; direct tax filings, collaborate directly with your assigned Senior Tax Advisory Chambers, and manage confidential statutory filings with bank-grade encryption.</p>
                 </div>
                 <div className="hero-action-buttons">
                   <button className="btn-hero-primary" onClick={() => setTab('upload')}>
@@ -820,7 +839,7 @@ const Portal = () => {
                 </div>
 
                 {/* Assigned Advisory Desk & Quick Actions */}
-                <div className="portal-bento-card ca-desk-card">
+                <div className="portal-bento-card advisory-desk-card">
                   <div className="bento-card-header">
                     <div className="bento-header-left">
                       <div className="bento-header-icon"><i className="fas fa-user-tie"></i></div>
@@ -832,11 +851,11 @@ const Portal = () => {
                   </div>
 
                   <div className="bento-card-body">
-                    <div className="ca-advisor-box">
-                      <div className="ca-avatar-ring">
+                    <div className="advisor-profile-box">
+                      <div className="advisor-avatar-ring">
                         <i className="fas fa-user-shield"></i>
                       </div>
-                      <div className="ca-info-text">
+                      <div className="advisor-info-text">
                         <h4>Senior Compliance Team</h4>
                         <span>Premier Tax &amp; Corporate Practice</span>
                         <p>Direct assistance available for notice handling, balance sheets, and ROC filings.</p>
@@ -882,7 +901,13 @@ const Portal = () => {
             <div className="filings-flow fade-in">
               {/* Executive Hero Banner */}
               <div className="portal-hero-card">
+                <div className="hero-atmosphere-orb"></div>
                 <div className="hero-text-content">
+                  <span className="hero-kicker-badge">
+                    <span className="hero-kicker-beacon"></span>
+                    <i className="fas fa-tasks"></i>
+                    <span>STATUTORY MILESTONES &bull; REAL-TIME TRACKING</span>
+                  </span>
                   <h1>Tax Filings &amp; Service Milestones</h1>
                   <p>Monitor progress stages for statutory filings, GST registrations, direct tax inquiries, and collaborate directly with your assigned practice advisor.</p>
                 </div>
@@ -1016,7 +1041,13 @@ const Portal = () => {
             <div className="vault-flow fade-in">
               {/* Executive Hero Banner */}
               <div className="portal-hero-card">
+                <div className="hero-atmosphere-orb"></div>
                 <div className="hero-text-content">
+                  <span className="hero-kicker-badge">
+                    <span className="hero-kicker-beacon"></span>
+                    <i className="fas fa-shield-halved"></i>
+                    <span>CONFIDENTIAL VAULT &bull; 256-BIT ENCRYPTION</span>
+                  </span>
                   <h1>Confidential Document Vault</h1>
                   <p>Access audit files, salary slips, P&amp;L balance sheets, and tax acknowledgments stored in encrypted cloud storage with instant download.</p>
                 </div>
@@ -1079,7 +1110,7 @@ const Portal = () => {
                               </td>
                               <td>
                                 {doc.adminNote ? (
-                                  <span className="ca-note-chip" title={doc.adminNote}>
+                                  <span className="advisor-note-chip" title={doc.adminNote}>
                                     <i className="fas fa-comment-dots"></i> {doc.adminNote}
                                   </span>
                                 ) : (
@@ -1120,13 +1151,15 @@ const Portal = () => {
             <div className="upload-flow fade-in">
               {/* Executive Hero Banner */}
               <div className="portal-hero-card">
+                <div className="hero-atmosphere-orb"></div>
                 <div className="hero-text-content">
-                  <div className="hero-kicker-badge">
+                  <span className="hero-kicker-badge">
+                    <span className="hero-kicker-beacon"></span>
                     <i className="fas fa-shield-halved"></i>
-                    <span>ENCRYPTED CLIENT VAULT</span>
-                  </div>
+                    <span>ENCRYPTED CLIENT VAULT &bull; ZERO-KNOWLEDGE ENCRYPTION</span>
+                  </span>
                   <h1>Fast &amp; Secure Document Vault</h1>
-                  <p>Batch upload financial statements, ITR computations, Form-16, and GST ledgers with instant virus scan and direct partner triage.</p>
+                  <p>Batch upload financial statements, ITR computations, Form-16, and GST ledgers with instant anti-virus triage and bank-grade encryption.</p>
                 </div>
                 <div className="hero-action-buttons">
                   <button className="btn-hero-primary" onClick={() => setTab('documents')}>
@@ -1365,7 +1398,13 @@ const Portal = () => {
             <div className="bookings-flow fade-in">
               {/* Executive Hero Banner */}
               <div className="portal-hero-card">
+                <div className="hero-atmosphere-orb"></div>
                 <div className="hero-text-content">
+                  <span className="hero-kicker-badge">
+                    <span className="hero-kicker-beacon"></span>
+                    <i className="fas fa-calendar-check"></i>
+                    <span>EXECUTIVE COUNSEL &bull; STRATEGY CHAMBERS</span>
+                  </span>
                   <h1>Consultations &amp; Advisory Scheduler</h1>
                   <p>Book live strategy sessions with our senior tax advisors for tax minimization, notice defense, and corporate structuring.</p>
                 </div>
@@ -1503,9 +1542,15 @@ const Portal = () => {
             <div className="billing-flow fade-in">
               {/* Executive Hero Banner */}
               <div className="portal-hero-card">
+                <div className="hero-atmosphere-orb"></div>
                 <div className="hero-text-content">
+                  <span className="hero-kicker-badge">
+                    <span className="hero-kicker-beacon"></span>
+                    <i className="fas fa-receipt"></i>
+                    <span>SCOPE-LOCKED RETAINERS &bull; ZERO BILLING SURPRISES</span>
+                  </span>
                   <h1>Invoices &amp; Retainer Clearances</h1>
-                  <p>Review statutory advisory retainers and clear audit fees online via UPI, Credit/Debit Cards, or Net Banking powered by Razorpay.</p>
+                  <p>Review statutory advisory retainers and clear fees online via UPI, Credit/Debit Cards, or Net Banking powered by Razorpay with 18% GST Input Tax Credit eligibility.</p>
                 </div>
                 <div className="hero-action-buttons">
                   <button className="btn-hero-primary" onClick={() => setTab('overview')}>

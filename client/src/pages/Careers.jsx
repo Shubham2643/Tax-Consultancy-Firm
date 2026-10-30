@@ -37,7 +37,7 @@ const OPEN_POSITIONS = [
     ],
   },
   {
-    id: 'qualified-ca',
+    id: 'senior-tax-consultant',
     title: 'Senior Tax Consultant (Assistant Manager - Tax & Audit)',
     department: 'Senior Advisory Chambers',
     type: 'Full-Time Senior Counsel',

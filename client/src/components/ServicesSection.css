@@ -3,11 +3,43 @@
    ============================================ */
 .services {
   padding: 85px 0 95px 0;
-  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #fbfcfd 50%, #f8fafc 100%);
   position: relative;
+  overflow: hidden;
   border-bottom: 1px solid #e2e8f0;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   scroll-margin-top: 85px;
+}
+
+/* Background Architectural Blueprint Dot Matrix Pattern */
+.services-ambient-grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(7, 19, 36, 0.045) 1px, transparent 1px);
+  background-size: 26px 26px;
+  mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, #000 35%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, #000 35%, transparent 100%);
+  pointer-events: none;
+  opacity: 0.85;
+  z-index: 0;
+}
+
+[data-theme='dark'] .services-ambient-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+}
+
+.services-ambient-orb.orb-gold {
+  position: absolute;
+  width: 580px;
+  height: 580px;
+  top: -80px;
+  right: -100px;
+  background: radial-gradient(circle, rgba(248, 180, 0, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(95px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.85;
 }
 
 .services.services-embedded {
@@ -20,57 +52,104 @@
   max-width: 1240px;
   margin: 0 auto;
   padding: 0 24px;
+  position: relative;
+  z-index: 1;
 }
 
 .section-header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 52px;
+  position: relative;
+  z-index: 2;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .services-badge {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  background: #fffbeb;
-  border: 1px solid #fde68a;
-  color: #b45309;
-  padding: 5px 14px;
-  border-radius: 999px;
+  gap: 9px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.97) 0%, rgba(254, 250, 238, 0.94) 50%, rgba(255, 255, 255, 0.97) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.44);
+  color: #855307;
+  padding: 6.5px 18px 6.5px 14px;
+  border-radius: 9999px;
+  font-family: var(--font-heading, 'Plus Jakarta Sans', sans-serif);
   font-size: 11px;
-  font-weight: 800;
+  font-weight: 750;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
-  margin-bottom: 18px;
-  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.08);
+  letter-spacing: 0.11em;
+  margin-bottom: 22px;
+  box-shadow: 
+    0 4px 18px rgba(180, 130, 20, 0.09),
+    0 1px 3px rgba(0, 0, 0, 0.03),
+    inset 0 1px 1px rgba(255, 255, 255, 0.95),
+    inset 0 -1px 1px rgba(212, 175, 55, 0.16);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.services-badge:hover {
+  transform: translateY(-1.5px);
+  border-color: rgba(212, 175, 55, 0.7);
+  box-shadow: 
+    0 8px 24px rgba(180, 130, 20, 0.15),
+    inset 0 1px 1px rgba(255, 255, 255, 1),
+    inset 0 -1px 1px rgba(212, 175, 55, 0.25);
 }
 
 .services-badge i {
   font-size: 11px;
+  color: #b45309;
+  filter: drop-shadow(0 1px 2px rgba(180, 83, 9, 0.25));
 }
 
 #services-heading {
-  font-size: clamp(2rem, 3.4vw, 2.9rem);
-  font-weight: 850;
+  font-family: var(--font-heading, 'Plus Jakarta Sans', sans-serif);
+  font-size: clamp(2.15rem, 3.8vw, 3.25rem);
+  font-weight: 800;
   color: #071324;
-  line-height: 1.18;
-  letter-spacing: -0.8px;
-  margin: 0 0 16px 0;
+  line-height: 1.14;
+  letter-spacing: -0.035em;
+  margin: 0 auto 20px auto;
+  max-width: 940px;
+  text-wrap: balance;
+  position: relative;
+  z-index: 1;
 }
 
 #services-heading .title-gradient-gold {
-  background: linear-gradient(135deg, #b45309 0%, #d97706 40%, #f59e0b 80%, #fbbf24 100%);
+  background: linear-gradient(
+    135deg,
+    #92400e 0%,
+    #b45309 18%,
+    #d97706 42%,
+    #f59e0b 65%,
+    #b45309 85%,
+    #78350f 100%
+  );
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
-  display: inline-block;
+  display: inline;
+  filter: drop-shadow(0 2px 14px rgba(217, 119, 6, 0.22));
+  font-weight: inherit;
 }
 
 .section-subtitle {
-  font-size: 1.05rem;
+  font-family: var(--font-sans, 'Inter', sans-serif);
+  font-size: clamp(1.025rem, 1.2vw, 1.15rem);
   color: #475569;
-  line-height: 1.65;
-  font-weight: 450;
-  max-width: 760px;
+  line-height: 1.72;
+  font-weight: 420;
+  max-width: 740px;
   margin: 0 auto;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  position: relative;
+  z-index: 1;
 }
 
 /* ============================================

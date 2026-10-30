@@ -342,7 +342,11 @@ const seedData = async () => {
         order: 6,
         children: [
           { label: 'Accounting & Bookkeeping', href: '/services/bookkeeping-services' },
-          { label: 'Payroll', href: '/services/payroll-services' },
+          { label: 'Statutory Tax Audit (Sec 44AB)', href: '/services/internal-audit-services' },
+          { label: 'Company Annual Filings (ROC)', href: '/services/business-incorporation-services' },
+          { label: 'Payroll & Statutory Labor Laws', href: '/services/payroll-services' },
+          { label: 'Corporate Tax Advisory & Planning', href: '/services/tax-advisory-and-planning' },
+          { label: 'Accounting System & Cloud ERP', href: '/services/accounting-system-setup' },
         ],
         isActive: true,
       },

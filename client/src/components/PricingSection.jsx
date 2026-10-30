@@ -328,7 +328,10 @@ const PricingSection = () => {
       <div className="container retainers-container">
         {/* Chambers Editorial Header */}
         <div className="retainers-header text-center">
+          <span className="header-watermark" aria-hidden="true">RETAINERS</span>
+          <div className="luxury-header-halo" aria-hidden="true"></div>
           <div className="retainers-eyebrow-badge">
+            <span className="badge-index-chip">04</span>
             <span className="retainers-live-dot" aria-hidden="true"></span>
             <i className="fas fa-landmark" aria-hidden="true"></i>
             <span>PRACTICE GOVERNANCE &bull; STATUTORY RETAINERS</span>
@@ -336,13 +339,25 @@ const PricingSection = () => {
 
           <h2 className="retainers-main-title">
             Predictable Retainers, <br />
-            <span className="title-burnished-gold">Absolute Precision.</span>
+            <span className="title-gradient-gold">Absolute Precision.</span>
           </h2>
 
           <p className="retainers-lead-text">
             Scope-locked statutory tax retainers governing direct tax, GST audit, ROC secretarial compliance,
             and scrutiny representation under strict regulatory practice ethics. Zero billing surprises.
           </p>
+
+          <div className="header-assurance-strip">
+            <span className="assurance-pill">
+              <i className="fa-solid fa-lock"></i> 100% Scope-Locked Mandates
+            </span>
+            <span className="assurance-pill">
+              <i className="fa-solid fa-shield-check"></i> Zero Surprise Surcharges
+            </span>
+            <span className="assurance-pill">
+              <i className="fa-solid fa-receipt"></i> 18% ITC Claimable Invoices
+            </span>
+          </div>
 
           {/* Institutional Fiscal Commitment Toggle */}
           <div className="retainers-billing-selector-wrap">

@@ -16,55 +16,59 @@ const formatDropdownLabel = (label) => {
 const getDropdownMeta = (label) => {
   const normalized = (label || '').toLowerCase();
   // Start a Business
-  if (normalized.includes('private limited')) return { icon: 'fas fa-building', desc: 'MCA SPICe+ & 2 DINs allotment' };
-  if (normalized.includes('limited liability') || normalized.includes('llp')) return { icon: 'fas fa-handshake', desc: 'LLP agreement & legal corporate status' };
-  if (normalized.includes('sole')) return { icon: 'fas fa-user-tie', desc: 'Single owner MSME registration' };
-  if (normalized.includes('huf') || normalized.includes('hindu')) return { icon: 'fas fa-users', desc: 'Family tax entity & separate PAN creation' };
-  if (normalized.includes('public limited')) return { icon: 'fas fa-landmark', desc: 'Large capital & multi-shareholder setup' };
-  if (normalized.includes('one person') || normalized.includes('opc')) return { icon: 'fas fa-user-shield', desc: 'Corporate status for solo founders' };
-  if (normalized.includes('partnership')) return { icon: 'fas fa-briefcase', desc: 'Deed drafting & ROF filing' };
-  if (normalized.includes('e-commerce')) return { icon: 'fas fa-cart-shopping', desc: 'Online seller statutory compliance' };
+  if (normalized.includes('private limited')) return { icon: 'fas fa-building', desc: 'MCA SPICe+ & 2 DINs allotment', tag: 'Fast-Track', tone: 'tone-emerald' };
+  if (normalized.includes('limited liability') || normalized.includes('llp')) return { icon: 'fas fa-handshake', desc: 'LLP agreement & legal corporate status', tag: 'Popular', tone: 'tone-sapphire' };
+  if (normalized.includes('sole')) return { icon: 'fas fa-user-tie', desc: 'Single owner MSME registration', tag: 'Turnkey', tone: 'tone-amber' };
+  if (normalized.includes('huf') || normalized.includes('hindu')) return { icon: 'fas fa-users', desc: 'Family tax entity & separate PAN creation', tag: 'Tax Shield', tone: 'tone-purple' };
+  if (normalized.includes('public limited')) return { icon: 'fas fa-landmark', desc: 'Large capital & multi-shareholder setup', tag: 'Enterprise', tone: 'tone-ruby' };
+  if (normalized.includes('one person') || normalized.includes('opc')) return { icon: 'fas fa-user-shield', desc: 'Corporate status for solo founders', tag: 'Solo Founder', tone: 'tone-cyan' };
+  if (normalized.includes('partnership')) return { icon: 'fas fa-briefcase', desc: 'Deed drafting & ROF filing', tag: 'Deed Draft', tone: 'tone-amber' };
+  if (normalized.includes('e-commerce')) return { icon: 'fas fa-cart-shopping', desc: 'Online seller statutory compliance', tag: 'Multi-State', tone: 'tone-sapphire' };
 
   // Registration
-  if (normalized.includes('government registration')) return { icon: 'fas fa-building-columns', desc: 'Municipal trade licenses & Shop Act' };
-  if (normalized.includes('startup') || normalized.includes('startup-india')) return { icon: 'fas fa-seedling', desc: 'DPIIT certificate & 80-IAC tax exemption' };
-  if (normalized.includes('professional tax')) return { icon: 'fas fa-id-badge', desc: 'Gujarat PTEC & PTRC employer setup' };
-  if (normalized.includes('pan application') || (normalized.includes('pan') && !normalized.includes('company'))) return { icon: 'fas fa-id-card', desc: 'Form 49A allotment & physical card' };
-  if (normalized.includes('tan application') || normalized.includes('tan')) return { icon: 'fas fa-receipt', desc: 'Form 49B deductor account for TDS' };
-  if (normalized.includes('digital signature') || normalized.includes('dsc')) return { icon: 'fas fa-key', desc: 'Class-3 USB cryptotoken for MCA & IT' };
-  if (normalized.includes('esi') || normalized.includes('esic')) return { icon: 'fas fa-hospital-user', desc: 'Employee State Insurance & medical cover' };
-  if (normalized.includes('pf') && !normalized.includes('return')) return { icon: 'fas fa-users-cog', desc: 'Provident Fund statutory registration' };
-  if (normalized.includes('import') || normalized.includes('iec')) return { icon: 'fas fa-ship', desc: 'DGFT Import-Export code setup' };
-  if (normalized.includes('udyam') || normalized.includes('msme')) return { icon: 'fas fa-certificate', desc: 'Govt subsidies & priority credit scheme' };
-  if (normalized.includes('gst registration') || normalized.includes('gst')) return { icon: 'fas fa-file-invoice-dollar', desc: '15-digit GSTIN & Aadhaar e-KYC' };
+  if (normalized.includes('government registration')) return { icon: 'fas fa-building-columns', desc: 'Municipal trade licenses & Shop Act', tag: 'Municipal', tone: 'tone-amber' };
+  if (normalized.includes('startup') || normalized.includes('startup-india')) return { icon: 'fas fa-seedling', desc: 'DPIIT certificate & 80-IAC tax exemption', tag: 'Tax Holiday', tone: 'tone-emerald' };
+  if (normalized.includes('professional tax')) return { icon: 'fas fa-id-badge', desc: 'Gujarat PTEC & PTRC employer setup', tag: 'State Tax', tone: 'tone-sapphire' };
+  if (normalized.includes('pan application') || (normalized.includes('pan') && !normalized.includes('company'))) return { icon: 'fas fa-id-card', desc: 'Form 49A allotment & physical card', tag: 'CBDT Direct', tone: 'tone-cyan' };
+  if (normalized.includes('tan application') || normalized.includes('tan')) return { icon: 'fas fa-receipt', desc: 'Form 49B deductor account for TDS', tag: 'TDS Track', tone: 'tone-purple' };
+  if (normalized.includes('digital signature') || normalized.includes('dsc')) return { icon: 'fas fa-key', desc: 'Class-3 USB cryptotoken for MCA & IT', tag: 'Class-3 USB', tone: 'tone-amber' };
+  if (normalized.includes('esi') || normalized.includes('esic')) return { icon: 'fas fa-hospital-user', desc: 'Employee State Insurance & medical cover', tag: 'Labor Code', tone: 'tone-ruby' };
+  if (normalized.includes('pf') && !normalized.includes('return')) return { icon: 'fas fa-users-cog', desc: 'Provident Fund statutory registration', tag: 'EPFO Portal', tone: 'tone-emerald' };
+  if (normalized.includes('import') || normalized.includes('iec')) return { icon: 'fas fa-ship', desc: 'DGFT Import-Export code setup', tag: 'Lifetime', tone: 'tone-sapphire' };
+  if (normalized.includes('udyam') || normalized.includes('msme')) return { icon: 'fas fa-certificate', desc: 'Govt subsidies & priority credit scheme', tag: 'Subsidies', tone: 'tone-amber' };
+  if (normalized.includes('gst registration') || normalized.includes('gst')) return { icon: 'fas fa-file-invoice-dollar', desc: '15-digit GSTIN & Aadhaar e-KYC', tag: 'Fast e-KYC', tone: 'tone-emerald' };
 
   // Return
-  if (normalized.includes('income tax') || normalized.includes('itr')) return { icon: 'fas fa-calculator', desc: 'Direct tax filing & 44ADA relief' };
-  if (normalized.includes('pf return')) return { icon: 'fas fa-users-cog', desc: 'Monthly ECR filing & challan generation' };
-  if (normalized.includes('tds return') || normalized.includes('tds')) return { icon: 'fas fa-receipt', desc: 'Form 24Q / 26Q quarterly returns' };
-  if (normalized.includes('e-way') || normalized.includes('eway')) return { icon: 'fas fa-truck-fast', desc: 'Consignment e-way portal generation' };
-  if (normalized.includes('pf & esic') || normalized.includes('esic return')) return { icon: 'fas fa-shield-halved', desc: 'Dual statutory labor compliance filing' };
+  if (normalized.includes('income tax') || normalized.includes('itr')) return { icon: 'fas fa-calculator', desc: 'Direct tax filing & 44ADA relief', tag: 'Direct Tax', tone: 'tone-emerald' };
+  if (normalized.includes('pf return')) return { icon: 'fas fa-users-cog', desc: 'Monthly ECR filing & challan generation', tag: 'Monthly ECR', tone: 'tone-sapphire' };
+  if (normalized.includes('tds return') || normalized.includes('tds')) return { icon: 'fas fa-receipt', desc: 'Form 24Q / 26Q quarterly returns', tag: 'Quarterly', tone: 'tone-amber' };
+  if (normalized.includes('e-way') || normalized.includes('eway')) return { icon: 'fas fa-truck-fast', desc: 'Consignment e-way portal generation', tag: 'Portal Sync', tone: 'tone-cyan' };
+  if (normalized.includes('pf & esic') || normalized.includes('esic return')) return { icon: 'fas fa-shield-halved', desc: 'Dual statutory labor compliance filing', tag: 'Dual Filing', tone: 'tone-ruby' };
 
   // Accounting & Compliance
-  if (normalized.includes('audit')) return { icon: 'fas fa-search-dollar', desc: 'Statutory Section 44AB audits' };
-  if (normalized.includes('bookkeeping') || normalized.includes('book keeping') || normalized.includes('accounting')) return { icon: 'fas fa-book', desc: 'Monthly ledger & P&L accounting' };
-  if (normalized.includes('roc') || normalized.includes('annual filing')) return { icon: 'fas fa-file-contract', desc: 'AOC-4 & MGT-7 annual statutory reporting' };
-  if (normalized.includes('cfo')) return { icon: 'fas fa-crown', desc: 'Executive financial leadership' };
+  if (normalized.includes('audit')) return { icon: 'fas fa-shield-halved', desc: 'Statutory Section 44AB audits & forensic review', tag: 'Tax Audit', tone: 'tone-amber' };
+  if (normalized.includes('bookkeeping') || normalized.includes('book keeping') || (normalized.includes('accounting') && !normalized.includes('system'))) return { icon: 'fas fa-book-bookmark', desc: 'Monthly ledger, P&L & balance sheet MIS', tag: 'Monthly MIS', tone: 'tone-sapphire' };
+  if (normalized.includes('system') || normalized.includes('erp')) return { icon: 'fas fa-laptop-code', desc: 'Custom cloud ERP & chart of accounts', tag: 'Cloud ERP', tone: 'tone-cyan' };
+  if (normalized.includes('roc') || normalized.includes('annual filing')) return { icon: 'fas fa-file-contract', desc: 'AOC-4 & MGT-7 statutory company governance', tag: 'MCA ROC', tone: 'tone-emerald' };
+  if (normalized.includes('payroll')) return { icon: 'fas fa-users-cog', desc: 'PF, ESIC, PT & statutory monthly wage MIS', tag: 'Wage MIS', tone: 'tone-ruby' };
+  if (normalized.includes('advisory') || normalized.includes('planning')) return { icon: 'fas fa-scale-balanced', desc: 'Transaction structuring & tax shield', tag: 'Tax Shield', tone: 'tone-purple' };
+  if (normalized.includes('financial statement')) return { icon: 'fas fa-file-invoice-dollar', desc: 'Balance sheet, P&L & cash flows', tag: 'Financials', tone: 'tone-emerald' };
+  if (normalized.includes('cfo')) return { icon: 'fas fa-crown', desc: 'Executive financial leadership & board MIS', tag: 'Virtual CFO', tone: 'tone-purple' };
 
-  if (normalized.includes('calculator') || normalized.includes('tax-tools')) return { icon: 'fas fa-calculator', desc: 'Old vs New Tax Regime & GST Tools' };
-  if (normalized.includes('due date') || normalized.includes('calendar') || normalized.includes('compliance')) return { icon: 'fas fa-calendar-check', desc: 'Statutory compliance & due dates' };
-  if (normalized.includes('pricing') || normalized.includes('retainer')) return { icon: 'fas fa-handshake', desc: 'Scope-locked corporate retainers' };
-  if (normalized.includes('career') || normalized.includes('articleship') || normalized.includes('job')) return { icon: 'fas fa-user-graduate', desc: 'Tax careers & professional hiring' };
-  if (normalized.includes('blog')) return { icon: 'fas fa-newspaper', desc: 'Tax circulars, case studies & updates' };
-  if (normalized.includes('faq')) return { icon: 'fas fa-circle-question', desc: 'Common compliance queries answered' };
-  if (normalized.includes('contact')) return { icon: 'fas fa-headset', desc: 'Direct access to senior advisory chambers' };
-  if (normalized.includes('trademark') || normalized.includes('ipr')) return { icon: 'fas fa-trademark', desc: 'Brand protection & IP registry' };
-  if (normalized.includes('copyright')) return { icon: 'fas fa-copyright', desc: 'Creative work & software protection' };
-  if (normalized.includes('food') || normalized.includes('fssai')) return { icon: 'fas fa-utensils', desc: 'Food business statutory licensing' };
-  if (normalized.includes('iso')) return { icon: 'fas fa-award', desc: 'ISO 9001/27001 standard compliance' };
-  if (normalized.includes('legal') || normalized.includes('agreement')) return { icon: 'fas fa-scale-balanced', desc: 'Shareholders & vendor contract drafting' };
+  if (normalized.includes('calculator') || normalized.includes('tax-tools')) return { icon: 'fas fa-calculator', desc: 'Old vs New Tax Regime & GST Tools', tag: 'Live Tool', tone: 'tone-sapphire' };
+  if (normalized.includes('due date') || normalized.includes('calendar') || normalized.includes('compliance')) return { icon: 'fas fa-calendar-check', desc: 'Statutory compliance & due dates', tag: 'Live Radar', tone: 'tone-emerald' };
+  if (normalized.includes('pricing') || normalized.includes('retainer')) return { icon: 'fas fa-handshake', desc: 'Scope-locked corporate retainers', tag: 'Locked Fee', tone: 'tone-amber' };
+  if (normalized.includes('career') || normalized.includes('articleship') || normalized.includes('job')) return { icon: 'fas fa-user-graduate', desc: 'Tax careers & professional hiring', tag: 'Careers', tone: 'tone-purple' };
+  if (normalized.includes('blog')) return { icon: 'fas fa-newspaper', desc: 'Tax circulars, case studies & updates', tag: 'Bulletins', tone: 'tone-cyan' };
+  if (normalized.includes('faq')) return { icon: 'fas fa-circle-question', desc: 'Common compliance queries answered', tag: 'Intel Hub', tone: 'tone-sapphire' };
+  if (normalized.includes('contact')) return { icon: 'fas fa-headset', desc: 'Direct access to senior advisory chambers', tag: 'Chambers', tone: 'tone-amber' };
+  if (normalized.includes('trademark') || normalized.includes('ipr')) return { icon: 'fas fa-trademark', desc: 'Brand protection & IP registry', tag: 'IP Registry', tone: 'tone-purple' };
+  if (normalized.includes('copyright')) return { icon: 'fas fa-copyright', desc: 'Creative work & software protection', tag: 'IP Defense', tone: 'tone-cyan' };
+  if (normalized.includes('food') || normalized.includes('fssai')) return { icon: 'fas fa-utensils', desc: 'Food business statutory licensing', tag: 'FSSAI License', tone: 'tone-ruby' };
+  if (normalized.includes('iso')) return { icon: 'fas fa-award', desc: 'ISO 9001/27001 standard compliance', tag: 'Standard', tone: 'tone-amber' };
+  if (normalized.includes('legal') || normalized.includes('agreement')) return { icon: 'fas fa-scale-balanced', desc: 'Shareholders & vendor contract drafting', tag: 'Contract', tone: 'tone-sapphire' };
 
-  return { icon: 'fas fa-shield-halved', desc: 'Statutory corporate compliance' };
+  return { icon: 'fas fa-shield-halved', desc: 'Statutory corporate compliance', tag: 'Statutory', tone: 'tone-amber' };
 };
 
 const getTopCategoryIcon = (label) => {
@@ -78,6 +82,16 @@ const getTopCategoryIcon = (label) => {
   if (normalized.includes('service')) return 'fas fa-briefcase';
   if (normalized.includes('other')) return 'fas fa-folder-open';
   return 'fas fa-layer-group';
+};
+
+const getCategorySublabel = (label) => {
+  const normalized = (label || '').toLowerCase();
+  if (normalized.includes('start') || normalized.includes('business')) return 'MCA SPICe+, LLP & Commercial Incorporation';
+  if (normalized.includes('registration')) return 'State & Central Statutory Licenses & Registrations';
+  if (normalized.includes('return')) return 'Direct Tax, GST & Labor Law E-Filings';
+  if (normalized.includes('accounting') || normalized.includes('compliance')) return 'Statutory Audits, Corporate Records & MCA Governance';
+  if (normalized.includes('other')) return 'Knowledge Hub, Calculators & Firm Infrastructure';
+  return 'Statutory Compliance & Filings';
 };
 
 const parseWorkingHours = (raw) => {
@@ -142,6 +156,25 @@ const Navbar = () => {
             children.push(req);
           }
         });
+      }
+
+      // Ensure "Accounting & Compliance" contains the full institutional corporate compliance suite
+      if (
+        item.label?.toLowerCase().includes('accounting') ||
+        item.label?.toLowerCase().includes('compliance')
+      ) {
+        const requiredCompliance = [
+          { label: 'Accounting & Bookkeeping', href: '/services/bookkeeping-services' },
+          { label: 'Statutory Tax Audit (Sec 44AB)', href: '/services/internal-audit-services' },
+          { label: 'Company Annual Filings (ROC)', href: '/services/business-incorporation-services' },
+          { label: 'Payroll & Statutory Labor Laws', href: '/services/payroll-services' },
+          { label: 'Corporate Tax Advisory & Planning', href: '/services/tax-advisory-and-planning' },
+          { label: 'Accounting System & Cloud ERP', href: '/services/accounting-system-setup' },
+        ];
+
+        if (children.length < 5) {
+          children = requiredCompliance;
+        }
       }
 
       return {
@@ -255,7 +288,7 @@ const Navbar = () => {
     }
     hoverTimeoutRef.current = setTimeout(() => {
       setActiveDropdown(null);
-    }, 120);
+    }, 180);
   };
 
   const handleDropdownItemClick = () => {
@@ -567,7 +600,7 @@ const Navbar = () => {
                               <span>{item.label}</span>
                             </span>
                             <span className="megamenu-sublabel">
-                              {item.label === 'Others' ? 'Knowledge Hub & Practice Support' : 'Statutory Compliance & Filings'}
+                              {getCategorySublabel(item.label)}
                             </span>
                           </div>
                           <span className="megamenu-count-badge">
@@ -584,21 +617,23 @@ const Navbar = () => {
                               <Link
                                 key={childIndex}
                                 to={child.href}
+                                style={{ '--tile-idx': childIndex }}
                                 className={`dropdown-rich-tile ${isChildActive ? 'tile-active' : ''}`}
                                 onClick={handleDropdownItemClick}
                               >
-                                <div className="dropdown-tile-icon">
+                                <div className={`dropdown-tile-icon ${meta.tone || 'tone-amber'}`}>
                                   <i className={meta.icon}></i>
                                 </div>
                                 <div className="dropdown-tile-info">
                                   <div className="dropdown-tile-title-row">
                                     <span className="dropdown-tile-title">{cleanTitle}</span>
+                                    {meta.tag && <span className="dropdown-micro-tag">{meta.tag}</span>}
                                     {isChildActive && <span className="active-tile-dot"></span>}
                                   </div>
                                   <span className="dropdown-tile-desc">{meta.desc}</span>
                                 </div>
                                 <div className="dropdown-tile-arrow">
-                                  <i className="fas fa-arrow-right"></i>
+                                  <i className="fas fa-chevron-right"></i>
                                 </div>
                               </Link>
                             );
@@ -612,14 +647,14 @@ const Navbar = () => {
                             onClick={handleDropdownItemClick}
                           >
                             <div className="strip-left">
-                              <span className="strip-sparkle"><i className="fas fa-user-tie"></i></span>
+                              <span className="strip-sparkle"><i className="fas fa-headset"></i></span>
                               <div className="strip-text-group">
-                                <span className="strip-bold">Need customized advisory?</span>
-                                <span className="strip-sub">Schedule a 1-on-1 strategy call with our advisory team</span>
+                                <span className="strip-bold">Need Bespoke Corporate Structuring?</span>
+                                <span className="strip-sub">Direct Partner Consultation &bull; &lt; 30 Mins Confidential Triage</span>
                               </div>
                             </div>
                             <span className="strip-cta-pill">
-                              <span>Book Free Call</span>
+                              <span>Consult Advisory Desk</span>
                               <i className="fas fa-arrow-right"></i>
                             </span>
                           </Link>

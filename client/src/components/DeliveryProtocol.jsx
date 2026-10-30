@@ -173,7 +173,10 @@ const DeliveryProtocol = () => {
             1. MODERN EXECUTIVE HEADER
             ============================================================ */}
         <header className="protocol-header text-center">
+          <span className="header-watermark" aria-hidden="true">PROTOCOL</span>
+          <div className="luxury-header-halo" aria-hidden="true"></div>
           <div className="protocol-eyebrow-pill">
+            <span className="badge-index-chip">05</span>
             <span className="live-dot" aria-hidden="true"></span>
             <i className="fa-solid fa-shield-halved" aria-hidden="true"></i>
             <span>THE DELIVERY STANDARD &bull; 4-STAGE STATUTORY PROTOCOL</span>
@@ -187,6 +190,18 @@ const DeliveryProtocol = () => {
           <p className="protocol-lead-text">
             Every client filing passes through an uncompromising forensic verification pipeline before government upload, backed by direct senior partner accountability and 7-year scrutiny defense.
           </p>
+
+          <div className="header-assurance-strip">
+            <span className="assurance-pill">
+              <i className="fa-solid fa-list-check"></i> 4 Sequential Verification Gates
+            </span>
+            <span className="assurance-pill">
+              <i className="fa-solid fa-user-check"></i> Dual Senior Partner Review
+            </span>
+            <span className="assurance-pill">
+              <i className="fa-solid fa-shield-halved"></i> 7-Year Notice Defense
+            </span>
+          </div>
         </header>
 
         {/* ============================================================

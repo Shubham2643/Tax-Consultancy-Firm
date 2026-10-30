@@ -144,9 +144,12 @@ const TrustSection = ({ onSelectCategory }) => {
             SECTION HEADER: Full-Width Institutional Authority
             ============================================================ */}
         <div className="trust-master-header">
+          <span className="header-watermark" aria-hidden="true">GOVERNANCE</span>
+          <div className="luxury-header-halo" aria-hidden="true"></div>
           <div className="trust-badge-label">
-            <span className="badge-pulse-dot"></span>
-            <i className="fas fa-shield-alt"></i>
+            <span className="badge-index-chip">01</span>
+            <span className="badge-pulse-dot" aria-hidden="true"></span>
+            <i className="fas fa-shield-alt" aria-hidden="true"></i>
             <span>{trustHeading}</span>
           </div>
 
@@ -157,6 +160,18 @@ const TrustSection = ({ onSelectCategory }) => {
           <p className="trust-master-subtext">
             Every tax return, statutory audit, and corporate compliance filing is executed under rigorous statutory standards—insulating Indian enterprises against notices, penalties, and tax leakages through multi-tier verification.
           </p>
+
+          <div className="header-assurance-strip">
+            <span className="assurance-pill">
+              <i className="fa-solid fa-check"></i> Statutory Practice Standards
+            </span>
+            <span className="assurance-pill">
+              <i className="fa-solid fa-shield-halved"></i> 100% Client Privilege &amp; NDA
+            </span>
+            <span className="assurance-pill">
+              <i className="fa-solid fa-award"></i> Zero Penalty Track Record
+            </span>
+          </div>
         </div>
 
         {/* ============================================================

@@ -138,8 +138,11 @@ const Contact = () => {
         <div className="contact-grid-overlay" aria-hidden="true"></div>
 
         <div className="contact-hero-container">
+          <span className="header-watermark" aria-hidden="true">CHAMBERS</span>
+          <div className="luxury-header-halo" aria-hidden="true"></div>
           <div className="contact-eyebrow-badge">
-            <span className="contact-live-dot pulse"></span>
+            <span className="badge-index-chip">00</span>
+            <span className="badge-pulse-dot" aria-hidden="true"></span>
             <i className="fas fa-landmark"></i>
             <span>EXECUTIVE CONSULTATION CHAMBERS &bull; NIKOL, AHMEDABAD</span>
           </div>
@@ -153,21 +156,16 @@ const Contact = () => {
           </p>
 
           {/* 3-Pillar Institutional Reassurance Strip */}
-          <div className="hero-reassurance-strip">
-            <div className="reassurance-pill">
-              <i className="fas fa-bolt"></i>
-              <span>Rapid Triage (&lt; 30 Mins)</span>
-            </div>
-            <div className="reassurance-divider"></div>
-            <div className="reassurance-pill">
-              <i className="fas fa-shield-halved"></i>
-              <span>100% Client Privilege &amp; NDA Bound</span>
-            </div>
-            <div className="reassurance-divider"></div>
-            <div className="reassurance-pill">
-              <i className="fas fa-scale-balanced"></i>
-              <span>Fiduciary Practice Standards</span>
-            </div>
+          <div className="header-assurance-strip">
+            <span className="assurance-pill">
+              <i className="fas fa-bolt"></i> Rapid Triage (&lt; 30 Mins)
+            </span>
+            <span className="assurance-pill">
+              <i className="fas fa-shield-halved"></i> 100% Client Privilege &amp; NDA Bound
+            </span>
+            <span className="assurance-pill">
+              <i className="fas fa-scale-balanced"></i> Fiduciary Practice Standards
+            </span>
           </div>
         </div>
       </section>

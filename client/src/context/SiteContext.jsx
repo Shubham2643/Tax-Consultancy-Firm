@@ -129,10 +129,12 @@ export const SiteContextProvider = ({ children }) => {
             label: 'Accounting & Compliance',
             href: '#',
             children: [
-              { label: 'Book Keeping & Accounting', href: '/services/bookkeeping-services' },
-              { label: 'Auditing (Internal & Tax Audit)', href: '/services/auditing' },
-              { label: 'TDS / TCS Compliance', href: '/services/tds-compliance' },
-              { label: 'Company Annual Filing (ROC)', href: '/services/roc-compliance' },
+              { label: 'Accounting & Bookkeeping', href: '/services/bookkeeping-services' },
+              { label: 'Statutory Tax Audit (Sec 44AB)', href: '/services/internal-audit-services' },
+              { label: 'Company Annual Filings (ROC)', href: '/services/business-incorporation-services' },
+              { label: 'Payroll & Statutory Labor Laws', href: '/services/payroll-services' },
+              { label: 'Corporate Tax Advisory & Planning', href: '/services/tax-advisory-and-planning' },
+              { label: 'Accounting System & Cloud ERP', href: '/services/accounting-system-setup' },
             ],
           },
           {

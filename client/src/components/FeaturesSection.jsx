@@ -137,7 +137,10 @@ const FeaturesSection = () => {
             1. SECTION MASTER HEADER
             ============================================================ */}
         <header className="features-header-wrap">
+          <span className="header-watermark" aria-hidden="true">ADVANTAGE</span>
+          <div className="luxury-header-halo" aria-hidden="true"></div>
           <div className="features-badge-pill">
+            <span className="badge-index-chip">03</span>
             <span className="live-dot" aria-hidden="true"></span>
             <i className="fa-solid fa-shield-halved" aria-hidden="true"></i>
             <span>THE ADVISORY ADVANTAGE &bull; FIDUCIARY EXCELLENCE</span>
@@ -151,6 +154,18 @@ const FeaturesSection = () => {
           <p className="features-subtitle">
             We combine institutional direct tax expertise, forensic pre-filing audit defense, and locked fixed-fee retainers to legally minimize liabilities, insulate your firm from notices, and guarantee 100% on-time statutory compliance.
           </p>
+
+          <div className="header-assurance-strip">
+            <span className="assurance-pill">
+              <i className="fa-solid fa-glasses"></i> Four-Eye Dual Review
+            </span>
+            <span className="assurance-pill">
+              <i className="fa-solid fa-magnifying-glass-chart"></i> Forensic Pre-Filing Audit
+            </span>
+            <span className="assurance-pill">
+              <i className="fa-solid fa-headset"></i> Direct Senior Partner Line
+            </span>
+          </div>
 
           {/* ============================================================
               2. INTERACTIVE VIEW CONTROLLER (3 MODES)
