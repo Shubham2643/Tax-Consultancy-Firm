@@ -2,134 +2,156 @@ import { Link } from 'react-router-dom';
 
 const CARDS_CONFIG = [
   {
+    pillarNum: '01',
     theme: 'card-theme-gold',
     eyebrow: 'TAX OPTIMIZATION',
+    statusBadge: '28.4% ALPHA',
     iconDefault: 'fa-solid fa-chart-line',
     actionText: 'Explore Tax Strategy',
     actionUrl: '/services',
-    tags: ['Sec 44ADA Optimization', 'GSTR-2B Matching', 'Zero Sec 234 Interest'],
-    // Visual Graphic: Tax Alpha Bar Comparison
-    renderVisual: () => (
-      <div className="visual-widget visual-tax-alpha">
-        <div className="visual-top-row">
-          <span className="visual-kicker">ANNUAL STATUTORY OUTFLOW ANALYSIS</span>
-          <span className="visual-badge-pill badge-gold-glow">Avg. 28.4% Saved</span>
+    // Zone 2: Direct Metric & Open Comparative Delta (No nested boxes)
+    renderContent: () => (
+      <div className="pillar-body-content">
+        {/* Large Display Metric directly on card */}
+        <div className="pillar-metric-section">
+          <span className="metric-kicker">
+            <i className="fa-solid fa-bolt text-gold"></i> NET STATUTORY ALPHA
+          </span>
+          <div className="metric-headline-row">
+            <span className="metric-large">₹4,70,000</span>
+            <span className="metric-pill pill-gold">+28.4% Saved</span>
+          </div>
+          <span className="metric-subtext">Average Net Outflow Preserved per Enterprise</span>
         </div>
 
-        <div className="tax-comparison-bars">
-          {/* Bar 1: Standard Unstructured */}
-          <div className="tax-bar-group">
-            <div className="tax-bar-meta">
-              <span className="bar-label">Standard Filing Outflow</span>
-              <strong className="bar-val text-muted">₹14,50,000</strong>
-            </div>
-            <div className="bar-track">
-              <div className="bar-fill fill-unstructured" style={{ width: '100%' }}></div>
-            </div>
+        {/* Open Comparison Delta (Sleek track, no double-bordered box) */}
+        <div className="pillar-delta-section">
+          <div className="delta-meta-row">
+            <span className="delta-label">Standard: <s className="strike">₹14,50,000</s></span>
+            <span className="delta-value text-emerald">Under SCA: ₹9,80,000</span>
           </div>
-
-          {/* Bar 2: Structured Outflow with SCA */}
-          <div className="tax-bar-group">
-            <div className="tax-bar-meta">
-              <span className="bar-label">Structured Under Chamunda Advisory</span>
-              <strong className="bar-val text-emerald">₹9,80,000</strong>
-            </div>
-            <div className="bar-track">
-              <div className="bar-fill fill-structured" style={{ width: '67.5%' }}></div>
-            </div>
+          <div className="delta-bar-track">
+            <div className="delta-bar-fill fill-gold" style={{ width: '68%' }}></div>
           </div>
         </div>
 
-        <div className="visual-highlight-chip">
-          <i className="fa-solid fa-bolt text-gold"></i>
-          <span><strong>₹4,70,000 Net Legal Savings</strong> &bull; Zero Scrutiny Risk</span>
-        </div>
+        {/* Clean Trust Checklist */}
+        <ul className="pillar-trust-checklist">
+          <li>
+            <i className="fa-solid fa-circle-check text-emerald"></i>
+            <span>100% Legitimate Exemptions &bull; Zero Scrutiny Risk</span>
+          </li>
+          <li>
+            <i className="fa-solid fa-circle-check text-emerald"></i>
+            <span>Sec 44ADA Optimization &bull; GSTR-2B Auto-Recon</span>
+          </li>
+        </ul>
       </div>
     ),
   },
   {
+    pillarNum: '02',
     theme: 'card-theme-emerald',
-    eyebrow: 'FIXED-FEE ASSURANCE',
-    iconDefault: 'fa-solid fa-handshake-angle',
+    eyebrow: 'PRICING CHARTER',
+    statusBadge: '100% PRICE LOCK',
+    iconDefault: 'fa-solid fa-gem',
     actionText: 'View Retainer Mandates',
     actionUrl: '/pricing',
-    tags: ['Scope-Locked Contract', 'No Hourly Creep', '18% ITC Invoices'],
-    // Visual Graphic: Scope-Locked Retainer Voucher
-    renderVisual: () => (
-      <div className="visual-widget visual-fixed-fee">
-        <div className="visual-top-row">
-          <span className="visual-kicker">FIDUCIARY RETAINER GUARANTEE</span>
-          <span className="visual-badge-pill badge-emerald-glow">100% Price Lock</span>
+    // Zone 2: Direct Metric & Open 3-Point Charter (No nested boxes)
+    renderContent: () => (
+      <div className="pillar-body-content">
+        {/* Large Display Metric directly on card */}
+        <div className="pillar-metric-section">
+          <span className="metric-kicker">
+            <i className="fa-solid fa-lock text-emerald"></i> BILLING TRANSPARENCY
+          </span>
+          <div className="metric-headline-row">
+            <span className="metric-large">₹0.00</span>
+            <span className="metric-pill pill-emerald">Strict Zero Default</span>
+          </div>
+          <span className="metric-subtext">Zero Hidden Surcharges &bull; No Billable Hour Creep</span>
         </div>
 
-        <div className="fee-spec-rows">
-          <div className="fee-spec-row">
-            <span className="spec-lbl">Deliverables Scope</span>
-            <span className="spec-val">100% Locked &amp; Milestone Based</span>
+        {/* Open 3-Point Charter Grid */}
+        <div className="pillar-charter-strip">
+          <div className="charter-chip">
+            <span className="chip-label">SCOPE LOCK</span>
+            <strong className="chip-val">100% Milestone</strong>
           </div>
-          <div className="fee-spec-row">
-            <span className="spec-lbl">Hourly Billing Inflation</span>
-            <span className="spec-val text-emerald">₹0.00 (Zero Hidden Fees)</span>
+          <div className="charter-chip">
+            <span className="chip-label">GST INVOICE</span>
+            <strong className="chip-val">18% ITC Claim</strong>
           </div>
-          <div className="fee-spec-row">
-            <span className="spec-lbl">Official GST Tax Invoice</span>
-            <span className="spec-val">18% Input Credit Claimable</span>
+          <div className="charter-chip highlight">
+            <span className="chip-label">NOTICE REPLIES</span>
+            <strong className="chip-val text-emerald">Included Free</strong>
           </div>
         </div>
 
-        <div className="visual-highlight-chip">
-          <i className="fa-solid fa-circle-check text-emerald"></i>
-          <span><strong>Zero Surprise Bills:</strong> Routine notice replies included</span>
-        </div>
+        {/* Clean Trust Checklist */}
+        <ul className="pillar-trust-checklist">
+          <li>
+            <i className="fa-solid fa-circle-check text-emerald"></i>
+            <span>Fiduciary Retainer Agreement signed before mandate</span>
+          </li>
+          <li>
+            <i className="fa-solid fa-circle-check text-emerald"></i>
+            <span>Pre-agreed deliverables with zero hourly surprises</span>
+          </li>
+        </ul>
       </div>
     ),
   },
   {
+    pillarNum: '03',
     theme: 'card-theme-cyan',
-    eyebrow: 'SENIOR PARTNER OVERSIGHT',
+    eyebrow: 'COUNSEL HOTLINE',
+    statusBadge: '< 15M SLA',
     iconDefault: 'fa-solid fa-headset',
-    actionText: 'Connect With Partner',
+    actionText: 'Consult Senior Partner',
     actionUrl: '/contact',
-    tags: ['< 15 Min SLA', 'Direct WhatsApp Line', 'Dual-Level Vetting'],
-    // Visual Graphic: Live Chambers Helpline
-    renderVisual: () => (
-      <div className="visual-widget visual-chambers-desk">
-        <div className="visual-top-row">
-          <span className="visual-kicker">CHAMBERS DIRECT DISPATCH</span>
-          <span className="visual-badge-pill badge-live-chambers">
-            <span className="live-chambers-dot"></span>
-            Chambers Online
+    // Zone 2: Direct Metric & Symmetrical 3-Point Partner Governance Matrix
+    renderContent: () => (
+      <div className="pillar-body-content">
+        {/* Large Display Metric directly on card */}
+        <div className="pillar-metric-section">
+          <span className="metric-kicker">
+            <i className="fa-solid fa-shield-halved text-cyan"></i> SENIOR PARTNER OVERSIGHT
           </span>
+          <div className="metric-headline-row">
+            <span className="metric-large">&lt; 15 <small>Mins</small></span>
+            <span className="metric-pill pill-cyan">Partner SLA</span>
+          </div>
+          <span className="metric-subtext">Direct Partner Escalation &bull; Nikol Chambers, Ahmedabad</span>
         </div>
 
-        <div className="chambers-status-box">
-          <div className="chambers-status-header">
-            <div className="chambers-avatar-badge">
-              <i className="fa-solid fa-user-tie"></i>
-            </div>
-            <div className="chambers-partner-info">
-              <strong>Senior Direct Tax Partner</strong>
-              <span>Nikol Central Chambers, Ahmedabad</span>
-            </div>
+        {/* Symmetrical 3-Point Executive Governance Matrix */}
+        <div className="pillar-charter-strip">
+          <div className="charter-chip">
+            <span className="chip-label">ACCOUNT LEAD</span>
+            <strong className="chip-val">Senior Partner</strong>
           </div>
-
-          <div className="chambers-meta-pills">
-            <span className="meta-pill">
-              <i className="fa-brands fa-whatsapp text-emerald"></i> VIP WhatsApp
-            </span>
-            <span className="meta-pill">
-              <i className="fa-solid fa-phone text-blue"></i> Direct Phone
-            </span>
-            <span className="meta-pill">
-              <i className="fa-solid fa-clock text-amber"></i> &lt; 15m Response
-            </span>
+          <div className="charter-chip">
+            <span className="chip-label">JUNIOR LAYERS</span>
+            <strong className="chip-val text-emerald">Strict Zero</strong>
+          </div>
+          <div className="charter-chip highlight">
+            <span className="chip-label">NOTICE TRIAGE</span>
+            <strong className="chip-val text-cyan">Same-Day SLA</strong>
           </div>
         </div>
 
-        <div className="visual-highlight-chip">
-          <i className="fa-solid fa-shield-halved text-cyan"></i>
-          <span><strong>Zero Junior Handoffs:</strong> Senior audit before filing</span>
-        </div>
+        {/* Clean Trust Checklist */}
+        <ul className="pillar-trust-checklist">
+          <li>
+            <i className="fa-solid fa-circle-check text-emerald"></i>
+            <span>Strict Zero-Junior Policy: Partner review before filing</span>
+          </li>
+          <li>
+            <i className="fa-solid fa-circle-check text-emerald"></i>
+            <span>Direct WhatsApp line & priority chambers call provided</span>
+          </li>
+        </ul>
       </div>
     ),
   },
@@ -139,6 +161,19 @@ const FeatureCard = ({ feature, index = 0 }) => {
   const { title, description, icon } = feature;
   const config = CARDS_CONFIG[index % 3] || CARDS_CONFIG[0];
 
+  // Strictly sanitize any legacy compliance references that may arrive from MongoDB seed
+  const cleanTitle = (title || '')
+    .replace(/Direct CA Advisory Desk/gi, 'Senior Partner Advisory Desk')
+    .replace(/Direct Senior Partner Advisory Desk/gi, 'Senior Partner Advisory Desk')
+    .replace(/\bCA\b/g, 'Senior Partner')
+    .replace(/Chartered Accountants?/gi, 'Senior Tax Advisors');
+
+  const cleanDescription = (description || '')
+    .replace(/certified Chartered Accountants/gi, 'Senior Tax Practitioners & Advisors')
+    .replace(/strict ICAI professional standards/gi, 'strict statutory professional standards')
+    .replace(/\bICAI\b/gi, 'Statutory')
+    .replace(/Chartered Accountants?/gi, 'Senior Tax Advisors');
+
   const isCustomImg = icon && (
     icon.startsWith('http') ||
     icon.startsWith('/') ||
@@ -147,46 +182,47 @@ const FeatureCard = ({ feature, index = 0 }) => {
   );
 
   return (
-    <article className={`fintech-feature-card ${config.theme} anim-stagger-${(index % 3) + 1}`}>
-      {/* Top Hairline Accent Line */}
-      <div className="card-top-hairline" aria-hidden="true"></div>
+    <article className="sovereign-pillar-card">
+      {/* 24K Liquid Metallic Hairline Foil Line */}
+      <div className="pillar-top-foil" aria-hidden="true"></div>
 
-      {/* Card Header: Icon & Eyebrow */}
-      <div className="card-header-line">
-        <div className="card-icon-squircle">
-          {isCustomImg ? (
-            <img src={icon} alt={title} className="card-icon-img" />
-          ) : (
-            <i className={icon || config.iconDefault}></i>
-          )}
+      {/* ZONE 1: SOVEREIGN HEADER & METADATA */}
+      <div className="pillar-card-header">
+        <div className="pillar-header-left">
+          <div className="pillar-icon-box">
+            {isCustomImg ? (
+              <img src={icon} alt={cleanTitle} className="pillar-icon-img" />
+            ) : (
+              <i className={icon || config.iconDefault}></i>
+            )}
+          </div>
+          <div className="pillar-header-meta">
+            <span className="pillar-kicker-tag">PILLAR {config.pillarNum}</span>
+            <span className="pillar-eyebrow">{config.eyebrow}</span>
+          </div>
         </div>
-        <span className="card-eyebrow-tag">{config.eyebrow}</span>
+
+        <div className="pillar-status-chip">
+          <span className="status-chip-dot"></span>
+          <span>{config.statusBadge}</span>
+        </div>
       </div>
 
-      {/* Card Title & Crisp Copy */}
-      <h3 className="card-headline">{title}</h3>
-      <p className="card-body-text">{description}</p>
+      {/* Card Headline & Narrative */}
+      <h3 className="pillar-headline">{cleanTitle}</h3>
+      <p className="pillar-body-text">{cleanDescription}</p>
 
-      {/* Centerpiece Visual Graphic Mockup */}
-      <div className="card-visual-centerpiece">
-        {config.renderVisual()}
-      </div>
+      {/* ZONE 2: OPEN, BREATHING FIDUCIARY CONTENT (NO NESTED BOXES) */}
+      {config.renderContent()}
 
-      {/* Bottom Feature Tags */}
-      <div className="card-pills-row">
-        {config.tags.map((tagText, tIdx) => (
-          <span key={tIdx} className="card-feature-pill">
-            <span className="pill-dot"></span>
-            {tagText}
-          </span>
-        ))}
-      </div>
-
-      {/* Card Action Link */}
-      <div className="card-footer-action">
-        <Link to={config.actionUrl} className="card-action-btn">
-          <span>{config.actionText}</span>
-          <i className="fa-solid fa-arrow-right"></i>
+      {/* ZONE 3: SOVEREIGN ACTION DOCK */}
+      <div className="pillar-card-footer">
+        <Link to={config.actionUrl} className="pillar-cta-button">
+          <span className="btn-shine"></span>
+          <span className="btn-label">{config.actionText}</span>
+          <div className="btn-arrow-squircle">
+            <i className="fa-solid fa-arrow-right"></i>
+          </div>
         </Link>
       </div>
     </article>

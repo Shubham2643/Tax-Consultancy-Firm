@@ -789,84 +789,119 @@ const Pricing = () => {
 
   return (
     <div className="pricing-page fade-in">
-      {/* 1. HERO SECTION — Swiss-Fintech Architecture */}
-      <section className="pricing-hero" aria-labelledby="pricing-hero-title">
-        <div className="pricing-top-accent-line" aria-hidden="true"></div>
-        <div className="pricing-geometric-backdrop" aria-hidden="true"></div>
+      {/* 1. HERO SECTION — Unified Chambers Master Architecture */}
+      <section className="pricing-hero statutory-retainers-section" aria-labelledby="pricing-hero-title">
+        {/* Top Gold Glowing Accent Divider & Architectural Blueprint Matrix */}
+        <div className="retainers-top-accent-line" aria-hidden="true"></div>
+        <div className="retainers-pinstripe-bg" aria-hidden="true"></div>
+        <div className="services-ambient-orb orb-gold" aria-hidden="true"></div>
 
-        <div className="pricing-hero-container">
-          <div className="pricing-hero-badge">
-            <span className="live-dot" aria-hidden="true"></span>
-            <i className="fa-solid fa-shield-halved" aria-hidden="true"></i>
-            <span>STATUTORY ADVISORY STANDARDS &bull; SCOPE-LOCKED RETAINERS</span>
+        <div className="container pricing-hero-container">
+          <div className="retainers-header text-center">
+            <span className="header-watermark" aria-hidden="true">RETAINERS</span>
+            <div className="luxury-header-halo" aria-hidden="true"></div>
+            <div className="retainers-eyebrow-badge">
+              <span className="badge-index-chip">02</span>
+              <span className="retainers-live-dot" aria-hidden="true"></span>
+              <i className="fas fa-layer-group" aria-hidden="true"></i>
+              <span>STATUTORY ADVISORY STANDARDS &bull; SCOPE-LOCKED RETAINERS</span>
+            </div>
+
+            <h1 id="pricing-hero-title" className="retainers-main-title">
+              Predictable Retainers, <br />
+              <span className="title-gradient-gold">Absolute Precision.</span>
+            </h1>
+
+            <p className="retainers-lead-text">
+              Scope-locked statutory tax retainers governing direct tax, GST audit, ROC secretarial compliance,
+              and scrutiny representation under strict regulatory practice ethics. Built for ambitious enterprises with zero billing surprises.
+            </p>
+
+            <div className="header-assurance-strip">
+              <span className="assurance-pill">
+                <i className="fa-solid fa-lock"></i> 100% Scope-Locked Mandates
+              </span>
+              <span className="assurance-pill">
+                <i className="fa-solid fa-shield-halved"></i> Zero Surprise Surcharges
+              </span>
+              <span className="assurance-pill">
+                <i className="fa-solid fa-receipt"></i> 18% ITC Claimable Invoices
+              </span>
+            </div>
           </div>
 
-          <h1 id="pricing-hero-title" className="pricing-main-title">
-            Predictable Retainers, <span className="title-gradient-gold">Absolute Precision.</span>
-          </h1>
-
-          <p className="pricing-hero-lead">
-            Scope-locked statutory tax retainers governing direct tax, GST audit, ROC secretarial compliance,
-            and scrutiny representation under strict regulatory practice ethics. Built for ambitious enterprises with zero billing surprises.
-          </p>
-
-          {/* Institutional Commitment Switcher */}
+          {/* Institutional Commitment Switcher & Tax Credit Console */}
           <div className="billing-switch-wrapper">
-            <div className="billing-switch-control" role="radiogroup" aria-label="Retainer Commitment Frequency">
-              <button
-                type="button"
-                className={`switch-tab ${billingCycle === 'monthly' ? 'active' : ''}`}
-                onClick={() => setBillingCycle('monthly')}
-                aria-checked={billingCycle === 'monthly'}
-              >
-                <span>Monthly Retainer</span>
-              </button>
+            <div className="billing-switch-dock">
+              <div className="billing-switch-control" role="radiogroup" aria-label="Retainer Commitment Frequency">
+                <button
+                  type="button"
+                  className={`switch-tab ${billingCycle === 'monthly' ? 'active' : ''}`}
+                  onClick={() => setBillingCycle('monthly')}
+                  aria-checked={billingCycle === 'monthly'}
+                >
+                  <i className="fa-regular fa-calendar me-1"></i>
+                  <span>Monthly Retainer</span>
+                </button>
 
-              <button
-                type="button"
-                className={`switch-tab ${billingCycle === 'annual' ? 'active' : ''}`}
-                onClick={() => setBillingCycle('annual')}
-                aria-checked={billingCycle === 'annual'}
-              >
-                <span>Annual Statutory Mandate</span>
-                <span className="save-pill">Save 18% &bull; 2 Mo Complimentary</span>
-              </button>
-            </div>
+                <button
+                  type="button"
+                  className={`switch-tab ${billingCycle === 'annual' ? 'active' : ''}`}
+                  onClick={() => setBillingCycle('annual')}
+                  aria-checked={billingCycle === 'annual'}
+                >
+                  <i className="fa-solid fa-calendar-check me-1 text-gold"></i>
+                  <span>Annual Statutory Mandate</span>
+                  <span className="save-pill">Save 18% &bull; 2 Mo Complimentary</span>
+                </button>
+              </div>
 
-            <div className="billing-tax-credit-chip">
-              <i className="fa-solid fa-receipt text-emerald"></i>
-              <span>100% Tax Invoiced &bull; Corporate clients claim 18% GST Input Tax Credit back</span>
+              <div className="billing-tax-credit-chip">
+                <i className="fa-solid fa-file-invoice-dollar text-emerald"></i>
+                <span><strong>100% Tax Invoiced:</strong> Corporate clients claim 18% GST Input Tax Credit back</span>
+              </div>
             </div>
           </div>
 
-          {/* Hero Trust Matrix */}
-          <div className="pricing-trust-matrix">
-            <div className="trust-matrix-card">
-              <i className="fa-solid fa-shield-halved"></i>
-              <div className="trust-matrix-text">
-                <strong>Zero Notice Penalties</strong>
-                <span>100% Statutory Precision</span>
+          {/* Hero Trust Matrix — Single Unified 4-Column Statutory Covenant Ledger */}
+          <div className="pricing-trust-ledger" role="region" aria-label="Statutory Practice Guarantees">
+            <div className="trust-ledger-col">
+              <div className="trust-ledger-icon-wrap amber">
+                <i className="fa-solid fa-shield-halved"></i>
+              </div>
+              <div className="trust-ledger-content">
+                <strong className="trust-ledger-title">Zero Notice Penalties</strong>
+                <span className="trust-ledger-sub">100% Statutory Precision SLA</span>
               </div>
             </div>
-            <div className="trust-matrix-card">
-              <i className="fa-solid fa-user-check"></i>
-              <div className="trust-matrix-text">
-                <strong>Two-Tier Senior Partner Review</strong>
-                <span>Dual Partner Sign-off</span>
+
+            <div className="trust-ledger-col">
+              <div className="trust-ledger-icon-wrap gold">
+                <i className="fa-solid fa-user-check"></i>
+              </div>
+              <div className="trust-ledger-content">
+                <strong className="trust-ledger-title">Dual Partner Review</strong>
+                <span className="trust-ledger-sub">Four-Eye Compliance Sign-off</span>
               </div>
             </div>
-            <div className="trust-matrix-card">
-              <i className="fa-solid fa-vault"></i>
-              <div className="trust-matrix-text">
-                <strong>Encrypted Client Vault</strong>
-                <span>Sec 128 Compliant Archival</span>
+
+            <div className="trust-ledger-col">
+              <div className="trust-ledger-icon-wrap blue">
+                <i className="fa-solid fa-vault"></i>
+              </div>
+              <div className="trust-ledger-content">
+                <strong className="trust-ledger-title">Encrypted Client Vault</strong>
+                <span className="trust-ledger-sub">Sec 128 Compliant Archival</span>
               </div>
             </div>
-            <div className="trust-matrix-card">
-              <i className="fa-solid fa-file-invoice-dollar"></i>
-              <div className="trust-matrix-text">
-                <strong>18% Claimable GST ITC</strong>
-                <span>Fully Deductible Retainer</span>
+
+            <div className="trust-ledger-col">
+              <div className="trust-ledger-icon-wrap emerald">
+                <i className="fa-solid fa-file-invoice-dollar"></i>
+              </div>
+              <div className="trust-ledger-content">
+                <strong className="trust-ledger-title">18% Claimable GST ITC</strong>
+                <span className="trust-ledger-sub">Fully Deductible Retainer</span>
               </div>
             </div>
           </div>

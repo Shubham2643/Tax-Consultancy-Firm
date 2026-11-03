@@ -1124,6 +1124,7 @@ html.theme-transitioning *::after {
 /* 1. Master Header Container & Halo */
 .trust-master-header,
 .services .section-header,
+.services-hero .section-header,
 .features-header-wrap,
 .retainers-header,
 .protocol-header,
@@ -1601,6 +1602,7 @@ html.theme-transitioning *::after {
 @media (max-width: 768px) {
   .trust-master-header,
   .services .section-header,
+  .services-hero .section-header,
   .features-header-wrap,
   .retainers-header,
   .protocol-header,

@@ -7,18 +7,18 @@ import './FeaturesSection.css';
 
 const DEFAULT_FEATURES = [
   {
-    title: 'Tax Optimization & Corporate Structuring',
-    description: 'Proactive direct tax and GST structuring tailored for Indian enterprises, MSMEs, and high-net-worth directors. We identify legitimate exemptions, optimize operational expenses, and structure compliant revenue models to legally minimize your statutory outflows.',
+    title: 'Tax Optimization & Structuring',
+    description: 'Proactive direct tax and GST structuring tailored for Indian businesses, startups, and enterprises to legally minimize statutory outflows.',
     icon: 'fas fa-chart-line',
   },
   {
     title: 'Transparent Flat-Rate Billing',
-    description: 'Upfront, predictable fee structures with all-inclusive statutory deliverables. No hourly surprises, no hidden surcharges—just fixed, milestone-based packages backed by strict professional compliance ethics.',
+    description: 'Upfront, milestone-based packages with zero hourly creep, predictable statutory deliverables, and 100% claimable 18% GST invoices.',
     icon: 'fas fa-gem',
   },
   {
-    title: 'Direct Senior Partner Advisory Desk',
-    description: 'Direct 1-on-1 access to senior corporate practitioners whenever statutory deadlines approach or urgent tax notices arrive. Real-time drafting, audit defense, and filing guidance via direct WhatsApp and phone channels.',
+    title: 'Senior Partner Advisory Desk',
+    description: 'Direct 1-on-1 access to senior corporate practitioners for urgent notice defense, statutory filings, and strategic boardroom review.',
     icon: 'fas fa-headset',
   },
 ];
@@ -108,7 +108,23 @@ const TURNOVER_SLABS = [
 const FeaturesSection = () => {
   const { data: response, loading, error } = useFetch(getFeatures);
   const rawFeatures = response?.data || [];
-  const features = rawFeatures.length > 0 ? rawFeatures : DEFAULT_FEATURES;
+  const features = (rawFeatures.length > 0 ? rawFeatures : DEFAULT_FEATURES).map((f, i) => {
+    const conciseDescs = [
+      'Proactive direct tax and GST structuring tailored for Indian businesses, startups, and enterprises to legally minimize statutory outflows.',
+      'Upfront, milestone-based packages with zero hourly creep, predictable statutory deliverables, and 100% claimable 18% GST invoices.',
+      'Direct 1-on-1 access to senior corporate practitioners for urgent notice defense, statutory filings, and strategic boardroom review.'
+    ];
+
+    return {
+      ...f,
+      title: (f.title || '')
+        .replace(/Direct CA Advisory Desk/gi, 'Senior Partner Advisory Desk')
+        .replace(/Direct Senior Partner Advisory Desk/gi, 'Senior Partner Advisory Desk')
+        .replace(/\bCA\b/g, 'Partner')
+        .replace(/Chartered Accountants?/gi, 'Senior Tax Advisors'),
+      description: conciseDescs[i % 3],
+    };
+  });
 
   // Active Tab View: 'pillars' | 'comparison' | 'calculator'
   const [activeTab, setActiveTab] = useState('pillars');

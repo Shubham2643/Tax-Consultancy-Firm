@@ -43,7 +43,7 @@
 }
 
 .services.services-embedded {
-  padding: 0 0 70px 0;
+  padding: 12px 0 70px 0;
   background: transparent;
   border-bottom: none;
 }
@@ -158,20 +158,34 @@
 .practice-command-console {
   width: 100%;
   max-width: 1240px;
-  margin: -48px auto 38px;
+  margin: 32px auto 38px;
   background: #ffffff;
-  border: 1.5px solid #e2e8f0;
-  border-top: 3.5px solid #f8b400;
+  border: 1px solid rgba(212, 175, 55, 0.22);
   border-radius: 20px;
-  box-shadow: 0 20px 48px -12px rgba(7, 19, 36, 0.14), 0 4px 14px rgba(7, 19, 36, 0.04);
-  padding: 18px 24px 16px;
+  box-shadow: 0 10px 32px rgba(7, 19, 36, 0.04), 0 1px 3px rgba(212, 175, 55, 0.06);
+  padding: 22px 26px 18px;
   position: relative;
-  z-index: 25;
-  transition: box-shadow 0.25s ease;
+  z-index: 5;
+  transition: all 0.25s ease;
+}
+
+.practice-command-console::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 15%;
+  right: 15%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.6) 50%, transparent 100%);
 }
 
 .practice-command-console:hover {
-  box-shadow: 0 24px 54px -12px rgba(7, 19, 36, 0.18), 0 6px 18px rgba(7, 19, 36, 0.06);
+  border-color: rgba(212, 175, 55, 0.38);
+  box-shadow: 0 16px 40px rgba(7, 19, 36, 0.07), 0 2px 6px rgba(212, 175, 55, 0.1);
+}
+
+.services-embedded .practice-command-console {
+  margin: 24px auto 36px;
 }
 
 /* Tier 1: Category Strip (Segmented Track) */
@@ -301,12 +315,12 @@
 .console-search-input:focus {
   outline: none;
   background: #ffffff;
-  border-color: #071324;
-  box-shadow: 0 0 0 3.5px rgba(7, 19, 36, 0.08);
+  border-color: rgba(212, 175, 55, 0.7);
+  box-shadow: 0 0 0 3.5px rgba(212, 175, 55, 0.14);
 }
 
 .console-search-bar:focus-within .console-search-icon {
-  color: #071324;
+  color: #b48206;
 }
 
 .console-search-hint {

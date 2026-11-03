@@ -88,37 +88,50 @@ const Services = () => {
 
   return (
     <div className="services-page fade-in">
-      {/* Prestige Hero */}
-      <div className="services-hero">
-        <div className="section-top-accent-line" aria-hidden="true"></div>
-        <div className="container">
-          <div className="services-hero-badge">
-            <span className="live-dot"></span>
-            <i className="fas fa-landmark"></i>
-            <span>STATUTORY COMPLIANT PRACTICE &bull; EST. 2018</span>
-          </div>
-          <h1>Statutory Advisory &amp; Practice Areas</h1>
-          <p>
-            Direct partner-led corporate structuring, forensic audits,
-            and appellate scrutiny defense for ambitious enterprises.
-          </p>
+      {/* Prestige Hero — Unified Chambers Master Architecture */}
+      <section className="services-hero" aria-labelledby="services-heading">
+        {/* Top Gold Glowing Accent Divider & Architectural Blueprint Matrix */}
+        <div className="services-top-accent-line" aria-hidden="true"></div>
+        <div className="services-ambient-grid" aria-hidden="true"></div>
+        <div className="services-ambient-orb orb-gold" aria-hidden="true"></div>
 
-          {/* 4-Pillar Live Assurance Bar */}
-          <div className="services-sla-ribbon">
+        <div className="container">
+          <div className="section-header text-center">
+            <span className="header-watermark" aria-hidden="true">EXPERTISE</span>
+            <div className="luxury-header-halo" aria-hidden="true"></div>
+            <div className="services-badge">
+              <span className="badge-index-chip">01</span>
+              <span className="badge-pulse-dot" aria-hidden="true"></span>
+              <i className="fas fa-landmark" aria-hidden="true"></i>
+              <span>STATUTORY COMPLIANT PRACTICE &bull; EST. 2018</span>
+            </div>
+
+            <h1 id="services-heading" className="retainers-main-title">
+              Statutory Advisory &amp; <br />
+              <span className="title-gradient-gold">Practice Areas</span>
+            </h1>
+
+            <p className="section-subtitle">
+              Direct partner-led corporate structuring, forensic audits, and appellate scrutiny defense for ambitious enterprises.
+            </p>
+          </div>
+
+          {/* 4-Pillar Live Assurance Deck — Single Unified Fiduciary Covenant Ledger */}
+          <div className="services-covenant-ledger" role="region" aria-label="Statutory Practice Guarantees">
             {slaPillars.map((pillar, idx) => (
-              <div key={idx} className="sla-ribbon-card">
-                <div className="sla-icon-box">
+              <div key={idx} className="covenant-ledger-col">
+                <div className={`covenant-icon-wrap ${idx === 0 ? 'amber' : idx === 1 ? 'gold' : idx === 2 ? 'blue' : 'emerald'}`}>
                   <i className={pillar.icon}></i>
                 </div>
-                <div className="sla-text-box">
-                  <span className="sla-card-title">{pillar.title}</span>
-                  <span className="sla-card-desc">{pillar.desc}</span>
+                <div className="covenant-content-wrap">
+                  <strong className="covenant-title">{pillar.title}</strong>
+                  <span className="covenant-desc">{pillar.desc}</span>
                 </div>
               </div>
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Main Practice Directory (Embedded without duplicate header) */}
       <ServicesSection hideHeader={true} />
@@ -131,11 +144,18 @@ const Services = () => {
         <div className="section-top-accent-line" aria-hidden="true"></div>
         <div className="container">
           <div className="section-header text-center">
+            <span className="header-watermark" aria-hidden="true">BENCHMARK</span>
+            <div className="luxury-header-halo" aria-hidden="true"></div>
             <div className="services-badge">
-              <i className="fas fa-scale-balanced"></i>
-              <span>CREDIBILITY BENCHMARK</span>
+              <span className="badge-index-chip">02</span>
+              <span className="badge-pulse-dot" aria-hidden="true"></span>
+              <i className="fas fa-scale-balanced" aria-hidden="true"></i>
+              <span>CREDIBILITY BENCHMARK &bull; PRACTICE ETHICS</span>
             </div>
-            <h2>Why Businesses Retain Shree Chamunda Associates</h2>
+            <h2 className="retainers-main-title">
+              Why Ambitious Enterprises Retain <br />
+              <span className="title-gradient-gold">Shree Chamunda Associates</span>
+            </h2>
             <p className="section-subtitle">
               Understand the critical difference between algorithm-only online filing platforms and certified practice counsel.
             </p>
@@ -193,11 +213,18 @@ const Services = () => {
         <div className="section-top-accent-line" aria-hidden="true"></div>
         <div className="container">
           <div className="section-header text-center">
+            <span className="header-watermark" aria-hidden="true">CLARITY</span>
+            <div className="luxury-header-halo" aria-hidden="true"></div>
             <div className="services-badge">
-              <i className="fas fa-circle-question"></i>
-              <span>STATUTORY CLARITY &bull; FAQS</span>
+              <span className="badge-index-chip">03</span>
+              <span className="badge-pulse-dot" aria-hidden="true"></span>
+              <i className="fas fa-circle-question" aria-hidden="true"></i>
+              <span>STATUTORY CLARITY &bull; PRACTICE FAQS</span>
             </div>
-            <h2>Frequently Asked Practice Questions</h2>
+            <h2 className="retainers-main-title">
+              Frequently Asked <br />
+              <span className="title-gradient-gold">Practice Questions</span>
+            </h2>
             <p className="section-subtitle">
               Direct, transparent answers regarding statutory timelines, notice defense, and retainer protocols.
             </p>
@@ -240,7 +267,10 @@ const Services = () => {
                 <span className="live-dot"></span>
                 <span>PARTNER-LEVEL DIRECT LINE</span>
               </div>
-              <h2>Need Tailored Tax Counsel or Entity Structuring?</h2>
+              <h2>
+                Need Tailored Tax Counsel or <br />
+                <span className="title-gradient-gold">Corporate Entity Structuring?</span>
+              </h2>
               <p>
                 Connect directly with our senior advisory team for an upfront review of your corporate structure, pending notices, or filing requirements.
               </p>

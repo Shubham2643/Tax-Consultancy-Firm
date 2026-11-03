@@ -135,9 +135,9 @@ const ServicesSection = ({
   return (
     <section className={`services ${hideHeader ? 'services-embedded' : ''}`} id="services-section" aria-labelledby="services-heading">
       {/* Top Gold Glowing Accent Divider & Architectural Blueprint Matrix */}
-      <div className="services-top-accent-line" aria-hidden="true"></div>
-      <div className="services-ambient-grid" aria-hidden="true"></div>
-      <div className="services-ambient-orb orb-gold" aria-hidden="true"></div>
+      {!hideHeader && <div className="services-top-accent-line" aria-hidden="true"></div>}
+      {!hideHeader && <div className="services-ambient-grid" aria-hidden="true"></div>}
+      {!hideHeader && <div className="services-ambient-orb orb-gold" aria-hidden="true"></div>}
 
       <div className="container">
         {!hideHeader && (

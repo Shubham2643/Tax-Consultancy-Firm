@@ -9,47 +9,61 @@
   overflow-x: hidden;
 }
 
+/* ============================================
+   SERVICES HERO — Unified Chambers Master Architecture
+   ============================================ */
 .services-hero {
-  background-color: #06101e;
-  color: #ffffff;
-  padding: 65px 0 60px 0;
-  text-align: center;
   position: relative;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfcfd 50%, #f8fafc 100%);
+  padding: 64px 0 44px 0;
+  text-align: center;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
   overflow: hidden;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: var(--font-body, 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif);
 }
 
-/* Floating Ambient Glowing Orbs */
-.services-hero::before {
-  content: '';
+/* Glowing Antique Gold Accent Line on Top */
+.services-top-accent-line {
   position: absolute;
-  top: -90px;
-  right: 6%;
-  width: 380px;
-  height: 380px;
-  background: radial-gradient(circle, rgba(248, 180, 0, 0.16) 0%, rgba(34, 197, 94, 0.06) 50%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-  animation: servicesFloatBubble 7s ease-in-out infinite alternate;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #996515 0%, #d4af37 35%, #f3e5ab 50%, #d4af37 65%, #996515 100%);
+  box-shadow: 0 0 14px rgba(212, 175, 55, 0.35);
+  z-index: 10;
 }
 
-.services-hero::after {
-  content: '';
+/* Background Architectural Blueprint Dot Matrix Pattern */
+.services-ambient-grid {
   position: absolute;
-  bottom: -70px;
-  left: 5%;
-  width: 340px;
-  height: 340px;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.14) 0%, transparent 70%);
-  border-radius: 50%;
+  inset: 0;
+  background-image: radial-gradient(rgba(7, 19, 36, 0.045) 1px, transparent 1px);
+  background-size: 26px 26px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, #000 35%, transparent 90%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, #000 35%, transparent 90%);
   pointer-events: none;
-  animation: servicesFloatBubble 9s ease-in-out infinite alternate-reverse;
+  opacity: 0.85;
+  z-index: 0;
 }
 
-@keyframes servicesFloatBubble {
-  0% { transform: translateY(0) scale(1) rotate(0deg); }
-  50% { transform: translateY(-18px) scale(1.1) rotate(6deg); }
-  100% { transform: translateY(12px) scale(0.95) rotate(-6deg); }
+[data-theme='dark'] .services-ambient-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+}
+
+/* Ambient Gold Halo Orb */
+.services-ambient-orb.orb-gold {
+  position: absolute;
+  width: 580px;
+  height: 580px;
+  top: -80px;
+  right: -100px;
+  background: radial-gradient(circle, rgba(248, 180, 0, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(95px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.85;
 }
 
 .services-hero .container {
@@ -60,50 +74,111 @@
   z-index: 2;
 }
 
-.services-hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(248, 180, 0, 0.08);
-  border: 1px solid rgba(248, 180, 0, 0.25);
-  color: #f8b400;
-  padding: 5px 14px;
-  border-radius: 20px;
-  font-size: 11.5px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  margin-bottom: 14px;
-}
-
-.services-hero-badge .live-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background-color: #22c55e;
-  box-shadow: 0 0 8px #22c55e;
-}
-
-.services-hero h1 {
-  font-size: 2.85rem;
-  font-weight: 850;
-  line-height: 1.15;
-  color: #ffffff;
-  letter-spacing: -1px;
-  margin: 0 0 12px 0;
-}
-
-.services-hero p {
-  font-size: 1.05rem;
-  color: #94a3b8;
-  max-width: 700px;
-  margin: 0 auto;
-  line-height: 1.55;
-}
-
 /* ============================================
-   4-PILLAR LIVE ASSURANCE RIBBON
+   SINGLE UNIFIED 4-COLUMN STATUTORY COVENANT LEDGER
    ============================================ */
+.services-covenant-ledger {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: #ffffff;
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: 16px;
+  box-shadow: 0 6px 24px rgba(7, 19, 36, 0.03), 0 1px 2px rgba(212, 175, 55, 0.06);
+  overflow: hidden;
+  position: relative;
+  margin-top: 28px;
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.services-covenant-ledger::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.65) 50%, transparent 100%);
+}
+
+.covenant-ledger-col {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 18px;
+  text-align: left;
+  border-right: 1px solid rgba(212, 175, 55, 0.14);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  background: transparent;
+}
+
+.covenant-ledger-col:last-child {
+  border-right: none;
+}
+
+.covenant-ledger-col:hover {
+  background: linear-gradient(180deg, rgba(212, 175, 55, 0.05) 0%, rgba(248, 180, 0, 0.01) 100%);
+}
+
+.covenant-icon-wrap {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.covenant-icon-wrap.amber {
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: #b48206;
+}
+
+.covenant-icon-wrap.gold {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: #d97706;
+}
+
+.covenant-icon-wrap.blue {
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  color: #2563eb;
+}
+
+.covenant-icon-wrap.emerald {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.28);
+  color: #059669;
+}
+
+.covenant-content-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.covenant-title {
+  font-family: var(--font-heading, 'Plus Jakarta Sans', sans-serif);
+  font-size: 0.82rem;
+  color: #071324;
+  font-weight: 750;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.covenant-desc {
+  font-size: 0.72rem;
+  color: #64748b;
+  font-weight: 450;
+  line-height: 1.35;
+}
+
+/* Fallback SLA ribbon cards */
 .services-sla-ribbon {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -115,16 +190,15 @@
 }
 
 .sla-ribbon-card {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: #ffffff;
+  border: 1px solid rgba(212, 175, 55, 0.25);
   border-radius: 14px;
   padding: 16px 18px;
   display: flex;
   align-items: center;
   gap: 14px;
   text-align: left;
-  backdrop-filter: blur(8px);
-  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(7, 19, 36, 0.04);
 }
 
 .sla-ribbon-card:hover {
@@ -770,16 +844,21 @@
 }
 
 .faq-accordion-item {
-  border: 1.5px solid #e2e8f0;
+  border: 1px solid rgba(212, 175, 55, 0.22);
   border-radius: 14px;
   background: #ffffff;
   overflow: hidden;
-  transition: all 0.25s ease;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-accordion-item:hover {
+  border-color: rgba(212, 175, 55, 0.4);
+  box-shadow: 0 4px 16px rgba(7, 19, 36, 0.04);
 }
 
 .faq-accordion-item.open {
-  border-color: #071324;
-  box-shadow: 0 4px 18px rgba(7, 19, 36, 0.06);
+  border-color: rgba(212, 175, 55, 0.6);
+  box-shadow: 0 6px 24px rgba(212, 175, 55, 0.09), 0 1px 2px rgba(7, 19, 36, 0.04);
 }
 
 .faq-accordion-btn {
@@ -845,15 +924,26 @@
 .practice-cta-card {
   max-width: 1100px;
   margin: 0 auto;
-  background: #06101e;
+  background: radial-gradient(circle at 50% 0%, #0d1a2d 0%, #06101e 100%);
   border-radius: 24px;
   padding: 55px 45px;
   position: relative;
   overflow: hidden;
   color: #ffffff;
   text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 24px 60px -12px rgba(7, 19, 36, 0.45);
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  box-shadow: 0 24px 60px -12px rgba(7, 19, 36, 0.45), 0 0 40px rgba(212, 175, 55, 0.08);
+}
+
+.practice-cta-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.8) 50%, transparent 100%);
+  z-index: 1;
 }
 
 .practice-cta-glow {
@@ -1000,9 +1090,17 @@
    RESPONSIVE DESIGN — Executive Mobile Experience
    ============================================ */
 @media (max-width: 1024px) {
-  .services-sla-ribbon {
+  .services-sla-ribbon,
+  .services-covenant-ledger {
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
+  }
+  .covenant-ledger-col:nth-child(2) {
+    border-right: none;
+  }
+  .covenant-ledger-col:nth-child(1),
+  .covenant-ledger-col:nth-child(2) {
+    border-bottom: 1px solid rgba(212, 175, 55, 0.16);
   }
   .protocol-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -1018,50 +1116,26 @@
 
 @media (max-width: 768px) {
   .services-hero {
-    padding: 38px 0 34px 0;
+    padding: 50px 0 38px 0;
   }
   .services-hero .container {
     padding: 0 16px;
   }
-  .services-hero-badge {
-    font-size: 10px;
-    padding: 4px 12px;
-    margin-bottom: 12px;
-    letter-spacing: 0.6px;
-  }
-  .services-hero h1 {
-    font-size: clamp(1.55rem, 6.5vw, 2.05rem);
-    line-height: 1.22;
-    letter-spacing: -0.4px;
-    margin-bottom: 8px;
-  }
-  .services-hero p {
-    font-size: 13px;
-    line-height: 1.5;
-    max-width: 95%;
-  }
 
-  /* SLA Ribbon on Mobile */
-  .services-sla-ribbon {
+  /* Covenant Ledger on Mobile */
+  .services-sla-ribbon,
+  .services-covenant-ledger {
     grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 0;
     margin-top: 24px;
   }
-  .sla-ribbon-card {
-    padding: 12px 14px;
-    border-radius: 12px;
-    gap: 12px;
+  .covenant-ledger-col {
+    border-right: none !important;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.16);
+    padding: 14px 16px;
   }
-  .sla-icon-box {
-    width: 36px;
-    height: 36px;
-    font-size: 15px;
-  }
-  .sla-card-title {
-    font-size: 13px;
-  }
-  .sla-card-desc {
-    font-size: 11px;
+  .covenant-ledger-col:last-child {
+    border-bottom: none;
   }
 
   /* Protocol Section Mobile */
@@ -1312,12 +1386,6 @@
 }
 
 @media (max-width: 480px) {
-  .services-hero {
-    padding: 30px 0 26px 0;
-  }
-  .services-hero h1 {
-    font-size: 1.48rem;
-  }
   .practice-cta-card h2 {
     font-size: 1.42rem;
   }
@@ -1329,39 +1397,6 @@
 [data-theme='light'] .services-page {
   background-color: #ffffff;
   color: #0f172a;
-}
-
-[data-theme='light'] .services-hero {
-  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
-  border-bottom: 1px solid #e2e8f0;
-}
-
-[data-theme='light'] .services-hero h1 {
-  color: #071324;
-}
-
-[data-theme='light'] .services-hero p {
-  color: #475569;
-}
-
-[data-theme='light'] .services-hero-badge {
-  background: rgba(217, 119, 6, 0.08);
-  border-color: rgba(217, 119, 6, 0.25);
-  color: #b45309;
-}
-
-[data-theme='light'] .sla-ribbon-card {
-  background: #ffffff;
-  border-color: #e2e8f0;
-  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
-}
-
-[data-theme='light'] .sla-card-title {
-  color: #071324;
-}
-
-[data-theme='light'] .sla-card-desc {
-  color: #64748b;
 }
 
 [data-theme='light'] .practice-protocol-section {
@@ -1493,15 +1528,29 @@
 }
 
 [data-theme='dark'] .services-hero {
-  background: radial-gradient(circle at 50% 10%, #0d1e38 0%, #071324 70%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: #07111e;
+  border-bottom-color: rgba(212, 175, 55, 0.2);
 }
 
-[data-theme='dark'] .services-hero h1 {
+[data-theme='dark'] .services-covenant-ledger {
+  background: #0d1a2d;
+  border-color: rgba(212, 175, 55, 0.28);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme='dark'] .covenant-ledger-col {
+  border-right-color: rgba(212, 175, 55, 0.16);
+}
+
+[data-theme='dark'] .covenant-ledger-col:hover {
+  background: rgba(212, 175, 55, 0.06);
+}
+
+[data-theme='dark'] .covenant-title {
   color: #ffffff;
 }
 
-[data-theme='dark'] .services-hero p {
+[data-theme='dark'] .covenant-desc {
   color: #94a3b8;
 }
 
