@@ -1,8 +1,10 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useSiteContext } from '../context/SiteContext';
 import './WhatsAppWidget.css';
 
 const WhatsAppWidget = () => {
+  const location = useLocation();
   const { settings } = useSiteContext();
   const [isOpen, setIsOpen] = useState(false);
   const widgetRef = useRef(null);
@@ -74,6 +76,12 @@ const WhatsAppWidget = () => {
       topic: 'Corporate Tax & Financial Retainer'
     }
   ];
+
+  // On the dedicated Contact & Consultation Chambers page, hide the floating pill
+  // to avoid overlapping the 2x2 communication suite and duplicate WhatsApp actions.
+  if (location.pathname === '/contact') {
+    return null;
+  }
 
   return (
     <div className={`wa-concierge-dock ${isOpen ? 'is-open' : ''}`} ref={widgetRef}>

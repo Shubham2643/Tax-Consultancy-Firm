@@ -202,13 +202,13 @@ const ContactForm = ({ activeTab: externalTab, onTabChange }) => {
             <i className="fas fa-calendar-check"></i>
           </div>
           <span className="tab-text-title">Book 1-on-1 Session</span>
-          <span className="tab-pill-badge direct-ca">Priority Advisory</span>
+          <span className="tab-pill-badge direct-partner">Priority Advisory</span>
         </button>
       </div>
 
       <div className="contact-bento-form-header executive-intake-header">
         <div className="form-header-left">
-          <div className={`contact-bento-icon ${activeTab === 'consultation' ? 'ca-consultation-icon' : ''}`}>
+          <div className={`contact-bento-icon ${activeTab === 'consultation' ? 'partner-consultation-icon' : ''}`}>
             <i className={activeTab === 'consultation' ? 'fas fa-scale-balanced' : 'fas fa-paper-plane'}></i>
           </div>
           <div className="contact-bento-title-wrap">
