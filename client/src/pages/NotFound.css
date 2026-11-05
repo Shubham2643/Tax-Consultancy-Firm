@@ -85,3 +85,23 @@
   background: #f8b400;
   color: #071324;
 }
+
+
+@media (max-width: 480px) {
+  .not-found-container {
+    padding: 1.5rem 1rem;
+  }
+  .not-found-code {
+    font-size: 4.5rem;
+  }
+  .not-found-title {
+    font-size: 1.4rem;
+  }
+  .not-found-description {
+    font-size: 0.95rem;
+  }
+  .not-found-home-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

@@ -225,11 +225,11 @@ const TrustSection = ({ onSelectCategory }) => {
     },
     {
       step: '03',
-      phase: 'PARTNER SIGN-OFF & DIGITAL VAULT ARCHIVAL',
+      phase: 'PARTNER SIGN-OFF & CONFIDENTIAL ARCHIVAL',
       phaseShort: 'SIGN-OFF',
       title: 'Certified Portal Dispatch & Fiduciary Filing Receipt',
       icon: 'fas fa-file-signature',
-      summary: 'Following final partner sign-off, the return is digitally transmitted to government servers with cryptographic verification, and official acknowledgment receipts are archived in your private client vault.',
+      summary: 'Following final partner sign-off, the return is digitally transmitted to government servers with cryptographic verification, and official acknowledgment receipts are archived in your private client portal.',
       checkpoints: [
         'Signed advisory partner verification review',
         'Instant government filing acknowledgment generated',
@@ -542,7 +542,7 @@ const TrustSection = ({ onSelectCategory }) => {
                 </div>
                 <div className="vault-file-meta">
                   <strong>GSTR-2B_Reconciled_Audit_Ledger.pdf</strong>
-                  <span>{vaultVerified ? 'SHA-256 Checksum: Stamped &bull; 256-Bit SSL Passed' : '256-Bit SSL Encrypted &bull; 1-Click Bank Download'}</span>
+                  <span>{vaultVerified ? 'Statutory Audit Hash: Verified • Bank Grade Security' : 'Verified Secure Ledger &bull; 1-Click Direct Download'}</span>
                 </div>
                 <span className={`vault-status-badge ${vaultVerified ? 'badge-verified' : ''}`}>
                   {vaultVerified ? 'VERIFIED ✓' : 'SECURE'}

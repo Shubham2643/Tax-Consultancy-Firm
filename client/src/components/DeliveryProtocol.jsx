@@ -121,10 +121,10 @@ const GATES = [
     accentColor: '#b45309',
     themeClass: 'gate-theme-amber',
     objective:
-      'Our professional liability does not terminate upon filing. All returns, working papers, and signed schedules are deposited into an encrypted digital vault, backed by 7-year complimentary scrutiny rejoinder defense by our senior tax advocates.',
+      'Our professional liability does not terminate upon filing. All returns, working papers, and signed schedules are deposited into secure confidential client archives, backed by 7-year complimentary scrutiny rejoinder defense by our senior tax advocates.',
     scopeItems: [
       {
-        title: 'Encrypted Document Custody',
+        title: 'Confidential Document Custody',
         desc: 'Perpetual cloud archival under secure encryption with multi-factor authentication, meeting mandatory statutory preservation guidelines.',
       },
       {

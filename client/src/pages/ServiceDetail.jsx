@@ -450,7 +450,7 @@ const ServiceDetail = () => {
     : [
         'Certificate of Official Incorporation / Filing Acknowledgement',
         'Senior Corporate Tax Advisor Verification & Advisory Docket',
-        'Permanent Digital Vault Archival on Client Portal with 24/7 Access',
+        'Permanent Confidential Archival on Client Portal with 24/7 Access',
         'Post-Filing Statutory Compliance & Deadline Calendar',
       ];
 

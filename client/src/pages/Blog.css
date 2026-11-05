@@ -481,7 +481,8 @@
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
-  min-width: 320px;
+  min-width: 260px;
+  max-width: calc(100vw - 32px);
   background: #ffffff;
   border: 1.5px solid #cbd5e1;
   border-radius: 14px;
@@ -1997,7 +1998,8 @@
     right: auto;
     left: 0;
     width: 100%;
-    min-width: 280px;
+    min-width: 0;
+    max-width: 100%;
   }
 }
 

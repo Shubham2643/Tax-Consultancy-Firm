@@ -2937,6 +2937,24 @@
     align-items: flex-start;
     gap: 12px;
   }
+  .about-stat-box {
+    padding: 18px 14px;
+  }
+  .stat-box-num {
+    font-size: 1.85rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .about-hero h1 {
+    font-size: 1.45rem;
+  }
+  .about-stat-box {
+    padding: 14px 10px;
+  }
+  .stat-box-num {
+    font-size: 1.6rem;
+  }
 }
 
 /* ============================================================

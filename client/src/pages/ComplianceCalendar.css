@@ -802,3 +802,33 @@
 }
 
 
+
+
+@media (max-width: 480px) {
+  .cal-hero {
+    padding: 38px 0 28px 0;
+  }
+  .cal-hero h1 {
+    font-size: 1.62rem;
+  }
+  .deadline-card {
+    padding: 16px 14px;
+    border-radius: 14px;
+  }
+  .calendar-cta-card {
+    padding: 22px 16px;
+    border-radius: 18px;
+  }
+}
+
+@media (max-width: 360px) {
+  .cal-hero h1 {
+    font-size: 1.38rem;
+  }
+  .deadline-card {
+    padding: 12px 10px;
+  }
+  .calendar-cta-card {
+    padding: 16px 12px;
+  }
+}

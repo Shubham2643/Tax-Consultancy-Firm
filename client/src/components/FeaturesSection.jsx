@@ -457,54 +457,156 @@ const FeaturesSection = () => {
         {/* ============================================================
             6. BOTTOM QUANTITATIVE BENCHMARKS & CTA RIBBON
             ============================================================ */}
+        {/* ============================================================
+            6. BOTTOM QUANTITATIVE BENCHMARKS & CTA RIBBON (10/10 Master Standard)
+            ============================================================ */}
         <div className="features-trust-ribbon">
+          <div className="trust-ribbon-top-hairline" aria-hidden="true"></div>
+
+          {/* 4 Quantitative Milestone Bento Plates */}
           <div className="trust-stats-grid">
-            <div className="trust-stat-box">
-              <div className="stat-icon-wrapper">
-                <i className="fa-solid fa-calendar-check" aria-hidden="true"></i>
+            {/* Stat 1: Years Practice */}
+            <div className="trust-stat-box stat-tile-amber">
+              <div className="stat-header-micro-row">
+                <div className="stat-icon-wrapper amber">
+                  <i className="fa-solid fa-calendar-check" aria-hidden="true"></i>
+                </div>
+                <span className="stat-status-badge amber">
+                  <span className="badge-pulse-dot amber" aria-hidden="true"></span>
+                  EST. 2022
+                </span>
               </div>
-              <span className="trust-stat-number">4+</span>
+              <div className="stat-number-wrap">
+                <span className="trust-stat-number">4+</span>
+                <span className="stat-suffix-tag">Years</span>
+              </div>
               <span className="trust-stat-label">Years Practice &amp; Advisory</span>
+              <span className="stat-micro-sub">Direct Tax, GST &amp; Scrutiny Defense</span>
             </div>
 
-            <div className="trust-stat-box">
-              <div className="stat-icon-wrapper">
-                <i className="fa-solid fa-building-shield" aria-hidden="true"></i>
+            {/* Stat 2: Active Retainers */}
+            <div className="trust-stat-box stat-tile-sapphire">
+              <div className="stat-header-micro-row">
+                <div className="stat-icon-wrapper sapphire">
+                  <i className="fa-solid fa-building-shield" aria-hidden="true"></i>
+                </div>
+                <span className="stat-status-badge sapphire">
+                  <span className="badge-pulse-dot sapphire" aria-hidden="true"></span>
+                  RETAINED
+                </span>
               </div>
-              <span className="trust-stat-number">200+</span>
+              <div className="stat-number-wrap">
+                <span className="trust-stat-number">200+</span>
+                <span className="stat-suffix-tag">Clients</span>
+              </div>
               <span className="trust-stat-label">Active Corporate Retainers</span>
+              <span className="stat-micro-sub">MSMEs, Founders, LLPs &amp; Pvt Ltd</span>
             </div>
 
-            <div className="trust-stat-box">
-              <div className="stat-icon-wrapper">
-                <i className="fa-solid fa-sack-dollar" aria-hidden="true"></i>
+            {/* Stat 3: Tax Legally Saved */}
+            <div className="trust-stat-box stat-tile-emerald">
+              <div className="stat-header-micro-row">
+                <div className="stat-icon-wrapper emerald">
+                  <i className="fa-solid fa-sack-dollar" aria-hidden="true"></i>
+                </div>
+                <span className="stat-status-badge emerald">
+                  <span className="badge-pulse-dot emerald" aria-hidden="true"></span>
+                  OPTIMIZED
+                </span>
               </div>
-              <span className="trust-stat-number">₹4.2 Cr+</span>
+              <div className="stat-number-wrap">
+                <span className="trust-stat-number gold-num">₹4.2 Cr+</span>
+                <span className="stat-suffix-tag">Saved</span>
+              </div>
               <span className="trust-stat-label">Tax Legally Saved For Clients</span>
+              <span className="stat-micro-sub">Statutory Structuring &amp; ITC Capture</span>
             </div>
 
-            <div className="trust-stat-box">
-              <div className="stat-icon-wrapper">
-                <i className="fa-solid fa-shield-heart" aria-hidden="true"></i>
+            {/* Stat 4: Compliance Record */}
+            <div className="trust-stat-box stat-tile-gold">
+              <div className="stat-header-micro-row">
+                <div className="stat-icon-wrapper gold">
+                  <i className="fa-solid fa-shield-heart" aria-hidden="true"></i>
+                </div>
+                <span className="stat-status-badge gold">
+                  <span className="badge-pulse-dot gold" aria-hidden="true"></span>
+                  PRECISION
+                </span>
               </div>
-              <span className="trust-stat-number">99.8%</span>
+              <div className="stat-number-wrap">
+                <span className="trust-stat-number">99.8%</span>
+                <span className="stat-suffix-tag">SLA</span>
+              </div>
               <span className="trust-stat-label">Statutory Compliance Record</span>
+              <span className="stat-micro-sub">Zero-Default Filing &amp; Notice Clearance</span>
             </div>
           </div>
 
+          {/* Precision Center Divider with Seal */}
+          <div className="trust-ribbon-divider" aria-hidden="true">
+            <span className="trust-divider-seal">
+              <i className="fa-solid fa-scale-balanced"></i>
+              <span>INSTITUTIONAL FIDUCIARY STANDARD</span>
+            </span>
+          </div>
+
+          {/* Bottom Dual-Action Strategic CTA */}
           <div className="trust-cta-row">
             <div className="trust-cta-text">
+              <div className="trust-cta-eyebrow-row">
+                <span className="trust-cta-kicker">
+                  <i className="fa-solid fa-shield-halved"></i>
+                  SENIOR PRACTICE ADVISORY DESK
+                </span>
+                <span className="trust-cta-live-pill">
+                  <span className="status-live-dot green" aria-hidden="true"></span>
+                  Live Intake Active
+                </span>
+              </div>
               <h4>Ready to insulate your enterprise from notices &amp; overpaid taxes?</h4>
-              <p>Schedule a confidential 1-on-1 strategy session with our senior corporate practitioners.</p>
+              <p>Schedule a confidential 1-on-1 strategy session with our senior corporate practitioners. No junior delegation, zero billable hour surprises.</p>
+
+              <div className="trust-assurance-pills">
+                <span className="trust-assurance-item">
+                  <i className="fa-solid fa-lock text-emerald"></i>
+                  <span>100% Client Privilege &amp; NDA</span>
+                </span>
+                <span className="trust-assurance-item">
+                  <i className="fa-solid fa-bolt text-amber"></i>
+                  <span>&lt; 24h Senior Partner Triage</span>
+                </span>
+                <span className="trust-assurance-item">
+                  <i className="fa-solid fa-file-shield text-sapphire"></i>
+                  <span>Fixed-Retainer Fee Certainty</span>
+                </span>
+              </div>
             </div>
+
             <div className="trust-cta-buttons">
-              <Link to="/contact" className="btn-features-primary">
-                <i className="fa-solid fa-calendar-alt"></i>
-                <span>Schedule Partner Review</span>
+              <Link to="/contact" className="btn-features-primary btn-trust-primary">
+                <div className="btn-icon-seal">
+                  <i className="fa-solid fa-calendar-check"></i>
+                </div>
+                <div className="btn-text-block">
+                  <strong>Schedule Partner Review</strong>
+                  <span>Direct 1-on-1 Strategy Session</span>
+                </div>
+                <div className="btn-arrow-disc">
+                  <i className="fa-solid fa-arrow-right"></i>
+                </div>
               </Link>
-              <button type="button" className="btn-features-whatsapp" onClick={handleWhatsAppChat}>
-                <i className="fa-brands fa-whatsapp"></i>
-                <span>Direct Advisory Chat</span>
+
+              <button type="button" className="btn-features-whatsapp btn-trust-whatsapp" onClick={handleWhatsAppChat}>
+                <div className="btn-icon-seal wa-seal">
+                  <i className="fa-brands fa-whatsapp"></i>
+                </div>
+                <div className="btn-text-block">
+                  <strong>Direct Advisory Chat</strong>
+                  <span>Instant WhatsApp &bull; &lt; 10m SLA</span>
+                </div>
+                <div className="btn-arrow-disc wa-arrow">
+                  <i className="fa-brands fa-whatsapp"></i>
+                </div>
               </button>
             </div>
           </div>

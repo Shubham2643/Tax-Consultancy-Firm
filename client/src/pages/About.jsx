@@ -281,11 +281,11 @@ const About = () => {
     {
       code: 'DESK 04',
       number: '04',
-      title: 'Compliance Systems & Digital Vault',
-      shortTitle: 'Compliance & Digital Vault',
+      title: 'Compliance Systems & Document Archival',
+      shortTitle: 'Compliance & Archival',
       scope: 'Fintech Automation • Document Cloud Archival • Real-Time Filing Tracker',
       desc: 'State-of-the-art paperless compliance infrastructure providing encrypted 24/7 document repositories, deadline tracking, and instantaneous audit retrievals.',
-      badges: ['Encrypted Cloud Vault', 'Automated ITC Screening', 'Paperless Accounting'],
+      badges: ['Confidential Cloud Archival', 'Automated ITC Screening', 'Paperless Accounting'],
       leadCounsel: 'Digital Systems Desk',
       statute: 'ISO 27001 Data Security • Cloud Archival',
       icon: <Icons.CodeTerminal />,
@@ -316,10 +316,10 @@ const About = () => {
       isChampion: true,
     },
     {
-      criterion: 'Document Security & Digital Vault',
+      criterion: 'Document Security & Confidential Archives',
       traditional: 'Physical paper files; lost vouchers in storage',
       big4: 'Restricted corporate ERPs with complex access permissions',
-      chamunda: '24/7 Secure Cloud Vault with instant one-click retrieval',
+      chamunda: '24/7 Secure Cloud Archives with instant one-click retrieval',
       isChampion: true,
     },
     {

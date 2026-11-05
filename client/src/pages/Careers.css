@@ -334,7 +334,30 @@
 
 @media (max-width: 600px) {
   .app-form-wrapper {
-    padding: 26px;
+    padding: 24px 18px;
+    border-radius: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .careers-hero h1 {
+    font-size: 1.65rem;
+  }
+  .app-form-wrapper {
+    padding: 18px 14px;
+    border-radius: 14px;
+  }
+  .app-form-header h2 {
+    font-size: 1.42rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .app-form-wrapper {
+    padding: 14px 10px;
+  }
+  .app-form-header h2 {
+    font-size: 1.22rem;
   }
 }
 

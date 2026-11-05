@@ -161,3 +161,14 @@
   background-color: #f8b400;
   color: #071324;
 }
+
+
+@media (max-width: 480px) {
+  .oauth-callback-page {
+    padding: 20px 12px;
+  }
+  .oauth-callback-card {
+    padding: 30px 20px;
+    border-radius: 16px;
+  }
+}

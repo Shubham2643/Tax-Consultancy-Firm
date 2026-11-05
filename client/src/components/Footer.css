@@ -67,7 +67,7 @@
   align-items: flex-start;
   gap: 20px;
   flex: 1;
-  min-width: 320px;
+  min-width: 0;
 }
 
 .bento-pre-icon {
@@ -2344,6 +2344,12 @@
 }
 
 @media (max-width: 360px) {
+  .bento-pre-banner {
+    padding: 16px 12px;
+  }
+  .bento-pre-heading {
+    font-size: 1.05rem;
+  }
   .bento-card {
     padding: 14px 11px;
   }

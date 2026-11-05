@@ -547,7 +547,7 @@ const Portal = () => {
               <span className="brand-eyebrow">SHREE CHAMUNDA ASSOCIATES</span>
               <h3 className="brand-workspace-title">Client Vault</h3>
               <span className="vault-live-badge">
-                <span className="live-pulse-dot"></span> 256-Bit Encrypted Session
+                <span className="live-pulse-dot"></span> Secure Client Session
               </span>
             </div>
           </Link>
@@ -1046,7 +1046,7 @@ const Portal = () => {
                   <span className="hero-kicker-badge">
                     <span className="hero-kicker-beacon"></span>
                     <i className="fas fa-shield-halved"></i>
-                    <span>CONFIDENTIAL VAULT &bull; 256-BIT ENCRYPTION</span>
+                    <span>CONFIDENTIAL CLIENT ARCHIVES &bull; STATUTORY PRIVILEGE</span>
                   </span>
                   <h1>Confidential Document Vault</h1>
                   <p>Access audit files, salary slips, P&amp;L balance sheets, and tax acknowledgments stored in encrypted cloud storage with instant download.</p>

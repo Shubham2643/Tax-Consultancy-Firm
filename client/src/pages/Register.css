@@ -282,6 +282,15 @@
   }
 }
 
+@media (max-width: 380px) {
+  .register-card {
+    padding: 1.5rem 1rem;
+  }
+  .register-title {
+    font-size: 1.25rem;
+  }
+}
+
 /* ============================================================
    REGISTER PAGE — DOMINANT LIGHT THEME ARCHITECTURE
    ============================================================ */

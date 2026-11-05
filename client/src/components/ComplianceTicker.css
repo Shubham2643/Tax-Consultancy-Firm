@@ -422,25 +422,32 @@
 @media (max-width: 768px) {
   .compliance-ticker-strip {
     height: 36px;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
   }
 
   .desktop-ticker-view {
     display: none !important;
   }
 
+  .compliance-ticker-container.mobile-ticker-view,
   .mobile-ticker-view {
     display: flex !important;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
-    padding: 0 8px;
-    gap: 8px;
-    box-sizing: border-box;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 8px !important;
+    gap: 6px !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
   }
 
   /* Mobile Rotating Carousel */
   .mobile-item-carousel {
-    flex: 1;
+    flex: 1 1 auto;
     min-width: 0;
     overflow: hidden;
     display: flex;

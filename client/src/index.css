@@ -38,7 +38,10 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: clip;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden !important;
+  overflow-x: clip !important;
   font-family: var(--font-sans);
 }
 
@@ -46,10 +49,24 @@ body {
   font-family: var(--font-sans);
   line-height: 1.6;
   color: var(--text);
-  overflow-x: clip;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden !important;
+  overflow-x: clip !important;
   background-color: #ffffff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+#root,
+.app,
+.main-content,
+.home-page {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden !important;
+  overflow-x: clip !important;
+  box-sizing: border-box;
 }
 
 /* Enforce font-family across every element, input, button, heading, and table */
@@ -1220,6 +1237,11 @@ html.theme-transitioning *::after {
   position: relative !important;
   z-index: 2 !important;
   overflow: hidden !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  white-space: normal !important;
+  word-break: break-word !important;
+  text-align: center !important;
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
   
   /* Glassmorphism Luxury Styling (Light) */
@@ -1676,4 +1698,165 @@ html.theme-transitioning *::after {
     padding: 5px 12px !important;
     font-size: 11px !important;
   }
+}
+
+/* 10. Universal Multi-Device Responsive Architecture (480px, 360px & 320px) */
+@media (max-width: 480px) {
+  .container,
+  .hero-layout-container,
+  .tst-container,
+  .features-container,
+  .services-container,
+  .contact-hero-container {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
+  .trust-master-header,
+  .services .section-header,
+  .services-hero .section-header,
+  .features-header-wrap,
+  .retainers-header,
+  .protocol-header,
+  .contact-hero-container {
+    margin-bottom: 26px !important;
+  }
+
+  .header-watermark {
+    display: none !important;
+  }
+
+  .luxury-header-halo {
+    display: none !important;
+  }
+
+  .trust-badge-label,
+  .services-badge,
+  .features-badge-pill,
+  .retainers-eyebrow-badge,
+  .protocol-eyebrow-pill,
+  .contact-eyebrow-badge {
+    padding: 3px 10px 3px 6px !important;
+    font-size: 8.5px !important;
+    margin-bottom: 10px !important;
+    gap: 4.5px !important;
+    letter-spacing: 0.04em !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .badge-index-chip {
+    min-width: 18px !important;
+    height: 15px !important;
+    padding: 0 4px !important;
+    font-size: 8px !important;
+  }
+
+  .trust-master-title,
+  #services-heading,
+  .features-main-title,
+  .retainers-main-title,
+  .protocol-main-title,
+  .contact-main-title {
+    font-size: clamp(1.48rem, 5.8vw, 1.88rem) !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.02em !important;
+    margin-bottom: 10px !important;
+  }
+
+  .trust-master-subtext,
+  .services .section-subtitle,
+  .features-subtitle,
+  .retainers-lead-text,
+  .protocol-lead-text,
+  .contact-subtitle {
+    font-size: 0.88rem !important;
+    line-height: 1.54 !important;
+  }
+
+  .header-assurance-strip,
+  .hero-reassurance-strip {
+    gap: 6px 8px !important;
+    margin-top: 14px !important;
+  }
+
+  .assurance-pill,
+  .hero-reassurance-strip .reassurance-pill {
+    padding: 4px 9px !important;
+    font-size: 10px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .container,
+  .hero-layout-container,
+  .tst-container,
+  .features-container,
+  .services-container,
+  .contact-hero-container {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  .trust-master-title,
+  #services-heading,
+  .features-main-title,
+  .retainers-main-title,
+  .protocol-main-title,
+  .contact-main-title {
+    font-size: 1.35rem !important;
+    line-height: 1.22 !important;
+  }
+
+  .trust-master-subtext,
+  .services .section-subtitle,
+  .features-subtitle,
+  .retainers-lead-text,
+  .protocol-lead-text,
+  .contact-subtitle {
+    font-size: 0.82rem !important;
+    line-height: 1.5 !important;
+  }
+
+  .trust-badge-label,
+  .services-badge,
+  .features-badge-pill,
+  .retainers-eyebrow-badge,
+  .protocol-eyebrow-pill,
+  .contact-eyebrow-badge {
+    padding: 2.5px 8px 2.5px 5px !important;
+    font-size: 8px !important;
+    margin-bottom: 8px !important;
+    gap: 4px !important;
+    letter-spacing: 0.02em !important;
+  }
+
+  .assurance-pill,
+  .hero-reassurance-strip .reassurance-pill {
+    font-size: 9.5px !important;
+    padding: 3px 8px !important;
+  }
+}
+
+/* 11. Universal Table & Embedded Media Responsiveness */
+.table-responsive-wrapper,
+.table-responsive-box,
+.matrix-table-wrapper,
+.comparison-table-scroll {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  scrollbar-width: thin;
+}
+
+img, video, canvas, svg:not([class*='fa']), iframe {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Prevent any accidental word-clip or overflow on mobile headers */
+h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }

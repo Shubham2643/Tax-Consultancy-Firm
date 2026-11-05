@@ -82,7 +82,7 @@ const Services = () => {
     },
     {
       q: 'Is our corporate and personal financial data confidential?',
-      a: 'Strictly. All client records and financial ledgers are housed within an encrypted, ISO 27001-compliant digital vault accessible only by your designated advisor under strict statutory professional secrecy regulations.',
+      a: 'Strictly. All client records and financial ledgers are housed within secure, ISO 27001-compliant client archives accessible only by your designated advisor under strict statutory professional secrecy regulations.',
     },
   ];
 

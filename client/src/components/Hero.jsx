@@ -60,18 +60,24 @@ const Hero = () => {
                 <i className="fas fa-shield-halved"></i>
               </div>
               <div className="trust-badge-content">
-                <strong>Zero-Penalty Record</strong>
+                <strong>
+                  <span className="badge-full">Zero-Penalty Record</span>
+                  <span className="badge-mob">Zero Penalty</span>
+                </strong>
                 <span>99.8% Statutory Accuracy</span>
               </div>
             </div>
 
             <div className="hero-trust-badge-card">
               <div className="trust-badge-icon gold">
-                <i className="fas fa-vault"></i>
+                <i className="fas fa-file-contract"></i>
               </div>
               <div className="trust-badge-content">
-                <strong>256-Bit Digital Vault</strong>
-                <span>Encrypted Paperless Storage</span>
+                <strong>
+                  <span className="badge-full">Mutual NDA &amp; Secrecy</span>
+                  <span className="badge-mob">Mutual NDA</span>
+                </strong>
+                <span>100% Fiduciary Client Privilege</span>
               </div>
             </div>
 
@@ -80,7 +86,10 @@ const Hero = () => {
                 <i className="fas fa-user-tie"></i>
               </div>
               <div className="trust-badge-content">
-                <strong>Direct Partner Desk</strong>
+                <strong>
+                  <span className="badge-full">Direct Partner Desk</span>
+                  <span className="badge-mob">Partner Desk</span>
+                </strong>
                 <span>Senior Advisor Assigned</span>
               </div>
             </div>
@@ -191,12 +200,12 @@ const Hero = () => {
                 <div className="mockup-title">
                   <span className="mockup-eyebrow">SHREE CHAMUNDA ASSOCIATES</span>
                   <strong>Client Compliance Workspace</strong>
-                  <span className="mockup-sub">Live Statutory Mandates &bull; 256-Bit Cloud Vault</span>
+                  <span className="mockup-sub">Live Statutory Mandates &bull; Confidential Client Dossier</span>
                 </div>
               </div>
               <div className="mockup-status-tag">
                 <span className="status-live-beacon"></span>
-                <span>Active Vault</span>
+                <span>Active Mandates</span>
               </div>
             </div>
 
@@ -207,7 +216,10 @@ const Hero = () => {
                 className={`segmented-tab-btn ${activeWorkspaceTab === 'all' ? 'active' : ''}`}
                 onClick={() => setActiveWorkspaceTab('all')}
               >
-                <span>All Mandates</span>
+                <span>
+                  <span className="tab-full">All Mandates</span>
+                  <span className="tab-mob">All</span>
+                </span>
                 <span className="segmented-count">4</span>
               </button>
               <button
@@ -215,7 +227,10 @@ const Hero = () => {
                 className={`segmented-tab-btn ${activeWorkspaceTab === 'tax' ? 'active' : ''}`}
                 onClick={() => setActiveWorkspaceTab('tax')}
               >
-                <span>Direct Tax &amp; GST</span>
+                <span>
+                  <span className="tab-full">Direct Tax &amp; GST</span>
+                  <span className="tab-mob">Tax &amp; GST</span>
+                </span>
                 <span className="segmented-count">2</span>
               </button>
               <button
@@ -223,7 +238,10 @@ const Hero = () => {
                 className={`segmented-tab-btn ${activeWorkspaceTab === 'audit' ? 'active' : ''}`}
                 onClick={() => setActiveWorkspaceTab('audit')}
               >
-                <span>Audit &amp; TDS</span>
+                <span>
+                  <span className="tab-full">Audit &amp; TDS</span>
+                  <span className="tab-mob">Audit</span>
+                </span>
                 <span className="segmented-count">2</span>
               </button>
             </div>
@@ -309,17 +327,20 @@ const Hero = () => {
             <div className="mockup-metrics-bar">
               <div className="metric-pill">
                 <strong>4+ Yrs</strong>
-                <span>Practice Heritage</span>
+                <span className="metric-full">Practice Heritage</span>
+                <span className="metric-mob">Experience</span>
               </div>
               <div className="metric-divider"></div>
               <div className="metric-pill">
                 <strong>200+</strong>
-                <span>Active Retainers</span>
+                <span className="metric-full">Active Retainers</span>
+                <span className="metric-mob">Retainers</span>
               </div>
               <div className="metric-divider"></div>
               <div className="metric-pill">
                 <strong className="text-emerald">100%</strong>
-                <span>Zero Notice Record</span>
+                <span className="metric-full">Zero Notice Record</span>
+                <span className="metric-mob">Compliance</span>
               </div>
             </div>
 

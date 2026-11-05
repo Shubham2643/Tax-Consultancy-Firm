@@ -2855,7 +2855,9 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
     height: 100vh;
     height: 100dvh;
     background: rgba(7, 19, 36, 0.55);
@@ -2881,8 +2883,19 @@
    6.2 COMPACT SMARTPHONE BREAKPOINT (<= 480px)
    ========================================================================== */
 @media (max-width: 480px) {
+  .top-bar {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+
   .top-bar-inner {
     padding: 0 10px;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
   }
 
   .top-bar-status-capsule {
@@ -2987,10 +3000,18 @@
 @media (max-width: 360px) {
   .top-bar {
     height: 30px;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
   }
 
   .top-bar-inner {
-    padding: 0 7px;
+    padding: 0 6px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
   }
 
   .top-bar-left {

@@ -389,7 +389,7 @@ const Footer = () => {
                   <span className="bento-gold-indicator" aria-hidden="true"></span>
                   <h4 className="bento-section-title">Portals &amp; Knowledge</h4>
                 </div>
-                <span className="bento-pill-tag">Digital Vault &amp; Filings</span>
+                <span className="bento-pill-tag">Client Portal &amp; Filings</span>
               </div>
 
               <div className="bento-portals-list">

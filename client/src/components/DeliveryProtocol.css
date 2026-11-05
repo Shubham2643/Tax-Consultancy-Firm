@@ -936,6 +936,30 @@
   }
 }
 
+@media (max-width: 360px) {
+  .protocol-protocol-section {
+    padding: 34px 0 42px 0 !important;
+  }
+  .protocol-container {
+    padding: 0 8px !important;
+  }
+  .protocol-main-title {
+    font-size: 1.30rem !important;
+  }
+  .protocol-lead-text {
+    font-size: 11px !important;
+    line-height: 1.45 !important;
+  }
+  .protocol-console-card {
+    padding: 14px 10px !important;
+    border-radius: 14px !important;
+  }
+  .pipeline-gate-btn {
+    padding: 8px 10px !important;
+    font-size: 10.5px !important;
+  }
+}
+
 /* ==========================================================================
    8. DOMINANT DARK THEME OVERRIDES ([data-theme='dark'])
    ========================================================================== */

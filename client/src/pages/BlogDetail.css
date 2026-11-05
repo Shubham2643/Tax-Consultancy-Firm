@@ -2163,6 +2163,31 @@
   }
 }
 
+@media (max-width: 480px) {
+  .masthead-title {
+    font-size: 1.45rem;
+  }
+  .article-content-card {
+    padding: 20px 14px;
+    border-radius: 16px;
+  }
+  .article-main-container {
+    padding: 0 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .masthead-title {
+    font-size: 1.25rem;
+  }
+  .article-content-card {
+    padding: 14px 10px;
+  }
+  .article-main-container {
+    padding: 0 8px;
+  }
+}
+
 /* ============================================================
    18. PRINT STYLESHEET
    ============================================================ */

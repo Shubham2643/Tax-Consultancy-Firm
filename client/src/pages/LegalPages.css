@@ -108,7 +108,7 @@
 /* Main Content Column */
 .legal-content-col {
   flex: 3;
-  min-width: 320px;
+  min-width: 0;
   background: white;
   padding: 50px;
   border-radius: 16px;
@@ -209,6 +209,22 @@
   }
   .legal-hero h1 {
     font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .legal-content-col {
+    padding: 18px 14px;
+    border-radius: 12px;
+  }
+  .legal-hero {
+    padding: 38px 0;
+  }
+  .legal-hero h1 {
+    font-size: 1.62rem;
+  }
+  .legal-section-block h2 {
+    font-size: 1.25rem;
   }
 }
 
