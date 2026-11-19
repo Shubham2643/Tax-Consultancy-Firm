@@ -60,11 +60,11 @@ const Hero = () => {
                 <i className="fas fa-shield-halved"></i>
               </div>
               <div className="trust-badge-content">
-                <strong>
+                <strong className="badge-title">
                   <span className="badge-full">Zero-Penalty Record</span>
                   <span className="badge-mob">Zero Penalty</span>
                 </strong>
-                <span>99.8% Statutory Accuracy</span>
+                <span className="badge-subtitle">99.8% Statutory Accuracy</span>
               </div>
             </div>
 
@@ -73,11 +73,11 @@ const Hero = () => {
                 <i className="fas fa-file-contract"></i>
               </div>
               <div className="trust-badge-content">
-                <strong>
+                <strong className="badge-title">
                   <span className="badge-full">Mutual NDA &amp; Secrecy</span>
                   <span className="badge-mob">Mutual NDA</span>
                 </strong>
-                <span>100% Fiduciary Client Privilege</span>
+                <span className="badge-subtitle">100% Fiduciary Client Privilege</span>
               </div>
             </div>
 
@@ -86,11 +86,11 @@ const Hero = () => {
                 <i className="fas fa-user-tie"></i>
               </div>
               <div className="trust-badge-content">
-                <strong>
+                <strong className="badge-title">
                   <span className="badge-full">Direct Partner Desk</span>
                   <span className="badge-mob">Partner Desk</span>
                 </strong>
-                <span>Senior Advisor Assigned</span>
+                <span className="badge-subtitle">Senior Advisor Assigned</span>
               </div>
             </div>
           </div>
@@ -98,10 +98,9 @@ const Hero = () => {
           {/* Primary Action Buttons - Institutional Chambers Style */}
           <div className="hero-cta-group">
             <Link to="/contact" className="btn-hero-primary" aria-label="Schedule Partner Advisory Session">
-              <span className="btn-hero-glow"></span>
-              <i className="fas fa-calendar-check hero-btn-lead-icon"></i>
+              <i className="fa-solid fa-calendar-check hero-btn-lead-icon"></i>
               <span className="hero-btn-text">Schedule Partner Advisory</span>
-              <i className="fas fa-arrow-right hero-btn-trail-icon"></i>
+              <i className="fa-solid fa-arrow-right hero-btn-trail-icon"></i>
             </Link>
 
             <a
@@ -111,75 +110,45 @@ const Hero = () => {
               className="btn-hero-whatsapp"
               aria-label="Direct WhatsApp Desk with Senior Advisory Consultant"
             >
-              <span className="wa-pulse-beacon"></span>
-              <i className="fab fa-whatsapp hero-wa-lead-icon"></i>
-              <span className="hero-wa-text">Direct WhatsApp Desk</span>
-              <i className="fas fa-arrow-up-right-from-square hero-wa-trail-icon"></i>
+              <i className="fa-brands fa-whatsapp hero-wa-lead-icon"></i>
+              <span className="hero-wa-text">Direct WhatsApp Chat</span>
             </a>
           </div>
 
-          {/* Elevated Fiduciary Social Proof */}
-          <div className="hero-social-proof">
-            <div className="executive-avatars-stack">
-              <span className="avatar-chip chip-1" title="Enterprise Client Ahmedabad">AK</span>
-              <span className="avatar-chip chip-2" title="Industrial Client Surat">RP</span>
-              <span className="avatar-chip chip-3" title="Corporate Client Vadodara">SM</span>
-              <span className="avatar-chip chip-plus">+200</span>
+          {/* Elevated Executive Fiduciary Social Proof Strip */}
+          <div className="hero-social-proof" role="region" aria-label="Institutional Trust and Compliance Record">
+            <div className="proof-seal-medallion" aria-hidden="true">
+              <i className="fa-solid fa-shield-halved"></i>
             </div>
-            <div className="proof-text-group">
-              <div className="rating-stars-row">
-                <div className="rating-stars">
-                  <i className="fas fa-star"></i>
-                  <i className="fas fa-star"></i>
-                  <i className="fas fa-star"></i>
-                  <i className="fas fa-star"></i>
-                  <i className="fas fa-star"></i>
+            <div className="proof-content-wrap">
+              <div className="proof-metric-row">
+                <div className="proof-stars" aria-label="Rated 4.98 out of 5 stars">
+                  <i className="fa-solid fa-star" aria-hidden="true"></i>
+                  <i className="fa-solid fa-star" aria-hidden="true"></i>
+                  <i className="fa-solid fa-star" aria-hidden="true"></i>
+                  <i className="fa-solid fa-star" aria-hidden="true"></i>
+                  <i className="fa-solid fa-star" aria-hidden="true"></i>
                 </div>
-                <span className="rating-score">4.98 / 5.0</span>
+                <span className="proof-score"><strong>4.98</strong> / 5.0</span>
+                <span className="proof-sep" aria-hidden="true">&bull;</span>
+                <span className="proof-fiduciary-tag">
+                  <i className="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+                  <span>Fiduciary Aligned</span>
+                </span>
               </div>
-              <span className="rating-caption">
-                Trusted by <strong>200+ Gujarat Businesses</strong> &bull; Zero Notice Default
-              </span>
-            </div>
-            <div className="proof-verified-badge">
-              <i className="fas fa-scale-balanced"></i>
-              <span>Fiduciary Aligned</span>
+              <div className="proof-caption-row">
+                <span className="proof-caption">
+                  Trusted by <strong>200+ Retained Enterprises</strong> in Gujarat
+                </span>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* RIGHT COLUMN: Live Interactive Compliance Workspace Preview with 3D Depth */}
+        {/* RIGHT COLUMN: Live Interactive Compliance Workspace Preview */}
         <div className="hero-visual-col">
           {/* Ambient Behind-Deck Glow */}
           <div className="hero-deck-glow-orb" aria-hidden="true"></div>
-
-          {/* Floating Satellite 1: Top-Right Senior Partner Telemetry */}
-          <div className="hero-floating-satellite satellite-top">
-            <div className="satellite-icon-ring gold">
-              <i className="fas fa-user-shield"></i>
-            </div>
-            <div className="satellite-text">
-              <div className="satellite-header-row">
-                <span className="satellite-pulse-dot"></span>
-                <strong>Senior Partner Desk</strong>
-              </div>
-              <span>Live Advisory &bull; &lt; 15m Confidential Triage</span>
-            </div>
-          </div>
-
-          {/* Floating Satellite 2: Bottom-Left Tax Alpha Pill */}
-          <div className="hero-floating-satellite satellite-bottom">
-            <div className="satellite-icon-ring emerald">
-              <i className="fas fa-arrow-trend-up"></i>
-            </div>
-            <div className="satellite-text">
-              <div className="satellite-header-row">
-                <span className="satellite-badge-pill">+₹2,45,000</span>
-                <strong>Tax Alpha</strong>
-              </div>
-              <span>Sec 80JJAA &amp; Depreciation Shield</span>
-            </div>
-          </div>
 
           {/* The Main Command Deck Card */}
           <div className="hero-mockup-card">

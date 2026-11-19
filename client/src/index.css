@@ -812,9 +812,15 @@ html.theme-transitioning *::after {
 }
 
 [data-theme='light'] .btn-hero-whatsapp {
-  background: #ffffff !important;
-  border-color: rgba(37, 211, 102, 0.5) !important;
-  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.12) !important;
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%) !important;
+  border: 1px solid rgba(18, 140, 126, 0.4) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.32) !important;
+}
+
+[data-theme='light'] .btn-hero-whatsapp .hero-wa-lead-icon,
+[data-theme='light'] .btn-hero-whatsapp .hero-wa-text {
+  color: #ffffff !important;
 }
 
 /* 4. FEATURES & WHY CHOOSE US in Light Mode */

@@ -78,7 +78,7 @@ const CARDS_CONFIG = [
             <span className="chip-label">SCOPE LOCK</span>
             <strong className="chip-val">100% Milestone</strong>
           </div>
-          <div className="charter-chip">
+          <div className="charter-chip">    
             <span className="chip-label">GST INVOICE</span>
             <strong className="chip-val">18% ITC Claim</strong>
           </div>
