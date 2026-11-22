@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useSiteContext } from '../context/SiteContext';
 import './About.css';
 
-// Precision inline SVGs designed for institutional practice aesthetics
+// SVG Icons tailored for executive practice aesthetics
 const Icons = {
   Landmark: () => (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <line x1="3" y1="22" x2="21" y2="22" />
       <line x1="6" y1="18" x2="6" y2="11" />
       <line x1="10" y1="18" x2="10" y2="11" />
@@ -16,31 +16,31 @@ const Icons = {
     </svg>
   ),
   Certificate: () => (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <circle cx="12" cy="8" r="6" />
       <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
     </svg>
   ),
   Location: () => (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
       <circle cx="12" cy="10" r="3" />
     </svg>
   ),
   ShieldCheck: () => (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
       <path d="m9 12 2 2 4-4" />
     </svg>
   ),
   Award: () => (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <circle cx="12" cy="8" r="6" />
       <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
     </svg>
   ),
   Building: () => (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <rect x="4" y="2" width="16" height="20" rx="2" />
       <path d="M9 22v-4h6v4" />
       <path d="M8 6h.01" />
@@ -52,7 +52,7 @@ const Icons = {
     </svg>
   ),
   FileInvoice: () => (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
       <polyline points="14 2 14 8 20 8" />
       <line x1="16" y1="13" x2="8" y2="13" />
@@ -61,7 +61,7 @@ const Icons = {
     </svg>
   ),
   Vault: () => (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <rect x="3" y="3" width="18" height="18" rx="2" />
       <circle cx="12" cy="12" r="4" />
       <line x1="12" y1="8" x2="12" y2="10" />
@@ -71,14 +71,14 @@ const Icons = {
     </svg>
   ),
   UserTie: () => (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <circle cx="12" cy="7" r="4" />
       <path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" />
       <path d="M12 11v4l1.5 2-1.5 1-1.5-1 1.5-2z" />
     </svg>
   ),
   Scale: () => (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />
       <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />
       <path d="M7 21h10" />
@@ -87,13 +87,13 @@ const Icons = {
     </svg>
   ),
   CodeTerminal: () => (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <polyline points="4 17 10 11 4 5" />
       <line x1="12" y1="19" x2="20" y2="19" />
     </svg>
   ),
   Receipt: () => (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1-2-1Z" />
       <path d="M16 8h-8" />
       <path d="M16 12h-8" />
@@ -101,46 +101,46 @@ const Icons = {
     </svg>
   ),
   ArrowLeft: () => (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <line x1="19" y1="12" x2="5" y2="12" />
       <polyline points="12 19 5 12 12 5" />
     </svg>
   ),
   ArrowRight: () => (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <line x1="5" y1="12" x2="19" y2="12" />
       <polyline points="12 5 19 12 12 19" />
     </svg>
   ),
   Clock: () => (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <circle cx="12" cy="12" r="10" />
       <polyline points="12 6 12 12 16 14" />
     </svg>
   ),
   Phone: () => (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
     </svg>
   ),
   Check: () => (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <polyline points="20 6 9 17 4 12" />
     </svg>
   ),
   Cross: () => (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <line x1="18" y1="6" x2="6" y2="18" />
       <line x1="6" y1="6" x2="18" y2="18" />
     </svg>
   ),
   WhatsApp: () => (
-    <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
       <path d="M12.031 2C6.495 2 2 6.48 2 12c0 1.956.565 3.784 1.543 5.334L2.25 21.75l4.582-1.201A9.943 9.943 0 0 0 12.031 22c5.536 0 10.031-4.48 10.031-10s-4.495-10-10.031-10zm5.836 14.283c-.244.686-1.419 1.346-1.958 1.408-.506.059-1.169.088-3.791-.974-3.155-1.277-5.187-4.46-5.344-4.667-.158-.207-1.282-1.705-1.282-3.253 0-1.547.81-2.308 1.099-2.622.288-.314.629-.393.839-.393.209 0 .42.002.604.011.196.01.458-.074.717.548.262.629.89 2.171.969 2.33.078.158.13.344.026.551-.105.207-.157.336-.314.52-.158.184-.332.41-.474.551-.158.158-.322.33-.138.646.184.316.818 1.35 1.752 2.18 1.202 1.069 2.216 1.4 2.53 1.558.314.157.498.132.682-.079.184-.21.786-.917.996-1.232.21-.314.42-.262.708-.157.288.105 1.832.864 2.146 1.021.314.158.524.236.602.368.079.131.079.761-.165 1.447z" />
     </svg>
   ),
   CalendarCheck: () => (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
       <line x1="16" y1="2" x2="16" y2="6" />
       <line x1="8" y1="2" x2="8" y2="6" />
@@ -149,35 +149,27 @@ const Icons = {
     </svg>
   ),
   Feather: () => (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z" />
       <line x1="16" y1="8" x2="2" y2="22" />
       <line x1="17.5" y1="15" x2="9" y2="15" />
     </svg>
   ),
-  Users: () => (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
-      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-    </svg>
-  ),
   Briefcase: () => (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
       <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
     </svg>
   ),
   History: () => (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
       <path d="M3 3v5h5" />
       <polyline points="12 7 12 12 15 15" />
     </svg>
   ),
   Compass: () => (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <circle cx="12" cy="12" r="10" />
       <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
     </svg>
@@ -200,10 +192,10 @@ const About = () => {
     ? (settings.address.includes('612') ? settings.address : '612, ' + settings.address)
     : '612, Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad, Gujarat - 380049';
 
-  // 1. Quantitative Benchmarks (Standardized equal length descriptions for identical card heights)
+  // 1. Quantitative Benchmarks
   const stats = [
     { number: '4+', label: 'Years of Practice', icon: <Icons.Award />, caption: 'Continuous regulatory advisory across Gujarat', theme: 'stat-gold' },
-    { number: '250+', label: 'Retained Enterprises', icon: <Icons.Building />, caption: 'Corporate manufacturing, trade & LLP clients', theme: 'stat-blue' },
+    { number: '250+', label: 'Retained Enterprises', icon: <Icons.Building />, caption: 'Corporate manufacturing, trade & LLP leaders', theme: 'stat-blue' },
     { number: '1,500+', label: 'Statutory Filings', icon: <Icons.FileInvoice />, caption: '100% on-time submission & audit track record', theme: 'stat-purple' },
     { number: '₹15Cr+', label: 'Scrutiny Mitigated', icon: <Icons.ShieldCheck />, caption: 'Zero tax assessment liability losses defended', theme: 'stat-emerald' },
   ];
@@ -227,14 +219,14 @@ const About = () => {
     {
       icon: <Icons.UserTie />,
       title: 'Direct Senior Partner Accountability',
-      desc: 'Your corporate account is directly managed and reviewed by senior advisors. We never hand off corporate clients to junior interns or generic support tickets.',
+      desc: 'Your corporate account is directly managed and reviewed by senior advisors. We never hand off corporate clients to junior interns or generic support queues.',
       tag: 'Senior Counsel',
       colorClass: 'pillar-partner',
     },
     {
       icon: <Icons.Receipt />,
       title: 'Fixed-Fee Retainer Transparency',
-      desc: 'Transparent, scope-locked retainer agreements with zero hidden surprise bills, arbitrary filing surcharges, or surprise hourly billing invoices.',
+      desc: 'Transparent, scope-locked retainer agreements with zero hidden surprise bills, arbitrary filing surcharges, or unexpected hourly billing invoices.',
       tag: 'Transparent Billing',
       colorClass: 'pillar-pricing',
     },
@@ -248,7 +240,7 @@ const About = () => {
       title: 'Direct Tax & Appellate Litigation',
       shortTitle: 'Direct Tax & Scrutiny',
       scope: 'Income Tax • Scrutiny Assessments • Appellate Representation',
-      desc: 'Comprehensive representation for Section 143(3) scrutiny, Section 148 reassessments, and CIT(Appeals) submissions with complete jurisprudence backing.',
+      desc: 'Comprehensive representation for Section 143(3) scrutiny, Section 148 reassessments, and CIT(Appeals) submissions with complete statutory jurisprudence backing.',
       badges: ['Sec 143/148 Defense', 'CIT(A) Submissions', 'Capital Gain Structuring'],
       leadCounsel: 'Senior Direct Tax Counsel',
       statute: 'Income Tax Act, 1961 • ITAT Appeals',
@@ -260,7 +252,7 @@ const About = () => {
       title: 'GST Audit & ITC Reconciliations',
       shortTitle: 'GST Audit & ITC',
       scope: 'Indirect Tax • Input Tax Credit Optimization • Notice Resolution',
-      desc: 'Algorithmic reconciliation of purchase registers against live GSTR-2B, defending ASMT-10 mismatch notices, and managing GST department audits.',
+      desc: 'Algorithmic reconciliation of purchase registers against live GSTR-2B, defending ASMT-10 mismatch notices, and managing departmental GST audits.',
       badges: ['ASMT-10 Dispute Resolution', 'GSTR-2B ITC Matching', 'E-Way Compliance'],
       leadCounsel: 'Indirect Tax Advisory Desk',
       statute: 'CGST & SGST Acts, 2017 • GST Portal',
@@ -284,7 +276,7 @@ const About = () => {
       title: 'Compliance Systems & Document Archival',
       shortTitle: 'Compliance & Archival',
       scope: 'Fintech Automation • Document Cloud Archival • Real-Time Filing Tracker',
-      desc: 'State-of-the-art paperless compliance infrastructure providing encrypted 24/7 document repositories, deadline tracking, and instantaneous audit retrievals.',
+      desc: 'State-of-the-art paperless compliance infrastructure providing encrypted 24/7 document repositories, statutory deadline tracking, and audit retrievals.',
       badges: ['Confidential Cloud Archival', 'Automated ITC Screening', 'Paperless Accounting'],
       leadCounsel: 'Digital Systems Desk',
       statute: 'ISO 27001 Data Security • Cloud Archival',
@@ -292,41 +284,41 @@ const About = () => {
     },
   ];
 
-  // 4. Comparative Matrix Data (Why Switch To Us)
+  // 4. Comparative Matrix Data
   const comparisonMatrix = [
     {
       criterion: 'Account Ownership & Oversight',
-      traditional: 'Delegated to junior bookkeepers; high turnover',
+      traditional: 'Delegated to junior bookkeepers; high staff turnover',
       big4: 'Handed off to multi-tiered junior analyst layers',
-      chamunda: 'Direct Senior Partner assigned with direct contact',
+      chamunda: 'Direct Senior Partner assigned with direct contact access',
       isChampion: true,
     },
     {
       criterion: 'Pre-Filing Verification Rigor',
-      traditional: 'Reactive filing; errors discovered after notice arrives',
-      big4: 'Thorough but encumbered by weeks of corporate red tape',
+      traditional: 'Reactive filing; errors discovered only after notice arrives',
+      big4: 'Thorough but encumbered by weeks of corporate bureaucracy',
       chamunda: 'Algorithmic 3-Stage reconciliation before portal dispatch',
       isChampion: true,
     },
     {
       criterion: 'Scrutiny & Notice Resolution',
-      traditional: 'Panic response; surprise bill per notice response',
-      big4: 'Exorbitant hourly billing for appellate drafting',
-      chamunda: 'Proactive defense with pre-arranged retainer terms',
+      traditional: 'Panic response; separate surprise bill per notice response',
+      big4: 'Exorbitant hourly billing for appellate legal drafting',
+      chamunda: 'Proactive defense covered under pre-arranged retainer terms',
       isChampion: true,
     },
     {
       criterion: 'Document Security & Confidential Archives',
       traditional: 'Physical paper files; lost vouchers in storage',
-      big4: 'Restricted corporate ERPs with complex access permissions',
+      big4: 'Restricted corporate ERPs with complex access barriers',
       chamunda: '24/7 Secure Cloud Archives with instant one-click retrieval',
       isChampion: true,
     },
     {
       criterion: 'Fee Structure & Retainers',
-      traditional: 'Arbitrary add-ons, sudden year-end charges',
-      big4: 'High minimum corporate retainers unaffordable for MSMEs',
-      chamunda: 'Predictable, scope-locked monthly / annual retainer',
+      traditional: 'Arbitrary add-ons, unexpected year-end charges',
+      big4: 'High minimum corporate retainers unaffordable for mid-market',
+      chamunda: 'Predictable, scope-locked monthly / annual retainers',
       isChampion: true,
     },
     {
@@ -344,7 +336,7 @@ const About = () => {
       year: '2023',
       phase: 'FOUNDING & GENESIS',
       title: 'Inception in Nikol, Ahmedabad',
-      desc: 'Established as an independent direct tax and accounting advisory practice dedicated to providing institutional-quality compliance to local manufacturing and trading enterprises.',
+      desc: 'Established as an independent direct tax and corporate accounting advisory practice dedicated to providing institutional-quality compliance to local manufacturing and trading enterprises.',
       badge: 'Ahmedabad Genesis',
       metric: '50+ Initial Enterprise Clients',
     },
@@ -367,14 +359,14 @@ const About = () => {
     {
       year: '2026',
       phase: 'INSTITUTIONAL SCALE',
-      title: 'Enterprise Wealth & Comprehensive Retainer Systems',
+      title: 'Enterprise Retainer Systems & High-Value Counsel',
       desc: 'Serving over 250+ enterprise retainers across Gujarat with zero-penalty assurances, proactive annual tax planning, and direct partner access for mid-market leaders.',
       badge: 'Statutory Standard',
       metric: '₹15Cr+ Scrutiny Exposure Protected',
     },
   ];
 
-  // 7. Master Institutional Credential Seals & Regulatory Authority
+  // 6. Master Institutional Credential Seals & Regulatory Authority
   const credentialSeals = [
     {
       id: 'fiduciary-seal',
@@ -426,7 +418,7 @@ const About = () => {
     },
   ];
 
-  // 8. Authentic Regulatory Framework & Technical Protocols
+  // 7. Authentic Regulatory Framework & Technical Protocols
   const accreditations = [
     { code: 'FIDUCIARY-ETHICS', title: 'Code of Professional Ethics Aligned', desc: 'Strict observance of professional independence, fiduciary duty, and non-disclosure standards' },
     { code: 'MCA-SPICE', title: 'MCA 21 SPICe+ Intermediary', desc: 'Turnkey corporate incorporations, LLP agreements, and statutory board resolutions' },
@@ -443,139 +435,164 @@ const About = () => {
   return (
     <div className="about-page fade-in">
       {/* ============================================================
-          1. EXECUTIVE MIDNIGHT HERO BANNER
+          1. EXECUTIVE MIDNIGHT HERO BANNER (Architectural Splendor)
           ============================================================ */}
       <section className="about-hero" aria-labelledby="about-hero-title">
-        <div className="section-top-accent-line" aria-hidden="true"></div>
-        <div className="about-hero-glow glow-gold" aria-hidden="true"></div>
-        <div className="about-hero-glow glow-blue" aria-hidden="true"></div>
-        <div className="about-hero-grid" aria-hidden="true"></div>
+        <div className="about-hero-pattern" aria-hidden="true"></div>
+        <div className="about-hero-ambient-glow" aria-hidden="true"></div>
 
-        <div className="container">
-          <div className="about-hero-badge">
-            <span className="live-dot pulse"></span>
-            <Icons.Landmark />
-            <span>Institutional Tax Practice &bull; Ahmedabad, Gujarat</span>
-          </div>
-
-          <h1 id="about-hero-title">
-            Architecting Statutory Precision &amp; <span className="hero-gradient-text">Institutional Tax Defense</span>
-          </h1>
-
-          <p className="about-hero-lead">
-            Founded with an uncompromising commitment to fiduciary integrity, Shree Chamunda Associates delivers precision direct tax advisory, appellate dispute resolution, and corporate compliance architecture for ambitious Indian enterprises.
-          </p>
-
-          {/* Hero Credibility Ribbon */}
-          <div className="about-hero-trust-ribbon">
-            <div className="trust-ribbon-item">
-              <span className="ribbon-icon text-gold"><Icons.Certificate /></span>
-              <span>Statutory Practice Standards Aligned</span>
+        <div className="container about-hero-container">
+          <div className="about-hero-inner">
+            <div className="about-hero-badge">
+              <span className="hero-badge-beacon" aria-hidden="true"></span>
+              <Icons.Landmark />
+              <span>Institutional Tax Practice &bull; Ahmedabad Chambers</span>
             </div>
-            <span className="ribbon-sep">&bull;</span>
-            <div className="trust-ribbon-item">
-              <span className="ribbon-icon text-emerald"><Icons.Location /></span>
-              <span>Central Chambers in Ahmedabad, Gujarat</span>
+
+            <h1 id="about-hero-title" className="about-hero-title">
+              Architecting Statutory Precision &amp; <span className="title-gold-foil">Institutional Corporate Defense</span>
+            </h1>
+
+            <p className="about-hero-lead">
+              Founded on an uncompromising commitment to fiduciary independence, Shree Chamunda Associates delivers precision corporate tax strategy, appellate dispute resolution, and regulatory compliance architecture for ambitious Indian enterprises.
+            </p>
+
+            {/* Twin Executive Action Buttons */}
+            <div className="about-hero-actions">
+              <button
+                type="button"
+                className="btn-about-primary"
+                onClick={() => navigate('/contact')}
+                aria-label="Schedule Partner Advisory Consultation"
+              >
+                <i className="fa-solid fa-calendar-check about-btn-lead-icon" aria-hidden="true"></i>
+                <span className="about-btn-text">Schedule Partner Advisory</span>
+                <i className="fa-solid fa-arrow-right about-btn-trail-icon" aria-hidden="true"></i>
+              </button>
+
+              <button
+                type="button"
+                className="btn-about-whatsapp"
+                onClick={handleWhatsAppConsult}
+                aria-label="Direct WhatsApp Desk with Senior Advisory Consultant"
+              >
+                <i className="fa-brands fa-whatsapp about-wa-lead-icon" aria-hidden="true"></i>
+                <span className="about-wa-text">Direct WhatsApp Desk</span>
+                <span className="about-wa-status-dot" aria-hidden="true"></span>
+              </button>
             </div>
-            <span className="ribbon-sep">&bull;</span>
-            <div className="trust-ribbon-item">
-              <span className="ribbon-icon text-blue"><Icons.ShieldCheck /></span>
-              <span>100% On-Time Statutory Track Record</span>
+
+            {/* Hero Credibility Ribbon */}
+            <div className="about-hero-trust-ribbon">
+              <div className="trust-ribbon-item">
+                <span className="ribbon-icon text-gold"><Icons.Certificate /></span>
+                <span>Statutory Practice Standards Aligned</span>
+              </div>
+              <span className="ribbon-sep" aria-hidden="true">&bull;</span>
+              <div className="trust-ribbon-item">
+                <span className="ribbon-icon text-emerald"><Icons.Location /></span>
+                <span>Central Chambers in Nikol, Ahmedabad</span>
+              </div>
+              <span className="ribbon-sep" aria-hidden="true">&bull;</span>
+              <div className="trust-ribbon-item">
+                <span className="ribbon-icon text-blue"><Icons.ShieldCheck /></span>
+                <span>100% On-Time Statutory Track Record</span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Main Page Content */}
+      {/* Main Page Layout Container */}
       <div className="container about-main-layout">
         {/* ============================================================
-            2. QUANTITATIVE BENCHMARKS RIBBON (Floating Overlap)
+            2. QUANTITATIVE BENCHMARKS RIBBON (Floating Luxury Bar)
             ============================================================ */}
         <section className="about-stats-ribbon" aria-label="Firm Scale & Quantitative Benchmarks">
-          {stats.map((stat, idx) => (
-            <div key={idx} className={`about-stat-box ${stat.theme}`}>
-              <div className="stat-box-top">
-                <div className="stat-box-icon">
-                  {stat.icon}
+          <div className="stats-grid">
+            {stats.map((stat, idx) => (
+              <div key={idx} className={`about-stat-box ${stat.theme}`}>
+                <div className="stat-box-top">
+                  <div className="stat-box-icon" aria-hidden="true">
+                    {stat.icon}
+                  </div>
+                  <h3 className="stat-box-num">{stat.number}</h3>
                 </div>
-                <h3 className="stat-box-num">{stat.number}</h3>
+                <strong className="stat-box-label">{stat.label}</strong>
+                <span className="stat-box-desc">{stat.caption}</span>
               </div>
-              <strong className="stat-box-label">{stat.label}</strong>
-              <span className="stat-box-desc">{stat.caption}</span>
-            </div>
-          ))}
+            ))}
+          </div>
         </section>
 
         {/* ============================================================
             3. EXECUTIVE FOUNDING MANIFESTO & FIDUCIARY COMMITMENTS
             ============================================================ */}
         <section className="about-manifesto-section" aria-labelledby="manifesto-title">
-          <div className="section-top-accent-line" aria-hidden="true"></div>
-          <div className="manifesto-card">
+          <div className="section-title-wrap text-center">
             <div className="about-eyebrow-tag">
               <Icons.Feather />
               <span>FOUNDING MANIFESTO &bull; PRACTICE ETHOS</span>
             </div>
-
-            <h2 id="manifesto-title" className="manifesto-heading">
+            <h2 id="manifesto-title" className="section-main-heading">
               The Fiduciary Responsibility of the Modern Tax Practice
             </h2>
-
-            <div className="manifesto-body">
-              <p className="manifesto-lead-quote">
-                &ldquo;Too many Indian enterprises suffer from surprise tax notices, delayed filings, and missed input credits because they are treated as generic batch numbers by transactional accounting shops. That model is broken.&rdquo;
-              </p>
-
-              <p className="manifesto-paragraph">
-                Shree Chamunda Associates was established in Ahmedabad to provide an institutional alternative: a high-touch, partner-led Tax &amp; Corporate Advisory where every return is pre-reconciled, every statutory deduction is optimized, and client confidentiality is protected under strict fiduciary law.
-              </p>
-
-              <p className="manifesto-paragraph">
-                Whether representing an enterprise through high-stakes GST scrutiny, structuring a cross-border entity, or managing routine ROC compliance, our clients work directly with senior advisors who understand the nuances of Indian tax jurisprudence.
-              </p>
-            </div>
-
-            <div className="manifesto-sign-off">
-              <div className="sign-off-identity">
-                <strong className="founder-signature-name">Executive Advisory Board</strong>
-                <span className="founder-signature-title">Office of the Managing Partners &bull; Shree Chamunda Associates</span>
-                <span className="founder-signature-loc">Ahmedabad, Gujarat</span>
-              </div>
-              <div className="firm-seal-block">
-                <Icons.Landmark />
-                <span>OFFICIAL PRACTICE SEAL</span>
-              </div>
-            </div>
-
-            <div className="manifesto-actions">
-              <button type="button" className="btn-manifesto-primary" onClick={() => navigate('/contact')}>
-                <Icons.CalendarCheck />
-                <span>Schedule Advisory Consultation</span>
-                <Icons.ArrowRight />
-              </button>
-              <button type="button" className="btn-manifesto-secondary" onClick={handleWhatsAppConsult}>
-                <Icons.WhatsApp />
-                <span>WhatsApp Office Desk</span>
-              </button>
-            </div>
+            <p className="section-main-subtext">
+              Transforming corporate taxation from a reactive compliance burden into an institutional shield of strategic value and zero-notice certainty.
+            </p>
           </div>
 
-          {/* 4 Fiduciary Horizontal Cards Stack */}
-          <div className="manifesto-fiduciary-stack">
-            {fiduciaryCommitments.map((item, idx) => (
-              <div key={idx} className={`fiduciary-stack-card ${item.colorClass}`}>
-                <div className="stack-card-header">
-                  <div className="stack-icon-title-group">
-                    <div className="stack-icon-box">
+          <div className="manifesto-dual-grid">
+            {/* Left: The Written Manifesto */}
+            <div className="manifesto-narrative-card">
+              <div className="manifesto-card-accent" aria-hidden="true"></div>
+
+              <div className="manifesto-lead-quote-box">
+                <div className="quote-mark" aria-hidden="true">&ldquo;</div>
+                <p className="manifesto-lead-quote">
+                  Too many Indian enterprises suffer from surprise tax notices, delayed filings, and missed input credits because they are treated as generic batch numbers by transactional accounting shops. That model is fundamentally broken.
+                </p>
+              </div>
+
+              <div className="manifesto-prose">
+                <p>
+                  <strong>Shree Chamunda Associates</strong> was established in Ahmedabad to provide an institutional alternative: a high-touch, partner-led Tax &amp; Corporate Advisory where every return is pre-reconciled, every statutory deduction is optimized, and client confidentiality is protected under strict fiduciary law.
+                </p>
+                <p>
+                  Whether representing an enterprise through high-stakes GST scrutiny, structuring a cross-border entity, or managing routine ROC governance, our clients work directly with senior advisors who understand the technical depth of Indian tax jurisprudence.
+                </p>
+              </div>
+
+              <div className="manifesto-sign-off">
+                <div className="sign-off-identity">
+                  <strong className="founder-signature-name">Executive Advisory Council</strong>
+                  <span className="founder-signature-title">Office of the Managing Partners &bull; Shree Chamunda Associates</span>
+                  <span className="founder-signature-loc">Nikol Chambers &bull; Ahmedabad, Gujarat</span>
+                </div>
+                <div className="firm-seal-block" title="Official Chambers Fiduciary Seal">
+                  <Icons.Landmark />
+                  <span>OFFICIAL PRACTICE SEAL</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right: 4 Fiduciary Horizontal Tenets */}
+            <div className="manifesto-fiduciary-stack">
+              {fiduciaryCommitments.map((item, idx) => (
+                <div key={idx} className={`fiduciary-stack-card ${item.colorClass}`}>
+                  <div className="stack-card-header">
+                    <div className="stack-icon-box" aria-hidden="true">
                       {item.icon}
                     </div>
-                    <h3 className="stack-title">{item.title}</h3>
+                    <div className="stack-header-text">
+                      <span className="stack-tag">{item.tag}</span>
+                      <h3 className="stack-title">{item.title}</h3>
+                    </div>
                   </div>
-                  <span className="stack-tag">{item.tag}</span>
+                  <p className="stack-desc">{item.desc}</p>
                 </div>
-                <p className="stack-desc">{item.desc}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </section>
 
@@ -583,19 +600,20 @@ const About = () => {
             4. THE 3-WAY COMPARATIVE DECISION MATRIX (Why Switch To Us)
             ============================================================ */}
         <section className="about-comparison-section" aria-labelledby="comparison-title">
-          <div className="section-top-accent-line" aria-hidden="true"></div>
-          <div className="section-header-centered">
+          <div className="section-title-wrap text-center">
             <div className="about-eyebrow-tag">
               <Icons.Compass />
               <span>THE INSTITUTIONAL DIFFERENCE &bull; DECISION MATRIX</span>
             </div>
-            <h2 id="comparison-title">Why Ambitious Businesses Switch to Us</h2>
-            <p className="section-subtext">
-              Compare how Shree Chamunda Associates delivers the technical precision of Tier-1 advisory firms with the direct accessibility and cost transparency of a dedicated partner.
+            <h2 id="comparison-title" className="section-main-heading">
+              Why Ambitious Businesses Retain Us
+            </h2>
+            <p className="section-main-subtext">
+              Compare how Shree Chamunda Associates delivers the technical precision of Tier-1 advisory firms with the direct partner accessibility and fee predictability of a dedicated practice.
             </p>
           </div>
 
-          {/* Desktop 4-Column Table */}
+          {/* Desktop Table View */}
           <div className="comparison-table-wrapper desktop-only-table">
             <table className="comparison-table">
               <thead>
@@ -606,7 +624,7 @@ const About = () => {
                   <th className="col-chamunda">
                     <div className="chamunda-header-badge">
                       <span>SHREE CHAMUNDA ASSOCIATES</span>
-                      <span className="recommended-chip">PRACTICE BENCHMARK</span>
+                      <span className="recommended-chip">BENCHMARK</span>
                     </div>
                   </th>
                 </tr>
@@ -641,7 +659,7 @@ const About = () => {
             </table>
           </div>
 
-          {/* Mobile Interactive Versus Deck */}
+          {/* Mobile Interactive Segmented View */}
           <div className="comparison-mobile-deck mobile-only-deck">
             <div className="compare-segmented-control" role="tablist" aria-label="Comparison Perspective">
               <button
@@ -651,7 +669,7 @@ const About = () => {
                 className={`compare-segment-btn ${activeCompareTab === 'traditional' ? 'active' : ''}`}
                 onClick={() => setActiveCompareTab('traditional')}
               >
-                <span>vs Traditional Local Practitioner</span>
+                <span>vs Traditional Accountant</span>
               </button>
               <button
                 type="button"
@@ -660,7 +678,7 @@ const About = () => {
                 className={`compare-segment-btn ${activeCompareTab === 'big4' ? 'active' : ''}`}
                 onClick={() => setActiveCompareTab('big4')}
               >
-                <span>vs Big 4 / National Firm</span>
+                <span>vs Big 4 Conglomerate</span>
               </button>
             </div>
 
@@ -677,7 +695,7 @@ const About = () => {
                     <div className="versus-side versus-competitor">
                       <div className="versus-side-header">
                         <span className="side-badge badge-competitor">
-                          {activeCompareTab === 'traditional' ? 'Traditional Local Practitioner' : 'Big 4 Practice'}
+                          {activeCompareTab === 'traditional' ? 'Traditional Practitioner' : 'Big 4 Conglomerate'}
                         </span>
                       </div>
                       <div className="versus-side-body">
@@ -692,7 +710,7 @@ const About = () => {
                         <span className="side-badge badge-chamunda">
                           SHREE CHAMUNDA ASSOCIATES
                         </span>
-                        <span className="versus-chip-gold">Practice Standard</span>
+                        <span className="versus-chip-gold">Our Standard</span>
                       </div>
                       <div className="versus-side-body">
                         <span className="status-check"><Icons.Check /></span>
@@ -710,21 +728,21 @@ const About = () => {
             5. SPECIALIZED INSTITUTIONAL PRACTICE DESKS
             ============================================================ */}
         <section className="about-practice-desks-section" aria-labelledby="practice-desks-title">
-          <div className="section-top-accent-line" aria-hidden="true"></div>
-          <div className="section-header-centered">
+          <div className="section-title-wrap text-center">
             <div className="about-eyebrow-tag">
               <Icons.Briefcase />
               <span>INSTITUTIONAL PRACTICE STRUCTURE</span>
             </div>
-            <h2 id="practice-desks-title">Four Specialized Advisory Desks</h2>
-            <p className="section-subtext">
-              Our firm is organized into dedicated practice desks, ensuring every facet of your tax planning, audit defense, and corporate governance is directed by domain specialists.
+            <h2 id="practice-desks-title" className="section-main-heading">
+              Four Specialized Advisory Desks
+            </h2>
+            <p className="section-main-subtext">
+              Structured into domain-specific practice desks, ensuring every corporate advisory mandate, litigation defense, and secretarial filing is directed by seasoned practice specialists.
             </p>
           </div>
 
-          {/* Unified Responsive Interactive Practice Desks Stage (Desktop 4-in-a-Row, Mobile 2x2) */}
-          <div className="practice-desks-interactive-showcase">
-            {/* Practice Desk Selector Tabs */}
+          <div className="practice-desks-showcase-box">
+            {/* 4 Desk Selector Tiles */}
             <div className="practice-desks-selector-grid" role="tablist" aria-label="Specialized Practice Desks">
               {practiceDesks.map((d, dIdx) => (
                 <button
@@ -739,24 +757,24 @@ const About = () => {
                 >
                   <div className="tile-top-row">
                     <span className="tile-badge">{d.code}</span>
-                    <span className="tile-icon">{d.icon}</span>
+                    <span className="tile-icon" aria-hidden="true">{d.icon}</span>
                   </div>
                   <span className="tile-title">{d.title}</span>
                   <div className="tile-status-bar">
                     {activeDeskIdx === dIdx ? (
                       <span className="tile-active-label">
-                        <span className="tile-live-pip"></span>
+                        <span className="tile-live-pip" aria-hidden="true"></span>
                         <span>Active Mandate</span>
                       </span>
                     ) : (
-                      <span className="tile-idle-label">Inspect Mandate &rarr;</span>
+                      <span className="tile-idle-label">Inspect Desk &rarr;</span>
                     )}
                   </div>
                 </button>
               ))}
             </div>
 
-            {/* Featured Active Desk Dossier Stage */}
+            {/* Featured Active Desk Dossier */}
             {(() => {
               const activeDesk = practiceDesks[activeDeskIdx];
               const prevIdx = (activeDeskIdx - 1 + practiceDesks.length) % practiceDesks.length;
@@ -770,25 +788,20 @@ const About = () => {
                   aria-labelledby={`desk-tab-${activeDeskIdx}`}
                   key={activeDeskIdx}
                 >
-                  <div className="dossier-top-accent"></div>
+                  <div className="dossier-top-accent" aria-hidden="true"></div>
 
                   <div className="dossier-stage-layout">
-                    {/* Left: Practice Scope, Desc & Capabilities */}
+                    {/* Left: Desk Scope & Capabilities */}
                     <div className="dossier-main-content">
                       <div className="dossier-card-header">
-                        <div className="dossier-header-left">
-                          <div className="dossier-tags-row">
-                            <span className="dossier-code-pill">{activeDesk.code}</span>
-                            <span className="dossier-lead-badge">
-                              <span className="live-dot pulse"></span>
-                              <span>{activeDesk.leadCounsel}</span>
-                            </span>
-                          </div>
-                          <span className="dossier-statute-note">{activeDesk.statute}</span>
+                        <div className="dossier-tags-row">
+                          <span className="dossier-code-pill">{activeDesk.code}</span>
+                          <span className="dossier-lead-badge">
+                            <span className="live-dot pulse" aria-hidden="true"></span>
+                            <span>{activeDesk.leadCounsel}</span>
+                          </span>
                         </div>
-                        <div className="dossier-insignia-seal desktop-hidden">
-                          {activeDesk.icon}
-                        </div>
+                        <span className="dossier-statute-note">{activeDesk.statute}</span>
                       </div>
 
                       <h3 className="dossier-desk-title">{activeDesk.title}</h3>
@@ -801,7 +814,7 @@ const About = () => {
                       <p className="dossier-desk-desc">{activeDesk.desc}</p>
 
                       <div className="dossier-capabilities-section">
-                        <span className="dossier-capabilities-label">Core Institutional Capabilities:</span>
+                        <span className="dossier-capabilities-label">Core Practice Capabilities:</span>
                         <div className="dossier-badges-grid">
                           {activeDesk.badges.map((b, bIdx) => (
                             <div key={bIdx} className="dossier-capability-chip">
@@ -861,10 +874,10 @@ const About = () => {
                       </div>
                     </div>
 
-                    {/* Right: Institutional Governance Sidebar (Desktop Exclusive) */}
+                    {/* Right: Institutional Governance Sidebar */}
                     <div className="dossier-authority-sidebar">
                       <div className="dossier-sidebar-seal-box">
-                        <div className="large-dossier-seal">
+                        <div className="large-dossier-seal" aria-hidden="true">
                           {activeDesk.icon}
                         </div>
                         <h4 className="sidebar-desk-designation">{activeDesk.code} &bull; {activeDesk.leadCounsel}</h4>
@@ -876,14 +889,14 @@ const About = () => {
                           <span className="gov-icon"><Icons.ShieldCheck /></span>
                           <div className="gov-text">
                             <strong>Senior Partner Oversight</strong>
-                            <p>Handled exclusively by senior practice advocates, never delegated to uncredentialed trainees.</p>
+                            <p>Handled exclusively by senior practice advisors, never delegated to uncredentialed trainees.</p>
                           </div>
                         </div>
 
                         <div className="sidebar-governance-item">
                           <span className="gov-icon"><Icons.Clock /></span>
                           <div className="gov-text">
-                            <strong>24-Hour Scrutiny Action</strong>
+                            <strong>24-Hour Notice Action</strong>
                             <p>Statutory assessment notices analyzed with comprehensive jurisprudence brief within 24h.</p>
                           </div>
                         </div>
@@ -912,20 +925,20 @@ const About = () => {
           </div>
         </section>
 
-
         {/* ============================================================
-            7. UNIFIED CHRONOLOGICAL GROWTH TRACK (Zero Dead Space)
+            6. UNIFIED CHRONOLOGICAL GROWTH TRACK (Verifiable Progress)
             ============================================================ */}
         <section className="about-timeline-section" aria-labelledby="timeline-title">
-          <div className="section-top-accent-line" aria-hidden="true"></div>
-          <div className="section-header-centered">
+          <div className="section-title-wrap text-center">
             <div className="about-eyebrow-tag">
               <Icons.History />
               <span>VERIFIABLE PROGRESS &bull; PRACTICE TRACK RECORD</span>
             </div>
-            <h2 id="timeline-title">Milestones of Firm Growth</h2>
-            <p className="section-subtext">
-              A verifiable chronicle of institutional expansion, compliance milestones, and digital modernization from our Nikol chambers to managing enterprise networks across Gujarat.
+            <h2 id="timeline-title" className="section-main-heading">
+              Milestones of Firm Growth
+            </h2>
+            <p className="section-main-subtext">
+              A verifiable chronicle of institutional expansion, statutory milestones, and digital modernization from our Nikol chambers to managing enterprise retainers statewide.
             </p>
           </div>
 
@@ -957,14 +970,18 @@ const About = () => {
         </section>
 
         {/* ============================================================
-            8. INSTITUTIONAL ACCREDITATIONS & REGULATORY AUTHORITY SEALS
+            7. INSTITUTIONAL ACCREDITATIONS & REGULATORY AUTHORITY SEALS
             ============================================================ */}
         <section className="about-accreditations-section" aria-label="Institutional Accreditations & Regulatory Seals">
-          <div className="section-top-accent-line" aria-hidden="true"></div>
-          <div className="accreditations-header">
-            <span className="accred-eyebrow">INSTITUTIONAL ASSURANCE &bull; REGULATORY BENCHMARK</span>
-            <h3>Practice Credentials &amp; Regulatory Authority Seals</h3>
-            <p className="accred-sub">
+          <div className="section-title-wrap text-center">
+            <div className="about-eyebrow-tag">
+              <Icons.Certificate />
+              <span>INSTITUTIONAL ASSURANCE &bull; REGULATORY BENCHMARK</span>
+            </div>
+            <h2 className="section-main-heading">
+              Practice Credentials &amp; Regulatory Seals
+            </h2>
+            <p className="section-main-subtext">
               Operating strictly within statutory charters enacted by the Parliament of India, ensuring uncompromised fiduciary independence, authorized appellate representation, and algorithmic zero-error filing defense.
             </p>
           </div>
@@ -974,7 +991,7 @@ const About = () => {
             {credentialSeals.map((seal) => (
               <div key={seal.id} className={`master-seal-card ${seal.sealClass}`}>
                 <div className="seal-card-header">
-                  <div className="seal-icon-emblem">
+                  <div className="seal-icon-emblem" aria-hidden="true">
                     {seal.icon}
                     <span className="seal-emblem-ring"></span>
                   </div>
@@ -1022,24 +1039,25 @@ const About = () => {
         </section>
 
         {/* ============================================================
-            9. PHYSICAL PRACTICE CHAMBERS & TRANSIT GUIDE
+            8. PHYSICAL PRACTICE CHAMBERS & TRANSIT GUIDE
             ============================================================ */}
         <section className="about-chambers-section" aria-labelledby="chambers-title">
-          <div className="section-top-accent-line" aria-hidden="true"></div>
           <div className="chambers-card-wrapper">
             <div className="chambers-narrative-col">
               <div className="about-eyebrow-tag">
                 <Icons.Location />
                 <span>PHYSICAL PRESENCE &bull; CENTRAL CHAMBERS</span>
               </div>
-              <h2 id="chambers-title">Our Ahmedabad Practice Chambers</h2>
+              <h2 id="chambers-title" className="chambers-main-heading">
+                Our Ahmedabad Practice Chambers
+              </h2>
               <p className="chambers-lead-text">
-                We believe financial counsel must be grounded in direct, accessible, personal relationships. Corporate leaders and founders are welcome to schedule in-person advisory sessions at our fully equipped chambers in Nikol, Ahmedabad.
+                We believe financial counsel must be grounded in direct, accessible, personal relationships. Corporate leaders, founders, and CFOs are welcome to schedule in-person advisory sessions at our fully equipped chambers in Nikol, Ahmedabad.
               </p>
 
               <div className="chambers-specs-list">
                 <div className="chambers-spec-item">
-                  <div className="chambers-spec-icon">
+                  <div className="chambers-spec-icon" aria-hidden="true">
                     <Icons.Location />
                   </div>
                   <div>
@@ -1049,7 +1067,7 @@ const About = () => {
                 </div>
 
                 <div className="chambers-spec-item">
-                  <div className="chambers-spec-icon">
+                  <div className="chambers-spec-icon" aria-hidden="true">
                     <Icons.Clock />
                   </div>
                   <div>
@@ -1059,7 +1077,7 @@ const About = () => {
                 </div>
 
                 <div className="chambers-spec-item">
-                  <div className="chambers-spec-icon">
+                  <div className="chambers-spec-icon" aria-hidden="true">
                     <Icons.Phone />
                   </div>
                   <div>
@@ -1100,7 +1118,7 @@ const About = () => {
                     </div>
                   </div>
                   <span className="chamber-status-badge">
-                    <span className="live-dot pulse"></span>
+                    <span className="live-dot pulse" aria-hidden="true"></span>
                     ACTIVE CHAMBERS
                   </span>
                 </div>
@@ -1108,7 +1126,7 @@ const About = () => {
                 <div className="chambers-highlights">
                   <div className="ch-highlight-item">
                     <Icons.Check />
-                    <span>Private Partner Consultation Chambers</span>
+                    <span>Private Senior Partner Consultation Suites</span>
                   </div>
                   <div className="ch-highlight-item">
                     <Icons.Check />
@@ -1133,48 +1151,61 @@ const About = () => {
         </section>
 
         {/* ============================================================
-            10. EXECUTIVE CLOSING CTA BANNER
+            9. EXECUTIVE CLOSING CTA BANNER (Institutional Finish)
             ============================================================ */}
-        <section className="about-closing-cta">
-          <div className="section-top-accent-line" aria-hidden="true"></div>
+        <section className="about-closing-cta" aria-labelledby="closing-cta-title">
           <div className="cta-ambient-glow" aria-hidden="true"></div>
           <div className="cta-grid-bg" aria-hidden="true"></div>
 
           <div className="cta-inner-content">
-            <span className="cta-top-chip">RETAIN SENIOR COUNSEL &bull; SCALE WITH CONFIDENCE</span>
-            <h2>Ready to Partner with Seasoned Tax Advisors?</h2>
+            <span className="cta-top-chip">RETAIN SENIOR COUNSEL &bull; SCALE WITH FIDUCIARY CERTAINTY</span>
+            <h2 id="closing-cta-title">Ready to Partner with Seasoned Tax Advisors?</h2>
             <p>
-              Schedule a confidential initial consultation to review your current tax structure, eliminate notice vulnerabilities, and secure an institutional compliance architecture.
+              Schedule a confidential partner consultation to review your corporate tax architecture, preempt notice vulnerabilities, and secure seamless statutory compliance.
             </p>
 
             <div className="cta-btn-group">
-              <button type="button" className="btn-cta-gold" onClick={() => navigate('/contact')}>
-                <span className="btn-shine"></span>
+              <button
+                type="button"
+                className="btn-cta-gold"
+                onClick={() => navigate('/contact')}
+              >
+                <i className="fa-solid fa-calendar-check" aria-hidden="true"></i>
                 <span>Schedule Confidential Review</span>
-                <Icons.ArrowRight />
+                <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
               </button>
-              <button type="button" className="btn-cta-whatsapp" onClick={handleWhatsAppConsult}>
-                <Icons.WhatsApp />
-                <span>Chat on WhatsApp Desk</span>
+
+              <button
+                type="button"
+                className="btn-cta-whatsapp"
+                onClick={handleWhatsAppConsult}
+              >
+                <i className="fa-brands fa-whatsapp" aria-hidden="true"></i>
+                <span>Direct WhatsApp Desk</span>
+                <span className="about-wa-status-dot" aria-hidden="true"></span>
               </button>
-              <a href={`tel:${phone.replace(/\s+/g, '')}`} className="btn-cta-outline">
-                <Icons.Phone />
-                <span>Call Directly: {phone}</span>
+
+              <a
+                href={`tel:${phone.replace(/\s+/g, '')}`}
+                className="btn-cta-outline"
+              >
+                <i className="fa-solid fa-phone" aria-hidden="true"></i>
+                <span>Call: {phone}</span>
               </a>
             </div>
 
             <div className="cta-trust-guarantees">
               <span className="cta-guarantee-pill">
                 <Icons.Check />
-                <span>Direct Senior Partner Counsel</span>
+                <span>Direct Senior Partner Access</span>
               </span>
               <span className="cta-guarantee-pill">
                 <Icons.Check />
-                <span>Strict NDA &amp; Client Confidentiality</span>
+                <span>Strict NDA &amp; Client Privilege</span>
               </span>
               <span className="cta-guarantee-pill">
                 <Icons.Check />
-                <span>&lt; 24h Response SLA</span>
+                <span>&lt; 24h Response Guarantee</span>
               </span>
             </div>
           </div>

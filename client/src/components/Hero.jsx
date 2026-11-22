@@ -1,11 +1,45 @@
-import { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSiteContext } from '../context/SiteContext';
 import './Hero.css';
 
+const DOSSIER_PILLARS = [
+  {
+    num: '01',
+    title: 'Direct Tax Defense & Corporate Planning',
+    badge: 'AUDIT PROTECTED',
+    badgeIcon: 'fa-solid fa-shield-halved',
+    desc: 'Strategic tax optimization under Sec 43B(h), 80JJAA incentives, and statutory depreciation shields.',
+    actionQuery: 'Corporate Tax Planning & Strategy'
+  },
+  {
+    num: '02',
+    title: 'GST Litigation Defense & Reconciliation',
+    badge: '2B RECONCILED',
+    badgeIcon: 'fa-solid fa-check',
+    desc: 'Departmental audit defense, automated 2B ITC matching, and zero-liability statutory reconciliation.',
+    actionQuery: 'GST Notice & Litigation Defense'
+  },
+  {
+    num: '03',
+    title: 'Statutory Audit & Form 3CD Verification',
+    badge: 'SEC 44AB READY',
+    badgeIcon: 'fa-solid fa-file-contract',
+    desc: 'Independent working papers verification, regulatory disclosures, and board-level compliance review.',
+    actionQuery: 'Statutory Corporate Audit Sec 44AB'
+  },
+  {
+    num: '04',
+    title: 'ROC Governance & MCA Secretarial Mandates',
+    badge: 'GOOD STANDING',
+    badgeIcon: 'fa-solid fa-building-columns',
+    desc: 'Annual ROC statutory filings (AOC-4, MGT-7), director statutory KYC, and corporate governance filings.',
+    actionQuery: 'ROC Compliance & MCA Governance'
+  }
+];
+
 const Hero = () => {
   const { settings, loading } = useSiteContext();
-  const [activeWorkspaceTab, setActiveWorkspaceTab] = useState('all');
 
   if (loading) {
     return (
@@ -46,11 +80,11 @@ const Hero = () => {
           </div>
 
           <h1 className="hero-main-title">
-            Strategic Tax Precision &amp; <span className="title-gradient-accent">Seamless Compliance</span> for Growing Businesses.
+            Strategic Tax Precision &amp; <span className="title-gradient-accent">Seamless Compliance</span> for Growing Enterprises.
           </h1>
 
           <p className="hero-subtext">
-            Partner with dedicated senior tax advisors for corporate tax planning, GST audits, ROC filings, and dispute resolutions—ensuring zero penalties and maximum legal tax savings.
+            Partner with dedicated senior tax advisors for strategic corporate tax, GST audit defense, ROC governance, and dispute resolution—ensuring zero penalties and maximum legal tax savings.
           </p>
 
           {/* 3 Executive Value Badges */}
@@ -60,10 +94,7 @@ const Hero = () => {
                 <i className="fas fa-shield-halved"></i>
               </div>
               <div className="trust-badge-content">
-                <strong className="badge-title">
-                  <span className="badge-full">Zero-Penalty Record</span>
-                  <span className="badge-mob">Zero Penalty</span>
-                </strong>
+                <strong className="badge-title">Zero-Penalty Record</strong>
                 <span className="badge-subtitle">99.8% Statutory Accuracy</span>
               </div>
             </div>
@@ -73,10 +104,7 @@ const Hero = () => {
                 <i className="fas fa-file-contract"></i>
               </div>
               <div className="trust-badge-content">
-                <strong className="badge-title">
-                  <span className="badge-full">Mutual NDA &amp; Secrecy</span>
-                  <span className="badge-mob">Mutual NDA</span>
-                </strong>
+                <strong className="badge-title">Mutual NDA &amp; Secrecy</strong>
                 <span className="badge-subtitle">100% Fiduciary Client Privilege</span>
               </div>
             </div>
@@ -86,11 +114,8 @@ const Hero = () => {
                 <i className="fas fa-user-tie"></i>
               </div>
               <div className="trust-badge-content">
-                <strong className="badge-title">
-                  <span className="badge-full">Direct Partner Desk</span>
-                  <span className="badge-mob">Partner Desk</span>
-                </strong>
-                <span className="badge-subtitle">Senior Advisor Assigned</span>
+                <strong className="badge-title">Direct Partner Desk</strong>
+                <span className="badge-subtitle">Direct Senior Partner Access</span>
               </div>
             </div>
           </div>
@@ -110,8 +135,9 @@ const Hero = () => {
               className="btn-hero-whatsapp"
               aria-label="Direct WhatsApp Desk with Senior Advisory Consultant"
             >
-              <i className="fa-brands fa-whatsapp hero-wa-lead-icon"></i>
-              <span className="hero-wa-text">Direct WhatsApp Chat</span>
+              <i className="fa-brands fa-whatsapp hero-wa-lead-icon" aria-hidden="true"></i>
+              <span className="hero-wa-text">Direct WhatsApp Desk</span>
+              <span className="hero-wa-status-dot" aria-hidden="true"></span>
             </a>
           </div>
 
@@ -138,185 +164,111 @@ const Hero = () => {
               </div>
               <div className="proof-caption-row">
                 <span className="proof-caption">
-                  Trusted by <strong>200+ Retained Enterprises</strong> in Gujarat
+                  Trusted by <strong>200+ Retained Enterprises</strong> across Gujarat
                 </span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* RIGHT COLUMN: Live Interactive Compliance Workspace Preview */}
+        {/* RIGHT COLUMN: Executive Advisory Dossier (Retained Corporate Counsel) */}
         <div className="hero-visual-col">
           {/* Ambient Behind-Deck Glow */}
           <div className="hero-deck-glow-orb" aria-hidden="true"></div>
 
-          {/* The Main Command Deck Card */}
-          <div className="hero-mockup-card">
+          {/* The Executive Advisory Dossier Card */}
+          <div className="hero-mockup-card dossier-card" role="region" aria-label="Executive Advisory Dossier">
             {/* Top 24K Gold Foil Accent Bar */}
-            <div className="mockup-top-foil"></div>
+            <div className="mockup-top-foil" aria-hidden="true"></div>
 
-            {/* Mockup Card Header */}
-            <div className="mockup-header">
-              <div className="mockup-brand">
-                <div className="mockup-crest-wrap">
+            {/* Subtle Institutional Fiduciary Watermark */}
+            <div className="dossier-watermark" aria-hidden="true">
+              <i className="fa-solid fa-scale-balanced"></i>
+            </div>
+
+            {/* Dossier Header: Crest, Firm Authority, and Active Standing */}
+            <div className="dossier-header">
+              <div className="dossier-brand">
+                <div className="dossier-crest-wrap">
                   <img
                     src="/assets/logo_circle_full.png?v=6"
-                    alt="Shree Chamunda Associates Crest"
-                    className="mockup-logo-crest"
+                    alt="Shree Chamunda Associates Insignia"
+                    className="dossier-logo-crest"
                   />
-                  <span className="crest-halo-glow"></span>
+                  <span className="crest-halo-glow" aria-hidden="true"></span>
                 </div>
-                <div className="mockup-title">
-                  <span className="mockup-eyebrow">SHREE CHAMUNDA ASSOCIATES</span>
-                  <strong>Client Compliance Workspace</strong>
-                  <span className="mockup-sub">Live Statutory Mandates &bull; Confidential Client Dossier</span>
+                <div className="dossier-title-block">
+                  <span className="dossier-eyebrow">CHAMBERS OF SHREE CHAMUNDA ASSOCIATES</span>
+                  <h3 className="dossier-heading">Executive Advisory Dossier</h3>
+                  <span className="dossier-sub">Retained Corporate Counsel &bull; Gujarat Jurisdiction</span>
                 </div>
               </div>
-              <div className="mockup-status-tag">
-                <span className="status-live-beacon"></span>
-                <span>Active Mandates</span>
-              </div>
-            </div>
-
-            {/* Interactive Workspace Filter Bar */}
-            <div className="mockup-segmented-bar" role="tablist" aria-label="Compliance Workspace Views">
-              <button
-                type="button"
-                className={`segmented-tab-btn ${activeWorkspaceTab === 'all' ? 'active' : ''}`}
-                onClick={() => setActiveWorkspaceTab('all')}
-              >
-                <span>
-                  <span className="tab-full">All Mandates</span>
-                  <span className="tab-mob">All</span>
-                </span>
-                <span className="segmented-count">4</span>
-              </button>
-              <button
-                type="button"
-                className={`segmented-tab-btn ${activeWorkspaceTab === 'tax' ? 'active' : ''}`}
-                onClick={() => setActiveWorkspaceTab('tax')}
-              >
-                <span>
-                  <span className="tab-full">Direct Tax &amp; GST</span>
-                  <span className="tab-mob">Tax &amp; GST</span>
-                </span>
-                <span className="segmented-count">2</span>
-              </button>
-              <button
-                type="button"
-                className={`segmented-tab-btn ${activeWorkspaceTab === 'audit' ? 'active' : ''}`}
-                onClick={() => setActiveWorkspaceTab('audit')}
-              >
-                <span>
-                  <span className="tab-full">Audit &amp; TDS</span>
-                  <span className="tab-mob">Audit</span>
-                </span>
-                <span className="segmented-count">2</span>
-              </button>
-            </div>
-
-            {/* Live Filing Status Tiles */}
-            <div className="mockup-tiles-list">
-              {/* Tile 1: GST */}
-              {(activeWorkspaceTab === 'all' || activeWorkspaceTab === 'tax') && (
-                <div className="mockup-tile-item fade-in">
-                  <div className="tile-icon-wrapper icon-emerald">
-                    <i className="fas fa-file-invoice-dollar"></i>
-                  </div>
-                  <div className="tile-details">
-                    <div className="tile-title-row">
-                      <strong>GSTR-3B Monthly Return</strong>
-                      <span className="tile-badge-success">
-                        <span className="tile-mini-beacon emerald"></span> Filed &amp; Reconciled
-                      </span>
-                    </div>
-                    <span className="tile-meta">Tax Liability ₹0.00 &bull; Automated 2B Reconciliation</span>
-                  </div>
+              <div className="dossier-meta-badge">
+                <span className="dossier-brief-label">ENGAGEMENT BRIEF</span>
+                <div className="dossier-standing-pill" title="Retained Counsel Active Standing">
+                  <span className="dossier-beacon-dot" aria-hidden="true"></span>
+                  <span>Active Standing</span>
                 </div>
-              )}
-
-              {/* Tile 2: Corporate Audit */}
-              {(activeWorkspaceTab === 'all' || activeWorkspaceTab === 'audit') && (
-                <div className="mockup-tile-item fade-in">
-                  <div className="tile-icon-wrapper icon-gold">
-                    <i className="fas fa-tasks"></i>
-                  </div>
-                  <div className="tile-details">
-                    <div className="tile-title-row">
-                      <strong>Corporate Tax Audit (Sec 44AB)</strong>
-                      <span className="tile-badge-in-progress">
-                        <span className="tile-mini-beacon amber"></span> In Review (92%)
-                      </span>
-                    </div>
-                    <div className="tile-progress-bar">
-                      <span className="progress-fill" style={{ width: '92%' }}>
-                        <span className="progress-shimmer"></span>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Tile 3: Tax Savings Stat */}
-              {(activeWorkspaceTab === 'all' || activeWorkspaceTab === 'tax') && (
-                <div className="mockup-tile-item fade-in">
-                  <div className="tile-icon-wrapper icon-blue">
-                    <i className="fas fa-chart-line"></i>
-                  </div>
-                  <div className="tile-details">
-                    <div className="tile-title-row">
-                      <strong>Tax Optimization Saved</strong>
-                      <span className="tile-badge-saving">+₹2,45,000</span>
-                    </div>
-                    <span className="tile-meta">Claimed Sec 80JJAA &amp; Depreciations legally</span>
-                  </div>
-                </div>
-              )}
-
-              {/* Tile 4: Advance Tax & Statutory Deadlines */}
-              {(activeWorkspaceTab === 'all' || activeWorkspaceTab === 'audit') && (
-                <div className="mockup-tile-item fade-in">
-                  <div className="tile-icon-wrapper icon-purple">
-                    <i className="fas fa-shield-alt"></i>
-                  </div>
-                  <div className="tile-details">
-                    <div className="tile-title-row">
-                      <strong>Advance Tax (Q4) &amp; TDS 26Q</strong>
-                      <span className="tile-badge-scheduled">
-                        <i className="fas fa-clock"></i> Scheduled (On-Time)
-                      </span>
-                    </div>
-                    <span className="tile-meta">Pre-Computation Done &bull; Zero Default Penalty</span>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Bottom 3-Metric Floating Mini Bar */}
-            <div className="mockup-metrics-bar">
-              <div className="metric-pill">
-                <strong>4+ Yrs</strong>
-                <span className="metric-full">Practice Heritage</span>
-                <span className="metric-mob">Experience</span>
-              </div>
-              <div className="metric-divider"></div>
-              <div className="metric-pill">
-                <strong>200+</strong>
-                <span className="metric-full">Active Retainers</span>
-                <span className="metric-mob">Retainers</span>
-              </div>
-              <div className="metric-divider"></div>
-              <div className="metric-pill">
-                <strong className="text-emerald">100%</strong>
-                <span className="metric-full">Zero Notice Record</span>
-                <span className="metric-mob">Compliance</span>
               </div>
             </div>
 
-            {/* Fiduciary Confidentiality & Governance Footnote */}
-            <div className="mockup-footer-sync">
-              <i className="fa-solid fa-shield-halved sync-shield-icon"></i>
-              <span>Strict Client Privilege &bull; Governed by Fiduciary Ethics</span>
+            {/* Section Eyebrow: Statutory Practice Pillars */}
+            <div className="dossier-pillars-eyebrow">
+              <span>STATUTORY PRACTICE PILLARS &bull; CORPORATE RETAINER</span>
+            </div>
+
+            {/* 4 Statutory Practice Pillars (Numbered 01 to 04) */}
+            <div className="dossier-pillars-list" role="list" aria-label="Statutory Practice Pillars">
+              {DOSSIER_PILLARS.map((pillar) => (
+                <Link
+                  key={pillar.num}
+                  to={`/contact?service=${encodeURIComponent(pillar.actionQuery)}`}
+                  className="dossier-pillar-card"
+                  role="listitem"
+                  aria-label={`${pillar.title} - ${pillar.badge}`}
+                >
+                  <div className="pillar-header-row">
+                    <div className="pillar-title-wrap">
+                      <span className="pillar-num">{pillar.num}</span>
+                      <h4 className="pillar-title">{pillar.title}</h4>
+                    </div>
+                    <div className="pillar-action-meta">
+                      <span className="pillar-status-pill">
+                        <i className={pillar.badgeIcon} aria-hidden="true"></i>
+                        <span>{pillar.badge}</span>
+                      </span>
+                      <span className="pillar-hover-arrow" aria-hidden="true">
+                        <i className="fa-solid fa-arrow-right"></i>
+                      </span>
+                    </div>
+                  </div>
+                  <p className="pillar-desc">{pillar.desc}</p>
+                </Link>
+              ))}
+            </div>
+
+            {/* Bottom 3-Metric Executive Bar */}
+            <div className="dossier-metrics-strip">
+              <div className="dossier-metric-col">
+                <strong className="dossier-metric-val">Zero-Notice</strong>
+                <span className="dossier-metric-lbl">DEFAULT RECORD</span>
+              </div>
+              <div className="dossier-metric-sep" aria-hidden="true"></div>
+              <div className="dossier-metric-col">
+                <strong className="dossier-metric-val">Direct Desk</strong>
+                <span className="dossier-metric-lbl">SENIOR PARTNER ACCESS</span>
+              </div>
+              <div className="dossier-metric-sep" aria-hidden="true"></div>
+              <div className="dossier-metric-col">
+                <strong className="dossier-metric-val">Strict NDA</strong>
+                <span className="dossier-metric-lbl">FIDUCIARY PRIVILEGE</span>
+              </div>
+            </div>
+
+            {/* Fiduciary Protocol Footnote */}
+            <div className="dossier-footer-note">
+              <i className="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+              <span>Strict Fiduciary Privilege &bull; Governed by Professional Ethics</span>
             </div>
           </div>
         </div>
