@@ -1,186 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSiteContext } from '../context/SiteContext';
 import './About.css';
-
-// SVG Icons tailored for executive practice aesthetics
-const Icons = {
-  Landmark: () => (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <line x1="3" y1="22" x2="21" y2="22" />
-      <line x1="6" y1="18" x2="6" y2="11" />
-      <line x1="10" y1="18" x2="10" y2="11" />
-      <line x1="14" y1="18" x2="14" y2="11" />
-      <line x1="18" y1="18" x2="18" y2="11" />
-      <polygon points="12 2 20 7 4 7" />
-    </svg>
-  ),
-  Certificate: () => (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <circle cx="12" cy="8" r="6" />
-      <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
-    </svg>
-  ),
-  Location: () => (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-      <circle cx="12" cy="10" r="3" />
-    </svg>
-  ),
-  ShieldCheck: () => (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-      <path d="m9 12 2 2 4-4" />
-    </svg>
-  ),
-  Award: () => (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <circle cx="12" cy="8" r="6" />
-      <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
-    </svg>
-  ),
-  Building: () => (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <rect x="4" y="2" width="16" height="20" rx="2" />
-      <path d="M9 22v-4h6v4" />
-      <path d="M8 6h.01" />
-      <path d="M16 6h.01" />
-      <path d="M8 10h.01" />
-      <path d="M16 10h.01" />
-      <path d="M8 14h.01" />
-      <path d="M16 14h.01" />
-    </svg>
-  ),
-  FileInvoice: () => (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-      <polyline points="14 2 14 8 20 8" />
-      <line x1="16" y1="13" x2="8" y2="13" />
-      <line x1="16" y1="17" x2="8" y2="17" />
-      <polyline points="10 9 9 9 8 9" />
-    </svg>
-  ),
-  Vault: () => (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <rect x="3" y="3" width="18" height="18" rx="2" />
-      <circle cx="12" cy="12" r="4" />
-      <line x1="12" y1="8" x2="12" y2="10" />
-      <line x1="12" y1="14" x2="12" y2="16" />
-      <line x1="8" y1="12" x2="10" y2="12" />
-      <line x1="14" y1="12" x2="16" y2="12" />
-    </svg>
-  ),
-  UserTie: () => (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <circle cx="12" cy="7" r="4" />
-      <path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" />
-      <path d="M12 11v4l1.5 2-1.5 1-1.5-1 1.5-2z" />
-    </svg>
-  ),
-  Scale: () => (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />
-      <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />
-      <path d="M7 21h10" />
-      <path d="M12 3v18" />
-      <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2" />
-    </svg>
-  ),
-  CodeTerminal: () => (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <polyline points="4 17 10 11 4 5" />
-      <line x1="12" y1="19" x2="20" y2="19" />
-    </svg>
-  ),
-  Receipt: () => (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1-2-1Z" />
-      <path d="M16 8h-8" />
-      <path d="M16 12h-8" />
-      <path d="M10 16H8" />
-    </svg>
-  ),
-  ArrowLeft: () => (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <line x1="19" y1="12" x2="5" y2="12" />
-      <polyline points="12 19 5 12 12 5" />
-    </svg>
-  ),
-  ArrowRight: () => (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <line x1="5" y1="12" x2="19" y2="12" />
-      <polyline points="12 5 19 12 12 19" />
-    </svg>
-  ),
-  Clock: () => (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <circle cx="12" cy="12" r="10" />
-      <polyline points="12 6 12 12 16 14" />
-    </svg>
-  ),
-  Phone: () => (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-    </svg>
-  ),
-  Check: () => (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <polyline points="20 6 9 17 4 12" />
-    </svg>
-  ),
-  Cross: () => (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <line x1="18" y1="6" x2="6" y2="18" />
-      <line x1="6" y1="6" x2="18" y2="18" />
-    </svg>
-  ),
-  WhatsApp: () => (
-    <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M12.031 2C6.495 2 2 6.48 2 12c0 1.956.565 3.784 1.543 5.334L2.25 21.75l4.582-1.201A9.943 9.943 0 0 0 12.031 22c5.536 0 10.031-4.48 10.031-10s-4.495-10-10.031-10zm5.836 14.283c-.244.686-1.419 1.346-1.958 1.408-.506.059-1.169.088-3.791-.974-3.155-1.277-5.187-4.46-5.344-4.667-.158-.207-1.282-1.705-1.282-3.253 0-1.547.81-2.308 1.099-2.622.288-.314.629-.393.839-.393.209 0 .42.002.604.011.196.01.458-.074.717.548.262.629.89 2.171.969 2.33.078.158.13.344.026.551-.105.207-.157.336-.314.52-.158.184-.332.41-.474.551-.158.158-.322.33-.138.646.184.316.818 1.35 1.752 2.18 1.202 1.069 2.216 1.4 2.53 1.558.314.157.498.132.682-.079.184-.21.786-.917.996-1.232.21-.314.42-.262.708-.157.288.105 1.832.864 2.146 1.021.314.158.524.236.602.368.079.131.079.761-.165 1.447z" />
-    </svg>
-  ),
-  CalendarCheck: () => (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-      <line x1="16" y1="2" x2="16" y2="6" />
-      <line x1="8" y1="2" x2="8" y2="6" />
-      <line x1="3" y1="10" x2="21" y2="10" />
-      <path d="m9 16 2 2 4-4" />
-    </svg>
-  ),
-  Feather: () => (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z" />
-      <line x1="16" y1="8" x2="2" y2="22" />
-      <line x1="17.5" y1="15" x2="9" y2="15" />
-    </svg>
-  ),
-  Briefcase: () => (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
-      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-    </svg>
-  ),
-  History: () => (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-      <path d="M3 3v5h5" />
-      <polyline points="12 7 12 12 15 15" />
-    </svg>
-  ),
-  Compass: () => (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <circle cx="12" cy="12" r="10" />
-      <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
-    </svg>
-  )
-};
 
 const About = () => {
   const { settings } = useSiteContext();
   const navigate = useNavigate();
   const [activeCompareTab, setActiveCompareTab] = useState('traditional'); // 'traditional' | 'big4'
-  const [activeDeskIdx, setActiveDeskIdx] = useState(0);
+  const [copiedAddress, setCopiedAddress] = useState(false);
+  const [activeCaseTab, setActiveCaseTab] = useState('all');
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -192,43 +20,330 @@ const About = () => {
     ? (settings.address.includes('612') ? settings.address : '612, ' + settings.address)
     : '612, Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad, Gujarat - 380049';
 
-  // 1. Quantitative Benchmarks
+  const handleCopyAddress = async () => {
+    try {
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(address);
+      } else {
+        throw new Error('Clipboard API unavailable');
+      }
+    } catch {
+      const textArea = document.createElement('textarea');
+      textArea.value = address;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+    }
+    setCopiedAddress(true);
+    setTimeout(() => setCopiedAddress(false), 2200);
+  };
+
+  const handleDownloadDossier = () => {
+    const printWindow = window.open('', '_blank', 'width=920,height=1000');
+    if (!printWindow) {
+      alert('Please allow popups to view and download the Institutional Practice Dossier.');
+      return;
+    }
+    const htmlContent = `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <title>Shree Chamunda Associates — Institutional Practice Capability Dossier</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+        <style>
+          @page { size: A4; margin: 16mm 14mm; }
+          * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+          body {
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            color: #0f172a;
+            background: #ffffff;
+            margin: 0;
+            padding: 24px;
+            font-size: 10.5pt;
+            line-height: 1.5;
+          }
+          .dossier-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid #d4af37;
+            padding-bottom: 16px;
+            margin-bottom: 20px;
+          }
+          .dossier-brand h1 {
+            font-size: 19pt;
+            font-weight: 800;
+            color: #081426;
+            margin: 0 0 4px 0;
+            letter-spacing: -0.02em;
+          }
+          .dossier-brand p {
+            font-size: 9.5pt;
+            font-weight: 700;
+            color: #b45309;
+            margin: 0;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+          }
+          .dossier-meta {
+            text-align: right;
+            font-size: 8.5pt;
+            color: #475569;
+          }
+          .dossier-meta strong { color: #081426; }
+          .executive-summary {
+            background: #f8fafc;
+            border-left: 4px solid #d4af37;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+          }
+          .executive-summary h2 {
+            font-size: 11pt;
+            margin: 0 0 4px 0;
+            color: #081426;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+          }
+          .executive-summary p { margin: 0; font-size: 9pt; color: #334155; line-height: 1.45; }
+          .covenants-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+          }
+          .cov-box {
+            border: 1px solid #e2e8f0;
+            padding: 8px 10px;
+            border-radius: 6px;
+            background: #ffffff;
+            text-align: center;
+          }
+          .cov-num { font-size: 15pt; font-weight: 800; color: #081426; display: block; }
+          .cov-lbl { font-size: 7.5pt; font-weight: 700; color: #64748b; text-transform: uppercase; }
+          .desks-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+          }
+          .desk-card {
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 10px 12px;
+            page-break-inside: avoid;
+          }
+          .desk-code { font-size: 7.5pt; font-weight: 800; color: #b45309; letter-spacing: 0.06em; }
+          .desk-name { font-size: 10pt; font-weight: 800; color: #081426; margin: 2px 0 4px 0; }
+          .desk-scope { font-size: 8pt; color: #475569; margin-bottom: 4px; line-height: 1.35; }
+          .desk-statute { font-size: 7.5pt; font-family: 'JetBrains Mono', monospace; color: #0369a1; background: #f0f9ff; padding: 2px 6px; border-radius: 3px; display: inline-block; }
+          .seals-row {
+            border-top: 1px solid #e2e8f0;
+            padding-top: 14px;
+            margin-bottom: 16px;
+          }
+          .seals-title { font-size: 9.5pt; font-weight: 800; color: #081426; text-transform: uppercase; margin-bottom: 6px; }
+          .seals-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; font-size: 8pt; color: #334155; }
+          .dossier-footer {
+            border-top: 2px solid #081426;
+            padding-top: 12px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 8pt;
+            color: #64748b;
+          }
+          .chambers-address { font-weight: 600; color: #081426; }
+          .no-print-bar {
+            background: #081426;
+            color: #ffffff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: -24px -24px 20px -24px;
+          }
+          .btn-print {
+            background: #d4af37;
+            color: #081426;
+            border: none;
+            padding: 6px 16px;
+            font-weight: 800;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 9pt;
+          }
+          @media print {
+            .no-print-bar { display: none !important; }
+            body { padding: 0 !important; }
+          }
+        </style>
+      </head>
+      <body>
+        <div class="no-print-bar">
+          <span><strong>Shree Chamunda Associates</strong> — Official Institutional Practice Capability Statement</span>
+          <button class="btn-print" onclick="window.print()">Print / Save as PDF</button>
+        </div>
+        <div class="dossier-header">
+          <div class="dossier-brand">
+            <h1>SHREE CHAMUNDA ASSOCIATES</h1>
+            <p>Corporate Tax, Statutory Scrutiny & Appellate Advisory</p>
+          </div>
+          <div class="dossier-meta">
+            <div>Ref: <strong>SCA-CAPABILITY-2026</strong></div>
+            <div>Chambers: <strong>Nikol Central, Ahmedabad</strong></div>
+            <div>Jurisdiction: <strong>Gujarat Commercial Practice</strong></div>
+          </div>
+        </div>
+
+        <div class="executive-summary">
+          <h2>Fiduciary Practice Charter & Institutional Standing</h2>
+          <p>
+            Shree Chamunda Associates operates as an independent corporate tax, appellate litigation, and regulatory advisory practice. Founded on absolute fiduciary independence, zero contingent conflicts, and direct senior partner oversight, the firm represents mid-market enterprises, manufacturing leaders, and LLPs across Gujarat in high-stakes direct tax scrutiny, GST reconciliations, and turnkey corporate governance.
+          </p>
+        </div>
+
+        <div class="covenants-row">
+          <div class="cov-box"><span class="cov-num">4+</span><span class="cov-lbl">Years of Practice</span></div>
+          <div class="cov-box"><span class="cov-num">250+</span><span class="cov-lbl">Retained Enterprises</span></div>
+          <div class="cov-box"><span class="cov-num">1,500+</span><span class="cov-lbl">Statutory Filings</span></div>
+          <div class="cov-box"><span class="cov-num">₹15Cr+</span><span class="cov-lbl">Scrutiny Mitigated</span></div>
+        </div>
+
+        <h3 style="font-size: 10pt; text-transform: uppercase; letter-spacing: 0.05em; color: #081426; margin: 0 0 8px 0;">Specialized Advisory Chambers</h3>
+        <div class="desks-grid">
+          <div class="desk-card">
+            <span class="desk-code">DESK 01 • DIRECT TAX & APPELLATE</span>
+            <div class="desk-name">Direct Tax & Appellate Litigation</div>
+            <div class="desk-scope">Comprehensive representation for Sec 143(3) scrutiny, Sec 148 reassessment notices, and CIT(Appeals) submissions.</div>
+            <span class="desk-statute">Income Tax Act, 1961 • ITAT Bench Jurisprudence</span>
+          </div>
+          <div class="desk-card">
+            <span class="desk-code">DESK 02 • INDIRECT TAX & GST</span>
+            <div class="desk-name">GST Audit & ITC Reconciliations</div>
+            <div class="desk-scope">Algorithmic 3-way matching of purchase registers with live GSTR-2B, ASMT-10 notice defense, and audit support.</div>
+            <span class="desk-statute">CGST & SGST Acts, 2017 • GSTN Authorized API</span>
+          </div>
+          <div class="desk-card">
+            <span class="desk-code">DESK 03 • CORPORATE GOVERNANCE</span>
+            <div class="desk-name">Corporate Legal & ROC Governance</div>
+            <div class="desk-scope">Turnkey Private Limited / LLP incorporations, annual secretarial compliances, and Startup India 80-IAC filings.</div>
+            <span class="desk-statute">Companies Act, 2013 • MCA 21 SPICe+ Intermediary</span>
+          </div>
+          <div class="desk-card">
+            <span class="desk-code">DESK 04 • DIGITAL ARCHIVAL</span>
+            <div class="desk-name">Compliance Systems & Document Archival</div>
+            <div class="desk-scope">Encrypted 256-bit cloud document repositories, real-time filing trackers, and automated statutory deadline alerts.</div>
+            <span class="desk-statute">ISO 27001 Data Security • Bank-Grade Cloud Vault</span>
+          </div>
+        </div>
+
+        <div class="seals-row">
+          <div class="seals-title">Statutory Verification Protocols & Fiduciary Standards</div>
+          <div class="seals-list">
+            <div>&bull; <strong>Dual-Tier Senior Partner Sign-Off:</strong> 100% computational cross-verification before portal submission.</div>
+            <div>&bull; <strong>Statutory Appellate Standing:</strong> Authorized standing under Sec 288 Income Tax Act & Sec 116 CGST Act.</div>
+            <div>&bull; <strong>Pre-Filing Mismatch Shield:</strong> Proactive 3-way reconciliation against 26AS, AIS, and GSTR-2B.</div>
+            <div>&bull; <strong>Fiduciary Non-Disclosure:</strong> Enforceable enterprise NDAs and institutional client privilege.</div>
+          </div>
+        </div>
+
+        <div class="dossier-footer">
+          <div>
+            <div class="chambers-address">Shree Chamunda Associates Practice Chambers</div>
+            <div>${address}</div>
+          </div>
+          <div style="text-align: right;">
+            <div>Advisory Hotline: <strong>${phone}</strong></div>
+            <div>Email: <strong>${settings?.email || 'shreechamundaassociates0905@gmail.com'}</strong></div>
+          </div>
+        </div>
+      </body>
+      </html>
+    `;
+    printWindow.document.open();
+    printWindow.document.write(htmlContent);
+    printWindow.document.close();
+  };
+
+  // 1. Quantitative Benchmarks (Architectural Fiduciary Covenant Ledger)
   const stats = [
-    { number: '4+', label: 'Years of Practice', icon: <Icons.Award />, caption: 'Continuous regulatory advisory across Gujarat', theme: 'stat-gold' },
-    { number: '250+', label: 'Retained Enterprises', icon: <Icons.Building />, caption: 'Corporate manufacturing, trade & LLP leaders', theme: 'stat-blue' },
-    { number: '1,500+', label: 'Statutory Filings', icon: <Icons.FileInvoice />, caption: '100% on-time submission & audit track record', theme: 'stat-purple' },
-    { number: '₹15Cr+', label: 'Scrutiny Mitigated', icon: <Icons.ShieldCheck />, caption: 'Zero tax assessment liability losses defended', theme: 'stat-emerald' },
+    {
+      index: '01',
+      number: '4+',
+      label: 'YEARS IN ACTIVE PRACTICE',
+      caption: 'Continuous direct tax, GST & corporate regulatory counsel delivered across Gujarat.',
+      statute: 'Est. 2023 • Ahmedabad',
+      icon: 'fa-solid fa-award',
+      accentColor: 'gold',
+      assuranceTag: 'Active Practice',
+    },
+    {
+      index: '02',
+      number: '250+',
+      label: 'RETAINED ENTERPRISE CLIENTS',
+      caption: 'Mid-market manufacturing, trading enterprises & LLP leaders managed under annual retainers.',
+      statute: 'Gujarat Commercial Sector',
+      icon: 'fa-solid fa-building',
+      accentColor: 'blue',
+      assuranceTag: 'Annual Retainers',
+    },
+    {
+      index: '03',
+      number: '1,500+',
+      label: 'STATUTORY AUDIT & TAX FILINGS',
+      caption: '100% on-time submission rate across Income Tax ITRs, GST returns & MCA secretarial forms.',
+      statute: 'Zero Portal Rejection Track',
+      icon: 'fa-solid fa-file-invoice-dollar',
+      accentColor: 'purple',
+      assuranceTag: 'Zero-Notice Accuracy',
+    },
+    {
+      index: '04',
+      number: '₹15Cr+',
+      label: 'SCRUTINY EXPOSURE DEFENDED',
+      caption: 'High-stakes assessment liabilities contested and defended before CIT(Appeals) & GST benches.',
+      statute: 'Sec 148 & ASMT-10 Relief',
+      icon: 'fa-solid fa-shield-halved',
+      accentColor: 'emerald',
+      assuranceTag: 'Appellate Shield',
+    },
   ];
 
   // 2. Core Fiduciary Commitments
   const fiduciaryCommitments = [
     {
-      icon: <Icons.Vault />,
+      icon: 'fa-solid fa-vault',
       title: 'Bank-Grade Confidentiality & NDA Enforcement',
       desc: 'Rigorous compliance with statutory non-disclosure protocols and formal enterprise NDAs. Financial records and vouchers are safeguarded in secure encrypted cloud repositories.',
       tag: 'Fiduciary Duty',
-      colorClass: 'pillar-vault',
+      colorClass: 'tenet-vault',
     },
     {
-      icon: <Icons.ShieldCheck />,
+      icon: 'fa-solid fa-shield-halved',
       title: 'Zero-Notice Pre-Filing Reconciliation',
       desc: 'Every statutory return is computationally pre-reconciled against GSTR-2B, AIS, and Form 26AS before portal dispatch to preempt departmental inquiry notices.',
       tag: 'Preventive Defense',
-      colorClass: 'pillar-shield',
+      colorClass: 'tenet-shield',
     },
     {
-      icon: <Icons.UserTie />,
+      icon: 'fa-solid fa-user-tie',
       title: 'Direct Senior Partner Accountability',
       desc: 'Your corporate account is directly managed and reviewed by senior advisors. We never hand off corporate clients to junior interns or generic support queues.',
       tag: 'Senior Counsel',
-      colorClass: 'pillar-partner',
+      colorClass: 'tenet-partner',
     },
     {
-      icon: <Icons.Receipt />,
+      icon: 'fa-solid fa-receipt',
       title: 'Fixed-Fee Retainer Transparency',
       desc: 'Transparent, scope-locked retainer agreements with zero hidden surprise bills, arbitrary filing surcharges, or unexpected hourly billing invoices.',
       tag: 'Transparent Billing',
-      colorClass: 'pillar-pricing',
+      colorClass: 'tenet-pricing',
     },
   ];
 
@@ -244,7 +359,11 @@ const About = () => {
       badges: ['Sec 143/148 Defense', 'CIT(A) Submissions', 'Capital Gain Structuring'],
       leadCounsel: 'Senior Direct Tax Counsel',
       statute: 'Income Tax Act, 1961 • ITAT Appeals',
-      icon: <Icons.Scale />,
+      governanceNote: 'Dual-Tier Senior Partner Sign-Off',
+      targetService: 'Income Tax Sec 148 / 144 Notice Defense',
+      icon: 'fa-solid fa-scale-balanced',
+      accentClass: 'accent-gold',
+      themeClass: 'desk-theme-gold',
     },
     {
       code: 'DESK 02',
@@ -256,7 +375,11 @@ const About = () => {
       badges: ['ASMT-10 Dispute Resolution', 'GSTR-2B ITC Matching', 'E-Way Compliance'],
       leadCounsel: 'Indirect Tax Advisory Desk',
       statute: 'CGST & SGST Acts, 2017 • GST Portal',
-      icon: <Icons.Receipt />,
+      governanceNote: 'Algorithmic 3-Way Reconciliation',
+      targetService: 'GST Scrutiny & ASMT-10 Notice Defense',
+      icon: 'fa-solid fa-receipt',
+      accentClass: 'accent-emerald',
+      themeClass: 'desk-theme-emerald',
     },
     {
       code: 'DESK 03',
@@ -268,7 +391,11 @@ const About = () => {
       badges: ['MCA SPICe+ Processing', 'Annual ROC Governance', 'Startup India 80-IAC'],
       leadCounsel: 'Corporate Secretarial Desk',
       statute: 'Companies Act, 2013 • MCA 21 Portal',
-      icon: <Icons.Building />,
+      governanceNote: 'Zero Regulatory Penalty Track Record',
+      targetService: 'Company / LLP Turnkey Incorporation',
+      icon: 'fa-solid fa-building-columns',
+      accentClass: 'accent-blue',
+      themeClass: 'desk-theme-blue',
     },
     {
       code: 'DESK 04',
@@ -280,57 +407,157 @@ const About = () => {
       badges: ['Confidential Cloud Archival', 'Automated ITC Screening', 'Paperless Accounting'],
       leadCounsel: 'Digital Systems Desk',
       statute: 'ISO 27001 Data Security • Cloud Archival',
-      icon: <Icons.CodeTerminal />,
+      governanceNote: 'Bank-Grade 256-Bit Vault Storage',
+      targetService: 'Complete Accounting & Bookkeeping Retainer',
+      icon: 'fa-solid fa-terminal',
+      accentClass: 'accent-purple',
+      themeClass: 'desk-theme-purple',
     },
   ];
 
-  // 4. Comparative Matrix Data
+  // 4. Comparative Matrix Data (Executive Decision Matrix)
   const comparisonMatrix = [
     {
+      num: '01',
+      icon: 'fa-solid fa-user-shield',
       criterion: 'Account Ownership & Oversight',
+      metric: 'Partner Direct',
       traditional: 'Delegated to junior bookkeepers; high staff turnover',
       big4: 'Handed off to multi-tiered junior analyst layers',
       chamunda: 'Direct Senior Partner assigned with direct contact access',
-      isChampion: true,
     },
     {
+      num: '02',
+      icon: 'fa-solid fa-microchip',
       criterion: 'Pre-Filing Verification Rigor',
+      metric: '3-Tier Zero-Error',
       traditional: 'Reactive filing; errors discovered only after notice arrives',
       big4: 'Thorough but encumbered by weeks of corporate bureaucracy',
       chamunda: 'Algorithmic 3-Stage reconciliation before portal dispatch',
-      isChampion: true,
     },
     {
+      num: '03',
+      icon: 'fa-solid fa-gavel',
       criterion: 'Scrutiny & Notice Resolution',
+      metric: 'Retainer Shield',
       traditional: 'Panic response; separate surprise bill per notice response',
       big4: 'Exorbitant hourly billing for appellate legal drafting',
       chamunda: 'Proactive defense covered under pre-arranged retainer terms',
-      isChampion: true,
     },
     {
-      criterion: 'Document Security & Confidential Archives',
+      num: '04',
+      icon: 'fa-solid fa-vault',
+      criterion: 'Document Security & Archival',
+      metric: 'Bank-Grade Cloud',
       traditional: 'Physical paper files; lost vouchers in storage',
       big4: 'Restricted corporate ERPs with complex access barriers',
       chamunda: '24/7 Secure Cloud Archives with instant one-click retrieval',
-      isChampion: true,
     },
     {
+      num: '05',
+      icon: 'fa-solid fa-file-contract',
       criterion: 'Fee Structure & Retainers',
+      metric: 'Scope-Locked',
       traditional: 'Arbitrary add-ons, unexpected year-end charges',
       big4: 'High minimum corporate retainers unaffordable for mid-market',
       chamunda: 'Predictable, scope-locked monthly / annual retainers',
-      isChampion: true,
     },
     {
+      num: '06',
+      icon: 'fa-solid fa-bolt-lightning',
       criterion: 'Responsiveness & Turnaround',
+      metric: '< 24h Partner SLA',
       traditional: 'Days of silence; unanswered calls during deadline rush',
       big4: 'Formal ticket queues with 48–72h turnaround delays',
       chamunda: '< 24h Dedicated Partner SLA on WhatsApp & phone',
-      isChampion: true,
     },
   ];
 
-  // 5. Unified Growth Milestones Track
+  // 5. Representative Statutory Case Precedents & Scrutiny Relief Records
+  const casePrecedents = [
+    {
+      id: 'precedent-1',
+      domain: 'Direct Taxation',
+      domainBadge: 'Direct Tax Counsel',
+      forum: 'CIT(Appeals) • National Faceless Appeal Centre',
+      act: 'Income Tax Act, 1961 • Sec 148 / 148A',
+      title: 'Quashing of ₹2.45 Cr Section 148 Reassessment Order',
+      clientSector: 'Mid-Market Industrial Manufacturing',
+      exposure: '₹2.45 Cr Assessed Liability',
+      outcome: '100% Demand Quashed • Zero Penalty Sustained',
+      outcomeTag: 'Appellate Relief',
+      summary: 'Assessing Officer initiated reassessment under Section 148 alleging unexplained share capital and premium receipts. Our direct tax appellate desk demonstrated statutory limitation bar under Section 149 and proved source of funds with forensic bank trails and audited balance sheets, securing a complete deletion of addition from CIT(Appeals).',
+      highlights: [
+        'Overcame jurisdictional notice defect under Section 148A(b)',
+        'Forensic 3-tier investor fund flow documentation',
+        'CIT(A) order quashed full demand with zero penalty'
+      ],
+      icon: 'fa-solid fa-scale-balanced',
+      themeClass: 'case-theme-gold'
+    },
+    {
+      id: 'precedent-2',
+      domain: 'Indirect Taxation',
+      domainBadge: 'GST Scrutiny Desk',
+      forum: 'Gujarat State Commercial Tax Division • Range Audit',
+      act: 'CGST & SGST Acts, 2017 • Sec 61 & 73',
+      title: 'ASMT-10 Notice Defense & ₹84.6 Lakhs ITC Recovery',
+      clientSector: 'Specialty Chemical Trading Entity',
+      exposure: '₹84.6 Lakhs Inward ITC Difference',
+      outcome: 'Dispute Dropped • Full ITC Allowed Without Surcharge',
+      outcomeTag: 'Audit Dismissed',
+      summary: 'Department issued Form GST ASMT-10 alleging extensive variance between GSTR-3B and auto-populated GSTR-2B over two financial years due to delayed vendor filings. We executed an algorithmic reconciliation of 1,400+ supplier tax invoices, establishing vendor tax deposit compliance and securing complete closure without departmental show-cause escalation.',
+      highlights: [
+        'Algorithmic 3-way invoice reconciliation against GSTR-2B',
+        'Invoked statutory safe-harbor precedents on bona fide purchaser credit',
+        'Zero penalty and zero interest surcharge assessed'
+      ],
+      icon: 'fa-solid fa-receipt',
+      themeClass: 'case-theme-emerald'
+    },
+    {
+      id: 'precedent-3',
+      domain: 'Corporate Legal',
+      domainBadge: 'ROC Governance Desk',
+      forum: 'Ministry of Corporate Affairs • Registrar of Companies (ROC)',
+      act: 'Companies Act, 2013 • SPICe+ & Sec 80-IAC',
+      title: 'Multi-Director Holding Restructuring & 80-IAC Tax Holiday',
+      clientSector: 'Technology & Logistics Venture',
+      exposure: 'Cross-Border Holding Architecture',
+      outcome: 'SPICe+ Turnkey Approved in 4 Days • 80-IAC Eligible',
+      outcomeTag: 'Turnkey Approval',
+      summary: 'Structured and executed incorporation of a multi-director private limited enterprise with custom Articles of Association (AoA) for institutional venture capital readiness. Processed foreign directorship KYC, secured SPICe+ certificate of incorporation within 4 business days, and filed complete DPIIT Startup India 80-IAC documentation for 3-year income tax exemption.',
+      highlights: [
+        'Dual-class voting rights & protective investor covenants drafted',
+        'Turnkey PAN, TAN, GSTIN & EPFO registration in 96 hours',
+        'DPIIT recognized for Section 80-IAC statutory tax holiday'
+      ],
+      icon: 'fa-solid fa-building-columns',
+      themeClass: 'case-theme-blue'
+    },
+    {
+      id: 'precedent-4',
+      domain: 'Compliance & Archival',
+      domainBadge: 'Forensic Systems Desk',
+      forum: 'Centralized Processing Centre • Sec 44AB Tax Audit',
+      act: 'Income Tax Act, 1961 • Sec 44AB & Sec 43B(h)',
+      title: '₹42 Cr Turnover Retrospective Books Migration & Audit Defense',
+      clientSector: 'Textile Manufacturing & Export Consortium',
+      exposure: '₹42 Cr Annual Turnover Ledgers',
+      outcome: 'Unqualified Clean Audit Report • Zero 43B(h) Disallowances',
+      outcomeTag: 'Zero-Defect Audit',
+      summary: 'A multi-unit textile conglomerate faced imminent statutory audit deadlines with fragmented physical paper ledgers and unverified MSME vendor payment timelines. Our systems desk digitized 3 fiscal years into an encrypted cloud repository, reconciled 12,000+ vouchers, and delivered an unqualified Form 3CD audit report with zero statutory disallowances.',
+      highlights: [
+        '100% paperless migration to secure encrypted digital vault',
+        'Automated MSME vendor payment tracking preempting Sec 43B(h) disallowance',
+        'Zero departmental inquiries or portal defects on Form 3CD'
+      ],
+      icon: 'fa-solid fa-vault',
+      themeClass: 'case-theme-purple'
+    }
+  ];
+
+  // 6. Unified Growth Milestones Track
   const growthMilestones = [
     {
       year: '2023',
@@ -377,7 +604,7 @@ const About = () => {
       subtitle: 'Fiduciary Independence & Uncompromised Confidentiality',
       desc: 'Strict adherence to professional standards of independence, mandatory NDA confidentiality, and fiduciary objectivity. Zero contingent fee conflicts and strict ethical segregation.',
       highlights: ['Mandatory NDA Protection', 'Independence by Protocol', 'Objectivity in Audit'],
-      icon: <Icons.Certificate />,
+      icon: 'fa-solid fa-certificate',
       sealClass: 'seal-fiduciary',
     },
     {
@@ -389,7 +616,7 @@ const About = () => {
       subtitle: 'CIT(Appeals), ITAT Benches & GST Revisional Jurisprudence',
       desc: 'Authorized statutory standing to represent corporate and individual assessees before Commissioner (Appeals), Income Tax Appellate Tribunal (ITAT), and GST Appellate Revisional benches.',
       highlights: ['CIT(A) Submissions', 'ITAT Case Jurisprudence', 'DRC-01A / ASMT-10 Defense'],
-      icon: <Icons.Scale />,
+      icon: 'fa-solid fa-scale-balanced',
       sealClass: 'seal-itat',
     },
     {
@@ -401,7 +628,7 @@ const About = () => {
       subtitle: 'Pre-Filing Algorithmic Cross-Verification',
       desc: 'Rigorous two-stage verification protocol: every tax return, computational schedule, and financial ledger is reviewed by a Lead Preparer and countersigned by a Senior Advisory Partner prior to portal transmission.',
       highlights: ['Pre-Filing 26AS/AIS Match', 'Partner Co-Signature', 'Zero Portal Errors Guarantee'],
-      icon: <Icons.ShieldCheck />,
+      icon: 'fa-solid fa-shield-halved',
       sealClass: 'seal-quality',
     },
     {
@@ -413,7 +640,7 @@ const About = () => {
       subtitle: 'Physical Chambers at 612 Hill Town Square, Nikol',
       desc: 'Physical corporate practice chambers established at 612 Hill Town Square, Nikol, Ahmedabad. Fully equipped with private partner consultation suites and secure encrypted archival terminals.',
       highlights: ['In-Person Advisory Chambers', 'Confidential Consultation Rooms', 'Bank-Grade Vault Terminals'],
-      icon: <Icons.Building />,
+      icon: 'fa-solid fa-building',
       sealClass: 'seal-chambers',
     },
   ];
@@ -435,70 +662,86 @@ const About = () => {
   return (
     <div className="about-page fade-in">
       {/* ============================================================
-          1. EXECUTIVE MIDNIGHT HERO BANNER (Architectural Splendor)
+          1. EDITORIAL SWISS FINTECH HERO SECTION (Architectural Precision)
           ============================================================ */}
       <section className="about-hero" aria-labelledby="about-hero-title">
-        <div className="about-hero-pattern" aria-hidden="true"></div>
-        <div className="about-hero-ambient-glow" aria-hidden="true"></div>
+        {/* Top Gold Glowing Accent Divider & Ambient Atmospheric Layers */}
+        <div className="about-top-accent-line" aria-hidden="true"></div>
+        <div className="about-ambient-grid" aria-hidden="true"></div>
+        <div className="about-ambient-orb orb-gold" aria-hidden="true"></div>
 
         <div className="container about-hero-container">
-          <div className="about-hero-inner">
-            <div className="about-hero-badge">
-              <span className="hero-badge-beacon" aria-hidden="true"></span>
-              <Icons.Landmark />
-              <span>Institutional Tax Practice &bull; Ahmedabad Chambers</span>
-            </div>
+          <span className="header-watermark" aria-hidden="true">CHAMBERS</span>
+          <div className="luxury-header-halo" aria-hidden="true"></div>
 
-            <h1 id="about-hero-title" className="about-hero-title">
-              Architecting Statutory Precision &amp; <span className="title-gold-foil">Institutional Corporate Defense</span>
-            </h1>
+          {/* Eyebrow Badge with Index Chip & Refined Amber Emblem */}
+          <div className="about-eyebrow-badge">
+            <span className="badge-index-chip">01</span>
+            <i className="fa-solid fa-landmark" aria-hidden="true"></i>
+            <span>INSTITUTIONAL TAX PRACTICE &bull; AHMEDABAD CHAMBERS</span>
+          </div>
 
-            <p className="about-hero-lead">
-              Founded on an uncompromising commitment to fiduciary independence, Shree Chamunda Associates delivers precision corporate tax strategy, appellate dispute resolution, and regulatory compliance architecture for ambitious Indian enterprises.
-            </p>
+          {/* Majestic Hero Headline with Liquid 24K Burnished Gold Highlight */}
+          <h1 id="about-hero-title" className="about-main-title">
+            Architecting Statutory Precision &amp; <br className="hidden-mobile" />
+            <span className="title-burnished-gold">Institutional Corporate Defense.</span>
+          </h1>
 
-            {/* Twin Executive Action Buttons */}
-            <div className="about-hero-actions">
-              <button
-                type="button"
-                className="btn-about-primary"
-                onClick={() => navigate('/contact')}
-                aria-label="Schedule Partner Advisory Consultation"
-              >
-                <i className="fa-solid fa-calendar-check about-btn-lead-icon" aria-hidden="true"></i>
-                <span className="about-btn-text">Schedule Partner Advisory</span>
-                <i className="fa-solid fa-arrow-right about-btn-trail-icon" aria-hidden="true"></i>
-              </button>
+          <p className="about-subtitle">
+            Founded on an uncompromising commitment to fiduciary independence, Shree Chamunda Associates delivers precision corporate tax strategy, appellate dispute resolution, and regulatory compliance architecture for ambitious Indian enterprises.
+          </p>
 
-              <button
-                type="button"
-                className="btn-about-whatsapp"
-                onClick={handleWhatsAppConsult}
-                aria-label="Direct WhatsApp Desk with Senior Advisory Consultant"
-              >
-                <i className="fa-brands fa-whatsapp about-wa-lead-icon" aria-hidden="true"></i>
-                <span className="about-wa-text">Direct WhatsApp Desk</span>
-                <span className="about-wa-status-dot" aria-hidden="true"></span>
-              </button>
-            </div>
+          {/* Twin Executive Action Buttons (Institutional Obsidian Standard) */}
+          <div className="about-hero-actions">
+            <button
+              type="button"
+              className="btn-hero-primary"
+              onClick={() => navigate('/contact')}
+              aria-label="Schedule Partner Advisory Consultation"
+            >
+              <i className="fa-solid fa-calendar-check hero-btn-lead-icon" aria-hidden="true"></i>
+              <span className="hero-btn-text">Schedule Partner Advisory</span>
+              <i className="fa-solid fa-arrow-right hero-btn-trail-icon" aria-hidden="true"></i>
+            </button>
 
-            {/* Hero Credibility Ribbon */}
-            <div className="about-hero-trust-ribbon">
-              <div className="trust-ribbon-item">
-                <span className="ribbon-icon text-gold"><Icons.Certificate /></span>
-                <span>Statutory Practice Standards Aligned</span>
-              </div>
-              <span className="ribbon-sep" aria-hidden="true">&bull;</span>
-              <div className="trust-ribbon-item">
-                <span className="ribbon-icon text-emerald"><Icons.Location /></span>
-                <span>Central Chambers in Nikol, Ahmedabad</span>
-              </div>
-              <span className="ribbon-sep" aria-hidden="true">&bull;</span>
-              <div className="trust-ribbon-item">
-                <span className="ribbon-icon text-blue"><Icons.ShieldCheck /></span>
-                <span>100% On-Time Statutory Track Record</span>
-              </div>
-            </div>
+            <button
+              type="button"
+              className="btn-hero-whatsapp"
+              onClick={handleWhatsAppConsult}
+              aria-label="Direct WhatsApp Desk with Senior Advisory Consultant"
+            >
+              <i className="fa-brands fa-whatsapp hero-wa-lead-icon" aria-hidden="true"></i>
+              <span className="hero-wa-text">Direct WhatsApp Desk</span>
+              <span className="hero-wa-status-dot" aria-hidden="true"></span>
+            </button>
+
+            <button
+              type="button"
+              className="btn-hero-dossier"
+              onClick={handleDownloadDossier}
+              aria-label="Download Institutional Practice Dossier"
+              title="Download Official Practice Capability Dossier (.pdf)"
+            >
+              <i className="fa-solid fa-file-pdf hero-dossier-lead-icon" aria-hidden="true"></i>
+              <span className="hero-dossier-text">Practice Dossier (.pdf)</span>
+              <i className="fa-solid fa-download hero-dossier-trail-icon" aria-hidden="true"></i>
+            </button>
+          </div>
+
+          {/* Frosted Executive Reassurance Strip */}
+          <div className="header-assurance-strip">
+            <span className="assurance-pill">
+              <i className="fa-solid fa-award text-gold" aria-hidden="true"></i>
+              <span>Statutory Practice Standards Aligned</span>
+            </span>
+            <span className="assurance-pill">
+              <i className="fa-solid fa-location-dot text-emerald" aria-hidden="true"></i>
+              <span>Central Chambers in Nikol, Ahmedabad</span>
+            </span>
+            <span className="assurance-pill">
+              <i className="fa-solid fa-shield-halved text-blue" aria-hidden="true"></i>
+              <span>100% On-Time Statutory Track Record</span>
+            </span>
           </div>
         </div>
       </section>
@@ -506,21 +749,44 @@ const About = () => {
       {/* Main Page Layout Container */}
       <div className="container about-main-layout">
         {/* ============================================================
-            2. QUANTITATIVE BENCHMARKS RIBBON (Floating Luxury Bar)
+            2. QUANTITATIVE BENCHMARKS (Architectural Fiduciary Covenant Ledger)
             ============================================================ */}
-        <section className="about-stats-ribbon" aria-label="Firm Scale & Quantitative Benchmarks">
-          <div className="stats-grid">
+        <section className="about-covenants-section" aria-label="Firm Scale & Quantitative Benchmarks">
+          <div className="covenants-pedestal-grid" role="region" aria-label="Statutory Practice Benchmarks">
             {stats.map((stat, idx) => (
-              <div key={idx} className={`about-stat-box ${stat.theme}`}>
-                <div className="stat-box-top">
-                  <div className="stat-box-icon" aria-hidden="true">
-                    {stat.icon}
-                  </div>
-                  <h3 className="stat-box-num">{stat.number}</h3>
+              <article key={idx} className={`covenant-pedestal-card covenant-accent-${stat.accentColor}`}>
+                <div className="card-top-hairline" aria-hidden="true"></div>
+                
+                {/* Top Meta Row: Index Chip and Clean Monochrome Statute Tag */}
+                <div className="covenant-card-top-row">
+                  <span className="covenant-index-chip">{stat.index}</span>
+                  <span className="covenant-statute-tag">
+                    <i className={stat.icon} aria-hidden="true"></i>
+                    <span>{stat.statute}</span>
+                  </span>
                 </div>
-                <strong className="stat-box-label">{stat.label}</strong>
-                <span className="stat-box-desc">{stat.caption}</span>
-              </div>
+
+                {/* Hero Number Display */}
+                <div className="covenant-metric-wrap">
+                  <span className="covenant-big-number">{stat.number}</span>
+                </div>
+
+                {/* Authoritative Uppercase Tracking Label */}
+                <h3 className="covenant-card-label">{stat.label}</h3>
+
+                <div className="covenant-divider" aria-hidden="true"></div>
+
+                {/* Narrative Scope */}
+                <p className="covenant-card-desc">{stat.caption}</p>
+
+                {/* Bottom Assurance Tag with Gold Verification Shield */}
+                <div className="covenant-card-footer">
+                  <span className="covenant-assurance-pill">
+                    <i className="fa-solid fa-shield-halved" aria-hidden="true"></i>
+                    <span>{stat.assuranceTag}</span>
+                  </span>
+                </div>
+              </article>
             ))}
           </div>
         </section>
@@ -529,9 +795,10 @@ const About = () => {
             3. EXECUTIVE FOUNDING MANIFESTO & FIDUCIARY COMMITMENTS
             ============================================================ */}
         <section className="about-manifesto-section" aria-labelledby="manifesto-title">
-          <div className="section-title-wrap text-center">
-            <div className="about-eyebrow-tag">
-              <Icons.Feather />
+          <div className="about-section-header text-center">
+            <div className="about-eyebrow-badge">
+              <span className="badge-index-chip">02</span>
+              <i className="fa-solid fa-feather-pointed" aria-hidden="true"></i>
               <span>FOUNDING MANIFESTO &bull; PRACTICE ETHOS</span>
             </div>
             <h2 id="manifesto-title" className="section-main-heading">
@@ -543,12 +810,12 @@ const About = () => {
           </div>
 
           <div className="manifesto-dual-grid">
-            {/* Left: The Written Manifesto */}
+            {/* Left: The Written Manifesto Card */}
             <div className="manifesto-narrative-card">
-              <div className="manifesto-card-accent" aria-hidden="true"></div>
+              <div className="card-top-hairline" aria-hidden="true"></div>
 
               <div className="manifesto-lead-quote-box">
-                <div className="quote-mark" aria-hidden="true">&ldquo;</div>
+                <span className="quote-mark" aria-hidden="true">&ldquo;</span>
                 <p className="manifesto-lead-quote">
                   Too many Indian enterprises suffer from surprise tax notices, delayed filings, and missed input credits because they are treated as generic batch numbers by transactional accounting shops. That model is fundamentally broken.
                 </p>
@@ -559,19 +826,33 @@ const About = () => {
                   <strong>Shree Chamunda Associates</strong> was established in Ahmedabad to provide an institutional alternative: a high-touch, partner-led Tax &amp; Corporate Advisory where every return is pre-reconciled, every statutory deduction is optimized, and client confidentiality is protected under strict fiduciary law.
                 </p>
                 <p>
-                  Whether representing an enterprise through high-stakes GST scrutiny, structuring a cross-border entity, or managing routine ROC governance, our clients work directly with senior advisors who understand the technical depth of Indian tax jurisprudence.
+                  Whether representing an enterprise through high-stakes GST scrutiny, structuring a corporate entity under MCA SPICe+, or managing continuous secretarial governance, our clients work directly with senior advisors who understand the technical depth of Indian tax jurisprudence.
                 </p>
               </div>
 
               <div className="manifesto-sign-off">
                 <div className="sign-off-identity">
-                  <strong className="founder-signature-name">Executive Advisory Council</strong>
-                  <span className="founder-signature-title">Office of the Managing Partners &bull; Shree Chamunda Associates</span>
-                  <span className="founder-signature-loc">Nikol Chambers &bull; Ahmedabad, Gujarat</span>
+                  <div className="sign-off-kicker">
+                    <i className="fa-solid fa-signature" aria-hidden="true"></i>
+                    <span>EXECUTED UNDER PRACTICE COVENANT</span>
+                  </div>
+                  <strong className="founder-signature-name">Office of the Managing Partners</strong>
+                  <span className="founder-signature-title">Appellate Tax Counsel &bull; Corporate Regulatory Practice</span>
+                  <span className="founder-signature-loc">
+                    <i className="fa-solid fa-location-dot" aria-hidden="true"></i>
+                    <span>Nikol Chambers &bull; Ahmedabad, Gujarat</span>
+                  </span>
                 </div>
-                <div className="firm-seal-block" title="Official Chambers Fiduciary Seal">
-                  <Icons.Landmark />
-                  <span>OFFICIAL PRACTICE SEAL</span>
+
+                {/* Prestigious Chambers Heraldic Signet Medallion */}
+                <div className="chambers-heraldic-seal" title="Official Chambers Fiduciary Seal">
+                  <div className="seal-concentric-ring">
+                    <div className="seal-center-core">
+                      <i className="fa-solid fa-scale-balanced seal-court-icon" aria-hidden="true"></i>
+                      <span className="seal-monogram-txt">SCA</span>
+                      <span className="seal-jurisdiction-txt">AHMEDABAD</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -580,9 +861,10 @@ const About = () => {
             <div className="manifesto-fiduciary-stack">
               {fiduciaryCommitments.map((item, idx) => (
                 <div key={idx} className={`fiduciary-stack-card ${item.colorClass}`}>
+                  <div className="card-top-hairline" aria-hidden="true"></div>
                   <div className="stack-card-header">
                     <div className="stack-icon-box" aria-hidden="true">
-                      {item.icon}
+                      <i className={item.icon}></i>
                     </div>
                     <div className="stack-header-text">
                       <span className="stack-tag">{item.tag}</span>
@@ -600,9 +882,10 @@ const About = () => {
             4. THE 3-WAY COMPARATIVE DECISION MATRIX (Why Switch To Us)
             ============================================================ */}
         <section className="about-comparison-section" aria-labelledby="comparison-title">
-          <div className="section-title-wrap text-center">
-            <div className="about-eyebrow-tag">
-              <Icons.Compass />
+          <div className="about-section-header text-center">
+            <div className="about-eyebrow-badge">
+              <span className="badge-index-chip">03</span>
+              <i className="fa-solid fa-compass" aria-hidden="true"></i>
               <span>THE INSTITUTIONAL DIFFERENCE &bull; DECISION MATRIX</span>
             </div>
             <h2 id="comparison-title" className="section-main-heading">
@@ -615,42 +898,74 @@ const About = () => {
 
           {/* Desktop Table View */}
           <div className="comparison-table-wrapper desktop-only-table">
+            <div className="card-top-hairline" aria-hidden="true"></div>
             <table className="comparison-table">
               <thead>
                 <tr>
-                  <th className="col-criterion">OPERATIONAL CRITERION</th>
-                  <th className="col-traditional">TRADITIONAL LOCAL ACCOUNTANT</th>
-                  <th className="col-big4">BIG 4 / NATIONAL PRACTICE</th>
+                  <th className="col-criterion">
+                    <span className="th-eyebrow-tag">OPERATIONAL BENCHMARK</span>
+                    <span className="th-heading-title">Practice Dimension</span>
+                  </th>
+                  <th className="col-traditional">
+                    <span className="th-eyebrow-tag">STATUS QUO</span>
+                    <span className="th-heading-title">Traditional Local Firm</span>
+                    <span className="th-sub-note">Reactive Bookkeeping</span>
+                  </th>
+                  <th className="col-big4">
+                    <span className="th-eyebrow-tag">NATIONAL CONGLOMERATE</span>
+                    <span className="th-heading-title">Big 4 / Corporate Firm</span>
+                    <span className="th-sub-note">High Overhead &bull; Junior Layers</span>
+                  </th>
                   <th className="col-chamunda">
-                    <div className="chamunda-header-badge">
-                      <span>SHREE CHAMUNDA ASSOCIATES</span>
-                      <span className="recommended-chip">BENCHMARK</span>
+                    <div className="chamunda-pedestal-header">
+                      <div className="pedestal-eyebrow-row">
+                        <span className="pedestal-crown-chip">
+                          <i className="fa-solid fa-crown" aria-hidden="true"></i>
+                          <span>BENCHMARK</span>
+                        </span>
+                      </div>
+                      <span className="pedestal-brand-title">SHREE CHAMUNDA ASSOCIATES</span>
+                      <span className="pedestal-sub-caption">Partner-Led Fiduciary Defense</span>
                     </div>
                   </th>
                 </tr>
               </thead>
               <tbody>
                 {comparisonMatrix.map((row, idx) => (
-                  <tr key={idx}>
+                  <tr key={idx} className="matrix-data-row">
                     <td className="cell-criterion">
-                      <strong>{row.criterion}</strong>
+                      <div className="criterion-identity-wrap">
+                        <span className="criterion-icon-badge">
+                          <i className={row.icon} aria-hidden="true"></i>
+                        </span>
+                        <div className="criterion-text-col">
+                          <strong className="criterion-title-text">{row.criterion}</strong>
+                          <span className="criterion-spec-tag">{row.metric}</span>
+                        </div>
+                      </div>
                     </td>
                     <td className="cell-traditional">
-                      <div className="cell-content">
-                        <span className="status-cross"><Icons.Cross /></span>
-                        <span>{row.traditional}</span>
+                      <div className="matrix-status-cell cell-status-negative">
+                        <span className="matrix-badge-icon badge-cross" aria-hidden="true">
+                          <i className="fa-solid fa-xmark"></i>
+                        </span>
+                        <span className="matrix-cell-text">{row.traditional}</span>
                       </div>
                     </td>
                     <td className="cell-big4">
-                      <div className="cell-content">
-                        <span className="status-neutral">&bull;</span>
-                        <span>{row.big4}</span>
+                      <div className="matrix-status-cell cell-status-neutral">
+                        <span className="matrix-badge-icon badge-neutral-dash" aria-hidden="true">
+                          <i className="fa-solid fa-minus"></i>
+                        </span>
+                        <span className="matrix-cell-text">{row.big4}</span>
                       </div>
                     </td>
                     <td className="cell-chamunda">
-                      <div className="cell-content">
-                        <span className="status-check"><Icons.Check /></span>
-                        <strong>{row.chamunda}</strong>
+                      <div className="matrix-status-cell cell-status-positive">
+                        <span className="matrix-badge-icon badge-check-gold" aria-hidden="true">
+                          <i className="fa-solid fa-check"></i>
+                        </span>
+                        <strong className="matrix-cell-text-bold">{row.chamunda}</strong>
                       </div>
                     </td>
                   </tr>
@@ -685,9 +1000,15 @@ const About = () => {
             <div className="compare-cards-stack">
               {comparisonMatrix.map((row, idx) => (
                 <div key={idx} className="compare-versus-card">
+                  <div className="card-top-hairline" aria-hidden="true"></div>
                   <div className="versus-card-criterion">
-                    <span className="criterion-number">0{idx + 1}</span>
-                    <strong className="criterion-title">{row.criterion}</strong>
+                    <span className="criterion-icon-badge">
+                      <i className={row.icon} aria-hidden="true"></i>
+                    </span>
+                    <div className="criterion-text-col">
+                      <strong className="criterion-title-text">{row.criterion}</strong>
+                      <span className="criterion-spec-tag">{row.metric}</span>
+                    </div>
                   </div>
 
                   <div className="versus-contrast-grid">
@@ -699,7 +1020,9 @@ const About = () => {
                         </span>
                       </div>
                       <div className="versus-side-body">
-                        <span className="status-cross"><Icons.Cross /></span>
+                        <span className="matrix-badge-icon badge-cross" aria-hidden="true">
+                          <i className="fa-solid fa-xmark"></i>
+                        </span>
                         <p>{activeCompareTab === 'traditional' ? row.traditional : row.big4}</p>
                       </div>
                     </div>
@@ -710,10 +1033,12 @@ const About = () => {
                         <span className="side-badge badge-chamunda">
                           SHREE CHAMUNDA ASSOCIATES
                         </span>
-                        <span className="versus-chip-gold">Our Standard</span>
+                        <span className="versus-chip-gold">Institutional Standard</span>
                       </div>
                       <div className="versus-side-body">
-                        <span className="status-check"><Icons.Check /></span>
+                        <span className="matrix-badge-icon badge-check-gold" aria-hidden="true">
+                          <i className="fa-solid fa-check"></i>
+                        </span>
                         <p><strong>{row.chamunda}</strong></p>
                       </div>
                     </div>
@@ -725,203 +1050,213 @@ const About = () => {
         </section>
 
         {/* ============================================================
-            5. SPECIALIZED INSTITUTIONAL PRACTICE DESKS
+            5. SPECIALIZED INSTITUTIONAL PRACTICE DESKS (Executive 2x2 Chambers Grid)
             ============================================================ */}
         <section className="about-practice-desks-section" aria-labelledby="practice-desks-title">
-          <div className="section-title-wrap text-center">
-            <div className="about-eyebrow-tag">
-              <Icons.Briefcase />
+          <div className="about-section-header text-center">
+            <div className="about-eyebrow-badge">
+              <span className="badge-index-chip">04</span>
+              <i className="fa-solid fa-briefcase" aria-hidden="true"></i>
               <span>INSTITUTIONAL PRACTICE STRUCTURE</span>
             </div>
             <h2 id="practice-desks-title" className="section-main-heading">
-              Four Specialized Advisory Desks
+              Four Specialized <span className="title-burnished-gold">Advisory Desks</span>
             </h2>
             <p className="section-main-subtext">
-              Structured into domain-specific practice desks, ensuring every corporate advisory mandate, litigation defense, and secretarial filing is directed by seasoned practice specialists.
+              Structured into domain-specific practice chambers, ensuring every corporate advisory mandate, litigation defense, and secretarial filing is directed by seasoned practice specialists.
             </p>
           </div>
 
-          <div className="practice-desks-showcase-box">
-            {/* 4 Desk Selector Tiles */}
-            <div className="practice-desks-selector-grid" role="tablist" aria-label="Specialized Practice Desks">
-              {practiceDesks.map((d, dIdx) => (
-                <button
-                  key={dIdx}
-                  type="button"
-                  role="tab"
-                  id={`desk-tab-${dIdx}`}
-                  aria-selected={activeDeskIdx === dIdx}
-                  aria-controls={`desk-panel-${dIdx}`}
-                  className={`desk-selector-tile ${activeDeskIdx === dIdx ? 'active' : ''}`}
-                  onClick={() => setActiveDeskIdx(dIdx)}
-                >
-                  <div className="tile-top-row">
-                    <span className="tile-badge">{d.code}</span>
-                    <span className="tile-icon" aria-hidden="true">{d.icon}</span>
+          {/* Prestigious 4-Desk Chambers Architecture Grid */}
+          <div className="practice-desks-chambers-grid">
+            {practiceDesks.map((desk, idx) => (
+              <article key={idx} className={`desk-chambers-card ${desk.themeClass}`}>
+                <div className="card-top-hairline" aria-hidden="true"></div>
+
+                {/* Card Top Row: Code Pill, Live Status, and Icon Disc */}
+                <div className="desk-card-header-row">
+                  <div className="desk-card-header-left">
+                    <span className="desk-code-badge">{desk.code}</span>
+                    <span className="desk-counsel-badge">
+                      <i className="fa-solid fa-user-shield" aria-hidden="true"></i>
+                      <span>{desk.leadCounsel}</span>
+                    </span>
                   </div>
-                  <span className="tile-title">{d.title}</span>
-                  <div className="tile-status-bar">
-                    {activeDeskIdx === dIdx ? (
-                      <span className="tile-active-label">
-                        <span className="tile-live-pip" aria-hidden="true"></span>
-                        <span>Active Mandate</span>
-                      </span>
-                    ) : (
-                      <span className="tile-idle-label">Inspect Desk &rarr;</span>
-                    )}
-                  </div>
-                </button>
-              ))}
-            </div>
-
-            {/* Featured Active Desk Dossier */}
-            {(() => {
-              const activeDesk = practiceDesks[activeDeskIdx];
-              const prevIdx = (activeDeskIdx - 1 + practiceDesks.length) % practiceDesks.length;
-              const nextIdx = (activeDeskIdx + 1) % practiceDesks.length;
-
-              return (
-                <div
-                  className="active-desk-dossier-stage"
-                  id={`desk-panel-${activeDeskIdx}`}
-                  role="tabpanel"
-                  aria-labelledby={`desk-tab-${activeDeskIdx}`}
-                  key={activeDeskIdx}
-                >
-                  <div className="dossier-top-accent" aria-hidden="true"></div>
-
-                  <div className="dossier-stage-layout">
-                    {/* Left: Desk Scope & Capabilities */}
-                    <div className="dossier-main-content">
-                      <div className="dossier-card-header">
-                        <div className="dossier-tags-row">
-                          <span className="dossier-code-pill">{activeDesk.code}</span>
-                          <span className="dossier-lead-badge">
-                            <span className="live-dot pulse" aria-hidden="true"></span>
-                            <span>{activeDesk.leadCounsel}</span>
-                          </span>
-                        </div>
-                        <span className="dossier-statute-note">{activeDesk.statute}</span>
-                      </div>
-
-                      <h3 className="dossier-desk-title">{activeDesk.title}</h3>
-
-                      <div className="dossier-scope-strip">
-                        <Icons.Briefcase />
-                        <span>{activeDesk.scope}</span>
-                      </div>
-
-                      <p className="dossier-desk-desc">{activeDesk.desc}</p>
-
-                      <div className="dossier-capabilities-section">
-                        <span className="dossier-capabilities-label">Core Practice Capabilities:</span>
-                        <div className="dossier-badges-grid">
-                          {activeDesk.badges.map((b, bIdx) => (
-                            <div key={bIdx} className="dossier-capability-chip">
-                              <span className="chip-check"><Icons.Check /></span>
-                              <span>{b}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Stepper Controls */}
-                      <div className="dossier-stepper-bar">
-                        <button
-                          type="button"
-                          className="stepper-nav-btn"
-                          onClick={() => setActiveDeskIdx(prevIdx)}
-                          aria-label={`Previous: ${practiceDesks[prevIdx].code}`}
-                        >
-                          <Icons.ArrowLeft />
-                          <span>{practiceDesks[prevIdx].code}</span>
-                        </button>
-
-                        <div className="stepper-dots-indicator">
-                          {practiceDesks.map((_, dotIdx) => (
-                            <button
-                              key={dotIdx}
-                              type="button"
-                              className={`stepper-dot ${activeDeskIdx === dotIdx ? 'active' : ''}`}
-                              onClick={() => setActiveDeskIdx(dotIdx)}
-                              aria-label={`Switch to ${practiceDesks[dotIdx].code}`}
-                            />
-                          ))}
-                          <span className="stepper-counter">{activeDeskIdx + 1} / {practiceDesks.length}</span>
-                        </div>
-
-                        <button
-                          type="button"
-                          className="stepper-nav-btn"
-                          onClick={() => setActiveDeskIdx(nextIdx)}
-                          aria-label={`Next: ${practiceDesks[nextIdx].code}`}
-                        >
-                          <span>{practiceDesks[nextIdx].code}</span>
-                          <Icons.ArrowRight />
-                        </button>
-                      </div>
-
-                      <div className="dossier-action-footer">
-                        <button
-                          type="button"
-                          className="btn-dossier-retain"
-                          onClick={() => navigate('/contact')}
-                        >
-                          <Icons.CalendarCheck />
-                          <span>Retain {activeDesk.code} Senior Counsel</span>
-                          <Icons.ArrowRight />
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Right: Institutional Governance Sidebar */}
-                    <div className="dossier-authority-sidebar">
-                      <div className="dossier-sidebar-seal-box">
-                        <div className="large-dossier-seal" aria-hidden="true">
-                          {activeDesk.icon}
-                        </div>
-                        <h4 className="sidebar-desk-designation">{activeDesk.code} &bull; {activeDesk.leadCounsel}</h4>
-                        <span className="sidebar-statute-tag">{activeDesk.statute}</span>
-                      </div>
-
-                      <div className="sidebar-governance-list">
-                        <div className="sidebar-governance-item">
-                          <span className="gov-icon"><Icons.ShieldCheck /></span>
-                          <div className="gov-text">
-                            <strong>Senior Partner Oversight</strong>
-                            <p>Handled exclusively by senior practice advisors, never delegated to uncredentialed trainees.</p>
-                          </div>
-                        </div>
-
-                        <div className="sidebar-governance-item">
-                          <span className="gov-icon"><Icons.Clock /></span>
-                          <div className="gov-text">
-                            <strong>24-Hour Notice Action</strong>
-                            <p>Statutory assessment notices analyzed with comprehensive jurisprudence brief within 24h.</p>
-                          </div>
-                        </div>
-
-                        <div className="sidebar-governance-item">
-                          <span className="gov-icon"><Icons.FileInvoice /></span>
-                          <div className="gov-text">
-                            <strong>Forensic Audit Trail</strong>
-                            <p>Every filing, computational reconciliation, and appellate submission logged with forensic traceability.</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="sidebar-direct-hotline">
-                        <span className="hotline-label">Direct Practice Line:</span>
-                        <a href="tel:+919510984735" className="hotline-phone">
-                          <Icons.Phone />
-                          <span>+91 95109 84735</span>
-                        </a>
-                      </div>
-                    </div>
+                  <div className={`desk-icon-emblem ${desk.accentClass}`} aria-hidden="true">
+                    <i className={desk.icon}></i>
                   </div>
                 </div>
-              );
-            })()}
+
+                {/* Statutory Jurisdiction & Title */}
+                <div className="desk-statute-jurisdiction">{desk.statute}</div>
+                <h3 className="desk-card-title">{desk.title}</h3>
+                
+                <div className="desk-card-scope">
+                  <i className="fa-solid fa-layer-group" aria-hidden="true"></i>
+                  <span>{desk.scope}</span>
+                </div>
+
+                <p className="desk-card-desc">{desk.desc}</p>
+
+                {/* Core Practice Capabilities */}
+                <div className="desk-card-capabilities">
+                  <span className="capabilities-label">Core Mandate Capabilities:</span>
+                  <div className="capabilities-chips-wrap">
+                    {desk.badges.map((b, bIdx) => (
+                      <span key={bIdx} className="capability-tag">
+                        <i className="fa-solid fa-check" aria-hidden="true"></i>
+                        <span>{b}</span>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Bottom Assurance Strip & Action Button */}
+                <div className="desk-card-footer">
+                  <div className="desk-governance-note">
+                    <i className="fa-solid fa-shield-halved text-emerald" aria-hidden="true"></i>
+                    <span>{desk.governanceNote}</span>
+                  </div>
+                  <button
+                    type="button"
+                    className="btn-desk-consult"
+                    onClick={() => {
+                      const targetParam = desk.targetService ? `service=${encodeURIComponent(desk.targetService)}&tab=consultation#booking-console` : 'tab=consultation#booking-console';
+                      navigate(`/contact?${targetParam}`);
+                    }}
+                    aria-label={`Retain ${desk.title} Counsel`}
+                  >
+                    <span>Retain Desk Counsel</span>
+                    <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        {/* ============================================================
+            5. REPRESENTATIVE STATUTORY PRECEDENTS & MATTERS HANDLED
+            ============================================================ */}
+        <section className="about-precedents-section" aria-labelledby="precedents-title">
+          <div className="about-section-header text-center">
+            <div className="about-eyebrow-badge">
+              <span className="badge-index-chip">05</span>
+              <i className="fa-solid fa-gavel" aria-hidden="true"></i>
+              <span>REPRESENTATIVE MATTERS &bull; STATUTORY PRECEDENTS</span>
+            </div>
+            <h2 id="precedents-title" className="section-main-heading">
+              Track Record of <span className="title-burnished-gold">Institutional Defense</span>
+            </h2>
+            <p className="section-main-subtext">
+              A selective chronicle of high-stakes scrutiny defenses, appellate reliefs, and corporate governance architectures executed across Gujarat with zero liability compromise.
+            </p>
+
+            {/* Filter Tabs */}
+            <div className="precedent-filter-tabs" role="tablist" aria-label="Practice Area Case Filter">
+              <button
+                type="button"
+                className={`filter-tab-pill ${activeCaseTab === 'all' ? 'active' : ''}`}
+                onClick={() => setActiveCaseTab('all')}
+              >
+                <span>All Precedents ({casePrecedents.length})</span>
+              </button>
+              <button
+                type="button"
+                className={`filter-tab-pill ${activeCaseTab === 'Direct Taxation' ? 'active' : ''}`}
+                onClick={() => setActiveCaseTab('Direct Taxation')}
+              >
+                <span>Direct Tax Defense</span>
+              </button>
+              <button
+                type="button"
+                className={`filter-tab-pill ${activeCaseTab === 'Indirect Taxation' ? 'active' : ''}`}
+                onClick={() => setActiveCaseTab('Indirect Taxation')}
+              >
+                <span>GST Scrutiny</span>
+              </button>
+              <button
+                type="button"
+                className={`filter-tab-pill ${activeCaseTab === 'Corporate Legal' ? 'active' : ''}`}
+                onClick={() => setActiveCaseTab('Corporate Legal')}
+              >
+                <span>Corporate Legal</span>
+              </button>
+              <button
+                type="button"
+                className={`filter-tab-pill ${activeCaseTab === 'Compliance & Archival' ? 'active' : ''}`}
+                onClick={() => setActiveCaseTab('Compliance & Archival')}
+              >
+                <span>Audit & Archival</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="precedents-grid">
+            {casePrecedents
+              .filter((c) => activeCaseTab === 'all' || c.domain === activeCaseTab)
+              .map((c) => (
+                <article key={c.id} className={`precedent-card ${c.themeClass}`}>
+                  <div className="card-top-hairline" aria-hidden="true"></div>
+                  
+                  <div className="precedent-card-header">
+                    <div className="precedent-header-left">
+                      <span className="precedent-forum-tag">
+                        <i className="fa-solid fa-landmark" aria-hidden="true"></i>
+                        <span>{c.forum}</span>
+                      </span>
+                      <span className="precedent-act-pill">{c.act}</span>
+                    </div>
+                    <span className="precedent-outcome-badge">
+                      <i className="fa-solid fa-circle-check" aria-hidden="true"></i>
+                      <span>{c.outcomeTag}</span>
+                    </span>
+                  </div>
+
+                  <h3 className="precedent-title">{c.title}</h3>
+
+                  <div className="precedent-metric-box">
+                    <div className="metric-col">
+                      <span className="metric-label">MANDATE EXPOSURE</span>
+                      <strong className="metric-value value-exposure">{c.exposure}</strong>
+                    </div>
+                    <div className="metric-divider"></div>
+                    <div className="metric-col">
+                      <span className="metric-label">RELIEF SECURED</span>
+                      <strong className="metric-value value-outcome">{c.outcome}</strong>
+                    </div>
+                  </div>
+
+                  <p className="precedent-summary">{c.summary}</p>
+
+                  <div className="precedent-highlights">
+                    <span className="highlights-label">Statutory Execution Protocols:</span>
+                    <ul className="highlights-list">
+                      {c.highlights.map((h, hIdx) => (
+                        <li key={hIdx}>
+                          <i className="fa-solid fa-check" aria-hidden="true"></i>
+                          <span>{h}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="precedent-footer">
+                    <span className="client-sector-tag">
+                      <i className="fa-solid fa-industry" aria-hidden="true"></i>
+                      <span>{c.clientSector}</span>
+                    </span>
+                    <button
+                      type="button"
+                      className="btn-precedent-consult"
+                      onClick={() => navigate('/contact?tab=consultation#booking-console')}
+                    >
+                      <span>Consult on Similar Notice</span>
+                      <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </article>
+              ))}
           </div>
         </section>
 
@@ -929,9 +1264,10 @@ const About = () => {
             6. UNIFIED CHRONOLOGICAL GROWTH TRACK (Verifiable Progress)
             ============================================================ */}
         <section className="about-timeline-section" aria-labelledby="timeline-title">
-          <div className="section-title-wrap text-center">
-            <div className="about-eyebrow-tag">
-              <Icons.History />
+          <div className="about-section-header text-center">
+            <div className="about-eyebrow-badge">
+              <span className="badge-index-chip">06</span>
+              <i className="fa-solid fa-clock-rotate-left" aria-hidden="true"></i>
               <span>VERIFIABLE PROGRESS &bull; PRACTICE TRACK RECORD</span>
             </div>
             <h2 id="timeline-title" className="section-main-heading">
@@ -951,6 +1287,7 @@ const About = () => {
                 </div>
 
                 <div className="milestone-card">
+                  <div className="card-top-hairline" aria-hidden="true"></div>
                   <div className="milestone-card-top">
                     <span className="milestone-phase-badge">{step.phase}</span>
                     <span className="milestone-metric-tag">{step.metric}</span>
@@ -959,7 +1296,7 @@ const About = () => {
                   <p className="milestone-desc">{step.desc}</p>
                   <div className="milestone-footer">
                     <span className="milestone-verify-badge">
-                      <Icons.Check />
+                      <i className="fa-solid fa-check" aria-hidden="true"></i>
                       <span>{step.badge}</span>
                     </span>
                   </div>
@@ -973,9 +1310,10 @@ const About = () => {
             7. INSTITUTIONAL ACCREDITATIONS & REGULATORY AUTHORITY SEALS
             ============================================================ */}
         <section className="about-accreditations-section" aria-label="Institutional Accreditations & Regulatory Seals">
-          <div className="section-title-wrap text-center">
-            <div className="about-eyebrow-tag">
-              <Icons.Certificate />
+          <div className="about-section-header text-center">
+            <div className="about-eyebrow-badge">
+              <span className="badge-index-chip">07</span>
+              <i className="fa-solid fa-certificate" aria-hidden="true"></i>
               <span>INSTITUTIONAL ASSURANCE &bull; REGULATORY BENCHMARK</span>
             </div>
             <h2 className="section-main-heading">
@@ -990,9 +1328,10 @@ const About = () => {
           <div className="master-seals-grid">
             {credentialSeals.map((seal) => (
               <div key={seal.id} className={`master-seal-card ${seal.sealClass}`}>
+                <div className="card-top-hairline" aria-hidden="true"></div>
                 <div className="seal-card-header">
                   <div className="seal-icon-emblem" aria-hidden="true">
-                    {seal.icon}
+                    <i className={seal.icon}></i>
                     <span className="seal-emblem-ring"></span>
                   </div>
                   <div className="seal-meta-header">
@@ -1011,7 +1350,7 @@ const About = () => {
                   <div className="seal-highlights-list">
                     {seal.highlights.map((h, i) => (
                       <span key={i} className="seal-highlight-pill">
-                        <Icons.Check />
+                        <i className="fa-solid fa-check" aria-hidden="true"></i>
                         <span>{h}</span>
                       </span>
                     ))}
@@ -1043,9 +1382,11 @@ const About = () => {
             ============================================================ */}
         <section className="about-chambers-section" aria-labelledby="chambers-title">
           <div className="chambers-card-wrapper">
+            <div className="card-top-hairline" aria-hidden="true"></div>
             <div className="chambers-narrative-col">
-              <div className="about-eyebrow-tag">
-                <Icons.Location />
+              <div className="about-eyebrow-badge">
+                <span className="badge-index-chip">08</span>
+                <i className="fa-solid fa-location-dot" aria-hidden="true"></i>
                 <span>PHYSICAL PRESENCE &bull; CENTRAL CHAMBERS</span>
               </div>
               <h2 id="chambers-title" className="chambers-main-heading">
@@ -1058,7 +1399,7 @@ const About = () => {
               <div className="chambers-specs-list">
                 <div className="chambers-spec-item">
                   <div className="chambers-spec-icon" aria-hidden="true">
-                    <Icons.Location />
+                    <i className="fa-solid fa-location-dot"></i>
                   </div>
                   <div>
                     <span className="spec-label">OFFICIAL CHAMBERS ADDRESS:</span>
@@ -1068,7 +1409,7 @@ const About = () => {
 
                 <div className="chambers-spec-item">
                   <div className="chambers-spec-icon" aria-hidden="true">
-                    <Icons.Clock />
+                    <i className="fa-solid fa-clock"></i>
                   </div>
                   <div>
                     <span className="spec-label">ADVISORY CONSULTATION HOURS:</span>
@@ -1078,7 +1419,7 @@ const About = () => {
 
                 <div className="chambers-spec-item">
                   <div className="chambers-spec-icon" aria-hidden="true">
-                    <Icons.Phone />
+                    <i className="fa-solid fa-phone"></i>
                   </div>
                   <div>
                     <span className="spec-label">DIRECT PRACTICE HOTLINE:</span>
@@ -1091,59 +1432,77 @@ const About = () => {
 
               <div className="chambers-cta-row">
                 <a
-                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('612, Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad, Gujarat 380049')}`}
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-directions"
                 >
-                  <Icons.Location />
+                  <i className="fa-solid fa-location-arrow" aria-hidden="true"></i>
                   <span>Open Google Maps Directions</span>
                 </a>
+                <button
+                  type="button"
+                  className={`btn-visit ${copiedAddress ? 'copied' : ''}`}
+                  onClick={handleCopyAddress}
+                  aria-label="Copy Chamber Address"
+                >
+                  <i className={copiedAddress ? "fa-solid fa-check text-emerald" : "fa-regular fa-copy"} aria-hidden="true"></i>
+                  <span>{copiedAddress ? 'Address Copied!' : 'Copy Chamber Address'}</span>
+                </button>
                 <button type="button" className="btn-visit" onClick={handleWhatsAppConsult}>
-                  <Icons.CalendarCheck />
-                  <span>Schedule In-Person Consultation</span>
+                  <i className="fa-solid fa-calendar-check" aria-hidden="true"></i>
+                  <span>Schedule Consultation</span>
                 </button>
               </div>
             </div>
 
-            {/* Visual Facility Showcase Card */}
+            {/* Visual Facility Showcase & Interactive Google Map Card */}
             <div className="chambers-visual-col">
-              <div className="chambers-visual-card">
-                <div className="chambers-card-glass-header">
-                  <div className="chambers-logo-mark">
-                    <img src="/assets/logo-transparent-svg.svg" alt="Firm Seal" onError={(e) => { e.target.style.display = 'none'; }} />
-                    <div>
-                      <strong>Shree Chamunda Associates</strong>
-                      <span>Statutory Tax &amp; Corporate Advisory</span>
+              <div className="chambers-map-frame-card">
+                <div className="card-top-hairline" aria-hidden="true"></div>
+                <div className="chambers-map-header">
+                  <div className="chambers-map-header-left">
+                    <div className="pin-disc-gold" aria-hidden="true">
+                      <i className="fa-solid fa-location-dot"></i>
+                    </div>
+                    <div className="chambers-map-header-text">
+                      <strong className="chambers-map-title">Shree Chamunda Practice Chambers</strong>
+                      <span className="chambers-map-subtitle">612, Hill Town Square &bull; Nikol, Ahmedabad</span>
                     </div>
                   </div>
-                  <span className="chamber-status-badge">
-                    <span className="live-dot pulse" aria-hidden="true"></span>
-                    ACTIVE CHAMBERS
+                  <span className="chamber-verified-tag">
+                    <i className="fa-solid fa-shield-halved text-gold" aria-hidden="true"></i>
+                    <span>VERIFIED PRACTICE HUB</span>
                   </span>
                 </div>
 
-                <div className="chambers-highlights">
-                  <div className="ch-highlight-item">
-                    <Icons.Check />
-                    <span>Private Senior Partner Consultation Suites</span>
-                  </div>
-                  <div className="ch-highlight-item">
-                    <Icons.Check />
-                    <span>Secure Digital Client Ingestion Infrastructure</span>
-                  </div>
-                  <div className="ch-highlight-item">
-                    <Icons.Check />
-                    <span>Appellate Scrutiny &amp; Statutory Hearing Preparation</span>
-                  </div>
-                  <div className="ch-highlight-item">
-                    <Icons.Check />
-                    <span>High-Speed Direct Filing &amp; Reconciliation Terminals</span>
-                  </div>
+                <div className="chambers-iframe-wrap">
+                  <iframe
+                    title="Shree Chamunda Associates Practice Chambers - Nikol, Ahmedabad"
+                    src="https://maps.google.com/maps?q=612,+Hill+Town+Square,+MG+Road,+near+Ganesh+Opera,+Nikol,+Ahmedabad,+Gujarat+380049&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0, minHeight: '340px', width: '100%', display: 'block' }}
+                    allowFullScreen=""
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
                 </div>
 
-                <div className="chambers-visual-footer">
-                  <span className="cf-tag">Nikol &bull; Ahmedabad, Gujarat &bull; Serving Enterprises Statewide</span>
+                <div className="chambers-map-footer">
+                  <span className="chambers-gps-tag">
+                    <i className="fa-solid fa-crosshairs" aria-hidden="true"></i>
+                    <span>23.0489° N, 72.6743° E &bull; Nikol Central Hub</span>
+                  </span>
+                  <a
+                    href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="chambers-nav-link"
+                  >
+                    <span>Open in Google Maps</span>
+                    <i className="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1185,6 +1544,17 @@ const About = () => {
                 <span className="about-wa-status-dot" aria-hidden="true"></span>
               </button>
 
+              <button
+                type="button"
+                className="btn-cta-dossier"
+                onClick={handleDownloadDossier}
+                aria-label="Download Institutional Practice Dossier"
+                title="Download Official Practice Capability Statement (.pdf)"
+              >
+                <i className="fa-solid fa-file-arrow-down" aria-hidden="true"></i>
+                <span>Practice Dossier (.pdf)</span>
+              </button>
+
               <a
                 href={`tel:${phone.replace(/\s+/g, '')}`}
                 className="btn-cta-outline"
@@ -1196,15 +1566,15 @@ const About = () => {
 
             <div className="cta-trust-guarantees">
               <span className="cta-guarantee-pill">
-                <Icons.Check />
+                <i className="fa-solid fa-check" aria-hidden="true"></i>
                 <span>Direct Senior Partner Access</span>
               </span>
               <span className="cta-guarantee-pill">
-                <Icons.Check />
+                <i className="fa-solid fa-check" aria-hidden="true"></i>
                 <span>Strict NDA &amp; Client Privilege</span>
               </span>
               <span className="cta-guarantee-pill">
-                <Icons.Check />
+                <i className="fa-solid fa-check" aria-hidden="true"></i>
                 <span>&lt; 24h Response Guarantee</span>
               </span>
             </div>

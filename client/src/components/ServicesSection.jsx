@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { getServices } from '../api';
 import useFetch from '../hooks/useFetch';
+import { FALLBACK_SERVICES } from '../data/fallbackServices';
 import ServiceCard from './ServiceCard';
 import './ServicesSection.css';
 
@@ -13,7 +14,7 @@ const ServicesSection = ({
 }) => {
   const [searchParams] = useSearchParams();
   const { data: response, loading, error } = useFetch(getServices);
-  const services = response?.data || [];
+  const services = (response?.data && response.data.length > 0) ? response.data : FALLBACK_SERVICES;
   
   const [internalFilter, setInternalFilter] = useState(() => {
     return searchParams?.get('category') || 'all';
@@ -307,7 +308,7 @@ const ServicesSection = ({
               <div key={i} className="skeleton skeleton-card"></div>
             ))}
           </div>
-        ) : error ? (
+        ) : (error && displayServices.length === 0) ? (
           <div className="error-message">
             <p>Failed to load services. Please try again later.</p>
           </div>

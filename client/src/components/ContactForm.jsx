@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { submitContact } from '../api';
 import ExecutiveSelect from './ExecutiveSelect';
@@ -9,12 +9,12 @@ const ContactForm = ({ activeTab: externalTab, onTabChange }) => {
   const [internalTab, setInternalTab] = useState('inquiry'); // 'inquiry' | 'consultation'
   const activeTab = externalTab !== undefined ? externalTab : internalTab;
 
-  const handleTabSwitch = (tab) => {
+  const handleTabSwitch = useCallback((tab) => {
     if (onTabChange) {
       onTabChange(tab);
     }
     setInternalTab(tab);
-  };
+  }, [onTabChange]);
 
   const [consultationMode, setConsultationMode] = useState('office'); // 'office' | 'virtual' | 'phone'
   const [preferredSlot, setPreferredSlot] = useState('morning'); // 'morning' | 'afternoon' | 'evening'
@@ -73,13 +73,31 @@ const ContactForm = ({ activeTab: externalTab, onTabChange }) => {
   });
 
   useEffect(() => {
-    if (location.state && location.state.planName) {
+    const params = new URLSearchParams(location.search);
+    const serviceParam = params.get('service');
+    const tabParam = params.get('tab');
+
+    if (tabParam && (tabParam === 'inquiry' || tabParam === 'consultation')) {
+      handleTabSwitch(tabParam);
+    }
+
+    if (serviceParam) {
+      setFormData((prev) => ({
+        ...prev,
+        service: serviceParam,
+      }));
+    } else if (location.state && location.state.service) {
+      setFormData((prev) => ({
+        ...prev,
+        service: location.state.service,
+      }));
+    } else if (location.state && location.state.planName) {
       setFormData((prev) => ({
         ...prev,
         service: `Inquiry about: ${location.state.planName}`,
       }));
     }
-  }, [location.state]);
+  }, [location.search, location.state, handleTabSwitch]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

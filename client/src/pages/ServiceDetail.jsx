@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { getServiceById, getServices, submitContact } from '../api';
+import { findFallbackService, FALLBACK_SERVICES } from '../data/fallbackServices';
 import './ServiceDetail.css';
 
 const NAV_SECTIONS = [
@@ -58,11 +59,11 @@ const ServiceDetail = () => {
         setLoading(true);
         setError(null);
         const [res, allRes] = await Promise.all([
-          getServiceById(id),
+          getServiceById(id).catch((err) => ({ success: false, error: err.message })),
           getServices().catch(() => ({ data: [] })),
         ]);
 
-        if (res.success && res.data) {
+        if (res?.success && res?.data) {
           setService(res.data);
           setOpenFaq(0);
 
@@ -73,14 +74,41 @@ const ServiceDetail = () => {
           });
           setDocReadiness(initialDocs);
         } else {
-          setError('Service portfolio record not found.');
+          // Fallback to offline catalog if backend fails or record not found
+          const fallback = findFallbackService(id);
+          if (fallback) {
+            setService(fallback);
+            setOpenFaq(0);
+            const initialDocs = {};
+            (fallback.documentsRequired || []).forEach((doc) => {
+              initialDocs[doc] = false;
+            });
+            setDocReadiness(initialDocs);
+          } else {
+            setError(res?.error || 'Service portfolio record not found.');
+          }
         }
 
-        if (allRes.success && Array.isArray(allRes.data)) {
+        if (allRes?.success && Array.isArray(allRes?.data) && allRes.data.length > 0) {
           setAllServices(allRes.data);
+        } else {
+          setAllServices(FALLBACK_SERVICES);
         }
       } catch (err) {
-        setError(err.message || 'Failed to load statutory portfolio details.');
+        // Resilient fallback on network/timeout error
+        const fallback = findFallbackService(id);
+        if (fallback) {
+          setService(fallback);
+          setOpenFaq(0);
+          const initialDocs = {};
+          (fallback.documentsRequired || []).forEach((doc) => {
+            initialDocs[doc] = false;
+          });
+          setDocReadiness(initialDocs);
+          setAllServices(FALLBACK_SERVICES);
+        } else {
+          setError(err.message || 'Failed to load statutory portfolio details.');
+        }
       } finally {
         setLoading(false);
       }

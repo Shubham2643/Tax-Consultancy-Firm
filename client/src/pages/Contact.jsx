@@ -1,4 +1,5 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import ContactForm from '../components/ContactForm';
 import { useSiteContext } from '../context/SiteContext';
 import './Contact.css';
@@ -35,7 +36,26 @@ const Contact = () => {
   const { settings, loading: settingsLoading } = useSiteContext();
   const faqs = CONSULTATION_FAQS;
 
-  const [activeTab, setActiveTab] = useState('inquiry'); // 'inquiry' | 'consultation'
+  const [searchParams] = useSearchParams();
+  const initialTab = searchParams.get('tab') === 'consultation' ? 'consultation' : 'inquiry';
+  const [activeTab, setActiveTab] = useState(initialTab); // 'inquiry' | 'consultation'
+
+  useEffect(() => {
+    const tabParam = searchParams.get('tab');
+    if (tabParam === 'consultation' || tabParam === 'inquiry') {
+      setActiveTab(tabParam);
+    }
+    if (window.location.hash === '#booking-console') {
+      const timer = setTimeout(() => {
+        const el = document.getElementById('booking-console');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 150);
+      return () => clearTimeout(timer);
+    }
+  }, [searchParams]);
+
   const [openFaqIdx, setOpenFaqIdx] = useState(0); // First FAQ open by default
   const [copiedField, setCopiedField] = useState(null);
   const [activeDocChecklist, setActiveDocChecklist] = useState('notice'); // 'notice' | 'corporate' | 'retainer'
@@ -454,7 +474,7 @@ const Contact = () => {
           3. SYMMETRICAL 50/50 TWO-COLUMN COMMAND CENTER
              (Synchronized Left Dossier + Right Consultation Console)
           ============================================================ */}
-      <section className="contact-main-console-section container">
+      <section className="contact-main-console-section container" id="booking-console">
         <div className="contact-equal-two-col-grid">
           {/* ========================================================
               COLUMN 1 (50%): Dynamic Fiduciary Dossier
