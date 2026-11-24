@@ -2408,18 +2408,20 @@
     transform: rotate(90deg);
   }
 
-  /* Sleek App Utility Strip: Vault + Search in 1 row (Height: 32px) */
+  /* Sleek App Utility Strip: Vault + Search in 1 row (Height: 34px) */
   .mobile-drawer-top-strip {
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 6px 10px 4px 10px;
+    gap: 8px;
+    padding: 8px 12px 6px 12px;
     flex-shrink: 0;
     box-sizing: border-box;
+    width: 100%;
   }
 
   .mobile-strip-auth {
     flex: 1;
+    min-width: 0;
     display: flex;
     gap: 6px;
     align-items: center;
@@ -2427,14 +2429,15 @@
 
   .mobile-strip-vault-btn {
     flex: 1;
-    height: 32px;
-    border-radius: 7px;
+    min-width: 0;
+    height: 34px;
+    border-radius: 8px;
     background: linear-gradient(135deg, #071324 0%, #0d233a 100%);
     border: 1px solid rgba(248, 180, 0, 0.35);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 9px;
+    padding: 0 10px;
     text-decoration: none;
     color: #ffffff;
     transition: all 0.15s ease;
@@ -2444,11 +2447,13 @@
     display: flex;
     align-items: center;
     gap: 6px;
+    min-width: 0;
   }
 
   .mobile-strip-icon {
-    font-size: 10.5px;
+    font-size: 11px;
     color: #f8b400;
+    flex-shrink: 0;
   }
 
   .mobile-strip-text {
@@ -2456,6 +2461,9 @@
     font-weight: 650;
     color: #ffffff;
     letter-spacing: 0.1px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .mobile-strip-cta {
@@ -2465,6 +2473,8 @@
     display: flex;
     align-items: center;
     gap: 3px;
+    flex-shrink: 0;
+    white-space: nowrap;
   }
 
   .mobile-strip-cta i {
@@ -2491,9 +2501,9 @@
   }
 
   .mobile-strip-search-btn {
-    width: 32px;
-    height: 32px;
-    border-radius: 7px;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
     background: #f8fafc;
     border: 1px solid #e2e8f0;
     color: #475569;
@@ -2828,12 +2838,9 @@
     min-width: 0;
   }
 
-  .mobile-footer-pulse-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #16a34a;
-    box-shadow: 0 0 5px #16a34a;
+  .mobile-footer-btn-icon {
+    font-size: 11px;
+    color: #071324;
     flex-shrink: 0;
   }
 

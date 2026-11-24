@@ -61,12 +61,46 @@ body {
 #root,
 .app,
 .main-content,
-.home-page {
+.home-page,
+.about-page,
+.services-page,
+.contact-page,
+.pricing-page,
+.portal-page,
+.admin-page,
+.careers-page,
+.faq-page,
+.legal-page {
   width: 100%;
   max-width: 100%;
   overflow-x: hidden !important;
   overflow-x: clip !important;
   box-sizing: border-box;
+}
+
+/* Defensive Mobile Viewport Safeguards (320px - 480px) */
+@media (max-width: 768px) {
+  /* Prevent flex/grid item min-content blowout */
+  .grid > *,
+  [class*='grid'] > *,
+  [class*='layout'] > *,
+  [class*='row'] > *,
+  [class*='split'] > *,
+  [class*='deck'] > *,
+  [class*='wrapper'] > *,
+  [class*='col'] {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  /* Prevent text from overflowing narrow screens */
+  h1, h2, h3, h4, h5, h6, p, span, a, strong, button {
+    overflow-wrap: break-word;
+  }
+
+  iframe {
+    max-width: 100% !important;
+  }
 }
 
 /* Enforce font-family across every element, input, button, heading, and table */
@@ -1207,18 +1241,20 @@ html.theme-transitioning *::after {
   top: 36% !important;
   left: 50% !important;
   transform: translate(-50%, -50%) !important;
-  width: clamp(340px, 62vw, 700px) !important;
-  height: 240px !important;
-  background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.22) 0%, rgba(245, 180, 0, 0.08) 42%, transparent 72%) !important;
-  filter: blur(52px) !important;
+  width: clamp(340px, 50vw, 600px) !important;
+  height: 200px !important;
+  background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.12) 0%, rgba(245, 180, 0, 0.04) 42%, transparent 72%) !important;
+  filter: blur(65px) !important;
   pointer-events: none !important;
   z-index: 0 !important;
   border-radius: 50% !important;
+  opacity: 0.65 !important;
 }
 
 [data-theme='dark'] .luxury-header-halo {
-  background: radial-gradient(ellipse at center, rgba(245, 187, 0, 0.24) 0%, rgba(59, 130, 246, 0.08) 46%, transparent 76%) !important;
-  filter: blur(62px) !important;
+  background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.12) 0%, rgba(59, 130, 246, 0.04) 46%, transparent 76%) !important;
+  filter: blur(75px) !important;
+  opacity: 0.5 !important;
 }
 
 /* 4. Executive Crest Pill (Eyebrow Badge With Traveling Crystal Prism Light Sweep) */
@@ -1393,20 +1429,12 @@ html.theme-transitioning *::after {
   filter: drop-shadow(0 1px 6px rgba(251, 191, 36, 0.45)) !important;
 }
 
-/* Signature Dual-Aura Emerald Live Beacon */
+/* Eyebrow Badges: Hide superfluous neon pulsing green dots for institutional Swiss cleanliness */
 .badge-pulse-dot,
 .live-dot,
 .retainers-live-dot,
 .contact-live-dot {
-  width: 8px !important;
-  height: 8px !important;
-  border-radius: 50% !important;
-  background-color: #10b981 !important;
-  position: relative !important;
-  display: inline-block !important;
-  box-shadow: 0 0 0 2.5px rgba(16, 185, 129, 0.24), 0 0 10px #10b981 !important;
-  animation: luxuryBeaconPulse 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
-  flex-shrink: 0 !important;
+  display: none !important;
 }
 
 @keyframes luxuryBeaconPulse {
@@ -1646,9 +1674,7 @@ html.theme-transitioning *::after {
   }
 
   .luxury-header-halo {
-    width: 320px !important;
-    height: 140px !important;
-    filter: blur(34px) !important;
+    display: none !important;
   }
 
   .trust-badge-label,

@@ -985,9 +985,24 @@
   box-shadow: 0 18px 42px -10px rgba(0, 0, 0, 0.7), 0 0 24px rgba(37, 211, 102, 0.3);
 }
 
+[data-theme='dark'] .chambers-contact-card.card-amber .channel-value-display-box {
+  background: rgba(212, 175, 55, 0.08) !important;
+  border-color: rgba(212, 175, 55, 0.25) !important;
+}
+
+[data-theme='dark'] .chambers-contact-card.card-sapphire .channel-value-display-box {
+  background: rgba(59, 130, 246, 0.08) !important;
+  border-color: rgba(59, 130, 246, 0.25) !important;
+}
+
+[data-theme='dark'] .chambers-contact-card.card-emerald .channel-value-display-box {
+  background: rgba(16, 185, 129, 0.08) !important;
+  border-color: rgba(16, 185, 129, 0.25) !important;
+}
+
 [data-theme='dark'] .chambers-contact-card.card-wa .channel-value-display-box {
-  background: rgba(37, 211, 102, 0.08);
-  border-color: rgba(37, 211, 102, 0.25);
+  background: rgba(37, 211, 102, 0.08) !important;
+  border-color: rgba(37, 211, 102, 0.25) !important;
 }
 
 [data-theme='dark'] .channel-heading {
@@ -999,8 +1014,8 @@
 }
 
 [data-theme='dark'] .channel-value-display-box {
-  background: #08121f;
-  border-color: rgba(255, 255, 255, 0.08);
+  background: #08121f !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
 }
 
 [data-theme='dark'] .value-primary-text {

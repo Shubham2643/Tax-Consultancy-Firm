@@ -166,21 +166,33 @@ const Blog = () => {
     });
   };
 
+  const sanitizeComplianceText = (text) => {
+    if (!text) return '';
+    return text
+      .replace(/\bCA\s+Rajesh\s+Sharma\b/gi, 'Rajesh Sharma, Senior Partner')
+      .replace(/\bCA\s+Guide\b/gi, 'Expert Guide')
+      .replace(/\bCA\s+([A-Z])/g, '$1')
+      .replace(/\bCA\b\.?\s*/g, 'Tax Counsel ');
+  };
+
   return (
     <div className="blog-page fade-in">
-      {/* Executive Clean Midnight Hero Banner */}
+      {/* Executive Institutional Hero Banner */}
       <div className="blog-hero">
-        <div className="section-top-accent-line" aria-hidden="true"></div>
+        <div className="blog-hero-ambient-mesh" aria-hidden="true"></div>
         <div className="container">
           <div className="blog-hero-badge">
-            <span className="live-dot"></span>
-            <i className="fas fa-shield-alt"></i>
-            <span>Knowledge Hub &bull; Statutory Circulars</span>
+            <i className="fas fa-shield-halved text-gold"></i>
+            <span>Knowledge Repository &bull; Statutory Intelligence</span>
           </div>
-          <h1>Tax &amp; Compliance Knowledge Hub</h1>
-          <p>Expert insights, Union Budget breakdowns, GST guides, and statutory circulars from experienced Senior Tax Consultants.</p>
+          <h1 className="blog-hero-title">
+            Tax &amp; Statutory Compliance <span className="blog-title-accent">Knowledge Hub</span>
+          </h1>
+          <p className="blog-hero-subtitle">
+            Executive intelligence, statutory circular interpretations, Union Budget breakdowns, and procedural GST guides authored by senior tax practitioners.
+          </p>
 
-          {/* Authority Trust Strip */}
+          {/* Authority Telemetry Strip */}
           <div className="blog-hero-metrics-strip">
             <div className="hero-metric-item">
               <i className="fas fa-certificate text-gold"></i>
@@ -188,7 +200,7 @@ const Blog = () => {
             </div>
             <div className="hero-metric-dot">&bull;</div>
             <div className="hero-metric-item">
-              <i className="fas fa-calendar-check text-green"></i>
+              <i className="fas fa-shield-check text-emerald"></i>
               <span>FY 2026-27 Assessment Ready</span>
             </div>
             <div className="hero-metric-dot">&bull;</div>
@@ -196,11 +208,18 @@ const Blog = () => {
               <i className="fas fa-landmark text-blue"></i>
               <span>CBDT &amp; CBIC Circulars Triage</span>
             </div>
+            <div className="hero-metric-dot">&bull;</div>
+            <div className="hero-metric-item">
+              <i className="fas fa-scale-balanced text-purple"></i>
+              <span>Statutory Precision Standards</span>
+            </div>
           </div>
 
           {/* Trending Statutory Topics Bar */}
           <div className="blog-trending-tags-bar">
-            <span className="trending-label"><i className="fas fa-fire"></i> Trending Topics:</span>
+            <span className="trending-label">
+              <i className="fas fa-bolt text-gold"></i> TRENDING TOPICS:
+            </span>
             <div className="trending-tags-pills">
               {trendingTags.map((tag) => (
                 <button
@@ -222,7 +241,6 @@ const Blog = () => {
 
       {/* Main Content Area */}
       <div className="container blog-container-wrapper">
-        <div className="section-top-accent-line" aria-hidden="true"></div>
         {/* Executive Editorial Navigation & Search Deck */}
         <div className="editorial-control-deck">
           {/* Tier 1: Practice Area Categories & Global Archive Counter */}
@@ -441,8 +459,7 @@ const Blog = () => {
                 <div className="spotlight-content-pane">
                   <div className="spotlight-eyebrow">
                     <div className="spotlight-kicker-badge">
-                      <span className="live-pulse-dot"></span>
-                      <i className="fas fa-bolt"></i>
+                      <i className="fas fa-star text-gold"></i>
                       <span>LEAD STATUTORY DISPATCH &bull; FY 2026-27</span>
                     </div>
                     <span className="spotlight-date">
@@ -450,7 +467,7 @@ const Blog = () => {
                     </span>
                   </div>
 
-                  <h2 className="spotlight-title">{featuredPost.title}</h2>
+                  <h2 className="spotlight-title">{sanitizeComplianceText(featuredPost.title)}</h2>
                   <p className="spotlight-summary">{featuredPost.summary}</p>
 
                   {/* Highlights Strip */}
@@ -491,7 +508,7 @@ const Blog = () => {
                         <i className="fas fa-user-tie"></i>
                       </div>
                       <div className="spotlight-author-meta">
-                        <strong>{featuredPost.author || 'Senior Practice Partner'}</strong>
+                        <strong>{sanitizeComplianceText(featuredPost.author || 'Senior Practice Partner')}</strong>
                         <span>Advisory Desk &bull; Shree Chamunda</span>
                       </div>
                     </div>
@@ -549,7 +566,7 @@ const Blog = () => {
                       </span>
                     </div>
 
-                    <h3 className="editorial-card-title">{blog.title}</h3>
+                    <h3 className="editorial-card-title">{sanitizeComplianceText(blog.title)}</h3>
                     <p className="editorial-card-excerpt">{blog.summary}</p>
 
                     {/* Tag Chips */}
@@ -577,7 +594,7 @@ const Blog = () => {
                           <i className="fas fa-user-tie"></i>
                         </div>
                         <div className="card-author-meta">
-                          <span className="card-author-name">{blog.author || 'Senior Tax Partner'}</span>
+                          <span className="card-author-name">{sanitizeComplianceText(blog.author || 'Senior Tax Partner')}</span>
                           <span className="card-author-date">{formatDate(blog.createdAt || blog.publishedAt)}</span>
                         </div>
                       </div>
@@ -594,7 +611,6 @@ const Blog = () => {
 
             {/* Weekly Tax & Compliance Digest Executive Dispatch */}
             <section className="blog-newsletter-bento" aria-labelledby="newsletter-headline">
-              <div className="section-top-accent-line" aria-hidden="true"></div>
               {/* Background Architectural Grid & Ambient Aura */}
               <div className="newsletter-ambient-grid" aria-hidden="true"></div>
               <div className="newsletter-ambient-glow" aria-hidden="true"></div>
@@ -605,8 +621,7 @@ const Blog = () => {
               {/* Left Column: Authoritative Editorial & Subscriber Proof */}
               <div className="newsletter-bento-content">
                 <div className="newsletter-kicker">
-                  <span className="live-dot pulse"></span>
-                  <i className="fas fa-paper-plane"></i>
+                  <i className="fas fa-paper-plane text-gold"></i>
                   <span>WEEKLY STATUTORY DISPATCH &bull; EXECUTIVE BRIEFING</span>
                 </div>
                 <h3 id="newsletter-headline">

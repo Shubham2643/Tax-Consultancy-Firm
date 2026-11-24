@@ -316,9 +316,9 @@ const TrustSection = ({ onSelectCategory }) => {
                 <span>{copiedLink ? "Link Copied" : "Share Docket"}</span>
               </button>
               <div className="ledger-header-badge">
-                <span className="ledger-beacon-dot"></span>
-                <i className="fas fa-certificate"></i>
-                <span>Institutional Standard</span>
+                <i className="fas fa-shield-check"></i>
+                <span className="ledger-badge-text-full">Institutional Standard</span>
+                <span className="ledger-badge-text-mobile">Verified Standard</span>
               </div>
             </div>
           </div>
@@ -347,7 +347,7 @@ const TrustSection = ({ onSelectCategory }) => {
                 <div className="metric-header-row">
                   <span className="metric-large-num">{item.num}</span>
                   <span className={`metric-pill-tag ${item.badgeClass}`}>
-                    <span className="metric-mini-beacon"></span>
+                    <i className="fas fa-shield-check metric-pill-icon" aria-hidden="true"></i>
                     {item.badge}
                   </span>
                 </div>
@@ -381,7 +381,7 @@ const TrustSection = ({ onSelectCategory }) => {
                 </div>
                 <div className="dossier-tray-actions">
                   <span className="dossier-telemetry-pill">
-                    <span className="live-status-dot"></span>
+                    <i className="fas fa-shield-check"></i>
                     <span>{trustMetrics[activeMetricIdx].dossier.telemetry}</span>
                   </span>
                   <button
@@ -440,8 +440,8 @@ const TrustSection = ({ onSelectCategory }) => {
             <div className="pipeline-top-foil" aria-hidden="true"></div>
             <div className="pipeline-wing-header">
               <div className="pipeline-eyebrow">
-                <span className="live-status-dot"></span>
-                <span>OPERATIONAL RIGOR &bull; COMPLIANCE DEFENSE ENGINE</span>
+                <i className="fas fa-shield-halved" aria-hidden="true"></i>
+                <span>OPERATIONAL RIGOR &bull; COMPLIANCE DEFENSE</span>
               </div>
               <h3>Our 3-Stage Pre-Submission Audit Pipeline</h3>
               <p>

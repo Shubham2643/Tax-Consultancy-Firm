@@ -900,7 +900,7 @@ const Navbar = () => {
             <i className="fab fa-whatsapp"></i>
           </a>
           <Link to="/contact" className="mobile-footer-consult-btn" onClick={() => setIsMobileOpen(false)}>
-            <span className="mobile-footer-pulse-dot"></span>
+            <i className="fas fa-calendar-check mobile-footer-btn-icon"></i>
             <span className="mobile-footer-consult-text">Book Consultation</span>
             <i className="fas fa-arrow-right mobile-footer-arrow"></i>
           </Link>

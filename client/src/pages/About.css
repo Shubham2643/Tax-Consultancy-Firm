@@ -3120,8 +3120,18 @@
     gap: 16px;
   }
   .chambers-card-wrapper {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) !important;
     gap: 28px;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .chambers-narrative-col,
+  .chambers-visual-col {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
 }
 
@@ -3276,16 +3286,113 @@
     font-size: 13.5px;
     line-height: 1.55;
   }
+  .about-eyebrow-badge {
+    white-space: normal !important;
+    line-height: 1.35 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
   .manifesto-narrative-card,
   .fiduciary-stack-card,
   .desk-chambers-card,
   .precedent-card,
   .milestone-card,
   .master-seal-card,
-  .chambers-card-wrapper,
   .about-closing-cta {
     padding: 22px 18px;
     border-radius: 14px;
+  }
+  .chambers-card-wrapper {
+    padding: 20px 14px !important;
+    gap: 22px !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    border-radius: 14px !important;
+  }
+  .chambers-narrative-col,
+  .chambers-visual-col {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  .chambers-main-heading {
+    font-size: 20px !important;
+    line-height: 1.25 !important;
+    word-break: break-word !important;
+  }
+  .chambers-lead-text {
+    font-size: 13px !important;
+    line-height: 1.55 !important;
+    word-break: break-word !important;
+  }
+  .chambers-spec-item {
+    gap: 10px !important;
+    min-width: 0 !important;
+  }
+  .spec-value {
+    font-size: 12.5px !important;
+    word-break: break-word !important;
+  }
+  .chambers-cta-row {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 8px !important;
+  }
+  .btn-directions,
+  .btn-visit {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 10px 14px !important;
+    font-size: 12px !important;
+    white-space: normal !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+  }
+  .chambers-map-frame-card {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .chambers-map-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+    padding: 12px 14px !important;
+  }
+  .chambers-map-header-left {
+    width: 100% !important;
+    gap: 10px !important;
+  }
+  .pin-disc-gold {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 12px !important;
+  }
+  .chambers-map-title {
+    font-size: 12px !important;
+    word-break: break-word !important;
+  }
+  .chambers-map-subtitle {
+    font-size: 10.5px !important;
+    word-break: break-word !important;
+  }
+  .chamber-verified-tag {
+    font-size: 9px !important;
+    padding: 3px 8px !important;
+    white-space: normal !important;
+  }
+  .chambers-iframe-wrap {
+    height: 220px !important;
+  }
+  .chambers-map-footer {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 6px !important;
+    padding: 10px 14px !important;
+  }
+  .chambers-gps-tag,
+  .chambers-nav-link {
+    font-size: 10.5px !important;
+    word-break: break-word !important;
   }
   .manifesto-lead-quote {
     font-size: 14.5px;
@@ -3301,9 +3408,6 @@
   .compare-versus-card {
     padding: 16px 14px;
   }
-  .chambers-iframe-wrap {
-    height: 260px;
-  }
   .about-closing-cta h2 {
     font-size: 22px;
   }
@@ -3318,20 +3422,101 @@
   .about-hero-container {
     padding: 0 12px 48px 12px;
   }
+  .about-eyebrow-badge {
+    padding: 5px 10px !important;
+    font-size: 9.2px !important;
+    gap: 5px !important;
+    white-space: normal !important;
+    line-height: 1.35 !important;
+  }
   .manifesto-narrative-card,
   .fiduciary-stack-card,
   .desk-chambers-card,
   .precedent-card,
   .milestone-card,
   .master-seal-card,
-  .chambers-card-wrapper,
   .about-closing-cta {
     padding: 18px 14px;
   }
-  .about-eyebrow-badge {
-    padding: 5px 12px;
-    font-size: 10px;
-    gap: 6px;
+  .chambers-card-wrapper {
+    padding: 16px 10px !important;
+    border-radius: 12px !important;
+    gap: 16px !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  .chambers-narrative-col,
+  .chambers-visual-col {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  .chambers-main-heading {
+    font-size: 17px !important;
+    line-height: 1.25 !important;
+    word-break: break-word !important;
+  }
+  .chambers-lead-text {
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+    word-break: break-word !important;
+  }
+  .chambers-spec-item {
+    gap: 8px !important;
+    min-width: 0 !important;
+  }
+  .chambers-spec-icon {
+    width: 26px !important;
+    height: 26px !important;
+    font-size: 11px !important;
+  }
+  .spec-label {
+    font-size: 9.5px !important;
+  }
+  .spec-value {
+    font-size: 11.5px !important;
+    word-break: break-word !important;
+  }
+  .btn-directions,
+  .btn-visit {
+    padding: 9px 10px !important;
+    font-size: 11px !important;
+  }
+  .chambers-map-frame-card {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .chambers-map-header {
+    padding: 10px 10px !important;
+    gap: 8px !important;
+  }
+  .chambers-map-header-left {
+    gap: 8px !important;
+  }
+  .pin-disc-gold {
+    width: 24px !important;
+    height: 24px !important;
+    font-size: 10px !important;
+  }
+  .chambers-map-title {
+    font-size: 11px !important;
+  }
+  .chambers-map-subtitle {
+    font-size: 9.5px !important;
+  }
+  .chamber-verified-tag {
+    font-size: 8px !important;
+    padding: 2px 6px !important;
+  }
+  .chambers-iframe-wrap {
+    height: 190px !important;
+  }
+  .chambers-map-footer {
+    padding: 8px 10px !important;
+  }
+  .chambers-gps-tag,
+  .chambers-nav-link {
+    font-size: 9.5px !important;
   }
   .founder-signature-name {
     font-size: 14.5px;

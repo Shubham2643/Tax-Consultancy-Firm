@@ -70,7 +70,7 @@ const COMPARISON_ROWS = [
 ];
 
 // Interactive Estimator Data
-const TURNOVER_SLABS = [
+  const TURNOVER_SLABS = [
   {
     id: 'tier1',
     range: '₹10L – ₹25L',
