@@ -624,6 +624,37 @@ const SOFTWARE_OPTIONS = [
   { id: 'Spreadsheets / Manual', label: 'Other / In-House', icon: 'fa-solid fa-table-cells' },
 ];
 
+const ESTIMATOR_ENTITY_OPTIONS = [
+  {
+    id: 'prop',
+    label: 'Proprietorship',
+    regimeBadge: 'ITR-3/4 + GST',
+    desc: 'Freelancers, Solo Practitioners & Emerging MSMEs',
+    icon: 'fa-solid fa-user',
+  },
+  {
+    id: 'pvt_ltd',
+    label: 'Pvt Ltd / LLP / MSME',
+    regimeBadge: 'MCA + ROC + TDS',
+    desc: 'Incorporated Companies, Active Trading & Manufacturing',
+    icon: 'fa-solid fa-building-user',
+  },
+  {
+    id: 'enterprise',
+    label: 'Enterprise / Multi-State',
+    regimeBadge: 'Sec 44AB + CFO',
+    desc: 'Turnover > ₹5 Cr, Factories & Multi-Branch Conglomerates',
+    icon: 'fa-solid fa-industry',
+  },
+];
+
+const ESTIMATOR_VOLUME_OPTIONS = [
+  { id: 'low', metric: '< 50', unit: 'Vouchers / Mo', scaleTag: 'Lean Desk' },
+  { id: 'medium', metric: '50 – 150', unit: 'Vouchers / Mo', scaleTag: 'MSME Core' },
+  { id: 'high', metric: '150 – 500', unit: 'Vouchers / Mo', scaleTag: 'High Velocity' },
+  { id: 'enterprise', metric: '500+', unit: 'Multi-Branch', scaleTag: 'Conglomerate' },
+];
+
 const Pricing = () => {
   const navigate = useNavigate();
   const { data: response } = useFetch(getPricing);
@@ -632,6 +663,8 @@ const Pricing = () => {
   const [billingCycle, setBillingCycle] = useState('annual');
   const [openFaq, setOpenFaq] = useState(0);
   const [faqCategory, setFaqCategory] = useState('all');
+  const [matrixCategoryFilter, setMatrixCategoryFilter] = useState('all');
+  const [mobileMatrixTierIdx, setMobileMatrixTierIdx] = useState(1); // Default to Corporate Benchmark (TIER 02)
 
   // Filtered FAQ items based on selected category
   const filteredFaqs = useMemo(() => {
@@ -712,6 +745,37 @@ const Pricing = () => {
     return dynamicTiers.find((t) => t.id === 'growth');
   }, [estimatorEntity, estimatorVolume, dynamicTiers]);
 
+  // Calibration rationale explaining the matched mandate trigger
+  const calibrationInsights = useMemo(() => {
+    if (!recommendedTier) return null;
+    if (recommendedTier.id === 'starter') {
+      return {
+        triggerLabel: 'Lean Statutory Trigger',
+        rationale:
+          'Single-entity proprietorship under 50 vouchers fits Foundational Practice without unnecessary MCA secretarial fees.',
+      };
+    }
+    if (recommendedTier.id === 'cfo') {
+      return {
+        triggerLabel: 'Audit & Multi-Branch Trigger',
+        rationale:
+          'High monthly density (150+ vouchers) or multi-state operations unlock Section 44AB Tax Audit, multi-GSTIN consolidation & Virtual CFO counsel.',
+      };
+    }
+    if (estimatorEntity === 'prop') {
+      return {
+        triggerLabel: 'ITC Recovery Scale Trigger',
+        rationale:
+          'Mid-scale transaction flow (50–150 vouchers) unlocks algorithmic GSTR-2B input credit matching & quarterly TDS governance.',
+      };
+    }
+    return {
+      triggerLabel: 'Corporate ROC Mandate Trigger',
+      rationale:
+        'Incorporated Pvt Ltd / LLP requires mandatory annual MCA Form AOC-4, MGT-7 & DIR-3 KYC paired with forensic GSTR-2B matching.',
+    };
+  }, [recommendedTier, estimatorEntity]);
+
   // Dynamic pricing info for matrix columns based on billing cycle
   const tierPrices = useMemo(() => {
     return dynamicTiers.map((tier) => {
@@ -727,10 +791,58 @@ const Pricing = () => {
       return {
         amount,
         period: '/mo',
-        note: isAnnual ? 'Billed annually (save ~20%)' : 'Billed monthly',
+        note: isAnnual ? 'Billed annually (-18%)' : 'Billed monthly',
       };
     });
   }, [dynamicTiers, billingCycle]);
+
+  const filteredMatrixCategories = useMemo(() => {
+    if (matrixCategoryFilter === 'all') return MATRIX_CATEGORIES;
+    return MATRIX_CATEGORIES.filter((cat) => cat.id === matrixCategoryFilter);
+  }, [matrixCategoryFilter]);
+
+  const visibleDimensionCount = useMemo(
+    () => filteredMatrixCategories.reduce((sum, cat) => sum + cat.rows.length, 0),
+    [filteredMatrixCategories]
+  );
+
+  const renderMatrixCellContent = (val) => {
+    const isBm = val.isBenchmark;
+    return (
+      <div className="cell-content-wrap">
+        {val.isCheck ? (
+          <div className="cell-check-line">
+            <i className="fa-solid fa-circle-check" aria-hidden="true"></i>
+            <strong className="cell-primary-text">{val.main}</strong>
+          </div>
+        ) : val.isNA ? (
+          <div className="cell-na-line">
+            <span className="cell-na-badge">
+              <i className="fa-solid fa-minus" aria-hidden="true"></i>
+              <span>Not Applicable</span>
+            </span>
+          </div>
+        ) : val.slaType ? (
+          <div className={`cell-sla-badge sla-${val.slaType}`}>
+            <i className={val.slaIcon} aria-hidden="true"></i>
+            <span>{val.main}</span>
+          </div>
+        ) : (
+          <strong className={`cell-primary-text ${isBm ? 'benchmark-highlight' : ''}`}>
+            {val.icon && <i className={`${val.icon} cell-inline-icon`} aria-hidden="true"></i>}
+            <span>{val.main}</span>
+          </strong>
+        )}
+        {val.sub && <span className="cell-sub-text">{val.sub}</span>}
+        {val.tag && (
+          <span className={`cell-tag tag-${val.tag.type}`}>
+            {val.tag.icon && <i className={val.tag.icon} aria-hidden="true"></i>}
+            <span>{val.tag.text}</span>
+          </span>
+        )}
+      </div>
+    );
+  };
 
   const handleSelectTier = (tier) => {
     const cycleSuffix =
@@ -1055,128 +1167,144 @@ const Pricing = () => {
       </main>
 
       {/* 3. INTERACTIVE RETAINER SCOPE & VOLUME ESTIMATOR */}
-      <section className="pricing-content-wrap estimator-section-container">
-        <div className="retainers-scope-estimator-box">
-          <div className="estimator-intro">
-            <div className="pricing-section-pill">
-              <i className="fa-solid fa-sliders"></i>
-              <span>INTERACTIVE SCOPE ESTIMATOR</span>
+      <section className="pricing-content-wrap estimator-section-container" aria-labelledby="scope-estimator-heading">
+        <div className="section-header-centered estimator-section-header">
+          <div className="retainers-eyebrow-badge estimator-eyebrow">
+            <span className="badge-index-chip">03</span>
+            <i className="fa-solid fa-sliders" aria-hidden="true"></i>
+            <span>SCOPE CALIBRATION WORKBENCH &bull; FIXED RETAINERS</span>
+          </div>
+          <h2 id="scope-estimator-heading" className="section-heading">
+            Calculate Your Ideal <span className="title-gradient-gold">Compliance Mandate</span>
+          </h2>
+          <p className="section-subtext">
+            Select your legal entity constitution and monthly voucher velocity to lock in calibrated statutory governance, priority SLA turnaround, and predictable fixed retainers.
+          </p>
+        </div>
+
+        <div className="estimator-workbench-grid">
+          {/* Left Pane: Swiss Calibration Controls */}
+          <div className="estimator-console-card">
+            <div className="console-toolbar">
+              <div className="console-status-label">
+                <span className="console-status-dot" aria-hidden="true"></span>
+                <span>CALIBRATION PARAMETERS</span>
+              </div>
+
+              <div className="console-cadence-toggle" role="radiogroup" aria-label="Estimator Billing Cadence">
+                <button
+                  type="button"
+                  className={`cadence-pill-btn ${billingCycle === 'annual' ? 'active' : ''}`}
+                  onClick={() => setBillingCycle('annual')}
+                  aria-checked={billingCycle === 'annual'}
+                >
+                  <span>Annual</span>
+                  <span className="cadence-save-tag">-18%</span>
+                </button>
+                <button
+                  type="button"
+                  className={`cadence-pill-btn ${billingCycle === 'monthly' ? 'active' : ''}`}
+                  onClick={() => setBillingCycle('monthly')}
+                  aria-checked={billingCycle === 'monthly'}
+                >
+                  <span>Monthly</span>
+                </button>
+              </div>
             </div>
-            <h3 className="estimator-heading">Calculate Your Ideal Compliance Mandate</h3>
-            <p className="estimator-sub">
-              Select your legal entity structure and monthly voucher volume to discover the calibrated statutory scope, dedicated partner oversight, and fixed retainer.
-            </p>
+
+            {/* Step 1: Legal Entity Structure */}
+            <div className="estimator-step-block">
+              <div className="step-label-row">
+                <span className="step-num">01</span>
+                <span className="step-title">Legal Entity Constitution</span>
+              </div>
+
+              <div className="entity-cards-grid">
+                {ESTIMATOR_ENTITY_OPTIONS.map((opt) => {
+                  const isActive = estimatorEntity === opt.id;
+                  return (
+                    <button
+                      key={opt.id}
+                      type="button"
+                      className={`entity-select-card ${isActive ? 'active' : ''}`}
+                      onClick={() => setEstimatorEntity(opt.id)}
+                      aria-pressed={isActive}
+                    >
+                      <div className="entity-card-icon">
+                        <i className={opt.icon} aria-hidden="true"></i>
+                      </div>
+                      <div className="entity-card-content">
+                        <div className="entity-title-row">
+                          <strong>{opt.label}</strong>
+                          <span className="entity-regime-chip">{opt.regimeBadge}</span>
+                        </div>
+                        <span className="entity-desc-text">{opt.desc}</span>
+                      </div>
+                      <div className="entity-check-dot" aria-hidden="true">
+                        <i className="fa-solid fa-check"></i>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Step 2: Monthly Transaction Scale */}
+            <div className="estimator-step-block">
+              <div className="step-label-row">
+                <span className="step-num">02</span>
+                <span className="step-title">Monthly Voucher Velocity</span>
+              </div>
+
+              <div className="volume-chips-grid">
+                {ESTIMATOR_VOLUME_OPTIONS.map((vol) => {
+                  const isActive = estimatorVolume === vol.id;
+                  return (
+                    <button
+                      key={vol.id}
+                      type="button"
+                      className={`volume-chip-btn ${isActive ? 'active' : ''}`}
+                      onClick={() => setEstimatorVolume(vol.id)}
+                      aria-pressed={isActive}
+                    >
+                      <span className="chip-scale-tag">{vol.scaleTag}</span>
+                      <strong className="chip-metric">{vol.metric}</strong>
+                      <span className="chip-label">{vol.unit}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Live Calibration Rationale */}
+            {calibrationInsights && (
+              <div className="estimator-calibration-banner" role="status" aria-live="polite">
+                <div className="calibration-banner-head">
+                  <span className="calibration-trigger-pill">
+                    <i className="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+                    <span>{calibrationInsights.triggerLabel}</span>
+                  </span>
+                  <span className="calibration-itc-note">
+                    <i className="fa-solid fa-file-invoice-dollar" aria-hidden="true"></i>
+                    <span>18% GST ITC Recoverable</span>
+                  </span>
+                </div>
+                <p className="calibration-banner-text">{calibrationInsights.rationale}</p>
+              </div>
+            )}
           </div>
 
-          <div className="estimator-console-grid">
-            {/* Left: Interactive Input Controls */}
-            <div className="estimator-inputs-panel">
-              {/* Step 1: Legal Entity Structure */}
-              <div className="estimator-step-block">
-                <div className="step-label-row">
-                  <span className="step-num">01</span>
-                  <label className="step-title">Legal Entity Structure</label>
-                </div>
-                <div className="entity-cards-grid">
-                  <button
-                    type="button"
-                    className={`entity-select-card ${estimatorEntity === 'prop' ? 'active' : ''}`}
-                    onClick={() => setEstimatorEntity('prop')}
-                  >
-                    <div className="entity-card-icon">
-                      <i className="fa-solid fa-user"></i>
-                    </div>
-                    <div className="entity-card-content">
-                      <strong>Proprietorship</strong>
-                      <span>Freelancers, Sole Practitioners &amp; Emerging MSMEs</span>
-                    </div>
-                    <div className="entity-check-dot">
-                      <i className="fa-solid fa-check"></i>
-                    </div>
-                  </button>
+          {/* Right Pane: Live Mandate Output Dossier */}
+          <div className="estimator-output-panel">
+            {recommendedTier && (() => {
+              const isOneTime = Boolean(recommendedTier.isOneTime);
+              const isAnnual = billingCycle === 'annual' && !isOneTime;
+              const activeRate = isAnnual ? recommendedTier.priceAnnual : recommendedTier.priceMonthly;
+              const annualSavings = !isOneTime
+                ? (recommendedTier.priceMonthly - recommendedTier.priceAnnual) * 12
+                : 0;
 
-                  <button
-                    type="button"
-                    className={`entity-select-card ${estimatorEntity === 'pvt_ltd' ? 'active' : ''}`}
-                    onClick={() => setEstimatorEntity('pvt_ltd')}
-                  >
-                    <div className="entity-card-icon">
-                      <i className="fa-solid fa-building-user"></i>
-                    </div>
-                    <div className="entity-card-content">
-                      <strong>Pvt Ltd / LLP / MSME</strong>
-                      <span>Incorporated Companies, Active Trading &amp; Manufacturing</span>
-                    </div>
-                    <div className="entity-check-dot">
-                      <i className="fa-solid fa-check"></i>
-                    </div>
-                  </button>
-
-                  <button
-                    type="button"
-                    className={`entity-select-card ${estimatorEntity === 'enterprise' ? 'active' : ''}`}
-                    onClick={() => setEstimatorEntity('enterprise')}
-                  >
-                    <div className="entity-card-icon">
-                      <i className="fa-solid fa-industry"></i>
-                    </div>
-                    <div className="entity-card-content">
-                      <strong>Enterprise / Multi-State</strong>
-                      <span>Turnover &gt; ₹5 Cr, Factories &amp; Multi-Branch Conglomerates</span>
-                    </div>
-                    <div className="entity-check-dot">
-                      <i className="fa-solid fa-check"></i>
-                    </div>
-                  </button>
-                </div>
-              </div>
-
-              {/* Step 2: Monthly Transaction Volume */}
-              <div className="estimator-step-block">
-                <div className="step-label-row">
-                  <span className="step-num">02</span>
-                  <label className="step-title">Monthly Transaction Scale</label>
-                </div>
-                <div className="volume-chips-grid">
-                  <button
-                    type="button"
-                    className={`volume-chip-btn ${estimatorVolume === 'low' ? 'active' : ''}`}
-                    onClick={() => setEstimatorVolume('low')}
-                  >
-                    <span className="chip-metric">&lt; 50</span>
-                    <span className="chip-label">Vouchers / Mo</span>
-                  </button>
-                  <button
-                    type="button"
-                    className={`volume-chip-btn ${estimatorVolume === 'medium' ? 'active' : ''}`}
-                    onClick={() => setEstimatorVolume('medium')}
-                  >
-                    <span className="chip-metric">50 – 150</span>
-                    <span className="chip-label">Vouchers / Mo</span>
-                  </button>
-                  <button
-                    type="button"
-                    className={`volume-chip-btn ${estimatorVolume === 'high' ? 'active' : ''}`}
-                    onClick={() => setEstimatorVolume('high')}
-                  >
-                    <span className="chip-metric">150 – 500</span>
-                    <span className="chip-label">Vouchers / Mo</span>
-                  </button>
-                  <button
-                    type="button"
-                    className={`volume-chip-btn ${estimatorVolume === 'enterprise' ? 'active' : ''}`}
-                    onClick={() => setEstimatorVolume('enterprise')}
-                  >
-                    <span className="chip-metric">500+</span>
-                    <span className="chip-label">Multi-Branch</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Right: Live Mandate Output Dossier */}
-            <div className="estimator-output-panel">
-              {recommendedTier && (
+              return (
                 <div className="mandate-dossier-card">
                   <div className="dossier-card-top">
                     <div className="dossier-match-badge">
@@ -1186,100 +1314,199 @@ const Pricing = () => {
                     <span className="dossier-tier-tag">{recommendedTier.code}</span>
                   </div>
 
-                  <h4 className="dossier-plan-name">{recommendedTier.name}</h4>
+                  <h3 className="dossier-plan-name">{recommendedTier.name}</h3>
                   <p className="dossier-plan-target">{recommendedTier.target}</p>
 
-                  <div className="dossier-price-row">
-                    <div className="dossier-price-wrap">
-                      <span className="dossier-currency">₹</span>
-                      <span className="dossier-amount">
-                        {(billingCycle === 'annual' && !recommendedTier.isOneTime
-                          ? recommendedTier.priceAnnual
-                          : recommendedTier.priceMonthly
-                        ).toLocaleString('en-IN')}
-                      </span>
-                      <span className="dossier-period">
-                        /{recommendedTier.isOneTime ? 'one-time setup' : billingCycle === 'annual' ? 'mo (billed annually)' : 'month'}
-                      </span>
+                  {/* Pricing Lockup */}
+                  <div className="dossier-fee-panel">
+                    <div className="dossier-fee-main">
+                      {isAnnual && (
+                        <div className="dossier-strikethrough-row">
+                          <span className="dossier-struck-price">
+                            ₹{recommendedTier.priceMonthly.toLocaleString('en-IN')}/mo
+                          </span>
+                          <span className="dossier-annual-chip">Annual Plan</span>
+                        </div>
+                      )}
+                      <div className="dossier-price-wrap">
+                        <span className="dossier-currency">₹</span>
+                        <span className="dossier-amount">{activeRate.toLocaleString('en-IN')}</span>
+                        <span className="dossier-period">
+                          /{isOneTime ? 'one-time setup' : isAnnual ? 'mo (billed annually)' : 'month'}
+                        </span>
+                      </div>
                     </div>
-                    <span className="dossier-scope-lock">
-                      <i className="fa-solid fa-lock text-gold"></i>
-                      <span>Scope-Locked</span>
-                    </span>
+
+                    <div className="dossier-fee-badges">
+                      <span className="dossier-scope-lock">
+                        <i className="fa-solid fa-lock" aria-hidden="true"></i>
+                        <span>Scope-Locked</span>
+                      </span>
+                      {isAnnual && annualSavings > 0 && (
+                        <span className="dossier-savings-pill">
+                          Save ₹{annualSavings.toLocaleString('en-IN')}/yr
+                        </span>
+                      )}
+                    </div>
                   </div>
+
+                  {/* 4-Cell Statutory Matrix Snapshot */}
+                  {recommendedTier.matrix && (
+                    <div className="dossier-specs-grid" aria-label="Calibrated Mandate Specifications">
+                      <div className="dossier-spec-cell">
+                        <span className="spec-cell-label">GST &amp; Filings</span>
+                        <strong className="spec-cell-val">{recommendedTier.matrix.gstFilings}</strong>
+                      </div>
+                      <div className="dossier-spec-cell">
+                        <span className="spec-cell-label">Direct Tax &amp; TDS</span>
+                        <strong className="spec-cell-val">{recommendedTier.matrix.advanceTaxTds}</strong>
+                      </div>
+                      <div className="dossier-spec-cell">
+                        <span className="spec-cell-label">ROC / Secretarial</span>
+                        <strong className="spec-cell-val">{recommendedTier.matrix.rocFilings}</strong>
+                      </div>
+                      <div className="dossier-spec-cell">
+                        <span className="spec-cell-label">Advisor SLA</span>
+                        <strong className="spec-cell-val">{recommendedTier.matrix.partnerSla}</strong>
+                      </div>
+                    </div>
+                  )}
 
                   {/* Included Core Safeguards */}
                   <div className="dossier-safeguards-box">
-                    <span className="safeguards-label">Mandate Highlights Under This Scale:</span>
+                    <span className="safeguards-label">Included Statutory Safeguards</span>
                     <ul className="safeguards-list">
                       {recommendedTier.disciplines.slice(0, 3).map((d, dIdx) => (
                         <li key={dIdx}>
-                          <i className="fa-solid fa-circle-check"></i>
-                          <span><strong>{d.title}:</strong> {d.detail}</span>
+                          <i className="fa-solid fa-circle-check" aria-hidden="true"></i>
+                          <span>
+                            <strong>{d.title}:</strong> {d.detail}
+                          </span>
                         </li>
                       ))}
                     </ul>
                   </div>
 
+                  {/* Action Buttons */}
                   <div className="dossier-actions">
                     <button
                       type="button"
                       className="btn-dossier-retain"
                       onClick={() => handleSelectTier(recommendedTier)}
                     >
-                      <span>Retain This Mandate Scope</span>
-                      <i className="fa-solid fa-arrow-right"></i>
+                      <span>Retain This Mandate</span>
+                      <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
                     </button>
                     <button
                       type="button"
                       className="btn-dossier-whatsapp"
                       onClick={() => handleWhatsAppDesk(recommendedTier)}
                     >
-                      <i className="fa-brands fa-whatsapp"></i>
-                      <span>WhatsApp Partner Desk</span>
+                      <i className="fa-brands fa-whatsapp" aria-hidden="true"></i>
+                      <span>WhatsApp Advisor</span>
                     </button>
                   </div>
                 </div>
-              )}
-            </div>
+              );
+            })()}
           </div>
         </div>
       </section>
 
       {/* 4. COMPREHENSIVE SIDE-BY-SIDE STATUTORY DELIVERABLES MATRIX */}
-      <section className="pricing-content-wrap pricing-matrix-section">
-        <div className="section-header-centered">
-          <div className="pricing-section-pill">
-            <i className="fa-solid fa-table-list"></i>
-            <span>EXHAUSTIVE SCOPE SPECIFICATION</span>
+      <section className="pricing-content-wrap pricing-matrix-section" aria-labelledby="scope-matrix-heading">
+        <div className="section-header-centered matrix-section-header">
+          <div className="retainers-eyebrow-badge matrix-eyebrow">
+            <span className="badge-index-chip">04</span>
+            <i className="fa-solid fa-table-list" aria-hidden="true"></i>
+            <span>EXHAUSTIVE SCOPE SPECIFICATION &bull; 10 STATUTORY DIMENSIONS</span>
           </div>
-          <h2 className="section-heading">Granular Statutory Scope Matrix</h2>
+          <h2 id="scope-matrix-heading" className="section-heading">
+            Granular Statutory <span className="title-gradient-gold">Scope Matrix</span>
+          </h2>
           <p className="section-subtext">
-            Comprehensive comparison of all 10 statutory dimensions across Foundational, Corporate Benchmark, Virtual CFO, and Turnkey Incorporation retainers.
+            Line-by-line statutory deliverable ledger comparing Foundational, Corporate Benchmark, Virtual CFO, and Turnkey Incorporation mandates.
           </p>
         </div>
 
-        {/* Value Trust Strip & Horizontal Scroll Indicator */}
-        <div className="matrix-trust-strip">
-          <div className="matrix-trust-item">
-            <i className="fa-solid fa-shield-halved text-amber"></i>
-            <span><strong>100% Fiduciary Mandate:</strong> Scope-locked professional fee charter</span>
+        {/* Unified Swiss Command Bar: Covenant Badges + Domain Filter + Billing Cadence */}
+        <div className="matrix-command-bar">
+          <div className="matrix-covenant-strip">
+            <span className="covenant-pill">
+              <i className="fa-solid fa-shield-halved text-amber" aria-hidden="true"></i>
+              <span><strong>100% Fiduciary Mandate:</strong> Scope-locked fee charter</span>
+            </span>
+            <span className="covenant-pill">
+              <i className="fa-solid fa-file-invoice-dollar text-emerald" aria-hidden="true"></i>
+              <span><strong>18% GST Input Credit (ITC):</strong> Fully deductible invoices</span>
+            </span>
+            <span className="covenant-pill">
+              <i className="fa-solid fa-lock text-blue" aria-hidden="true"></i>
+              <span><strong>Zero Challan Surcharges:</strong> Actual treasury passthrough</span>
+            </span>
           </div>
-          <div className="matrix-trust-item">
-            <i className="fa-solid fa-file-invoice-dollar text-emerald"></i>
-            <span><strong>18% GST Input Credit (ITC):</strong> Fully deductible tax invoices issued</span>
-          </div>
-          <div className="matrix-trust-item">
-            <i className="fa-solid fa-lock text-blue"></i>
-            <span><strong>Zero Arbitrary Surcharges:</strong> Transparent treasury challan passthrough</span>
-          </div>
-          <div className="matrix-mobile-scroll-indicator">
-            <i className="fa-solid fa-arrow-left"></i>
-            <span>Swipe horizontally to compare all 4 tiers</span>
-            <i className="fa-solid fa-arrow-right"></i>
+
+          <div className="matrix-control-deck">
+            <div className="matrix-domain-tabs" role="tablist" aria-label="Filter Statutory Scope Categories">
+              <button
+                type="button"
+                role="tab"
+                aria-selected={matrixCategoryFilter === 'all'}
+                className={`matrix-domain-tab ${matrixCategoryFilter === 'all' ? 'active' : ''}`}
+                onClick={() => setMatrixCategoryFilter('all')}
+              >
+                <span>All Dimensions</span>
+                <span className="tab-count-badge">10</span>
+              </button>
+              {MATRIX_CATEGORIES.map((cat, cIdx) => {
+                const isActive = matrixCategoryFilter === cat.id;
+                const shortTitle =
+                  cat.id === 'accounting'
+                    ? 'Accounting & Vault'
+                    : cat.id === 'gst'
+                    ? 'GST & ITC'
+                    : cat.id === 'direct-tax'
+                    ? 'Direct Tax & ROC'
+                    : 'Defense & SLA';
+                return (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    className={`matrix-domain-tab ${isActive ? 'active' : ''}`}
+                    onClick={() => setMatrixCategoryFilter(cat.id)}
+                  >
+                    <span>{`0${cIdx + 1} • ${shortTitle}`}</span>
+                    <span className="tab-count-badge">{cat.rows.length}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="console-cadence-toggle matrix-cadence-toggle" role="radiogroup" aria-label="Matrix Billing Cadence">
+              <button
+                type="button"
+                className={`cadence-pill-btn ${billingCycle === 'annual' ? 'active' : ''}`}
+                onClick={() => setBillingCycle('annual')}
+                aria-checked={billingCycle === 'annual'}
+              >
+                <span>Annual</span>
+                <span className="cadence-save-tag">-18%</span>
+              </button>
+              <button
+                type="button"
+                className={`cadence-pill-btn ${billingCycle === 'monthly' ? 'active' : ''}`}
+                onClick={() => setBillingCycle('monthly')}
+                aria-checked={billingCycle === 'monthly'}
+              >
+                <span>Monthly</span>
+              </button>
+            </div>
           </div>
         </div>
 
+        {/* Desktop Executive Comparison Table (> 900px) */}
         <div className="matrix-table-wrapper">
           <table className="scope-comparison-table">
             <thead>
@@ -1288,7 +1515,9 @@ const Pricing = () => {
                   <div className="th-deliverables-header">
                     <span className="th-deliverables-badge">STATUTORY SCOPE DIRECTIVE</span>
                     <strong className="th-deliverables-title">Statutory Dimension</strong>
-                    <span className="th-deliverables-sub">Engagement Charter Deliverables</span>
+                    <span className="th-deliverables-sub">
+                      Showing {visibleDimensionCount} of 10 Statutory Deliverables
+                    </span>
                   </div>
                 </th>
                 {dynamicTiers.map((tier, idx) => {
@@ -1302,14 +1531,14 @@ const Pricing = () => {
                       <div className="th-tier-card">
                         {isBenchmark && (
                           <div className="th-benchmark-badge-pill">
-                            <i className="fa-solid fa-crown"></i>
+                            <i className="fa-solid fa-crown" aria-hidden="true"></i>
                             <span>THE FIRM BENCHMARK</span>
                           </div>
                         )}
                         <div className="th-tier-meta">
                           <span className="th-tier-code">{tier.code}</span>
                           {tier.isOneTime && (
-                            <span className="th-formation-badge">ONE-TIME MANDATE</span>
+                            <span className="th-formation-badge">ONE-TIME</span>
                           )}
                         </div>
                         <strong className="th-tier-heading">{tier.shortName || tier.name}</strong>
@@ -1325,7 +1554,7 @@ const Pricing = () => {
                           onClick={() => handleSelectTier(tier)}
                         >
                           <span>{isBenchmark ? 'Choose Corporate' : tier.isOneTime ? 'Incorporate' : 'Select Retainer'}</span>
-                          <i className="fa-solid fa-arrow-right"></i>
+                          <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
                         </button>
                       </div>
                     </th>
@@ -1334,12 +1563,14 @@ const Pricing = () => {
               </tr>
             </thead>
             <tbody>
-              {MATRIX_CATEGORIES.map((cat) => (
+              {filteredMatrixCategories.map((cat) => (
                 <Fragment key={cat.id}>
                   <tr className="matrix-category-row">
                     <td colSpan={5}>
                       <div className="matrix-category-header">
-                        <i className={cat.categoryIcon}></i>
+                        <span className="category-icon-box">
+                          <i className={cat.categoryIcon} aria-hidden="true"></i>
+                        </span>
                         <span>{cat.categoryTitle}</span>
                       </div>
                     </td>
@@ -1347,8 +1578,10 @@ const Pricing = () => {
                   {cat.rows.map((row, rIdx) => (
                     <tr key={`${cat.id}-${rIdx}`} className="matrix-data-row">
                       <td className="matrix-deliverable-cell">
-                        <strong className="deliverable-name">{row.title}</strong>
-                        <span className="deliverable-desc">{row.desc}</span>
+                        <div className="deliverable-meta-stack">
+                          <strong className="deliverable-name">{row.title}</strong>
+                          <span className="deliverable-desc">{row.desc}</span>
+                        </div>
                       </td>
                       {row.tierValues.map((val, tIdx) => {
                         const isBm = val.isBenchmark;
@@ -1357,37 +1590,7 @@ const Pricing = () => {
                             key={`${cat.id}-${rIdx}-tier-${tIdx}`}
                             className={`matrix-value-cell ${isBm ? 'td-tier-benchmark' : ''}`}
                           >
-                            <div className="cell-content-wrap">
-                              {val.isCheck ? (
-                                <div className="cell-check-line">
-                                  <i className="fa-solid fa-circle-check text-emerald"></i>
-                                  <strong className="cell-primary-text">{val.main}</strong>
-                                </div>
-                              ) : val.isNA ? (
-                                <div className="cell-na-line">
-                                  <span className="cell-na-badge">
-                                    <i className="fa-solid fa-minus"></i> Not Applicable
-                                  </span>
-                                </div>
-                              ) : val.slaType ? (
-                                <div className={`cell-sla-badge sla-${val.slaType}`}>
-                                  <i className={val.slaIcon}></i>
-                                  <span>{val.main}</span>
-                                </div>
-                              ) : (
-                                <strong className={`cell-primary-text ${isBm ? 'benchmark-highlight' : ''}`}>
-                                  {val.icon && <i className={`${val.icon} me-1`}></i>}
-                                  {val.main}
-                                </strong>
-                              )}
-                              {val.sub && <span className="cell-sub-text">{val.sub}</span>}
-                              {val.tag && (
-                                <span className={`cell-tag tag-${val.tag.type}`}>
-                                  {val.tag.icon && <i className={val.tag.icon}></i>}
-                                  <span>{val.tag.text}</span>
-                                </span>
-                              )}
-                            </div>
+                            {renderMatrixCellContent(val)}
                           </td>
                         );
                       })}
@@ -1401,7 +1604,7 @@ const Pricing = () => {
                 <td className="matrix-footer-deliverable">
                   <div className="footer-deliverable-box">
                     <strong>Statutory Retainer Selection</strong>
-                    <span>Fixed professional fees • 100% regulatory ethical compliance</span>
+                    <span>Fixed professional fees &bull; 100% regulatory ethical compliance</span>
                   </div>
                 </td>
                 {dynamicTiers.map((tier) => {
@@ -1417,7 +1620,7 @@ const Pricing = () => {
                         onClick={() => handleSelectTier(tier)}
                       >
                         <span>{isBenchmark ? 'Choose Corporate' : tier.isOneTime ? 'Incorporate Entity' : 'Retain This Tier'}</span>
-                        <i className="fa-solid fa-arrow-right"></i>
+                        <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
                       </button>
                     </td>
                   );
@@ -1426,27 +1629,127 @@ const Pricing = () => {
             </tfoot>
           </table>
         </div>
+
+        {/* Mobile & Tablet Executive Comparison Deck (<= 900px, Zero Horizontal Scroll) */}
+        <div className="matrix-mobile-deck" aria-label="Mobile Tier Scope Specification">
+          <div className="matrix-mobile-tier-grid" role="tablist" aria-label="Select Tier to Inspect">
+            {dynamicTiers.map((tier, idx) => {
+              const priceInfo = tierPrices[idx];
+              const isSelected = mobileMatrixTierIdx === idx;
+              const isBenchmark = tier.id === 'growth';
+              return (
+                <button
+                  key={`mob-tier-${tier.id}`}
+                  type="button"
+                  role="tab"
+                  aria-selected={isSelected}
+                  className={`mobile-tier-tab-btn ${isSelected ? 'active' : ''} ${isBenchmark ? 'is-benchmark' : ''}`}
+                  onClick={() => setMobileMatrixTierIdx(idx)}
+                >
+                  <div className="mobile-tier-tab-top">
+                    <span className="mobile-tier-code">{tier.code}</span>
+                    {isBenchmark && (
+                      <span className="mobile-tier-crown" aria-label="Firm Benchmark">
+                        <i className="fa-solid fa-crown" aria-hidden="true"></i>
+                      </span>
+                    )}
+                  </div>
+                  <strong className="mobile-tier-name">{tier.shortName || tier.name}</strong>
+                  <span className="mobile-tier-price">
+                    ₹{priceInfo.amount.toLocaleString('en-IN')}
+                    <small>{priceInfo.period}</small>
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {dynamicTiers[mobileMatrixTierIdx] && (() => {
+            const activeMobTier = dynamicTiers[mobileMatrixTierIdx];
+            const activeMobPrice = tierPrices[mobileMatrixTierIdx];
+            const isBm = activeMobTier.id === 'growth';
+            return (
+              <div className="matrix-mobile-active-banner">
+                <div className="mobile-banner-info">
+                  <div className="mobile-banner-badges">
+                    <span className="dossier-tier-tag">{activeMobTier.code}</span>
+                    {isBm && (
+                      <span className="mobile-bm-pill">
+                        <i className="fa-solid fa-crown" aria-hidden="true"></i>
+                        <span>Benchmark</span>
+                      </span>
+                    )}
+                  </div>
+                  <h4>{activeMobTier.name}</h4>
+                  <p>
+                    <strong>₹{activeMobPrice.amount.toLocaleString('en-IN')}</strong> {activeMobPrice.period} &bull; {activeMobPrice.note}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className={`mobile-banner-cta ${isBm ? 'btn-benchmark' : ''}`}
+                  onClick={() => handleSelectTier(activeMobTier)}
+                >
+                  <span>{isBm ? 'Choose Corporate' : activeMobTier.isOneTime ? 'Incorporate Entity' : 'Select Retainer'}</span>
+                  <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                </button>
+              </div>
+            );
+          })()}
+
+          <div className="matrix-mobile-groups">
+            {filteredMatrixCategories.map((cat) => (
+              <div key={`mob-cat-${cat.id}`} className="matrix-mobile-group-card">
+                <div className="mobile-group-header">
+                  <span className="category-icon-box">
+                    <i className={cat.categoryIcon} aria-hidden="true"></i>
+                  </span>
+                  <span>{cat.categoryTitle}</span>
+                </div>
+                <div className="mobile-group-rows">
+                  {cat.rows.map((row, rIdx) => {
+                    const val = row.tierValues[mobileMatrixTierIdx];
+                    return (
+                      <div key={`mob-row-${cat.id}-${rIdx}`} className="mobile-group-row">
+                        <div className="mobile-row-dimension">
+                          <strong className="deliverable-name">{row.title}</strong>
+                          <span className="deliverable-desc">{row.desc}</span>
+                        </div>
+                        <div className={`mobile-row-spec ${val.isBenchmark ? 'spec-benchmark' : ''}`}>
+                          {renderMatrixCellContent(val)}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* 5. CUSTOM ENTERPRISE QUOTE REQUEST SECTION */}
-      <section className="pricing-content-wrap quote-request-section" id="custom-quote-section">
-        <div className="quote-box-grid">
-          {/* Narrative & Fiduciary Partner Column */}
-          <div className="quote-narrative-col">
-            <div className="pricing-section-pill">
-              <i className="fa-solid fa-file-signature"></i>
-              <span>BESPOKE RETAINER MANDATE</span>
-            </div>
-            <h2 className="quote-heading">Require a Custom Manufacturing or Multi-State Retainer?</h2>
-            <p className="quote-lead">
-              For factories, chemical manufacturing units, export houses, and high-volume e-commerce conglomerates across
-              Gujarat and Maharashtra, our Senior Partners prepare a scoped engagement letter aligned with your ERP and volume.
-            </p>
+      <section className="pricing-content-wrap quote-request-section" id="custom-quote-section" aria-labelledby="custom-quote-heading">
+        <div className="section-header-centered quote-section-header">
+          <div className="retainers-eyebrow-badge quote-eyebrow">
+            <span className="badge-index-chip">05</span>
+            <i className="fa-solid fa-file-signature" aria-hidden="true"></i>
+            <span>BESPOKE RETAINER MANDATE &bull; CUSTOM ENTERPRISE RFP</span>
+          </div>
+          <h2 id="custom-quote-heading" className="section-heading">
+            Require a Custom Manufacturing or <span className="title-gradient-gold">Multi-State Retainer?</span>
+          </h2>
+          <p className="section-subtext">
+            For factories, chemical manufacturing units, export houses, and multi-branch conglomerates across Gujarat and Maharashtra, our Senior Partners draft a scope-locked engagement letter aligned with your ERP and volume.
+          </p>
+        </div>
 
-            {/* Senior Partner Desk Direct Card */}
+        <div className="quote-workbench-grid">
+          {/* Left Column: Direct Senior Partner Desk + Unified Covenant Ledger */}
+          <div className="quote-advisory-col">
             <div className="partner-desk-card">
               <div className="partner-desk-top">
-                <div className="partner-desk-avatar">
+                <div className="partner-desk-avatar" aria-hidden="true">
                   <i className="fa-solid fa-user-tie"></i>
                 </div>
                 <div className="partner-desk-info">
@@ -1454,16 +1757,18 @@ const Pricing = () => {
                   <strong className="partner-desk-title">Senior Tax Practice Principal</strong>
                 </div>
                 <span className="partner-live-status">
-                  <span className="live-dot-pulse"></span>
+                  <span className="live-dot-pulse" aria-hidden="true"></span>
                   <span>Available (&lt; 4h SLA)</span>
                 </span>
               </div>
+
               <p className="partner-desk-desc">
-                Direct engagement letter drafting with zero intermediary account managers. 100% compliant under statutory fiduciary charter.
+                Direct engagement letter drafting with zero intermediary account managers—100% compliant under statutory fiduciary charter.
               </p>
+
               <div className="partner-desk-actions">
                 <a href="tel:+919510984735" className="partner-direct-link phone">
-                  <i className="fa-solid fa-phone-volume"></i>
+                  <i className="fa-solid fa-phone-volume" aria-hidden="true"></i>
                   <span>+91 95109 84735</span>
                 </a>
                 <a
@@ -1472,79 +1777,129 @@ const Pricing = () => {
                   rel="noopener noreferrer"
                   className="partner-direct-link whatsapp"
                 >
-                  <i className="fa-brands fa-whatsapp"></i>
+                  <i className="fa-brands fa-whatsapp" aria-hidden="true"></i>
                   <span>WhatsApp Partner Desk</span>
                 </a>
               </div>
             </div>
 
-            {/* 4 Architectural Fiduciary Guarantee Cards */}
-            <div className="quote-guarantee-grid">
-              <div className="guarantee-card">
-                <div className="guarantee-icon-wrap amber">
-                  <i className="fa-solid fa-file-shield"></i>
+            {/* Unified 2x2 Fiduciary Covenant Ledger */}
+            <div className="quote-covenant-ledger" role="region" aria-label="Fiduciary Practice Guarantees">
+              <div className="covenant-quad-grid">
+                <div className="covenant-quad-cell">
+                  <div className="guarantee-icon-wrap amber" aria-hidden="true">
+                    <i className="fa-solid fa-file-shield"></i>
+                  </div>
+                  <div className="guarantee-body">
+                    <strong>Mutual NDA Guarantee</strong>
+                    <p>Executed prior to financial books or portal credential inspection.</p>
+                  </div>
                 </div>
-                <div className="guarantee-body">
-                  <strong>Mutual NDA Guarantee</strong>
-                  <p>Mutual NDA executed prior to financial books or credential inspection.</p>
+
+                <div className="covenant-quad-cell">
+                  <div className="guarantee-icon-wrap emerald" aria-hidden="true">
+                    <i className="fa-solid fa-lock"></i>
+                  </div>
+                  <div className="guarantee-body">
+                    <strong>Zero Hidden Surcharges</strong>
+                    <p>Upfront fixed monthly retainers under strict statutory charter.</p>
+                  </div>
+                </div>
+
+                <div className="covenant-quad-cell">
+                  <div className="guarantee-icon-wrap blue" aria-hidden="true">
+                    <i className="fa-solid fa-network-wired"></i>
+                  </div>
+                  <div className="guarantee-body">
+                    <strong>Seamless ERP Ingestion</strong>
+                    <p>Bidirectional workflow with Tally Prime, SAP, Zoho Books &amp; Oracle.</p>
+                  </div>
+                </div>
+
+                <div className="covenant-quad-cell">
+                  <div className="guarantee-icon-wrap purple" aria-hidden="true">
+                    <i className="fa-solid fa-scale-balanced"></i>
+                  </div>
+                  <div className="guarantee-body">
+                    <strong>Appellate Representation</strong>
+                    <p>Direct defense before CIT(Appeals), ITAT &amp; tax tribunal benches.</p>
+                  </div>
                 </div>
               </div>
 
-              <div className="guarantee-card">
-                <div className="guarantee-icon-wrap emerald">
-                  <i className="fa-solid fa-lock"></i>
-                </div>
-                <div className="guarantee-body">
-                  <strong>Fixed Retainers, Zero Surcharges</strong>
-                  <p>Upfront fixed monthly retainers under statutory charter with zero hidden fees.</p>
-                </div>
-              </div>
-
-              <div className="guarantee-card">
-                <div className="guarantee-icon-wrap blue">
-                  <i className="fa-solid fa-network-wired"></i>
-                </div>
-                <div className="guarantee-body">
-                  <strong>Seamless ERP Ingestion</strong>
-                  <p>Bidirectional sync with Tally Prime, SAP ERP, Zoho Books, Busy & Oracle.</p>
-                </div>
-              </div>
-
-              <div className="guarantee-card">
-                <div className="guarantee-icon-wrap purple">
-                  <i className="fa-solid fa-scale-balanced"></i>
-                </div>
-                <div className="guarantee-body">
-                  <strong>Appellate Representation</strong>
-                  <p>Direct defense before CIT(Appeals), ITAT & departmental tax benches.</p>
-                </div>
+              <div className="covenant-ledger-footer">
+                <span className="ledger-foot-item">
+                  <i className="fa-solid fa-shield-halved text-amber" aria-hidden="true"></i>
+                  <span>Companies Act Sec 128 Archival</span>
+                </span>
+                <span className="ledger-foot-item">
+                  <i className="fa-solid fa-certificate text-emerald" aria-hidden="true"></i>
+                  <span>18% ITC Compliant Tax Invoices</span>
+                </span>
               </div>
             </div>
 
-            {/* Compliance trust chips */}
-            <div className="quote-trust-strip">
-              <span className="trust-pill"><i className="fa-solid fa-shield-halved text-amber"></i> Companies Act Sec 128 Archival</span>
-              <span className="trust-pill"><i className="fa-solid fa-certificate text-emerald"></i> Statutory Certified</span>
+            {/* Engagement Execution Protocol Card */}
+            <div className="quote-onboarding-card" role="region" aria-label="Engagement Onboarding Protocol">
+              <div className="onboarding-card-head">
+                <span className="onboarding-kicker">
+                  <i className="fa-solid fa-route" aria-hidden="true"></i>
+                  <span>ENGAGEMENT EXECUTION PROTOCOL</span>
+                </span>
+                <span className="onboarding-total-badge">48h Onboarding</span>
+              </div>
+
+              <div className="onboarding-steps-list">
+                <div className="onboarding-step-item">
+                  <span className="onboarding-step-num">01</span>
+                  <div className="onboarding-step-copy">
+                    <strong>Mutual NDA &amp; Volume Audit</strong>
+                    <span>Credential-safe review of GSTINs, ERP &amp; notice backlog</span>
+                  </div>
+                  <span className="onboarding-step-eta">&lt; 4h</span>
+                </div>
+
+                <div className="onboarding-step-item">
+                  <span className="onboarding-step-num">02</span>
+                  <div className="onboarding-step-copy">
+                    <strong>Scope-Locked Engagement Charter</strong>
+                    <span>Fixed-fee legal mandate drafted directly by Senior Partner</span>
+                  </div>
+                  <span className="onboarding-step-eta">24h</span>
+                </div>
+
+                <div className="onboarding-step-item">
+                  <span className="onboarding-step-num">03</span>
+                  <div className="onboarding-step-copy">
+                    <strong>ERP Sync &amp; Compliance Go-Live</strong>
+                    <span>Dedicated WhatsApp advisor desk &amp; encrypted client vault</span>
+                  </div>
+                  <span className="onboarding-step-eta">48h</span>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Form Column */}
+          {/* Right Column: Executive Engagement Intake RFP Card */}
           <div className="quote-form-col">
             <div className="quote-form-card">
               <div className="form-card-header">
-                <div>
+                <div className="form-card-heading-wrap">
                   <span className="form-card-badge">DIRECT ENGAGEMENT INTAKE</span>
                   <h3 className="form-card-title">Request Scope-Locked Retainer Proposal</h3>
                 </div>
                 <span className="form-sla-pill">
-                  <i className="fa-regular fa-clock"></i> &lt; 4h Partner Turnaround
+                  <i className="fa-regular fa-clock" aria-hidden="true"></i>
+                  <span>&lt; 4h Turnaround</span>
                 </span>
               </div>
-              <p className="form-subtext">Our Senior Practice Partner will review your transaction volume and formulate a formal engagement proposal.</p>
+              <p className="form-subtext">
+                Share your entity constitution, transaction volume, and accounting stack so our Senior Practice Partner can prepare a tailored engagement letter.
+              </p>
 
               {quoteStatus.success && (
-                <div className="success-quote-banner">
-                  <i className="fa-solid fa-circle-check"></i>
+                <div className="success-quote-banner" role="status">
+                  <i className="fa-solid fa-circle-check" aria-hidden="true"></i>
                   <div>
                     <strong>Mandate Request Successfully Received!</strong>
                     <p>Our Senior Partner has received your submission and will contact your office within 4 business hours.</p>
@@ -1553,19 +1908,18 @@ const Pricing = () => {
               )}
 
               {quoteStatus.error && (
-                <div className="error-quote-banner">
-                  <i className="fa-solid fa-circle-exclamation"></i>
+                <div className="error-quote-banner" role="alert">
+                  <i className="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
                   <p>{quoteStatus.error}</p>
                 </div>
               )}
 
               <form onSubmit={handleQuoteSubmit} className="quote-form">
-                {/* Contact Coordinates */}
                 <div className="form-row-split">
                   <div className="quote-input-group">
                     <label htmlFor="qName">Full Name *</label>
                     <div className="input-with-icon">
-                      <i className="fa-regular fa-user"></i>
+                      <i className="fa-regular fa-user" aria-hidden="true"></i>
                       <input
                         type="text"
                         id="qName"
@@ -1580,7 +1934,7 @@ const Pricing = () => {
                   <div className="quote-input-group">
                     <label htmlFor="qCompany">Company / LLP / Firm Name *</label>
                     <div className="input-with-icon">
-                      <i className="fa-regular fa-building"></i>
+                      <i className="fa-regular fa-building" aria-hidden="true"></i>
                       <input
                         type="text"
                         id="qCompany"
@@ -1598,7 +1952,7 @@ const Pricing = () => {
                   <div className="quote-input-group">
                     <label htmlFor="qEmail">Work Email Address *</label>
                     <div className="input-with-icon">
-                      <i className="fa-regular fa-envelope"></i>
+                      <i className="fa-regular fa-envelope" aria-hidden="true"></i>
                       <input
                         type="email"
                         id="qEmail"
@@ -1613,7 +1967,7 @@ const Pricing = () => {
                   <div className="quote-input-group">
                     <label htmlFor="qPhone">Phone Number *</label>
                     <div className="input-with-icon">
-                      <i className="fa-solid fa-phone"></i>
+                      <i className="fa-solid fa-phone" aria-hidden="true"></i>
                       <input
                         type="tel"
                         id="qPhone"
@@ -1631,18 +1985,29 @@ const Pricing = () => {
                 <div className="quote-input-group">
                   <label>Preferred Statutory Mandate</label>
                   <div className="mandate-chips-grid">
-                    {MANDATE_OPTIONS.map((opt) => {
+                    {MANDATE_OPTIONS.map((opt, mIdx) => {
                       const isSelected = quoteForm.planInterest === opt.id;
+                      const isWide = mIdx === MANDATE_OPTIONS.length - 1;
                       return (
                         <button
                           key={opt.id}
                           type="button"
-                          className={`mandate-chip-btn ${isSelected ? 'selected' : ''}`}
+                          className={`mandate-chip-btn ${isSelected ? 'selected' : ''} ${isWide ? 'mandate-chip-wide' : ''}`}
                           onClick={() => setQuoteForm({ ...quoteForm, planInterest: opt.id })}
+                          aria-pressed={isSelected}
                         >
-                          <span className="mandate-chip-name">{opt.label}</span>
-                          <span className="mandate-chip-price">{opt.tag}</span>
-                          {opt.popular && <span className="mandate-chip-star"><i className="fa-solid fa-crown"></i></span>}
+                          <div className="mandate-chip-main">
+                            <span className="mandate-chip-name">{opt.label}</span>
+                            <span className="mandate-chip-price">{opt.tag}</span>
+                          </div>
+                          {opt.popular ? (
+                            <span className="mandate-chip-crown" aria-label="Firm Benchmark">
+                              <i className="fa-solid fa-crown" aria-hidden="true"></i>
+                              <span>Core</span>
+                            </span>
+                          ) : isWide ? (
+                            <span className="mandate-chip-custom-tag">Custom ERP</span>
+                          ) : null}
                         </button>
                       );
                     })}
@@ -1661,6 +2026,7 @@ const Pricing = () => {
                           type="button"
                           className={`volume-segment-btn ${isSelected ? 'selected' : ''}`}
                           onClick={() => setQuoteForm({ ...quoteForm, monthlyInvoices: v.id })}
+                          aria-pressed={isSelected}
                         >
                           <span className="seg-label">{v.label}</span>
                           <span className="seg-sub">{v.sub}</span>
@@ -1682,8 +2048,9 @@ const Pricing = () => {
                           type="button"
                           className={`software-pill-btn ${isSelected ? 'selected' : ''}`}
                           onClick={() => setQuoteForm({ ...quoteForm, accountingSoftware: s.id })}
+                          aria-pressed={isSelected}
                         >
-                          <i className={s.icon}></i>
+                          <i className={s.icon} aria-hidden="true"></i>
                           <span>{s.label}</span>
                         </button>
                       );
@@ -1696,7 +2063,7 @@ const Pricing = () => {
                   <label htmlFor="qNotes">Specific Compliance Requirements / Notices</label>
                   <textarea
                     id="qNotes"
-                    rows="3"
+                    rows="2"
                     value={quoteForm.notes}
                     onChange={(e) => setQuoteForm({ ...quoteForm, notes: e.target.value })}
                     placeholder="e.g. Have 2 GSTINs in Gujarat and Maharashtra, need ASMT-10 mismatch resolution, pending 44AB tax audit, Section 194Q compliance..."
@@ -1708,18 +2075,19 @@ const Pricing = () => {
                 <button type="submit" className="btn-submit-quote" disabled={quoteStatus.loading}>
                   {quoteStatus.loading ? (
                     <span>
-                      <i className="fa-solid fa-spinner fa-spin"></i> Formulating Mandate Request...
+                      <i className="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> Formulating Mandate Request...
                     </span>
                   ) : (
-                    <span>
-                      Request Scope-Locked Proposal <i className="fa-solid fa-arrow-right"></i>
-                    </span>
+                    <>
+                      <span>Request Scope-Locked Proposal</span>
+                      <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                    </>
                   )}
                 </button>
 
                 <div className="form-fiduciary-footer">
-                  <i className="fa-solid fa-shield-halved text-emerald"></i>
-                  <span>Strict Fiduciary Confidentiality • Zero Spam Policy • 4h Turnaround</span>
+                  <i className="fa-solid fa-shield-halved text-emerald" aria-hidden="true"></i>
+                  <span>Strict Fiduciary Confidentiality &bull; Zero Spam Policy &bull; 4h Turnaround</span>
                 </div>
               </form>
             </div>

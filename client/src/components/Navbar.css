@@ -3106,6 +3106,8 @@
   .navbar-logo {
     gap: 5px;
     margin-right: 0;
+    min-width: 0;
+    flex-shrink: 1;
   }
 
   .navbar-logo-badge,
@@ -3114,13 +3116,19 @@
     height: 30px;
   }
 
+  .navbar-logo-wordmark {
+    overflow: hidden;
+  }
+
   .logo-ring-accent {
     inset: -2px;
   }
 
   .wordmark-title {
-    font-size: 9.5px !important;
-    letter-spacing: -0.2px !important;
+    font-size: 8.8px !important;
+    letter-spacing: -0.3px !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .wordmark-tagline {

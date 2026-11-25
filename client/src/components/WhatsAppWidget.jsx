@@ -77,9 +77,13 @@ const WhatsAppWidget = () => {
     }
   ];
 
-  // On the dedicated Contact & Consultation Chambers page, hide the floating pill
-  // to avoid overlapping the 2x2 communication suite and duplicate WhatsApp actions.
-  if (location.pathname === '/contact') {
+  // Hide the floating widget on dedicated Contact, Calculators, and Compliance Calendar routes
+  // to avoid obscuring full-width card actions and native CTA panels on desktop and mobile.
+  if (
+    location.pathname === '/contact' ||
+    location.pathname === '/calculators' ||
+    location.pathname === '/compliance-calendar'
+  ) {
     return null;
   }
 
