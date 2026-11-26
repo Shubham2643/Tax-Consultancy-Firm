@@ -1,17 +1,218 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { getServiceById, getServices, submitContact } from '../api';
 import { findFallbackService, FALLBACK_SERVICES } from '../data/fallbackServices';
+import useSEO from '../hooks/useSEO';
 import './ServiceDetail.css';
 
-const NAV_SECTIONS = [
-  { id: 'overview', label: '1. Overview & Purview', shortLabel: 'Overview', icon: 'fas fa-book-open' },
-  { id: 'deliverables', label: '2. Deliverables Docket', shortLabel: 'Deliverables', icon: 'fas fa-certificate' },
-  { id: 'documents', label: '3. Mandatory Documents', shortLabel: 'Documents', icon: 'fas fa-clipboard-list' },
-  { id: 'roadmap', label: '4. Filing Workflow', shortLabel: 'Workflow', icon: 'fas fa-stream' },
-  { id: 'eligibility', label: '5. Eligibility & Scope', shortLabel: 'Eligibility', icon: 'fas fa-user-check' },
-  { id: 'faqs', label: '6. Statutory FAQs', shortLabel: 'FAQs', icon: 'fas fa-question-circle' },
+const WORKBENCH_TABS = [
+  { id: 'overview', num: '01', label: 'Scope & Deliverables', shortLabel: 'Overview', icon: 'fa-solid fa-layer-group' },
+  { id: 'documents', num: '02', label: 'Documents Checklist', shortLabel: 'Documents', icon: 'fa-solid fa-clipboard-check' },
+  { id: 'roadmap', num: '03', label: 'Filing Workflow', shortLabel: 'Workflow', icon: 'fa-solid fa-diagram-project' },
+  { id: 'eligibility', num: '04', label: 'Eligibility & Continuity', shortLabel: 'Eligibility', icon: 'fa-solid fa-user-shield' },
 ];
+
+const CAPITAL_SLABS = [
+  { id: '10L', label: '₹10 Lakh', sub: 'Standard MSME' },
+  { id: '15L', label: '₹15 Lakh', sub: 'Zero Part-B Fee' },
+  { id: '25L', label: '₹25 Lakh', sub: 'Growth Slab' },
+  { id: '50L', label: '₹50 Lakh', sub: 'Corporate Capital' },
+];
+
+const TURNOVER_TIERS = [
+  { id: 'micro', label: '< ₹20L', sub: 'Solo / Freelance' },
+  { id: 'sme', label: '₹20L–1.5Cr', sub: 'Active SME' },
+  { id: 'mid', label: '₹1.5Cr–5Cr', sub: 'Growth Entity' },
+  { id: 'enterprise', label: '> ₹5Cr', sub: 'Audit / Multi-State' },
+];
+
+const FILING_FREQUENCIES = [
+  { id: 'monthly', label: 'Monthly' },
+  { id: 'quarterly', label: 'Quarterly' },
+  { id: 'annual', label: 'Annual' },
+];
+
+const CATEGORY_MAP = {
+  startup: { label: 'Startup & Corporate Law', icon: 'fa-solid fa-rocket', code: 'CORP' },
+  registration: { label: 'Statutory Licensing', icon: 'fa-solid fa-stamp', code: 'LIC' },
+  tax: { label: 'Taxation & Regulatory', icon: 'fa-solid fa-file-invoice-dollar', code: 'TAX' },
+  accounting: { label: 'Assurance & Accounts', icon: 'fa-solid fa-calculator', code: 'ACC' },
+  general: { label: 'Corporate Advisory', icon: 'fa-solid fa-landmark', code: 'ADV' },
+};
+
+const getStatutoryAuthority = (title, type) => {
+  const t = (title || '').toLowerCase();
+  const tp = (type || '').toLowerCase();
+  if (t.includes('pvt') || t.includes('private limited') || t.includes('llp') || t.includes('opc') || tp === 'startup') {
+    return {
+      authority: 'Ministry of Corporate Affairs (MCA)',
+      statute: 'Companies Act, 2013',
+      portal: 'MCA-21 SPICe+ CRC',
+      badge: 'MCA-21 Regulatory Filing',
+      watermark: 'INCORPORATE',
+    };
+  }
+  if (t.includes('gst') || t.includes('lut') || t.includes('gstr')) {
+    return {
+      authority: 'Goods & Services Tax Network (GSTN)',
+      statute: 'Central GST Act, 2017 (Sec 22-25)',
+      portal: 'gst.gov.in Official Portal',
+      badge: 'GSTN Statutory Compliance',
+      watermark: 'INDIRECT TAX',
+    };
+  }
+  if (t.includes('itr') || t.includes('tax return') || t.includes('personal tax') || tp === 'tax') {
+    return {
+      authority: 'Income Tax Department (CBDT)',
+      statute: 'Income-tax Act, 1961 (Sec 139)',
+      portal: 'e-Filing 2.0 Portal',
+      badge: 'Direct Tax Compliance',
+      watermark: 'INCOME TAX',
+    };
+  }
+  if (t.includes('audit') || t.includes('accounting') || t.includes('bookkeeping') || t.includes('payroll') || tp === 'accounting') {
+    return {
+      authority: 'Statutory Assurance Standard',
+      statute: 'Standards on Auditing (SA 700) & Sec 128',
+      portal: 'Cloud Ledger & Statutory Vault',
+      badge: 'Assurance & Accounting',
+      watermark: 'ASSURANCE',
+    };
+  }
+  if (t.includes('iec') || t.includes('import')) {
+    return {
+      authority: 'Directorate General of Foreign Trade (DGFT)',
+      statute: 'Foreign Trade (D&R) Act, 1992',
+      portal: 'dgft.gov.in Portal',
+      badge: 'Foreign Trade License',
+      watermark: 'TRADE DESK',
+    };
+  }
+  if (t.includes('msme') || t.includes('udyam')) {
+    return {
+      authority: 'Ministry of MSME, Govt of India',
+      statute: 'MSMED Act, 2006',
+      portal: 'udyamregistration.gov.in',
+      badge: 'Central MSME Recognition',
+      watermark: 'UDYAM DESK',
+    };
+  }
+  return {
+    authority: 'Central Statutory Registry',
+    statute: 'Indian Regulatory Framework',
+    portal: 'Official Government Gateway',
+    badge: 'Statutory Practice Mandate',
+    watermark: 'ADVISORY',
+  };
+};
+
+const getPostFilingRoadmap = (service, isIncorporation) => {
+  const tp = (service?.serviceType || '').toLowerCase();
+  if (isIncorporation) {
+    return {
+      heading: 'Post-Incorporation Statutory Calendar',
+      sub: 'Mandatory statutory registrations and corporate governance filings following incorporation:',
+      items: [
+        { tag: 'Within 30 Days', title: 'Corporate Bank Account', desc: 'Open current account backed by COI, PAN & Board Resolution.' },
+        { tag: 'Within 30 Days', title: 'Statutory Appointment', desc: 'Formal statutory Form ADT-1 filing with Ministry of Corporate Affairs.' },
+        { tag: 'Within 180 Days', title: 'Commencement Filing', desc: 'Mandatory paid-up capital declaration via Form INC-20A.' },
+        { tag: 'Periodic Cycle', title: 'GST, TDS & Annual ROC', desc: 'Ongoing monthly/quarterly returns and annual AOC-4 / MGT-7 filings.' },
+      ],
+    };
+  }
+  if (tp === 'accounting') {
+    return {
+      heading: 'Recurring Ledger & Governance Cadence',
+      sub: 'Synchronized monthly accounting checkpoints keeping your ledgers 100% audit-ready year-round:',
+      items: [
+        { tag: 'By 5th Monthly', title: 'Bank & Gateway Sync', desc: 'Dual-entry posting of all current accounts, UPI, and card statements.' },
+        { tag: 'By 11th Monthly', title: 'GSTR-2B Vendor Matching', desc: 'Algorithmic ITC reconciliation prior to outward & GSTR-3B filings.' },
+        { tag: 'By 7th Monthly', title: 'TDS Challan Remittance', desc: 'Sec 194C/194J withholding computations and timely treasury challans.' },
+        { tag: 'Quarter Close', title: 'Trial Balance & MIS Pack', desc: 'Partner-reviewed P&L statements, aging schedules, and Sec 128 cloud archive.' },
+      ],
+    };
+  }
+  if (tp === 'tax') {
+    return {
+      heading: 'Post-Filing Assessment & Tax Hygiene',
+      sub: 'Key direct and indirect tax follow-through actions after portal submission:',
+      items: [
+        { tag: 'Within 30 Days', title: 'Return E-Verification', desc: 'Immediate Aadhaar OTP / EV-code verification for valid return processing.' },
+        { tag: 'Quarterly Review', title: 'AIS & Form 26AS Sync', desc: 'Continuous matching of high-value financial trails and TDS credits.' },
+        { tag: '15th Jun / Sep / Dec', title: 'Advance Tax Calibration', desc: 'Quarterly profit projections under Sec 208–211 to prevent Sec 234B/C interest.' },
+        { tag: '8-Year Custody', title: 'Scrutable Audit Archive', desc: 'Permanent storage of computation sheets, challans, and acknowledgements.' },
+      ],
+    };
+  }
+  return {
+    heading: 'Post-Approval Compliance Continuity',
+    sub: 'Essential operational steps to preserve regulatory good standing after license issuance:',
+    items: [
+      { tag: 'Day 1 Approval', title: 'Statutory Certificate Display', desc: 'Verify official seal, registration number, and premises display rules.' },
+      { tag: 'Immediate', title: 'Credential & Portal Custody', desc: 'Secure archiving of login tokens, DSC validity, and approval PDFs.' },
+      { tag: 'Recurring', title: 'Periodical Renewals', desc: 'Timely annual updates, LUT renewals, and statutory event modifications.' },
+      { tag: 'On Demand', title: 'Modification & Notice Defense', desc: 'Partner representation for department queries or entity detail amendments.' },
+    ],
+  };
+};
+
+const getBenefitDescription = (benefitTitle) => {
+  const b = (benefitTitle || '').toLowerCase();
+  if (b.includes('deduction') || b.includes('optim') || b.includes('tax')) {
+    return 'Legitimate tax structuring under governing statutes to protect cash flow and minimize liability.';
+  }
+  if (b.includes('penalty') || b.includes('scrutiny') || b.includes('notice') || b.includes('complian')) {
+    return 'Cross-verification against central statutory databases to eliminate defect notices and late fees.';
+  }
+  if (b.includes('bank') || b.includes('credit') || b.includes('loan') || b.includes('dossier')) {
+    return 'Clean, bank-grade financial documentation recognized cleanly for credit approvals and tenders.';
+  }
+  if (b.includes('vault') || b.includes('archival') || b.includes('record') || b.includes('control')) {
+    return 'Encrypted Section 128 cloud recordkeeping with round-the-clock retrieval of ledgers and challans.';
+  }
+  if (b.includes('partner') || b.includes('supervis') || b.includes('vet')) {
+    return 'Senior corporate advisory review on every schedule and filing before portal upload.';
+  }
+  return 'Complete adherence to regulatory circulars ensuring clean statutory standing at every stage.';
+};
+
+const getDeliverableSubtitle = (title) => {
+  const t = (title || '').toLowerCase();
+  if (t.includes('profit') || t.includes('loss') || t.includes('financial statement') || t.includes('balance')) {
+    return 'Structured monthly operating margin, revenue, and expense statements.';
+  }
+  if (t.includes('reconcil') || t.includes('bank')) {
+    return 'Line-by-line statement matching resolving unrecorded entries and variances.';
+  }
+  if (t.includes('payable') || t.includes('receivable') || t.includes('ledger')) {
+    return 'Updated vendor bills, customer receivables, and clear aging schedules.';
+  }
+  if (t.includes('expense') || t.includes('analytic') || t.includes('voucher')) {
+    return 'Categorized overhead trends and verified input-credit voucher records.';
+  }
+  if (t.includes('salary') || t.includes('payslip') || t.includes('payroll')) {
+    return 'Computed monthly salary registers and digitized employee pay statements.';
+  }
+  if (t.includes('pf') || t.includes('esic') || t.includes('24q') || t.includes('tds') || t.includes('challan')) {
+    return 'Reconciled treasury payment challans and quarterly statutory return proofs.';
+  }
+  if (t.includes('incorporat') || t.includes('coi') || t.includes('certificate')) {
+    return 'Official government registration certificate and permanent statutory ID record.';
+  }
+  if (t.includes('moa') || t.includes('aoa') || t.includes('agreement') || t.includes('deed')) {
+    return 'Legally vetted constitutional charter drafted and stamped per current rules.';
+  }
+  if (t.includes('pan') || t.includes('tan') || t.includes('dsc')) {
+    return 'Tax identification allotment and encrypted Class-3 digital signing keys.';
+  }
+  if (t.includes('gst') || t.includes('lut') || t.includes('return') || t.includes('itr')) {
+    return 'Portal-verified return summary, computation sheet, and official receipt.';
+  }
+  if (t.includes('calendar') || t.includes('vault') || t.includes('archival')) {
+    return 'Due-date alert schedule backed by encrypted 8-year digital portal custody.';
+  }
+  return 'Partner-verified statutory record delivered and archived in your Client Vault.';
+};
 
 const ServiceDetail = () => {
   const { id } = useParams();
@@ -20,6 +221,9 @@ const ServiceDetail = () => {
   const [allServices, setAllServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // Workbench Active Tab State
+  const [activeTab, setActiveTab] = useState('overview');
 
   // Mandate Intake Form State
   const [formData, setFormData] = useState({
@@ -36,22 +240,30 @@ const ServiceDetail = () => {
     error: null,
   });
 
-  // Interactive Document Checklist Readiness Tracker
+  // Interactive Document Checklist & FAQ Accordion State
   const [docReadiness, setDocReadiness] = useState({});
   const [copiedChecklist, setCopiedChecklist] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
   const [openFaq, setOpenFaq] = useState(0);
   const [faqFilter, setFaqFilter] = useState('');
-  const [activeNav, setActiveNav] = useState('overview');
-  const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
-  // Dynamic Statutory Share Capital / Entity Slabs (For Incorporation / Corporate Services)
+  // Dynamic Calibration Slabs
   const [capitalSlab, setCapitalSlab] = useState('10L');
   const [directorCount, setDirectorCount] = useState(2);
-
-  // Dynamic Turnover Slabs (For Tax / Return / Accounting Services)
   const [turnoverTier, setTurnoverTier] = useState('sme');
   const [filingFrequency, setFilingFrequency] = useState('annual');
+
+  useSEO({
+    title: service ? `${service.title} | Statutory Dossier & Mandate` : 'Statutory Practice Dossier',
+    description:
+      service?.description ||
+      'Shree Chamunda Associates statutory practice dossier covering scope, mandatory deliverables, documents, and engagement fees.',
+  });
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setActiveTab('overview');
+  }, [id]);
 
   useEffect(() => {
     const fetchServiceDetail = async () => {
@@ -66,19 +278,18 @@ const ServiceDetail = () => {
         if (res?.success && res?.data) {
           setService(res.data);
           setOpenFaq(0);
-
-          // Initialize document readiness
+          setFilingFrequency(res.data.serviceType === 'accounting' ? 'monthly' : 'annual');
           const initialDocs = {};
           (res.data.documentsRequired || []).forEach((doc) => {
             initialDocs[doc] = false;
           });
           setDocReadiness(initialDocs);
         } else {
-          // Fallback to offline catalog if backend fails or record not found
           const fallback = findFallbackService(id);
           if (fallback) {
             setService(fallback);
             setOpenFaq(0);
+            setFilingFrequency(fallback.serviceType === 'accounting' ? 'monthly' : 'annual');
             const initialDocs = {};
             (fallback.documentsRequired || []).forEach((doc) => {
               initialDocs[doc] = false;
@@ -95,11 +306,11 @@ const ServiceDetail = () => {
           setAllServices(FALLBACK_SERVICES);
         }
       } catch (err) {
-        // Resilient fallback on network/timeout error
         const fallback = findFallbackService(id);
         if (fallback) {
           setService(fallback);
           setOpenFaq(0);
+          setFilingFrequency(fallback.serviceType === 'accounting' ? 'monthly' : 'annual');
           const initialDocs = {};
           (fallback.documentsRequired || []).forEach((doc) => {
             initialDocs[doc] = false;
@@ -116,27 +327,14 @@ const ServiceDetail = () => {
     fetchServiceDetail();
   }, [id]);
 
-  // Track active scroll section for sticky in-page nav
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + 170;
-
-      for (const section of NAV_SECTIONS) {
-        const el = document.getElementById(section.id);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveNav(section.id);
-            break;
-          }
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const isIncorporation = useMemo(() => {
+    if (!service) return false;
+    return (
+      service.serviceType === 'startup' ||
+      (service.title || '').toLowerCase().includes('company') ||
+      (service.title || '').toLowerCase().includes('llp')
+    );
+  }, [service]);
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -167,6 +365,14 @@ const ServiceDetail = () => {
       ...prev,
       [docName]: !prev[docName],
     }));
+  };
+
+  const jumpToWorkbenchTab = (tabId) => {
+    setActiveTab(tabId);
+    const el = document.getElementById('dossier-workbench');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   };
 
   const handleFormSubmit = async (e) => {
@@ -204,13 +410,13 @@ const ServiceDetail = () => {
   const handleCopyChecklist = () => {
     const docs = Object.keys(docReadiness);
     const lines = [
-      `📋 MANDATORY STATUTORY COMPLIANCE CHECKLIST`,
+      `MANDATORY STATUTORY COMPLIANCE CHECKLIST`,
       `Service: ${service?.title || 'Statutory Filing'}`,
       `Firm: Shree Chamunda Associates | Corporate Tax & Advisory Chambers`,
       `Chambers: 612, Hill Town Square, Nikol, Ahmedabad - 380049`,
       `Direct Advisory Hotline: +91 95109 84735`,
       `--------------------------------------------------`,
-      ...docs.map((d, i) => `${docReadiness[d] ? '[✓ READY]' : '[  PENDING]'} ${i + 1}. ${d}`),
+      ...docs.map((d, i) => `${docReadiness[d] ? '[READY]' : '[PENDING]'} ${i + 1}. ${d}`),
       `--------------------------------------------------`,
       `Status: ${docs.filter((d) => docReadiness[d]).length} of ${docs.length} assembled`,
       `Official Docket Date: ${new Date().toLocaleDateString('en-IN')}`,
@@ -250,19 +456,19 @@ const ServiceDetail = () => {
         <title>Compliance Document Checklist - ${service?.title} - Shree Chamunda Associates</title>
         <style>
           @page { size: A4 portrait; margin: 16mm; }
-          body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #0f172a; margin: 0; padding: 24px; line-height: 1.5; }
-          .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2.5px solid #b45309; padding-bottom: 16px; margin-bottom: 24px; }
+          body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #071324; margin: 0; padding: 24px; line-height: 1.5; }
+          .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2.5px solid #d4af37; padding-bottom: 16px; margin-bottom: 24px; }
           .firm-name { font-size: 20px; font-weight: 800; color: #071324; text-transform: uppercase; letter-spacing: 0.5px; }
           .firm-desc { font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase; margin-top: 3px; }
           .firm-meta { text-align: right; font-size: 11px; color: #334155; line-height: 1.45; }
-          .doc-badge { display: inline-block; background: #fffbeb; color: #b45309; border: 1px solid #fde68a; font-size: 10px; font-weight: 750; padding: 4px 10px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+          .doc-badge { display: inline-block; background: #fffbeb; color: #9a6c04; border: 1px solid #d4af37; font-size: 10px; font-weight: 750; padding: 4px 10px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
           .title { font-size: 22px; font-weight: 800; color: #071324; margin: 0 0 8px 0; }
           .lead { font-size: 13px; color: #475569; margin: 0 0 24px 0; }
           table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
-          th { background: #f8fafc; color: #0f172a; padding: 10px 12px; text-align: left; font-size: 11.5px; font-weight: 700; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; border-top: 1px solid #e2e8f0; }
+          th { background: #f8fafc; color: #071324; padding: 10px 12px; text-align: left; font-size: 11.5px; font-weight: 700; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; border-top: 1px solid #e2e8f0; }
           td { padding: 11px 12px; border-bottom: 1px solid #edf2f7; font-size: 12.5px; }
           .box { width: 16px; height: 16px; border: 1.5px solid #071324; border-radius: 3px; display: inline-block; text-align: center; line-height: 16px; font-size: 11px; font-weight: bold; }
-          .box.checked { background: #071324; color: #f59e0b; }
+          .box.checked { background: #071324; color: #f8b400; }
           .notes-box { border: 1.5px dashed #cbd5e1; border-radius: 8px; padding: 14px 18px; margin-bottom: 24px; min-height: 70px; }
           .notes-box strong { font-size: 11.5px; color: #071324; text-transform: uppercase; display: block; margin-bottom: 4px; }
           .footer { border-top: 1px solid #e2e8f0; padding-top: 12px; display: flex; justify-content: space-between; font-size: 10.5px; color: #64748b; }
@@ -281,7 +487,7 @@ const ServiceDetail = () => {
         </div>
         <span class="doc-badge">Official Statutory Document Verification Docket</span>
         <h1 class="title">${service?.title}</h1>
-        <p class="lead">Please assemble the following mandatory statutory KYC and entity records for statutory portal filing. Digital scans may be submitted directly or presented at our Nikol Chambers.</p>
+        <p class="lead">Please assemble the following mandatory statutory KYC and entity records for portal filing. Digital scans may be submitted directly or presented at our Nikol Chambers.</p>
         <table>
           <thead>
             <tr>
@@ -295,7 +501,7 @@ const ServiceDetail = () => {
           <tbody>
             ${docs.map((doc, idx) => `
               <tr>
-                <td style="text-align: center;"><span class="box ${docReadiness[doc] ? 'checked' : ''}">${docReadiness[doc] ? '✓' : ''}</span></td>
+                <td style="text-align: center;"><span class="box ${docReadiness[doc] ? 'checked' : ''}">${docReadiness[doc] ? '&#10003;' : ''}</span></td>
                 <td style="color: #64748b; font-weight: 600;">${idx + 1}</td>
                 <td><strong>${doc}</strong></td>
                 <td style="text-align: center; color: #94a3b8;">[&nbsp;&nbsp;&nbsp;&nbsp;]</td>
@@ -320,81 +526,16 @@ const ServiceDetail = () => {
     printWin.document.close();
   };
 
-  const getStatutoryAuthority = (title, type) => {
-    const t = (title || '').toLowerCase();
-    const tp = (type || '').toLowerCase();
-    if (t.includes('pvt') || t.includes('private limited') || t.includes('llp') || t.includes('opc') || tp === 'startup') {
-      return {
-        authority: 'Ministry of Corporate Affairs (MCA)',
-        statute: 'Companies Act, 2013',
-        portal: 'MCA-21 SPICe+ CRC',
-        badge: 'MCA-21 Regulatory Filing',
-      };
-    }
-    if (t.includes('gst') || t.includes('lut') || t.includes('gstr')) {
-      return {
-        authority: 'Goods & Services Tax Network (GSTN)',
-        statute: 'Central GST Act, 2017 (Sec 22-25)',
-        portal: 'gst.gov.in Official Portal',
-        badge: 'GSTN Statutory Compliance',
-      };
-    }
-    if (t.includes('itr') || t.includes('tax return') || t.includes('personal tax') || tp === 'tax') {
-      return {
-        authority: 'Income Tax Department (CBDT)',
-        statute: 'Income-tax Act, 1961 (Sec 139)',
-        portal: 'e-Filing 2.0 Portal',
-        badge: 'Direct Tax Compliance',
-      };
-    }
-    if (t.includes('audit') || t.includes('accounting') || tp === 'accounting') {
-      return {
-        authority: 'Statutory Assurance Standard',
-        statute: 'Standards on Auditing (SA 700)',
-        portal: 'Central Regulatory Filing',
-        badge: 'Assurance & Accounting',
-      };
-    }
-    if (t.includes('iec') || t.includes('import')) {
-      return {
-        authority: 'Directorate General of Foreign Trade (DGFT)',
-        statute: 'Foreign Trade (D&R) Act, 1992',
-        portal: 'dgft.gov.in Portal',
-        badge: 'Foreign Trade License',
-      };
-    }
-    if (t.includes('msme') || t.includes('udyam')) {
-      return {
-        authority: 'Ministry of MSME, Govt of India',
-        statute: 'MSMED Act, 2006',
-        portal: 'udyamregistration.gov.in',
-        badge: 'Central MSME Recognition',
-      };
-    }
-    return {
-      authority: 'Central Statutory Registry',
-      statute: 'Indian Regulatory Framework',
-      portal: 'Official Government Gateway',
-      badge: 'Statutory Practice Mandate',
-    };
-  };
-
-  const categoryMap = {
-    startup: { label: 'Startup & Corporate Law', icon: 'fa-solid fa-rocket' },
-    registration: { label: 'Statutory Licensing', icon: 'fa-solid fa-stamp' },
-    tax: { label: 'Taxation & Regulatory', icon: 'fa-solid fa-file-invoice-dollar' },
-    accounting: { label: 'Assurance & Accounts', icon: 'fa-solid fa-calculator' },
-    general: { label: 'Corporate Advisory', icon: 'fa-solid fa-landmark' },
-  };
-
   if (loading) {
     return (
       <div className="service-dossier-page">
-        <div className="dossier-content-wrap py-5">
-          <div className="skeleton-line" style={{ width: '30%', height: '24px', marginBottom: '20px' }}></div>
-          <div className="skeleton-line" style={{ width: '60%', height: '48px', marginBottom: '16px' }}></div>
-          <div className="skeleton-line" style={{ width: '80%', height: '20px', marginBottom: '40px' }}></div>
-          <div className="skeleton-box" style={{ height: '400px', borderRadius: '16px' }}></div>
+        <div className="dossier-hero-skeleton">
+          <div className="dossier-shell-wrap">
+            <div className="skeleton-line" style={{ width: '28%', height: '20px', marginBottom: '20px' }}></div>
+            <div className="skeleton-line" style={{ width: '54%', height: '54px', marginBottom: '14px' }}></div>
+            <div className="skeleton-line" style={{ width: '70%', height: '22px', marginBottom: '32px' }}></div>
+            <div className="skeleton-box" style={{ height: '380px', borderRadius: '22px' }}></div>
+          </div>
         </div>
       </div>
     );
@@ -403,13 +544,16 @@ const ServiceDetail = () => {
   if (error || !service) {
     return (
       <div className="service-dossier-page">
-        <div className="dossier-content-wrap py-5 text-center">
-          <div className="error-card">
-            <i className="fas fa-exclamation-circle error-icon"></i>
+        <div className="dossier-shell-wrap dossier-error-wrap">
+          <div className="dossier-error-card">
+            <div className="error-icon-badge" aria-hidden="true">
+              <i className="fa-solid fa-circle-exclamation"></i>
+            </div>
             <h2>Statutory Record Not Found</h2>
-            <p>{error || 'The requested service portfolio could not be retrieved.'}</p>
-            <button className="btn-return-services" onClick={() => navigate('/services')}>
-              <i className="fas fa-arrow-left"></i> Return to Practice Areas
+            <p>{error || 'The requested service portfolio could not be retrieved from the chambers catalog.'}</p>
+            <button type="button" className="btn-return-services" onClick={() => navigate('/services')}>
+              <i className="fa-solid fa-arrow-left" aria-hidden="true"></i>
+              <span>Return to Practice Areas</span>
             </button>
           </div>
         </div>
@@ -418,33 +562,27 @@ const ServiceDetail = () => {
   }
 
   const statutoryInfo = getStatutoryAuthority(service.title, service.serviceType);
-  const currentCategory = categoryMap[service.serviceType] || { label: 'Corporate Advisory', icon: 'fa-solid fa-briefcase' };
+  const currentCategory = CATEGORY_MAP[service.serviceType] || { label: 'Corporate Advisory', icon: 'fa-solid fa-briefcase', code: 'ADV' };
+  const postFilingRoadmap = getPostFilingRoadmap(service, isIncorporation);
 
-  // Determine if service is corporate incorporation or periodic tax/accounting
-  const isIncorporation =
-    service.serviceType === 'startup' ||
-    (service.title || '').toLowerCase().includes('company') ||
-    (service.title || '').toLowerCase().includes('llp');
+  const titleWords = (service.title || '').trim().split(/\s+/);
+  const leadWords = titleWords.length > 1 ? titleWords.slice(0, -1).join(' ') : '';
+  const highlightWord = titleWords.length > 1 ? titleWords[titleWords.length - 1] : service.title;
 
   // Dynamic Fee Calculations
   const baseGovtFee = service.governmentFee || 0;
   const baseProfFee = service.professionalFee || 0;
-
   let calculatedGovtFee = baseGovtFee;
   let calculatedProfFee = baseProfFee;
 
   if (isIncorporation && baseProfFee > 0) {
-    // Under MCA SPICe+ rules:
-    // Authorized capital <= 15 Lakhs has 0 INR MCA portal fee, only state stamp duty applies.
     if (capitalSlab === '1L' || capitalSlab === '10L' || capitalSlab === '15L') {
-      calculatedGovtFee = 1500; // State Stamp Duty (e-MOA/AOA, SPICe)
+      calculatedGovtFee = 1500;
     } else if (capitalSlab === '25L') {
-      calculatedGovtFee = 1500 + 36000; // MCA Part B Slab fee
+      calculatedGovtFee = 1500 + 36000;
     } else if (capitalSlab === '50L') {
       calculatedGovtFee = 2500 + 72000;
     }
-
-    // Additional director DSC/DIN fee
     if (directorCount > 2) {
       calculatedProfFee += (directorCount - 2) * 1500;
     }
@@ -473,1005 +611,984 @@ const ServiceDetail = () => {
   const readyDocCount = documents.filter((d) => docReadiness[d]).length;
   const docPercentage = documents.length > 0 ? Math.round((readyDocCount / documents.length) * 100) : 0;
 
-  const deliverables = service.deliverables && service.deliverables.length > 0
-    ? service.deliverables
-    : [
-        'Certificate of Official Incorporation / Filing Acknowledgement',
-        'Senior Corporate Tax Advisor Verification & Advisory Docket',
-        'Permanent Confidential Archival on Client Portal with 24/7 Access',
-        'Post-Filing Statutory Compliance & Deadline Calendar',
-      ];
+  const deliverables =
+    service.deliverables && service.deliverables.length > 0
+      ? service.deliverables
+      : [
+          'Certificate of Official Incorporation / Filing Acknowledgement',
+          'Senior Corporate Tax Advisor Verification & Advisory Docket',
+          'Permanent Confidential Archival on Client Portal with 24/7 Access',
+          'Post-Filing Statutory Compliance & Deadline Calendar',
+        ];
 
-  const processSteps = service.processSteps && service.processSteps.length > 0
-    ? service.processSteps
-    : [
-        { step: 1, title: 'Document Vetting & KYC Intake', description: 'Our legal and compliance team verifies identity proofs, addresses, and statutory prerequisites.' },
-        { step: 2, title: 'Application Drafting & Statutory Review', description: 'Preparation of statutory forms, affidavits, declarations, and legal disclosures in accordance with regulations.' },
-        { step: 3, title: 'Official Portal Filing & Fee Payment', description: 'Execution on the government portal with generation of the official acknowledgement receipt.' },
-        { step: 4, title: 'Liaison & Approval Issuance', description: 'Monitoring processing with the regulatory authority and obtaining the final signed certificate.' },
-      ];
+  const processSteps =
+    service.processSteps && service.processSteps.length > 0
+      ? service.processSteps
+      : [
+          {
+            step: 1,
+            title: 'Document Vetting & KYC Intake',
+            description: 'Compliance specialists verify KYC credentials, bank trails, and statutory prerequisites.',
+          },
+          {
+            step: 2,
+            title: 'Drafting & Schedule Preparation',
+            description: 'Statutory filings, reconciliations, and declarations prepared per current circulars.',
+          },
+          {
+            step: 3,
+            title: 'Official Portal Submission',
+            description: 'Portal execution with government payment challan and official acknowledgement generation.',
+          },
+          {
+            step: 4,
+            title: 'Liaison & Digital Vault Delivery',
+            description: 'Tracking departmental processing and archiving certified outputs in your Client Vault.',
+          },
+        ];
 
-  const eligibilityList = service.eligibility && service.eligibility.length > 0
-    ? service.eligibility
-    : [
-        'Proprietorships, Partnerships, LLPs, and Corporate Entities operating in India',
-        'Founders, Promoters, and NRIs establishing Indian commercial operations',
-        'Businesses seeking mandatory statutory compliance, tax defense, and licensing',
-      ];
+  const eligibilityList =
+    service.eligibility && service.eligibility.length > 0
+      ? service.eligibility
+      : [
+          'Proprietorships, Partnerships, LLPs, and Corporate Entities operating in India',
+          'Founders, Promoters, and NRIs establishing Indian commercial operations',
+          'Businesses seeking continuous statutory compliance, clean books, and audit readiness',
+        ];
 
-  const keyBenefits = service.keyBenefits && service.keyBenefits.length > 0
-    ? service.keyBenefits
-    : [
-        '100% Statutory Compliance and penalty avoidance under applicable Indian law',
-        'Direct Partner Supervision with verified documentation docket',
-        'Faster turnaround backed by official portal direct integration',
-      ];
+  const keyBenefits =
+    service.keyBenefits && service.keyBenefits.length > 0
+      ? service.keyBenefits
+      : [
+          '100% Statutory Compliance and penalty avoidance under Indian law',
+          'Direct Senior Partner Supervision with verified documentation docket',
+          'Rapid turnaround backed by direct portal integration & digital vault archival',
+        ];
 
-  const rawFaqs = service.faqs && service.faqs.length > 0
-    ? service.faqs
-    : [
-        {
-          question: `What is the typical turnaround timeline for ${service.title}?`,
-          answer: `Our standard advisory turnaround is ${service.timeline || '3–7 working days'}, subject to government department processing queues and timely submission of verified KYC records.`,
-        },
-        {
-          question: 'Are government portal receipts and challans provided to the client?',
-          answer: 'Yes. 100% of official government payment challans, acknowledgment receipts, and digitally signed certificates are delivered directly to you and permanently archived in your client portal.',
-        },
-        {
-          question: 'Do I need to visit your physical chambers in Ahmedabad in person?',
-          answer: 'No physical presence is required. All documentation, digital signatures, and filings are managed through our secure portal and WhatsApp hotline. You are also welcome to visit our Nikol Chambers anytime during business hours.',
-        },
-      ];
+  const rawFaqs =
+    service.faqs && service.faqs.length > 0
+      ? service.faqs
+      : [
+          {
+            question: `What is the typical turnaround timeline for ${service.title}?`,
+            answer: `Our standard advisory turnaround is ${service.timeline || '3–7 working days'}, subject to regulatory portal queues and prompt verification of KYC/financial records.`,
+          },
+          {
+            question: 'Are government portal receipts and challans provided to the client?',
+            answer:
+              'Yes. 100% of official treasury challans, acknowledgement receipts, and digitally signed filings are shared directly with you and archived permanently in your Client Vault.',
+          },
+          {
+            question: 'Do I need to visit your physical chambers in Ahmedabad in person?',
+            answer:
+              'No physical presence is required. All documentation, digital signatures, and filings are executed seamlessly via our encrypted portal and WhatsApp desk, or in person at our Nikol Chambers.',
+          },
+        ];
 
-  const filteredFaqs = rawFaqs.filter((f) =>
-    (f.question || '').toLowerCase().includes(faqFilter.toLowerCase()) ||
-    (f.answer || '').toLowerCase().includes(faqFilter.toLowerCase())
+  const filteredFaqs = rawFaqs.filter(
+    (f) =>
+      (f.question || '').toLowerCase().includes(faqFilter.toLowerCase()) ||
+      (f.answer || '').toLowerCase().includes(faqFilter.toLowerCase())
   );
 
-  // Cross-Compliance bundled services
   const relatedServices = allServices
-    .filter((s) => s._id !== service._id && s.serviceType === service.serviceType)
+    .filter((s) => s._id !== service._id && s.slug !== service.slug && s.serviceType === service.serviceType)
     .slice(0, 3);
 
-  const getBenefitDescription = (benefitTitle) => {
-    const b = (benefitTitle || '').toLowerCase();
-    if (b.includes('deduction') || b.includes('optim') || b.includes('tax')) {
-      return 'Legitimate tax planning under governing provisions to maximize eligible exemptions and minimize net liability.';
-    }
-    if (b.includes('penalty') || b.includes('scrutiny') || b.includes('notice') || b.includes('complian')) {
-      return 'Comprehensive cross-reconciliation against central tax databases to insulate returns from defect notices.';
-    }
-    if (b.includes('bank') || b.includes('credit') || b.includes('loan') || b.includes('dossier')) {
-      return 'Formally certified financial computation sheet recognized by institutional banks for credit approvals.';
-    }
-    if (b.includes('vault') || b.includes('archival') || b.includes('record')) {
-      return 'Encrypted secure digital storage with round-the-clock redownload of filed acknowledgments and challans.';
-    }
-    if (b.includes('partner') || b.includes('supervis') || b.includes('vet')) {
-      return 'Direct technical vetting by senior compliance practitioners prior to portal submission.';
-    }
-    return 'Full statutory adherence executed in accordance with official department guidelines to ensure filing validity.';
-  };
-
-  const activeSectionObj = NAV_SECTIONS.find((s) => s.id === activeNav) || NAV_SECTIONS[0];
+  const selectedTierObj = TURNOVER_TIERS.find((t) => t.id === turnoverTier) || TURNOVER_TIERS[1];
+  const selectedFreqObj = FILING_FREQUENCIES.find((f) => f.id === filingFrequency) || FILING_FREQUENCIES[0];
 
   return (
     <div className="service-dossier-page">
-      {/* Top Gold Brand Accent */}
-      <div className="dossier-top-accent" aria-hidden="true"></div>
+      {/* ====================================================================
+          BAND 01: EXECUTIVE SWISS-FINTECH HERO & INTEGRATED STATUTORY LEDGER
+          ==================================================================== */}
+      <header className="service-hero-band">
+        <div className="dossier-shell-wrap service-hero-container">
+          <span className="service-hero-watermark" aria-hidden="true">
+            {statutoryInfo.watermark}
+          </span>
 
-      {/* ============================================================
-          1. EXECUTIVE STATUTORY HERO BANNER
-          ============================================================ */}
-      <header className="executive-hero">
-        <div className="dossier-content-wrap">
-          {/* Breadcrumb Navigation */}
-          <nav className="hero-breadcrumb" aria-label="Breadcrumb">
-            <Link to="/"><i className="fas fa-home"></i> Home</Link>
-            <span className="sep">/</span>
+          {/* Minimal Breadcrumb Trail */}
+          <nav className="service-breadcrumb" aria-label="Breadcrumb">
+            <Link to="/">
+              <i className="fa-solid fa-house" aria-hidden="true"></i>
+              <span>Home</span>
+            </Link>
+            <i className="fa-solid fa-chevron-right sep" aria-hidden="true"></i>
             <Link to="/services">Practice Areas</Link>
-            <span className="sep sep-cat">/</span>
+            <i className="fa-solid fa-chevron-right sep sep-cat" aria-hidden="true"></i>
             <span className="cat-name">{currentCategory.label}</span>
-            <span className="sep">/</span>
-            <span className="current-page">{service.title}</span>
+            <i className="fa-solid fa-chevron-right sep" aria-hidden="true"></i>
+            <span className="current-crumb">{service.title}</span>
           </nav>
 
-          <div className="hero-grid-header">
-            <div className="hero-title-cluster">
-              {/* Statutory Badges Strip */}
-              <div className="hero-badges-strip">
-                <span className="hero-badge badge-authority">
-                  <i className="fa-solid fa-landmark"></i> {statutoryInfo.badge}
-                </span>
-                <span className="hero-badge badge-statute">
-                  <i className="fa-solid fa-scale-balanced"></i> {statutoryInfo.statute}
-                </span>
-                <span className="hero-badge badge-sla">
-                  <span className="live-dot"></span> SLA: {service.timeline || '3–5 Business Days'}
-                </span>
-              </div>
-
-              <h1 className="hero-h1">{service.title}</h1>
-              <p className="hero-description">{service.description}</p>
-
-              {/* Quick Hero Actions */}
-              <div className="hero-cta-group">
-                <a href="#consultation-intake" className="btn-hero-primary">
-                  <i className="fas fa-file-contract"></i> Initiate Engagement Mandate
-                </a>
-                <button type="button" onClick={handlePrintChecklist} className="btn-hero-secondary">
-                  <i className="fas fa-print"></i> Print Compliance Sheet
-                </button>
-                <button type="button" onClick={handleShareDossier} className="btn-hero-share" title="Share with Partners">
-                  <i className="fas fa-share-alt"></i> {copiedLink ? 'Link Copied!' : 'Share with Partners'}
-                </button>
-                <a href="tel:+919510984735" className="hero-hotline-link">
-                  <i className="fas fa-phone-alt"></i> Chambers: +91 95109 84735
-                </a>
-              </div>
-            </div>
-
-            {/* Quick Statutory Fact Box in Hero (Desktop Only) */}
-            <div className="hero-stats-docket">
-              <div className="stat-docket-header">
-                <i className="fa-solid fa-shield-halved"></i>
-                <div>
-                  <strong>Statutory Filing Purview</strong>
-                  <span>Official Government Gateway</span>
-                </div>
-              </div>
-              <div className="stat-docket-body">
-                <div className="stat-row">
-                  <span className="stat-lbl">Regulatory Body</span>
-                  <span className="stat-val">{statutoryInfo.authority}</span>
-                </div>
-                <div className="stat-row">
-                  <span className="stat-lbl">Filing Portal</span>
-                  <span className="stat-val">{statutoryInfo.portal}</span>
-                </div>
-                <div className="stat-row">
-                  <span className="stat-lbl">Standard Turnaround</span>
-                  <span className="stat-val font-semibold">{service.timeline || '3–7 Days'}</span>
-                </div>
-                <div className="stat-row">
-                  <span className="stat-lbl">Practice Oversight</span>
-                  <span className="stat-val text-amber">Senior Partner Vetted</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* ============================================================
-          2. STICKY IN-PAGE NAVIGATION (Desktop Row + Mobile/Tablet Drawer)
-             Zero awkward horizontal scrolling on mobile/tablet!
-          ============================================================ */}
-      <nav className="dossier-sticky-subnav" aria-label="Section shortcuts">
-        <div className="dossier-content-wrap">
-          {/* Desktop Navigation Row (>= 992px) */}
-          <div className="subnav-desktop-row">
-            {NAV_SECTIONS.map((sec) => (
-              <a
-                key={sec.id}
-                href={`#${sec.id}`}
-                className={`subnav-pill ${activeNav === sec.id ? 'active' : ''}`}
-                onClick={() => setActiveNav(sec.id)}
-              >
-                {sec.label}
-              </a>
-            ))}
-          </div>
-
-          {/* Mobile & Tablet Interactive Navigator (< 992px) */}
-          <div className="subnav-mobile-bar">
-            <div className="mobile-active-section">
-              <span className="mobile-sec-badge">
-                Section {NAV_SECTIONS.findIndex((s) => s.id === activeNav) + 1} of 6
+          {/* Centered-Clean Editorial Hero Cluster */}
+          <div className="service-hero-main">
+            <div className="retainers-eyebrow-badge service-eyebrow">
+              <span className="badge-index-chip">{currentCategory.code}</span>
+              <span className="retainers-live-dot" aria-hidden="true"></span>
+              <i className={currentCategory.icon} aria-hidden="true"></i>
+              <span>
+                {statutoryInfo.badge} &bull; {service.timeline || '3–7 Business Days'}
               </span>
-              <strong className="mobile-sec-title">
-                <i className={activeSectionObj.icon}></i> {activeSectionObj.shortLabel}
-              </strong>
+            </div>
+
+            <h1 className="service-hero-heading">
+              {leadWords ? `${leadWords} ` : ''}
+              <span className="title-burnished-gold">{highlightWord}</span>
+            </h1>
+
+            <p className="service-hero-lead">{service.description}</p>
+
+            {/* Uncluttered Primary + Secondary Action Pair */}
+            <div className="service-hero-actions">
+              <a href="#consultation-intake" className="btn-service-primary">
+                <span>Initiate Engagement Mandate</span>
+                <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
+              </a>
+              <button type="button" onClick={handlePrintChecklist} className="btn-service-secondary">
+                <i className="fa-solid fa-print" aria-hidden="true"></i>
+                <span>Print Compliance Sheet</span>
+              </button>
+              <button
+                type="button"
+                onClick={handleShareDossier}
+                className="btn-service-quiet"
+                title="Copy shareable link"
+              >
+                <i className={copiedLink ? 'fa-solid fa-check' : 'fa-solid fa-share-nodes'} aria-hidden="true"></i>
+                <span>{copiedLink ? 'Link Copied' : 'Share'}</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Anchored 4-Column Bottom Statutory Ledger Strip (Matches Careers Sec 01) */}
+          <div className="service-stats-ledger" role="region" aria-label="Statutory Mandate Specifications">
+            <div className="service-ledger-cell">
+              <span className="ledger-icon-box" aria-hidden="true">
+                <i className="fa-solid fa-scale-balanced"></i>
+              </span>
+              <div className="ledger-copy">
+                <span className="ledger-label">Governing Statute</span>
+                <strong>{statutoryInfo.statute}</strong>
+              </div>
+            </div>
+
+            <div className="service-ledger-cell">
+              <span className="ledger-icon-box" aria-hidden="true">
+                <i className="fa-solid fa-landmark"></i>
+              </span>
+              <div className="ledger-copy">
+                <span className="ledger-label">Regulatory Authority</span>
+                <strong>{statutoryInfo.authority}</strong>
+              </div>
+            </div>
+
+            <div className="service-ledger-cell">
+              <span className="ledger-icon-box icon-emerald" aria-hidden="true">
+                <i className="fa-regular fa-clock"></i>
+              </span>
+              <div className="ledger-copy">
+                <span className="ledger-label">Turnaround &amp; Portal</span>
+                <strong className="val-emerald">{service.timeline || '3–7 Days'} &bull; {statutoryInfo.portal}</strong>
+              </div>
             </div>
 
             <button
               type="button"
-              className="btn-mobile-jump"
-              onClick={() => setMobileNavOpen(!mobileNavOpen)}
-              aria-expanded={mobileNavOpen}
+              className="service-ledger-cell ledger-cell-action"
+              onClick={() => jumpToWorkbenchTab('documents')}
             >
-              <span>Jump to Section</span>
-              <i className={`fas fa-chevron-${mobileNavOpen ? 'up' : 'down'} chevron-icon`}></i>
+              <span className="ledger-icon-box icon-obsidian" aria-hidden="true">
+                <i className="fa-solid fa-shield-halved"></i>
+              </span>
+              <div className="ledger-copy">
+                <span className="ledger-label">Mandate &amp; Checklist</span>
+                <strong>
+                  {hasStructuredFees ? `Est. ₹${totalMandateFee.toLocaleString('en-IN')}+` : 'Custom Retainer'} &bull; {readyDocCount}/{documents.length} Ready
+                </strong>
+              </div>
+              <i className="fa-solid fa-chevron-right ledger-arrow" aria-hidden="true"></i>
             </button>
           </div>
-
-          {/* Mobile Quick-Jump Drawer */}
-          {mobileNavOpen && (
-            <>
-              <div
-                className="mobile-nav-backdrop"
-                onClick={() => setMobileNavOpen(false)}
-                aria-hidden="true"
-              />
-              <div className="mobile-nav-drawer">
-                <div className="mobile-nav-grid">
-                  {NAV_SECTIONS.map((sec, idx) => (
-                    <a
-                      key={sec.id}
-                      href={`#${sec.id}`}
-                      className={`mobile-nav-tile ${activeNav === sec.id ? 'active' : ''}`}
-                      onClick={() => {
-                        setActiveNav(sec.id);
-                        setMobileNavOpen(false);
-                      }}
-                    >
-                      <div className="tile-top">
-                        <span className="tile-num">0{idx + 1}</span>
-                        <i className={sec.icon}></i>
-                      </div>
-                      <strong className="tile-name">{sec.shortLabel}</strong>
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </>
-          )}
         </div>
-      </nav>
+      </header>
 
-      {/* ============================================================
-          3. MAIN 2-COLUMN DOSSIER LAYOUT
-             Left Column (~68%): Comprehensive Statutory Content
-             Right Column (~32%): Sticky Engagement & Action Console
-          ============================================================ */}
-      <div className="dossier-content-wrap dossier-grid-container">
-        {/* ========================================================
-            LEFT COLUMN: THE STATUTORY DOSSIER (~68%)
-            ======================================================== */}
-        <main className="dossier-primary-col">
-          {/* SECTION 1: STATUTORY OVERVIEW & REGULATORY SCOPE */}
-          <section id="overview" className="dossier-panel">
-            <div className="panel-header">
-              <div className="panel-badge-icon">
-                <i className="fas fa-book-open"></i>
-              </div>
-              <div>
-                <span className="panel-eyebrow">REGULATORY PURVIEW</span>
-                <h2 className="panel-heading">Statutory Scope &amp; Legal Foundation</h2>
-              </div>
+      {/* ====================================================================
+          BAND 02: INTERACTIVE STATUTORY DOSSIER WORKBENCH
+          Asymmetric Obsidian + Editorial Tabs (Replaces 7-Card Wall)
+          ==================================================================== */}
+      <section id="dossier-workbench" className="dossier-shell-wrap workbench-band" aria-labelledby="workbench-heading">
+        <div className="workbench-top-bar">
+          <div className="workbench-heading-cluster">
+            <div className="retainers-eyebrow-badge">
+              <span className="badge-index-chip">02</span>
+              <i className="fa-solid fa-book-open" aria-hidden="true"></i>
+              <span>MANDATE ARCHITECTURE &amp; REQUIREMENTS</span>
             </div>
-            <div className="panel-body">
-              <p className="dossier-text-p">
-                {service.detailedOverview || service.description}
-              </p>
+            <h2 id="workbench-heading" className="band-section-heading">
+              Practice <span className="title-burnished-gold">Specifications</span>
+            </h2>
+          </div>
 
-              {/* Statutory Specifications Ledger (Clean, Professional Table on Mobile) */}
-              <div className="statutory-specs-ledger">
-                <div className="ledger-entry">
-                  <span className="ledger-entry-lbl"><i className="fa-solid fa-scale-balanced"></i> Governing Statute</span>
-                  <strong className="ledger-entry-val">{statutoryInfo.statute}</strong>
-                </div>
-                <div className="ledger-entry">
-                  <span className="ledger-entry-lbl"><i className="fa-solid fa-landmark"></i> Regulatory Authority</span>
-                  <strong className="ledger-entry-val">{statutoryInfo.authority}</strong>
-                </div>
-                <div className="ledger-entry">
-                  <span className="ledger-entry-lbl"><i className="far fa-clock"></i> Filing SLA Turnaround</span>
-                  <strong className="ledger-entry-val text-emerald">{service.timeline || '3–7 Business Days'}</strong>
-                </div>
-                <div className="ledger-entry">
-                  <span className="ledger-entry-lbl"><i className="fa-solid fa-vault"></i> Archival &amp; Verification</span>
-                  <strong className="ledger-entry-val">Permanent Client Docket &bull; Senior Vetted</strong>
-                </div>
-              </div>
+          {/* Interactive Segmented Tab Controls */}
+          <div className="workbench-tabs-rail" role="tablist" aria-label="Service dossier sections">
+            {WORKBENCH_TABS.map((tab) => {
+              const isSelected = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={isSelected}
+                  className={`workbench-tab-btn ${isSelected ? 'active' : ''}`}
+                  onClick={() => setActiveTab(tab.id)}
+                >
+                  <span className="tab-idx">{tab.num}</span>
+                  <i className={tab.icon} aria-hidden="true"></i>
+                  <span className="tab-lbl-full">{tab.label}</span>
+                  <span className="tab-lbl-short">{tab.shortLabel}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
 
-              {/* Key Strategic Benefits */}
-              <div className="benefits-section-wrap">
-                <h3 className="sub-heading">Strategic Benefits &amp; Statutory Compliance</h3>
-                <div className="benefits-card-grid">
+        {/* Active Tab Stage */}
+        <div className="workbench-stage">
+          {/* TAB 01: SCOPE & DELIVERABLES (Asymmetric Obsidian Anchor + 2x2 Deliverables Grid) */}
+          {activeTab === 'overview' && (
+            <div id="overview" className="stage-overview-bento" role="tabpanel" aria-label="Scope and Deliverables">
+              {/* Left Obsidian Anchor Panel */}
+              <div className="overview-obsidian-panel">
+                <div className="anchor-panel-top">
+                  <span className="anchor-tag">STATUTORY BRIEF</span>
+                  <h3>Legal Scope &amp; Oversight</h3>
+                  <p>{service.detailedOverview || service.description}</p>
+                </div>
+
+                <div className="anchor-advantages-list">
+                  <span className="anchor-sub-kicker">KEY COMPLIANCE ADVANTAGES</span>
                   {keyBenefits.map((benefit, idx) => (
-                    <div key={idx} className="benefit-card">
-                      <div className="benefit-badge">
-                        <i className="fas fa-check"></i>
-                      </div>
-                      <div className="benefit-body">
-                        <h4>{benefit}</h4>
+                    <div key={idx} className="anchor-adv-row">
+                      <span className="adv-check-dot" aria-hidden="true">
+                        <i className="fa-solid fa-check"></i>
+                      </span>
+                      <div>
+                        <strong>{benefit}</strong>
                         <p>{getBenefitDescription(benefit)}</p>
                       </div>
                     </div>
                   ))}
                 </div>
-              </div>
-            </div>
-          </section>
 
-          {/* SECTION 2: OFFICIAL DELIVERABLES DOCKET */}
-          <section id="deliverables" className="dossier-panel">
-            <div className="panel-header">
-              <div className="panel-badge-icon badge-emerald">
-                <i className="fas fa-certificate"></i>
+                <div className="anchor-panel-footer">
+                  <i className="fa-solid fa-vault" aria-hidden="true"></i>
+                  <span>Permanent Sec 128 Digital Vault &bull; 100% Challan Transparency</span>
+                </div>
               </div>
-              <div>
-                <span className="panel-eyebrow">MANDATE OUTPUTS</span>
-                <h2 className="panel-heading">Certified Tangible Deliverables</h2>
-              </div>
-            </div>
-            <div className="panel-body">
-              <p className="dossier-text-p">
-                Upon successful filing and regulatory adjudication, the client is issued an official statutory compliance docket containing all certificates, official filings, and digitally verified records:
-              </p>
 
-              {/* Official Deliverables Registry (Clean, High-Density on Mobile) */}
-              <div className="deliverables-docket-grid">
-                {deliverables.map((item, idx) => (
-                  <div key={idx} className="deliverable-item-card">
-                    <div className="del-index-badge">{String(idx + 1).padStart(2, '0')}</div>
-                    <div className="del-text-block">
+              {/* Right Deliverables & Outputs Panel */}
+              <div id="deliverables" className="overview-deliverables-panel">
+                <div className="del-panel-header">
+                  <div>
+                    <span className="del-kicker">TANGIBLE OUTPUTS</span>
+                    <h3>Certified Mandate Deliverables</h3>
+                  </div>
+                  <span className="del-count-pill">
+                    <i className="fa-solid fa-file-lines" aria-hidden="true"></i>
+                    <span>{deliverables.length} Official Outputs</span>
+                  </span>
+                </div>
+
+                <div className="deliverables-quad-grid">
+                  {deliverables.map((item, idx) => (
+                    <div key={idx} className="del-quad-card">
+                      <div className="del-quad-top">
+                        <span className="del-quad-num">{String(idx + 1).padStart(2, '0')}</span>
+                        <span className="del-certified-tag">
+                          <i className="fa-solid fa-circle-check" aria-hidden="true"></i>
+                          <span>Certified PDF</span>
+                        </span>
+                      </div>
                       <h4>{item}</h4>
+                      <p>{getDeliverableSubtitle(item)}</p>
                     </div>
-                    <span className="del-badge-pill">Official Certified PDF</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="panel-disclaimer-box">
-                <i className="fa-solid fa-shield-halved"></i>
-                <div>
-                  <strong>Official Government Filing Receipts Guaranteed</strong>
-                  <p>All portal transaction fees, challans, and acknowledgments are provided with complete audit transparency.</p>
+                  ))}
                 </div>
-              </div>
-            </div>
-          </section>
 
-          {/* SECTION 3: MANDATORY STATUTORY DOCUMENTS */}
-          <section id="documents" className="dossier-panel">
-            <div className="panel-header panel-header-between">
-              <div className="header-cluster">
-                <div className="panel-badge-icon badge-gold">
-                  <i className="fas fa-clipboard-list"></i>
-                </div>
-                <div>
-                  <span className="panel-eyebrow">STATUTORY PREREQUISITES</span>
-                  <h2 className="panel-heading">Mandatory Statutory Documents</h2>
-                </div>
-              </div>
-
-              {/* Action Toolbar */}
-              <div className="panel-tools">
-                <button
-                  type="button"
-                  className={`btn-panel-action ${copiedChecklist ? 'btn-copied' : ''}`}
-                  onClick={handleCopyChecklist}
-                  title="Copy checklist to clipboard"
-                >
-                  <i className={copiedChecklist ? 'fas fa-check' : 'far fa-copy'}></i>
-                  <span>{copiedChecklist ? 'Copied!' : 'Copy List'}</span>
-                </button>
-                <button
-                  type="button"
-                  className="btn-panel-action btn-print-docket"
-                  onClick={handlePrintChecklist}
-                  title="Print official letterhead docket"
-                >
-                  <i className="fas fa-print"></i>
-                  <span>Print Sheet</span>
-                </button>
-              </div>
-            </div>
-            <div className="panel-body">
-              {/* Executive Document Guidance Callout */}
-              <div className="document-guideline-strip">
-                <i className="fas fa-info-circle"></i>
-                <span>All records must be clear, color PDF scans. Identity records must match the central government database exactly. Click any item to mark it assembled:</span>
-              </div>
-
-              {/* Interactive Readiness Progress Meter */}
-              <div className="readiness-meter-box">
-                <div className="meter-label-row">
-                  <span className="meter-title">Client Preparedness</span>
-                  <strong className="meter-count">{readyDocCount} of {documents.length} Assembled ({docPercentage}%)</strong>
-                </div>
-                <div className="meter-track">
-                  <div className="meter-fill" style={{ width: `${docPercentage}%` }}></div>
-                </div>
-              </div>
-
-              {/* Clean Document Registry (No Redundant Text) */}
-              <div className="documents-list-table">
-                {documents.map((doc, idx) => (
-                  <div
-                    key={idx}
-                    className={`document-row-card ${docReadiness[doc] ? 'row-assembled' : ''}`}
-                    onClick={() => toggleDocCheck(doc)}
-                    role="button"
-                    tabIndex={0}
-                    onKeyDown={(e) => {
-                      if (e.key === ' ' || e.key === 'Enter') {
-                        e.preventDefault();
-                        toggleDocCheck(doc);
-                      }
-                    }}
+                <div className="del-panel-action-bar">
+                  <button
+                    type="button"
+                    className="btn-next-tab"
+                    onClick={() => setActiveTab('documents')}
                   >
-                    <div className="doc-num-col">
-                      <span className={`doc-check-indicator ${docReadiness[doc] ? 'active' : ''}`}>
-                        {docReadiness[doc] ? <i className="fas fa-check"></i> : idx + 1}
-                      </span>
+                    <span>Review Required Documents ({documents.length})</span>
+                    <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                  </button>
+                  <button
+                    type="button"
+                    className="btn-next-tab secondary"
+                    onClick={() => setActiveTab('roadmap')}
+                  >
+                    <span>View {processSteps.length}-Stage Workflow</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 02: INTERACTIVE MANDATORY DOCUMENTS VAULT */}
+          {activeTab === 'documents' && (
+            <div id="documents" className="stage-documents-panel" role="tabpanel" aria-label="Documents Checklist">
+              <div className="docs-toolbar-header">
+                <div className="docs-progress-cluster">
+                  <div className="docs-progress-top">
+                    <div>
+                      <span className="del-kicker">PRE-FILING READINESS</span>
+                      <h3>Interactive Statutory Document Checklist</h3>
                     </div>
-                    <div className="doc-content-col">
-                      <h4 className="doc-title">{doc}</h4>
-                    </div>
-                    <div className="doc-status-col">
-                      <span className={`doc-tag-pill ${docReadiness[doc] ? 'tag-ready' : 'tag-mandatory'}`}>
-                        {docReadiness[doc] ? 'Assembled' : 'Required'}
-                      </span>
-                    </div>
+                    <strong className="docs-progress-score">
+                      {readyDocCount} of {documents.length} Assembled ({docPercentage}%)
+                    </strong>
                   </div>
-                ))}
+                  <div
+                    className="docs-meter-track"
+                    role="progressbar"
+                    aria-valuenow={docPercentage}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                  >
+                    <div className="docs-meter-fill" style={{ width: `${docPercentage}%` }}></div>
+                  </div>
+                </div>
+
+                <div className="docs-tools-group">
+                  <button
+                    type="button"
+                    className={`btn-doc-tool ${copiedChecklist ? 'copied' : ''}`}
+                    onClick={handleCopyChecklist}
+                  >
+                    <i className={copiedChecklist ? 'fa-solid fa-check' : 'fa-regular fa-copy'} aria-hidden="true"></i>
+                    <span>{copiedChecklist ? 'Copied!' : 'Copy Checklist'}</span>
+                  </button>
+                  <button type="button" className="btn-doc-tool primary" onClick={handlePrintChecklist}>
+                    <i className="fa-solid fa-print" aria-hidden="true"></i>
+                    <span>Print A4 Sheet</span>
+                  </button>
+                </div>
               </div>
 
-              <div className="dossier-callout-strip">
-                <i className="fas fa-lightbulb"></i>
+              <div className="docs-checklist-grid">
+                {documents.map((doc, idx) => {
+                  const isReady = Boolean(docReadiness[doc]);
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      className={`doc-tile-btn ${isReady ? 'assembled' : ''}`}
+                      onClick={() => toggleDocCheck(doc)}
+                      aria-pressed={isReady}
+                    >
+                      <span className={`doc-tile-check ${isReady ? 'checked' : ''}`} aria-hidden="true">
+                        {isReady ? <i className="fa-solid fa-check"></i> : String(idx + 1).padStart(2, '0')}
+                      </span>
+                      <span className="doc-tile-name">{doc}</span>
+                      <span className={`doc-tile-status ${isReady ? 'ready' : ''}`}>
+                        {isReady ? 'Assembled' : 'Required'}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="docs-advisory-note">
+                <i className="fa-solid fa-circle-info" aria-hidden="true"></i>
                 <span>
-                  <strong>Advisory Note:</strong> If any director or authorized signatory lacks updated Aadhaar mobile linkage or PAN credentials, our compliance desk will facilitate instant rectification prior to portal filing.
+                  Click any document card above to mark it ready. Missing PAN/Aadhaar synchronization or prior financial statements? Mention it in Step 03 below—our Nikol desk handles rectification prior to portal upload.
                 </span>
               </div>
             </div>
-          </section>
+          )}
 
-          {/* SECTION 4: STEP-BY-STEP FILING WORKFLOW */}
-          <section id="roadmap" className="dossier-panel">
-            <div className="panel-header">
-              <div className="panel-badge-icon badge-blue">
-                <i className="fas fa-stream"></i>
+          {/* TAB 03: PROCEDURAL EXECUTION PIPELINE */}
+          {activeTab === 'roadmap' && (
+            <div id="roadmap" className="stage-roadmap-panel" role="tabpanel" aria-label="Filing Workflow">
+              <div className="stage-intro-row">
+                <div>
+                  <span className="del-kicker">AUDIT-SAFE EXECUTION</span>
+                  <h3>{processSteps.length}-Stage Portal Filing Workflow</h3>
+                </div>
+                <span className="stage-sla-pill">
+                  <i className="fa-regular fa-clock" aria-hidden="true"></i>
+                  <span>Target Completion: {service.timeline || '3–7 Working Days'}</span>
+                </span>
               </div>
-              <div>
-                <span className="panel-eyebrow">PROCEDURAL PROTOCOL</span>
-                <h2 className="panel-heading">Step-by-Step Filing Workflow</h2>
-              </div>
-            </div>
-            <div className="panel-body">
-              <p className="dossier-text-p">
-                Our engagement follows a transparent, 5-stage procedural workflow designed to guarantee zero notice exposure and rapid statutory clearance:
-              </p>
 
-              <div className="statutory-timeline">
+              <div className="pipeline-cards-grid">
                 {processSteps.map((step, idx) => (
-                  <div key={idx} className="timeline-node">
-                    <div className="timeline-marker">
-                      <span className="marker-number">{step.step || idx + 1}</span>
+                  <div key={idx} className="pipeline-stage-card">
+                    <div className="pipeline-card-top">
+                      <span className="pipeline-num">{String(step.step || idx + 1).padStart(2, '0')}</span>
+                      <span className="pipeline-tag">Stage {String(step.step || idx + 1).padStart(2, '0')}</span>
                     </div>
-                    <div className="timeline-card">
-                      <div className="timeline-card-header">
-                        <span className="timeline-phase-tag">Stage 0{step.step || idx + 1}</span>
-                        <h3>{step.title}</h3>
-                      </div>
-                      <p className="timeline-desc">{step.description}</p>
-                    </div>
+                    <h4>{step.title}</h4>
+                    <p>{step.description}</p>
                   </div>
                 ))}
               </div>
             </div>
-          </section>
+          )}
 
-          {/* SECTION 5: ELIGIBILITY CRITERIA */}
-          <section id="eligibility" className="dossier-panel">
-            <div className="panel-header">
-              <div className="panel-badge-icon">
-                <i className="fas fa-user-check"></i>
-              </div>
-              <div>
-                <span className="panel-eyebrow">QUALIFICATION</span>
-                <h2 className="panel-heading">Eligibility &amp; Mandatory Preconditions</h2>
-              </div>
-            </div>
-            <div className="panel-body">
-              <div className="eligibility-split-grid">
-                <div className="eligibility-box">
-                  <h4 className="box-title"><i className="fas fa-check-circle text-emerald"></i> Who Should Avail This Service</h4>
-                  <ul className="eligibility-ul">
+          {/* TAB 04: ELIGIBILITY & CONTEXT-AWARE POST-FILING CADENCE */}
+          {activeTab === 'eligibility' && (
+            <div id="eligibility" className="stage-eligibility-panel" role="tabpanel" aria-label="Eligibility and Continuity">
+              <div className="elig-charter-split">
+                <div className="elig-who-box">
+                  <span className="del-kicker">APPLICABLE ENTITIES</span>
+                  <h3>Who Should Engage This Mandate</h3>
+                  <ul className="elig-clean-list">
                     {eligibilityList.map((item, idx) => (
                       <li key={idx}>
-                        <i className="fas fa-arrow-right"></i>
+                        <i className="fa-solid fa-circle-check" aria-hidden="true"></i>
                         <span>{item}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <div className="eligibility-box box-highlighted">
-                  <h4 className="box-title"><i className="fa-solid fa-lock text-amber"></i> Client Assurance Commitments</h4>
-                  <ul className="eligibility-ul">
+                <div className="elig-assurance-obsidian">
+                  <span className="anchor-tag">CHAMBERS FIDUCIARY OATH</span>
+                  <h3>Client Confidentiality &amp; Oversight</h3>
+                  <ul className="elig-oath-list">
                     <li>
-                      <i className="fas fa-shield-alt"></i>
-                      <span><strong>NDA Protection:</strong> All proprietary business plans and financial statements remain strictly confidential.</span>
+                      <i className="fa-solid fa-lock" aria-hidden="true"></i>
+                      <span>
+                        <strong>Strict NDA Protection:</strong> Financial statements, bank trails, and commercial projections stay strictly confidential.
+                      </span>
                     </li>
                     <li>
-                      <i className="fas fa-user-tie"></i>
-                      <span><strong>Senior Supervision:</strong> All documentation vetted by senior corporate practitioners before portal upload.</span>
+                      <i className="fa-solid fa-user-tie" aria-hidden="true"></i>
+                      <span>
+                        <strong>Partner Supervision:</strong> Every ledger computation and statutory return is reviewed by senior specialists before filing.
+                      </span>
                     </li>
                     <li>
-                      <i className="fas fa-receipt"></i>
-                      <span><strong>Direct Portal Receipts:</strong> 100% government fee challans provided directly to your accounting department.</span>
+                      <i className="fa-solid fa-receipt" aria-hidden="true"></i>
+                      <span>
+                        <strong>Direct Challan Proof:</strong> 100% government payment receipts shared transparently with zero intermediary markup.
+                      </span>
                     </li>
                   </ul>
                 </div>
               </div>
 
-              {/* High-Value Advisory: Post-Filing Compliances */}
-              <div className="post-filing-compliance-box">
-                <div className="post-compliance-header">
-                  <i className="fa-solid fa-calendar-check"></i>
+              <div className="continuity-roadmap-block">
+                <div className="continuity-head">
+                  <span className="continuity-badge-icon" aria-hidden="true">
+                    <i className="fa-solid fa-calendar-check"></i>
+                  </span>
                   <div>
-                    <h4>Post-Filing Statutory Compliance Roadmap</h4>
-                    <p>Maintaining regulatory good standing after initial registration is mandatory under Indian law:</p>
+                    <h4>{postFilingRoadmap.heading}</h4>
+                    <p>{postFilingRoadmap.sub}</p>
                   </div>
                 </div>
-                <div className="post-compliance-grid">
-                  <div className="compliance-mini-card">
-                    <span className="comp-day">Within 30 Days</span>
-                    <strong>Current Bank Account</strong>
-                    <p>Formal opening of entity bank account with official COI &amp; PAN.</p>
-                  </div>
-                  <div className="compliance-mini-card">
-                    <span className="comp-day">Within 30 Days</span>
-                    <strong>Auditor Appointment</strong>
-                    <p>Statutory appointment of auditor via Ministry Form ADT-1.</p>
-                  </div>
-                  <div className="compliance-mini-card">
-                    <span className="comp-day">Within 180 Days</span>
-                    <strong>Commencement of Business</strong>
-                    <p>Mandatory capital subscription filing via Form INC-20A.</p>
-                  </div>
-                  <div className="compliance-mini-card">
-                    <span className="comp-day">Periodic</span>
-                    <strong>GST &amp; TDS Compliances</strong>
-                    <p>Timely monthly/quarterly return filings to avoid compounding penalties.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* SECTION 6: STATUTORY FAQS ACCORDION */}
-          <section id="faqs" className="dossier-panel">
-            <div className="panel-header panel-header-between">
-              <div className="header-cluster">
-                <div className="panel-badge-icon">
-                  <i className="fas fa-question-circle"></i>
-                </div>
-                <div>
-                  <span className="panel-eyebrow">CLARIFICATIONS</span>
-                  <h2 className="panel-heading">Statutory &amp; Practice FAQs</h2>
-                </div>
-              </div>
-              <div className="faq-search-box">
-                <i className="fas fa-search"></i>
-                <input
-                  type="text"
-                  placeholder="Search questions..."
-                  value={faqFilter}
-                  onChange={(e) => setFaqFilter(e.target.value)}
-                  className="faq-search-input"
-                />
-              </div>
-            </div>
-            <div className="panel-body">
-              <div className="dossier-accordion">
-                {filteredFaqs.length > 0 ? (
-                  filteredFaqs.map((faq, idx) => (
-                    <div key={idx} className={`accordion-item ${openFaq === idx ? 'expanded' : ''}`}>
-                      <button
-                        type="button"
-                        className="accordion-trigger"
-                        onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                        aria-expanded={openFaq === idx}
-                      >
-                        <span className="faq-q-text">{faq.question}</span>
-                        <i className={`fas fa-chevron-${openFaq === idx ? 'up' : 'down'}`}></i>
-                      </button>
-                      {openFaq === idx && (
-                        <div className="accordion-content">
-                          <p>{faq.answer}</p>
-                        </div>
-                      )}
-                    </div>
-                  ))
-                ) : (
-                  <div className="faq-empty-state">
-                    <p>No questions matched your search term.</p>
-                  </div>
-                )}
-              </div>
-            </div>
-          </section>
-
-          {/* SECTION 7: FREQUENTLY BUNDLED STATUTORY COMPLIANCES */}
-          {relatedServices.length > 0 && (
-            <section className="dossier-panel bundled-compliances-panel">
-              <div className="panel-header">
-                <div className="panel-badge-icon badge-gold">
-                  <i className="fas fa-cubes"></i>
-                </div>
-                <div>
-                  <span className="panel-eyebrow">INTEGRATED MANDATES</span>
-                  <h2 className="panel-heading">Frequently Bundled Compliances</h2>
-                </div>
-              </div>
-              <div className="panel-body">
-                <div className="bundled-cards-grid">
-                  {relatedServices.map((rel) => (
-                    <div key={rel._id} className="bundled-card">
-                      <div className="bundled-card-top">
-                        <span className="bundled-type">{rel.serviceType}</span>
-                        <h4>{rel.title}</h4>
-                        <p>{rel.description}</p>
-                      </div>
-                      <div className="bundled-card-footer">
-                        <span className="bundled-timeline"><i className="far fa-clock"></i> {rel.timeline || '3–5 Days'}</span>
-                        <Link to={`/services/${rel._id}`} className="btn-bundled-view">
-                          View Dossier <i className="fas fa-arrow-right"></i>
-                        </Link>
-                      </div>
+                <div className="continuity-cards-row">
+                  {postFilingRoadmap.items.map((m) => (
+                    <div key={m.title} className="continuity-card">
+                      <span className="cont-tag">{m.tag}</span>
+                      <strong>{m.title}</strong>
+                      <p>{m.desc}</p>
                     </div>
                   ))}
                 </div>
               </div>
-            </section>
+            </div>
           )}
-        </main>
+        </div>
+      </section>
 
-        {/* ========================================================
-            RIGHT COLUMN: STICKY EXECUTIVE ACTION CONSOLE (~32%)
-            ======================================================== */}
-        <aside className="dossier-sidebar-col">
-          <div className="sticky-action-stack">
-            {/* SIDEBAR CARD 1: TRANSPARENT STATUTORY FEE BREAKDOWN */}
-            <div className="sidebar-card fee-schedule-card">
-              <div className="sidebar-card-top">
-                <span className="sidebar-kicker">ENGAGEMENT SCHEDULE</span>
-                <h3 className="sidebar-title">Transparent Mandate Pricing</h3>
+      {/* ====================================================================
+          BAND 03: FULL-WIDTH FEE CALIBRATION & MANDATE INTAKE WORKBENCH
+          (Matches Pricing Sec 05 & Careers Sec 04 — Uncrowded & Roomy)
+          ==================================================================== */}
+      <section id="consultation-intake" className="dossier-shell-wrap engagement-band" aria-labelledby="engagement-heading">
+        <div className="section-header-centered engagement-section-header">
+          <div className="retainers-eyebrow-badge">
+            <span className="badge-index-chip">03</span>
+            <i className="fa-solid fa-sliders" aria-hidden="true"></i>
+            <span>MANDATE CALIBRATION &amp; PARTNER INTAKE DESK</span>
+          </div>
+          <h2 id="engagement-heading" className="band-section-heading">
+            Calibrate Scope &amp; <span className="title-burnished-gold">Initiate Engagement</span>
+          </h2>
+          <p className="band-section-subtext">
+            Select your entity scale below to configure an engagement profile and transmit your brief directly to our Managing Partners.
+          </p>
+        </div>
+
+        <div className="engagement-workbench-grid">
+          {/* LEFT COLUMN: OBSIDIAN FEE & CHAMBERS DESK */}
+          <aside className="engagement-obsidian-col">
+            <div className="engagement-fee-card">
+              <div className="eng-card-head">
+                <div>
+                  <span className="eng-kicker">FEE &amp; VOLUME CALIBRATOR</span>
+                  <h3>{hasStructuredFees ? 'Transparent Mandate Estimate' : 'Scope & Retainer Profile'}</h3>
+                </div>
+                <span className="eng-lock-pill">
+                  <i className="fa-solid fa-lock" aria-hidden="true"></i>
+                  <span>Scope-Locked</span>
+                </span>
               </div>
 
+              {/* Calibrator Slabs */}
+              <div className="eng-calibrator-controls">
+                {isIncorporation ? (
+                  <>
+                    <div className="eng-ctrl-group">
+                      <span className="eng-ctrl-label">Authorized Share Capital Slab</span>
+                      <div className="eng-slab-grid">
+                        {CAPITAL_SLABS.map((slab) => (
+                          <button
+                            key={slab.id}
+                            type="button"
+                            className={`eng-slab-btn ${capitalSlab === slab.id ? 'active' : ''}`}
+                            onClick={() => setCapitalSlab(slab.id)}
+                          >
+                            <strong>{slab.label}</strong>
+                            <span>{slab.sub}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="eng-ctrl-group">
+                      <span className="eng-ctrl-label">Designated Directors (DIN &amp; DSC)</span>
+                      <div className="eng-stepper">
+                        <button
+                          type="button"
+                          className="btn-eng-step"
+                          disabled={directorCount <= 2}
+                          onClick={() => setDirectorCount((c) => Math.max(2, c - 1))}
+                          aria-label="Decrease directors"
+                        >
+                          <i className="fa-solid fa-minus" aria-hidden="true"></i>
+                        </button>
+                        <strong className="eng-step-val">{directorCount} Directors</strong>
+                        <button
+                          type="button"
+                          className="btn-eng-step"
+                          disabled={directorCount >= 6}
+                          onClick={() => setDirectorCount((c) => Math.min(6, c + 1))}
+                          aria-label="Increase directors"
+                        >
+                          <i className="fa-solid fa-plus" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="eng-ctrl-group">
+                      <span className="eng-ctrl-label">Annual Turnover / Voucher Volume</span>
+                      <div className="eng-slab-grid">
+                        {TURNOVER_TIERS.map((tier) => (
+                          <button
+                            key={tier.id}
+                            type="button"
+                            className={`eng-slab-btn ${turnoverTier === tier.id ? 'active' : ''}`}
+                            onClick={() => setTurnoverTier(tier.id)}
+                          >
+                            <strong>{tier.label}</strong>
+                            <span>{tier.sub}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="eng-ctrl-group">
+                      <span className="eng-ctrl-label">Filing &amp; Accounting Frequency</span>
+                      <div className="eng-freq-grid">
+                        {FILING_FREQUENCIES.map((freq) => (
+                          <button
+                            key={freq.id}
+                            type="button"
+                            className={`eng-freq-btn ${filingFrequency === freq.id ? 'active' : ''}`}
+                            onClick={() => setFilingFrequency(freq.id)}
+                          >
+                            {freq.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+
+              {/* Fee Output Readout */}
               {hasStructuredFees ? (
-                <div className="fee-structure-block">
-                  {/* Dynamic Slab Selector for Incorporation */}
-                  {isIncorporation && (
-                    <div className="slab-selector-cluster">
-                      <div className="slab-group">
-                        <label className="slab-label">Authorized Share Capital Slab</label>
-                        <div className="slab-btn-row">
-                          {[
-                            { id: '10L', label: '₹10 Lakh' },
-                            { id: '15L', label: '₹15 Lakh' },
-                            { id: '25L', label: '₹25 Lakh' },
-                            { id: '50L', label: '₹50 Lakh' },
-                          ].map((slab) => (
-                            <button
-                              key={slab.id}
-                              type="button"
-                              className={`slab-tab ${capitalSlab === slab.id ? 'active' : ''}`}
-                              onClick={() => setCapitalSlab(slab.id)}
-                            >
-                              {slab.label}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="slab-group">
-                        <label className="slab-label">Designated Directors (DIN &amp; DSC)</label>
-                        <div className="director-stepper">
-                          <button
-                            type="button"
-                            className="btn-stepper"
-                            disabled={directorCount <= 2}
-                            onClick={() => setDirectorCount((c) => Math.max(2, c - 1))}
-                          >
-                            <i className="fas fa-minus"></i>
-                          </button>
-                          <span className="stepper-val">{directorCount} Directors</span>
-                          <button
-                            type="button"
-                            className="btn-stepper"
-                            disabled={directorCount >= 6}
-                            onClick={() => setDirectorCount((c) => Math.min(6, c + 1))}
-                          >
-                            <i className="fas fa-plus"></i>
-                          </button>
-                        </div>
-                      </div>
+                <div className="eng-readout-panel">
+                  <div className="readout-hero-row">
+                    <div>
+                      <span className="readout-caption">Estimated Total Investment</span>
+                      <div className="readout-amount">₹{totalMandateFee.toLocaleString('en-IN')}</div>
                     </div>
-                  )}
-
-                  {/* Dynamic Slab Selector for Tax / Returns */}
-                  {!isIncorporation && (
-                    <div className="slab-selector-cluster">
-                      <div className="slab-group">
-                        <label className="slab-label">Annual Turnover / Volume Tier</label>
-                        <div className="slab-btn-row">
-                          {[
-                            { id: 'micro', label: '< ₹20L' },
-                            { id: 'sme', label: '₹20L–1.5Cr' },
-                            { id: 'mid', label: '₹1.5Cr–5Cr' },
-                            { id: 'enterprise', label: '> ₹5Cr' },
-                          ].map((tier) => (
-                            <button
-                              key={tier.id}
-                              type="button"
-                              className={`slab-tab ${turnoverTier === tier.id ? 'active' : ''}`}
-                              onClick={() => setTurnoverTier(tier.id)}
-                            >
-                              {tier.label}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="slab-group">
-                        <label className="slab-label">Filing Frequency Model</label>
-                        <div className="slab-btn-row">
-                          {[
-                            { id: 'annual', label: 'Annual' },
-                            { id: 'quarterly', label: 'Quarterly' },
-                            { id: 'monthly', label: 'Monthly' },
-                          ].map((freq) => (
-                            <button
-                              key={freq.id}
-                              type="button"
-                              className={`slab-tab ${filingFrequency === freq.id ? 'active' : ''}`}
-                              onClick={() => setFilingFrequency(freq.id)}
-                            >
-                              {freq.label}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="fee-primary-display">
-                    <span className="fee-label">Total Estimated Investment</span>
-                    <div className="fee-sum">₹{totalMandateFee.toLocaleString('en-IN')}</div>
-                    <span className="fee-subtext">Statutory portal fees + Senior legal drafting retainer</span>
+                    <span className="readout-tax-pill">Official Challan Included</span>
                   </div>
-
-                  <div className="fee-itemized-ledger">
-                    <div className="ledger-row">
-                      <span className="ledger-lbl">
-                        Government Portal &amp; Stamp Duty
-                        <small className="block-sub">Official MCA/GSTN challan provided</small>
-                      </span>
-                      <strong className="ledger-val">
-                        {calculatedGovtFee > 0 ? `₹${calculatedGovtFee.toLocaleString('en-IN')}` : 'Nil (Govt Waiver)'}
+                  <div className="readout-ledger-rows">
+                    <div className="r-row">
+                      <span>Govt Portal &amp; Stamp Duty</span>
+                      <strong>
+                        {calculatedGovtFee > 0 ? `₹${calculatedGovtFee.toLocaleString('en-IN')}` : 'Nil (Exempt)'}
                       </strong>
                     </div>
-
-                    <div className="ledger-row">
-                      <span className="ledger-lbl">
-                        Advisory &amp; Drafting Retainer
-                        <small className="block-sub">Includes Class-3 DSC &amp; Senior vetting</small>
-                      </span>
-                      <strong className="ledger-val">
-                        ₹{calculatedProfFee.toLocaleString('en-IN')}
-                      </strong>
+                    <div className="r-row">
+                      <span>Advisory &amp; Filing Retainer</span>
+                      <strong>₹{calculatedProfFee.toLocaleString('en-IN')}</strong>
                     </div>
-
-                    <div className="ledger-divider"></div>
-
-                    <div className="ledger-row total-row">
-                      <span className="total-name">Total Outlay</span>
-                      <strong className="total-num">₹{totalMandateFee.toLocaleString('en-IN')}</strong>
-                    </div>
-                  </div>
-
-                  <div className="fee-guarantee-note">
-                    <i className="fa-solid fa-circle-check"></i>
-                    <span>Official government payment challan provided directly to client. Zero hidden fees.</span>
                   </div>
                 </div>
               ) : (
-                <div className="fee-structure-block">
-                  <div className="fee-primary-display">
-                    <span className="fee-label">Advisory Retainer</span>
-                    <div className="fee-sum">Custom Mandate</div>
-                    <span className="fee-subtext">Scope-based engagement tailored to entity turnover</span>
-                  </div>
-                  <div className="fee-guarantee-note">
-                    <i className="fa-solid fa-circle-check"></i>
-                    <span>Includes complimentary initial statutory compliance assessment.</span>
-                  </div>
-                </div>
-              )}
-
-              {/* Engagement Assurance Badges */}
-              <div className="sidebar-trust-strip">
-                <div className="trust-pill"><i className="fa-solid fa-file-invoice"></i> 100% Official Receipts</div>
-                <div className="trust-pill"><i className="fa-solid fa-shield-alt"></i> Non-Disclosure Protected</div>
-                <div className="trust-pill"><i className="fa-solid fa-user-shield"></i> Senior Advisor Vetted</div>
-              </div>
-            </div>
-
-            {/* SIDEBAR CARD 2: FAST-TRACK MANDATE INTAKE FORM WITH DIRECT FILE DROPZONE */}
-            <div className="sidebar-card intake-form-card" id="consultation-intake">
-              <div className="sidebar-card-top">
-                <span className="sidebar-kicker">MANDATE INTAKE DESK</span>
-                <h3 className="sidebar-title">Book Service Engagement</h3>
-                <p className="sidebar-desc">Submit your details to receive our formal statutory engagement docket within 2 business hours.</p>
-              </div>
-
-              {formStatus.success && (
-                <div className="form-alert-box alert-success">
-                  <i className="fas fa-check-circle"></i>
-                  <div>
-                    <strong>Mandate Logged Successfully</strong>
-                    <p>Our senior corporate tax advisors will review your file and reach out today.</p>
-                  </div>
-                </div>
-              )}
-
-              {formStatus.error && (
-                <div className="form-alert-box alert-error">
-                  <i className="fas fa-exclamation-circle"></i>
-                  <div>
-                    <strong>Submission Note</strong>
-                    <p>{formStatus.error}</p>
-                  </div>
-                </div>
-              )}
-
-              <form onSubmit={handleFormSubmit} className="dossier-intake-form">
-                <div className="form-group-field">
-                  <label htmlFor="name">Full Name *</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    required
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    placeholder="e.g. Rahul Sharma"
-                    className="form-control-input"
-                  />
-                </div>
-
-                <div className="form-group-field">
-                  <label htmlFor="phone">Phone / WhatsApp Number *</label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    required
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    placeholder="+91 98765 43210"
-                    className="form-control-input"
-                  />
-                </div>
-
-                <div className="form-group-field">
-                  <label htmlFor="email">Corporate Email Address *</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    placeholder="rahul@enterprise.com"
-                    className="form-control-input"
-                  />
-                </div>
-
-                <div className="form-group-field">
-                  <label htmlFor="entityName">Commercial Entity / Proposed Name</label>
-                  <input
-                    type="text"
-                    id="entityName"
-                    name="entityName"
-                    value={formData.entityName}
-                    onChange={handleInputChange}
-                    placeholder="e.g. Apex Logix Private Limited"
-                    className="form-control-input"
-                  />
-                </div>
-
-                {/* Direct KYC Docket File Upload Attachment */}
-                <div className="form-group-field">
-                  <label>Attach KYC / Statutory Records (Optional)</label>
-                  {!attachedFile ? (
-                    <label className="file-dropzone-label">
-                      <input
-                        type="file"
-                        onChange={handleFileUpload}
-                        accept=".pdf,.png,.jpg,.jpeg,.doc,.docx"
-                        className="file-hidden-input"
-                      />
-                      <i className="fas fa-cloud-upload-alt"></i>
-                      <span>Upload PAN / Aadhaar / Entity Document (PDF/Image)</span>
-                      <small>Max file size: 10 MB</small>
-                    </label>
-                  ) : (
-                    <div className="attached-file-pill">
-                      <div className="file-pill-left">
-                        <i className="fas fa-file-pdf"></i>
-                        <div>
-                          <strong>{attachedFile.name}</strong>
-                          <span>{attachedFile.size}</span>
-                        </div>
-                      </div>
-                      <button type="button" onClick={handleRemoveFile} className="btn-file-remove" title="Remove attachment">
-                        <i className="fas fa-times"></i>
-                      </button>
+                <div className="eng-readout-panel">
+                  <div className="readout-hero-row">
+                    <div>
+                      <span className="readout-caption">Configured Scope Summary</span>
+                      <div className="readout-amount amount-custom">Custom Scope Quote</div>
                     </div>
-                  )}
+                    <span className="readout-tax-pill">{selectedFreqObj.label} Cycle</span>
+                  </div>
+                  <p className="custom-profile-text">
+                    Calibrated for <strong>{selectedTierObj.label}</strong> ({selectedTierObj.sub}) on a{' '}
+                    <strong>{selectedFreqObj.label}</strong> schedule.
+                  </p>
+                  <Link to="/pricing" className="btn-compare-retainers">
+                    <span>Compare Monthly Fixed Retainer Plans</span>
+                    <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                  </Link>
                 </div>
+              )}
 
-                <div className="form-group-field">
-                  <label htmlFor="message">Filing Deadlines / Specific Notes</label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows="2"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    placeholder="Mention any urgent deadline, turnover volume, or query..."
-                    className="form-control-textarea"
-                  ></textarea>
+              {/* Direct Chambers Contact Strip (Safe Left Side) */}
+              <div className="eng-chambers-footer">
+                <div className="chambers-foot-meta">
+                  <i className="fa-solid fa-location-dot" aria-hidden="true"></i>
+                  <span>612, Hill Town Square, MG Road, Nikol, Ahmedabad &bull; Mon–Sat 9:30 AM–7:30 PM</span>
                 </div>
-
-                <button type="submit" className="btn-submit-mandate" disabled={formStatus.submitting}>
-                  {formStatus.submitting ? (
-                    <span><i className="fas fa-spinner fa-spin"></i> Processing Docket...</span>
-                  ) : (
-                    <span>Submit Engagement Mandate <i className="fas fa-arrow-right"></i></span>
-                  )}
-                </button>
-              </form>
-            </div>
-
-            {/* SIDEBAR CARD 3: PHYSICAL CHAMBERS & DIRECT COUNSEL */}
-            <div className="sidebar-card chambers-docket-card">
-              <div className="chambers-docket-header">
-                <i className="fas fa-landmark text-amber"></i>
-                <div>
-                  <strong>Shree Chamunda Associates</strong>
-                  <span>Corporate Tax &amp; Advisory Chambers</span>
-                </div>
-              </div>
-
-              <div className="chambers-docket-body">
-                <p className="chambers-street">
-                  <i className="fas fa-map-marker-alt"></i>
-                  <span>612, Hill Town Square, MG Road, near Ganesh Opera, Nikol, Ahmedabad - 380049</span>
-                </p>
-
-                <div className="chambers-direct-actions">
+                <div className="chambers-foot-btns">
+                  <a href="tel:+919510984735" className="btn-chambers-pill phone">
+                    <i className="fa-solid fa-phone" aria-hidden="true"></i>
+                    <span>+91 95109 84735</span>
+                  </a>
                   <a
                     href={`https://wa.me/919510984735?text=${encodeURIComponent(
                       `Hello Shree Chamunda Associates, I would like to consult on statutory mandate: ${service.title}`
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-chambers-wa"
+                    className="btn-chambers-pill whatsapp"
                   >
-                    <i className="fab fa-whatsapp"></i> Chat with Senior Counsel
+                    <i className="fa-brands fa-whatsapp" aria-hidden="true"></i>
+                    <span>WhatsApp Chambers</span>
                   </a>
-                  <a href="tel:+919510984735" className="btn-chambers-call">
-                    <i className="fas fa-phone-alt"></i> Call Nikol Chambers: +91 95109 84735
-                  </a>
-                </div>
-
-                <div className="chambers-timing">
-                  <i className="far fa-clock"></i>
-                  <span>Chambers Hours: Mon–Sat, 9:30 AM – 7:30 PM IST</span>
                 </div>
               </div>
             </div>
+          </aside>
+
+          {/* RIGHT COLUMN: SPACIOUS BOOK SERVICE ENGAGEMENT FORM */}
+          <div className="engagement-form-card">
+            <div className="intake-panel-header">
+              <div>
+                <span className="del-kicker">DIRECT PARTNER DESK</span>
+                <h3>Book Service Engagement</h3>
+              </div>
+              <span className="intake-sla-tag">
+                <span className="retainers-live-dot" aria-hidden="true"></span>
+                <span>&lt; 2h Turnaround</span>
+              </span>
+            </div>
+
+            <div className="intake-context-bar">
+              <span className="ctx-label">Selected Mandate</span>
+              <strong className="ctx-value">{service.title}</strong>
+              <span className="ctx-meta">
+                {isIncorporation
+                  ? `${capitalSlab} Capital • ${directorCount} Directors`
+                  : `${selectedTierObj.label} • ${selectedFreqObj.label}`}
+              </span>
+            </div>
+
+            {formStatus.success && (
+              <div className="form-alert-banner success">
+                <i className="fa-solid fa-circle-check" aria-hidden="true"></i>
+                <div>
+                  <strong>Engagement Mandate Logged</strong>
+                  <p>Our senior tax advisors will review your scope and connect within 2 business hours.</p>
+                </div>
+              </div>
+            )}
+
+            {formStatus.error && (
+              <div className="form-alert-banner error">
+                <i className="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+                <div>
+                  <strong>Submission Notice</strong>
+                  <p>{formStatus.error}</p>
+                </div>
+              </div>
+            )}
+
+            <form onSubmit={handleFormSubmit} className="spacious-intake-form">
+              <div className="form-split-2">
+                <div className="field-block">
+                  <label htmlFor="name">Full Name *</label>
+                  <div className="input-icon-shell">
+                    <i className="fa-regular fa-user" aria-hidden="true"></i>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      required
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      placeholder="e.g. Rahul Sharma"
+                      className="dossier-field-input"
+                    />
+                  </div>
+                </div>
+
+                <div className="field-block">
+                  <label htmlFor="phone">Phone / WhatsApp Number *</label>
+                  <div className="input-icon-shell">
+                    <i className="fa-solid fa-phone" aria-hidden="true"></i>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      required
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      placeholder="+91 98765 43210"
+                      className="dossier-field-input"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="form-split-2">
+                <div className="field-block">
+                  <label htmlFor="email">Corporate Email Address *</label>
+                  <div className="input-icon-shell">
+                    <i className="fa-regular fa-envelope" aria-hidden="true"></i>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      placeholder="rahul@enterprise.com"
+                      className="dossier-field-input"
+                    />
+                  </div>
+                </div>
+
+                <div className="field-block">
+                  <label htmlFor="entityName">Commercial Entity / Proposed Name</label>
+                  <div className="input-icon-shell">
+                    <i className="fa-solid fa-building" aria-hidden="true"></i>
+                    <input
+                      type="text"
+                      id="entityName"
+                      name="entityName"
+                      value={formData.entityName}
+                      onChange={handleInputChange}
+                      placeholder="e.g. Apex Logix Private Limited"
+                      className="dossier-field-input"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="field-block">
+                <label>Attach KYC / Financial Statements (Optional)</label>
+                {!attachedFile ? (
+                  <label className="spacious-dropzone">
+                    <input
+                      type="file"
+                      onChange={handleFileUpload}
+                      accept=".pdf,.png,.jpg,.jpeg,.doc,.docx"
+                      className="file-hidden-input"
+                    />
+                    <span className="dropzone-icon" aria-hidden="true">
+                      <i className="fa-solid fa-cloud-arrow-up"></i>
+                    </span>
+                    <div className="dropzone-copy">
+                      <strong>Upload PAN, Bank Statement, or Entity KYC (PDF / Image)</strong>
+                      <span>Maximum 10 MB &bull; Encrypted transfer directly to Managing Partner desk</span>
+                    </div>
+                  </label>
+                ) : (
+                  <div className="attached-file-chip">
+                    <div className="file-chip-meta">
+                      <i className="fa-solid fa-file-pdf" aria-hidden="true"></i>
+                      <div>
+                        <strong>{attachedFile.name}</strong>
+                        <span>{attachedFile.size}</span>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleRemoveFile}
+                      className="btn-remove-attachment"
+                      aria-label="Remove attached file"
+                    >
+                      <i className="fa-solid fa-xmark" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              <div className="field-block">
+                <label htmlFor="message">Deadlines &amp; Practice Notes</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="3"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  placeholder="Share monthly transaction volume, urgent statutory notice deadlines, or specific accounting requirements..."
+                  className="dossier-field-textarea"
+                ></textarea>
+              </div>
+
+              <button type="submit" className="btn-submit-engagement" disabled={formStatus.submitting}>
+                {formStatus.submitting ? (
+                  <>
+                    <i className="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
+                    <span>Transmitting Engagement Docket...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Submit Engagement Mandate to Partner Desk</span>
+                    <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                  </>
+                )}
+              </button>
+
+              <div className="intake-fiduciary-foot">
+                <i className="fa-solid fa-shield-halved" aria-hidden="true"></i>
+                <span>Direct Nikol Chambers Desk &bull; Strict Non-Disclosure Guaranteed &bull; Zero Hidden Fees</span>
+              </div>
+            </form>
           </div>
-        </aside>
-      </div>
+        </div>
+      </section>
+
+      {/* ====================================================================
+          BAND 04: OPEN STATUTORY FAQS + INTEGRATED BUNDLED SERVICES
+          ==================================================================== */}
+      <section id="faqs" className="dossier-shell-wrap faqs-band" aria-labelledby="faqs-heading">
+        <div className="faqs-editorial-split">
+          <div className="faqs-left-col">
+            <div className="retainers-eyebrow-badge">
+              <span className="badge-index-chip">04</span>
+              <i className="fa-solid fa-circle-question" aria-hidden="true"></i>
+              <span>STATUTORY CLARIFICATIONS</span>
+            </div>
+            <h2 id="faqs-heading" className="faqs-heading">
+              Common Mandate <span className="title-burnished-gold">Questions</span>
+            </h2>
+            <p className="faqs-lead">
+              Answers reviewed by our advisory desk covering turnaround timelines, portal receipts, and statutory procedures.
+            </p>
+
+            <div className="faqs-filter-shell">
+              <i className="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+              <input
+                type="text"
+                placeholder="Search clarifications..."
+                value={faqFilter}
+                onChange={(e) => setFaqFilter(e.target.value)}
+                className="faqs-filter-input"
+                aria-label="Search FAQs"
+              />
+            </div>
+          </div>
+
+          <div className="faqs-right-col">
+            <div className="open-accordion-list">
+              {filteredFaqs.length > 0 ? (
+                filteredFaqs.map((faq, idx) => {
+                  const isOpen = openFaq === idx;
+                  return (
+                    <div key={idx} className={`open-faq-row ${isOpen ? 'expanded' : ''}`}>
+                      <button
+                        type="button"
+                        className="open-faq-trigger"
+                        onClick={() => setOpenFaq(isOpen ? null : idx)}
+                        aria-expanded={isOpen}
+                      >
+                        <span className="faq-num-tag">Q{String(idx + 1).padStart(2, '0')}</span>
+                        <span className="faq-question-text">{faq.question}</span>
+                        <i className="fa-solid fa-chevron-down faq-arrow-icon" aria-hidden="true"></i>
+                      </button>
+                      {isOpen && (
+                        <div className="open-faq-body">
+                          <p>{faq.answer}</p>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="faqs-empty-box">
+                  <p>No clarifications matched &ldquo;{faqFilter}&rdquo;.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {relatedServices.length > 0 && (
+        <section className="dossier-shell-wrap bundled-band" aria-labelledby="bundled-heading">
+          <div className="bundled-band-header">
+            <div>
+              <span className="del-kicker">INTEGRATED PRACTICE AREAS</span>
+              <h2 id="bundled-heading" className="bundled-heading">
+                Frequently Bundled Compliances
+              </h2>
+            </div>
+            <Link to="/services" className="btn-all-services-link">
+              <span>All Practice Areas</span>
+              <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            </Link>
+          </div>
+
+          <div className="bundled-editorial-grid">
+            {relatedServices.map((rel) => (
+              <Link key={rel.slug || rel._id} to={`/services/${rel.slug || rel._id}`} className="bundled-tile-card">
+                <div className="bundled-tile-top">
+                  <span className="bundled-cat-tag">{rel.serviceType}</span>
+                  <h3>{rel.title}</h3>
+                  <p>{rel.description}</p>
+                </div>
+                <div className="bundled-tile-foot">
+                  <span>
+                    <i className="fa-regular fa-clock" aria-hidden="true"></i> {rel.timeline || '3–5 Days'}
+                  </span>
+                  <strong className="tile-view-cta">
+                    Inspect Dossier <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                  </strong>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 };
