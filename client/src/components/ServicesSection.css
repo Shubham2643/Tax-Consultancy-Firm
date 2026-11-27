@@ -1949,22 +1949,35 @@
   box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45) !important;
 }
 
-[data-theme='dark'] .filter-dock-btn {
+[data-theme='dark'] .filter-dock-btn:not(.active) {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
   color: #cbd5e1 !important;
 }
 
-[data-theme='dark'] .filter-dock-btn:hover {
-  background: rgba(255, 255, 255, 0.08) !important;
+[data-theme='dark'] .filter-dock-btn:not(.active) i {
+  color: #94a3b8 !important;
+}
+
+[data-theme='dark'] .filter-dock-btn:not(.active):hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(248, 180, 0, 0.35) !important;
   color: #ffffff !important;
+}
+
+[data-theme='dark'] .filter-dock-btn:not(.active):hover i {
+  color: #f8b400 !important;
 }
 
 [data-theme='dark'] .dock-count-badge {
   background: rgba(255, 255, 255, 0.08) !important;
-  color: #94a3b8 !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: #cbd5e1 !important;
 }
 
 [data-theme='dark'] .filter-dock-btn.active.dock-btn-all {
   background: #1e293b !important;
+  border-color: rgba(248, 180, 0, 0.45) !important;
   color: #ffffff !important;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
 }
@@ -1973,7 +1986,21 @@
 }
 [data-theme='dark'] .filter-dock-btn.active.dock-btn-all .dock-count-badge {
   background: rgba(248, 180, 0, 0.25) !important;
+  border-color: rgba(248, 180, 0, 0.4) !important;
   color: #f8b400 !important;
+}
+
+[data-theme='dark'] .filter-dock-btn.active.dock-btn-startup,
+[data-theme='dark'] .filter-dock-btn.active.dock-btn-registration,
+[data-theme='dark'] .filter-dock-btn.active.dock-btn-tax,
+[data-theme='dark'] .filter-dock-btn.active.dock-btn-accounting {
+  color: #ffffff !important;
+}
+
+[data-theme='dark'] .filter-dock-btn.active:not(.dock-btn-all) .dock-count-badge {
+  background: rgba(255, 255, 255, 0.22) !important;
+  border-color: transparent !important;
+  color: #ffffff !important;
 }
 
 [data-theme='dark'] .filter-btn {
@@ -2000,16 +2027,78 @@
 
 [data-theme='dark'] .service-card,
 [data-theme='dark'] .executive-service-card {
-  background: #0f1c32 !important;
-  border-color: rgba(255, 255, 255, 0.08) !important;
+  background: linear-gradient(168deg, rgba(16, 30, 54, 0.96) 0%, rgba(8, 17, 33, 0.99) 100%) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
   color: #f1f5f9 !important;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 16px 38px -12px rgba(0, 0, 0, 0.55) !important;
 }
 
 [data-theme='dark'] .service-card:hover,
 [data-theme='dark'] .executive-service-card:hover {
   border-color: rgba(248, 180, 0, 0.45) !important;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 22px 46px -12px rgba(0, 0, 0, 0.72),
+    0 0 24px rgba(248, 180, 0, 0.1) !important;
+}
+
+[data-theme='dark'] .service-card.card-cat-startup:hover {
+  border-color: rgba(129, 140, 248, 0.52) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 22px 46px -12px rgba(0, 0, 0, 0.72),
+    0 0 26px rgba(99, 102, 241, 0.16) !important;
+}
+
+[data-theme='dark'] .service-card.card-cat-registration:hover {
+  border-color: rgba(52, 211, 153, 0.5) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 22px 46px -12px rgba(0, 0, 0, 0.72),
+    0 0 26px rgba(16, 185, 129, 0.15) !important;
+}
+
+[data-theme='dark'] .service-card.card-cat-accounting:hover {
+  border-color: rgba(56, 189, 248, 0.5) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 22px 46px -12px rgba(0, 0, 0, 0.72),
+    0 0 26px rgba(56, 189, 248, 0.15) !important;
+}
+
+[data-theme='dark'] .service-icon-tile {
+  background: rgba(248, 180, 0, 0.12) !important;
+  border-color: rgba(248, 180, 0, 0.35) !important;
+  color: #fbbf24 !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 8px 18px rgba(0, 0, 0, 0.35) !important;
+}
+
+[data-theme='dark'] .service-card.card-cat-startup .service-icon-tile {
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.25) 0%, rgba(49, 46, 129, 0.45) 100%) !important;
+  border-color: rgba(129, 140, 248, 0.44) !important;
+  color: #a5b4fc !important;
+}
+
+[data-theme='dark'] .service-card.card-cat-registration .service-icon-tile {
+  background: linear-gradient(135deg, rgba(5, 150, 105, 0.24) 0%, rgba(6, 78, 59, 0.45) 100%) !important;
+  border-color: rgba(52, 211, 153, 0.42) !important;
+  color: #6ee7b7 !important;
+}
+
+[data-theme='dark'] .service-card.card-cat-tax .service-icon-tile {
+  background: linear-gradient(135deg, rgba(217, 119, 6, 0.26) 0%, rgba(120, 53, 15, 0.48) 100%) !important;
+  border-color: rgba(251, 191, 36, 0.45) !important;
+  color: #fbbf24 !important;
+}
+
+[data-theme='dark'] .service-card.card-cat-accounting .service-icon-tile {
+  background: linear-gradient(135deg, rgba(2, 132, 199, 0.24) 0%, rgba(12, 74, 110, 0.46) 100%) !important;
+  border-color: rgba(56, 189, 248, 0.44) !important;
+  color: #7dd3fc !important;
 }
 
 [data-theme='dark'] .service-card-title,
@@ -2018,46 +2107,70 @@
 }
 
 [data-theme='dark'] .service-card-title a:hover {
-  color: #38bdf8 !important;
+  color: #fbbf24 !important;
 }
 
 [data-theme='dark'] .service-card-desc {
-  color: #94a3b8 !important;
+  color: #b6c3d4 !important;
 }
 
 [data-theme='dark'] .service-category-tag {
   background: rgba(255, 255, 255, 0.06) !important;
-  border-color: rgba(255, 255, 255, 0.1) !important;
-  color: #cbd5e1 !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #e2e8f0 !important;
+}
+
+[data-theme='dark'] .service-category-tag.badge-cat-startup {
+  background: rgba(99, 102, 241, 0.14) !important;
+  border-color: rgba(129, 140, 248, 0.34) !important;
+  color: #a5b4fc !important;
+}
+
+[data-theme='dark'] .service-category-tag.badge-cat-registration {
+  background: rgba(16, 185, 129, 0.14) !important;
+  border-color: rgba(52, 211, 153, 0.32) !important;
+  color: #6ee7b7 !important;
+}
+
+[data-theme='dark'] .service-category-tag.badge-cat-tax {
+  background: rgba(245, 158, 11, 0.14) !important;
+  border-color: rgba(251, 191, 36, 0.34) !important;
+  color: #fcd34d !important;
+}
+
+[data-theme='dark'] .service-category-tag.badge-cat-accounting {
+  background: rgba(14, 165, 233, 0.14) !important;
+  border-color: rgba(56, 189, 248, 0.34) !important;
+  color: #7dd3fc !important;
 }
 
 [data-theme='dark'] .service-tat-pill {
-  background: rgba(255, 255, 255, 0.04) !important;
-  border-color: rgba(255, 255, 255, 0.08) !important;
-  color: #cbd5e1 !important;
+  background: rgba(4, 10, 20, 0.65) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: #e2e8f0 !important;
 }
 
 [data-theme='dark'] .service-compliance-strip,
 [data-theme='dark'] .service-specs-ribbon {
-  background: rgba(255, 255, 255, 0.04) !important;
-  border-color: rgba(255, 255, 255, 0.08) !important;
+  background: rgba(4, 10, 20, 0.62) !important;
+  border-color: rgba(255, 255, 255, 0.09) !important;
 }
 
 [data-theme='dark'] .compliance-statute,
 [data-theme='dark'] .spec-statute {
-  color: #cbd5e1 !important;
+  color: #e2e8f0 !important;
 }
 
 [data-theme='dark'] .compliance-statute i,
 [data-theme='dark'] .spec-statute i {
-  color: #94a3b8 !important;
+  color: #fbbf24 !important;
 }
 
 [data-theme='dark'] .compliance-assurance,
 [data-theme='dark'] .spec-assurance {
-  background: rgba(16, 185, 129, 0.15) !important;
-  border-color: rgba(16, 185, 129, 0.28) !important;
-  color: #34d399 !important;
+  background: rgba(16, 185, 129, 0.14) !important;
+  border-color: rgba(52, 211, 153, 0.28) !important;
+  color: #6ee7b7 !important;
 }
 
 [data-theme='dark'] .compliance-assurance i,
@@ -2066,35 +2179,36 @@
 }
 
 [data-theme='dark'] .scope-count-badge {
-  background: rgba(16, 185, 129, 0.15) !important;
-  border-color: rgba(16, 185, 129, 0.28) !important;
-  color: #34d399 !important;
+  background: rgba(16, 185, 129, 0.14) !important;
+  border-color: rgba(52, 211, 153, 0.28) !important;
+  color: #6ee7b7 !important;
 }
 
 [data-theme='dark'] .service-scope-wrap {
-  border-top-color: rgba(255, 255, 255, 0.06) !important;
+  border-top-color: rgba(255, 255, 255, 0.09) !important;
 }
 
 [data-theme='dark'] .scope-title {
-  color: #64748b !important;
+  color: #94a3b8 !important;
+  letter-spacing: 0.06em !important;
 }
 
 [data-theme='dark'] .scope-list li {
-  color: #cbd5e1 !important;
+  color: #e2e8f0 !important;
 }
 
 [data-theme='dark'] .scope-check-dot {
-  background: rgba(16, 185, 129, 0.15) !important;
-  border-color: rgba(16, 185, 129, 0.3) !important;
+  background: rgba(16, 185, 129, 0.16) !important;
+  border-color: rgba(52, 211, 153, 0.34) !important;
   color: #34d399 !important;
 }
 
 [data-theme='dark'] .service-card-footer {
-  border-top-color: rgba(255, 255, 255, 0.06) !important;
+  border-top-color: rgba(255, 255, 255, 0.09) !important;
 }
 
 [data-theme='dark'] .service-retainer-block .retainer-label {
-  color: #64748b !important;
+  color: #94a3b8 !important;
 }
 
 [data-theme='dark'] .service-retainer-block .retainer-price {
@@ -2102,21 +2216,33 @@
 }
 
 [data-theme='dark'] .btn-service-explore {
-  background: #1e293b !important;
-  color: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  background: linear-gradient(180deg, rgba(30, 41, 59, 0.92) 0%, rgba(15, 23, 42, 0.98) 100%) !important;
+  color: #f8fafc !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 4px 12px rgba(0, 0, 0, 0.35) !important;
+}
+
+[data-theme='dark'] .btn-service-explore i {
+  color: #fbbf24 !important;
 }
 
 [data-theme='dark'] .btn-service-explore:hover {
   background: #f8b400 !important;
   color: #071324 !important;
   border-color: #f8b400 !important;
+  box-shadow: 0 6px 18px rgba(248, 180, 0, 0.28) !important;
+}
+
+[data-theme='dark'] .btn-service-explore:hover i {
+  color: #071324 !important;
 }
 
 [data-theme='dark'] .btn-service-quick-consult {
   background: rgba(248, 180, 0, 0.12) !important;
-  border-color: rgba(248, 180, 0, 0.35) !important;
-  color: #f8b400 !important;
+  border-color: rgba(248, 180, 0, 0.38) !important;
+  color: #fbbf24 !important;
 }
 
 [data-theme='dark'] .btn-service-quick-consult:hover {

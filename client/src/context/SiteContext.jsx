@@ -82,7 +82,6 @@ export const SiteContextProvider = ({ children }) => {
           },
         });
         setNavMenu([
-          { label: 'Home', href: '/', children: [] },
           {
             label: 'Start a Business',
             href: '#',
@@ -138,7 +137,7 @@ export const SiteContextProvider = ({ children }) => {
             ],
           },
           {
-            label: 'Others',
+            label: 'Resources',
             href: '#',
             children: [
               { label: 'Blog', href: '/blog' },

@@ -44,14 +44,14 @@
    1. TOP BAR — Executive Status & Intelligence Line
    ========================================================================== */
 .top-bar {
-  background: #050d1a;
-  color: #94a3b8;
+  background: #f8fafc;
+  color: #475569;
   padding: 0;
   font-size: 11.5px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid #e2e8f0;
   position: relative;
   z-index: 1002;
-  height: 38px;
+  height: 36px;
   display: flex;
   align-items: center;
 }
@@ -271,7 +271,7 @@
 .top-bar-sep {
   width: 1px;
   height: 14px;
-  background-color: rgba(255, 255, 255, 0.12);
+  background-color: rgba(15, 23, 42, 0.14);
   flex-shrink: 0;
 }
 
@@ -280,7 +280,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: #cbd5e1;
+  color: #334155;
   text-decoration: none;
   font-size: 11.5px;
   font-weight: 550;
@@ -289,18 +289,18 @@
 }
 
 .top-bar-icon {
-  color: #f8b400;
+  color: #b45309;
   font-size: 11px;
   transition: transform 0.2s ease, color 0.2s ease;
 }
 
 .top-bar-link:hover {
-  color: #ffffff;
+  color: #071324;
 }
 
 .top-bar-link:hover .top-bar-icon {
-  transform: scale(1.15);
-  color: #ffc425;
+  transform: scale(1.1);
+  color: #92400e;
 }
 
 @media (max-width: 1160px) {
@@ -677,9 +677,9 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  max-width: 1440px;
+  max-width: 1420px;
   margin: 0 auto;
-  padding: 0 clamp(16px, 1.8vw, 28px);
+  padding: 0 clamp(16px, 2vw, 28px);
   height: 100%;
   box-sizing: border-box;
 }
@@ -690,8 +690,8 @@
   align-items: center;
   text-decoration: none;
   flex-shrink: 0;
-  gap: 10px;
-  margin-right: clamp(10px, 1vw, 16px);
+  gap: 8px;
+  margin-right: clamp(8px, 0.8vw, 12px);
   height: 100%;
   outline: none;
 }
@@ -757,9 +757,9 @@
 }
 
 .wordmark-title {
-  font-size: clamp(11.5px, 0.95vw, 13.5px);
+  font-size: clamp(11.5px, 0.88vw, 12.6px);
   font-weight: 850;
-  letter-spacing: clamp(0.15px, 0.08vw, 0.4px);
+  letter-spacing: clamp(0.1px, 0.04vw, 0.25px);
   color: #071324;
   line-height: 1.15;
   margin: 0;
@@ -777,15 +777,15 @@
 .wordmark-tagline {
   display: flex;
   align-items: center;
-  gap: clamp(3px, 1vw, 4.5px);
-  margin-top: clamp(1px, 0.5vw, 2.5px);
+  gap: clamp(3px, 0.6vw, 4px);
+  margin-top: clamp(1px, 0.35vw, 2.5px);
   line-height: 1;
 }
 
 .wordmark-tag-item {
-  font-size: clamp(6.5px, 1.8vw, 8.5px);
+  font-size: clamp(6.5px, 0.52vw, 7.6px);
   font-weight: 800;
-  letter-spacing: clamp(0.7px, 0.3vw, 1.3px);
+  letter-spacing: clamp(0.7px, 0.08vw, 1.05px);
   color: #b47500;
   line-height: 1;
   transition: color 0.2s ease;
@@ -817,7 +817,7 @@
   display: flex;
   align-items: center;
   height: 100%;
-  gap: 2px;
+  gap: clamp(1px, 0.15vw, 3px);
   list-style: none;
   margin: 0;
   padding: 0;
@@ -833,10 +833,10 @@
 .nav-link {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 3.5px;
   color: #334155;
-  padding: 6px clamp(6.5px, 0.55vw, 8.5px);
-  font-size: clamp(12px, 0.86vw, 12.8px);
+  padding: 6px clamp(5.5px, 0.45vw, 7px);
+  font-size: clamp(11.8px, 0.82vw, 12.2px);
   font-weight: 600;
   letter-spacing: -0.15px;
   text-decoration: none;
@@ -1206,7 +1206,7 @@
   font-weight: 800;
 }
 
-/* Dynamic Domain Color Tones for Tile Icons */
+/* Restrained Dual-Tone Institutional Icon Badges */
 .dropdown-tile-icon {
   width: 40px;
   height: 40px;
@@ -1219,46 +1219,21 @@
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Color Tone Variants */
-.dropdown-tile-icon.tone-emerald {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(5, 150, 105, 0.22) 100%);
-  border: 1px solid rgba(16, 185, 129, 0.38);
-  color: #047857;
+.dropdown-tile-icon.tone-gold {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border: 1px solid rgba(212, 175, 55, 0.44);
+  color: #926604;
 }
 
-.dropdown-tile-icon.tone-sapphire {
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.12) 0%, rgba(14, 165, 233, 0.22) 100%);
-  border: 1px solid rgba(37, 99, 235, 0.38);
-  color: #1d4ed8;
-}
-
-.dropdown-tile-icon.tone-amber {
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.14) 0%, rgba(217, 119, 6, 0.24) 100%);
-  border: 1px solid rgba(245, 158, 11, 0.42);
-  color: #b45309;
-}
-
-.dropdown-tile-icon.tone-purple {
-  background: linear-gradient(135deg, rgba(147, 51, 234, 0.12) 0%, rgba(126, 34, 206, 0.22) 100%);
-  border: 1px solid rgba(147, 51, 234, 0.38);
-  color: #7e22ce;
-}
-
-.dropdown-tile-icon.tone-ruby {
-  background: linear-gradient(135deg, rgba(225, 29, 72, 0.12) 0%, rgba(190, 18, 60, 0.22) 100%);
-  border: 1px solid rgba(225, 29, 72, 0.38);
-  color: #be123c;
-}
-
-.dropdown-tile-icon.tone-cyan {
-  background: linear-gradient(135deg, rgba(13, 148, 136, 0.12) 0%, rgba(15, 118, 110, 0.22) 100%);
-  border: 1px solid rgba(13, 148, 136, 0.38);
-  color: #0f766e;
+.dropdown-tile-icon.tone-slate {
+  background: linear-gradient(135deg, #f8fafc 0%, #eef2f7 100%);
+  border: 1px solid rgba(15, 23, 42, 0.14);
+  color: #0f2544;
 }
 
 .dropdown-rich-tile:hover .dropdown-tile-icon {
-  transform: scale(1.1) rotate(1deg);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  transform: scale(1.06);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.09);
 }
 
 .dropdown-tile-info {
@@ -1275,45 +1250,21 @@
   justify-content: flex-start;
   gap: 8px;
   margin-bottom: 3px;
-  flex-wrap: wrap;
 }
 
 .dropdown-tile-title {
   font-family: var(--font-heading, 'Plus Jakarta Sans', sans-serif);
-  font-size: 13.5px;
-  font-weight: 750;
+  font-size: 13.2px;
+  font-weight: 700;
   color: #071324;
-  line-height: 1.35;
+  line-height: 1.3;
   white-space: normal;
   word-break: normal;
   transition: color 0.2s ease;
 }
 
 .dropdown-rich-tile:hover .dropdown-tile-title {
-  color: #b45309;
-}
-
-/* Micro-Tag Pill */
-.dropdown-micro-tag {
-  font-family: var(--font-sans, 'Inter', -apple-system, sans-serif);
-  font-size: 9.5px;
-  font-weight: 750;
-  letter-spacing: 0.03em;
-  padding: 2px 7.5px;
-  border-radius: 999px;
-  background: rgba(248, 180, 0, 0.12);
-  border: 1px solid rgba(212, 175, 55, 0.35);
-  color: #855307;
-  white-space: nowrap;
-  flex-shrink: 0;
-  line-height: 1.25;
-  transition: all 0.2s ease;
-}
-
-.dropdown-rich-tile:hover .dropdown-micro-tag {
-  background: rgba(248, 180, 0, 0.22);
-  border-color: rgba(212, 175, 55, 0.6);
-  color: #78350f;
+  color: #926604;
 }
 
 .active-tile-dot {
@@ -1326,7 +1277,7 @@
 }
 
 .dropdown-tile-desc {
-  font-size: 11px;
+  font-size: 11.2px;
   color: #64748b;
   line-height: 1.38;
   white-space: normal;
@@ -1480,9 +1431,9 @@
 .navbar-right-actions {
   display: flex;
   align-items: center;
-  gap: clamp(6px, 0.6vw, 10px);
+  gap: clamp(6px, 0.55vw, 8px);
   flex-shrink: 0;
-  margin-left: clamp(8px, 1vw, 14px);
+  margin-left: clamp(6px, 0.7vw, 10px);
   height: 100%;
 }
 
@@ -1490,11 +1441,11 @@
 .nav-search-bar {
   position: relative;
   height: 38px;
-  width: clamp(135px, 9.5vw, 175px);
+  width: clamp(208px, 14.3vw, 226px);
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 0 10px 0 5px;
+  gap: 5.5px;
+  padding: 0 8px 0 4px;
   border-radius: 999px;
   background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
   border: 1px solid rgba(226, 232, 240, 0.95);
@@ -1618,7 +1569,7 @@
   position: relative;
   z-index: 2;
   flex: 1;
-  font-size: 12.5px;
+  font-size: 12px;
   font-weight: 550;
   color: #64748b;
   letter-spacing: -0.15px;
@@ -1633,6 +1584,22 @@
 .nav-search-bar:hover .nav-search-placeholder {
   color: #071324;
   font-weight: 600;
+}
+
+/* Keyboard Shortcut Chip */
+.nav-search-kbd {
+  position: relative;
+  z-index: 2;
+  font-size: 9px;
+  font-weight: 700;
+  color: #64748b;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 5px;
+  padding: 2px 4.5px;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  flex-shrink: 0;
 }
 
 /* Interactive Hover Cue Arrow */
@@ -1658,19 +1625,21 @@
   transform: translateX(0);
 }
 
-@media (max-width: 1380px) {
-  .nav-search-bar {
-    width: 140px;
-  }
+@media (max-width: 1440px) {
+  .nav-search-kbd,
   .nav-search-hover-cue {
     display: none;
   }
+  .nav-search-bar {
+    width: 158px;
+  }
 }
 
-@media (max-width: 1260px) {
+@media (max-width: 1360px) {
   .nav-search-placeholder {
     display: none;
   }
+  .nav-search-kbd,
   .nav-search-hover-cue {
     display: none;
   }
@@ -1894,13 +1863,13 @@
   display: none;
 }
 
-/* Small Laptop & Compact Desktop (1181px to 1440px): Guarantees zero edge-overflow across all laptop screens */
+/* Small Laptop & Compact Desktop (1181px to 1440px): Balanced density with full brand tagline preserved */
 @media (min-width: 1181px) and (max-width: 1440px) {
   .navbar-inner {
-    padding: 0 16px;
+    padding: 0 18px;
   }
   .navbar-logo {
-    margin-right: 8px;
+    margin-right: 10px;
     gap: 8px;
   }
   .navbar-logo-badge,
@@ -1909,48 +1878,63 @@
     height: 40px;
   }
   .wordmark-title {
-    font-size: 11px !important;
+    font-size: 11.5px !important;
     letter-spacing: 0.1px !important;
   }
-  .wordmark-tagline {
-    display: none !important;
+  .wordmark-tag-item {
+    font-size: 7px;
+    letter-spacing: 0.85px;
   }
   .navbar-nav {
-    gap: 2px;
+    gap: 3px;
   }
   .nav-link {
-    padding: 5px 6.5px;
+    padding: 6px 8px;
+    font-size: 12px;
+    gap: 3.5px;
+  }
+}
+
+/* Tight Desktop Laptop Band (1181px to 1265px): Guarantee clean right-edge clearance before drawer breakpoint */
+@media (min-width: 1181px) and (max-width: 1265px) {
+  .navbar-inner {
+    padding: 0 12px;
+  }
+  .navbar-logo {
+    margin-right: 6px;
+    gap: 7px;
+  }
+  .navbar-logo-badge,
+  .navbar-logo-img {
+    width: 38px;
+    height: 38px;
+  }
+  .wordmark-title {
+    font-size: 11px !important;
+    letter-spacing: 0.05px !important;
+  }
+  .wordmark-tag-item {
+    font-size: 6.75px;
+    letter-spacing: 0.7px;
+  }
+  .navbar-nav {
+    gap: 1px;
+  }
+  .nav-link {
+    padding: 5.5px 6px;
     font-size: 11.5px;
     gap: 3px;
   }
-  .nav-search-bar {
-    width: 38px !important;
-    padding: 0 !important;
-    justify-content: center;
-  }
-  .nav-search-placeholder,
-  .nav-search-hover-cue {
-    display: none !important;
-  }
-  .nav-consultation-btn {
-    height: 36px;
-    padding: 0 6px 0 5px;
+  .navbar-right-actions {
+    margin-left: 6px;
     gap: 6px;
   }
-  .consult-badge-leading {
-    width: 22px;
-    height: 22px;
-  }
-  .consult-calendar-icon {
-    font-size: 9.5px;
+  .nav-consultation-btn {
+    padding: 0 7px 0 5px;
+    gap: 6px;
   }
   .consult-main-text {
     font-size: 11.5px;
-  }
-  .consult-arrow-badge {
-    width: 19px;
-    height: 19px;
-    font-size: 8px;
   }
 }
 
@@ -2000,8 +1984,6 @@
   .top-bar {
     display: flex !important;
     height: 32px;
-    background: linear-gradient(90deg, #030a14 0%, #08162b 50%, #030a14 100%);
-    border-bottom: 1px solid rgba(248, 180, 0, 0.25);
     font-size: 11px;
   }
 
@@ -2127,21 +2109,21 @@
     font-size: 8.5px;
   }
 
-  /* Executive Crisp White Luxury Mobile Navbar — Consistent with Desktop Perfection */
+  /* Theme-aware Compact Mobile Navbar */
   .navbar {
-    background-color: rgba(255, 255, 255, 0.96) !important;
+    background-color: rgba(255, 255, 255, 0.96);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
     backdrop-filter: blur(20px) saturate(180%);
-    border-bottom: 1px solid rgba(226, 232, 240, 0.9) !important;
-    box-shadow: 0 2px 14px -2px rgba(7, 19, 36, 0.05) !important;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+    box-shadow: 0 2px 14px -2px rgba(7, 19, 36, 0.05);
     height: 60px;
   }
 
   .navbar-scrolled {
-    background-color: #ffffff !important;
-    border-bottom-color: rgba(203, 213, 225, 0.95) !important;
-    box-shadow: 0 4px 20px -2px rgba(7, 19, 36, 0.08) !important;
-    height: 56px;
+    background-color: #ffffff;
+    border-bottom-color: rgba(203, 213, 225, 0.95);
+    box-shadow: 0 4px 20px -2px rgba(7, 19, 36, 0.08);
+    height: 54px;
   }
 
   .navbar-inner {
@@ -2221,16 +2203,16 @@
     height: 35px;
     padding: 0;
     justify-content: center;
-    background: #f8fafc !important;
-    border: 1px solid #e2e8f0 !important;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
     border-radius: 9px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   }
 
   .nav-search-bar:hover,
   .nav-search-bar:active {
-    background: #ffffff !important;
-    border-color: #f8b400 !important;
+    background: #ffffff;
+    border-color: #f8b400;
     box-shadow: 0 2px 8px rgba(248, 180, 0, 0.2);
   }
 
@@ -2240,13 +2222,13 @@
   }
 
   .nav-search-icon {
-    color: #071324 !important;
+    color: #071324;
     font-size: 13px;
   }
 
   .nav-search-bar:hover .nav-search-icon,
   .nav-search-bar:active .nav-search-icon {
-    color: #b47500 !important;
+    color: #b47500;
   }
 
   /* Hamburger Menu Toggler on Mobile */
@@ -2254,8 +2236,8 @@
     width: 35px;
     height: 35px;
     border-radius: 9px;
-    background: #f8fafc !important;
-    border: 1px solid #e2e8f0 !important;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
     display: flex;
     align-items: center;
@@ -2264,13 +2246,13 @@
 
   .navbar-toggler:hover,
   .navbar-toggler:active {
-    background: #ffffff !important;
-    border-color: #f8b400 !important;
+    background: #ffffff;
+    border-color: #f8b400;
     box-shadow: 0 2px 8px rgba(248, 180, 0, 0.2);
   }
 
   .hamburger span {
-    background-color: #071324 !important;
+    background-color: #071324;
   }
 
   .nav-consultation-btn {
@@ -3236,25 +3218,16 @@
   color: #f8b400;
 }
 
-/* Dark Mode Social Circle Buttons */
-[data-theme='dark'] .social-circle-btn {
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+[data-theme='dark'] .top-bar-sep {
+  background-color: rgba(255, 255, 255, 0.14);
 }
 
-[data-theme='dark'] .social-circle-btn.wa-circle-btn {
-  border-color: rgba(34, 197, 94, 0.35);
-  color: #4ade80;
+[data-theme='dark'] .top-bar-link {
+  color: #cbd5e1;
 }
 
-[data-theme='dark'] .social-circle-btn.ig-circle-btn {
-  border-color: rgba(244, 114, 182, 0.35);
-  color: #f472b6;
-}
-
-[data-theme='dark'] .social-circle-btn.fb-circle-btn {
-  border-color: rgba(96, 165, 250, 0.35);
-  color: #60a5fa;
+[data-theme='dark'] .top-bar-icon {
+  color: #f8b400;
 }
 
 [data-theme='dark'] .navbar,
@@ -3262,6 +3235,11 @@
   background-color: rgba(7, 19, 36, 0.95);
   border-bottom-color: rgba(248, 180, 0, 0.25);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme='dark'] .navbar-logo-img {
+  border-color: rgba(248, 180, 0, 0.72);
+  box-shadow: 0 0 14px rgba(248, 180, 0, 0.22);
 }
 
 [data-theme='dark'] .navbar-scrolled,
@@ -3343,6 +3321,18 @@
   border-color: rgba(255, 255, 255, 0.08);
 }
 
+[data-theme='dark'] .dropdown-tile-icon.tone-gold {
+  background: linear-gradient(135deg, rgba(245, 187, 0, 0.16) 0%, rgba(217, 119, 6, 0.24) 100%);
+  border-color: rgba(245, 187, 0, 0.38);
+  color: #fbbf24;
+}
+
+[data-theme='dark'] .dropdown-tile-icon.tone-slate {
+  background: linear-gradient(135deg, rgba(148, 163, 184, 0.14) 0%, rgba(100, 116, 139, 0.2) 100%);
+  border-color: rgba(148, 163, 184, 0.28);
+  color: #e2e8f0;
+}
+
 [data-theme='dark'] .dropdown-rich-tile:hover {
   background: rgba(255, 255, 255, 0.08) !important;
   border-color: rgba(245, 187, 0, 0.5) !important;
@@ -3355,18 +3345,6 @@
 
 [data-theme='dark'] .dropdown-rich-tile:hover .dropdown-tile-title {
   color: #fde047;
-}
-
-[data-theme='dark'] .dropdown-micro-tag {
-  background: rgba(245, 187, 0, 0.15);
-  border-color: rgba(245, 187, 0, 0.35);
-  color: #fef08a;
-}
-
-[data-theme='dark'] .dropdown-rich-tile:hover .dropdown-micro-tag {
-  background: rgba(245, 187, 0, 0.28);
-  border-color: rgba(245, 187, 0, 0.65);
-  color: #ffffff;
 }
 
 [data-theme='dark'] .dropdown-tile-desc {
@@ -3471,6 +3449,16 @@
 [data-theme='dark'] .nav-search-placeholder,
 .navbar.navbar-theme-dark .nav-search-placeholder {
   color: #94a3b8;
+}
+
+[data-theme='dark'] .nav-search-kbd {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.14);
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .nav-search-icon {
+  color: #cbd5e1;
 }
 
 [data-theme='dark'] .nav-search-bar:hover .nav-search-placeholder,
@@ -3578,8 +3566,28 @@
 }
 
 [data-theme='dark'] .mobile-nav-link:hover,
+[data-theme='dark'] .mobile-nav-link.expanded,
 [data-theme='dark'] .mobile-nav-link.active {
   background: rgba(248, 180, 0, 0.12) !important;
+}
+
+[data-theme='dark'] .mobile-nav-link.expanded .mobile-item-icon,
+[data-theme='dark'] .mobile-nav-link.active .mobile-item-icon {
+  background: rgba(248, 180, 0, 0.18) !important;
+  color: #f8b400 !important;
+}
+
+[data-theme='dark'] .mobile-nav-link.expanded .mobile-nav-title,
+[data-theme='dark'] .mobile-nav-link.active .mobile-nav-title,
+[data-theme='dark'] .mobile-nav-link.active .mobile-item-title {
+  color: #f8b400 !important;
+}
+
+[data-theme='dark'] .mobile-nav-link.expanded .mobile-item-count,
+[data-theme='dark'] .mobile-nav-link.active .mobile-item-count {
+  background: rgba(248, 180, 0, 0.2);
+  color: #f8b400;
+  border-color: rgba(248, 180, 0, 0.35);
 }
 
 [data-theme='dark'] .mobile-sub-tile {

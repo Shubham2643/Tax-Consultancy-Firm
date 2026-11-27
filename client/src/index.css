@@ -303,10 +303,8 @@ img {
    SMOOTH THEME TRANSITION
    ============================================ */
 html.theme-transitioning,
-html.theme-transitioning *,
-html.theme-transitioning *::before,
-html.theme-transitioning *::after {
-  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease, box-shadow 0.25s ease !important;
+html.theme-transitioning * {
+  transition: border-color 0.14s ease !important;
 }
 
 /* ============================================
@@ -739,8 +737,7 @@ html.theme-transitioning *::after {
   border: 1px solid #e2e8f0 !important;
 }
 
-/* 3. HERO SECTIONS across All Pages in Light Mode */
-[data-theme='light'] .hero,
+/* 3. HERO SECTIONS across Inner Pages in Light Mode */
 [data-theme='light'] .services-hero,
 [data-theme='light'] .detail-hero,
 [data-theme='light'] .about-hero,
@@ -757,7 +754,6 @@ html.theme-transitioning *::after {
   border-bottom: 1px solid #e2e8f0 !important;
 }
 
-[data-theme='light'] .hero h1,
 [data-theme='light'] .services-hero h1,
 [data-theme='light'] .detail-hero h1,
 [data-theme='light'] .about-hero h1,
@@ -773,7 +769,6 @@ html.theme-transitioning *::after {
   color: #071324 !important;
 }
 
-[data-theme='light'] .hero p,
 [data-theme='light'] .services-hero p,
 [data-theme='light'] .detail-hero p,
 [data-theme='light'] .about-hero p,
@@ -792,70 +787,12 @@ html.theme-transitioning *::after {
   color: #475569 !important;
 }
 
-[data-theme='light'] .hero-pill-badge,
 [data-theme='light'] .calc-hero-badge,
 [data-theme='light'] .pricing-hero-badge,
 [data-theme='light'] .about-hero-badge {
   background: rgba(217, 119, 6, 0.08) !important;
   border-color: rgba(217, 119, 6, 0.3) !important;
   color: #b45309 !important;
-}
-
-[data-theme='light'] .hero-mockup-card {
-  background: #ffffff !important;
-  border: 1px solid #e2e8f0 !important;
-  box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.08), 0 0 1px rgba(15, 23, 42, 0.1) !important;
-}
-
-[data-theme='light'] .mockup-header {
-  border-bottom-color: #f1f5f9 !important;
-}
-
-[data-theme='light'] .mockup-title strong {
-  color: #071324 !important;
-}
-
-[data-theme='light'] .mockup-title span {
-  color: #64748b !important;
-}
-
-[data-theme='light'] .mockup-tile-item {
-  background: #f8fafc !important;
-  border-color: #e2e8f0 !important;
-}
-
-[data-theme='light'] .mockup-tile-item:hover {
-  background: #f1f5f9 !important;
-  border-color: #cbd5e1 !important;
-}
-
-[data-theme='light'] .mockup-tile-item strong {
-  color: #0f172a !important;
-}
-
-[data-theme='light'] .mockup-tile-item span {
-  color: #64748b !important;
-}
-
-[data-theme='light'] .mockup-footer-note {
-  border-top-color: #f1f5f9 !important;
-  color: #64748b !important;
-}
-
-[data-theme='light'] .micro-trust-item {
-  color: #334155 !important;
-}
-
-[data-theme='light'] .btn-hero-whatsapp {
-  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%) !important;
-  border: 1px solid rgba(18, 140, 126, 0.4) !important;
-  color: #ffffff !important;
-  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.32) !important;
-}
-
-[data-theme='light'] .btn-hero-whatsapp .hero-wa-lead-icon,
-[data-theme='light'] .btn-hero-whatsapp .hero-wa-text {
-  color: #ffffff !important;
 }
 
 /* 4. FEATURES & WHY CHOOSE US in Light Mode */

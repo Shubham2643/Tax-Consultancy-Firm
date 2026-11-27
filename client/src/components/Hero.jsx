@@ -6,36 +6,36 @@ import './Hero.css';
 const DOSSIER_PILLARS = [
   {
     num: '01',
-    title: 'Direct Tax Defense & Corporate Planning',
-    badge: 'AUDIT PROTECTED',
+    title: 'Direct Tax Planning & Defense',
+    badge: 'AUDIT SHIELD',
     badgeIcon: 'fa-solid fa-shield-halved',
     desc: 'Strategic tax optimization under Sec 43B(h), 80JJAA incentives, and statutory depreciation shields.',
-    actionQuery: 'Corporate Tax Planning & Strategy'
+    to: '/services/tax-advisory-and-planning',
   },
   {
     num: '02',
-    title: 'GST Litigation Defense & Reconciliation',
+    title: 'GST Filing & Litigation Defense',
     badge: '2B RECONCILED',
     badgeIcon: 'fa-solid fa-check',
     desc: 'Departmental audit defense, automated 2B ITC matching, and zero-liability statutory reconciliation.',
-    actionQuery: 'GST Notice & Litigation Defense'
+    to: '/services/gst-return-filing',
   },
   {
     num: '03',
-    title: 'Statutory Audit & Form 3CD Verification',
+    title: 'Statutory Audit & Form 3CD',
     badge: 'SEC 44AB READY',
     badgeIcon: 'fa-solid fa-file-contract',
     desc: 'Independent working papers verification, regulatory disclosures, and board-level compliance review.',
-    actionQuery: 'Statutory Corporate Audit Sec 44AB'
+    to: '/services/internal-audit-services',
   },
   {
     num: '04',
-    title: 'ROC Governance & MCA Secretarial Mandates',
-    badge: 'GOOD STANDING',
+    title: 'ROC Governance & Annual Filings',
+    badge: 'MCA COMPLIANT',
     badgeIcon: 'fa-solid fa-building-columns',
     desc: 'Annual ROC statutory filings (AOC-4, MGT-7), director statutory KYC, and corporate governance filings.',
-    actionQuery: 'ROC Compliance & MCA Governance'
-  }
+    to: '/services/business-incorporation-services',
+  },
 ];
 
 const Hero = () => {
@@ -74,8 +74,7 @@ const Hero = () => {
         {/* LEFT COLUMN: Executive Value Narrative */}
         <div className="hero-narrative-col">
           <div className="hero-pill-badge">
-            <span className="pill-dot-live"></span>
-            <i className="fas fa-shield-halved"></i>
+            <span className="pill-dot-live" aria-hidden="true"></span>
             <span>PREMIER TAX &amp; STATUTORY ADVISORY &bull; GUJARAT</span>
           </div>
 
@@ -91,7 +90,7 @@ const Hero = () => {
           <div className="hero-trust-badges-grid">
             <div className="hero-trust-badge-card">
               <div className="trust-badge-icon emerald">
-                <i className="fas fa-shield-halved"></i>
+                <i className="fa-solid fa-shield-halved" aria-hidden="true"></i>
               </div>
               <div className="trust-badge-content">
                 <strong className="badge-title">Zero-Penalty Record</strong>
@@ -101,21 +100,21 @@ const Hero = () => {
 
             <div className="hero-trust-badge-card">
               <div className="trust-badge-icon gold">
-                <i className="fas fa-file-contract"></i>
+                <i className="fa-solid fa-file-contract" aria-hidden="true"></i>
               </div>
               <div className="trust-badge-content">
-                <strong className="badge-title">Mutual NDA &amp; Secrecy</strong>
-                <span className="badge-subtitle">100% Fiduciary Client Privilege</span>
+                <strong className="badge-title">Strict Client NDA</strong>
+                <span className="badge-subtitle">100% Fiduciary Confidentiality</span>
               </div>
             </div>
 
             <div className="hero-trust-badge-card">
               <div className="trust-badge-icon sapphire">
-                <i className="fas fa-user-tie"></i>
+                <i className="fa-solid fa-user-tie" aria-hidden="true"></i>
               </div>
               <div className="trust-badge-content">
                 <strong className="badge-title">Direct Partner Desk</strong>
-                <span className="badge-subtitle">Direct Senior Partner Access</span>
+                <span className="badge-subtitle">Senior Partner Review</span>
               </div>
             </div>
           </div>
@@ -222,7 +221,7 @@ const Hero = () => {
               {DOSSIER_PILLARS.map((pillar) => (
                 <Link
                   key={pillar.num}
-                  to={`/contact?service=${encodeURIComponent(pillar.actionQuery)}`}
+                  to={pillar.to}
                   className="dossier-pillar-card"
                   role="listitem"
                   aria-label={`${pillar.title} - ${pillar.badge}`}
@@ -250,18 +249,18 @@ const Hero = () => {
             {/* Bottom 3-Metric Executive Bar */}
             <div className="dossier-metrics-strip">
               <div className="dossier-metric-col">
-                <strong className="dossier-metric-val">Zero-Notice</strong>
-                <span className="dossier-metric-lbl">DEFAULT RECORD</span>
+                <strong className="dossier-metric-val">200+ Entities</strong>
+                <span className="dossier-metric-lbl">CORPORATE RETAINERS</span>
               </div>
               <div className="dossier-metric-sep" aria-hidden="true"></div>
               <div className="dossier-metric-col">
-                <strong className="dossier-metric-val">Direct Desk</strong>
-                <span className="dossier-metric-lbl">SENIOR PARTNER ACCESS</span>
+                <strong className="dossier-metric-val">99.8% On-Time</strong>
+                <span className="dossier-metric-lbl">FILING ACCURACY</span>
               </div>
               <div className="dossier-metric-sep" aria-hidden="true"></div>
               <div className="dossier-metric-col">
-                <strong className="dossier-metric-val">Strict NDA</strong>
-                <span className="dossier-metric-lbl">FIDUCIARY PRIVILEGE</span>
+                <strong className="dossier-metric-val">Partner-Led</strong>
+                <span className="dossier-metric-lbl">DIRECT SIGN-OFF</span>
               </div>
             </div>
 

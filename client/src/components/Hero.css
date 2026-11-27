@@ -8,7 +8,7 @@
   color: #ffffff;
   width: 100%;
   max-width: 100%;
-  padding: clamp(92px, 8vw, 120px) 0 88px 0;
+  padding: clamp(52px, 4.5vw, 72px) 0 80px 0;
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
@@ -266,23 +266,6 @@
   margin-top: 1px;
 }
 
-/* Responsive mobile-only text swaps - HIDDEN by default on Desktop */
-.badge-mob,
-.tab-mob,
-.metric-mob,
-.triage-btn-mob,
-.telemetry-label-mob,
-.telemetry-val-mob,
-.triage-eye-mob,
-.triage-kicker-mob,
-.triage-cta-mob {
-  display: none !important;
-}
-
-.badge-full {
-  display: inline-block !important;
-}
-
 /* ==========================================================================
    CALL-TO-ACTION BUTTONS (Institutional Chambers Standard)
    ========================================================================== */
@@ -350,8 +333,8 @@
   transform: translateX(4px);
 }
 
-/* 2. SECONDARY CTA: Direct WhatsApp Desk (Institutional Obsidian Emerald Desk) */
-.btn-hero-whatsapp {
+/* 2. SECONDARY CTA: Direct WhatsApp Desk (Authentic WhatsApp Emerald) */
+.hero .btn-hero-whatsapp {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -359,58 +342,62 @@
   gap: 10px;
   height: 48px;
   padding: 0 22px;
-  background: #081426 !important;
+  background: linear-gradient(135deg, #25d366 0%, #16a34a 52%, #128c7e 100%) !important;
   color: #ffffff !important;
   border-radius: 10px;
   text-decoration: none;
-  border: 1px solid rgba(37, 211, 102, 0.45) !important;
-  box-shadow: 0 4px 14px rgba(8, 20, 38, 0.22) !important;
+  border: 1px solid #15803d !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 6px 18px rgba(18, 140, 126, 0.34) !important;
   transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   white-space: nowrap;
   box-sizing: border-box;
 }
 
-.hero-wa-lead-icon {
-  color: #25d366 !important;
+.hero .hero-wa-lead-icon {
+  color: #ffffff !important;
   font-size: 18px !important;
   flex-shrink: 0;
   display: inline-block;
   line-height: 1;
-  filter: drop-shadow(0 0 8px rgba(37, 211, 102, 0.5));
+  filter: drop-shadow(0 1px 2px rgba(7, 94, 84, 0.35));
   transition: transform 0.24s ease;
 }
 
-.hero-wa-text {
+.hero .hero-wa-text {
   font-family: var(--font-heading, 'Plus Jakarta Sans', sans-serif);
   font-size: 14.5px !important;
   font-weight: 700 !important;
   color: #ffffff !important;
   letter-spacing: -0.01em;
   line-height: 1;
+  text-shadow: 0 1px 2px rgba(7, 94, 84, 0.32);
 }
 
-.hero-wa-status-dot {
+.hero .hero-wa-status-dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #25d366;
-  box-shadow: 0 0 8px #25d366;
-  animation: beaconPing 2s infinite ease-in-out;
+  background: #ffffff;
+  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.85), 0 0 8px rgba(255, 255, 255, 0.75);
+  animation: beaconPingWhite 2s infinite ease-in-out;
   flex-shrink: 0;
 }
 
-.btn-hero-whatsapp:hover {
-  background: #0d2238 !important;
-  border-color: #25d366 !important;
-  box-shadow: 
-    0 8px 24px rgba(8, 20, 38, 0.32),
-    0 0 16px rgba(37, 211, 102, 0.28) !important;
+.hero .btn-hero-whatsapp:hover {
+  background: linear-gradient(135deg, #20bd5a 0%, #15803d 55%, #0f766e 100%) !important;
+  border-color: #16a34a !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.32),
+    0 10px 24px -4px rgba(18, 140, 126, 0.45),
+    0 0 18px rgba(37, 211, 102, 0.3) !important;
   transform: translateY(-2px);
   color: #ffffff !important;
 }
 
-.btn-hero-whatsapp:hover .hero-wa-lead-icon {
+.hero .btn-hero-whatsapp:hover .hero-wa-lead-icon {
   transform: scale(1.12);
 }
 
@@ -554,7 +541,7 @@
    ============================================ */
 .hero-mockup-card {
   width: 100%;
-  max-width: 500px;
+  max-width: 516px;
   display: flex;
   flex-direction: column;
   background: linear-gradient(155deg, rgba(10, 22, 42, 0.94) 0%, rgba(6, 14, 28, 0.98) 100%);
@@ -802,6 +789,11 @@
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
+.dossier-pillar-card:focus-visible {
+  outline: 2px solid #f59e0b;
+  outline-offset: 2px;
+}
+
 .pillar-header-row {
   display: flex;
   align-items: center;
@@ -827,7 +819,7 @@
 
 .pillar-title {
   font-family: var(--font-heading, 'Plus Jakarta Sans', sans-serif);
-  font-size: 13px;
+  font-size: 12.75px;
   font-weight: 800;
   color: #ffffff;
   letter-spacing: -0.015em;
@@ -841,7 +833,7 @@
 .pillar-action-meta {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 6px;
   flex-shrink: 0;
 }
 
@@ -874,19 +866,21 @@
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: rgba(212, 175, 55, 0.15);
-  border: 1px solid rgba(212, 175, 55, 0.35);
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.32);
   color: #fbbf24;
   font-size: 8.5px;
-  opacity: 0;
-  transform: translateX(-4px);
+  opacity: 0.62;
+  transform: translateX(0);
   transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   flex-shrink: 0;
 }
 
 .dossier-pillar-card:hover .pillar-hover-arrow {
   opacity: 1;
-  transform: translateX(0);
+  background: rgba(212, 175, 55, 0.26);
+  border-color: rgba(245, 158, 11, 0.65);
+  transform: translateX(2px);
 }
 
 .pillar-desc {
@@ -979,9 +973,10 @@
   100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
 }
 
-@keyframes savingPillGlow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
-  50% { box-shadow: 0 0 12px rgba(56, 189, 248, 0.5); }
+@keyframes beaconPingWhite {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.85); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(255, 255, 255, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
 }
 
 /* ==========================================================================
@@ -1089,38 +1084,42 @@
   color: #ffffff !important;
 }
 
-[data-theme='light'] .btn-hero-whatsapp {
-  background: #081426 !important;
-  border: 1px solid rgba(37, 211, 102, 0.45) !important;
+[data-theme='light'] .hero .btn-hero-whatsapp {
+  background: linear-gradient(135deg, #25d366 0%, #16a34a 52%, #128c7e 100%) !important;
+  border: 1px solid #15803d !important;
   color: #ffffff !important;
-  box-shadow: 0 4px 14px rgba(8, 20, 38, 0.2) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 6px 18px rgba(18, 140, 126, 0.28) !important;
 }
 
-[data-theme='light'] .btn-hero-whatsapp .hero-wa-lead-icon {
-  color: #25d366 !important;
-  filter: drop-shadow(0 0 6px rgba(37, 211, 102, 0.45));
-}
-
-[data-theme='light'] .btn-hero-whatsapp .hero-wa-text {
+[data-theme='light'] .hero .btn-hero-whatsapp .hero-wa-lead-icon {
   color: #ffffff !important;
+  filter: drop-shadow(0 1px 2px rgba(7, 94, 84, 0.35));
 }
 
-[data-theme='light'] .btn-hero-whatsapp .hero-wa-status-dot {
-  background: #25d366 !important;
-  box-shadow: 0 0 8px #25d366 !important;
-}
-
-[data-theme='light'] .btn-hero-whatsapp:hover {
-  background: #0d2238 !important;
-  border-color: #25d366 !important;
+[data-theme='light'] .hero .btn-hero-whatsapp .hero-wa-text {
   color: #ffffff !important;
-  box-shadow: 
-    0 8px 24px rgba(8, 20, 38, 0.28),
+  text-shadow: 0 1px 2px rgba(7, 94, 84, 0.3);
+}
+
+[data-theme='light'] .hero .btn-hero-whatsapp .hero-wa-status-dot {
+  background: #ffffff !important;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.85) !important;
+}
+
+[data-theme='light'] .hero .btn-hero-whatsapp:hover {
+  background: linear-gradient(135deg, #20bd5a 0%, #15803d 55%, #0f766e 100%) !important;
+  border-color: #16a34a !important;
+  color: #ffffff !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.32),
+    0 10px 24px -4px rgba(18, 140, 126, 0.38),
     0 0 16px rgba(37, 211, 102, 0.25) !important;
   transform: translateY(-2px);
 }
 
-[data-theme='light'] .btn-hero-whatsapp:hover .hero-wa-text {
+[data-theme='light'] .hero .btn-hero-whatsapp:hover .hero-wa-text {
   color: #ffffff !important;
 }
 
@@ -1261,6 +1260,12 @@
   color: #b45309;
 }
 
+[data-theme='light'] .dossier-pillar-card:hover .pillar-hover-arrow {
+  background: rgba(217, 119, 6, 0.2);
+  border-color: rgba(217, 119, 6, 0.55);
+  color: #92400e;
+}
+
 [data-theme='light'] .pillar-desc {
   color: #64748b;
 }
@@ -1297,7 +1302,7 @@
 /* Small Laptop Optimization (1025px to 1280px) */
 @media (min-width: 1025px) and (max-width: 1280px) {
   .hero {
-    padding: 85px 0 75px 0;
+    padding: 44px 0 72px 0;
   }
   .hero-layout-container {
     gap: 36px;
@@ -1410,19 +1415,21 @@
     box-sizing: border-box !important;
   }
   .hero-pill-badge {
-    font-size: clamp(8px, 2.5vw, 9.5px) !important;
-    padding: 3.5px 10px !important;
-    margin: 0 auto 10px auto !important;
+    font-size: 9px !important;
+    padding: 5px 11px !important;
+    gap: 6px !important;
+    letter-spacing: 0.04em !important;
+    margin: 0 auto 12px auto !important;
     max-width: 100% !important;
-    width: auto !important;
+    width: fit-content !important;
     box-sizing: border-box !important;
-    white-space: normal !important;
-    word-break: break-word !important;
+    white-space: nowrap !important;
+    justify-content: center !important;
     text-align: center !important;
   }
   .hero-main-title {
-    font-size: clamp(1.22rem, 5.2vw, 1.55rem) !important;
-    line-height: 1.22 !important;
+    font-size: clamp(1.42rem, 5.8vw, 1.75rem) !important;
+    line-height: 1.18 !important;
     margin: 0 auto 10px auto !important;
     width: 100% !important;
     max-width: 100% !important;
@@ -1431,7 +1438,7 @@
     hyphens: manual !important;
     text-align: center !important;
     box-sizing: border-box !important;
-    letter-spacing: -0.02em !important;
+    letter-spacing: -0.025em !important;
   }
   .title-gradient-accent {
     display: inline !important;
@@ -1439,11 +1446,11 @@
     overflow-wrap: break-word !important;
   }
   .hero-subtext {
-    font-size: clamp(11px, 3.1vw, 12.5px) !important;
-    line-height: 1.5 !important;
+    font-size: 12.5px !important;
+    line-height: 1.52 !important;
     margin: 0 auto 14px auto !important;
     width: 100% !important;
-    max-width: 100% !important;
+    max-width: 34ch !important;
     word-break: break-word !important;
     overflow-wrap: break-word !important;
     box-sizing: border-box !important;
@@ -1453,20 +1460,20 @@
     flex-direction: column !important;
     width: 100% !important;
     max-width: 100% !important;
-    margin: 0 auto 16px auto !important;
-    gap: 8px !important;
+    margin: 0 auto 14px auto !important;
+    gap: 9px !important;
     box-sizing: border-box !important;
   }
   .btn-hero-primary,
   .btn-hero-whatsapp {
     width: 100% !important;
     max-width: 100% !important;
-    height: 44px !important;
+    height: 46px !important;
     padding: 0 16px !important;
     justify-content: center !important;
     align-items: center !important;
     gap: 9px !important;
-    border-radius: 10px !important;
+    border-radius: 11px !important;
     box-sizing: border-box !important;
   }
   .hero-btn-text,
@@ -1549,57 +1556,30 @@
     box-sizing: border-box !important;
     overflow: hidden !important;
   }
-  .triage-header {
-    padding-bottom: 10px !important;
-    margin-bottom: 9px !important;
-    flex-wrap: wrap !important;
-    gap: 8px !important;
-  }
-  .triage-heading {
-    font-size: 12px !important;
-  }
-  .triage-status-pill {
-    align-items: center !important;
+  .dossier-eyebrow,
+  .dossier-sub,
+  .pillar-title {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
   }
 }
 
 /* Compact Mobile View (max-width: 480px) */
 @media (max-width: 480px) {
   .hero {
-    padding: 28px 0 68px 0 !important;
+    padding: 20px 0 56px 0 !important;
   }
   .hero-layout-container {
-    padding: 0 12px !important;
+    padding: 0 14px !important;
     gap: 16px !important;
   }
 
-  /* Responsive Text Swaps */
-  .tab-full,
-  .metric-full,
-  .badge-full,
-  .telemetry-label-full,
-  .telemetry-val-full,
-  .triage-eye-full,
-  .triage-kicker-full,
-  .triage-cta-full {
-    display: none !important;
-  }
-  .tab-mob,
-  .metric-mob,
-  .badge-mob,
-  .telemetry-label-mob,
-  .telemetry-val-mob,
-  .triage-eye-mob,
-  .triage-kicker-mob,
-  .triage-cta-mob {
-    display: inline !important;
-  }
-
-  /* Ultra-Sleek 3-Pillar Micro Ribbon */
+  /* Ultra-Sleek 3-Pillar Micro Ribbon (Aligned Icons & Clean Border) */
   .hero-trust-badges-grid {
     display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 6px !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 7px !important;
     margin: 0 auto 14px auto !important;
     width: 100% !important;
     max-width: 100% !important;
@@ -1608,31 +1588,32 @@
   .hero-trust-badge-card {
     flex-direction: column !important;
     align-items: center !important;
-    justify-content: center !important;
+    justify-content: flex-start !important;
     text-align: center !important;
-    padding: 7px 4px !important;
-    gap: 4px !important;
-    border-radius: 10px !important;
+    padding: 9px 5px !important;
+    gap: 6px !important;
+    border-radius: 11px !important;
     width: 100% !important;
     box-sizing: border-box !important;
     min-height: unset !important;
   }
   .trust-badge-icon {
-    width: 24px !important;
-    height: 24px !important;
-    font-size: 10px !important;
-    border-radius: 6px !important;
+    width: 26px !important;
+    height: 26px !important;
+    font-size: 11px !important;
+    border-radius: 7px !important;
   }
   .trust-badge-content {
     text-align: center !important;
     align-items: center !important;
+    justify-content: center !important;
     width: 100% !important;
     min-width: 0 !important;
   }
   .trust-badge-content .badge-title {
     font-size: 9.5px !important;
     white-space: normal !important;
-    line-height: 1.15 !important;
+    line-height: 1.2 !important;
     text-align: center !important;
     display: block !important;
     font-weight: 800 !important;
@@ -1644,12 +1625,6 @@
   .trust-badge-content .badge-subtitle {
     display: none !important;
   }
-  .trust-badge-content .badge-mob {
-    display: inline-block !important;
-  }
-  .trust-badge-content .badge-full {
-    display: none !important;
-  }
 
   /* Responsive Executive Advisory Dossier Deck */
   .hero-mockup-card.dossier-card {
@@ -1657,6 +1632,7 @@
     border-radius: 14px !important;
   }
   .dossier-header {
+    align-items: flex-start !important;
     gap: 8px !important;
     padding-bottom: 8px !important;
   }
@@ -1670,12 +1646,15 @@
   }
   .dossier-eyebrow {
     font-size: 7px !important;
+    line-height: 1.2 !important;
   }
   .dossier-heading {
     font-size: 13px !important;
+    white-space: normal !important;
   }
   .dossier-sub {
     font-size: 9px !important;
+    line-height: 1.25 !important;
   }
   .dossier-brief-label {
     font-size: 6.8px !important;
@@ -1689,29 +1668,48 @@
     margin: 8px 0 6px 0 !important;
   }
   .dossier-pillars-list {
-    gap: 5px !important;
+    gap: 6px !important;
   }
   .dossier-pillar-card {
-    padding: 7px 9px !important;
+    padding: 8px 9px !important;
     border-radius: 9px !important;
+    gap: 4px !important;
+  }
+  .pillar-header-row {
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    gap: 4px 8px !important;
+  }
+  .pillar-title-wrap {
+    flex: 1 1 160px !important;
+    gap: 6px !important;
   }
   .pillar-num {
-    font-size: 11.5px !important;
+    font-size: 11px !important;
   }
   .pillar-title {
     font-size: 11.5px !important;
+    line-height: 1.25 !important;
+  }
+  .pillar-action-meta {
+    gap: 5px !important;
+    margin-left: auto !important;
   }
   .pillar-status-pill {
     font-size: 7.2px !important;
-    padding: 1.5px 5px !important;
+    padding: 1.5px 5.5px !important;
   }
   .pillar-hover-arrow {
-    display: none !important;
+    display: inline-flex !important;
+    width: 16px !important;
+    height: 16px !important;
+    font-size: 7.5px !important;
+    opacity: 0.72 !important;
   }
   .pillar-desc {
-    font-size: 9px !important;
-    line-height: 1.32 !important;
-    padding-left: 19px !important;
+    font-size: 9.5px !important;
+    line-height: 1.35 !important;
+    padding-left: 18px !important;
   }
   .dossier-watermark {
     font-size: 85px !important;
@@ -1738,33 +1736,33 @@
   .hero-social-proof {
     display: flex !important;
     align-items: center !important;
-    justify-content: center !important;
-    padding: 8px 12px !important;
+    justify-content: flex-start !important;
+    padding: 9px 12px !important;
     gap: 10px !important;
     width: 100% !important;
     max-width: 100% !important;
-    border-radius: 10px !important;
+    border-radius: 11px !important;
     box-sizing: border-box !important;
   }
   .proof-seal-medallion {
-    width: 30px !important;
-    height: 30px !important;
-    min-width: 30px !important;
-    font-size: 13px !important;
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    font-size: 13.5px !important;
     border-radius: 8px !important;
   }
   .proof-metric-row {
     display: flex !important;
     align-items: center !important;
-    gap: 6px !important;
-    flex-wrap: nowrap !important;
+    gap: 4px 6px !important;
+    flex-wrap: wrap !important;
   }
   .proof-stars {
-    font-size: 9px !important;
+    font-size: 9.5px !important;
     gap: 1.5px !important;
   }
   .proof-score {
-    font-size: 10px !important;
+    font-size: 10.5px !important;
   }
   .proof-sep {
     display: inline !important;
@@ -1772,149 +1770,199 @@
     font-size: 8px !important;
   }
   .proof-fiduciary-tag {
-    font-size: 8px !important;
-    padding: 1.5px 5px !important;
+    font-size: 8.2px !important;
+    padding: 1.5px 6px !important;
   }
   .proof-caption-row {
-    font-size: 9.5px !important;
-    line-height: 1.25 !important;
+    font-size: 9.8px !important;
+    line-height: 1.32 !important;
     text-align: left !important;
+    white-space: normal !important;
+    overflow-wrap: break-word !important;
+  }
+}
+
+/* Narrow Phone Two-Tier Dossier Header (<= 400px: 375px & 320px clarity) */
+@media (max-width: 400px) {
+  .dossier-header {
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding-bottom: 9px !important;
+  }
+  .dossier-brand {
+    flex: 1 1 100% !important;
+    min-width: 0 !important;
+  }
+  .dossier-heading {
+    font-size: 13.5px !important;
+  }
+  .dossier-meta-badge {
+    flex-direction: row !important;
+    width: 100% !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding-top: 6px !important;
+    border-top: 1px dashed rgba(212, 175, 55, 0.25) !important;
   }
 }
 
 /* Ultra-Compact Mobile (max-width: 360px - 320px) */
 @media (max-width: 360px) {
   .hero {
-    padding: 22px 0 60px 0 !important;
+    padding: 14px 0 46px 0 !important;
   }
   .hero-layout-container {
-    padding: 0 8px !important;
-    gap: 12px !important;
+    padding: 0 10px !important;
+    gap: 14px !important;
   }
   .hero-pill-badge {
-    font-size: 7.2px !important;
-    padding: 2px 6px !important;
-    gap: 3px !important;
-    margin-bottom: 7px !important;
+    font-size: 7.8px !important;
+    padding: 4px 8px !important;
+    gap: 5px !important;
+    letter-spacing: 0.025em !important;
+    margin-bottom: 10px !important;
+    white-space: nowrap !important;
+  }
+  .pill-dot-live {
+    width: 6px !important;
+    height: 6px !important;
+    flex-shrink: 0 !important;
   }
   .hero-main-title {
-    font-size: 1.08rem !important;
-    line-height: 1.2 !important;
-    letter-spacing: -0.01em !important;
+    font-size: 1.3rem !important;
+    line-height: 1.18 !important;
+    letter-spacing: -0.022em !important;
     word-break: break-word !important;
     margin-bottom: 8px !important;
   }
   .hero-subtext {
-    font-size: 10.5px !important;
-    line-height: 1.4 !important;
-    margin-bottom: 10px !important;
+    font-size: 11.4px !important;
+    line-height: 1.48 !important;
+    max-width: 100% !important;
+    margin-bottom: 12px !important;
   }
   .hero-trust-badges-grid {
-    gap: 4px !important;
+    gap: 5px !important;
     margin-bottom: 12px !important;
   }
   .hero-trust-badge-card {
-    padding: 5px 2px !important;
+    padding: 8px 3px !important;
+    gap: 5px !important;
+  }
+  .trust-badge-icon {
+    width: 24px !important;
+    height: 24px !important;
+    font-size: 10px !important;
   }
   .trust-badge-content .badge-title {
-    font-size: 8.5px !important;
+    font-size: 8.6px !important;
+    line-height: 1.18 !important;
   }
   .btn-hero-primary,
   .btn-hero-whatsapp {
-    height: 42px !important;
+    height: 44px !important;
     padding: 0 12px !important;
     justify-content: center !important;
     gap: 8px !important;
   }
   .hero-btn-text,
   .hero-wa-text {
-    font-size: 12px !important;
-  }
-  .hero-btn-lead-icon {
     font-size: 13px !important;
   }
+  .hero-btn-lead-icon {
+    font-size: 13.5px !important;
+  }
   .hero-wa-lead-icon {
-    font-size: 15px !important;
+    font-size: 15.5px !important;
   }
   .hero-wa-status-dot {
-    width: 5px !important;
-    height: 5px !important;
+    width: 6px !important;
+    height: 6px !important;
   }
   /* Executive Advisory Dossier 360px Ultra-Compact */
   .hero-mockup-card.dossier-card {
-    padding: 10px 8px !important;
+    padding: 11px 9px !important;
     border-radius: 12px !important;
   }
   .dossier-crest-wrap {
-    width: 28px !important;
-    height: 28px !important;
+    width: 30px !important;
+    height: 30px !important;
   }
   .dossier-logo-crest {
-    width: 28px !important;
-    height: 28px !important;
+    width: 30px !important;
+    height: 30px !important;
   }
   .dossier-heading {
-    font-size: 11.5px !important;
+    font-size: 12.5px !important;
   }
   .dossier-sub {
     font-size: 8.5px !important;
   }
   .pillar-title {
-    font-size: 10.5px !important;
+    font-size: 11px !important;
   }
   .pillar-status-pill {
     font-size: 6.8px !important;
-    padding: 1px 4.5px !important;
+    padding: 1.5px 5px !important;
+  }
+  .pillar-hover-arrow {
+    width: 15px !important;
+    height: 15px !important;
+    font-size: 7px !important;
   }
   .pillar-desc {
-    font-size: 8.5px !important;
+    font-size: 9px !important;
     padding-left: 0 !important;
   }
   .dossier-metrics-strip {
-    padding: 6px 8px !important;
+    padding: 7px 8px !important;
   }
   .dossier-metric-val {
-    font-size: 9.5px !important;
+    font-size: 9.8px !important;
   }
   .dossier-metric-lbl {
     font-size: 6.2px !important;
   }
   .dossier-footer-note {
-    font-size: 7.5px !important;
+    font-size: 7.8px !important;
   }
   .hero-social-proof {
-    padding: 6px 8px !important;
+    padding: 8px 10px !important;
     gap: 8px !important;
     max-width: 100% !important;
     border-radius: 10px !important;
   }
   .proof-seal-medallion {
-    width: 26px !important;
-    height: 26px !important;
-    min-width: 26px !important;
-    font-size: 11px !important;
-    border-radius: 6px !important;
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    font-size: 11.5px !important;
+    border-radius: 7px !important;
   }
   .proof-metric-row {
-    gap: 4px !important;
+    gap: 3px 5px !important;
+    flex-wrap: wrap !important;
   }
   .proof-stars {
-    font-size: 8px !important;
+    font-size: 8.5px !important;
     gap: 1px !important;
   }
   .proof-score {
-    font-size: 9px !important;
+    font-size: 9.5px !important;
   }
   .proof-sep {
     display: inline !important;
   }
   .proof-fiduciary-tag {
     font-size: 7.5px !important;
-    padding: 1px 4px !important;
+    padding: 1px 4.5px !important;
     letter-spacing: 0 !important;
   }
   .proof-caption-row {
-    font-size: 8.8px !important;
-    line-height: 1.25 !important;
+    font-size: 9.2px !important;
+    line-height: 1.32 !important;
+    white-space: normal !important;
+    overflow-wrap: break-word !important;
   }
 }

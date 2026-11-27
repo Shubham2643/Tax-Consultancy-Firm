@@ -7,81 +7,102 @@ import ThemeToggle from './ThemeToggle';
 import './Navbar.css';
 
 const formatDropdownLabel = (label) => {
+  if (!label) return '';
   if (label === 'Sole Properties') return 'Sole Proprietorship';
   if (label.includes('Hindu Undividable')) return 'Hindu Undivided Family (HUF)';
   if (label === 'One Person Company(OPC)') return 'One Person Company (OPC)';
+  if (label === 'Udhyam-MSME Registration') return 'Udyam / MSME Registration';
   return label;
 };
 
-const getDropdownMeta = (label) => {
+/**
+ * Resolve clean FontAwesome 6 icon, concise 1-line subtitle, and disciplined 2-tone accent
+ * for every navigation tile. Specific return/dual rules run before generic registration rules.
+ */
+const getDropdownMeta = (label, href = '') => {
   const normalized = (label || '').toLowerCase();
+  const path = (href || '').toLowerCase();
+
+  // Returns & E-Filings (ordered ahead of general registration substrings)
+  if (normalized.includes('pf & esic') || path.includes('pf-and-esic-return')) {
+    return { icon: 'fa-solid fa-shield-halved', desc: 'Monthly EPF ECR & ESIC return filings', tone: 'tone-gold' };
+  }
+  if (normalized.includes('pf return') || path.includes('pf-return')) {
+    return { icon: 'fa-solid fa-users-gear', desc: 'Monthly ECR filing & challan generation', tone: 'tone-slate' };
+  }
+  if (normalized.includes('tds return') || path.includes('tds-return')) {
+    return { icon: 'fa-solid fa-receipt', desc: 'Form 24Q / 26Q quarterly statements', tone: 'tone-gold' };
+  }
+  if (normalized.includes('gst return') || path.includes('gst-return')) {
+    return { icon: 'fa-solid fa-percent', desc: 'GSTR-1, GSTR-3B & ITC reconciliation', tone: 'tone-gold' };
+  }
+  if (normalized.includes('income tax') || normalized.includes('itr')) {
+    return { icon: 'fa-solid fa-file-invoice-dollar', desc: 'Direct tax e-filing & Sec 44ADA relief', tone: 'tone-slate' };
+  }
+  if (normalized.includes('e-way') || normalized.includes('eway')) {
+    return { icon: 'fa-solid fa-truck-fast', desc: 'Consignment e-Way Bill portal setup', tone: 'tone-slate' };
+  }
+
   // Start a Business
-  if (normalized.includes('private limited')) return { icon: 'fas fa-building', desc: 'MCA SPICe+ & 2 DINs allotment', tag: 'Fast-Track', tone: 'tone-emerald' };
-  if (normalized.includes('limited liability') || normalized.includes('llp')) return { icon: 'fas fa-handshake', desc: 'LLP agreement & legal corporate status', tag: 'Popular', tone: 'tone-sapphire' };
-  if (normalized.includes('sole')) return { icon: 'fas fa-user-tie', desc: 'Single owner MSME registration', tag: 'Turnkey', tone: 'tone-amber' };
-  if (normalized.includes('huf') || normalized.includes('hindu')) return { icon: 'fas fa-users', desc: 'Family tax entity & separate PAN creation', tag: 'Tax Shield', tone: 'tone-purple' };
-  if (normalized.includes('public limited')) return { icon: 'fas fa-landmark', desc: 'Large capital & multi-shareholder setup', tag: 'Enterprise', tone: 'tone-ruby' };
-  if (normalized.includes('one person') || normalized.includes('opc')) return { icon: 'fas fa-user-shield', desc: 'Corporate status for solo founders', tag: 'Solo Founder', tone: 'tone-cyan' };
-  if (normalized.includes('partnership')) return { icon: 'fas fa-briefcase', desc: 'Deed drafting & ROF filing', tag: 'Deed Draft', tone: 'tone-amber' };
-  if (normalized.includes('e-commerce')) return { icon: 'fas fa-cart-shopping', desc: 'Online seller statutory compliance', tag: 'Multi-State', tone: 'tone-sapphire' };
+  if (normalized.includes('private limited')) return { icon: 'fa-solid fa-building-columns', desc: 'MCA SPICe+ filing & 2 DINs allotment', tone: 'tone-gold' };
+  if (normalized.includes('limited liability') || normalized.includes('llp')) return { icon: 'fa-solid fa-handshake', desc: 'LLP agreement & corporate entity setup', tone: 'tone-slate' };
+  if (normalized.includes('sole')) return { icon: 'fa-solid fa-user-tie', desc: 'Single-owner MSME proprietorship launch', tone: 'tone-slate' };
+  if (normalized.includes('huf') || normalized.includes('hindu')) return { icon: 'fa-solid fa-users', desc: 'Family tax entity & separate PAN allotment', tone: 'tone-gold' };
+  if (normalized.includes('public limited')) return { icon: 'fa-solid fa-landmark', desc: 'Multi-shareholder large capital incorporation', tone: 'tone-slate' };
+  if (normalized.includes('one person') || normalized.includes('opc')) return { icon: 'fa-solid fa-user-shield', desc: 'Corporate status tailored for solo founders', tone: 'tone-gold' };
+  if (normalized.includes('partnership')) return { icon: 'fa-solid fa-briefcase', desc: 'Partnership deed drafting & ROF filing', tone: 'tone-slate' };
+  if (normalized.includes('e-commerce')) return { icon: 'fa-solid fa-cart-shopping', desc: 'Online seller GST & marketplace setup', tone: 'tone-gold' };
 
-  // Registration
-  if (normalized.includes('government registration')) return { icon: 'fas fa-building-columns', desc: 'Municipal trade licenses & Shop Act', tag: 'Municipal', tone: 'tone-amber' };
-  if (normalized.includes('startup') || normalized.includes('startup-india')) return { icon: 'fas fa-seedling', desc: 'DPIIT certificate & 80-IAC tax exemption', tag: 'Tax Holiday', tone: 'tone-emerald' };
-  if (normalized.includes('professional tax')) return { icon: 'fas fa-id-badge', desc: 'Gujarat PTEC & PTRC employer setup', tag: 'State Tax', tone: 'tone-sapphire' };
-  if (normalized.includes('pan application') || (normalized.includes('pan') && !normalized.includes('company'))) return { icon: 'fas fa-id-card', desc: 'Form 49A allotment & physical card', tag: 'CBDT Direct', tone: 'tone-cyan' };
-  if (normalized.includes('tan application') || normalized.includes('tan')) return { icon: 'fas fa-receipt', desc: 'Form 49B deductor account for TDS', tag: 'TDS Track', tone: 'tone-purple' };
-  if (normalized.includes('digital signature') || normalized.includes('dsc')) return { icon: 'fas fa-key', desc: 'Class-3 USB cryptotoken for MCA & IT', tag: 'Class-3 USB', tone: 'tone-amber' };
-  if (normalized.includes('esi') || normalized.includes('esic')) return { icon: 'fas fa-hospital-user', desc: 'Employee State Insurance & medical cover', tag: 'Labor Code', tone: 'tone-ruby' };
-  if (normalized.includes('pf') && !normalized.includes('return')) return { icon: 'fas fa-users-cog', desc: 'Provident Fund statutory registration', tag: 'EPFO Portal', tone: 'tone-emerald' };
-  if (normalized.includes('import') || normalized.includes('iec')) return { icon: 'fas fa-ship', desc: 'DGFT Import-Export code setup', tag: 'Lifetime', tone: 'tone-sapphire' };
-  if (normalized.includes('udyam') || normalized.includes('msme')) return { icon: 'fas fa-certificate', desc: 'Govt subsidies & priority credit scheme', tag: 'Subsidies', tone: 'tone-amber' };
-  if (normalized.includes('gst registration') || normalized.includes('gst')) return { icon: 'fas fa-file-invoice-dollar', desc: '15-digit GSTIN & Aadhaar e-KYC', tag: 'Fast e-KYC', tone: 'tone-emerald' };
-
-  // Return
-  if (normalized.includes('income tax') || normalized.includes('itr')) return { icon: 'fas fa-calculator', desc: 'Direct tax filing & 44ADA relief', tag: 'Direct Tax', tone: 'tone-emerald' };
-  if (normalized.includes('pf return')) return { icon: 'fas fa-users-cog', desc: 'Monthly ECR filing & challan generation', tag: 'Monthly ECR', tone: 'tone-sapphire' };
-  if (normalized.includes('tds return') || normalized.includes('tds')) return { icon: 'fas fa-receipt', desc: 'Form 24Q / 26Q quarterly returns', tag: 'Quarterly', tone: 'tone-amber' };
-  if (normalized.includes('e-way') || normalized.includes('eway')) return { icon: 'fas fa-truck-fast', desc: 'Consignment e-way portal generation', tag: 'Portal Sync', tone: 'tone-cyan' };
-  if (normalized.includes('pf & esic') || normalized.includes('esic return')) return { icon: 'fas fa-shield-halved', desc: 'Dual statutory labor compliance filing', tag: 'Dual Filing', tone: 'tone-ruby' };
+  // Registration & Licensing
+  if (normalized.includes('government registration')) return { icon: 'fa-solid fa-landmark-dome', desc: 'Municipal trade & Shop Act licensing', tone: 'tone-slate' };
+  if (normalized.includes('startup') || normalized.includes('startup-india')) return { icon: 'fa-solid fa-seedling', desc: 'DPIIT recognition & 80-IAC tax holiday', tone: 'tone-gold' };
+  if (normalized.includes('professional tax')) return { icon: 'fa-solid fa-id-badge', desc: 'Gujarat PTEC & PTRC employer setup', tone: 'tone-slate' };
+  if (normalized.includes('pan application') || (normalized.includes('pan') && !normalized.includes('company'))) return { icon: 'fa-solid fa-id-card', desc: 'Form 49A allotment & physical card', tone: 'tone-slate' };
+  if (normalized.includes('tan application') || normalized.includes('tan')) return { icon: 'fa-solid fa-file-signature', desc: 'Form 49B deductor account for TDS', tone: 'tone-gold' };
+  if (normalized.includes('digital signature') || normalized.includes('dsc')) return { icon: 'fa-solid fa-key', desc: 'Class-3 USB token for MCA & e-Filing', tone: 'tone-gold' };
+  if (normalized.includes('esi') || normalized.includes('esic')) return { icon: 'fa-solid fa-notes-medical', desc: 'Employee State Insurance employer setup', tone: 'tone-slate' };
+  if (normalized.includes('pf')) return { icon: 'fa-solid fa-users-gear', desc: 'EPFO Provident Fund registration', tone: 'tone-slate' };
+  if (normalized.includes('import') || normalized.includes('iec')) return { icon: 'fa-solid fa-ship', desc: 'DGFT Import-Export Code registration', tone: 'tone-gold' };
+  if (normalized.includes('udyam') || normalized.includes('udhyam') || normalized.includes('msme')) return { icon: 'fa-solid fa-certificate', desc: 'Govt MSME subsidies & priority credit', tone: 'tone-gold' };
+  if (normalized.includes('gst registration') || normalized.includes('gst')) return { icon: 'fa-solid fa-percent', desc: '15-digit GSTIN & Aadhaar e-KYC', tone: 'tone-gold' };
 
   // Accounting & Compliance
-  if (normalized.includes('audit')) return { icon: 'fas fa-shield-halved', desc: 'Statutory Section 44AB audits & forensic review', tag: 'Tax Audit', tone: 'tone-amber' };
-  if (normalized.includes('bookkeeping') || normalized.includes('book keeping') || (normalized.includes('accounting') && !normalized.includes('system'))) return { icon: 'fas fa-book-bookmark', desc: 'Monthly ledger, P&L & balance sheet MIS', tag: 'Monthly MIS', tone: 'tone-sapphire' };
-  if (normalized.includes('system') || normalized.includes('erp')) return { icon: 'fas fa-laptop-code', desc: 'Custom cloud ERP & chart of accounts', tag: 'Cloud ERP', tone: 'tone-cyan' };
-  if (normalized.includes('roc') || normalized.includes('annual filing')) return { icon: 'fas fa-file-contract', desc: 'AOC-4 & MGT-7 statutory company governance', tag: 'MCA ROC', tone: 'tone-emerald' };
-  if (normalized.includes('payroll')) return { icon: 'fas fa-users-cog', desc: 'PF, ESIC, PT & statutory monthly wage MIS', tag: 'Wage MIS', tone: 'tone-ruby' };
-  if (normalized.includes('advisory') || normalized.includes('planning')) return { icon: 'fas fa-scale-balanced', desc: 'Transaction structuring & tax shield', tag: 'Tax Shield', tone: 'tone-purple' };
-  if (normalized.includes('financial statement')) return { icon: 'fas fa-file-invoice-dollar', desc: 'Balance sheet, P&L & cash flows', tag: 'Financials', tone: 'tone-emerald' };
-  if (normalized.includes('cfo')) return { icon: 'fas fa-crown', desc: 'Executive financial leadership & board MIS', tag: 'Virtual CFO', tone: 'tone-purple' };
+  if (normalized.includes('audit')) return { icon: 'fa-solid fa-magnifying-glass-chart', desc: 'Sec 44AB tax audits & forensic review', tone: 'tone-slate' };
+  if (normalized.includes('bookkeeping') || normalized.includes('book keeping') || (normalized.includes('accounting') && !normalized.includes('system'))) return { icon: 'fa-solid fa-book-bookmark', desc: 'Monthly ledger, P&L & balance sheet MIS', tone: 'tone-gold' };
+  if (normalized.includes('system') || normalized.includes('erp')) return { icon: 'fa-solid fa-laptop-code', desc: 'Cloud accounting & chart of accounts setup', tone: 'tone-slate' };
+  if (normalized.includes('roc') || normalized.includes('annual filing')) return { icon: 'fa-solid fa-file-contract', desc: 'MCA AOC-4 & MGT-7 annual governance', tone: 'tone-gold' };
+  if (normalized.includes('payroll')) return { icon: 'fa-solid fa-users-gear', desc: 'Salary registers, PF, ESIC & Form 24Q', tone: 'tone-slate' };
+  if (normalized.includes('advisory') || normalized.includes('planning')) return { icon: 'fa-solid fa-scale-balanced', desc: 'Tax structuring & entity risk advisory', tone: 'tone-gold' };
+  if (normalized.includes('financial statement')) return { icon: 'fa-solid fa-chart-pie', desc: 'Statutory balance sheet & cash flows', tone: 'tone-slate' };
+  if (normalized.includes('cfo')) return { icon: 'fa-solid fa-crown', desc: 'Fractional CFO & board reporting packs', tone: 'tone-gold' };
 
-  if (normalized.includes('calculator') || normalized.includes('tax-tools')) return { icon: 'fas fa-calculator', desc: 'Old vs New Tax Regime & GST Tools', tag: 'Live Tool', tone: 'tone-sapphire' };
-  if (normalized.includes('due date') || normalized.includes('calendar') || normalized.includes('compliance')) return { icon: 'fas fa-calendar-check', desc: 'Statutory compliance & due dates', tag: 'Live Radar', tone: 'tone-emerald' };
-  if (normalized.includes('pricing') || normalized.includes('retainer')) return { icon: 'fas fa-handshake', desc: 'Scope-locked corporate retainers', tag: 'Locked Fee', tone: 'tone-amber' };
-  if (normalized.includes('career') || normalized.includes('articleship') || normalized.includes('job')) return { icon: 'fas fa-user-graduate', desc: 'Tax careers & professional hiring', tag: 'Careers', tone: 'tone-purple' };
-  if (normalized.includes('blog')) return { icon: 'fas fa-newspaper', desc: 'Tax circulars, case studies & updates', tag: 'Bulletins', tone: 'tone-cyan' };
-  if (normalized.includes('faq')) return { icon: 'fas fa-circle-question', desc: 'Common compliance queries answered', tag: 'Intel Hub', tone: 'tone-sapphire' };
-  if (normalized.includes('contact')) return { icon: 'fas fa-headset', desc: 'Direct access to senior advisory chambers', tag: 'Chambers', tone: 'tone-amber' };
-  if (normalized.includes('trademark') || normalized.includes('ipr')) return { icon: 'fas fa-trademark', desc: 'Brand protection & IP registry', tag: 'IP Registry', tone: 'tone-purple' };
-  if (normalized.includes('copyright')) return { icon: 'fas fa-copyright', desc: 'Creative work & software protection', tag: 'IP Defense', tone: 'tone-cyan' };
-  if (normalized.includes('food') || normalized.includes('fssai')) return { icon: 'fas fa-utensils', desc: 'Food business statutory licensing', tag: 'FSSAI License', tone: 'tone-ruby' };
-  if (normalized.includes('iso')) return { icon: 'fas fa-award', desc: 'ISO 9001/27001 standard compliance', tag: 'Standard', tone: 'tone-amber' };
-  if (normalized.includes('legal') || normalized.includes('agreement')) return { icon: 'fas fa-scale-balanced', desc: 'Shareholders & vendor contract drafting', tag: 'Contract', tone: 'tone-sapphire' };
+  // Resources & Hub
+  if (normalized.includes('calculator') || normalized.includes('tax-tools')) return { icon: 'fa-solid fa-calculator', desc: 'FY 2025–26 Income Tax & GST calculators', tone: 'tone-gold' };
+  if (normalized.includes('due date') || normalized.includes('calendar') || normalized.includes('compliance')) return { icon: 'fa-solid fa-calendar-check', desc: 'Live statutory due-date & filing tracker', tone: 'tone-slate' };
+  if (normalized.includes('pricing') || normalized.includes('retainer')) return { icon: 'fa-solid fa-handshake', desc: 'Fixed-fee corporate retainer mandates', tone: 'tone-gold' };
+  if (normalized.includes('career') || normalized.includes('articleship') || normalized.includes('job')) return { icon: 'fa-solid fa-user-graduate', desc: 'Open advisory roles & practice careers', tone: 'tone-slate' };
+  if (normalized.includes('blog')) return { icon: 'fa-solid fa-newspaper', desc: 'Tax circulars, guides & partner notes', tone: 'tone-slate' };
+  if (normalized.includes('faq')) return { icon: 'fa-solid fa-circle-question', desc: 'Answers to statutory & filing questions', tone: 'tone-gold' };
+  if (normalized.includes('trademark') || normalized.includes('ipr')) return { icon: 'fa-solid fa-trademark', desc: 'Brand protection & IP registry filing', tone: 'tone-slate' };
+  if (normalized.includes('copyright')) return { icon: 'fa-solid fa-copyright', desc: 'Creative & software IP registration', tone: 'tone-slate' };
+  if (normalized.includes('food') || normalized.includes('fssai')) return { icon: 'fa-solid fa-utensils', desc: 'FSSAI central & state food licensing', tone: 'tone-gold' };
+  if (normalized.includes('iso')) return { icon: 'fa-solid fa-award', desc: 'ISO 9001/27001 certification setup', tone: 'tone-gold' };
+  if (normalized.includes('legal') || normalized.includes('agreement')) return { icon: 'fa-solid fa-scale-balanced', desc: 'Shareholder & commercial contract drafting', tone: 'tone-slate' };
 
-  return { icon: 'fas fa-shield-halved', desc: 'Statutory corporate compliance', tag: 'Statutory', tone: 'tone-amber' };
+  return { icon: 'fa-solid fa-shield-halved', desc: 'Statutory corporate compliance support', tone: 'tone-gold' };
 };
 
 const getTopCategoryIcon = (label) => {
   const normalized = (label || '').toLowerCase();
-  if (normalized.includes('home')) return 'fas fa-house';
-  if (normalized.includes('about')) return 'fas fa-building-user';
-  if (normalized.includes('start') || normalized.includes('business')) return 'fas fa-rocket';
-  if (normalized.includes('registration')) return 'fas fa-stamp';
-  if (normalized.includes('return') || normalized.includes('tax')) return 'fas fa-file-invoice-dollar';
-  if (normalized.includes('accounting') || normalized.includes('compliance')) return 'fas fa-calculator';
-  if (normalized.includes('service')) return 'fas fa-briefcase';
-  if (normalized.includes('other')) return 'fas fa-folder-open';
-  return 'fas fa-layer-group';
+  if (normalized.includes('home')) return 'fa-solid fa-house';
+  if (normalized.includes('about')) return 'fa-solid fa-building-user';
+  if (normalized.includes('start') || normalized.includes('business')) return 'fa-solid fa-rocket';
+  if (normalized.includes('registration')) return 'fa-solid fa-stamp';
+  if (normalized.includes('return') || normalized.includes('tax')) return 'fa-solid fa-file-invoice-dollar';
+  if (normalized.includes('accounting') || normalized.includes('compliance')) return 'fa-solid fa-calculator';
+  if (normalized.includes('service')) return 'fa-solid fa-briefcase';
+  if (normalized.includes('resource') || normalized.includes('other')) return 'fa-solid fa-compass';
+  return 'fa-solid fa-layer-group';
 };
 
 const getCategorySublabel = (label) => {
@@ -90,20 +111,75 @@ const getCategorySublabel = (label) => {
   if (normalized.includes('registration')) return 'State & Central Statutory Licenses & Registrations';
   if (normalized.includes('return')) return 'Direct Tax, GST & Labor Law E-Filings';
   if (normalized.includes('accounting') || normalized.includes('compliance')) return 'Statutory Audits, Corporate Records & MCA Governance';
-  if (normalized.includes('other')) return 'Knowledge Hub, Calculators & Firm Infrastructure';
+  if (normalized.includes('resource') || normalized.includes('other')) return 'Knowledge Hub, Interactive Calculators & Firm Infrastructure';
   return 'Statutory Compliance & Filings';
 };
 
+const getDropdownFooter = (label) => {
+  const normalized = (label || '').toLowerCase();
+  if (normalized.includes('start') || normalized.includes('business')) {
+    return {
+      title: 'Need Bespoke Entity Structuring?',
+      sub: 'Compare Pvt Ltd, LLP & OPC tax impact with our Senior Partners',
+      cta: 'Consult Structuring Desk',
+      to: '/contact',
+      icon: 'fa-solid fa-building-columns',
+    };
+  }
+  if (normalized.includes('registration')) {
+    return {
+      title: 'Unsure Which Registrations Apply?',
+      sub: 'Get a mandatory state & central licensing roadmap in under 30 mins',
+      cta: 'Request Licensing Brief',
+      to: '/contact',
+      icon: 'fa-solid fa-stamp',
+    };
+  }
+  if (normalized.includes('return')) {
+    return {
+      title: 'Pending Notices or Revised Return Filings?',
+      sub: 'Direct execution via our Income Tax, GST & TDS Compliance Desk',
+      cta: 'Consult Filing Desk',
+      to: '/contact',
+      icon: 'fa-solid fa-file-circle-check',
+    };
+  }
+  if (normalized.includes('accounting') || normalized.includes('compliance')) {
+    return {
+      title: 'Looking for Scope-Locked Monthly Retainers?',
+      sub: 'Unified monthly ledger curation, GSTR-2B matching & ROC governance',
+      cta: 'Compare Retainer Plans',
+      to: '/pricing',
+      icon: 'fa-solid fa-handshake',
+    };
+  }
+  if (normalized.includes('resource') || normalized.includes('other')) {
+    return {
+      title: 'Compare Tax Impact Before Engaging',
+      sub: 'Run live FY 2025–26 Old vs New Regime, HRA & GST calculations',
+      cta: 'Open Tax Calculators',
+      to: '/calculators',
+      icon: 'fa-solid fa-calculator',
+    };
+  }
+  return {
+    title: 'Need Partner-Led Advisory Guidance?',
+    sub: 'Direct Senior Partner consultation at our Nikol Chambers or online',
+    cta: 'Book Consultation',
+    to: '/contact',
+    icon: 'fa-solid fa-headset',
+  };
+};
+
 const parseWorkingHours = (raw) => {
-  const defaultSchedule = { days: "Mon – Sat", time: "10:00 AM – 7:00 PM" };
+  const defaultSchedule = { days: 'Mon – Sat', time: '10:00 AM – 7:00 PM' };
   if (!raw || typeof raw !== 'string') return defaultSchedule;
 
   const colonIdx = raw.indexOf(':');
   if (colonIdx !== -1) {
-    let daysPart = raw.substring(0, colonIdx).trim();
-    // Validate if the segment before colon contains day names/abbreviations
+    const daysPart = raw.substring(0, colonIdx).trim();
     if (/[a-zA-Z]{3}/.test(daysPart)) {
-      let days = daysPart.replace(/([a-zA-Z]{3})\s*[-–]\s*([a-zA-Z]{3})/gi, '$1 – $2');
+      const days = daysPart.replace(/([a-zA-Z]{3})\s*[-–]\s*([a-zA-Z]{3})/gi, '$1 – $2');
       let time = raw.substring(colonIdx + 1).trim();
       time = time.replace(/(\d{1,2})\.(\d{2})/g, '$1:$2');
       time = time.replace(/([AP]M)\s*[-–]\s*(\d{1,2})/gi, '$1 – $2');
@@ -111,16 +187,15 @@ const parseWorkingHours = (raw) => {
 
       return {
         days: days || defaultSchedule.days,
-        time: time || defaultSchedule.time
+        time: time || defaultSchedule.time,
       };
     }
   }
 
-  // Fallback cleanup if raw string only had times without a day prefix
-  let cleanedTime = raw.replace(/(\d{1,2})\.(\d{2})/g, '$1:$2').replace(/\s*[-–]\s*/g, ' – ').trim();
+  const cleanedTime = raw.replace(/(\d{1,2})\.(\d{2})/g, '$1:$2').replace(/\s*[-–]\s*/g, ' – ').trim();
   return {
     days: defaultSchedule.days,
-    time: cleanedTime || defaultSchedule.time
+    time: cleanedTime || defaultSchedule.time,
   };
 };
 
@@ -133,35 +208,37 @@ const Navbar = () => {
     .filter((item) => {
       const label = (item?.label || '').toLowerCase().trim();
       const href = (item?.href || '').trim();
-      return !label.includes('contact') && href !== '/contact';
+      // Drop redundant "Home" (logo anchors home) and redundant "/contact" top link (handled via primary CTA).
+      return label !== 'home' && href !== '/' && !label.includes('contact') && href !== '/contact';
     })
     .map((item) => {
+      const rawLabel = (item.label || '').trim();
+      const displayLabel = rawLabel.toLowerCase() === 'others' ? 'Resources' : rawLabel;
+
       let children = (item.children || []).filter((child) => {
         const childLabel = (child?.label || '').toLowerCase().trim();
         const childHref = (child?.href || '').trim();
         return !childLabel.includes('contact') && childHref !== '/contact';
       });
 
-      // Ensure "Others" (Knowledge & Firm Hub) contains the key institutional pages
-      if (item.label?.toLowerCase().includes('other')) {
-        const requiredOthers = [
+      if (displayLabel.toLowerCase().includes('resource') || rawLabel.toLowerCase().includes('other')) {
+        const requiredResources = [
           { label: 'Tax Calculators', href: '/calculators' },
           { label: 'Compliance Calendar', href: '/compliance-calendar' },
           { label: 'Retainer Pricing', href: '/pricing' },
-          { label: 'Careers & Articleship', href: '/careers' },
+          { label: 'Careers & Practice Track', href: '/careers' },
         ];
 
-        requiredOthers.forEach((req) => {
+        requiredResources.forEach((req) => {
           if (!children.some((c) => c.href === req.href)) {
             children.push(req);
           }
         });
       }
 
-      // Ensure "Accounting & Compliance" contains the full institutional corporate compliance suite
       if (
-        item.label?.toLowerCase().includes('accounting') ||
-        item.label?.toLowerCase().includes('compliance')
+        displayLabel.toLowerCase().includes('accounting') ||
+        displayLabel.toLowerCase().includes('compliance')
       ) {
         const requiredCompliance = [
           { label: 'Accounting & Bookkeeping', href: '/services/bookkeeping-services' },
@@ -179,24 +256,36 @@ const Navbar = () => {
 
       return {
         ...item,
-        children
+        label: displayLabel,
+        children,
       };
     });
+
+  // Include explicit Home entry in the mobile drawer while keeping the desktop bar concise.
+  const mobileNavMenu = [{ label: 'Home', href: '/', children: [] }, ...navMenu];
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [mobileExpandedIndex, setMobileExpandedIndex] = useState(null);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1180);
+  const [isMobile, setIsMobile] = useState(() => window.matchMedia('(max-width: 1180px)').matches);
   const location = useLocation();
 
   useEffect(() => {
+    const mql = window.matchMedia('(max-width: 1180px)');
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 40);
     };
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 1180);
+    const syncViewport = () => {
+      const mobileNow = mql.matches;
+      setIsMobile(mobileNow);
+      if (!mobileNow) {
+        setIsMobileOpen(false);
+        setMobileExpandedIndex(null);
+      } else {
+        setActiveDropdown(null);
+      }
     };
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
@@ -209,12 +298,15 @@ const Navbar = () => {
         setIsSearchOpen((prev) => !prev);
       }
     };
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleResize);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    mql.addEventListener('change', syncViewport);
+    window.addEventListener('resize', syncViewport);
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
+      mql.removeEventListener('change', syncViewport);
+      window.removeEventListener('resize', syncViewport);
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
@@ -310,7 +402,6 @@ const Navbar = () => {
     }
   };
 
-  // Close desktop megamenu on outside click or window scroll
   useEffect(() => {
     if (activeDropdown === null || isMobile) return;
     const handleOutsideClick = (e) => {
@@ -332,20 +423,6 @@ const Navbar = () => {
   const phone = settings?.phone || '+91 95109 84735';
   const email = settings?.email || 'shreechamundaassociates0905@gmail.com';
 
-  const getSocialLink = (platform) => {
-    const defaultLinks = {
-      facebook: "https://www.facebook.com/share/1BRPjWQVX8/",
-      instagram:
-        "https://www.instagram.com/shree_chamunda_associate?igsh=Z3BlOGNhdXc4bGNm",
-      whatsapp: "https://wa.me/919510984735",
-    };
-    const val = settings?.socialLinks?.[platform];
-    if (!val || val === '#' || val.trim() === '') {
-      return defaultLinks[platform];
-    }
-    return val.trim();
-  };
-
   const isItemActive = (item) => {
     if (!item) return false;
 
@@ -358,10 +435,8 @@ const Navbar = () => {
     const currentPath = normalize(location.pathname);
     const itemPath = normalize(item.href);
 
-    // 1. Exact match
     if (currentPath === itemPath) return true;
 
-    // 2. If item has children, check if current path belongs to any child
     if (item.children && item.children.length > 0) {
       return item.children.some((c) => {
         if (!c.href) return false;
@@ -370,8 +445,6 @@ const Navbar = () => {
       });
     }
 
-    // 3. Special handling for general "Services" tab:
-    // Only active on /services or services not categorized under any megamenu dropdown
     if (item.href === '/services') {
       if (currentPath === '/services') return true;
       const isOwnedByOtherCategory = navMenu.some(
@@ -385,7 +458,6 @@ const Navbar = () => {
       return !isOwnedByOtherCategory && currentPath.startsWith('/services');
     }
 
-    // 4. Other sub-routes (e.g. /blog/:id)
     if (item.href && item.href !== '/' && currentPath.startsWith(itemPath + '/')) {
       return true;
     }
@@ -401,22 +473,19 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Top Bar — Executive Intelligence & Status Line */}
+      {/* Top Bar — Quiet Executive Desk & Portal Strip */}
       <div className="top-bar">
         <div className="top-bar-inner">
           <div className="top-bar-left">
-            {/* Executive Office Hours Capsule */}
-            <div 
-              className="top-bar-status-capsule" 
+            <div
+              className="top-bar-status-capsule"
               title={`Senior Advisory Desk • ${schedule.days}: ${schedule.time} IST`}
             >
-              {/* Horology Clock Icon */}
-              <i className="far fa-clock top-clock-icon" aria-hidden="true"></i>
-
-              {/* Office Hours Label */}
-              <span className="top-status-label-text">Office Hours:</span>
-
-              {/* Schedule Days & Times */}
+              <span className="top-status-beacon" aria-hidden="true">
+                <span className="beacon-core"></span>
+              </span>
+              <i className="fa-regular fa-clock top-clock-icon" aria-hidden="true"></i>
+              <span className="top-status-label-text">Chambers:</span>
               <div className="top-status-schedule">
                 <span className="top-schedule-days">{schedule.days}</span>
                 <span className="top-schedule-sep" aria-hidden="true">•</span>
@@ -427,77 +496,34 @@ const Navbar = () => {
 
             <span className="top-bar-sep top-bar-hide-sm" aria-hidden="true"></span>
 
-            {/* Direct Helpline Link */}
-            <a 
-              href={`tel:${phone.replace(/[^0-9+]/g, '')}`} 
+            <a
+              href={`tel:${phone.replace(/[^0-9+]/g, '')}`}
               className="top-bar-link top-bar-hide-sm"
               title="Call advisory desk"
             >
-              <i className="fas fa-phone-alt top-bar-icon"></i>
+              <i className="fa-solid fa-phone top-bar-icon" aria-hidden="true"></i>
               <span className="top-link-text">{phone}</span>
             </a>
 
             <span className="top-bar-sep top-bar-hide-md" aria-hidden="true"></span>
 
-            {/* Advisory Inbox Link */}
-            <a 
-              href={`mailto:${email}`} 
+            <a
+              href={`mailto:${email}`}
               className="top-bar-link top-bar-hide-md"
               title="Email Shree Chamunda Associates"
             >
-              <i className="fas fa-envelope top-bar-icon"></i>
+              <i className="fa-regular fa-envelope top-bar-icon" aria-hidden="true"></i>
               <span className="top-link-text">{email}</span>
             </a>
           </div>
 
           <div className="top-bar-right">
-            {/* Social Channels */}
-            <div className="top-bar-social">
-              {getSocialLink('whatsapp') && (
-                <a
-                  href={getSocialLink('whatsapp')}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Direct WhatsApp Advisory Desk"
-                  className="social-circle-btn wa-circle-btn"
-                  title="WhatsApp Advisory"
-                >
-                  <i className="fab fa-whatsapp"></i>
-                </a>
-              )}
-              {getSocialLink('instagram') && (
-                <a
-                  href={getSocialLink('instagram')}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Instagram"
-                  className="social-circle-btn ig-circle-btn"
-                  title="Instagram"
-                >
-                  <i className="fab fa-instagram"></i>
-                </a>
-              )}
-              {getSocialLink('facebook') && (
-                <a
-                  href={getSocialLink('facebook')}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Facebook"
-                  className="social-circle-btn fb-circle-btn"
-                  title="Facebook"
-                >
-                  <i className="fab fa-facebook-f"></i>
-                </a>
-              )}
-            </div>
-
             <div className="top-bar-theme-toggle">
               <ThemeToggle />
             </div>
 
             <span className="top-bar-sep" aria-hidden="true"></span>
 
-            {/* Client Portal Vault Button */}
             {user ? (
               <div className="top-bar-user-pill">
                 <Link
@@ -506,27 +532,28 @@ const Navbar = () => {
                   title={user.role === 'admin' ? 'Open Admin Dashboard' : 'Open Client Portal'}
                 >
                   <span className="user-pill-badge">
-                    <i className={user.role === 'admin' ? 'fas fa-shield-halved' : 'fas fa-user-check'}></i>
+                    <i className={user.role === 'admin' ? 'fa-solid fa-shield-halved' : 'fa-solid fa-user-check'}></i>
                   </span>
                   <span>{user.role === 'admin' ? 'Admin Panel' : 'My Vault'}</span>
                 </Link>
                 <button
+                  type="button"
                   onClick={logout}
                   className="top-user-logout"
                   title="Logout Session"
                   aria-label="Logout Session"
                 >
-                  <i className="fas fa-sign-out-alt"></i>
+                  <i className="fa-solid fa-right-from-bracket"></i>
                 </button>
               </div>
             ) : (
               <Link to="/login" className="top-bar-vault-btn" title="Access Secure Client Vault">
-                <span className="vault-badge">
-                  <i className="fas fa-shield-halved vault-icon"></i>
+                <span className="vault-badge" aria-hidden="true">
+                  <i className="fa-solid fa-shield-halved vault-icon"></i>
                 </span>
                 <span className="vault-text">Client Vault</span>
-                <span className="vault-arrow-wrap">
-                  <i className="fas fa-arrow-right vault-arrow"></i>
+                <span className="vault-arrow-wrap" aria-hidden="true">
+                  <i className="fa-solid fa-arrow-right vault-arrow"></i>
                 </span>
               </Link>
             )}
@@ -534,10 +561,9 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Main Navbar — Executive Sticky Header */}
-      <nav className={`navbar ${isScrolled ? "navbar-scrolled" : ""} ${isMobileOpen ? "navbar-mobile-active" : ""}`}>
+      {/* Main Navbar — Institutional Swiss-Fintech Header */}
+      <nav className={`navbar ${isScrolled ? 'navbar-scrolled' : ''} ${isMobileOpen ? 'navbar-mobile-active' : ''}`}>
         <div className="navbar-inner">
-          {/* Logo with Halo Accent & Geometric Wordmark */}
           <Link to="/" className="navbar-logo" aria-label="Shree Chamunda Associates Home">
             <div className="navbar-logo-badge">
               <img
@@ -545,7 +571,7 @@ const Navbar = () => {
                 alt="Shree Chamunda Associates"
                 className="navbar-logo-img"
               />
-              <span className="logo-ring-accent"></span>
+              <span className="logo-ring-accent" aria-hidden="true"></span>
             </div>
             <div className="navbar-logo-wordmark">
               <span className="wordmark-title">SHREE CHAMUNDA ASSOCIATES</span>
@@ -559,44 +585,46 @@ const Navbar = () => {
             </div>
           </Link>
 
-          {/* Desktop Navigation Links */}
           <div className="navbar-center-nav">
             <ul className="navbar-nav">
               {navMenu.map((item, index) => {
                 const active = isItemActive(item);
+                const hasChildren = item.children && item.children.length > 0;
                 const alignClass = getAlignmentClass(index, navMenu.length);
                 const isDropdownOpen = activeDropdown === index;
                 const showIndicator = active && (activeDropdown === null || isDropdownOpen);
+                const footerMeta = getDropdownFooter(item.label);
+
                 return (
                   <li
                     key={index}
-                    className={`nav-item ${item.children && item.children.length > 0 ? "has-dropdown" : ""} ${active ? "active" : ""} ${isDropdownOpen ? "dropdown-active" : ""}`}
+                    className={`nav-item ${hasChildren ? 'has-dropdown' : ''} ${active ? 'active' : ''} ${isDropdownOpen ? 'dropdown-active' : ''}`}
                     onMouseEnter={() => handleMouseEnter(index)}
                     onMouseLeave={handleMouseLeave}
                   >
                     <Link
                       to={item.href}
                       className="nav-link"
+                      aria-expanded={hasChildren ? isDropdownOpen : undefined}
                       onClick={(e) => handleLinkClick(e, item, index)}
                     >
                       <span className="nav-link-label">{item.label}</span>
-                      {item.children && item.children.length > 0 && (
-                        <i className="fas fa-chevron-down dropdown-icon"></i>
+                      {hasChildren && (
+                        <i className="fa-solid fa-chevron-down dropdown-icon" aria-hidden="true"></i>
                       )}
                       {showIndicator && <span className="nav-link-indicator"></span>}
                     </Link>
 
-                    {/* Mega Menu Dropdown */}
-                    {item.children && item.children.length > 0 && (
+                    {hasChildren && (
                       <div
-                        className={`dropdown-megamenu-panel ${item.children.length > 4 ? 'megamenu-grid' : 'megamenu-single'} ${alignClass} ${isDropdownOpen ? "dropdown-open" : ""}`}
+                        className={`dropdown-megamenu-panel ${item.children.length > 4 ? 'megamenu-grid' : 'megamenu-single'} ${alignClass} ${isDropdownOpen ? 'dropdown-open' : ''}`}
                       >
                         <div className="dropdown-caret-arrow"></div>
                         <div className="megamenu-header-bar">
                           <div className="megamenu-header-left">
                             <span className="megamenu-category-pill">
-                              <span className="megamenu-live-dot"></span>
-                              <i className={getTopCategoryIcon(item.label)}></i>
+                              <span className="megamenu-live-dot" aria-hidden="true"></span>
+                              <i className={getTopCategoryIcon(item.label)} aria-hidden="true"></i>
                               <span>{item.label}</span>
                             </span>
                             <span className="megamenu-sublabel">
@@ -604,13 +632,13 @@ const Navbar = () => {
                             </span>
                           </div>
                           <span className="megamenu-count-badge">
-                            {item.children.length} {item.label === 'Others' ? 'Resources' : 'Services'}
+                            {item.children.length} {item.label === 'Resources' ? 'Guides & Tools' : 'Mandates'}
                           </span>
                         </div>
 
                         <div className="megamenu-items-container">
                           {item.children.map((child, childIndex) => {
-                            const meta = getDropdownMeta(child.label);
+                            const meta = getDropdownMeta(child.label, child.href);
                             const cleanTitle = formatDropdownLabel(child.label);
                             const isChildActive = location.pathname === child.href;
                             return (
@@ -621,19 +649,18 @@ const Navbar = () => {
                                 className={`dropdown-rich-tile ${isChildActive ? 'tile-active' : ''}`}
                                 onClick={handleDropdownItemClick}
                               >
-                                <div className={`dropdown-tile-icon ${meta.tone || 'tone-amber'}`}>
-                                  <i className={meta.icon}></i>
+                                <div className={`dropdown-tile-icon ${meta.tone || 'tone-gold'}`}>
+                                  <i className={meta.icon} aria-hidden="true"></i>
                                 </div>
                                 <div className="dropdown-tile-info">
                                   <div className="dropdown-tile-title-row">
                                     <span className="dropdown-tile-title">{cleanTitle}</span>
-                                    {meta.tag && <span className="dropdown-micro-tag">{meta.tag}</span>}
-                                    {isChildActive && <span className="active-tile-dot"></span>}
+                                    {isChildActive && <span className="active-tile-dot" title="Active page"></span>}
                                   </div>
                                   <span className="dropdown-tile-desc">{meta.desc}</span>
                                 </div>
-                                <div className="dropdown-tile-arrow">
-                                  <i className="fas fa-chevron-right"></i>
+                                <div className="dropdown-tile-arrow" aria-hidden="true">
+                                  <i className="fa-solid fa-chevron-right"></i>
                                 </div>
                               </Link>
                             );
@@ -642,20 +669,22 @@ const Navbar = () => {
 
                         <div className="dropdown-bottom-strip">
                           <Link
-                            to="/contact"
+                            to={footerMeta.to}
                             className="dropdown-strip-link"
                             onClick={handleDropdownItemClick}
                           >
                             <div className="strip-left">
-                              <span className="strip-sparkle"><i className="fas fa-headset"></i></span>
+                              <span className="strip-sparkle" aria-hidden="true">
+                                <i className={footerMeta.icon}></i>
+                              </span>
                               <div className="strip-text-group">
-                                <span className="strip-bold">Need Bespoke Corporate Structuring?</span>
-                                <span className="strip-sub">Direct Partner Consultation &bull; &lt; 30 Mins Confidential Triage</span>
+                                <span className="strip-bold">{footerMeta.title}</span>
+                                <span className="strip-sub">{footerMeta.sub}</span>
                               </div>
                             </div>
                             <span className="strip-cta-pill">
-                              <span>Consult Advisory Desk</span>
-                              <i className="fas fa-arrow-right"></i>
+                              <span>{footerMeta.cta}</span>
+                              <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
                             </span>
                           </Link>
                         </div>
@@ -667,57 +696,56 @@ const Navbar = () => {
             </ul>
           </div>
 
-          {/* Desktop Right Action Suite */}
           <div className="navbar-right-actions">
-            {/* Mobile Direct Quick-Call Button */}
             <a
               href={`tel:${phone.replace(/[^0-9+]/g, '')}`}
               className="nav-mobile-call-btn"
               title={`Direct Call Advisory Office (${phone})`}
               aria-label="Direct Call Advisory Office"
             >
-              <i className="fas fa-phone-alt"></i>
+              <i className="fa-solid fa-phone"></i>
             </a>
 
-            {/* Ultra-Modern Search Bar with Micro-Badge & Interactive Hover Beam */}
             <button
               type="button"
               className="nav-search-bar"
               onClick={() => setIsSearchOpen(true)}
-              title="Search services, calculators & guides..."
+              title="Search services, calculators & guides (Ctrl+K)"
               aria-label="Search Services"
             >
-              <span className="nav-search-icon-badge">
-                <i className="fas fa-search nav-search-icon"></i>
+              <span className="nav-search-icon-badge" aria-hidden="true">
+                <i className="fa-solid fa-magnifying-glass nav-search-icon"></i>
               </span>
               <span className="nav-search-placeholder">Search services...</span>
+              <span className="nav-search-kbd" aria-hidden="true">Ctrl+K</span>
               <span className="nav-search-hover-cue" aria-hidden="true">
-                <i className="fas fa-arrow-right"></i>
+                <i className="fa-solid fa-arrow-right"></i>
               </span>
             </button>
 
-            {/* Executive FinTech Consultation Appointment CTA Module */}
             <Link
               to="/contact"
               className="nav-consultation-btn"
               title="Schedule Consultation with Senior Advisor"
             >
-              <span className="consult-badge-leading">
-                <i className="fas fa-calendar-check consult-calendar-icon"></i>
+              <span className="consult-badge-leading" aria-hidden="true">
+                <i className="fa-solid fa-calendar-check consult-calendar-icon"></i>
               </span>
               <span className="consult-main-text">Book Consultation</span>
-              <span className="consult-arrow-badge">
-                <i className="fas fa-arrow-right"></i>
+              <span className="consult-arrow-badge" aria-hidden="true">
+                <i className="fa-solid fa-arrow-right"></i>
               </span>
             </Link>
 
-            {/* Mobile Hamburger Toggler */}
             <button
+              type="button"
               className="navbar-toggler"
               onClick={toggleMobile}
               aria-label="Toggle navigation"
+              aria-expanded={isMobileOpen}
+              aria-controls="mobile-nav-drawer"
             >
-              <span className={`hamburger ${isMobileOpen ? "hamburger-open" : ""}`}>
+              <span className={`hamburger ${isMobileOpen ? 'hamburger-open' : ''}`}>
                 <span></span>
                 <span></span>
                 <span></span>
@@ -727,14 +755,13 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Mobile Backdrop Overlay */}
       {isMobileOpen && (
         <div className="navbar-overlay" onClick={toggleMobile} aria-label="Close navigation overlay"></div>
       )}
 
-      {/* Mobile Slide-Over Drawer (Outside <nav> stacking context) */}
-      <div 
-        className={`navbar-mobile-drawer ${isMobileOpen ? "drawer-open" : ""}`}
+      <div
+        id="mobile-nav-drawer"
+        className={`navbar-mobile-drawer ${isMobileOpen ? 'drawer-open' : ''}`}
         aria-hidden={!isMobileOpen}
       >
         <div className="mobile-drawer-header">
@@ -747,44 +774,43 @@ const Navbar = () => {
               <span>TAX &bull; AUDIT &bull; ADVISORY</span>
             </div>
           </Link>
-          <button className="mobile-drawer-close-btn" onClick={toggleMobile} aria-label="Close navigation menu">
-            <i className="fas fa-times"></i>
+          <button type="button" className="mobile-drawer-close-btn" onClick={toggleMobile} aria-label="Close navigation menu">
+            <i className="fa-solid fa-xmark"></i>
           </button>
         </div>
 
-        {/* Sleek App Utility Strip: Vault + Search in 1 row (Height: 32px) */}
         <div className="mobile-drawer-top-strip">
           {user ? (
             <div className="mobile-strip-auth">
-              <Link 
-                to={user.role === 'admin' ? '/admin' : '/portal'} 
+              <Link
+                to={user.role === 'admin' ? '/admin' : '/portal'}
                 className="mobile-strip-vault-btn logged-in"
                 onClick={() => setIsMobileOpen(false)}
               >
                 <span className="live-pulse-dot"></span>
-                <i className="fas fa-user-shield"></i>
+                <i className="fa-solid fa-user-shield"></i>
                 <span className="mobile-strip-text">{user.role === 'admin' ? 'Admin Panel' : 'Client Vault'}</span>
               </Link>
-              <button onClick={logout} className="mobile-strip-logout-btn" title="Logout Session">
-                <i className="fas fa-sign-out-alt"></i>
+              <button type="button" onClick={logout} className="mobile-strip-logout-btn" title="Logout Session">
+                <i className="fa-solid fa-right-from-bracket"></i>
               </button>
             </div>
           ) : (
-            <Link 
-              to="/login" 
+            <Link
+              to="/login"
               className="mobile-strip-vault-btn"
               onClick={() => setIsMobileOpen(false)}
             >
               <div className="mobile-strip-left">
-                <i className="fas fa-shield-alt mobile-strip-icon"></i>
+                <i className="fa-solid fa-shield-halved mobile-strip-icon"></i>
                 <span className="mobile-strip-text">Client Vault</span>
               </div>
-              <span className="mobile-strip-cta">Login <i className="fas fa-chevron-right"></i></span>
+              <span className="mobile-strip-cta">Login <i className="fa-solid fa-chevron-right"></i></span>
             </Link>
           )}
 
-          <button 
-            type="button" 
+          <button
+            type="button"
             className="mobile-strip-search-btn"
             onClick={() => {
               setIsMobileOpen(false);
@@ -792,17 +818,15 @@ const Navbar = () => {
             }}
             aria-label="Search Services"
           >
-            <i className="fas fa-search"></i>
+            <i className="fa-solid fa-magnifying-glass"></i>
           </button>
         </div>
 
-        {/* Mobile Nav Links with Sleek List Rows */}
         <div className="mobile-drawer-body">
-          {/* Mobile Theme Selector Row */}
           <ThemeToggle variant="drawer-row" />
 
           <ul className="mobile-nav-list">
-            {navMenu.map((item, index) => {
+            {mobileNavMenu.map((item, index) => {
               const active = isItemActive(item);
               const hasChildren = item.children && item.children.length > 0;
               const isExpanded = mobileExpandedIndex === index;
@@ -825,7 +849,7 @@ const Navbar = () => {
                         <div className="mobile-nav-link-right">
                           <span className="mobile-item-count">{item.children.length}</span>
                           <span className={`mobile-row-chevron ${isExpanded ? 'expanded' : ''}`}>
-                            <i className="fas fa-chevron-down"></i>
+                            <i className="fa-solid fa-chevron-down"></i>
                           </span>
                         </div>
                       </button>
@@ -849,10 +873,10 @@ const Navbar = () => {
                   </div>
 
                   {hasChildren && (
-                    <div className={`mobile-accordion-collapse ${isExpanded ? "expanded" : ""}`}>
+                    <div className={`mobile-accordion-collapse ${isExpanded ? 'expanded' : ''}`}>
                       <div className="mobile-sub-accordion-inner">
                         {item.children.map((child, childIndex) => {
-                          const meta = getDropdownMeta(child.label);
+                          const meta = getDropdownMeta(child.label, child.href);
                           const cleanTitle = formatDropdownLabel(child.label);
                           const isChildActive = location.pathname === child.href;
                           return (
@@ -872,7 +896,7 @@ const Navbar = () => {
                                 <span className="mobile-sub-title">{cleanTitle}</span>
                                 <span className="mobile-sub-desc">{meta.desc}</span>
                               </div>
-                              <i className="fas fa-chevron-right mobile-sub-arrow"></i>
+                              <i className="fa-solid fa-chevron-right mobile-sub-arrow"></i>
                             </Link>
                           );
                         })}
@@ -885,10 +909,9 @@ const Navbar = () => {
           </ul>
         </div>
 
-        {/* Compact 1-Row App Action Footer (Height: 52px) */}
         <div className="mobile-drawer-footer">
           <a href={`tel:${phone.replace(/[^0-9+]/g, '')}`} className="mobile-footer-icon-btn call" title="Call Us">
-            <i className="fas fa-phone-alt"></i>
+            <i className="fa-solid fa-phone"></i>
           </a>
           <a
             href={`https://wa.me/919510984735?text=${encodeURIComponent('Hello Advisory Team, I would like to consult regarding tax & compliance services.')}`}
@@ -897,17 +920,16 @@ const Navbar = () => {
             className="mobile-footer-icon-btn wa"
             title="Chat on WhatsApp"
           >
-            <i className="fab fa-whatsapp"></i>
+            <i className="fa-brands fa-whatsapp"></i>
           </a>
           <Link to="/contact" className="mobile-footer-consult-btn" onClick={() => setIsMobileOpen(false)}>
-            <i className="fas fa-calendar-check mobile-footer-btn-icon"></i>
+            <i className="fa-solid fa-calendar-check mobile-footer-btn-icon"></i>
             <span className="mobile-footer-consult-text">Book Consultation</span>
-            <i className="fas fa-arrow-right mobile-footer-arrow"></i>
+            <i className="fa-solid fa-arrow-right mobile-footer-arrow"></i>
           </Link>
         </div>
       </div>
 
-      {/* Service Search Command Palette */}
       <ServiceSearchModal
         isOpen={isSearchOpen}
         onClose={() => setIsSearchOpen(false)}
