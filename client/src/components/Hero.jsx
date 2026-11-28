@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSiteContext } from '../context/SiteContext';
+import { useTheme } from '../context/ThemeContext';
 import './Hero.css';
 
 const DOSSIER_PILLARS = [
   {
     num: '01',
+    tone: 'gold',
     title: 'Direct Tax Planning & Defense',
     badge: 'AUDIT SHIELD',
     badgeIcon: 'fa-solid fa-shield-halved',
@@ -14,6 +16,7 @@ const DOSSIER_PILLARS = [
   },
   {
     num: '02',
+    tone: 'emerald',
     title: 'GST Filing & Litigation Defense',
     badge: '2B RECONCILED',
     badgeIcon: 'fa-solid fa-check',
@@ -22,6 +25,7 @@ const DOSSIER_PILLARS = [
   },
   {
     num: '03',
+    tone: 'sapphire',
     title: 'Statutory Audit & Form 3CD',
     badge: 'SEC 44AB READY',
     badgeIcon: 'fa-solid fa-file-contract',
@@ -30,6 +34,7 @@ const DOSSIER_PILLARS = [
   },
   {
     num: '04',
+    tone: 'indigo',
     title: 'ROC Governance & Annual Filings',
     badge: 'MCA COMPLIANT',
     badgeIcon: 'fa-solid fa-building-columns',
@@ -38,8 +43,33 @@ const DOSSIER_PILLARS = [
   },
 ];
 
+const HERO_TRUST_BADGES = [
+  {
+    id: 'penalty-free',
+    tone: 'emerald',
+    icon: 'fa-solid fa-shield-halved',
+    title: 'Zero-Penalty Record',
+    subtitle: '99.8% Statutory Accuracy',
+  },
+  {
+    id: 'client-nda',
+    tone: 'gold',
+    icon: 'fa-solid fa-file-contract',
+    title: 'Strict Client NDA',
+    subtitle: 'Fiduciary Confidentiality',
+  },
+  {
+    id: 'partner-desk',
+    tone: 'sapphire',
+    icon: 'fa-solid fa-user-tie',
+    title: 'Direct Partner Desk',
+    subtitle: 'Senior Partner Review',
+  },
+];
+
 const Hero = () => {
   const { settings, loading } = useSiteContext();
+  const { isDark } = useTheme();
 
   if (loading) {
     return (
@@ -75,7 +105,9 @@ const Hero = () => {
         <div className="hero-narrative-col">
           <div className="hero-pill-badge">
             <span className="pill-dot-live" aria-hidden="true"></span>
-            <span>PREMIER TAX &amp; STATUTORY ADVISORY &bull; GUJARAT</span>
+            <span className="pill-kicker-text">PREMIER TAX &amp; STATUTORY ADVISORY</span>
+            <span className="pill-kicker-sep" aria-hidden="true"></span>
+            <span className="pill-region-tag">GUJARAT</span>
           </div>
 
           <h1 className="hero-main-title">
@@ -83,48 +115,33 @@ const Hero = () => {
           </h1>
 
           <p className="hero-subtext">
-            Partner with dedicated senior tax advisors for strategic corporate tax, GST audit defense, ROC governance, and dispute resolution—ensuring zero penalties and maximum legal tax savings.
+            Partner with dedicated senior tax advisors for strategic corporate tax, GST audit defense, ROC governance, and dispute resolution—ensuring <strong className="hero-subtext-highlight">zero penalties</strong> and <strong className="hero-subtext-highlight">maximum legal tax savings</strong>.
           </p>
 
           {/* 3 Executive Value Badges */}
           <div className="hero-trust-badges-grid">
-            <div className="hero-trust-badge-card">
-              <div className="trust-badge-icon emerald">
-                <i className="fa-solid fa-shield-halved" aria-hidden="true"></i>
+            {HERO_TRUST_BADGES.map((badge) => (
+              <div
+                key={badge.id}
+                className={`hero-trust-badge-card hero-trust-badge-card--${badge.tone}`}
+              >
+                <div className={`trust-badge-icon ${badge.tone}`}>
+                  <i className={badge.icon} aria-hidden="true"></i>
+                </div>
+                <div className="trust-badge-content">
+                  <strong className="badge-title">{badge.title}</strong>
+                  <span className="badge-subtitle">{badge.subtitle}</span>
+                </div>
               </div>
-              <div className="trust-badge-content">
-                <strong className="badge-title">Zero-Penalty Record</strong>
-                <span className="badge-subtitle">99.8% Statutory Accuracy</span>
-              </div>
-            </div>
-
-            <div className="hero-trust-badge-card">
-              <div className="trust-badge-icon gold">
-                <i className="fa-solid fa-file-contract" aria-hidden="true"></i>
-              </div>
-              <div className="trust-badge-content">
-                <strong className="badge-title">Strict Client NDA</strong>
-                <span className="badge-subtitle">100% Fiduciary Confidentiality</span>
-              </div>
-            </div>
-
-            <div className="hero-trust-badge-card">
-              <div className="trust-badge-icon sapphire">
-                <i className="fa-solid fa-user-tie" aria-hidden="true"></i>
-              </div>
-              <div className="trust-badge-content">
-                <strong className="badge-title">Direct Partner Desk</strong>
-                <span className="badge-subtitle">Senior Partner Review</span>
-              </div>
-            </div>
+            ))}
           </div>
 
           {/* Primary Action Buttons - Institutional Chambers Style */}
           <div className="hero-cta-group">
             <Link to="/contact" className="btn-hero-primary" aria-label="Schedule Partner Advisory Session">
-              <i className="fa-solid fa-calendar-check hero-btn-lead-icon"></i>
+              <i className="fa-solid fa-calendar-check hero-btn-lead-icon" aria-hidden="true"></i>
               <span className="hero-btn-text">Schedule Partner Advisory</span>
-              <i className="fa-solid fa-arrow-right hero-btn-trail-icon"></i>
+              <i className="fa-solid fa-arrow-right hero-btn-trail-icon" aria-hidden="true"></i>
             </Link>
 
             <a
@@ -142,30 +159,36 @@ const Hero = () => {
 
           {/* Elevated Executive Fiduciary Social Proof Strip */}
           <div className="hero-social-proof" role="region" aria-label="Institutional Trust and Compliance Record">
-            <div className="proof-seal-medallion" aria-hidden="true">
-              <i className="fa-solid fa-shield-halved"></i>
-            </div>
-            <div className="proof-content-wrap">
-              <div className="proof-metric-row">
-                <div className="proof-stars" aria-label="Rated 4.98 out of 5 stars">
-                  <i className="fa-solid fa-star" aria-hidden="true"></i>
-                  <i className="fa-solid fa-star" aria-hidden="true"></i>
-                  <i className="fa-solid fa-star" aria-hidden="true"></i>
-                  <i className="fa-solid fa-star" aria-hidden="true"></i>
-                  <i className="fa-solid fa-star" aria-hidden="true"></i>
+            <div className="proof-main-group">
+              <div className="proof-seal-medallion" aria-hidden="true">
+                <i className="fa-solid fa-shield-halved"></i>
+              </div>
+              <div className="proof-content-wrap">
+                <div className="proof-metric-row">
+                  <div className="proof-stars" aria-label="Rated 4.98 out of 5 stars">
+                    <i className="fa-solid fa-star" aria-hidden="true"></i>
+                    <i className="fa-solid fa-star" aria-hidden="true"></i>
+                    <i className="fa-solid fa-star" aria-hidden="true"></i>
+                    <i className="fa-solid fa-star" aria-hidden="true"></i>
+                    <i className="fa-solid fa-star" aria-hidden="true"></i>
+                  </div>
+                  <span className="proof-score"><strong>4.98</strong> / 5.0</span>
+                  <span className="proof-sep" aria-hidden="true">&bull;</span>
+                  <span className="proof-fiduciary-tag">
+                    <i className="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+                    <span>Fiduciary Aligned</span>
+                  </span>
                 </div>
-                <span className="proof-score"><strong>4.98</strong> / 5.0</span>
-                <span className="proof-sep" aria-hidden="true">&bull;</span>
-                <span className="proof-fiduciary-tag">
-                  <i className="fa-solid fa-scale-balanced" aria-hidden="true"></i>
-                  <span>Fiduciary Aligned</span>
-                </span>
+                <div className="proof-caption-row">
+                  <span className="proof-caption">
+                    Trusted by <strong>200+ Retained Enterprises</strong> across Gujarat
+                  </span>
+                </div>
               </div>
-              <div className="proof-caption-row">
-                <span className="proof-caption">
-                  Trusted by <strong>200+ Retained Enterprises</strong> across Gujarat
-                </span>
-              </div>
+            </div>
+            <div className="proof-practice-stamp" aria-hidden="true">
+              <span className="proof-stamp-kicker">RETAINED DESK</span>
+              <span className="proof-stamp-scope">Direct Tax &bull; GST &bull; ROC</span>
             </div>
           </div>
         </div>
@@ -185,21 +208,24 @@ const Hero = () => {
               <i className="fa-solid fa-scale-balanced"></i>
             </div>
 
-            {/* Dossier Header: Crest, Firm Authority, and Active Standing */}
+            {/* Dossier Header: Precision Crest Medallion, Authority Masthead & Telemetry Plaque */}
             <div className="dossier-header">
               <div className="dossier-brand">
                 <div className="dossier-crest-wrap">
                   <img
-                    src="/assets/logo_circle_full.png?v=6"
-                    alt="Shree Chamunda Associates Insignia"
+                    src={isDark ? '/assets/logo_crest_dark.png?v=1' : '/assets/logo_crest.png?v=1'}
+                    alt="Shree Chamunda Associates Crest"
                     className="dossier-logo-crest"
                   />
-                  <span className="crest-halo-glow" aria-hidden="true"></span>
                 </div>
                 <div className="dossier-title-block">
                   <span className="dossier-eyebrow">CHAMBERS OF SHREE CHAMUNDA ASSOCIATES</span>
                   <h3 className="dossier-heading">Executive Advisory Dossier</h3>
-                  <span className="dossier-sub">Retained Corporate Counsel &bull; Gujarat Jurisdiction</span>
+                  <span className="dossier-sub">
+                    <span>Retained Corporate Counsel</span>
+                    <span className="dossier-sub-sep" aria-hidden="true"></span>
+                    <span className="dossier-sub-region">Gujarat Jurisdiction</span>
+                  </span>
                 </div>
               </div>
               <div className="dossier-meta-badge">
@@ -213,7 +239,9 @@ const Hero = () => {
 
             {/* Section Eyebrow: Statutory Practice Pillars */}
             <div className="dossier-pillars-eyebrow">
-              <span>STATUTORY PRACTICE PILLARS &bull; CORPORATE RETAINER</span>
+              <span className="pillars-eyebrow-label">STATUTORY PRACTICE PILLARS &bull; CORPORATE RETAINER</span>
+              <span className="pillars-eyebrow-rule" aria-hidden="true"></span>
+              <span className="pillars-eyebrow-count">4 MANDATES</span>
             </div>
 
             {/* 4 Statutory Practice Pillars (Numbered 01 to 04) */}
@@ -222,7 +250,7 @@ const Hero = () => {
                 <Link
                   key={pillar.num}
                   to={pillar.to}
-                  className="dossier-pillar-card"
+                  className={`dossier-pillar-card pillar-tone-${pillar.tone}`}
                   role="listitem"
                   aria-label={`${pillar.title} - ${pillar.badge}`}
                 >
@@ -246,22 +274,55 @@ const Hero = () => {
               ))}
             </div>
 
-            {/* Bottom 3-Metric Executive Bar */}
-            <div className="dossier-metrics-strip">
-              <div className="dossier-metric-col">
-                <strong className="dossier-metric-val">200+ Entities</strong>
-                <span className="dossier-metric-lbl">CORPORATE RETAINERS</span>
-              </div>
-              <div className="dossier-metric-sep" aria-hidden="true"></div>
-              <div className="dossier-metric-col">
-                <strong className="dossier-metric-val">99.8% On-Time</strong>
-                <span className="dossier-metric-lbl">FILING ACCURACY</span>
-              </div>
-              <div className="dossier-metric-sep" aria-hidden="true"></div>
-              <div className="dossier-metric-col">
-                <strong className="dossier-metric-val">Partner-Led</strong>
-                <span className="dossier-metric-lbl">DIRECT SIGN-OFF</span>
-              </div>
+            {/* Bottom 3-Metric Executive KPI Dock */}
+            <div className="dossier-metrics-strip" aria-label="Firm executive metrics">
+              {[
+                {
+                  id: 'retainers',
+                  tone: 'gold',
+                  icon: 'fa-solid fa-building-columns',
+                  num: '200+',
+                  unit: 'Entities',
+                  label: 'CORPORATE RETAINERS',
+                },
+                {
+                  id: 'accuracy',
+                  tone: 'emerald',
+                  icon: 'fa-solid fa-circle-check',
+                  num: '99.8%',
+                  unit: 'On-Time',
+                  label: 'FILING ACCURACY',
+                },
+                {
+                  id: 'partner',
+                  tone: 'sapphire',
+                  icon: 'fa-solid fa-user-tie',
+                  text: 'Partner-Led',
+                  label: 'DIRECT SIGN-OFF',
+                },
+              ].map((metric) => (
+                <div
+                  key={metric.id}
+                  className={`dossier-metric-card dossier-metric-card--${metric.tone}`}
+                >
+                  <div className="dossier-metric-top">
+                    <strong className="dossier-metric-val">
+                      {metric.num ? (
+                        <>
+                          <span className="dossier-metric-num">{metric.num}</span>{' '}
+                          <span className="dossier-metric-unit">{metric.unit}</span>
+                        </>
+                      ) : (
+                        <span className="dossier-metric-single">{metric.text}</span>
+                      )}
+                    </strong>
+                    <span className="dossier-metric-icon" aria-hidden="true">
+                      <i className={metric.icon}></i>
+                    </span>
+                  </div>
+                  <span className="dossier-metric-lbl">{metric.label}</span>
+                </div>
+              ))}
             </div>
 
             {/* Fiduciary Protocol Footnote */}
